@@ -1,834 +1,949 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
 // Complete tools catalog array
 const tools = [
   // Flagship Whiteboard
   {
-    id: 'whiteboard',
-    name: 'Visual Whiteboard',
-    desc: 'Draggable sticky notes, drawing boards, and flow diagram layout workspace. Custom colors and download.',
-    category: 'collaboration',
-    path: '/tools/whiteboard',
-    badgeText: 'COLLABORATION',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Launch Canvas',
-    searchKeywords: 'whiteboard sketchpad canvas sticky notes whiteboard'
+    id: "whiteboard",
+    name: "Visual Whiteboard",
+    desc: "Draggable sticky notes, drawing boards, and flow diagram layout workspace. Custom colors and download.",
+    category: "collaboration",
+    path: "/tools/whiteboard",
+    badgeText: "COLLABORATION",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Launch Canvas",
+    searchKeywords: "whiteboard sketchpad canvas sticky notes whiteboard",
   },
   // Existing Developer Tools
   {
-    id: 'json-formatter',
-    name: 'JSON Formatter',
-    desc: 'Format, validate, beautify, and compress JSON files instantly. Highlights syntax errors, matching brackets, and paths.',
-    category: 'developer',
-    path: '/tools/json-formatter',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Beautify JSON',
-    searchKeywords: 'json formatter validator parser format minify beautify code'
+    id: "json-formatter",
+    name: "JSON Formatter",
+    desc: "Format, validate, beautify, and compress JSON files instantly. Highlights syntax errors, matching brackets, and paths.",
+    category: "developer",
+    path: "/tools/json-formatter",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Beautify JSON",
+    searchKeywords:
+      "json formatter validator parser format minify beautify code",
   },
   {
-    id: 'base64-url',
-    name: 'Base64 & URL Tool',
-    desc: 'Quickly encode and decode strings to and from Base64 or standard URL format. Side-by-side verification panels.',
-    category: 'developer',
-    path: '/tools/base64-url',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Convert String',
-    searchKeywords: 'base64 url encoder decoder converter text string translation'
+    id: "base64-url",
+    name: "Base64 & URL Tool",
+    desc: "Quickly encode and decode strings to and from Base64 or standard URL format. Side-by-side verification panels.",
+    category: "developer",
+    path: "/tools/base64-url",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Convert String",
+    searchKeywords:
+      "base64 url encoder decoder converter text string translation",
   },
   {
-    id: 'uuid-hash',
-    name: 'UUID & Hash Gen',
-    desc: 'Bulk generate secure UUID v4 tokens or hash target input strings using MD5, SHA-1, or SHA-256 engines locally.',
-    category: 'developer',
-    path: '/tools/uuid-hash',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Generate IDs',
-    searchKeywords: 'uuid hash generator md5 sha-1 sha-256 bulk id text security token'
+    id: "uuid-hash",
+    name: "UUID & Hash Gen",
+    desc: "Bulk generate secure UUID v4 tokens or hash target input strings using MD5, SHA-1, or SHA-256 engines locally.",
+    category: "developer",
+    path: "/tools/uuid-hash",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Generate IDs",
+    searchKeywords:
+      "uuid hash generator md5 sha-1 sha-256 bulk id text security token",
   },
   {
-    id: 'contrast-checker',
-    name: 'Contrast Checker',
-    desc: 'Verify color contrast ratios of text overlay backgrounds. Test against standard WCAG 2.1 AA/AAA accessibility checks.',
-    category: 'developer',
-    path: '/tools/contrast-checker',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Check Contrast',
-    searchKeywords: 'contrast checker wcag accessibility color palette aa aaa check colors contrast ratio web guidelines'
+    id: "contrast-checker",
+    name: "Contrast Checker",
+    desc: "Verify color contrast ratios of text overlay backgrounds. Test against standard WCAG 2.1 AA/AAA accessibility checks.",
+    category: "developer",
+    path: "/tools/contrast-checker",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Check Contrast",
+    searchKeywords:
+      "contrast checker wcag accessibility color palette aa aaa check colors contrast ratio web guidelines",
   },
   {
-    id: 'svg-previewer',
-    name: 'SVG Optimizer',
-    desc: 'Preview vector graphics in real time, sanitize inline CSS styles, adjust layout viewboxes, and export clean markup.',
-    category: 'developer',
-    path: '/tools/svg-previewer',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Optimize SVG',
-    searchKeywords: 'svg optimizer previewer editor xml scale sanitization graphics'
+    id: "svg-previewer",
+    name: "SVG Optimizer",
+    desc: "Preview vector graphics in real time, sanitize inline CSS styles, adjust layout viewboxes, and export clean markup.",
+    category: "developer",
+    path: "/tools/svg-previewer",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Optimize SVG",
+    searchKeywords:
+      "svg optimizer previewer editor xml scale sanitization graphics",
   },
   // TIER 1 - Finance & Tax
   {
-    id: 'mortgage-payment',
-    name: 'Mortgage Payment Calculator',
-    desc: 'Calculate your monthly mortgage payments including principal, interest, taxes, and insurance.',
-    category: 'finance',
-    path: '/tools/finance/mortgage-payment',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Mortgage',
-    searchKeywords: 'mortgage payment calculator finance interest rate amortization principal taxes insurance'
+    id: "mortgage-payment",
+    name: "Mortgage Payment Calculator",
+    desc: "Calculate your monthly mortgage payments including principal, interest, taxes, and insurance.",
+    category: "finance",
+    path: "/tools/finance/mortgage-payment",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Mortgage",
+    searchKeywords:
+      "mortgage payment calculator finance interest rate amortization principal taxes insurance",
   },
   {
-    id: 'take-home-pay',
-    name: 'Take-Home Pay / Paycheck Calculator',
-    desc: 'Estimate your net take-home salary after federal, state, and local tax deductions.',
-    category: 'finance',
-    path: '/tools/finance/take-home-pay',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Take-Home',
-    searchKeywords: 'take home pay paycheck salary net income tax deductions federal state local'
+    id: "take-home-pay",
+    name: "Take-Home Pay / Paycheck Calculator",
+    desc: "Estimate your net take-home salary after federal, state, and local tax deductions.",
+    category: "finance",
+    path: "/tools/finance/take-home-pay",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Take-Home",
+    searchKeywords:
+      "take home pay paycheck salary net income tax deductions federal state local",
   },
   {
-    id: 'tip-calculator',
-    name: 'Tip Calculator',
-    desc: 'Quickly calculate tips and split bill payments among multiple friends or colleagues.',
-    category: 'finance',
-    path: '/tools/finance/tip-calculator',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Tip',
-    searchKeywords: 'tip calculator split bill payout restaurants service dining friends cost'
+    id: "tip-calculator",
+    name: "Tip Calculator",
+    desc: "Quickly calculate tips and split bill payments among multiple friends or colleagues.",
+    category: "finance",
+    path: "/tools/finance/tip-calculator",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Tip",
+    searchKeywords:
+      "tip calculator split bill payout restaurants service dining friends cost",
   },
   {
-    id: 'auto-loan',
-    name: 'Auto Loan Calculator',
-    desc: 'Determine monthly payments, total interest, and overall cost of a new or used car loan.',
-    category: 'finance',
-    path: '/tools/finance/auto-loan',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Loan',
-    searchKeywords: 'auto loan calculator vehicle car financing interest rate payments monthly down payment'
+    id: "auto-loan",
+    name: "Auto Loan Calculator",
+    desc: "Determine monthly payments, total interest, and overall cost of a new or used car loan.",
+    category: "finance",
+    path: "/tools/finance/auto-loan",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Loan",
+    searchKeywords:
+      "auto loan calculator vehicle car financing interest rate payments monthly down payment",
   },
   {
-    id: 'compound-interest',
-    name: 'Compound Interest Calculator',
-    desc: 'Calculate the future value of your savings or investments using compound interest formulas.',
-    category: 'finance',
-    path: '/tools/finance/compound-interest',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Interest',
-    searchKeywords: 'compound interest calculator future value savings investment growth rate compound'
+    id: "compound-interest",
+    name: "Compound Interest Calculator",
+    desc: "Calculate the future value of your savings or investments using compound interest formulas.",
+    category: "finance",
+    path: "/tools/finance/compound-interest",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Interest",
+    searchKeywords:
+      "compound interest calculator future value savings investment growth rate compound",
   },
   {
-    id: 'student-loan-payoff',
-    name: 'Student Loan Payoff Calculator',
-    desc: 'Analyze debt payoff timelines and estimate total interest savings under various payment plans.',
-    category: 'finance',
-    path: '/tools/finance/student-loan-payoff',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Payoff',
-    searchKeywords: 'student loan payoff debt repayment schedule refinancing interest savings amortization'
+    id: "student-loan-payoff",
+    name: "Student Loan Payoff Calculator",
+    desc: "Analyze debt payoff timelines and estimate total interest savings under various payment plans.",
+    category: "finance",
+    path: "/tools/finance/student-loan-payoff",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Payoff",
+    searchKeywords:
+      "student loan payoff debt repayment schedule refinancing interest savings amortization",
   },
   {
-    id: 'retirement-401k',
-    name: '401(k) / Retirement Savings Calculator',
-    desc: 'Project your retirement savings balance and future income based on annual contributions.',
-    category: 'finance',
-    path: '/tools/finance/retirement-401k',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate 401k',
-    searchKeywords: '401k retirement savings calculator 401(k) investment contributions planning'
+    id: "retirement-401k",
+    name: "401(k) / Retirement Savings Calculator",
+    desc: "Project your retirement savings balance and future income based on annual contributions.",
+    category: "finance",
+    path: "/tools/finance/retirement-401k",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate 401k",
+    searchKeywords:
+      "401k retirement savings calculator 401(k) investment contributions planning",
   },
   {
-    id: 'capital-gains-tax',
-    name: 'Capital Gains Tax Estimator',
-    desc: 'Estimate federal capital gains taxes on profits from stocks, crypto, or real estate sales.',
-    category: 'finance',
-    path: '/tools/finance/capital-gains-tax',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Estimate Tax',
-    searchKeywords: 'capital gains tax estimator capital gains investment tax rate shares stocks crypto real estate profits'
+    id: "capital-gains-tax",
+    name: "Capital Gains Tax Estimator",
+    desc: "Estimate federal capital gains taxes on profits from stocks, crypto, or real estate sales.",
+    category: "finance",
+    path: "/tools/finance/capital-gains-tax",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Estimate Tax",
+    searchKeywords:
+      "capital gains tax estimator capital gains investment tax rate shares stocks crypto real estate profits",
   },
   {
-    id: 'federal-tax-bracket',
-    name: 'Federal Tax Bracket Calculator',
-    desc: 'Determine your federal marginal income tax brackets and effective tax rate calculations.',
-    category: 'finance',
-    path: '/tools/finance/federal-tax-bracket',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate Brackets',
-    searchKeywords: 'federal tax bracket calculator marginal tax rate deductions filing status'
+    id: "federal-tax-bracket",
+    name: "Federal Tax Bracket Calculator",
+    desc: "Determine your federal marginal income tax brackets and effective tax rate calculations.",
+    category: "finance",
+    path: "/tools/finance/federal-tax-bracket",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate Brackets",
+    searchKeywords:
+      "federal tax bracket calculator marginal tax rate deductions filing status",
   },
   {
-    id: 'sip-return',
-    name: 'SIP Return Calculator',
-    desc: 'Calculate prospective maturity returns on systematic investment plans over selected periods.',
-    category: 'finance',
-    path: '/tools/finance/sip-return',
-    badgeText: 'FINANCE',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Calculate SIP',
-    searchKeywords: 'sip return calculator systematic investment plan mutual funds returns calculations'
+    id: "sip-return",
+    name: "SIP Return Calculator",
+    desc: "Calculate prospective maturity returns on systematic investment plans over selected periods.",
+    category: "finance",
+    path: "/tools/finance/sip-return",
+    badgeText: "FINANCE",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Calculate SIP",
+    searchKeywords:
+      "sip return calculator systematic investment plan mutual funds returns calculations",
   },
 
   // TIER 2 - Health & Fitness
   {
-    id: 'bmi-calculator',
-    name: 'BMI Calculator (imperial)',
-    desc: 'Calculate Body Mass Index based on imperial units and evaluate healthy weight classifications.',
-    category: 'health',
-    path: '/tools/health/bmi-calculator',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate BMI',
-    searchKeywords: 'bmi calculator body mass index imperial weight height metric obesity healthy'
+    id: "bmi-calculator",
+    name: "BMI Calculator (imperial)",
+    desc: "Calculate Body Mass Index based on imperial units and evaluate healthy weight classifications.",
+    category: "health",
+    path: "/tools/health/bmi-calculator",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate BMI",
+    searchKeywords:
+      "bmi calculator body mass index imperial weight height metric obesity healthy",
   },
   {
-    id: 'calorie-deficit',
-    name: 'Calorie Deficit Calculator',
-    desc: 'Determine daily calorie targets needed to achieve sustainable weight goals based on activity.',
-    category: 'health',
-    path: '/tools/health/calorie-deficit',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate Calorie Deficit',
-    searchKeywords: 'calorie deficit calculator weight loss tdee active target metabolic nutrition'
+    id: "calorie-deficit",
+    name: "Calorie Deficit Calculator",
+    desc: "Determine daily calorie targets needed to achieve sustainable weight goals based on activity.",
+    category: "health",
+    path: "/tools/health/calorie-deficit",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate Calorie Deficit",
+    searchKeywords:
+      "calorie deficit calculator weight loss tdee active target metabolic nutrition",
   },
   {
-    id: 'macro-calculator',
-    name: 'Macro Calculator',
-    desc: 'Calculate dynamic daily macronutrient targets (protein, carbs, fats) for physical fitness.',
-    category: 'health',
-    path: '/tools/health/macro-calculator',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate Macros',
-    searchKeywords: 'macro calculator protein carbohydrate fats diet weight lifting bulking cutting'
+    id: "macro-calculator",
+    name: "Macro Calculator",
+    desc: "Calculate dynamic daily macronutrient targets (protein, carbs, fats) for physical fitness.",
+    category: "health",
+    path: "/tools/health/macro-calculator",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate Macros",
+    searchKeywords:
+      "macro calculator protein carbohydrate fats diet weight lifting bulking cutting",
   },
   {
-    id: 'water-intake',
-    name: 'Water Intake Calculator',
-    desc: 'Determine recommended daily water intake volume targets based on weight and activity levels.',
-    category: 'health',
-    path: '/tools/health/water-intake',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate Water Intake',
-    searchKeywords: 'water intake calculator hydration fitness metrics liquids health cups volume'
+    id: "water-intake",
+    name: "Water Intake Calculator",
+    desc: "Determine recommended daily water intake volume targets based on weight and activity levels.",
+    category: "health",
+    path: "/tools/health/water-intake",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate Water Intake",
+    searchKeywords:
+      "water intake calculator hydration fitness metrics liquids health cups volume",
   },
   {
-    id: 'pregnancy-due-date',
-    name: 'Due Date / Pregnancy Calculator',
-    desc: 'Estimate gestation progress, key trimester milestones, and pregnancy due dates.',
-    category: 'health',
-    path: '/tools/health/pregnancy-due-date',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate Due Date',
-    searchKeywords: 'due date pregnancy calculator trimesters milestones ovulation gestation calendar'
+    id: "pregnancy-due-date",
+    name: "Due Date / Pregnancy Calculator",
+    desc: "Estimate gestation progress, key trimester milestones, and pregnancy due dates.",
+    category: "health",
+    path: "/tools/health/pregnancy-due-date",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate Due Date",
+    searchKeywords:
+      "due date pregnancy calculator trimesters milestones ovulation gestation calendar",
   },
   {
-    id: 'sleep-cycle',
-    name: 'Sleep Cycle Calculator',
-    desc: 'Optimize wake times and sleep windows based on standard human sleep cycles.',
-    category: 'health',
-    path: '/tools/health/sleep-cycle',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Calculate Sleep Cycles',
-    searchKeywords: 'sleep cycle calculator wake up times rem bedtime fatigue optimizer'
+    id: "sleep-cycle",
+    name: "Sleep Cycle Calculator",
+    desc: "Optimize wake times and sleep windows based on standard human sleep cycles.",
+    category: "health",
+    path: "/tools/health/sleep-cycle",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Calculate Sleep Cycles",
+    searchKeywords:
+      "sleep cycle calculator wake up times rem bedtime fatigue optimizer",
   },
   {
-    id: 'calorie-burn',
-    name: 'Calorie Burn Estimator',
-    desc: 'Estimate total calories burned during physical exercises and everyday activities.',
-    category: 'health',
-    path: '/tools/health/calorie-burn',
-    badgeText: 'HEALTH',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Estimate Burn',
-    searchKeywords: 'calorie burn estimator dynamic met values exercise fitness calculation physical'
+    id: "calorie-burn",
+    name: "Calorie Burn Estimator",
+    desc: "Estimate total calories burned during physical exercises and everyday activities.",
+    category: "health",
+    path: "/tools/health/calorie-burn",
+    badgeText: "HEALTH",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Estimate Burn",
+    searchKeywords:
+      "calorie burn estimator dynamic met values exercise fitness calculation physical",
   },
 
   // TIER 3 - Engagement
   {
-    id: 'typing-test',
-    name: 'Premium Typing Test',
-    desc: 'Test and measure typing speed, words per minute (WPM), and character accuracy errors.',
-    category: 'engagement',
-    path: '/tools/engagement/typing-test',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Start Test',
-    searchKeywords: 'typing test wpm key layout velocity check characters precision'
+    id: "typing-test",
+    name: "Premium Typing Test",
+    desc: "Test and measure typing speed, words per minute (WPM), and character accuracy errors.",
+    category: "engagement",
+    path: "/tools/engagement/typing-test",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Start Test",
+    searchKeywords:
+      "typing test wpm key layout velocity check characters precision",
   },
   {
-    id: 'reaction-time',
-    name: 'Reaction Time Test',
-    desc: 'Measure visual click latency and compare cognitive reaction time against averages.',
-    category: 'engagement',
-    path: '/tools/engagement/reaction-time',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Test Latency',
-    searchKeywords: 'reaction time test visual speed click reflex delay millisecond visual'
+    id: "reaction-time",
+    name: "Reaction Time Test",
+    desc: "Measure visual click latency and compare cognitive reaction time against averages.",
+    category: "engagement",
+    path: "/tools/engagement/reaction-time",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Test Latency",
+    searchKeywords:
+      "reaction time test visual speed click reflex delay millisecond visual",
   },
   {
-    id: 'clicks-per-second',
-    name: 'Clicks Per Second',
-    desc: 'Test mouse clicking speed and track clicks per second (CPS) in a speed window.',
-    category: 'engagement',
-    path: '/tools/engagement/clicks-per-second',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Test Click Speed',
-    searchKeywords: 'clicks per second cps speed click mouse test drag clicking'
+    id: "clicks-per-second",
+    name: "Clicks Per Second",
+    desc: "Test mouse clicking speed and track clicks per second (CPS) in a speed window.",
+    category: "engagement",
+    path: "/tools/engagement/clicks-per-second",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Test Click Speed",
+    searchKeywords:
+      "clicks per second cps speed click mouse test drag clicking",
   },
   {
-    id: 'pomodoro-timer',
-    name: 'Pomodoro / Focus Timer',
-    desc: 'Boost work session efficiency using standard Pomodoro time management methods.',
-    category: 'engagement',
-    path: '/tools/engagement/pomodoro-timer',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Launch Timer',
-    searchKeywords: 'pomodoro timer focus studies work breaks track time management'
+    id: "pomodoro-timer",
+    name: "Pomodoro / Focus Timer",
+    desc: "Boost work session efficiency using standard Pomodoro time management methods.",
+    category: "engagement",
+    path: "/tools/engagement/pomodoro-timer",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Launch Timer",
+    searchKeywords:
+      "pomodoro timer focus studies work breaks track time management",
   },
   {
-    id: 'chronological-age',
-    name: 'Chronological Age Calculator',
-    desc: 'Calculate precise age in years, months, weeks, days, and hours from birthdates.',
-    category: 'engagement',
-    path: '/tools/engagement/chronological-age',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Calculate Age',
-    searchKeywords: 'chronological age calculator date of birth details breakdown timeline'
+    id: "chronological-age",
+    name: "Chronological Age Calculator",
+    desc: "Calculate precise age in years, months, weeks, days, and hours from birthdates.",
+    category: "engagement",
+    path: "/tools/engagement/chronological-age",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Calculate Age",
+    searchKeywords:
+      "chronological age calculator date of birth details breakdown timeline",
   },
   {
-    id: 'spacebar-counter',
-    name: 'Spacebar Counter',
-    desc: 'Test and record spacebar keystroke frequencies within designated time limits.',
-    category: 'engagement',
-    path: '/tools/engagement/spacebar-counter',
-    badgeText: 'ENGAGEMENT',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Start Counting',
-    searchKeywords: 'spacebar counter key pressing frequency test inputs keyboard'
+    id: "spacebar-counter",
+    name: "Spacebar Counter",
+    desc: "Test and record spacebar keystroke frequencies within designated time limits.",
+    category: "engagement",
+    path: "/tools/engagement/spacebar-counter",
+    badgeText: "ENGAGEMENT",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Start Counting",
+    searchKeywords:
+      "spacebar counter key pressing frequency test inputs keyboard",
   },
 
   // TIER 4 - Developer
   {
-    id: 'password-generator',
-    name: 'Password Generator',
-    desc: 'Generate strong, secure, and customizable passwords with configurable complexity.',
-    category: 'developer',
-    path: '/tools/developer/password-generator',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Generate Password',
-    searchKeywords: 'password generator security complex custom symbols numbers keys generation'
+    id: "password-generator",
+    name: "Password Generator",
+    desc: "Generate strong, secure, and customizable passwords with configurable complexity.",
+    category: "developer",
+    path: "/tools/developer/password-generator",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Generate Password",
+    searchKeywords:
+      "password generator security complex custom symbols numbers keys generation",
   },
   {
-    id: 'uuid-guid-generator',
-    name: 'UUID / GUID Generator',
-    desc: 'Generate unique cryptographic UUID v4 tokens or GUID codes locally in bulk.',
-    category: 'developer',
-    path: '/tools/developer/uuid-guid-generator',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Generate UUIDs',
-    searchKeywords: 'uuid guid generator bulk token id cryptographic keys'
+    id: "uuid-guid-generator",
+    name: "UUID / GUID Generator",
+    desc: "Generate unique cryptographic UUID v4 tokens or GUID codes locally in bulk.",
+    category: "developer",
+    path: "/tools/developer/uuid-guid-generator",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Generate UUIDs",
+    searchKeywords: "uuid guid generator bulk token id cryptographic keys",
   },
   {
-    id: 'diff-checker',
-    name: 'Diff Checker',
-    desc: 'Highlight text insertions, deletions, and differences between two text strings side-by-side.',
-    category: 'developer',
-    path: '/tools/developer/diff-checker',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Check Diff',
-    searchKeywords: 'diff checker comparison text check discrepancies changes output'
+    id: "diff-checker",
+    name: "Diff Checker",
+    desc: "Highlight text insertions, deletions, and differences between two text strings side-by-side.",
+    category: "developer",
+    path: "/tools/developer/diff-checker",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Check Diff",
+    searchKeywords:
+      "diff checker comparison text check discrepancies changes output",
   },
   {
-    id: 'case-converter',
-    name: 'Case Converter',
-    desc: 'Transform text blocks to UPPERCASE, lowercase, Title Case, camelCase, or sentence formats.',
-    category: 'developer',
-    path: '/tools/developer/case-converter',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Convert Case',
-    searchKeywords: 'case converter upper lower title camel format sentence capitalization text'
+    id: "case-converter",
+    name: "Case Converter",
+    desc: "Transform text blocks to UPPERCASE, lowercase, Title Case, camelCase, or sentence formats.",
+    category: "developer",
+    path: "/tools/developer/case-converter",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Convert Case",
+    searchKeywords:
+      "case converter upper lower title camel format sentence capitalization text",
   },
   {
-    id: 'word-character-counter',
-    name: 'Word / Character Counter',
-    desc: 'Count words, characters, sentences, paragraphs, and reading times for any input text.',
-    category: 'developer',
-    path: '/tools/developer/word-character-counter',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Count Words',
-    searchKeywords: 'word character counter paragraph sentence readings duration length analysis'
+    id: "word-character-counter",
+    name: "Word / Character Counter",
+    desc: "Count words, characters, sentences, paragraphs, and reading times for any input text.",
+    category: "developer",
+    path: "/tools/developer/word-character-counter",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Count Words",
+    searchKeywords:
+      "word character counter paragraph sentence readings duration length analysis",
   },
   {
-    id: 'readability-score',
-    name: 'Readability Score Checker',
-    desc: 'Analyze text reading levels using standard Flesch-Kincaid and Gunning Fog score engines.',
-    category: 'developer',
-    path: '/tools/developer/readability-score',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Check Readability',
-    searchKeywords: 'readability score checker flesch kincaid gunning fog grade text analysis english complexity'
+    id: "readability-score",
+    name: "Readability Score Checker",
+    desc: "Analyze text reading levels using standard Flesch-Kincaid and Gunning Fog score engines.",
+    category: "developer",
+    path: "/tools/developer/readability-score",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Check Readability",
+    searchKeywords:
+      "readability score checker flesch kincaid gunning fog grade text analysis english complexity",
   },
   {
-    id: 'code-formatter',
-    name: 'Code Formatter',
-    desc: 'Beautify, format, and structure code inputs for JSON, HTML, CSS, or Javascript syntax.',
-    category: 'developer',
-    path: '/tools/developer/code-formatter',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Format Code',
-    searchKeywords: 'code formatter compiler beautifier syntax layout cleaner scripts indentations'
+    id: "code-formatter",
+    name: "Code Formatter",
+    desc: "Beautify, format, and structure code inputs for JSON, HTML, CSS, or Javascript syntax.",
+    category: "developer",
+    path: "/tools/developer/code-formatter",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Format Code",
+    searchKeywords:
+      "code formatter compiler beautifier syntax layout cleaner scripts indentations",
   },
   {
-    id: 'name-generator',
-    name: 'Name Generator',
-    desc: 'Generate fictional character names, business brands, or user profile names randomly.',
-    category: 'developer',
-    path: '/tools/developer/name-generator',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Generate Names',
-    searchKeywords: 'name generator fictional profile random characters nickname brand names'
+    id: "name-generator",
+    name: "Name Generator",
+    desc: "Generate fictional character names, business brands, or user profile names randomly.",
+    category: "developer",
+    path: "/tools/developer/name-generator",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Generate Names",
+    searchKeywords:
+      "name generator fictional profile random characters nickname brand names",
   },
   {
-    id: 'randomizer-wheel',
-    name: 'Randomizer Wheel',
-    desc: 'Input choice sets, spin the interactive decision wheel, and select random choices.',
-    category: 'developer',
-    path: '/tools/developer/randomizer-wheel',
-    badgeText: 'DEVELOPER',
-    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Spin Wheel',
-    searchKeywords: 'randomizer wheel choices selector options picker decide spin rotation layout'
+    id: "randomizer-wheel",
+    name: "Randomizer Wheel",
+    desc: "Input choice sets, spin the interactive decision wheel, and select random choices.",
+    category: "developer",
+    path: "/tools/developer/randomizer-wheel",
+    badgeText: "DEVELOPER",
+    badgeClass: "badge-tag-purple bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Spin Wheel",
+    searchKeywords:
+      "randomizer wheel choices selector options picker decide spin rotation layout",
   },
 
   // TIER 5 - Audio
   {
-    id: 'white-noise',
-    name: 'White Noise Generator',
-    desc: 'Generate customizable continuous white noise frequencies for study focus or sleep.',
-    category: 'audio',
-    path: '/tools/audio/white-noise',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Play White Noise',
-    searchKeywords: 'white noise generator study focus sleep sounds masking continuous ambient frequency'
+    id: "white-noise",
+    name: "White Noise Generator",
+    desc: "Generate customizable continuous white noise frequencies for study focus or sleep.",
+    category: "audio",
+    path: "/tools/audio/white-noise",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Play White Noise",
+    searchKeywords:
+      "white noise generator study focus sleep sounds masking continuous ambient frequency",
   },
   {
-    id: 'brown-noise',
-    name: 'Brown Noise Generator',
-    desc: 'Play deeper, lower-frequency brown noise tracks for relaxation and sound masking.',
-    category: 'audio',
-    path: '/tools/audio/brown-noise',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Play Brown Noise',
-    searchKeywords: 'brown noise generator deep sleep relaxation noise blockers red noise continuous'
+    id: "brown-noise",
+    name: "Brown Noise Generator",
+    desc: "Play deeper, lower-frequency brown noise tracks for relaxation and sound masking.",
+    category: "audio",
+    path: "/tools/audio/brown-noise",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Play Brown Noise",
+    searchKeywords:
+      "brown noise generator deep sleep relaxation noise blockers red noise continuous",
   },
   {
-    id: 'tuning-fork',
-    name: 'Tuning Fork',
-    desc: 'Emit stable audio tuning pitches at standard standard frequencies like A440.',
-    category: 'audio',
-    path: '/tools/audio/tuning-fork',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Play Pitch',
-    searchKeywords: 'tuning fork musical instruments sound frequencies standard audio pitch check'
+    id: "tuning-fork",
+    name: "Tuning Fork",
+    desc: "Emit stable audio tuning pitches at standard standard frequencies like A440.",
+    category: "audio",
+    path: "/tools/audio/tuning-fork",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Play Pitch",
+    searchKeywords:
+      "tuning fork musical instruments sound frequencies standard audio pitch check",
   },
   {
-    id: 'headphone-test',
-    name: 'Headphone Test Suite',
-    desc: 'Test headphone stereo balance, bass response ranges, and dynamic sound levels.',
-    category: 'audio',
-    path: '/tools/audio/headphone-test',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Start Test',
-    searchKeywords: 'headphone test suite audio balance bass dynamic range check speaker stereo'
+    id: "headphone-test",
+    name: "Headphone Test Suite",
+    desc: "Test headphone stereo balance, bass response ranges, and dynamic sound levels.",
+    category: "audio",
+    path: "/tools/audio/headphone-test",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Start Test",
+    searchKeywords:
+      "headphone test suite audio balance bass dynamic range check speaker stereo",
   },
   {
-    id: 'microphone-frequency',
-    name: 'Microphone Frequency Response',
-    desc: 'Visualize real-time microphone audio frequency feedback peaks via Web Audio APIs.',
-    category: 'audio',
-    path: '/tools/audio/microphone-frequency',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Visualize Mic',
-    searchKeywords: 'microphone frequency response visualizer sound inputs analyzer audio decibels peaks'
+    id: "microphone-frequency",
+    name: "Microphone Frequency Response",
+    desc: "Visualize real-time microphone audio frequency feedback peaks via Web Audio APIs.",
+    category: "audio",
+    path: "/tools/audio/microphone-frequency",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Visualize Mic",
+    searchKeywords:
+      "microphone frequency response visualizer sound inputs analyzer audio decibels peaks",
   },
   {
-    id: 'speaker-phase',
-    name: 'Speaker Phase Tool',
-    desc: 'Play matched in-phase and out-of-phase frequency sounds to check speaker polarity.',
-    category: 'audio',
-    path: '/tools/audio/speaker-phase',
-    badgeText: 'AUDIO',
-    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
-    cardClass: 'card-feature-coral',
-    actionText: 'Check Phase',
-    searchKeywords: 'speaker phase polarity audio wiring test sound signals direction out of phase'
+    id: "speaker-phase",
+    name: "Speaker Phase Tool",
+    desc: "Play matched in-phase and out-of-phase frequency sounds to check speaker polarity.",
+    category: "audio",
+    path: "/tools/audio/speaker-phase",
+    badgeText: "AUDIO",
+    badgeClass: "badge-tag-coral bg-coral-light text-coral-dark",
+    cardClass: "card-feature-coral",
+    actionText: "Check Phase",
+    searchKeywords:
+      "speaker phase polarity audio wiring test sound signals direction out of phase",
   },
 
   // TIER 6 - Mobile
   {
-    id: 'spirit-level',
-    name: 'Spirit Level / Bubble Level',
-    desc: 'Turn mobile devices into digital spirit levels using device orientation angles.',
-    category: 'mobile',
-    path: '/tools/mobile/spirit-level',
-    badgeText: 'MOBILE',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Check Alignment',
-    searchKeywords: 'spirit level bubble level orientation angles horizontal gyroscope sensors mobile'
+    id: "spirit-level",
+    name: "Spirit Level / Bubble Level",
+    desc: "Turn mobile devices into digital spirit levels using device orientation angles.",
+    category: "mobile",
+    path: "/tools/mobile/spirit-level",
+    badgeText: "MOBILE",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Check Alignment",
+    searchKeywords:
+      "spirit level bubble level orientation angles horizontal gyroscope sensors mobile",
   },
   {
-    id: 'compass-rose',
-    name: 'Compass Rose',
-    desc: 'Display heading orientations and compass rose markers using magnetic sensors.',
-    category: 'mobile',
-    path: '/tools/mobile/compass-rose',
-    badgeText: 'MOBILE',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'View Compass',
-    searchKeywords: 'compass rose magnetometer navigation heading angles geolocation maps orientation'
+    id: "compass-rose",
+    name: "Compass Rose",
+    desc: "Display heading orientations and compass rose markers using magnetic sensors.",
+    category: "mobile",
+    path: "/tools/mobile/compass-rose",
+    badgeText: "MOBILE",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "View Compass",
+    searchKeywords:
+      "compass rose magnetometer navigation heading angles geolocation maps orientation",
   },
   {
-    id: 'accelerometer-viewer',
-    name: 'Accelerometer Viewer',
-    desc: 'Track real-time acceleration shifts, gravitational forces, and movements.',
-    category: 'mobile',
-    path: '/tools/mobile/accelerometer-viewer',
-    badgeText: 'MOBILE',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Track Forces',
-    searchKeywords: 'accelerometer viewer device motion velocity forces gravity shifts graph sensor'
+    id: "accelerometer-viewer",
+    name: "Accelerometer Viewer",
+    desc: "Track real-time acceleration shifts, gravitational forces, and movements.",
+    category: "mobile",
+    path: "/tools/mobile/accelerometer-viewer",
+    badgeText: "MOBILE",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Track Forces",
+    searchKeywords:
+      "accelerometer viewer device motion velocity forces gravity shifts graph sensor",
   },
   {
-    id: 'light-meter',
-    name: 'Light Meter',
-    desc: 'Audit ambient light values in Lux using client-side camera sensory feeds.',
-    category: 'mobile',
-    path: '/tools/mobile/light-meter',
-    badgeText: 'MOBILE',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Measure Light',
-    searchKeywords: 'light meter camera sensory lux units ambient check photography details'
+    id: "light-meter",
+    name: "Light Meter",
+    desc: "Audit ambient light values in Lux using client-side camera sensory feeds.",
+    category: "mobile",
+    path: "/tools/mobile/light-meter",
+    badgeText: "MOBILE",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Measure Light",
+    searchKeywords:
+      "light meter camera sensory lux units ambient check photography details",
   },
   {
-    id: 'orientation-lock',
-    name: 'Orientation Lock Check',
-    desc: 'Verify screen rotation responses, lock alignments, and display geometry.',
-    category: 'mobile',
-    path: '/tools/mobile/orientation-lock',
-    badgeText: 'MOBILE',
-    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
-    cardClass: 'card-feature-rose',
-    actionText: 'Check Screen Lock',
-    searchKeywords: 'orientation lock check scale rotation triggers mobile viewport dimensions'
+    id: "orientation-lock",
+    name: "Orientation Lock Check",
+    desc: "Verify screen rotation responses, lock alignments, and display geometry.",
+    category: "mobile",
+    path: "/tools/mobile/orientation-lock",
+    badgeText: "MOBILE",
+    badgeClass: "badge-tag-purple bg-rose-light text-primary",
+    cardClass: "card-feature-rose",
+    actionText: "Check Screen Lock",
+    searchKeywords:
+      "orientation lock check scale rotation triggers mobile viewport dimensions",
   },
 
   // TIER 7 - Display
   {
-    id: 'refresh-rate',
-    name: 'Refresh Rate Test',
-    desc: 'Measure browser monitor display refresh rates and detect visual frame pacing drops.',
-    category: 'display',
-    path: '/tools/display/refresh-rate',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Check Refresh Rate',
-    searchKeywords: 'refresh rate test hz monitor pacing frames fps diagnostics display speed'
+    id: "refresh-rate",
+    name: "Refresh Rate Test",
+    desc: "Measure browser monitor display refresh rates and detect visual frame pacing drops.",
+    category: "display",
+    path: "/tools/display/refresh-rate",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Check Refresh Rate",
+    searchKeywords:
+      "refresh rate test hz monitor pacing frames fps diagnostics display speed",
   },
   {
-    id: 'aspect-ratio',
-    name: 'Aspect Ratio Checker',
-    desc: 'Calculate screen aspect ratios, viewport pixel geometries, and scaling grids.',
-    category: 'display',
-    path: '/tools/display/aspect-ratio',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Check Ratio',
-    searchKeywords: 'aspect ratio check dimensions layout viewport resolution scale pixel math'
+    id: "aspect-ratio",
+    name: "Aspect Ratio Checker",
+    desc: "Calculate screen aspect ratios, viewport pixel geometries, and scaling grids.",
+    category: "display",
+    path: "/tools/display/aspect-ratio",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Check Ratio",
+    searchKeywords:
+      "aspect ratio check dimensions layout viewport resolution scale pixel math",
   },
   {
-    id: 'scroll-wheel',
-    name: 'Scroll Wheel Test',
-    desc: 'Verify scroll wheel ticks, direction velocities, and scroll track sensitivity.',
-    category: 'display',
-    path: '/tools/display/scroll-wheel',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Test Scroll',
-    searchKeywords: 'scroll wheel test mouse wheel scrolling speed track sensitivity double lines'
+    id: "scroll-wheel",
+    name: "Scroll Wheel Test",
+    desc: "Verify scroll wheel ticks, direction velocities, and scroll track sensitivity.",
+    category: "display",
+    path: "/tools/display/scroll-wheel",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Test Scroll",
+    searchKeywords:
+      "scroll wheel test mouse wheel scrolling speed track sensitivity double lines",
   },
   {
-    id: 'polling-rate',
-    name: 'Polling Rate Test',
-    desc: 'Track mouse report polling frequencies and verify data coordinate throughput rates.',
-    category: 'display',
-    path: '/tools/display/polling-rate',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Check Polling Rate',
-    searchKeywords: 'polling rate test report frequency rate hz mouse tracking coordinates latency'
+    id: "polling-rate",
+    name: "Polling Rate Test",
+    desc: "Track mouse report polling frequencies and verify data coordinate throughput rates.",
+    category: "display",
+    path: "/tools/display/polling-rate",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Check Polling Rate",
+    searchKeywords:
+      "polling rate test report frequency rate hz mouse tracking coordinates latency",
   },
   {
-    id: 'double-click',
-    name: 'Double Click Test',
-    desc: 'Audit and detect mechanical mouse switch double-click issues on primary inputs.',
-    category: 'display',
-    path: '/tools/display/double-click',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Start Mouse Test',
-    searchKeywords: 'double click test mouse switches click detection gaming diagnostic mechanical issues'
+    id: "double-click",
+    name: "Double Click Test",
+    desc: "Audit and detect mechanical mouse switch double-click issues on primary inputs.",
+    category: "display",
+    path: "/tools/display/double-click",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Start Mouse Test",
+    searchKeywords:
+      "double click test mouse switches click detection gaming diagnostic mechanical issues",
   },
   {
-    id: 'key-repeat',
-    name: 'Key Repeat Test',
-    desc: 'Test keyboard repeat rates, input bounce delays, and keystroke logs.',
-    category: 'display',
-    path: '/tools/display/key-repeat',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Test Key Repeat',
-    searchKeywords: 'key repeat test delay speed typing latency bounce rate keypress log'
+    id: "key-repeat",
+    name: "Key Repeat Test",
+    desc: "Test keyboard repeat rates, input bounce delays, and keystroke logs.",
+    category: "display",
+    path: "/tools/display/key-repeat",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Test Key Repeat",
+    searchKeywords:
+      "key repeat test delay speed typing latency bounce rate keypress log",
   },
   {
-    id: 'caps-lock',
-    name: 'Caps Lock Test',
-    desc: 'Check Caps Lock activation states, keystroke indicators, and warnings.',
-    category: 'display',
-    path: '/tools/display/caps-lock',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Test Caps Lock',
-    searchKeywords: 'caps lock test status checker keyboard active status indicators warnings'
+    id: "caps-lock",
+    name: "Caps Lock Test",
+    desc: "Check Caps Lock activation states, keystroke indicators, and warnings.",
+    category: "display",
+    path: "/tools/display/caps-lock",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Test Caps Lock",
+    searchKeywords:
+      "caps lock test status checker keyboard active status indicators warnings",
   },
   {
-    id: 'keyboard-latency',
-    name: 'Keyboard Latency Test',
-    desc: 'Test keyboard press latencies and measure input-to-screen response times.',
-    category: 'display',
-    path: '/tools/display/keyboard-latency',
-    badgeText: 'DISPLAY',
-    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
-    cardClass: 'card-feature-yellow',
-    actionText: 'Check Latency',
-    searchKeywords: 'keyboard latency test keypress ms delay reaction speed input response'
+    id: "keyboard-latency",
+    name: "Keyboard Latency Test",
+    desc: "Test keyboard press latencies and measure input-to-screen response times.",
+    category: "display",
+    path: "/tools/display/keyboard-latency",
+    badgeText: "DISPLAY",
+    badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
+    cardClass: "card-feature-yellow",
+    actionText: "Check Latency",
+    searchKeywords:
+      "keyboard latency test keypress ms delay reaction speed input response",
   },
 
   // TIER 8 - General
   {
-    id: 'time-zone-converter',
-    name: 'Time Zone Converter',
-    desc: 'Convert and compare calendar dates and times across global time zones.',
-    category: 'general',
-    path: '/tools/general/time-zone-converter',
-    badgeText: 'EVERYDAY',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Convert Time',
-    searchKeywords: 'time zone converter clock comparison calendar utc local world schedules'
+    id: "time-zone-converter",
+    name: "Time Zone Converter",
+    desc: "Convert and compare calendar dates and times across global time zones.",
+    category: "general",
+    path: "/tools/general/time-zone-converter",
+    badgeText: "EVERYDAY",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Convert Time",
+    searchKeywords:
+      "time zone converter clock comparison calendar utc local world schedules",
   },
   {
-    id: 'currency-converter',
-    name: 'Currency Converter',
-    desc: 'Convert standard currencies using localized static conversion rates.',
-    category: 'general',
-    path: '/tools/general/currency-converter',
-    badgeText: 'EVERYDAY',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Convert Currency',
-    searchKeywords: 'currency converter money conversion dollar euro pound rates static calculations'
+    id: "currency-converter",
+    name: "Currency Converter",
+    desc: "Convert standard currencies using localized static conversion rates.",
+    category: "general",
+    path: "/tools/general/currency-converter",
+    badgeText: "EVERYDAY",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Convert Currency",
+    searchKeywords:
+      "currency converter money conversion dollar euro pound rates static calculations",
   },
   {
-    id: 'speedometer',
-    name: 'Speedometer',
-    desc: 'Calculate real-time geographic velocities using browser GPS location updates.',
-    category: 'general',
-    path: '/tools/general/speedometer',
-    badgeText: 'EVERYDAY',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Check Speed',
-    searchKeywords: 'speedometer gps velocity coordinates tracking movement geographic travel'
+    id: "speedometer",
+    name: "Speedometer",
+    desc: "Calculate real-time geographic velocities using browser GPS location updates.",
+    category: "general",
+    path: "/tools/general/speedometer",
+    badgeText: "EVERYDAY",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Check Speed",
+    searchKeywords:
+      "speedometer gps velocity coordinates tracking movement geographic travel",
   },
   {
-    id: 'screen-dead-pixel',
-    name: 'Screen Dead Pixel Checker',
-    desc: 'Scan and identify dead pixels on your monitor screen using solid backgrounds.',
-    category: 'general',
-    path: '/tools/general/screen-dead-pixel',
-    badgeText: 'EVERYDAY',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Scan Screen',
-    searchKeywords: 'dead pixel screen monitor background check solid pixels checker diagnostic'
+    id: "screen-dead-pixel",
+    name: "Screen Dead Pixel Checker",
+    desc: "Scan and identify dead pixels on your monitor screen using solid backgrounds.",
+    category: "general",
+    path: "/tools/general/screen-dead-pixel",
+    badgeText: "EVERYDAY",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Scan Screen",
+    searchKeywords:
+      "dead pixel screen monitor background check solid pixels checker diagnostic",
   },
   {
-    id: 'color-picker',
-    name: 'Color Picker',
-    desc: 'Extract HSL, hex, and RGB values from canvas coordinates or input ranges.',
-    category: 'general',
-    path: '/tools/general/color-picker',
-    badgeText: 'EVERYDAY',
-    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
-    cardClass: 'card-feature-teal',
-    actionText: 'Pick Colors',
-    searchKeywords: 'color picker canvas cursor hex rgb hsl colors palettes checks extract'
-  }
+    id: "color-picker",
+    name: "Color Picker",
+    desc: "Extract HSL, hex, and RGB values from canvas coordinates or input ranges.",
+    category: "general",
+    path: "/tools/general/color-picker",
+    badgeText: "EVERYDAY",
+    badgeClass: "badge-tag-yellow bg-teal-light text-moss-dark",
+    cardClass: "card-feature-teal",
+    actionText: "Pick Colors",
+    searchKeywords:
+      "color picker canvas cursor hex rgb hsl colors palettes checks extract",
+  },
 ];
 ---
 
 <Layout>
   <!-- Hero Section -->
-  <section class="bg-canvas border-b border-hairline py-16 lg:py-24 px-4 overflow-hidden relative">
+  <section
+    class="bg-canvas border-b border-hairline py-16 lg:py-24 px-4 overflow-hidden relative"
+  >
     <!-- Vibrant background grid pattern -->
     <div class="absolute inset-0 dot-grid opacity-25 pointer-events-none"></div>
 
-    <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+    <div
+      class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10"
+    >
       <!-- Left Hero Content -->
-      <div class="lg:col-span-6 flex flex-col gap-6 items-start text-left animate-fade-in-up">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-yellow border border-yellow-light text-yellow-dark rounded-full text-xs font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep animate-ping"></span>
+      <div
+        class="lg:col-span-6 flex flex-col gap-6 items-start text-left animate-fade-in-up"
+      >
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 bg-surface-yellow border border-yellow-light text-yellow-dark rounded-full text-xs font-semibold"
+        >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep animate-ping"
+          ></span>
           Zero Server Overhead &bull; 100% Private Sandbox
         </div>
-        
-        <h1 class="font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-[-2.5px] leading-[1.05] text-primary">
-          See how teams get great done, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none">computation by computation.</span>
+
+        <h1
+          class="font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-[-2.5px] leading-[1.05] text-primary"
+        >
+          See how teams get great done, <span
+            class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none"
+            >computation by computation.</span
+          >
         </h1>
-        
-        <p class="font-display text-base md:text-lg text-slate max-w-xl leading-relaxed">
-          An interactive multi-tool suite containing 56 calculators, diagnostics, and text tools. Calculate finances, optimize health parameters, run input tests, and sketch ideas on a local whiteboard canvas.
+
+        <p
+          class="font-display text-base md:text-lg text-slate max-w-xl leading-relaxed"
+        >
+          An interactive multi-tool suite containing 56 calculators,
+          diagnostics, and text tools. Calculate finances, optimize health
+          parameters, run input tests, and sketch ideas on a local whiteboard
+          canvas.
         </p>
 
         <!-- Instant Filter / Search Pill with Live Dropdown -->
         <div class="w-full max-w-lg mt-2 relative" id="hero-search-wrapper">
           <div class="relative flex items-center">
             <div class="absolute left-4 text-stone pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4.5 h-4.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
-            <input 
-              type="text" 
-              id="tool-search" 
-              placeholder="Search tools (e.g. JSON, Whiteboard, UUID...)" 
+            <input
+              type="text"
+              id="tool-search"
+              placeholder="Search tools (e.g. JSON, Whiteboard, UUID...)"
               class="text-input w-full pl-11 pr-20 focus:border-brand-blue"
               autocomplete="off"
               spellcheck="false"
             />
             <div class="absolute right-3 flex items-center gap-1.5">
-              <span class="text-[9px] font-bold text-stone bg-surface border border-hairline rounded px-1.5 py-0.5 select-none hidden sm:inline">Ctrl+K</span>
+              <span
+                class="text-[9px] font-bold text-stone bg-surface border border-hairline rounded px-1.5 py-0.5 select-none hidden sm:inline"
+                >Ctrl+K</span
+              >
             </div>
           </div>
 
           <!-- Hero Search Dropdown -->
-          <div 
-            id="hero-search-dropdown" 
+          <div
+            id="hero-search-dropdown"
             class="absolute top-full left-0 w-full mt-2 bg-canvas border border-hairline rounded-xl shadow-modal z-50 overflow-hidden hidden"
           >
             <!-- Results list -->
-            <div id="hero-dropdown-results" class="max-h-[340px] overflow-y-auto"></div>
-            
+            <div
+              id="hero-dropdown-results"
+              class="max-h-[340px] overflow-y-auto"
+            >
+            </div>
+
             <!-- No Results + Request Tool CTA -->
             <div id="hero-dropdown-empty" class="hidden px-5 py-6 text-center">
-              <div class="w-10 h-10 mx-auto rounded-full bg-surface-yellow border border-yellow-light flex items-center justify-center text-base mb-2.5">🔍</div>
-              <p class="text-sm font-display font-medium text-primary mb-1">No matching tools found</p>
-              <p class="text-xs text-slate mb-3">Can't find what you need? Request it and we'll build it!</p>
-              <button 
-                id="hero-request-tool-btn" 
+              <div
+                class="w-10 h-10 mx-auto rounded-full bg-surface-yellow border border-yellow-light flex items-center justify-center text-base mb-2.5"
+              >
+                🔍
+              </div>
+              <p class="text-sm font-display font-medium text-primary mb-1">
+                No matching tools found
+              </p>
+              <p class="text-xs text-slate mb-3">
+                Can't find what you need? Request it and we'll build it!
+              </p>
+              <button
+                id="hero-request-tool-btn"
                 class="button-primary !py-2 !px-5 !text-xs inline-flex items-center gap-1.5 cursor-pointer"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 4v16m8-8H4"></path>
                 </svg>
                 Request a Tool
               </button>
@@ -838,75 +953,188 @@ const tools = [
 
         <!-- Pill Tabs for Category Filter -->
         <div class="flex flex-wrap gap-2.5 mt-2" id="filter-tabs-container">
-          <button class="pill-tab pill-tab-active" data-category="all">All Tools</button>
-          <button class="pill-tab" data-category="collaboration">Collaboration</button>
-          <button class="pill-tab" data-category="finance">Finance & Tax</button>
-          <button class="pill-tab" data-category="health">Health & Fitness</button>
-          <button class="pill-tab" data-category="engagement">Engagement</button>
-          <button class="pill-tab" data-category="developer">Developer & Text</button>
-          <button class="pill-tab" data-category="audio">Audio Utilities</button>
-          <button class="pill-tab" data-category="mobile">Mobile Sensors</button>
-          <button class="pill-tab" data-category="display">Display & Input</button>
-          <button class="pill-tab" data-category="general">Everyday Tools</button>
+          <button class="pill-tab pill-tab-active" data-category="all"
+            >All Tools</button
+          >
+          <button class="pill-tab" data-category="collaboration"
+            >Collaboration</button
+          >
+          <button class="pill-tab" data-category="finance">Finance & Tax</button
+          >
+          <button class="pill-tab" data-category="health"
+            >Health & Fitness</button
+          >
+          <button class="pill-tab" data-category="engagement">Engagement</button
+          >
+          <button class="pill-tab" data-category="developer"
+            >Developer & Text</button
+          >
+          <button class="pill-tab" data-category="audio">Audio Utilities</button
+          >
+          <button class="pill-tab" data-category="mobile">Mobile Sensors</button
+          >
+          <button class="pill-tab" data-category="display"
+            >Display & Input</button
+          >
+          <button class="pill-tab" data-category="general"
+            >Everyday Tools</button
+          >
         </div>
       </div>
 
       <!-- Right Immersive Interactive Sandbox Widget -->
       <div class="lg:col-span-6 w-full animate-fade-in-up delay-200">
-        <div class="whiteboard-mockup overflow-hidden aspect-[16/10] flex flex-col relative shadow-mockup glow-border-card animate-float-slow" id="home-board-container">
+        <div
+          class="whiteboard-mockup overflow-hidden aspect-[16/10] flex flex-col relative shadow-mockup glow-border-card animate-float-slow"
+          id="home-board-container"
+        >
           <!-- Canvas Top Menu Toolbar -->
-          <div class="h-11 border-b border-hairline bg-surface/85 backdrop-blur-md flex items-center px-4 justify-between select-none">
+          <div
+            class="h-11 border-b border-hairline bg-surface/85 backdrop-blur-md flex items-center px-4 justify-between select-none"
+          >
             <!-- Left tools -->
             <div class="flex items-center gap-1.5">
-              <button id="hero-tool-pen" class="p-1.5 rounded-md bg-surface border border-hairline-strong text-primary cursor-pointer hover:bg-hairline transition-colors" title="Sketch Pen">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              <button
+                id="hero-tool-pen"
+                class="p-1.5 rounded-md bg-surface border border-hairline-strong text-primary cursor-pointer hover:bg-hairline transition-colors"
+                title="Sketch Pen"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  ></path>
                 </svg>
               </button>
-              <button id="hero-tool-sticky" class="p-1.5 rounded-md hover:bg-surface text-slate cursor-pointer transition-colors" title="Add Note">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <button
+                id="hero-tool-sticky"
+                class="p-1.5 rounded-md hover:bg-surface text-slate cursor-pointer transition-colors"
+                title="Add Note"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  ></path>
                 </svg>
               </button>
               <div class="w-[1px] h-4 bg-hairline"></div>
-              <button id="hero-tool-uuid" class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-blue cursor-pointer transition-colors" title="Add UUID Note">+ UUID Note</button>
-              <button id="hero-tool-base64" class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-teal cursor-pointer transition-colors" title="Add Base64 Note">+ Base64 Note</button>
+              <button
+                id="hero-tool-uuid"
+                class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-blue cursor-pointer transition-colors"
+                title="Add UUID Note">+ UUID Note</button
+              >
+              <button
+                id="hero-tool-base64"
+                class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-teal cursor-pointer transition-colors"
+                title="Add Base64 Note">+ Base64 Note</button
+              >
             </div>
-            
+
             <!-- Right side controls -->
             <div class="flex items-center gap-1.5">
-              <button id="toggle-multiplayer" class="px-2 py-0.5 rounded-full bg-surface hover:bg-hairline text-[9px] font-semibold text-slate border border-hairline flex items-center gap-1 cursor-pointer transition-colors">
-                <span class="w-1.5 h-1.5 rounded-full bg-stone" id="multiplayer-dot"></span>
+              <button
+                id="toggle-multiplayer"
+                class="px-2 py-0.5 rounded-full bg-surface hover:bg-hairline text-[9px] font-semibold text-slate border border-hairline flex items-center gap-1 cursor-pointer transition-colors"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-stone"
+                  id="multiplayer-dot"></span>
                 <span>Cursors</span>
               </button>
-              <button id="hero-tool-clear" class="p-1.5 rounded hover:bg-surface text-stone cursor-pointer transition-colors" title="Clear drawings">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              <button
+                id="hero-tool-clear"
+                class="p-1.5 rounded hover:bg-surface text-stone cursor-pointer transition-colors"
+                title="Clear drawings"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  ></path>
                 </svg>
               </button>
             </div>
           </div>
 
           <!-- Canvas & Notes Area -->
-          <div class="flex-grow bg-canvas dot-grid relative overflow-hidden" id="home-board-canvas">
+          <div
+            class="flex-grow bg-canvas dot-grid relative overflow-hidden"
+            id="home-board-canvas"
+          >
             <!-- Simulated cursors layer -->
-            <div id="simulated-cursors" class="absolute inset-0 pointer-events-none z-35"></div>
+            <div
+              id="simulated-cursors"
+              class="absolute inset-0 pointer-events-none z-35"
+            >
+            </div>
 
             <!-- Notes layer -->
-            <div id="home-notes-container" class="absolute inset-0 pointer-events-none z-10"></div>
-            
+            <div
+              id="home-notes-container"
+              class="absolute inset-0 pointer-events-none z-10"
+            >
+            </div>
+
             <!-- Drawings Canvas -->
-            <canvas id="home-sketch-canvas" class="absolute top-0 left-0 w-full h-full cursor-crosshair z-20"></canvas>
-            
+            <canvas
+              id="home-sketch-canvas"
+              class="absolute top-0 left-0 w-full h-full cursor-crosshair z-20"
+            ></canvas>
+
             <!-- SVG curves that connect notes dynamically -->
-            <svg class="absolute inset-0 pointer-events-none stroke-brand-blue animate-pulse z-0" fill="none" stroke-width="1.5" id="home-connecting-lines" style="width:100%; height:100%;">
-              <path d="M 0 0" stroke-dasharray="4" id="home-path-1" />
-              <path d="M 0 0" stroke-dasharray="4" id="home-path-2" class="stroke-brand-teal" />
+            <svg
+              class="absolute inset-0 pointer-events-none stroke-brand-blue animate-pulse z-0"
+              fill="none"
+              stroke-width="1.5"
+              id="home-connecting-lines"
+              style="width:100%; height:100%;"
+            >
+              <path d="M 0 0" stroke-dasharray="4" id="home-path-1"></path>
+              <path
+                d="M 0 0"
+                stroke-dasharray="4"
+                id="home-path-2"
+                class="stroke-brand-teal"></path>
             </svg>
-            
+
             <!-- Floating tip -->
-            <div class="absolute bottom-3 right-3 bg-primary text-canvas px-2.5 py-1.2 rounded-full text-[9px] font-medium shadow-modal flex items-center gap-1 select-none pointer-events-none opacity-80 z-40">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-brand-yellow" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
+            <div
+              class="absolute bottom-3 right-3 bg-primary text-canvas px-2.5 py-1.2 rounded-full text-[9px] font-medium shadow-modal flex items-center gap-1 select-none pointer-events-none opacity-80 z-40"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3 h-3 text-brand-yellow"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                ><path
+                  d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                ></path></svg
+              >
               Drag sticky notes or sketch with pen tool!
             </div>
           </div>
@@ -915,103 +1143,171 @@ const tools = [
     </div>
   </section>
 
-
-
   <!-- Directory Section -->
-  <section id="tools-directory-section" class="bg-canvas py-16 px-4 border-b border-hairline scroll-mt-20">
+  <section
+    id="tools-directory-section"
+    class="bg-canvas py-16 px-4 border-b border-hairline scroll-mt-20"
+  >
     <div class="max-w-[1280px] mx-auto">
       <!-- Recent History Workspaces Container (Dynamically populated) -->
-      <div id="recent-workspaces-section" class="hidden mb-12 animate-fade-in-up delay-75">
-        <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider block mb-3.5 select-none">Quick Jump Back</span>
-        <div id="recent-workspaces-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div
+        id="recent-workspaces-section"
+        class="hidden mb-12 animate-fade-in-up delay-75"
+      >
+        <span
+          class="text-xs font-semibold text-brand-blue uppercase tracking-wider block mb-3.5 select-none"
+          >Quick Jump Back</span
+        >
+        <div
+          id="recent-workspaces-list"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"
+        >
           <!-- Dynamic nodes -->
         </div>
         <div class="h-[1px] bg-hairline mt-12"></div>
       </div>
 
-      <div class="flex flex-col md:flex-row justify-between items-baseline gap-4 mb-10">
+      <div
+        id="select-workspace-section"
+        class="scroll-mt-20 flex flex-col md:flex-row justify-between items-baseline gap-4 mb-10"
+      >
         <div>
-          <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">All Sandbox Tools</span>
-          <h2 class="font-display font-medium text-3xl text-primary tracking-tight mt-1">Select a Workspace</h2>
+          <span
+            class="text-xs font-semibold text-brand-blue uppercase tracking-wider"
+            >All Sandbox Tools</span
+          >
+          <h2
+            class="font-display font-medium text-3xl text-primary tracking-tight mt-1"
+          >
+            Select a Workspace
+          </h2>
         </div>
         <p class="text-sm text-slate max-w-md">
-          Format input strings, run accessibility audits, compile SVG code, and draw. Instant results.
+          Format input strings, run accessibility audits, compile SVG code, and
+          draw. Instant results.
         </p>
       </div>
 
       <!-- Tool Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
-        {tools.map((tool, index) => {
-          let delayClass = "delay-75";
-          if (index % 4 === 1) delayClass = "delay-100";
-          else if (index % 4 === 2) delayClass = "delay-150";
-          else if (index % 4 === 3) delayClass = "delay-200";
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        id="tools-grid"
+      >
+        {
+          tools.map((tool, index) => {
+            let delayClass = "delay-75";
+            if (index % 4 === 1) delayClass = "delay-100";
+            else if (index % 4 === 2) delayClass = "delay-150";
+            else if (index % 4 === 3) delayClass = "delay-200";
 
-          return (
-            <div 
-              class={`tool-card ${tool.cardClass} flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up ${delayClass}`} 
-              data-category={tool.category} 
-              data-title={tool.searchKeywords}
-            >
-              <div class="flex flex-col gap-3">
-                <span class={tool.badgeClass} style="align-self: start;">{tool.badgeText}</span>
-                <h3 class="font-display font-medium text-2xl text-primary tracking-tight">{tool.name}</h3>
-                <p class={`text-sm leading-relaxed ${tool.cardClass === 'card-feature-yellow' ? 'text-yellow-dark/90' : tool.cardClass === 'card-feature-teal' ? 'text-moss-dark/90' : tool.cardClass === 'card-feature-coral' ? 'text-coral-dark/90' : 'text-slate font-sans font-normal'}`}>
-                  {tool.desc}
-                </p>
+            return (
+              <div
+                class={`tool-card ${tool.cardClass} flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up ${delayClass}`}
+                data-category={tool.category}
+                data-title={tool.searchKeywords}
+              >
+                <div class="flex flex-col gap-3">
+                  <span class={tool.badgeClass} style="align-self: start;">
+                    {tool.badgeText}
+                  </span>
+                  <h3 class="font-display font-medium text-2xl text-primary tracking-tight">
+                    {tool.name}
+                  </h3>
+                  <p
+                    class={`text-sm leading-relaxed ${tool.cardClass === "card-feature-yellow" ? "text-yellow-dark/90" : tool.cardClass === "card-feature-teal" ? "text-moss-dark/90" : tool.cardClass === "card-feature-coral" ? "text-coral-dark/90" : "text-slate font-sans font-normal"}`}
+                  >
+                    {tool.desc}
+                  </p>
+                </div>
+                <a
+                  href={tool.path}
+                  class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform"
+                >
+                  {tool.actionText} &rarr;
+                </a>
               </div>
-              <a href={tool.path} class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-                {tool.actionText} &rarr;
-              </a>
-            </div>
-          );
-        })}
+            );
+          })
+        }
 
         <!-- Request a Tool Grid Card -->
-        <div class="card-base border-dashed border-2 border-hairline-strong flex flex-col justify-between gap-4 p-6 hover:shadow-mockup transition-all group animate-fade-in-up delay-300 select-text" id="request-grid-card">
+        <div
+          class="card-base border-dashed border-2 border-hairline-strong flex flex-col justify-between gap-4 p-6 hover:shadow-mockup transition-all group animate-fade-in-up delay-300 select-text"
+          id="request-grid-card"
+        >
           <div class="flex flex-col gap-3">
-            <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start">SUGGEST</span>
-            <h3 class="font-display font-medium text-xl text-primary tracking-tight">Request a Tool</h3>
+            <span
+              class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start"
+              >SUGGEST</span
+            >
+            <h3
+              class="font-display font-medium text-xl text-primary tracking-tight"
+            >
+              Request a Tool
+            </h3>
             <p class="text-xs text-slate leading-relaxed font-sans font-normal">
-              Need a custom calculator, audio generator, or sensor reader? Request it here! We build our utilities completely client-side.
+              Need a custom calculator, audio generator, or sensor reader?
+              Request it here! We build our utilities completely client-side.
             </p>
           </div>
-          
-          <form id="grid-request-form" class="flex flex-col gap-2 pointer-events-auto">
-            <input 
-              type="email" 
-              id="grid-request-email" 
-              required 
-              placeholder="Enter email address" 
-              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+
+          <form
+            id="grid-request-form"
+            class="flex flex-col gap-2 pointer-events-auto"
+          >
+            <input
+              type="email"
+              id="grid-request-email"
+              required
+              placeholder="Enter email address"
+              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue"
             />
-            <input 
-              type="text" 
-              id="grid-request-desc" 
-              required 
-              placeholder="What tool do you want next?" 
-              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+            <input
+              type="text"
+              id="grid-request-desc"
+              required
+              placeholder="What tool do you want next?"
+              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue"
             />
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               class="button-primary w-full !py-2 !text-xs hover:button-primary-active mt-1"
             >
               Submit Idea
             </button>
           </form>
 
-          <div id="grid-request-success" class="hidden flex-col items-center justify-center text-center py-4 gap-2">
-            <span class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm">✓</span>
-            <span class="text-xs font-semibold text-primary">Idea Submitted!</span>
-            <span class="text-[10px] text-slate font-medium">Thanks! We've saved your request.</span>
+          <div
+            id="grid-request-success"
+            class="hidden flex-col items-center justify-center text-center py-4 gap-2"
+          >
+            <span
+              class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm"
+              >✓</span
+            >
+            <span class="text-xs font-semibold text-primary"
+              >Idea Submitted!</span
+            >
+            <span class="text-[10px] text-slate font-medium"
+              >Thanks! We've saved your request.</span
+            >
           </div>
         </div>
       </div>
-      
+
       <!-- Empty state when no search matches -->
-      <div id="empty-state" class="hidden text-center py-16 border border-dashed border-hairline rounded-xl mt-6">
-        <p class="text-slate font-medium">No tools found matching your criteria.</p>
-        <button id="clear-search-btn" class="button-ghost text-brand-blue text-sm mt-2 font-medium">Clear search queries</button>
+      <div
+        id="empty-state"
+        class="hidden text-center py-16 border border-dashed border-hairline rounded-xl mt-6"
+      >
+        <p class="text-slate font-medium">
+          No tools found matching your criteria.
+        </p>
+        <button
+          id="clear-search-btn"
+          class="button-ghost text-brand-blue text-sm mt-2 font-medium"
+          >Clear search queries</button
+        >
       </div>
     </div>
   </section>
@@ -1020,22 +1316,41 @@ const tools = [
   <section class="bg-canvas py-16 px-4 border-t border-hairline relative z-10">
     <div class="max-w-[1280px] mx-auto">
       <div class="text-center mb-12 flex flex-col gap-2">
-        <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">User Reviews</span>
-        <h2 class="font-display font-medium text-3xl text-primary tracking-tight">What Creators Say About BoardTools</h2>
+        <span
+          class="text-xs font-semibold text-brand-blue uppercase tracking-wider"
+          >User Reviews</span
+        >
+        <h2
+          class="font-display font-medium text-3xl text-primary tracking-tight"
+        >
+          What Creators Say About BoardTools
+        </h2>
         <p class="text-sm text-slate max-w-md mx-auto">
-          Read testimonials from developers and designers who build interfaces using our secure client-side sandbox.
+          Read testimonials from developers and designers who build interfaces
+          using our secure client-side sandbox.
         </p>
       </div>
 
       <!-- Reviews Feed Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="homepage-reviews-grid">
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6"
+        id="homepage-reviews-grid"
+      >
         <!-- Static review 1 -->
-        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-surface-yellow border border-yellow-light text-yellow-dark shadow-subtle">
+        <div
+          class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-surface-yellow border border-yellow-light text-yellow-dark shadow-subtle"
+        >
           <p class="text-xs leading-relaxed opacity-95 italic">
-            "Absolutely loving the interactive whiteboard widget on the homepage! I was able to sketch out a wireframe flow while simultaneously using the UUID and Base64 cards."
+            "Absolutely loving the interactive whiteboard widget on the
+            homepage! I was able to sketch out a wireframe flow while
+            simultaneously using the UUID and Base64 cards."
           </p>
           <div class="flex items-center gap-3 mt-2">
-            <div class="w-8 h-8 rounded-full bg-yellow-light border border-yellow-dark/20 flex items-center justify-center font-bold text-xs select-none">DV</div>
+            <div
+              class="w-8 h-8 rounded-full bg-yellow-light border border-yellow-dark/20 flex items-center justify-center font-bold text-xs select-none"
+            >
+              DV
+            </div>
             <div class="flex flex-col">
               <span class="text-xs font-bold text-primary">Darnell Vance</span>
               <span class="text-[9px] opacity-75">Senior Product Designer</span>
@@ -1044,12 +1359,20 @@ const tools = [
         </div>
 
         <!-- Static review 2 -->
-        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-teal-light border border-hairline text-moss-dark shadow-subtle">
+        <div
+          class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-teal-light border border-hairline text-moss-dark shadow-subtle"
+        >
           <p class="text-xs leading-relaxed opacity-95 italic">
-            "The fact that this tool runs 100% locally is a lifesaver. Our company has extremely strict policies about pasting credentials or data into third-party sites."
+            "The fact that this tool runs 100% locally is a lifesaver. Our
+            company has extremely strict policies about pasting credentials or
+            data into third-party sites."
           </p>
           <div class="flex items-center gap-3 mt-2">
-            <div class="w-8 h-8 rounded-full bg-teal-light border border-moss-dark/20 flex items-center justify-center font-bold text-xs select-none">AR</div>
+            <div
+              class="w-8 h-8 rounded-full bg-teal-light border border-moss-dark/20 flex items-center justify-center font-bold text-xs select-none"
+            >
+              AR
+            </div>
             <div class="flex flex-col">
               <span class="text-xs font-bold text-primary">Aisha Rahman</span>
               <span class="text-[9px] opacity-75">Full Stack Developer</span>
@@ -1058,12 +1381,20 @@ const tools = [
         </div>
 
         <!-- Static review 3 -->
-        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-coral-light border border-hairline text-coral-dark shadow-subtle">
+        <div
+          class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-coral-light border border-hairline text-coral-dark shadow-subtle"
+        >
           <p class="text-xs leading-relaxed opacity-95 italic">
-            "Clean aesthetic, very Miro-esque. The Contrast Checker works flawlessly for auditing AA/AAA scores. I'd love to see a JWT decoder added in a future update!"
+            "Clean aesthetic, very Miro-esque. The Contrast Checker works
+            flawlessly for auditing AA/AAA scores. I'd love to see a JWT decoder
+            added in a future update!"
           </p>
           <div class="flex items-center gap-3 mt-2">
-            <div class="w-8 h-8 rounded-full bg-coral-light border border-coral-dark/20 flex items-center justify-center font-bold text-xs select-none">MC</div>
+            <div
+              class="w-8 h-8 rounded-full bg-coral-light border border-coral-dark/20 flex items-center justify-center font-bold text-xs select-none"
+            >
+              MC
+            </div>
             <div class="flex flex-col">
               <span class="text-xs font-bold text-primary">Marcus Cheng</span>
               <span class="text-[9px] opacity-75">UI Engineer</span>
@@ -1074,7 +1405,10 @@ const tools = [
 
       <!-- Write a Review CTA -->
       <div class="flex justify-center mt-10">
-        <a href="/review" class="button-primary text-sm hover:button-primary-active flex items-center gap-2">
+        <a
+          href="/review"
+          class="button-primary text-sm hover:button-primary-active flex items-center gap-2"
+        >
           <span>★</span> Review Our Website <span>★</span>
         </a>
       </div>
@@ -1085,41 +1419,73 @@ const tools = [
   <section class="bg-surface py-16 px-4">
     <div class="max-w-[800px] mx-auto">
       <div class="text-center mb-12">
-        <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">Frequently Asked Questions</span>
-        <h2 class="font-display font-medium text-3xl text-primary mt-1 tracking-tight">Security & Operation</h2>
+        <span
+          class="text-xs font-semibold text-brand-blue uppercase tracking-wider"
+          >Frequently Asked Questions</span
+        >
+        <h2
+          class="font-display font-medium text-3xl text-primary mt-1 tracking-tight"
+        >
+          Security & Operation
+        </h2>
       </div>
 
-      <div class="flex flex-col border border-hairline rounded-lg overflow-hidden bg-canvas">
+      <div
+        class="flex flex-col border border-hairline rounded-lg overflow-hidden bg-canvas"
+      >
         <!-- Q1 -->
         <details class="group/faq border-b border-hairline cursor-pointer" open>
-          <summary class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none">
+          <summary
+            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+          >
             Is my data safe? Do you store any inputs?
-            <span class="text-slate group-open/faq:rotate-180 transition-transform">&darr;</span>
+            <span
+              class="text-slate group-open/faq:rotate-180 transition-transform"
+              >&darr;</span
+            >
           </summary>
           <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            Yes, your data is 100% safe. BoardTools is built as a fully static website. All operations, conversions, computations, and image rendering happen entirely inside your local browser. No data, files, or strings are ever transmitted to any external servers.
+            Yes, your data is 100% safe. BoardTools is built as a fully static
+            website. All operations, conversions, computations, and image
+            rendering happen entirely inside your local browser. No data, files,
+            or strings are ever transmitted to any external servers.
           </div>
         </details>
-        
+
         <!-- Q2 -->
         <details class="group/faq border-b border-hairline cursor-pointer">
-          <summary class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none">
+          <summary
+            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+          >
             How does the canvas whiteboard save its state?
-            <span class="text-slate group-open/faq:rotate-180 transition-transform">&darr;</span>
+            <span
+              class="text-slate group-open/faq:rotate-180 transition-transform"
+              >&darr;</span
+            >
           </summary>
           <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            The whiteboard saves its sketches and sticky notes content directly to your local browser storage (`localStorage`). If you refresh or close the tab, your draft will be preserved. You can also click the "Export PNG" button to download a static snapshot to your computer.
+            The whiteboard saves its sketches and sticky notes content directly
+            to your local browser storage (`localStorage`). If you refresh or
+            close the tab, your draft will be preserved. You can also click the
+            "Export PNG" button to download a static snapshot to your computer.
           </div>
         </details>
 
         <!-- Q3 -->
         <details class="group/faq cursor-pointer">
-          <summary class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none">
+          <summary
+            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+          >
             Are these tools completely free to use?
-            <span class="text-slate group-open/faq:rotate-180 transition-transform">&darr;</span>
+            <span
+              class="text-slate group-open/faq:rotate-180 transition-transform"
+              >&darr;</span
+            >
           </summary>
           <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            Yes, BoardTools is completely free, open-source, and does not require registration or account login. Our goal is to provide a smooth, aesthetic, and helpful toolkit for creators.
+            Yes, BoardTools is completely free, open-source, and does not
+            require registration or account login. Our goal is to provide a
+            smooth, aesthetic, and helpful toolkit for creators.
           </div>
         </details>
       </div>
@@ -1127,33 +1493,72 @@ const tools = [
   </section>
 
   <!-- Feature Highlights Bar -->
-  <section class="bg-surface/50 border-t border-b border-hairline py-10 px-4 relative select-none z-10">
-    <div class="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up delay-300">
-      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-teal/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
-        <div class="w-10 h-10 rounded-full bg-teal-light border border-hairline text-moss-dark flex items-center justify-center font-bold text-sm select-none">🔒</div>
+  <section
+    class="bg-surface/50 border-t border-b border-hairline py-10 px-4 relative select-none z-10"
+  >
+    <div
+      class="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up delay-300"
+    >
+      <div
+        class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-teal/30 hover:bg-canvas/80 transition-all duration-300 font-sans"
+      >
+        <div
+          class="w-10 h-10 rounded-full bg-teal-light border border-hairline text-moss-dark flex items-center justify-center font-bold text-sm select-none"
+        >
+          🔒
+        </div>
         <div class="flex flex-col">
-          <span class="text-xs font-semibold text-primary">100% Private Sandbox</span>
+          <span class="text-xs font-semibold text-primary"
+            >100% Private Sandbox</span
+          >
           <span class="text-[10px] text-stone">All tools run client-side</span>
         </div>
       </div>
-      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-yellow/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
-        <div class="w-10 h-10 rounded-full bg-surface-yellow border border-yellow-light text-yellow-dark flex items-center justify-center font-bold text-sm select-none">🎨</div>
+      <div
+        class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-yellow/30 hover:bg-canvas/80 transition-all duration-300 font-sans"
+      >
+        <div
+          class="w-10 h-10 rounded-full bg-surface-yellow border border-yellow-light text-yellow-dark flex items-center justify-center font-bold text-sm select-none"
+        >
+          🎨
+        </div>
         <div class="flex flex-col">
-          <span class="text-xs font-semibold text-primary">Interactive Canvas</span>
-          <span class="text-[10px] text-stone">Draw & place sticky notes live</span>
+          <span class="text-xs font-semibold text-primary"
+            >Interactive Canvas</span
+          >
+          <span class="text-[10px] text-stone"
+            >Draw & place sticky notes live</span
+          >
         </div>
       </div>
-      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-blue/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
-        <div class="w-10 h-10 rounded-full bg-surface-pricing-featured border border-hairline text-brand-blue flex items-center justify-center font-bold text-sm select-none">💾</div>
+      <div
+        class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-blue/30 hover:bg-canvas/80 transition-all duration-300 font-sans"
+      >
+        <div
+          class="w-10 h-10 rounded-full bg-surface-pricing-featured border border-hairline text-brand-blue flex items-center justify-center font-bold text-sm select-none"
+        >
+          💾
+        </div>
         <div class="flex flex-col">
-          <span class="text-xs font-semibold text-primary">Local JSON Projects</span>
-          <span class="text-[10px] text-stone">Save/load workspaces to disk</span>
+          <span class="text-xs font-semibold text-primary"
+            >Local JSON Projects</span
+          >
+          <span class="text-[10px] text-stone"
+            >Save/load workspaces to disk</span
+          >
         </div>
       </div>
-      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-coral/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
-        <div class="w-10 h-10 rounded-full bg-coral-light border border-hairline text-coral-dark flex items-center justify-center font-bold text-sm select-none">⚡</div>
+      <div
+        class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-coral/30 hover:bg-canvas/80 transition-all duration-300 font-sans"
+      >
+        <div
+          class="w-10 h-10 rounded-full bg-coral-light border border-hairline text-coral-dark flex items-center justify-center font-bold text-sm select-none"
+        >
+          ⚡
+        </div>
         <div class="flex flex-col">
-          <span class="text-xs font-semibold text-primary">Zero Server Lag</span>
+          <span class="text-xs font-semibold text-primary">Zero Server Lag</span
+          >
           <span class="text-[10px] text-stone">Instant local executions</span>
         </div>
       </div>
@@ -1162,15 +1567,26 @@ const tools = [
 
   <!-- CTA Banner Dark -->
   <section class="bg-canvas py-16 px-4">
-    <div class="max-w-[1280px] mx-auto bg-primary text-canvas rounded-3xl p-12 text-center flex flex-col items-center gap-6 shadow-mockup">
-      <span class="text-brand-yellow font-display text-sm font-semibold tracking-wider uppercase">Visual Workflow Suite</span>
-      <h2 class="font-display font-medium text-3xl md:text-4xl text-canvas max-w-xl tracking-tight leading-tight">
+    <div
+      class="max-w-[1280px] mx-auto bg-primary text-canvas rounded-3xl p-12 text-center flex flex-col items-center gap-6 shadow-mockup"
+    >
+      <span
+        class="text-brand-yellow font-display text-sm font-semibold tracking-wider uppercase"
+        >Visual Workflow Suite</span
+      >
+      <h2
+        class="font-display font-medium text-3xl md:text-4xl text-canvas max-w-xl tracking-tight leading-tight"
+      >
         Build better web interfaces visually. Launch BoardTools.
       </h2>
       <p class="text-xs md:text-sm text-on-dark-muted max-w-md">
-        Instant loading, zero tracker cookies, offline capability, completely local sandbox.
+        Instant loading, zero tracker cookies, offline capability, completely
+        local sandbox.
       </p>
-      <a href="/tools/whiteboard" class="button-on-dark px-8 py-3 !rounded-full mt-2">
+      <a
+        href="/tools/whiteboard"
+        class="button-on-dark px-8 py-3 !rounded-full mt-2"
+      >
         Launch Sandbox Whiteboard
       </a>
     </div>
@@ -1181,32 +1597,40 @@ const tools = [
   // ============================================
   // GRID REQUEST A TOOL FORM LOGIC
   // ============================================
-  const gridForm = document.getElementById('grid-request-form') as HTMLFormElement | null;
-  const gridSuccess = document.getElementById('grid-request-success');
+  const gridForm = document.getElementById(
+    "grid-request-form",
+  ) as HTMLFormElement | null;
+  const gridSuccess = document.getElementById("grid-request-success");
 
   if (gridForm && gridSuccess) {
-    gridForm.addEventListener('submit', (e) => {
+    gridForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const emailVal = (document.getElementById('grid-request-email') as HTMLInputElement | null)?.value;
-      const toolVal = (document.getElementById('grid-request-desc') as HTMLInputElement | null)?.value;
+      const emailVal = (
+        document.getElementById("grid-request-email") as HTMLInputElement | null
+      )?.value;
+      const toolVal = (
+        document.getElementById("grid-request-desc") as HTMLInputElement | null
+      )?.value;
 
       if (emailVal && toolVal) {
         const submission = {
           email: emailVal,
           tool: toolVal,
           timestamp: Date.now(),
-          source: 'grid'
+          source: "grid",
         };
 
         try {
-          const existing = JSON.parse(localStorage.getItem('requested_tools') || '[]');
+          const existing = JSON.parse(
+            localStorage.getItem("requested_tools") || "[]",
+          );
           existing.push(submission);
-          localStorage.setItem('requested_tools', JSON.stringify(existing));
-        } catch(err) {}
+          localStorage.setItem("requested_tools", JSON.stringify(existing));
+        } catch (err) {}
 
-        gridForm.classList.add('hidden');
-        gridSuccess.classList.remove('hidden');
-        gridSuccess.classList.add('flex');
+        gridForm.classList.add("hidden");
+        gridSuccess.classList.remove("hidden");
+        gridSuccess.classList.add("flex");
       }
     });
   }
@@ -1214,27 +1638,35 @@ const tools = [
   // ============================================
   // HOMEPAGE DYNAMIC REVIEWS FEED LOGIC
   // ============================================
-  const homepageReviewsGrid = document.getElementById('homepage-reviews-grid');
+  const homepageReviewsGrid = document.getElementById("homepage-reviews-grid");
   if (homepageReviewsGrid) {
     try {
-      const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+      const localReviews = JSON.parse(
+        localStorage.getItem("user_reviews") || "[]",
+      );
       if (localReviews.length > 0) {
         const pastelClasses = [
           "bg-surface-yellow border border-yellow-light text-yellow-dark",
           "bg-teal-light border border-hairline text-moss-dark",
           "bg-coral-light border border-hairline text-coral-dark",
-          "bg-rose-light border border-hairline text-primary"
+          "bg-rose-light border border-hairline text-primary",
         ];
 
         localReviews.slice(0, 3).forEach((item: any, index: number) => {
           const colorClass = pastelClasses[index % pastelClasses.length];
-          const starsHTML = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
-          
-          const card = document.createElement('div');
+          const starsHTML =
+            "★".repeat(item.rating) + "☆".repeat(5 - item.rating);
+
+          const card = document.createElement("div");
           card.className = `flex flex-col justify-between gap-4 p-6 rounded-2xl ${colorClass} shadow-subtle animate-fade-in-up`;
-          
-          const initials = (item.name || 'U').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
-          
+
+          const initials = (item.name || "U")
+            .split(" ")
+            .map((n: string) => n[0])
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+
           card.innerHTML = `
             <div class="flex flex-col gap-3">
               <div class="flex justify-between items-start">
@@ -1251,14 +1683,17 @@ const tools = [
               </div>
               <div class="flex flex-col">
                 <span class="text-xs font-bold text-primary">${item.name}</span>
-                <span class="text-[9px] opacity-75">${item.title || 'User'}</span>
+                <span class="text-[9px] opacity-75">${item.title || "User"}</span>
               </div>
             </div>
           `;
-          homepageReviewsGrid.insertBefore(card, homepageReviewsGrid.firstChild);
+          homepageReviewsGrid.insertBefore(
+            card,
+            homepageReviewsGrid.firstChild,
+          );
         });
       }
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }
@@ -1266,95 +1701,111 @@ const tools = [
   // ============================================
   // TOOL FILTER & SEARCH LOGIC + HERO DROPDOWN
   // ============================================
-  const searchInput = document.getElementById('tool-search') as HTMLInputElement | null;
-  const filterTabs = document.querySelectorAll('#filter-tabs-container button');
-  const toolCards = document.querySelectorAll('.tool-card');
-  const emptyState = document.getElementById('empty-state');
-  const clearBtn = document.getElementById('clear-search-btn');
-  const heroDropdown = document.getElementById('hero-search-dropdown');
-  const heroDropdownResults = document.getElementById('hero-dropdown-results');
-  const heroDropdownEmpty = document.getElementById('hero-dropdown-empty');
-  const heroRequestBtn = document.getElementById('hero-request-tool-btn');
-  const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+  const searchInput = document.getElementById(
+    "tool-search",
+  ) as HTMLInputElement | null;
+  const filterTabs = document.querySelectorAll("#filter-tabs-container button");
+  const toolCards = document.querySelectorAll(".tool-card");
+  const emptyState = document.getElementById("empty-state");
+  const clearBtn = document.getElementById("clear-search-btn");
+  const heroDropdown = document.getElementById("hero-search-dropdown");
+  const heroDropdownResults = document.getElementById("hero-dropdown-results");
+  const heroDropdownEmpty = document.getElementById("hero-dropdown-empty");
+  const heroRequestBtn = document.getElementById("hero-request-tool-btn");
+  const heroSearchWrapper = document.getElementById("hero-search-wrapper");
 
   // Get tools index from SearchOverlay (shared data)
-  const heroSearchTools: Array<{id: string, name: string, desc: string, category: string, path: string, icon: string, keywords: string}> = 
-    (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
+  const heroSearchTools: Array<{
+    id: string;
+    name: string;
+    desc: string;
+    category: string;
+    path: string;
+    icon: string;
+    keywords: string;
+  }> = (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
 
-  let activeCategory = 'all';
-  let searchQuery = '';
+  let activeCategory = "all";
+  let searchQuery = "";
   let heroActiveIdx = -1;
   let heroVisibleItems: HTMLElement[] = [];
 
   function filterTools() {
     let visibleCount = 0;
-    
-    toolCards.forEach(card => {
+
+    toolCards.forEach((card) => {
       const element = card as HTMLElement;
-      const category = element.dataset.category || '';
-      const titleText = element.dataset.title || '';
-      
-      const categoryMatch = activeCategory === 'all' || category === activeCategory;
-      const searchMatch = searchQuery === '' || titleText.toLowerCase().includes(searchQuery.toLowerCase());
-      
+      const category = element.dataset.category || "";
+      const titleText = element.dataset.title || "";
+
+      const categoryMatch =
+        activeCategory === "all" || category === activeCategory;
+      const searchMatch =
+        searchQuery === "" ||
+        titleText.toLowerCase().includes(searchQuery.toLowerCase());
+
       if (categoryMatch && searchMatch) {
-        element.style.display = 'flex';
+        element.style.display = "flex";
         visibleCount++;
       } else {
-        element.style.display = 'none';
+        element.style.display = "none";
       }
     });
 
     if (emptyState) {
       if (visibleCount === 0) {
-        emptyState.classList.remove('hidden');
+        emptyState.classList.remove("hidden");
       } else {
-        emptyState.classList.add('hidden');
+        emptyState.classList.add("hidden");
       }
     }
   }
 
   function heroHighlightText(text: string, query: string): string {
     if (!query) return text;
-    const safeQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return text.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark class="bg-brand-yellow/40 text-primary rounded-sm px-0.5">$1</mark>');
+    const safeQ = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return text.replace(
+      new RegExp(`(${safeQ})`, "gi"),
+      '<mark class="bg-brand-yellow/40 text-primary rounded-sm px-0.5">$1</mark>',
+    );
   }
 
   function showHeroDropdown(query: string) {
     if (!heroDropdown || !heroDropdownResults || !heroDropdownEmpty) return;
-    
+
     const q = query.toLowerCase().trim();
     if (!q) {
-      heroDropdown.classList.add('hidden');
+      heroDropdown.classList.add("hidden");
       heroActiveIdx = -1;
       heroVisibleItems = [];
       return;
     }
 
-    const matches = heroSearchTools.filter(t =>
-      t.name.toLowerCase().includes(q) ||
-      t.keywords.toLowerCase().includes(q) ||
-      t.desc.toLowerCase().includes(q) ||
-      t.category.toLowerCase().includes(q)
+    const matches = heroSearchTools.filter(
+      (t) =>
+        t.name.toLowerCase().includes(q) ||
+        t.keywords.toLowerCase().includes(q) ||
+        t.desc.toLowerCase().includes(q) ||
+        t.category.toLowerCase().includes(q),
     );
 
-    heroDropdown.classList.remove('hidden');
+    heroDropdown.classList.remove("hidden");
 
     if (matches.length > 0) {
-      heroDropdownEmpty.classList.add('hidden');
-      heroDropdownResults.classList.remove('hidden');
+      heroDropdownEmpty.classList.add("hidden");
+      heroDropdownResults.classList.remove("hidden");
 
       // Group by category
       const grouped: Record<string, typeof matches> = {};
-      matches.forEach(m => {
+      matches.forEach((m) => {
         if (!grouped[m.category]) grouped[m.category] = [];
         grouped[m.category].push(m);
       });
 
-      let html = '';
+      let html = "";
       for (const [cat, items] of Object.entries(grouped)) {
         html += `<div class="px-4 pt-3 pb-1"><span class="text-[10px] font-bold text-stone uppercase tracking-wider">${cat}</span></div>`;
-        items.forEach(item => {
+        items.forEach((item) => {
           html += `
             <a href="${item.path}" class="hero-dropdown-item flex items-center gap-3 px-4 py-2.5 hover:bg-surface transition-colors cursor-pointer group" data-path="${item.path}">
               <span class="w-7 h-7 rounded-lg bg-surface border border-hairline flex items-center justify-center text-xs shrink-0 group-hover:border-brand-blue/30 transition-colors">${item.icon}</span>
@@ -1370,7 +1821,7 @@ const tools = [
       }
 
       html += `<div class="px-4 py-2.5 border-t border-hairline flex items-center justify-between">
-        <span class="text-[10px] text-stone">${matches.length} tool${matches.length !== 1 ? 's' : ''} found</span>
+        <span class="text-[10px] text-stone">${matches.length} tool${matches.length !== 1 ? "s" : ""} found</span>
         <span class="text-[9px] text-stone flex items-center gap-1">
           <kbd class="bg-surface border border-hairline rounded px-1 py-0.5 font-mono text-[8px]">↑↓</kbd> navigate
           <kbd class="bg-surface border border-hairline rounded px-1 py-0.5 font-mono text-[8px] ml-1">↵</kbd> select
@@ -1378,12 +1829,14 @@ const tools = [
       </div>`;
 
       heroDropdownResults.innerHTML = html;
-      heroVisibleItems = Array.from(heroDropdownResults.querySelectorAll('.hero-dropdown-item'));
+      heroVisibleItems = Array.from(
+        heroDropdownResults.querySelectorAll(".hero-dropdown-item"),
+      );
       heroActiveIdx = -1;
     } else {
-      heroDropdownResults.classList.add('hidden');
-      heroDropdownResults.innerHTML = '';
-      heroDropdownEmpty.classList.remove('hidden');
+      heroDropdownResults.classList.add("hidden");
+      heroDropdownResults.innerHTML = "";
+      heroDropdownEmpty.classList.remove("hidden");
       heroVisibleItems = [];
       heroActiveIdx = -1;
     }
@@ -1392,148 +1845,163 @@ const tools = [
   function updateHeroHighlight() {
     heroVisibleItems.forEach((el, i) => {
       if (i === heroActiveIdx) {
-        el.classList.add('bg-surface');
-        el.scrollIntoView({ block: 'nearest' });
+        el.classList.add("bg-surface");
+        el.scrollIntoView({ block: "nearest" });
       } else {
-        el.classList.remove('bg-surface');
+        el.classList.remove("bg-surface");
       }
     });
   }
 
   // Handle Search Input Change — filters grid + shows dropdown
   if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener("input", (e) => {
       searchQuery = (e.target as HTMLInputElement).value;
       filterTools();
       showHeroDropdown(searchQuery);
     });
 
     // Handle focus to show dropdown if query exists
-    searchInput.addEventListener('focus', () => {
+    searchInput.addEventListener("focus", () => {
       if (searchQuery.trim()) {
         showHeroDropdown(searchQuery);
       }
     });
 
     // Keyboard navigation in hero dropdown
-    searchInput.addEventListener('keydown', (e) => {
-      if (heroDropdown?.classList.contains('hidden')) return;
-      
-      if (e.key === 'ArrowDown') {
+    searchInput.addEventListener("keydown", (e) => {
+      if (heroDropdown?.classList.contains("hidden")) return;
+
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         if (heroVisibleItems.length > 0) {
-          heroActiveIdx = Math.min(heroActiveIdx + 1, heroVisibleItems.length - 1);
+          heroActiveIdx = Math.min(
+            heroActiveIdx + 1,
+            heroVisibleItems.length - 1,
+          );
           updateHeroHighlight();
         }
-      } else if (e.key === 'ArrowUp') {
+      } else if (e.key === "ArrowUp") {
         e.preventDefault();
         if (heroVisibleItems.length > 0) {
           heroActiveIdx = Math.max(heroActiveIdx - 1, 0);
           updateHeroHighlight();
         }
-      } else if (e.key === 'Enter') {
+      } else if (e.key === "Enter") {
         e.preventDefault();
         if (heroActiveIdx >= 0 && heroVisibleItems[heroActiveIdx]) {
-          const href = heroVisibleItems[heroActiveIdx].getAttribute('href') || heroVisibleItems[heroActiveIdx].dataset.path;
+          const href =
+            heroVisibleItems[heroActiveIdx].getAttribute("href") ||
+            heroVisibleItems[heroActiveIdx].dataset.path;
           if (href) window.location.href = href;
         }
-      } else if (e.key === 'Escape') {
-        heroDropdown?.classList.add('hidden');
+      } else if (e.key === "Escape") {
+        heroDropdown?.classList.add("hidden");
         heroActiveIdx = -1;
       }
     });
   }
 
   // Close hero dropdown on outside click
-  document.addEventListener('click', (e) => {
-    if (heroSearchWrapper && heroDropdown && !heroSearchWrapper.contains(e.target as Node)) {
-      heroDropdown.classList.add('hidden');
+  document.addEventListener("click", (e) => {
+    if (
+      heroSearchWrapper &&
+      heroDropdown &&
+      !heroSearchWrapper.contains(e.target as Node)
+    ) {
+      heroDropdown.classList.add("hidden");
       heroActiveIdx = -1;
     }
   });
 
   // Hero "Request a Tool" button → triggers the floating RequestToolPopup
   if (heroRequestBtn) {
-    heroRequestBtn.addEventListener('click', () => {
-      heroDropdown?.classList.add('hidden');
-      const requestContainer = document.getElementById('floating-request-container');
-      const requestCollapsed = document.getElementById('request-collapsed-bubble');
-      const requestExpanded = document.getElementById('request-expanded-card');
+    heroRequestBtn.addEventListener("click", () => {
+      heroDropdown?.classList.add("hidden");
+      const requestContainer = document.getElementById(
+        "floating-request-container",
+      );
+      const requestCollapsed = document.getElementById(
+        "request-collapsed-bubble",
+      );
+      const requestExpanded = document.getElementById("request-expanded-card");
       if (requestContainer && requestCollapsed && requestExpanded) {
-        requestContainer.classList.remove('hidden');
-        requestContainer.classList.add('flex');
-        requestCollapsed.classList.add('hidden');
-        requestExpanded.classList.remove('hidden');
-        requestExpanded.classList.add('flex');
+        requestContainer.classList.remove("hidden");
+        requestContainer.classList.add("flex");
+        requestCollapsed.classList.add("hidden");
+        requestExpanded.classList.remove("hidden");
+        requestExpanded.classList.add("flex");
       }
     });
   }
 
   // Handle Category Pill clicks
-  filterTabs.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  filterTabs.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
       // Remove active from all tabs
-      filterTabs.forEach(t => t.classList.remove('pill-tab-active'));
+      filterTabs.forEach((t) => t.classList.remove("pill-tab-active"));
       // Add active to current click
       const current = e.currentTarget as HTMLButtonElement;
-      current.classList.add('pill-tab-active');
-      activeCategory = current.dataset.category || 'all';
+      current.classList.add("pill-tab-active");
+      activeCategory = current.dataset.category || "all";
       filterTools();
-      
-      // Smoothly scroll to the directory section
-      const targetSection = document.getElementById('tools-directory-section');
+
+      // Smoothly scroll to the Select a Workspace section
+      const targetSection = document.getElementById("select-workspace-section");
       if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+        targetSection.scrollIntoView({ behavior: "smooth" });
       }
     });
   });
 
   // Handle Clear button
   if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
+    clearBtn.addEventListener("click", () => {
       if (searchInput) {
-        searchInput.value = '';
+        searchInput.value = "";
       }
-      searchQuery = '';
-      activeCategory = 'all';
-      filterTabs.forEach(t => {
-        if ((t as HTMLElement).dataset.category === 'all') {
-          t.classList.add('pill-tab-active');
+      searchQuery = "";
+      activeCategory = "all";
+      filterTabs.forEach((t) => {
+        if ((t as HTMLElement).dataset.category === "all") {
+          t.classList.add("pill-tab-active");
         } else {
-          t.classList.remove('pill-tab-active');
+          t.classList.remove("pill-tab-active");
         }
       });
       filterTools();
-      heroDropdown?.classList.add('hidden');
+      heroDropdown?.classList.add("hidden");
     });
   }
 
   // Make whole card clickable to navigate to link inside
-  toolCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      const link = card.querySelector('a');
+  toolCards.forEach((card) => {
+    card.addEventListener("click", (e) => {
+      const link = card.querySelector("a");
       if (link && e.target !== link) {
-        window.location.href = link.getAttribute('href') || '/';
+        window.location.href = link.getAttribute("href") || "/";
       }
     });
   });
 
   // Handle Category query parameter on load
   const urlParams = new URLSearchParams(window.location.search);
-  const categoryParam = urlParams.get('category');
+  const categoryParam = urlParams.get("category");
   if (categoryParam) {
-    const targetTab = Array.from(filterTabs).find(t => (t as HTMLElement).dataset.category === categoryParam);
+    const targetTab = Array.from(filterTabs).find(
+      (t) => (t as HTMLElement).dataset.category === categoryParam,
+    );
     if (targetTab) {
-      filterTabs.forEach(t => t.classList.remove('pill-tab-active'));
-      targetTab.classList.add('pill-tab-active');
+      filterTabs.forEach((t) => t.classList.remove("pill-tab-active"));
+      targetTab.classList.add("pill-tab-active");
       activeCategory = categoryParam;
       filterTools();
-      
+
       // Smoothly scroll to the directory section on page load with a slight delay
       setTimeout(() => {
-        const targetSection = document.getElementById('tools-directory-section');
+        const targetSection = document.getElementById("select-workspace-section");
         if (targetSection) {
-          targetSection.scrollIntoView({ behavior: 'smooth' });
+          targetSection.scrollIntoView({ behavior: "smooth" });
         }
       }, 150);
     }
@@ -1542,61 +2010,89 @@ const tools = [
   // ============================================
   // IMMERSIVE HERO WHITEBOARD SANDBOX
   // ============================================
-  const homeCanvas = document.getElementById('home-board-canvas') as HTMLElement | null;
-  const notesContainer = document.getElementById('home-notes-container');
-  const heroPenBtn = document.getElementById('hero-tool-pen');
-  const heroStickyBtn = document.getElementById('hero-tool-sticky');
-  const heroSketchCanvas = document.getElementById('home-sketch-canvas') as HTMLCanvasElement | null;
-  const heroCtx = heroSketchCanvas?.getContext('2d');
-  
-  let activeHeroTool: 'pen' | 'sticky' = 'sticky';
+  const homeCanvas = document.getElementById(
+    "home-board-canvas",
+  ) as HTMLElement | null;
+  const notesContainer = document.getElementById("home-notes-container");
+  const heroPenBtn = document.getElementById("hero-tool-pen");
+  const heroStickyBtn = document.getElementById("hero-tool-sticky");
+  const heroSketchCanvas = document.getElementById(
+    "home-sketch-canvas",
+  ) as HTMLCanvasElement | null;
+  const heroCtx = heroSketchCanvas?.getContext("2d");
+
+  let activeHeroTool: "pen" | "sticky" = "sticky";
   let isDrawingHero = false;
   let lastHeroX = 0;
   let lastHeroY = 0;
-  let heroNotes: Array<{id: string, el: HTMLElement, type: string}> = [];
+  let heroNotes: Array<{ id: string; el: HTMLElement; type: string }> = [];
 
-  function setHeroTool(tool: 'pen' | 'sticky') {
+  function setHeroTool(tool: "pen" | "sticky") {
     activeHeroTool = tool;
-    if (tool === 'pen') {
-      heroPenBtn?.classList.add('bg-primary', 'text-canvas');
-      heroPenBtn?.classList.remove('bg-surface', 'text-slate');
-      heroStickyBtn?.classList.remove('bg-primary', 'text-canvas');
-      heroStickyBtn?.classList.add('bg-surface', 'text-slate');
+    if (tool === "pen") {
+      heroPenBtn?.classList.add("bg-primary", "text-canvas");
+      heroPenBtn?.classList.remove("bg-surface", "text-slate");
+      heroStickyBtn?.classList.remove("bg-primary", "text-canvas");
+      heroStickyBtn?.classList.add("bg-surface", "text-slate");
       if (heroSketchCanvas) {
-        heroSketchCanvas.style.pointerEvents = 'auto'; // allow drawing
-        heroSketchCanvas.style.cursor = 'crosshair';
+        heroSketchCanvas.style.pointerEvents = "auto"; // allow drawing
+        heroSketchCanvas.style.cursor = "crosshair";
       }
     } else {
-      heroStickyBtn?.classList.add('bg-primary', 'text-canvas');
-      heroStickyBtn?.classList.remove('bg-surface', 'text-slate');
-      heroPenBtn?.classList.remove('bg-primary', 'text-canvas');
-      heroPenBtn?.classList.add('bg-surface', 'text-slate');
+      heroStickyBtn?.classList.add("bg-primary", "text-canvas");
+      heroStickyBtn?.classList.remove("bg-surface", "text-slate");
+      heroPenBtn?.classList.remove("bg-primary", "text-canvas");
+      heroPenBtn?.classList.add("bg-surface", "text-slate");
       if (heroSketchCanvas) {
-        heroSketchCanvas.style.pointerEvents = 'none'; // click through to drag notes
-        heroSketchCanvas.style.cursor = 'default';
+        heroSketchCanvas.style.pointerEvents = "none"; // click through to drag notes
+        heroSketchCanvas.style.cursor = "default";
       }
     }
   }
 
   // Draw Line Connector SVG paths between note-1 -> note-2 -> note-3
   function updateLines() {
-    const canvasEl = document.getElementById('home-board-canvas');
-    const n1 = canvasEl?.querySelector('[data-id="note-1"]') as HTMLElement | null;
-    const n2 = canvasEl?.querySelector('[data-id="note-2"]') as HTMLElement | null;
-    const n3 = canvasEl?.querySelector('[data-id="note-3"]') as HTMLElement | null;
-    const path1 = document.getElementById('home-path-1');
-    const path2 = document.getElementById('home-path-2');
-    
+    const canvasEl = document.getElementById("home-board-canvas");
+    const n1 = canvasEl?.querySelector(
+      '[data-id="note-1"]',
+    ) as HTMLElement | null;
+    const n2 = canvasEl?.querySelector(
+      '[data-id="note-2"]',
+    ) as HTMLElement | null;
+    const n3 = canvasEl?.querySelector(
+      '[data-id="note-3"]',
+    ) as HTMLElement | null;
+    const path1 = document.getElementById("home-path-1");
+    const path2 = document.getElementById("home-path-2");
+
     if (canvasEl && n1 && n2 && path1) {
-      const r1 = { x: n1.offsetLeft + n1.offsetWidth / 2, y: n1.offsetTop + n1.offsetHeight / 2 };
-      const r2 = { x: n2.offsetLeft + n2.offsetWidth / 2, y: n2.offsetTop + n2.offsetHeight / 2 };
-      path1.setAttribute('d', `M ${r1.x} ${r1.y} Q ${(r1.x + r2.x)/2} ${(r1.y + r2.y)/2 - 30} ${r2.x} ${r2.y}`);
+      const r1 = {
+        x: n1.offsetLeft + n1.offsetWidth / 2,
+        y: n1.offsetTop + n1.offsetHeight / 2,
+      };
+      const r2 = {
+        x: n2.offsetLeft + n2.offsetWidth / 2,
+        y: n2.offsetTop + n2.offsetHeight / 2,
+      };
+      path1.setAttribute(
+        "d",
+        `M ${r1.x} ${r1.y} Q ${(r1.x + r2.x) / 2} ${(r1.y + r2.y) / 2 - 30} ${r2.x} ${r2.y}`,
+      );
     }
 
     if (canvasEl && n2 && n3 && path2) {
-      const r2 = { x: n2.offsetLeft + n2.offsetWidth / 2, y: n2.offsetTop + n2.offsetHeight / 2 };
-      const r3 = { x: n3.offsetLeft + n3.offsetWidth / 2, y: n3.offsetTop + n3.offsetHeight / 2 };
-      path2.setAttribute('d', `M ${r2.x} ${r2.y} Q ${(r2.x + r3.x)/2} ${(r2.y + r3.y)/2 + 30} ${r3.x} ${r3.y}`);
+      const r2 = {
+        x: n2.offsetLeft + n2.offsetWidth / 2,
+        y: n2.offsetTop + n2.offsetHeight / 2,
+      };
+      const r3 = {
+        x: n3.offsetLeft + n3.offsetWidth / 2,
+        y: n3.offsetTop + n3.offsetHeight / 2,
+      };
+      path2.setAttribute(
+        "d",
+        `M ${r2.x} ${r2.y} Q ${(r2.x + r3.x) / 2} ${(r2.y + r3.y) / 2 + 30} ${r3.x} ${r3.y}`,
+      );
     }
   }
 
@@ -1605,19 +2101,19 @@ const tools = [
     let startOffsetX = 0;
     let startOffsetY = 0;
 
-    el.addEventListener('mousedown', (e) => {
+    el.addEventListener("mousedown", (e) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') return;
+      if (target.tagName === "TEXTAREA" || target.tagName === "INPUT") return;
       isMoving = true;
       const rect = el.getBoundingClientRect();
       startOffsetX = e.clientX - rect.left;
       startOffsetY = e.clientY - rect.top;
-      el.style.zIndex = '30';
+      el.style.zIndex = "30";
     });
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener("mousemove", (e) => {
       if (!isMoving) return;
-      const canvasEl = document.getElementById('home-board-canvas');
+      const canvasEl = document.getElementById("home-board-canvas");
       if (canvasEl) {
         const rect = canvasEl.getBoundingClientRect();
         let x = e.clientX - rect.left - startOffsetX;
@@ -1632,27 +2128,27 @@ const tools = [
       }
     });
 
-    document.addEventListener('mouseup', () => {
+    document.addEventListener("mouseup", () => {
       if (isMoving) {
         isMoving = false;
-        el.style.zIndex = '';
+        el.style.zIndex = "";
       }
     });
 
     // Touch support for dragging
-    el.addEventListener('touchstart', (e) => {
+    el.addEventListener("touchstart", (e) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') return;
+      if (target.tagName === "TEXTAREA" || target.tagName === "INPUT") return;
       isMoving = true;
       const rect = el.getBoundingClientRect();
       startOffsetX = e.touches[0].clientX - rect.left;
       startOffsetY = e.touches[0].clientY - rect.top;
-      el.style.zIndex = '30';
+      el.style.zIndex = "30";
     });
 
-    document.addEventListener('touchmove', (e) => {
+    document.addEventListener("touchmove", (e) => {
       if (!isMoving) return;
-      const canvasEl = document.getElementById('home-board-canvas');
+      const canvasEl = document.getElementById("home-board-canvas");
       if (canvasEl) {
         const rect = canvasEl.getBoundingClientRect();
         let x = e.touches[0].clientX - rect.left - startOffsetX;
@@ -1667,42 +2163,50 @@ const tools = [
       }
     });
 
-    document.addEventListener('touchend', () => {
+    document.addEventListener("touchend", () => {
       if (isMoving) {
         isMoving = false;
-        el.style.zIndex = '';
+        el.style.zIndex = "";
       }
     });
   }
 
-  function spawnHeroNote(id: string, x: number, y: number, text: string, color: string, type = 'normal') {
+  function spawnHeroNote(
+    id: string,
+    x: number,
+    y: number,
+    text: string,
+    color: string,
+    type = "normal",
+  ) {
     if (!notesContainer) return;
 
-    const note = document.createElement('div');
+    const note = document.createElement("div");
     note.id = id;
     note.dataset.id = id;
     note.style.left = `${x}px`;
     note.style.top = `${y}px`;
     note.style.backgroundColor = color;
-    
-    let textColor = '#1c1c1e';
-    let subText = '#yellow';
-    if (color === '#0fbcb0') {
-      textColor = '#050038';
-      subText = '#teal';
-    } else if (color === '#ff9999') {
-      textColor = '#600000';
-      subText = '#coral';
-    } else if (color === '#ffd8f4') {
-      textColor = '#1c1c1e';
-      subText = '#rose';
+
+    let textColor = "#1c1c1e";
+    let subText = "#yellow";
+    if (color === "#0fbcb0") {
+      textColor = "#050038";
+      subText = "#teal";
+    } else if (color === "#ff9999") {
+      textColor = "#600000";
+      subText = "#coral";
+    } else if (color === "#ffd8f4") {
+      textColor = "#1c1c1e";
+      subText = "#rose";
     }
 
-    note.className = 'absolute w-24 h-24 shadow-card rounded-sm p-2 flex flex-col justify-between font-display text-[10px] cursor-grab active:cursor-grabbing select-none pointer-events-auto transition-shadow hover:shadow-mockup';
+    note.className =
+      "absolute w-24 h-24 shadow-card rounded-sm p-2 flex flex-col justify-between font-display text-[10px] cursor-grab active:cursor-grabbing select-none pointer-events-auto transition-shadow hover:shadow-mockup";
     note.style.transform = `rotate(${(Math.random() * 6 - 3).toFixed(1)}deg)`;
     note.style.color = textColor;
 
-    if (type === 'uuid') {
+    if (type === "uuid") {
       note.innerHTML = `
         <div class="flex flex-col gap-1 w-full h-[62px] pointer-events-auto">
           <span class="font-bold text-[8px] uppercase text-brand-blue tracking-wide select-none">UUID v4 Token</span>
@@ -1710,7 +2214,7 @@ const tools = [
         </div>
         <span class="text-[8px] opacity-70 self-end pointer-events-none">#uuid</span>
       `;
-    } else if (type === 'base64') {
+    } else if (type === "base64") {
       note.innerHTML = `
         <div class="flex flex-col gap-1 w-full h-[62px] pointer-events-auto">
           <input type="text" placeholder="Type..." class="w-full bg-canvas/60 border border-black/15 rounded px-1 text-[8px] font-sans outline-none h-4 text-primary base64-input-box" />
@@ -1720,14 +2224,20 @@ const tools = [
       `;
       // Attach encoder listener
       setTimeout(() => {
-        const inp = note.querySelector('.base64-input-box') as HTMLInputElement | null;
-        const out = note.querySelector('.base64-output-box') as HTMLTextAreaElement | null;
+        const inp = note.querySelector(
+          ".base64-input-box",
+        ) as HTMLInputElement | null;
+        const out = note.querySelector(
+          ".base64-output-box",
+        ) as HTMLTextAreaElement | null;
         if (inp && out) {
-          inp.addEventListener('input', () => {
+          inp.addEventListener("input", () => {
             try {
-              out.value = inp.value ? btoa(unescape(encodeURIComponent(inp.value))) : '';
-            } catch(e) {
-              out.value = 'Error...';
+              out.value = inp.value
+                ? btoa(unescape(encodeURIComponent(inp.value)))
+                : "";
+            } catch (e) {
+              out.value = "Error...";
             }
           });
         }
@@ -1746,26 +2256,51 @@ const tools = [
   }
 
   // Spawn initial starting sticky notes
-  spawnHeroNote('note-1', 40, 30, 'Define MVP & Workspaces', '#ffd02f', 'normal');
-  spawnHeroNote('note-2', 240, 90, 'Refine Brand Guidelines', '#0fbcb0', 'normal');
-  spawnHeroNote('note-3', 110, 160, 'Local SEO & Speed Audit', '#ffd8f4', 'normal');
+  spawnHeroNote(
+    "note-1",
+    40,
+    30,
+    "Define MVP & Workspaces",
+    "#ffd02f",
+    "normal",
+  );
+  spawnHeroNote(
+    "note-2",
+    240,
+    90,
+    "Refine Brand Guidelines",
+    "#0fbcb0",
+    "normal",
+  );
+  spawnHeroNote(
+    "note-3",
+    110,
+    160,
+    "Local SEO & Speed Audit",
+    "#ffd8f4",
+    "normal",
+  );
 
   // Sketch Drawing Listeners
   function resizeHeroCanvas() {
     if (heroSketchCanvas && heroSketchCanvas.parentElement) {
-      const temp = document.createElement('canvas');
+      const temp = document.createElement("canvas");
       temp.width = heroSketchCanvas.width;
       temp.height = heroSketchCanvas.height;
-      const tCtx = temp.getContext('2d');
+      const tCtx = temp.getContext("2d");
       if (tCtx) tCtx.drawImage(heroSketchCanvas, 0, 0);
 
       heroSketchCanvas.width = heroSketchCanvas.parentElement.clientWidth;
       heroSketchCanvas.height = heroSketchCanvas.parentElement.clientHeight;
 
       if (heroCtx) {
-        heroCtx.lineCap = 'round';
-        heroCtx.lineJoin = 'round';
-        heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+        heroCtx.lineCap = "round";
+        heroCtx.lineJoin = "round";
+        heroCtx.strokeStyle = document.documentElement.classList.contains(
+          "dark",
+        )
+          ? "#ffffff"
+          : "#1c1c1e";
         heroCtx.lineWidth = 4;
         heroCtx.drawImage(temp, 0, 0);
       }
@@ -1774,17 +2309,17 @@ const tools = [
 
   if (heroSketchCanvas && heroCtx) {
     resizeHeroCanvas();
-    window.addEventListener('resize', resizeHeroCanvas);
+    window.addEventListener("resize", resizeHeroCanvas);
 
-    heroSketchCanvas.addEventListener('mousedown', (e) => {
-      if (activeHeroTool !== 'pen') return;
+    heroSketchCanvas.addEventListener("mousedown", (e) => {
+      if (activeHeroTool !== "pen") return;
       isDrawingHero = true;
       const rect = heroSketchCanvas.getBoundingClientRect();
       lastHeroX = e.clientX - rect.left;
       lastHeroY = e.clientY - rect.top;
     });
 
-    heroSketchCanvas.addEventListener('mousemove', (e) => {
+    heroSketchCanvas.addEventListener("mousemove", (e) => {
       if (!isDrawingHero || !heroCtx) return;
       const rect = heroSketchCanvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -1793,26 +2328,32 @@ const tools = [
       heroCtx.beginPath();
       heroCtx.moveTo(lastHeroX, lastHeroY);
       heroCtx.lineTo(x, y);
-      heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+      heroCtx.strokeStyle = document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#1c1c1e";
       heroCtx.stroke();
-      
+
       lastHeroX = x;
       lastHeroY = y;
     });
 
-    heroSketchCanvas.addEventListener('mouseup', () => { isDrawingHero = false; });
-    heroSketchCanvas.addEventListener('mouseout', () => { isDrawingHero = false; });
+    heroSketchCanvas.addEventListener("mouseup", () => {
+      isDrawingHero = false;
+    });
+    heroSketchCanvas.addEventListener("mouseout", () => {
+      isDrawingHero = false;
+    });
 
     // Touch support for sketching
-    heroSketchCanvas.addEventListener('touchstart', (e) => {
-      if (activeHeroTool !== 'pen') return;
+    heroSketchCanvas.addEventListener("touchstart", (e) => {
+      if (activeHeroTool !== "pen") return;
       isDrawingHero = true;
       const rect = heroSketchCanvas.getBoundingClientRect();
       lastHeroX = e.touches[0].clientX - rect.left;
       lastHeroY = e.touches[0].clientY - rect.top;
     });
 
-    heroSketchCanvas.addEventListener('touchmove', (e) => {
+    heroSketchCanvas.addEventListener("touchmove", (e) => {
       if (!isDrawingHero || !heroCtx) return;
       const rect = heroSketchCanvas.getBoundingClientRect();
       const x = e.touches[0].clientX - rect.left;
@@ -1821,70 +2362,99 @@ const tools = [
       heroCtx.beginPath();
       heroCtx.moveTo(lastHeroX, lastHeroY);
       heroCtx.lineTo(x, y);
-      heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+      heroCtx.strokeStyle = document.documentElement.classList.contains("dark")
+        ? "#ffffff"
+        : "#1c1c1e";
       heroCtx.stroke();
-      
+
       lastHeroX = x;
       lastHeroY = y;
     });
 
-    heroSketchCanvas.addEventListener('touchend', () => { isDrawingHero = false; });
+    heroSketchCanvas.addEventListener("touchend", () => {
+      isDrawingHero = false;
+    });
   }
 
   // Tool Bar Switches
-  if (heroPenBtn) heroPenBtn.addEventListener('click', () => setHeroTool('pen'));
-  if (heroStickyBtn) heroStickyBtn.addEventListener('click', () => setHeroTool('sticky'));
+  if (heroPenBtn)
+    heroPenBtn.addEventListener("click", () => setHeroTool("pen"));
+  if (heroStickyBtn)
+    heroStickyBtn.addEventListener("click", () => setHeroTool("sticky"));
 
-  setHeroTool('sticky'); // Default state is dragging notes
+  setHeroTool("sticky"); // Default state is dragging notes
 
   // Clear drawings layer
-  const heroClearBtn = document.getElementById('hero-tool-clear');
+  const heroClearBtn = document.getElementById("hero-tool-clear");
   if (heroClearBtn && heroSketchCanvas && heroCtx) {
-    heroClearBtn.addEventListener('click', () => {
+    heroClearBtn.addEventListener("click", () => {
       heroCtx.clearRect(0, 0, heroSketchCanvas.width, heroSketchCanvas.height);
     });
   }
 
   // Quick Action - Spawn UUID Sticky Note
-  const heroUuidBtn = document.getElementById('hero-tool-uuid');
+  const heroUuidBtn = document.getElementById("hero-tool-uuid");
   if (heroUuidBtn) {
-    heroUuidBtn.addEventListener('click', () => {
-      const uuid = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-      const canvasEl = document.getElementById('home-board-canvas');
+    heroUuidBtn.addEventListener("click", () => {
+      const uuid = crypto.randomUUID
+        ? crypto.randomUUID()
+        : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+            const r = (Math.random() * 16) | 0;
+            const v = c === "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+          });
+      const canvasEl = document.getElementById("home-board-canvas");
       const w = canvasEl?.clientWidth || 400;
       const h = canvasEl?.clientHeight || 250;
-      spawnHeroNote('uuid_' + Date.now(), w/2 - 48, h/2 - 48, uuid, '#ffd8f4', 'uuid');
-      setHeroTool('sticky');
+      spawnHeroNote(
+        "uuid_" + Date.now(),
+        w / 2 - 48,
+        h / 2 - 48,
+        uuid,
+        "#ffd8f4",
+        "uuid",
+      );
+      setHeroTool("sticky");
     });
   }
 
   // Quick Action - Spawn Base64 Sticky Note
-  const heroBase64Btn = document.getElementById('hero-tool-base64');
+  const heroBase64Btn = document.getElementById("hero-tool-base64");
   if (heroBase64Btn) {
-    heroBase64Btn.addEventListener('click', () => {
-      const canvasEl = document.getElementById('home-board-canvas');
+    heroBase64Btn.addEventListener("click", () => {
+      const canvasEl = document.getElementById("home-board-canvas");
       const w = canvasEl?.clientWidth || 400;
       const h = canvasEl?.clientHeight || 250;
-      spawnHeroNote('b64_' + Date.now(), w/2 - 48, h/2 - 48, '', '#ff9999', 'base64');
-      setHeroTool('sticky');
+      spawnHeroNote(
+        "b64_" + Date.now(),
+        w / 2 - 48,
+        h / 2 - 48,
+        "",
+        "#ff9999",
+        "base64",
+      );
+      setHeroTool("sticky");
     });
   }
 
   // Double click canvas to add note
   if (homeCanvas) {
-    homeCanvas.addEventListener('dblclick', (e) => {
+    homeCanvas.addEventListener("dblclick", (e) => {
       if (e.target !== homeCanvas && e.target !== heroSketchCanvas) return;
       const rect = homeCanvas.getBoundingClientRect();
       const x = e.clientX - rect.left - 48;
       const y = e.clientY - rect.top - 48;
 
-      const colors = ['#ffd02f', '#ff9999', '#0fbcb0', '#ffd8f4'];
+      const colors = ["#ffd02f", "#ff9999", "#0fbcb0", "#ffd8f4"];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      spawnHeroNote('note_' + Date.now(), x, y, 'Double click to edit', randomColor, 'normal');
+      spawnHeroNote(
+        "note_" + Date.now(),
+        x,
+        y,
+        "Double click to edit",
+        randomColor,
+        "normal",
+      );
     });
   }
 
@@ -1893,28 +2463,51 @@ const tools = [
   // ============================================
   let multiplayerInterval: any = null;
   let multiplayerActive = false;
-  const simCursorsContainer = document.getElementById('simulated-cursors');
-  const toggleMultiplayerBtn = document.getElementById('toggle-multiplayer');
-  const mpDot = document.getElementById('multiplayer-dot');
+  const simCursorsContainer = document.getElementById("simulated-cursors");
+  const toggleMultiplayerBtn = document.getElementById("toggle-multiplayer");
+  const mpDot = document.getElementById("multiplayer-dot");
 
   const simulatedUsers = [
-    { name: 'Jaina 🎨', color: '#ff9999', cursorColor: '#ff9999', textColor: '#600000', x: 20, y: 30 },
-    { name: 'Claude 🤖', color: '#0fbcb0', cursorColor: '#0fbcb0', textColor: '#050038', x: 80, y: 20 },
-    { name: 'Astro 🚀', color: '#ffd02f', cursorColor: '#ffd02f', textColor: '#1c1c1e', x: 50, y: 70 }
+    {
+      name: "Jaina 🎨",
+      color: "#ff9999",
+      cursorColor: "#ff9999",
+      textColor: "#600000",
+      x: 20,
+      y: 30,
+    },
+    {
+      name: "Claude 🤖",
+      color: "#0fbcb0",
+      cursorColor: "#0fbcb0",
+      textColor: "#050038",
+      x: 80,
+      y: 20,
+    },
+    {
+      name: "Astro 🚀",
+      color: "#ffd02f",
+      cursorColor: "#ffd02f",
+      textColor: "#1c1c1e",
+      x: 50,
+      y: 70,
+    },
   ];
 
   function setupSimulatedCursors() {
     if (!simCursorsContainer) return;
-    simCursorsContainer.innerHTML = '';
-    
+    simCursorsContainer.innerHTML = "";
+
     simulatedUsers.forEach((user, idx) => {
-      const cursorDiv = document.createElement('div');
+      const cursorDiv = document.createElement("div");
       cursorDiv.id = `sim-user-${idx}`;
-      cursorDiv.className = 'absolute pointer-events-none z-30 flex items-center gap-1';
+      cursorDiv.className =
+        "absolute pointer-events-none z-30 flex items-center gap-1";
       cursorDiv.style.left = `${user.x}%`;
       cursorDiv.style.top = `${user.y}%`;
-      cursorDiv.style.transition = 'left 1.5s cubic-bezier(0.25, 1, 0.5, 1), top 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
-      
+      cursorDiv.style.transition =
+        "left 1.5s cubic-bezier(0.25, 1, 0.5, 1), top 1.5s cubic-bezier(0.25, 1, 0.5, 1)";
+
       cursorDiv.innerHTML = `
         <svg class="w-4 h-4 filter drop-shadow" style="color: ${user.cursorColor}" viewBox="0 0 24 24" fill="currentColor">
           <path d="M4 3l16 9-6.5 1.5L20 20l-3 1.5-6.5-6.5L4 18V3z" />
@@ -1937,7 +2530,7 @@ const tools = [
         cursor.style.top = `${newY}%`;
 
         if (Math.random() > 0.8) {
-          const label = cursor.querySelector('span');
+          const label = cursor.querySelector("span");
           if (label) {
             const origText = label.textContent;
             label.textContent = `${user.name} (editing...)`;
@@ -1951,23 +2544,31 @@ const tools = [
   }
 
   if (toggleMultiplayerBtn && mpDot) {
-    toggleMultiplayerBtn.addEventListener('click', () => {
+    toggleMultiplayerBtn.addEventListener("click", () => {
       multiplayerActive = !multiplayerActive;
       if (multiplayerActive) {
-        toggleMultiplayerBtn.classList.add('bg-primary', 'text-canvas', 'border-primary');
-        toggleMultiplayerBtn.classList.remove('bg-surface', 'text-slate');
-        mpDot.classList.add('bg-success-accent');
-        mpDot.classList.remove('bg-stone');
+        toggleMultiplayerBtn.classList.add(
+          "bg-primary",
+          "text-canvas",
+          "border-primary",
+        );
+        toggleMultiplayerBtn.classList.remove("bg-surface", "text-slate");
+        mpDot.classList.add("bg-success-accent");
+        mpDot.classList.remove("bg-stone");
         setupSimulatedCursors();
         moveSimulatedCursors();
         multiplayerInterval = setInterval(moveSimulatedCursors, 2200);
       } else {
-        toggleMultiplayerBtn.classList.remove('bg-primary', 'text-canvas', 'border-primary');
-        toggleMultiplayerBtn.classList.add('bg-surface', 'text-slate');
-        mpDot.classList.remove('bg-success-accent');
-        mpDot.classList.add('bg-stone');
+        toggleMultiplayerBtn.classList.remove(
+          "bg-primary",
+          "text-canvas",
+          "border-primary",
+        );
+        toggleMultiplayerBtn.classList.add("bg-surface", "text-slate");
+        mpDot.classList.remove("bg-success-accent");
+        mpDot.classList.add("bg-stone");
         clearInterval(multiplayerInterval);
-        if (simCursorsContainer) simCursorsContainer.innerHTML = '';
+        if (simCursorsContainer) simCursorsContainer.innerHTML = "";
       }
     });
   }
@@ -1975,33 +2576,37 @@ const tools = [
   // ============================================
   // WORKSPACE HISTORY RENDER
   // ============================================
-  const recentSection = document.getElementById('recent-workspaces-section');
-  const recentList = document.getElementById('recent-workspaces-list');
+  const recentSection = document.getElementById("recent-workspaces-section");
+  const recentList = document.getElementById("recent-workspaces-list");
 
   if (recentSection && recentList) {
     try {
-      const recents = JSON.parse(localStorage.getItem('recent_tools') || '[]');
+      const recents = JSON.parse(localStorage.getItem("recent_tools") || "[]");
       if (recents.length > 0) {
-        recentSection.classList.remove('hidden');
-        recentList.innerHTML = '';
-        
-        recents.forEach(item => {
-          let bgClass = 'bg-surface-yellow border border-yellow-light text-yellow-dark';
-          let iconChar = 'W';
-          if (item.category === 'developer') {
-            bgClass = 'bg-surface-pricing-featured border border-hairline text-brand-blue';
-            iconChar = 'D';
-          } else if (item.category === 'design') {
-            bgClass = 'bg-teal-light border border-hairline text-moss-dark';
-            iconChar = 'S';
-          } else if (item.category === 'collaboration') {
-            bgClass = 'bg-surface-yellow border border-yellow-light text-yellow-dark';
-            iconChar = 'W';
+        recentSection.classList.remove("hidden");
+        recentList.innerHTML = "";
+
+        recents.forEach((item) => {
+          let bgClass =
+            "bg-surface-yellow border border-yellow-light text-yellow-dark";
+          let iconChar = "W";
+          if (item.category === "developer") {
+            bgClass =
+              "bg-surface-pricing-featured border border-hairline text-brand-blue";
+            iconChar = "D";
+          } else if (item.category === "design") {
+            bgClass = "bg-teal-light border border-hairline text-moss-dark";
+            iconChar = "S";
+          } else if (item.category === "collaboration") {
+            bgClass =
+              "bg-surface-yellow border border-yellow-light text-yellow-dark";
+            iconChar = "W";
           }
 
-          const card = document.createElement('a');
+          const card = document.createElement("a");
           card.href = item.path;
-          card.className = 'flex items-center gap-3 p-3.5 bg-canvas/60 border border-hairline rounded-xl hover:-translate-y-1 hover:shadow-subtle transition-all duration-200 group';
+          card.className =
+            "flex items-center gap-3 p-3.5 bg-canvas/60 border border-hairline rounded-xl hover:-translate-y-1 hover:shadow-subtle transition-all duration-200 group";
           card.innerHTML = `
             <div class="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-xs ${bgClass} select-none">
               ${iconChar}

@@ -9,13 +9,15 @@ interface Props {
 	description?: string;
 	toolName?: string;
 	toolCategory?: string;
+	hideBanner?: boolean;
 }
 
 const { 
 	title = "BoardTools - The Visual Workspace Tools Suite", 
 	description = "A gorgeous Miro-inspired suite of client-side web utility tools including whiteboard, JSON formatter, contrast checker, base64 tool, and more. 100% private.",
 	toolName,
-	toolCategory
+	toolCategory,
+	hideBanner = false
 } = Astro.props;
 ---
 <!doctype html>
@@ -57,12 +59,6 @@ const {
 		<meta name="twitter:description" content={description} />
 	</head>
 	<body class="flex flex-col min-h-screen antialiased bg-canvas text-ink">
-		<!-- Top Promo Banner -->
-		<div class="bg-primary text-canvas py-2.5 px-4 text-center text-xs font-semibold tracking-wide flex items-center justify-center gap-2">
-			<span class="bg-brand-yellow text-primary text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">Secure</span>
-			<span>All tools run 100% locally in your browser. None of your data ever leaves your device.</span>
-		</div>
-
 		<!-- Sticky Navigation Header -->
 		<Header />
 
