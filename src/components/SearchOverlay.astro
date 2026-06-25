@@ -1,0 +1,375 @@
+---
+// Complete tools catalog for search (mirrored from index.astro)
+const tools = [
+  { id: 'whiteboard', name: 'Visual Whiteboard', desc: 'Draggable sticky notes, drawing boards, and flow diagram layout workspace.', category: 'Collaboration', path: '/tools/whiteboard', icon: '🎨', keywords: 'whiteboard sketchpad canvas sticky notes whiteboard' },
+  { id: 'json-formatter', name: 'JSON Formatter', desc: 'Format, validate, beautify, and compress JSON files instantly.', category: 'Developer', path: '/tools/json-formatter', icon: '🔧', keywords: 'json formatter validator parser format minify beautify code' },
+  { id: 'base64-url', name: 'Base64 & URL Tool', desc: 'Encode and decode strings to and from Base64 or URL format.', category: 'Developer', path: '/tools/base64-url', icon: '🔧', keywords: 'base64 url encoder decoder converter text string' },
+  { id: 'uuid-hash', name: 'UUID & Hash Gen', desc: 'Generate secure UUID v4 tokens or hash strings using MD5, SHA-1, SHA-256.', category: 'Developer', path: '/tools/uuid-hash', icon: '🔧', keywords: 'uuid hash generator md5 sha-1 sha-256 bulk id token' },
+  { id: 'contrast-checker', name: 'Contrast Checker', desc: 'Verify color contrast ratios against WCAG 2.1 AA/AAA.', category: 'Developer', path: '/tools/contrast-checker', icon: '🔧', keywords: 'contrast checker wcag accessibility color palette' },
+  { id: 'svg-previewer', name: 'SVG Optimizer', desc: 'Preview vector graphics, sanitize CSS, and export clean markup.', category: 'Developer', path: '/tools/svg-previewer', icon: '🔧', keywords: 'svg optimizer previewer editor xml scale graphics' },
+  { id: 'mortgage-payment', name: 'Mortgage Payment Calculator', desc: 'Calculate monthly mortgage payments including principal and interest.', category: 'Finance', path: '/tools/finance/mortgage-payment', icon: '💰', keywords: 'mortgage payment calculator finance interest rate amortization' },
+  { id: 'take-home-pay', name: 'Take-Home Pay Calculator', desc: 'Estimate net take-home salary after tax deductions.', category: 'Finance', path: '/tools/finance/take-home-pay', icon: '💰', keywords: 'take home pay paycheck salary net income tax deductions' },
+  { id: 'tip-calculator', name: 'Tip Calculator', desc: 'Calculate tips and split bills among friends.', category: 'Finance', path: '/tools/finance/tip-calculator', icon: '💰', keywords: 'tip calculator split bill payout restaurants' },
+  { id: 'auto-loan', name: 'Auto Loan Calculator', desc: 'Determine monthly payments and total cost of a car loan.', category: 'Finance', path: '/tools/finance/auto-loan', icon: '💰', keywords: 'auto loan calculator vehicle car financing interest rate' },
+  { id: 'compound-interest', name: 'Compound Interest Calculator', desc: 'Calculate future value of savings using compound interest.', category: 'Finance', path: '/tools/finance/compound-interest', icon: '💰', keywords: 'compound interest calculator future value savings investment' },
+  { id: 'student-loan-payoff', name: 'Student Loan Payoff Calculator', desc: 'Analyze debt payoff timelines and interest savings.', category: 'Finance', path: '/tools/finance/student-loan-payoff', icon: '💰', keywords: 'student loan payoff debt repayment schedule refinancing' },
+  { id: 'retirement-401k', name: '401(k) / Retirement Savings', desc: 'Project retirement savings balance and future income.', category: 'Finance', path: '/tools/finance/retirement-401k', icon: '💰', keywords: '401k retirement savings calculator investment contributions' },
+  { id: 'capital-gains-tax', name: 'Capital Gains Tax Estimator', desc: 'Estimate capital gains taxes on stocks, crypto, or real estate.', category: 'Finance', path: '/tools/finance/capital-gains-tax', icon: '💰', keywords: 'capital gains tax estimator investment stocks crypto' },
+  { id: 'federal-tax-bracket', name: 'Federal Tax Bracket Calculator', desc: 'Determine federal marginal tax brackets and effective rate.', category: 'Finance', path: '/tools/finance/federal-tax-bracket', icon: '💰', keywords: 'federal tax bracket calculator marginal rate deductions' },
+  { id: 'sip-return', name: 'SIP Return Calculator', desc: 'Calculate maturity returns on systematic investment plans.', category: 'Finance', path: '/tools/finance/sip-return', icon: '💰', keywords: 'sip return calculator systematic investment plan mutual funds' },
+  { id: 'bmi-calculator', name: 'BMI Calculator', desc: 'Calculate Body Mass Index and evaluate weight classifications.', category: 'Health', path: '/tools/health/bmi-calculator', icon: '🏥', keywords: 'bmi calculator body mass index weight height' },
+  { id: 'calorie-deficit', name: 'Calorie Deficit Calculator', desc: 'Determine daily calorie targets for weight goals.', category: 'Health', path: '/tools/health/calorie-deficit', icon: '🏥', keywords: 'calorie deficit calculator weight loss tdee nutrition' },
+  { id: 'macro-calculator', name: 'Macro Calculator', desc: 'Calculate daily macronutrient targets for fitness.', category: 'Health', path: '/tools/health/macro-calculator', icon: '🏥', keywords: 'macro calculator protein carbohydrate fats diet' },
+  { id: 'water-intake', name: 'Water Intake Calculator', desc: 'Determine recommended daily water intake targets.', category: 'Health', path: '/tools/health/water-intake', icon: '🏥', keywords: 'water intake calculator hydration fitness health' },
+  { id: 'pregnancy-due-date', name: 'Pregnancy Due Date Calculator', desc: 'Estimate gestation progress and pregnancy due dates.', category: 'Health', path: '/tools/health/pregnancy-due-date', icon: '🏥', keywords: 'due date pregnancy calculator trimesters milestones' },
+  { id: 'sleep-cycle', name: 'Sleep Cycle Calculator', desc: 'Optimize wake times based on standard sleep cycles.', category: 'Health', path: '/tools/health/sleep-cycle', icon: '🏥', keywords: 'sleep cycle calculator wake up times rem bedtime' },
+  { id: 'calorie-burn', name: 'Calorie Burn Estimator', desc: 'Estimate calories burned during exercises and activities.', category: 'Health', path: '/tools/health/calorie-burn', icon: '🏥', keywords: 'calorie burn estimator exercise fitness met values' },
+  { id: 'typing-test', name: 'Premium Typing Test', desc: 'Test typing speed, WPM, and character accuracy.', category: 'Engagement', path: '/tools/engagement/typing-test', icon: '⌨️', keywords: 'typing test wpm key speed characters precision' },
+  { id: 'reaction-time', name: 'Reaction Time Test', desc: 'Measure visual click latency and reaction time.', category: 'Engagement', path: '/tools/engagement/reaction-time', icon: '⌨️', keywords: 'reaction time test visual speed click reflex' },
+  { id: 'clicks-per-second', name: 'Clicks Per Second', desc: 'Test mouse clicking speed and CPS.', category: 'Engagement', path: '/tools/engagement/clicks-per-second', icon: '⌨️', keywords: 'clicks per second cps speed click mouse test' },
+  { id: 'pomodoro-timer', name: 'Pomodoro / Focus Timer', desc: 'Boost work efficiency using Pomodoro method.', category: 'Engagement', path: '/tools/engagement/pomodoro-timer', icon: '⌨️', keywords: 'pomodoro timer focus studies work breaks time management' },
+  { id: 'chronological-age', name: 'Chronological Age Calculator', desc: 'Calculate precise age in years, months, weeks, and days.', category: 'Engagement', path: '/tools/engagement/chronological-age', icon: '⌨️', keywords: 'chronological age calculator date of birth breakdown' },
+  { id: 'spacebar-counter', name: 'Spacebar Counter', desc: 'Test spacebar keystroke frequencies within time limits.', category: 'Engagement', path: '/tools/engagement/spacebar-counter', icon: '⌨️', keywords: 'spacebar counter key pressing frequency test keyboard' },
+  { id: 'password-generator', name: 'Password Generator', desc: 'Generate strong, secure passwords with custom complexity.', category: 'Developer', path: '/tools/developer/password-generator', icon: '🔧', keywords: 'password generator security complex custom symbols' },
+  { id: 'uuid-guid-generator', name: 'UUID / GUID Generator', desc: 'Generate cryptographic UUID v4 tokens in bulk.', category: 'Developer', path: '/tools/developer/uuid-guid-generator', icon: '🔧', keywords: 'uuid guid generator bulk token id cryptographic' },
+  { id: 'diff-checker', name: 'Diff Checker', desc: 'Highlight differences between two text strings.', category: 'Developer', path: '/tools/developer/diff-checker', icon: '🔧', keywords: 'diff checker comparison text differences changes' },
+  { id: 'case-converter', name: 'Case Converter', desc: 'Transform text to UPPERCASE, lowercase, Title Case, camelCase.', category: 'Developer', path: '/tools/developer/case-converter', icon: '🔧', keywords: 'case converter upper lower title camel format text' },
+  { id: 'word-character-counter', name: 'Word / Character Counter', desc: 'Count words, characters, sentences, and reading times.', category: 'Developer', path: '/tools/developer/word-character-counter', icon: '🔧', keywords: 'word character counter paragraph sentence length' },
+  { id: 'readability-score', name: 'Readability Score Checker', desc: 'Analyze reading levels using Flesch-Kincaid and Gunning Fog.', category: 'Developer', path: '/tools/developer/readability-score', icon: '🔧', keywords: 'readability score checker flesch kincaid gunning fog' },
+  { id: 'code-formatter', name: 'Code Formatter', desc: 'Beautify code for JSON, HTML, CSS, or Javascript.', category: 'Developer', path: '/tools/developer/code-formatter', icon: '🔧', keywords: 'code formatter beautifier syntax layout cleaner' },
+  { id: 'name-generator', name: 'Name Generator', desc: 'Generate fictional names, brands, or profile names.', category: 'Developer', path: '/tools/developer/name-generator', icon: '🔧', keywords: 'name generator fictional profile random characters' },
+  { id: 'randomizer-wheel', name: 'Randomizer Wheel', desc: 'Spin an interactive decision wheel for random choices.', category: 'Developer', path: '/tools/developer/randomizer-wheel', icon: '🔧', keywords: 'randomizer wheel choices selector options picker spin' },
+  { id: 'white-noise', name: 'White Noise Generator', desc: 'Generate white noise for focus or sleep.', category: 'Audio', path: '/tools/audio/white-noise', icon: '🎵', keywords: 'white noise generator study focus sleep sounds ambient' },
+  { id: 'brown-noise', name: 'Brown Noise Generator', desc: 'Play deep brown noise for relaxation and masking.', category: 'Audio', path: '/tools/audio/brown-noise', icon: '🎵', keywords: 'brown noise generator deep sleep relaxation' },
+  { id: 'tuning-fork', name: 'Tuning Fork', desc: 'Emit stable tuning pitches at standard frequencies.', category: 'Audio', path: '/tools/audio/tuning-fork', icon: '🎵', keywords: 'tuning fork musical instruments sound frequencies pitch' },
+  { id: 'headphone-test', name: 'Headphone Test Suite', desc: 'Test headphone stereo balance, bass, and dynamics.', category: 'Audio', path: '/tools/audio/headphone-test', icon: '🎵', keywords: 'headphone test audio balance bass dynamic range' },
+  { id: 'microphone-frequency', name: 'Microphone Frequency Response', desc: 'Visualize real-time microphone frequency feedback.', category: 'Audio', path: '/tools/audio/microphone-frequency', icon: '🎵', keywords: 'microphone frequency response visualizer sound analyzer' },
+  { id: 'speaker-phase', name: 'Speaker Phase Tool', desc: 'Check speaker polarity with in-phase sound tests.', category: 'Audio', path: '/tools/audio/speaker-phase', icon: '🎵', keywords: 'speaker phase polarity audio wiring test sound' },
+  { id: 'spirit-level', name: 'Spirit Level / Bubble Level', desc: 'Digital spirit level using device orientation.', category: 'Mobile', path: '/tools/mobile/spirit-level', icon: '📱', keywords: 'spirit level bubble orientation gyroscope sensors' },
+  { id: 'compass-rose', name: 'Compass Rose', desc: 'Display heading orientations using magnetic sensors.', category: 'Mobile', path: '/tools/mobile/compass-rose', icon: '📱', keywords: 'compass rose magnetometer navigation heading' },
+  { id: 'accelerometer-viewer', name: 'Accelerometer Viewer', desc: 'Track real-time acceleration and movements.', category: 'Mobile', path: '/tools/mobile/accelerometer-viewer', icon: '📱', keywords: 'accelerometer viewer device motion velocity gravity' },
+  { id: 'light-meter', name: 'Light Meter', desc: 'Measure ambient light in Lux using camera.', category: 'Mobile', path: '/tools/mobile/light-meter', icon: '📱', keywords: 'light meter camera lux ambient photography' },
+  { id: 'orientation-lock', name: 'Orientation Lock Check', desc: 'Verify screen rotation and display geometry.', category: 'Mobile', path: '/tools/mobile/orientation-lock', icon: '📱', keywords: 'orientation lock screen rotation viewport mobile' },
+  { id: 'refresh-rate', name: 'Refresh Rate Test', desc: 'Measure monitor display refresh rates.', category: 'Display', path: '/tools/display/refresh-rate', icon: '🖥️', keywords: 'refresh rate test hz monitor pacing frames fps' },
+  { id: 'aspect-ratio', name: 'Aspect Ratio Checker', desc: 'Calculate screen aspect ratios and pixel geometries.', category: 'Display', path: '/tools/display/aspect-ratio', icon: '🖥️', keywords: 'aspect ratio dimensions viewport resolution scale' },
+  { id: 'scroll-wheel', name: 'Scroll Wheel Test', desc: 'Verify scroll wheel ticks and sensitivity.', category: 'Display', path: '/tools/display/scroll-wheel', icon: '🖥️', keywords: 'scroll wheel test mouse scrolling speed sensitivity' },
+  { id: 'polling-rate', name: 'Polling Rate Test', desc: 'Track mouse polling frequencies.', category: 'Display', path: '/tools/display/polling-rate', icon: '🖥️', keywords: 'polling rate test report frequency mouse tracking' },
+  { id: 'double-click', name: 'Double Click Test', desc: 'Detect mouse double-click issues.', category: 'Display', path: '/tools/display/double-click', icon: '🖥️', keywords: 'double click test mouse switches detection gaming' },
+  { id: 'key-repeat', name: 'Key Repeat Test', desc: 'Test keyboard repeat rates and bounce delays.', category: 'Display', path: '/tools/display/key-repeat', icon: '🖥️', keywords: 'key repeat test delay speed typing latency' },
+  { id: 'caps-lock', name: 'Caps Lock Test', desc: 'Check Caps Lock activation states.', category: 'Display', path: '/tools/display/caps-lock', icon: '🖥️', keywords: 'caps lock test status checker keyboard active' },
+  { id: 'keyboard-latency', name: 'Keyboard Latency Test', desc: 'Measure keyboard input-to-screen response times.', category: 'Display', path: '/tools/display/keyboard-latency', icon: '🖥️', keywords: 'keyboard latency test keypress delay reaction speed' },
+  { id: 'time-zone-converter', name: 'Time Zone Converter', desc: 'Convert dates and times across global time zones.', category: 'Everyday', path: '/tools/general/time-zone-converter', icon: '🌍', keywords: 'time zone converter clock comparison calendar utc' },
+  { id: 'currency-converter', name: 'Currency Converter', desc: 'Convert currencies using localized rates.', category: 'Everyday', path: '/tools/general/currency-converter', icon: '🌍', keywords: 'currency converter money dollar euro pound rates' },
+  { id: 'speedometer', name: 'Speedometer', desc: 'Real-time GPS velocity tracking.', category: 'Everyday', path: '/tools/general/speedometer', icon: '🌍', keywords: 'speedometer gps velocity tracking movement geographic' },
+  { id: 'screen-dead-pixel', name: 'Screen Dead Pixel Checker', desc: 'Scan and identify dead pixels on your monitor.', category: 'Everyday', path: '/tools/general/screen-dead-pixel', icon: '🌍', keywords: 'dead pixel screen monitor background checker diagnostic' },
+  { id: 'color-picker', name: 'Color Picker', desc: 'Extract HSL, hex, and RGB values from any color.', category: 'Everyday', path: '/tools/general/color-picker', icon: '🌍', keywords: 'color picker canvas hex rgb hsl colors palettes' },
+];
+
+const toolsJSON = JSON.stringify(tools);
+---
+
+<!-- Search Overlay (Global, triggered from navbar) -->
+<div 
+  id="search-overlay" 
+  class="fixed inset-0 z-[100] hidden" 
+  role="dialog" 
+  aria-modal="true" 
+  aria-label="Search tools"
+>
+  <!-- Backdrop -->
+  <div id="search-overlay-backdrop" class="absolute inset-0 bg-primary/60 backdrop-blur-sm"></div>
+  
+  <!-- Search Panel -->
+  <div class="relative z-10 w-full max-w-2xl mx-auto mt-[12vh] px-4">
+    <!-- Search Input Container -->
+    <div class="bg-canvas rounded-2xl shadow-modal border border-hairline overflow-hidden animate-scale-in">
+      <!-- Input Row -->
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-hairline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input 
+          type="text" 
+          id="overlay-search-input" 
+          placeholder="Search 56+ tools… (e.g. JSON, mortgage, typing test)" 
+          class="flex-1 bg-transparent text-primary text-base font-display font-medium placeholder:text-stone outline-none border-none"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button 
+          id="overlay-close-btn" 
+          class="text-[10px] font-bold text-stone bg-surface border border-hairline rounded-md px-2 py-1 hover:bg-hairline transition-colors cursor-pointer select-none"
+          aria-label="Close search"
+        >
+          ESC
+        </button>
+      </div>
+      
+      <!-- Results Container -->
+      <div id="overlay-search-results" class="max-h-[50vh] overflow-y-auto">
+        <!-- Hint State (shown when input is empty) -->
+        <div id="overlay-hint-state" class="px-5 py-6 text-center">
+          <p class="text-xs text-stone font-display">Start typing to search across all tools…</p>
+          <div class="flex flex-wrap justify-center gap-2 mt-3">
+            <button class="search-suggestion-pill px-3 py-1.5 bg-surface border border-hairline text-xs font-medium text-slate rounded-full hover:border-brand-blue hover:text-brand-blue transition-colors cursor-pointer">JSON</button>
+            <button class="search-suggestion-pill px-3 py-1.5 bg-surface border border-hairline text-xs font-medium text-slate rounded-full hover:border-brand-blue hover:text-brand-blue transition-colors cursor-pointer">Mortgage</button>
+            <button class="search-suggestion-pill px-3 py-1.5 bg-surface border border-hairline text-xs font-medium text-slate rounded-full hover:border-brand-blue hover:text-brand-blue transition-colors cursor-pointer">Typing Test</button>
+            <button class="search-suggestion-pill px-3 py-1.5 bg-surface border border-hairline text-xs font-medium text-slate rounded-full hover:border-brand-blue hover:text-brand-blue transition-colors cursor-pointer">Password</button>
+            <button class="search-suggestion-pill px-3 py-1.5 bg-surface border border-hairline text-xs font-medium text-slate rounded-full hover:border-brand-blue hover:text-brand-blue transition-colors cursor-pointer">Whiteboard</button>
+          </div>
+        </div>
+
+        <!-- Results list (dynamically populated) -->
+        <div id="overlay-results-list" class="hidden"></div>
+        
+        <!-- No Results State -->
+        <div id="overlay-no-results" class="hidden px-5 py-8 text-center">
+          <div class="w-12 h-12 mx-auto rounded-full bg-surface-yellow border border-yellow-light flex items-center justify-center text-lg mb-3">🔍</div>
+          <p class="text-sm font-display font-medium text-primary mb-1">No tools found</p>
+          <p class="text-xs text-slate mb-4">We don't have that tool yet, but you can request it!</p>
+          <button 
+            id="overlay-request-tool-btn" 
+            class="button-primary !py-2.5 !px-6 !text-xs inline-flex items-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            Request This Tool
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyboard hint -->
+    <p class="text-center text-[10px] text-on-dark-muted mt-3 font-display select-none">
+      <span class="inline-flex items-center gap-1">
+        <kbd class="bg-canvas/20 border border-canvas/10 rounded px-1.5 py-0.5 text-canvas/70 font-mono text-[9px]">↑</kbd>
+        <kbd class="bg-canvas/20 border border-canvas/10 rounded px-1.5 py-0.5 text-canvas/70 font-mono text-[9px]">↓</kbd>
+        to navigate
+      </span>
+      <span class="mx-2">·</span>
+      <span class="inline-flex items-center gap-1">
+        <kbd class="bg-canvas/20 border border-canvas/10 rounded px-1.5 py-0.5 text-canvas/70 font-mono text-[9px]">↵</kbd>
+        to select
+      </span>
+      <span class="mx-2">·</span>
+      <span class="inline-flex items-center gap-1">
+        <kbd class="bg-canvas/20 border border-canvas/10 rounded px-1.5 py-0.5 text-canvas/70 font-mono text-[9px]">esc</kbd>
+        to close
+      </span>
+    </p>
+  </div>
+</div>
+
+<script define:vars={{ toolsJSON }}>
+  window.__BOARDTOOLS_SEARCH_INDEX__ = JSON.parse(toolsJSON);
+</script>
+
+<script>
+  // =============================================
+  // GLOBAL SEARCH OVERLAY LOGIC
+  // =============================================
+  const overlay = document.getElementById('search-overlay');
+  const overlayBackdrop = document.getElementById('search-overlay-backdrop');
+  const overlayInput = document.getElementById('overlay-search-input') as HTMLInputElement | null;
+  const overlayCloseBtn = document.getElementById('overlay-close-btn');
+  const overlayHintState = document.getElementById('overlay-hint-state');
+  const overlayResultsList = document.getElementById('overlay-results-list');
+  const overlayNoResults = document.getElementById('overlay-no-results');
+  const overlayRequestBtn = document.getElementById('overlay-request-tool-btn');
+  const suggestionPills = document.querySelectorAll('.search-suggestion-pill');
+  
+  const tools: Array<{id: string, name: string, desc: string, category: string, path: string, icon: string, keywords: string}> = 
+    (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
+
+  let overlayActiveIndex = -1;
+  let overlayVisibleResults: HTMLElement[] = [];
+
+  function openSearchOverlay() {
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => overlayInput?.focus(), 50);
+    overlayActiveIndex = -1;
+  }
+
+  function closeSearchOverlay() {
+    if (!overlay) return;
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (overlayInput) overlayInput.value = '';
+    resetOverlayStates();
+  }
+
+  function resetOverlayStates() {
+    overlayHintState?.classList.remove('hidden');
+    overlayResultsList?.classList.add('hidden');
+    overlayNoResults?.classList.add('hidden');
+    if (overlayResultsList) overlayResultsList.innerHTML = '';
+    overlayActiveIndex = -1;
+    overlayVisibleResults = [];
+  }
+
+  function highlightMatch(text: string, query: string): string {
+    if (!query) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark class="bg-brand-yellow/40 text-primary rounded-sm px-0.5">$1</mark>');
+  }
+
+  function renderOverlayResults(query: string) {
+    if (!overlayResultsList || !overlayHintState || !overlayNoResults) return;
+    
+    if (!query.trim()) {
+      resetOverlayStates();
+      return;
+    }
+
+    const q = query.toLowerCase().trim();
+    const matches = tools.filter(t => 
+      t.name.toLowerCase().includes(q) || 
+      t.keywords.toLowerCase().includes(q) || 
+      t.desc.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q)
+    );
+
+    overlayHintState.classList.add('hidden');
+
+    if (matches.length > 0) {
+      overlayNoResults.classList.add('hidden');
+      overlayResultsList.classList.remove('hidden');
+      
+      // Group by category
+      const grouped: Record<string, typeof matches> = {};
+      matches.forEach(m => {
+        if (!grouped[m.category]) grouped[m.category] = [];
+        grouped[m.category].push(m);
+      });
+
+      let html = '';
+      for (const [cat, items] of Object.entries(grouped)) {
+        html += `<div class="px-5 pt-3 pb-1"><span class="text-[10px] font-bold text-stone uppercase tracking-wider">${cat}</span></div>`;
+        items.forEach(item => {
+          html += `
+            <a href="${item.path}" class="overlay-result-item flex items-center gap-3 px-5 py-3 hover:bg-surface transition-colors cursor-pointer group" data-path="${item.path}">
+              <span class="w-8 h-8 rounded-lg bg-surface border border-hairline flex items-center justify-center text-sm shrink-0 group-hover:border-brand-blue/30 transition-colors">${item.icon}</span>
+              <div class="flex-1 min-w-0">
+                <span class="text-sm font-display font-medium text-primary block truncate">${highlightMatch(item.name, query)}</span>
+                <span class="text-[11px] text-stone block truncate">${highlightMatch(item.desc, query)}</span>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-hairline-strong group-hover:text-brand-blue shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>`;
+        });
+      }
+
+      // Show match count
+      html += `<div class="px-5 py-3 border-t border-hairline">
+        <span class="text-[10px] text-stone">${matches.length} tool${matches.length !== 1 ? 's' : ''} found</span>
+      </div>`;
+
+      overlayResultsList.innerHTML = html;
+      overlayVisibleResults = Array.from(overlayResultsList.querySelectorAll('.overlay-result-item'));
+      overlayActiveIndex = -1;
+    } else {
+      overlayResultsList.classList.add('hidden');
+      overlayNoResults.classList.remove('hidden');
+      overlayVisibleResults = [];
+      overlayActiveIndex = -1;
+    }
+  }
+
+  function updateOverlayHighlight() {
+    overlayVisibleResults.forEach((el, i) => {
+      if (i === overlayActiveIndex) {
+        el.classList.add('bg-surface');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('bg-surface');
+      }
+    });
+  }
+
+  // Event: Search input
+  overlayInput?.addEventListener('input', () => {
+    renderOverlayResults(overlayInput.value);
+  });
+
+  // Event: Keyboard navigation
+  overlayInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (overlayVisibleResults.length > 0) {
+        overlayActiveIndex = Math.min(overlayActiveIndex + 1, overlayVisibleResults.length - 1);
+        updateOverlayHighlight();
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (overlayVisibleResults.length > 0) {
+        overlayActiveIndex = Math.max(overlayActiveIndex - 1, 0);
+        updateOverlayHighlight();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (overlayActiveIndex >= 0 && overlayVisibleResults[overlayActiveIndex]) {
+        const href = overlayVisibleResults[overlayActiveIndex].getAttribute('href') || overlayVisibleResults[overlayActiveIndex].dataset.path;
+        if (href) window.location.href = href;
+      }
+    }
+  });
+
+  // Event: Close button
+  overlayCloseBtn?.addEventListener('click', closeSearchOverlay);
+
+  // Event: Backdrop click
+  overlayBackdrop?.addEventListener('click', closeSearchOverlay);
+
+  // Event: Escape key (global)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) {
+      closeSearchOverlay();
+    }
+  });
+
+  // Event: Suggestion pills
+  suggestionPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      if (overlayInput) {
+        overlayInput.value = pill.textContent?.trim() || '';
+        renderOverlayResults(overlayInput.value);
+        overlayInput.focus();
+      }
+    });
+  });
+
+  // Event: Request tool button — trigger the floating request popup
+  overlayRequestBtn?.addEventListener('click', () => {
+    closeSearchOverlay();
+    // Trigger the existing RequestToolPopup
+    const requestContainer = document.getElementById('floating-request-container');
+    const requestCollapsed = document.getElementById('request-collapsed-bubble');
+    const requestExpanded = document.getElementById('request-expanded-card');
+    if (requestContainer && requestCollapsed && requestExpanded) {
+      requestContainer.classList.remove('hidden');
+      requestContainer.classList.add('flex');
+      requestCollapsed.classList.add('hidden');
+      requestExpanded.classList.remove('hidden');
+      requestExpanded.classList.add('flex');
+    }
+  });
+
+  // Event: Ctrl/Cmd+K shortcut
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      if (overlay?.classList.contains('hidden')) {
+        openSearchOverlay();
+      } else {
+        closeSearchOverlay();
+      }
+    }
+  });
+
+  // Expose open function globally for navbar button
+  (window as any).__openSearchOverlay = openSearchOverlay;
+</script>

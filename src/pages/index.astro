@@ -1,5 +1,770 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Complete tools catalog array
+const tools = [
+  // Flagship Whiteboard
+  {
+    id: 'whiteboard',
+    name: 'Visual Whiteboard',
+    desc: 'Draggable sticky notes, drawing boards, and flow diagram layout workspace. Custom colors and download.',
+    category: 'collaboration',
+    path: '/tools/whiteboard',
+    badgeText: 'COLLABORATION',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Launch Canvas',
+    searchKeywords: 'whiteboard sketchpad canvas sticky notes whiteboard'
+  },
+  // Existing Developer Tools
+  {
+    id: 'json-formatter',
+    name: 'JSON Formatter',
+    desc: 'Format, validate, beautify, and compress JSON files instantly. Highlights syntax errors, matching brackets, and paths.',
+    category: 'developer',
+    path: '/tools/json-formatter',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Beautify JSON',
+    searchKeywords: 'json formatter validator parser format minify beautify code'
+  },
+  {
+    id: 'base64-url',
+    name: 'Base64 & URL Tool',
+    desc: 'Quickly encode and decode strings to and from Base64 or standard URL format. Side-by-side verification panels.',
+    category: 'developer',
+    path: '/tools/base64-url',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Convert String',
+    searchKeywords: 'base64 url encoder decoder converter text string translation'
+  },
+  {
+    id: 'uuid-hash',
+    name: 'UUID & Hash Gen',
+    desc: 'Bulk generate secure UUID v4 tokens or hash target input strings using MD5, SHA-1, or SHA-256 engines locally.',
+    category: 'developer',
+    path: '/tools/uuid-hash',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Generate IDs',
+    searchKeywords: 'uuid hash generator md5 sha-1 sha-256 bulk id text security token'
+  },
+  {
+    id: 'contrast-checker',
+    name: 'Contrast Checker',
+    desc: 'Verify color contrast ratios of text overlay backgrounds. Test against standard WCAG 2.1 AA/AAA accessibility checks.',
+    category: 'developer',
+    path: '/tools/contrast-checker',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Check Contrast',
+    searchKeywords: 'contrast checker wcag accessibility color palette aa aaa check colors contrast ratio web guidelines'
+  },
+  {
+    id: 'svg-previewer',
+    name: 'SVG Optimizer',
+    desc: 'Preview vector graphics in real time, sanitize inline CSS styles, adjust layout viewboxes, and export clean markup.',
+    category: 'developer',
+    path: '/tools/svg-previewer',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Optimize SVG',
+    searchKeywords: 'svg optimizer previewer editor xml scale sanitization graphics'
+  },
+  // TIER 1 - Finance & Tax
+  {
+    id: 'mortgage-payment',
+    name: 'Mortgage Payment Calculator',
+    desc: 'Calculate your monthly mortgage payments including principal, interest, taxes, and insurance.',
+    category: 'finance',
+    path: '/tools/finance/mortgage-payment',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Mortgage',
+    searchKeywords: 'mortgage payment calculator finance interest rate amortization principal taxes insurance'
+  },
+  {
+    id: 'take-home-pay',
+    name: 'Take-Home Pay / Paycheck Calculator',
+    desc: 'Estimate your net take-home salary after federal, state, and local tax deductions.',
+    category: 'finance',
+    path: '/tools/finance/take-home-pay',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Take-Home',
+    searchKeywords: 'take home pay paycheck salary net income tax deductions federal state local'
+  },
+  {
+    id: 'tip-calculator',
+    name: 'Tip Calculator',
+    desc: 'Quickly calculate tips and split bill payments among multiple friends or colleagues.',
+    category: 'finance',
+    path: '/tools/finance/tip-calculator',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Tip',
+    searchKeywords: 'tip calculator split bill payout restaurants service dining friends cost'
+  },
+  {
+    id: 'auto-loan',
+    name: 'Auto Loan Calculator',
+    desc: 'Determine monthly payments, total interest, and overall cost of a new or used car loan.',
+    category: 'finance',
+    path: '/tools/finance/auto-loan',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Loan',
+    searchKeywords: 'auto loan calculator vehicle car financing interest rate payments monthly down payment'
+  },
+  {
+    id: 'compound-interest',
+    name: 'Compound Interest Calculator',
+    desc: 'Calculate the future value of your savings or investments using compound interest formulas.',
+    category: 'finance',
+    path: '/tools/finance/compound-interest',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Interest',
+    searchKeywords: 'compound interest calculator future value savings investment growth rate compound'
+  },
+  {
+    id: 'student-loan-payoff',
+    name: 'Student Loan Payoff Calculator',
+    desc: 'Analyze debt payoff timelines and estimate total interest savings under various payment plans.',
+    category: 'finance',
+    path: '/tools/finance/student-loan-payoff',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Payoff',
+    searchKeywords: 'student loan payoff debt repayment schedule refinancing interest savings amortization'
+  },
+  {
+    id: 'retirement-401k',
+    name: '401(k) / Retirement Savings Calculator',
+    desc: 'Project your retirement savings balance and future income based on annual contributions.',
+    category: 'finance',
+    path: '/tools/finance/retirement-401k',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate 401k',
+    searchKeywords: '401k retirement savings calculator 401(k) investment contributions planning'
+  },
+  {
+    id: 'capital-gains-tax',
+    name: 'Capital Gains Tax Estimator',
+    desc: 'Estimate federal capital gains taxes on profits from stocks, crypto, or real estate sales.',
+    category: 'finance',
+    path: '/tools/finance/capital-gains-tax',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Estimate Tax',
+    searchKeywords: 'capital gains tax estimator capital gains investment tax rate shares stocks crypto real estate profits'
+  },
+  {
+    id: 'federal-tax-bracket',
+    name: 'Federal Tax Bracket Calculator',
+    desc: 'Determine your federal marginal income tax brackets and effective tax rate calculations.',
+    category: 'finance',
+    path: '/tools/finance/federal-tax-bracket',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate Brackets',
+    searchKeywords: 'federal tax bracket calculator marginal tax rate deductions filing status'
+  },
+  {
+    id: 'sip-return',
+    name: 'SIP Return Calculator',
+    desc: 'Calculate prospective maturity returns on systematic investment plans over selected periods.',
+    category: 'finance',
+    path: '/tools/finance/sip-return',
+    badgeText: 'FINANCE',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Calculate SIP',
+    searchKeywords: 'sip return calculator systematic investment plan mutual funds returns calculations'
+  },
+
+  // TIER 2 - Health & Fitness
+  {
+    id: 'bmi-calculator',
+    name: 'BMI Calculator (imperial)',
+    desc: 'Calculate Body Mass Index based on imperial units and evaluate healthy weight classifications.',
+    category: 'health',
+    path: '/tools/health/bmi-calculator',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate BMI',
+    searchKeywords: 'bmi calculator body mass index imperial weight height metric obesity healthy'
+  },
+  {
+    id: 'calorie-deficit',
+    name: 'Calorie Deficit Calculator',
+    desc: 'Determine daily calorie targets needed to achieve sustainable weight goals based on activity.',
+    category: 'health',
+    path: '/tools/health/calorie-deficit',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate Calorie Deficit',
+    searchKeywords: 'calorie deficit calculator weight loss tdee active target metabolic nutrition'
+  },
+  {
+    id: 'macro-calculator',
+    name: 'Macro Calculator',
+    desc: 'Calculate dynamic daily macronutrient targets (protein, carbs, fats) for physical fitness.',
+    category: 'health',
+    path: '/tools/health/macro-calculator',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate Macros',
+    searchKeywords: 'macro calculator protein carbohydrate fats diet weight lifting bulking cutting'
+  },
+  {
+    id: 'water-intake',
+    name: 'Water Intake Calculator',
+    desc: 'Determine recommended daily water intake volume targets based on weight and activity levels.',
+    category: 'health',
+    path: '/tools/health/water-intake',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate Water Intake',
+    searchKeywords: 'water intake calculator hydration fitness metrics liquids health cups volume'
+  },
+  {
+    id: 'pregnancy-due-date',
+    name: 'Due Date / Pregnancy Calculator',
+    desc: 'Estimate gestation progress, key trimester milestones, and pregnancy due dates.',
+    category: 'health',
+    path: '/tools/health/pregnancy-due-date',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate Due Date',
+    searchKeywords: 'due date pregnancy calculator trimesters milestones ovulation gestation calendar'
+  },
+  {
+    id: 'sleep-cycle',
+    name: 'Sleep Cycle Calculator',
+    desc: 'Optimize wake times and sleep windows based on standard human sleep cycles.',
+    category: 'health',
+    path: '/tools/health/sleep-cycle',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Calculate Sleep Cycles',
+    searchKeywords: 'sleep cycle calculator wake up times rem bedtime fatigue optimizer'
+  },
+  {
+    id: 'calorie-burn',
+    name: 'Calorie Burn Estimator',
+    desc: 'Estimate total calories burned during physical exercises and everyday activities.',
+    category: 'health',
+    path: '/tools/health/calorie-burn',
+    badgeText: 'HEALTH',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Estimate Burn',
+    searchKeywords: 'calorie burn estimator dynamic met values exercise fitness calculation physical'
+  },
+
+  // TIER 3 - Engagement
+  {
+    id: 'typing-test',
+    name: 'Premium Typing Test',
+    desc: 'Test and measure typing speed, words per minute (WPM), and character accuracy errors.',
+    category: 'engagement',
+    path: '/tools/engagement/typing-test',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Start Test',
+    searchKeywords: 'typing test wpm key layout velocity check characters precision'
+  },
+  {
+    id: 'reaction-time',
+    name: 'Reaction Time Test',
+    desc: 'Measure visual click latency and compare cognitive reaction time against averages.',
+    category: 'engagement',
+    path: '/tools/engagement/reaction-time',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Test Latency',
+    searchKeywords: 'reaction time test visual speed click reflex delay millisecond visual'
+  },
+  {
+    id: 'clicks-per-second',
+    name: 'Clicks Per Second',
+    desc: 'Test mouse clicking speed and track clicks per second (CPS) in a speed window.',
+    category: 'engagement',
+    path: '/tools/engagement/clicks-per-second',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Test Click Speed',
+    searchKeywords: 'clicks per second cps speed click mouse test drag clicking'
+  },
+  {
+    id: 'pomodoro-timer',
+    name: 'Pomodoro / Focus Timer',
+    desc: 'Boost work session efficiency using standard Pomodoro time management methods.',
+    category: 'engagement',
+    path: '/tools/engagement/pomodoro-timer',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Launch Timer',
+    searchKeywords: 'pomodoro timer focus studies work breaks track time management'
+  },
+  {
+    id: 'chronological-age',
+    name: 'Chronological Age Calculator',
+    desc: 'Calculate precise age in years, months, weeks, days, and hours from birthdates.',
+    category: 'engagement',
+    path: '/tools/engagement/chronological-age',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Calculate Age',
+    searchKeywords: 'chronological age calculator date of birth details breakdown timeline'
+  },
+  {
+    id: 'spacebar-counter',
+    name: 'Spacebar Counter',
+    desc: 'Test and record spacebar keystroke frequencies within designated time limits.',
+    category: 'engagement',
+    path: '/tools/engagement/spacebar-counter',
+    badgeText: 'ENGAGEMENT',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Start Counting',
+    searchKeywords: 'spacebar counter key pressing frequency test inputs keyboard'
+  },
+
+  // TIER 4 - Developer
+  {
+    id: 'password-generator',
+    name: 'Password Generator',
+    desc: 'Generate strong, secure, and customizable passwords with configurable complexity.',
+    category: 'developer',
+    path: '/tools/developer/password-generator',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Generate Password',
+    searchKeywords: 'password generator security complex custom symbols numbers keys generation'
+  },
+  {
+    id: 'uuid-guid-generator',
+    name: 'UUID / GUID Generator',
+    desc: 'Generate unique cryptographic UUID v4 tokens or GUID codes locally in bulk.',
+    category: 'developer',
+    path: '/tools/developer/uuid-guid-generator',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Generate UUIDs',
+    searchKeywords: 'uuid guid generator bulk token id cryptographic keys'
+  },
+  {
+    id: 'diff-checker',
+    name: 'Diff Checker',
+    desc: 'Highlight text insertions, deletions, and differences between two text strings side-by-side.',
+    category: 'developer',
+    path: '/tools/developer/diff-checker',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Check Diff',
+    searchKeywords: 'diff checker comparison text check discrepancies changes output'
+  },
+  {
+    id: 'case-converter',
+    name: 'Case Converter',
+    desc: 'Transform text blocks to UPPERCASE, lowercase, Title Case, camelCase, or sentence formats.',
+    category: 'developer',
+    path: '/tools/developer/case-converter',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Convert Case',
+    searchKeywords: 'case converter upper lower title camel format sentence capitalization text'
+  },
+  {
+    id: 'word-character-counter',
+    name: 'Word / Character Counter',
+    desc: 'Count words, characters, sentences, paragraphs, and reading times for any input text.',
+    category: 'developer',
+    path: '/tools/developer/word-character-counter',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Count Words',
+    searchKeywords: 'word character counter paragraph sentence readings duration length analysis'
+  },
+  {
+    id: 'readability-score',
+    name: 'Readability Score Checker',
+    desc: 'Analyze text reading levels using standard Flesch-Kincaid and Gunning Fog score engines.',
+    category: 'developer',
+    path: '/tools/developer/readability-score',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Check Readability',
+    searchKeywords: 'readability score checker flesch kincaid gunning fog grade text analysis english complexity'
+  },
+  {
+    id: 'code-formatter',
+    name: 'Code Formatter',
+    desc: 'Beautify, format, and structure code inputs for JSON, HTML, CSS, or Javascript syntax.',
+    category: 'developer',
+    path: '/tools/developer/code-formatter',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Format Code',
+    searchKeywords: 'code formatter compiler beautifier syntax layout cleaner scripts indentations'
+  },
+  {
+    id: 'name-generator',
+    name: 'Name Generator',
+    desc: 'Generate fictional character names, business brands, or user profile names randomly.',
+    category: 'developer',
+    path: '/tools/developer/name-generator',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Generate Names',
+    searchKeywords: 'name generator fictional profile random characters nickname brand names'
+  },
+  {
+    id: 'randomizer-wheel',
+    name: 'Randomizer Wheel',
+    desc: 'Input choice sets, spin the interactive decision wheel, and select random choices.',
+    category: 'developer',
+    path: '/tools/developer/randomizer-wheel',
+    badgeText: 'DEVELOPER',
+    badgeClass: 'badge-tag-purple bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Spin Wheel',
+    searchKeywords: 'randomizer wheel choices selector options picker decide spin rotation layout'
+  },
+
+  // TIER 5 - Audio
+  {
+    id: 'white-noise',
+    name: 'White Noise Generator',
+    desc: 'Generate customizable continuous white noise frequencies for study focus or sleep.',
+    category: 'audio',
+    path: '/tools/audio/white-noise',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Play White Noise',
+    searchKeywords: 'white noise generator study focus sleep sounds masking continuous ambient frequency'
+  },
+  {
+    id: 'brown-noise',
+    name: 'Brown Noise Generator',
+    desc: 'Play deeper, lower-frequency brown noise tracks for relaxation and sound masking.',
+    category: 'audio',
+    path: '/tools/audio/brown-noise',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Play Brown Noise',
+    searchKeywords: 'brown noise generator deep sleep relaxation noise blockers red noise continuous'
+  },
+  {
+    id: 'tuning-fork',
+    name: 'Tuning Fork',
+    desc: 'Emit stable audio tuning pitches at standard standard frequencies like A440.',
+    category: 'audio',
+    path: '/tools/audio/tuning-fork',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Play Pitch',
+    searchKeywords: 'tuning fork musical instruments sound frequencies standard audio pitch check'
+  },
+  {
+    id: 'headphone-test',
+    name: 'Headphone Test Suite',
+    desc: 'Test headphone stereo balance, bass response ranges, and dynamic sound levels.',
+    category: 'audio',
+    path: '/tools/audio/headphone-test',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Start Test',
+    searchKeywords: 'headphone test suite audio balance bass dynamic range check speaker stereo'
+  },
+  {
+    id: 'microphone-frequency',
+    name: 'Microphone Frequency Response',
+    desc: 'Visualize real-time microphone audio frequency feedback peaks via Web Audio APIs.',
+    category: 'audio',
+    path: '/tools/audio/microphone-frequency',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Visualize Mic',
+    searchKeywords: 'microphone frequency response visualizer sound inputs analyzer audio decibels peaks'
+  },
+  {
+    id: 'speaker-phase',
+    name: 'Speaker Phase Tool',
+    desc: 'Play matched in-phase and out-of-phase frequency sounds to check speaker polarity.',
+    category: 'audio',
+    path: '/tools/audio/speaker-phase',
+    badgeText: 'AUDIO',
+    badgeClass: 'badge-tag-coral bg-coral-light text-coral-dark',
+    cardClass: 'card-feature-coral',
+    actionText: 'Check Phase',
+    searchKeywords: 'speaker phase polarity audio wiring test sound signals direction out of phase'
+  },
+
+  // TIER 6 - Mobile
+  {
+    id: 'spirit-level',
+    name: 'Spirit Level / Bubble Level',
+    desc: 'Turn mobile devices into digital spirit levels using device orientation angles.',
+    category: 'mobile',
+    path: '/tools/mobile/spirit-level',
+    badgeText: 'MOBILE',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Check Alignment',
+    searchKeywords: 'spirit level bubble level orientation angles horizontal gyroscope sensors mobile'
+  },
+  {
+    id: 'compass-rose',
+    name: 'Compass Rose',
+    desc: 'Display heading orientations and compass rose markers using magnetic sensors.',
+    category: 'mobile',
+    path: '/tools/mobile/compass-rose',
+    badgeText: 'MOBILE',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'View Compass',
+    searchKeywords: 'compass rose magnetometer navigation heading angles geolocation maps orientation'
+  },
+  {
+    id: 'accelerometer-viewer',
+    name: 'Accelerometer Viewer',
+    desc: 'Track real-time acceleration shifts, gravitational forces, and movements.',
+    category: 'mobile',
+    path: '/tools/mobile/accelerometer-viewer',
+    badgeText: 'MOBILE',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Track Forces',
+    searchKeywords: 'accelerometer viewer device motion velocity forces gravity shifts graph sensor'
+  },
+  {
+    id: 'light-meter',
+    name: 'Light Meter',
+    desc: 'Audit ambient light values in Lux using client-side camera sensory feeds.',
+    category: 'mobile',
+    path: '/tools/mobile/light-meter',
+    badgeText: 'MOBILE',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Measure Light',
+    searchKeywords: 'light meter camera sensory lux units ambient check photography details'
+  },
+  {
+    id: 'orientation-lock',
+    name: 'Orientation Lock Check',
+    desc: 'Verify screen rotation responses, lock alignments, and display geometry.',
+    category: 'mobile',
+    path: '/tools/mobile/orientation-lock',
+    badgeText: 'MOBILE',
+    badgeClass: 'badge-tag-purple bg-rose-light text-primary',
+    cardClass: 'card-feature-rose',
+    actionText: 'Check Screen Lock',
+    searchKeywords: 'orientation lock check scale rotation triggers mobile viewport dimensions'
+  },
+
+  // TIER 7 - Display
+  {
+    id: 'refresh-rate',
+    name: 'Refresh Rate Test',
+    desc: 'Measure browser monitor display refresh rates and detect visual frame pacing drops.',
+    category: 'display',
+    path: '/tools/display/refresh-rate',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Check Refresh Rate',
+    searchKeywords: 'refresh rate test hz monitor pacing frames fps diagnostics display speed'
+  },
+  {
+    id: 'aspect-ratio',
+    name: 'Aspect Ratio Checker',
+    desc: 'Calculate screen aspect ratios, viewport pixel geometries, and scaling grids.',
+    category: 'display',
+    path: '/tools/display/aspect-ratio',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Check Ratio',
+    searchKeywords: 'aspect ratio check dimensions layout viewport resolution scale pixel math'
+  },
+  {
+    id: 'scroll-wheel',
+    name: 'Scroll Wheel Test',
+    desc: 'Verify scroll wheel ticks, direction velocities, and scroll track sensitivity.',
+    category: 'display',
+    path: '/tools/display/scroll-wheel',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Test Scroll',
+    searchKeywords: 'scroll wheel test mouse wheel scrolling speed track sensitivity double lines'
+  },
+  {
+    id: 'polling-rate',
+    name: 'Polling Rate Test',
+    desc: 'Track mouse report polling frequencies and verify data coordinate throughput rates.',
+    category: 'display',
+    path: '/tools/display/polling-rate',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Check Polling Rate',
+    searchKeywords: 'polling rate test report frequency rate hz mouse tracking coordinates latency'
+  },
+  {
+    id: 'double-click',
+    name: 'Double Click Test',
+    desc: 'Audit and detect mechanical mouse switch double-click issues on primary inputs.',
+    category: 'display',
+    path: '/tools/display/double-click',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Start Mouse Test',
+    searchKeywords: 'double click test mouse switches click detection gaming diagnostic mechanical issues'
+  },
+  {
+    id: 'key-repeat',
+    name: 'Key Repeat Test',
+    desc: 'Test keyboard repeat rates, input bounce delays, and keystroke logs.',
+    category: 'display',
+    path: '/tools/display/key-repeat',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Test Key Repeat',
+    searchKeywords: 'key repeat test delay speed typing latency bounce rate keypress log'
+  },
+  {
+    id: 'caps-lock',
+    name: 'Caps Lock Test',
+    desc: 'Check Caps Lock activation states, keystroke indicators, and warnings.',
+    category: 'display',
+    path: '/tools/display/caps-lock',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Test Caps Lock',
+    searchKeywords: 'caps lock test status checker keyboard active status indicators warnings'
+  },
+  {
+    id: 'keyboard-latency',
+    name: 'Keyboard Latency Test',
+    desc: 'Test keyboard press latencies and measure input-to-screen response times.',
+    category: 'display',
+    path: '/tools/display/keyboard-latency',
+    badgeText: 'DISPLAY',
+    badgeClass: 'badge-tag-yellow bg-yellow-light text-yellow-dark',
+    cardClass: 'card-feature-yellow',
+    actionText: 'Check Latency',
+    searchKeywords: 'keyboard latency test keypress ms delay reaction speed input response'
+  },
+
+  // TIER 8 - General
+  {
+    id: 'time-zone-converter',
+    name: 'Time Zone Converter',
+    desc: 'Convert and compare calendar dates and times across global time zones.',
+    category: 'general',
+    path: '/tools/general/time-zone-converter',
+    badgeText: 'EVERYDAY',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Convert Time',
+    searchKeywords: 'time zone converter clock comparison calendar utc local world schedules'
+  },
+  {
+    id: 'currency-converter',
+    name: 'Currency Converter',
+    desc: 'Convert standard currencies using localized static conversion rates.',
+    category: 'general',
+    path: '/tools/general/currency-converter',
+    badgeText: 'EVERYDAY',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Convert Currency',
+    searchKeywords: 'currency converter money conversion dollar euro pound rates static calculations'
+  },
+  {
+    id: 'speedometer',
+    name: 'Speedometer',
+    desc: 'Calculate real-time geographic velocities using browser GPS location updates.',
+    category: 'general',
+    path: '/tools/general/speedometer',
+    badgeText: 'EVERYDAY',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Check Speed',
+    searchKeywords: 'speedometer gps velocity coordinates tracking movement geographic travel'
+  },
+  {
+    id: 'screen-dead-pixel',
+    name: 'Screen Dead Pixel Checker',
+    desc: 'Scan and identify dead pixels on your monitor screen using solid backgrounds.',
+    category: 'general',
+    path: '/tools/general/screen-dead-pixel',
+    badgeText: 'EVERYDAY',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Scan Screen',
+    searchKeywords: 'dead pixel screen monitor background check solid pixels checker diagnostic'
+  },
+  {
+    id: 'color-picker',
+    name: 'Color Picker',
+    desc: 'Extract HSL, hex, and RGB values from canvas coordinates or input ranges.',
+    category: 'general',
+    path: '/tools/general/color-picker',
+    badgeText: 'EVERYDAY',
+    badgeClass: 'badge-tag-yellow bg-teal-light text-moss-dark',
+    cardClass: 'card-feature-teal',
+    actionText: 'Pick Colors',
+    searchKeywords: 'color picker canvas cursor hex rgb hsl colors palettes checks extract'
+  }
+];
 ---
 
 <Layout>
@@ -17,26 +782,56 @@ import Layout from '../layouts/Layout.astro';
         </div>
         
         <h1 class="font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-[-2.5px] leading-[1.05] text-primary">
-          See how teams get great done, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none">tool by tool.</span>
+          See how teams get great done, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none">computation by computation.</span>
         </h1>
         
         <p class="font-display text-base md:text-lg text-slate max-w-xl leading-relaxed">
-          An interactive visual utility sandbox for developers and designers. Draw sketches, place sticky notes, format code, and persist workspace states locally.
+          An interactive multi-tool suite containing 56 calculators, diagnostics, and text tools. Calculate finances, optimize health parameters, run input tests, and sketch ideas on a local whiteboard canvas.
         </p>
 
-        <!-- Instant Filter / Search Pill -->
-        <div class="w-full max-w-lg mt-2">
+        <!-- Instant Filter / Search Pill with Live Dropdown -->
+        <div class="w-full max-w-lg mt-2 relative" id="hero-search-wrapper">
           <div class="relative flex items-center">
+            <div class="absolute left-4 text-stone pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
             <input 
               type="text" 
               id="tool-search" 
               placeholder="Search tools (e.g. JSON, Whiteboard, UUID...)" 
-              class="text-input w-full pr-12 focus:border-brand-blue"
+              class="text-input w-full pl-11 pr-20 focus:border-brand-blue"
+              autocomplete="off"
+              spellcheck="false"
             />
-            <div class="absolute right-4 text-stone pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <div class="absolute right-3 flex items-center gap-1.5">
+              <span class="text-[9px] font-bold text-stone bg-surface border border-hairline rounded px-1.5 py-0.5 select-none hidden sm:inline">Ctrl+K</span>
+            </div>
+          </div>
+
+          <!-- Hero Search Dropdown -->
+          <div 
+            id="hero-search-dropdown" 
+            class="absolute top-full left-0 w-full mt-2 bg-canvas border border-hairline rounded-xl shadow-modal z-50 overflow-hidden hidden"
+          >
+            <!-- Results list -->
+            <div id="hero-dropdown-results" class="max-h-[340px] overflow-y-auto"></div>
+            
+            <!-- No Results + Request Tool CTA -->
+            <div id="hero-dropdown-empty" class="hidden px-5 py-6 text-center">
+              <div class="w-10 h-10 mx-auto rounded-full bg-surface-yellow border border-yellow-light flex items-center justify-center text-base mb-2.5">🔍</div>
+              <p class="text-sm font-display font-medium text-primary mb-1">No matching tools found</p>
+              <p class="text-xs text-slate mb-3">Can't find what you need? Request it and we'll build it!</p>
+              <button 
+                id="hero-request-tool-btn" 
+                class="button-primary !py-2 !px-5 !text-xs inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                Request a Tool
+              </button>
             </div>
           </div>
         </div>
@@ -45,8 +840,14 @@ import Layout from '../layouts/Layout.astro';
         <div class="flex flex-wrap gap-2.5 mt-2" id="filter-tabs-container">
           <button class="pill-tab pill-tab-active" data-category="all">All Tools</button>
           <button class="pill-tab" data-category="collaboration">Collaboration</button>
-          <button class="pill-tab" data-category="developer">Developer</button>
-          <button class="pill-tab" data-category="design">Design</button>
+          <button class="pill-tab" data-category="finance">Finance & Tax</button>
+          <button class="pill-tab" data-category="health">Health & Fitness</button>
+          <button class="pill-tab" data-category="engagement">Engagement</button>
+          <button class="pill-tab" data-category="developer">Developer & Text</button>
+          <button class="pill-tab" data-category="audio">Audio Utilities</button>
+          <button class="pill-tab" data-category="mobile">Mobile Sensors</button>
+          <button class="pill-tab" data-category="display">Display & Input</button>
+          <button class="pill-tab" data-category="general">Everyday Tools</button>
         </div>
       </div>
 
@@ -117,7 +918,7 @@ import Layout from '../layouts/Layout.astro';
 
 
   <!-- Directory Section -->
-  <section class="bg-canvas py-16 px-4 border-b border-hairline">
+  <section id="tools-directory-section" class="bg-canvas py-16 px-4 border-b border-hairline scroll-mt-20">
     <div class="max-w-[1280px] mx-auto">
       <!-- Recent History Workspaces Container (Dynamically populated) -->
       <div id="recent-workspaces-section" class="hidden mb-12 animate-fade-in-up delay-75">
@@ -134,95 +935,37 @@ import Layout from '../layouts/Layout.astro';
           <h2 class="font-display font-medium text-3xl text-primary tracking-tight mt-1">Select a Workspace</h2>
         </div>
         <p class="text-sm text-slate max-w-md">
-          Format input strings, run accessibility color contrast audits, compile SVG code, and draw. Instant results.
+          Format input strings, run accessibility audits, compile SVG code, and draw. Instant results.
         </p>
       </div>
 
       <!-- Tool Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
-        <!-- Whiteboard Card -->
-        <div class="tool-card card-feature-yellow flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-75" data-category="collaboration" data-title="Whiteboard Sketchpad Canvas Sticky Notes">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">COLLABORATION</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Visual Whiteboard</h3>
-            <p class="text-sm text-yellow-dark/90 leading-relaxed">
-              Draggable sticky notes, drawing boards, and flow diagram layout workspace. Custom colors and download.
-            </p>
-          </div>
-          <a href="/tools/whiteboard" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Launch Canvas &rarr;
-          </a>
-        </div>
+        {tools.map((tool, index) => {
+          let delayClass = "delay-75";
+          if (index % 4 === 1) delayClass = "delay-100";
+          else if (index % 4 === 2) delayClass = "delay-150";
+          else if (index % 4 === 3) delayClass = "delay-200";
 
-        <!-- JSON Formatter Card -->
-        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-100" data-category="developer" data-title="JSON Formatter Validator Parser Format Minify Beautify">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">DEVELOPER</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">JSON Formatter</h3>
-            <p class="text-sm text-moss-dark/90 leading-relaxed">
-              Format, validate, beautify, and compress JSON files instantly. Highlights syntax errors, matching brackets, and paths.
-            </p>
-          </div>
-          <a href="/tools/json-formatter" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Beautify JSON &rarr;
-          </a>
-        </div>
-
-        <!-- Base64 Card -->
-        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-150" data-category="developer" data-title="Base64 URL Encoder Decoder Converter text">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">DEVELOPER</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Base64 & URL Tool</h3>
-            <p class="text-sm text-coral-dark/90 leading-relaxed">
-              Quickly encode and decode strings to and from Base64 or standard URL format. Side-by-side verification panels.
-            </p>
-          </div>
-          <a href="/tools/base64-url" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Convert String &rarr;
-          </a>
-        </div>
-
-        <!-- UUID & Hash Card -->
-        <div class="tool-card card-feature-rose flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-200" data-category="developer" data-title="UUID Hash Generator MD5 SHA-1 SHA-256 Bulk ID text">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-purple bg-rose-light text-primary self-start">DEVELOPER</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">UUID & Hash Gen</h3>
-            <p class="text-sm text-slate leading-relaxed font-normal font-sans">
-              Bulk generate secure UUID v4 tokens or hash target input strings using MD5, SHA-1, or SHA-256 engines locally.
-            </p>
-          </div>
-          <a href="/tools/uuid-hash" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Generate IDs &rarr;
-          </a>
-        </div>
-
-        <!-- Contrast Checker Card -->
-        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-250" data-category="design" data-title="Contrast Checker WCAG Accessibility color palette AA AAA">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">DESIGN</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Contrast Checker</h3>
-            <p class="text-sm text-moss-dark/90 leading-relaxed">
-              Verify color contrast ratios of text overlay backgrounds. Test against standard WCAG 2.1 AA/AAA accessibility checks.
-            </p>
-          </div>
-          <a href="/tools/contrast-checker" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Check Contrast &rarr;
-          </a>
-        </div>
-
-        <!-- SVG Previewer Card -->
-        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-300" data-category="design" data-title="SVG Optimizer Previewer Editor XML scale sanitization">
-          <div class="flex flex-col gap-3">
-            <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">DESIGN</span>
-            <h3 class="font-display font-medium text-2xl text-primary tracking-tight">SVG Optimizer</h3>
-            <p class="text-sm text-coral-dark/90 leading-relaxed">
-              Preview vector graphics in real time, sanitize inline CSS styles, adjust layout viewboxes, and export clean markup.
-            </p>
-          </div>
-          <a href="/tools/svg-previewer" class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
-            Optimize SVG &rarr;
-          </a>
-        </div>
+          return (
+            <div 
+              class={`tool-card ${tool.cardClass} flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up ${delayClass}`} 
+              data-category={tool.category} 
+              data-title={tool.searchKeywords}
+            >
+              <div class="flex flex-col gap-3">
+                <span class={tool.badgeClass} style="align-self: start;">{tool.badgeText}</span>
+                <h3 class="font-display font-medium text-2xl text-primary tracking-tight">{tool.name}</h3>
+                <p class={`text-sm leading-relaxed ${tool.cardClass === 'card-feature-yellow' ? 'text-yellow-dark/90' : tool.cardClass === 'card-feature-teal' ? 'text-moss-dark/90' : tool.cardClass === 'card-feature-coral' ? 'text-coral-dark/90' : 'text-slate font-sans font-normal'}`}>
+                  {tool.desc}
+                </p>
+              </div>
+              <a href={tool.path} class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform">
+                {tool.actionText} &rarr;
+              </a>
+            </div>
+          );
+        })}
 
         <!-- Request a Tool Grid Card -->
         <div class="card-base border-dashed border-2 border-hairline-strong flex flex-col justify-between gap-4 p-6 hover:shadow-mockup transition-all group animate-fade-in-up delay-300 select-text" id="request-grid-card">
@@ -230,7 +973,7 @@ import Layout from '../layouts/Layout.astro';
             <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start">SUGGEST</span>
             <h3 class="font-display font-medium text-xl text-primary tracking-tight">Request a Tool</h3>
             <p class="text-xs text-slate leading-relaxed font-sans font-normal">
-              Need a JWT parser, cron expression builder, or epoch converter? Request it here! We build our utilities completely client-side.
+              Need a custom calculator, audio generator, or sensor reader? Request it here! We build our utilities completely client-side.
             </p>
           </div>
           
@@ -521,16 +1264,27 @@ import Layout from '../layouts/Layout.astro';
   }
 
   // ============================================
-  // TOOL FILTER & SEARCH LOGIC
+  // TOOL FILTER & SEARCH LOGIC + HERO DROPDOWN
   // ============================================
   const searchInput = document.getElementById('tool-search') as HTMLInputElement | null;
   const filterTabs = document.querySelectorAll('#filter-tabs-container button');
   const toolCards = document.querySelectorAll('.tool-card');
   const emptyState = document.getElementById('empty-state');
   const clearBtn = document.getElementById('clear-search-btn');
+  const heroDropdown = document.getElementById('hero-search-dropdown');
+  const heroDropdownResults = document.getElementById('hero-dropdown-results');
+  const heroDropdownEmpty = document.getElementById('hero-dropdown-empty');
+  const heroRequestBtn = document.getElementById('hero-request-tool-btn');
+  const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+
+  // Get tools index from SearchOverlay (shared data)
+  const heroSearchTools: Array<{id: string, name: string, desc: string, category: string, path: string, icon: string, keywords: string}> = 
+    (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
 
   let activeCategory = 'all';
   let searchQuery = '';
+  let heroActiveIdx = -1;
+  let heroVisibleItems: HTMLElement[] = [];
 
   function filterTools() {
     let visibleCount = 0;
@@ -560,11 +1314,158 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  // Handle Search Input Change
+  function heroHighlightText(text: string, query: string): string {
+    if (!query) return text;
+    const safeQ = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return text.replace(new RegExp(`(${safeQ})`, 'gi'), '<mark class="bg-brand-yellow/40 text-primary rounded-sm px-0.5">$1</mark>');
+  }
+
+  function showHeroDropdown(query: string) {
+    if (!heroDropdown || !heroDropdownResults || !heroDropdownEmpty) return;
+    
+    const q = query.toLowerCase().trim();
+    if (!q) {
+      heroDropdown.classList.add('hidden');
+      heroActiveIdx = -1;
+      heroVisibleItems = [];
+      return;
+    }
+
+    const matches = heroSearchTools.filter(t =>
+      t.name.toLowerCase().includes(q) ||
+      t.keywords.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q)
+    );
+
+    heroDropdown.classList.remove('hidden');
+
+    if (matches.length > 0) {
+      heroDropdownEmpty.classList.add('hidden');
+      heroDropdownResults.classList.remove('hidden');
+
+      // Group by category
+      const grouped: Record<string, typeof matches> = {};
+      matches.forEach(m => {
+        if (!grouped[m.category]) grouped[m.category] = [];
+        grouped[m.category].push(m);
+      });
+
+      let html = '';
+      for (const [cat, items] of Object.entries(grouped)) {
+        html += `<div class="px-4 pt-3 pb-1"><span class="text-[10px] font-bold text-stone uppercase tracking-wider">${cat}</span></div>`;
+        items.forEach(item => {
+          html += `
+            <a href="${item.path}" class="hero-dropdown-item flex items-center gap-3 px-4 py-2.5 hover:bg-surface transition-colors cursor-pointer group" data-path="${item.path}">
+              <span class="w-7 h-7 rounded-lg bg-surface border border-hairline flex items-center justify-center text-xs shrink-0 group-hover:border-brand-blue/30 transition-colors">${item.icon}</span>
+              <div class="flex-1 min-w-0">
+                <span class="text-sm font-display font-medium text-primary block truncate">${heroHighlightText(item.name, query)}</span>
+                <span class="text-[10px] text-stone block truncate">${heroHighlightText(item.desc, query)}</span>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-hairline-strong group-hover:text-brand-blue shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>`;
+        });
+      }
+
+      html += `<div class="px-4 py-2.5 border-t border-hairline flex items-center justify-between">
+        <span class="text-[10px] text-stone">${matches.length} tool${matches.length !== 1 ? 's' : ''} found</span>
+        <span class="text-[9px] text-stone flex items-center gap-1">
+          <kbd class="bg-surface border border-hairline rounded px-1 py-0.5 font-mono text-[8px]">↑↓</kbd> navigate
+          <kbd class="bg-surface border border-hairline rounded px-1 py-0.5 font-mono text-[8px] ml-1">↵</kbd> select
+        </span>
+      </div>`;
+
+      heroDropdownResults.innerHTML = html;
+      heroVisibleItems = Array.from(heroDropdownResults.querySelectorAll('.hero-dropdown-item'));
+      heroActiveIdx = -1;
+    } else {
+      heroDropdownResults.classList.add('hidden');
+      heroDropdownResults.innerHTML = '';
+      heroDropdownEmpty.classList.remove('hidden');
+      heroVisibleItems = [];
+      heroActiveIdx = -1;
+    }
+  }
+
+  function updateHeroHighlight() {
+    heroVisibleItems.forEach((el, i) => {
+      if (i === heroActiveIdx) {
+        el.classList.add('bg-surface');
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('bg-surface');
+      }
+    });
+  }
+
+  // Handle Search Input Change — filters grid + shows dropdown
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = (e.target as HTMLInputElement).value;
       filterTools();
+      showHeroDropdown(searchQuery);
+    });
+
+    // Handle focus to show dropdown if query exists
+    searchInput.addEventListener('focus', () => {
+      if (searchQuery.trim()) {
+        showHeroDropdown(searchQuery);
+      }
+    });
+
+    // Keyboard navigation in hero dropdown
+    searchInput.addEventListener('keydown', (e) => {
+      if (heroDropdown?.classList.contains('hidden')) return;
+      
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (heroVisibleItems.length > 0) {
+          heroActiveIdx = Math.min(heroActiveIdx + 1, heroVisibleItems.length - 1);
+          updateHeroHighlight();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (heroVisibleItems.length > 0) {
+          heroActiveIdx = Math.max(heroActiveIdx - 1, 0);
+          updateHeroHighlight();
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (heroActiveIdx >= 0 && heroVisibleItems[heroActiveIdx]) {
+          const href = heroVisibleItems[heroActiveIdx].getAttribute('href') || heroVisibleItems[heroActiveIdx].dataset.path;
+          if (href) window.location.href = href;
+        }
+      } else if (e.key === 'Escape') {
+        heroDropdown?.classList.add('hidden');
+        heroActiveIdx = -1;
+      }
+    });
+  }
+
+  // Close hero dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (heroSearchWrapper && heroDropdown && !heroSearchWrapper.contains(e.target as Node)) {
+      heroDropdown.classList.add('hidden');
+      heroActiveIdx = -1;
+    }
+  });
+
+  // Hero "Request a Tool" button → triggers the floating RequestToolPopup
+  if (heroRequestBtn) {
+    heroRequestBtn.addEventListener('click', () => {
+      heroDropdown?.classList.add('hidden');
+      const requestContainer = document.getElementById('floating-request-container');
+      const requestCollapsed = document.getElementById('request-collapsed-bubble');
+      const requestExpanded = document.getElementById('request-expanded-card');
+      if (requestContainer && requestCollapsed && requestExpanded) {
+        requestContainer.classList.remove('hidden');
+        requestContainer.classList.add('flex');
+        requestCollapsed.classList.add('hidden');
+        requestExpanded.classList.remove('hidden');
+        requestExpanded.classList.add('flex');
+      }
     });
   }
 
@@ -578,6 +1479,12 @@ import Layout from '../layouts/Layout.astro';
       current.classList.add('pill-tab-active');
       activeCategory = current.dataset.category || 'all';
       filterTools();
+      
+      // Smoothly scroll to the directory section
+      const targetSection = document.getElementById('tools-directory-section');
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 
@@ -597,6 +1504,7 @@ import Layout from '../layouts/Layout.astro';
         }
       });
       filterTools();
+      heroDropdown?.classList.add('hidden');
     });
   }
 
@@ -609,6 +1517,27 @@ import Layout from '../layouts/Layout.astro';
       }
     });
   });
+
+  // Handle Category query parameter on load
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get('category');
+  if (categoryParam) {
+    const targetTab = Array.from(filterTabs).find(t => (t as HTMLElement).dataset.category === categoryParam);
+    if (targetTab) {
+      filterTabs.forEach(t => t.classList.remove('pill-tab-active'));
+      targetTab.classList.add('pill-tab-active');
+      activeCategory = categoryParam;
+      filterTools();
+      
+      // Smoothly scroll to the directory section on page load with a slight delay
+      setTimeout(() => {
+        const targetSection = document.getElementById('tools-directory-section');
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    }
+  }
 
   // ============================================
   // IMMERSIVE HERO WHITEBOARD SANDBOX

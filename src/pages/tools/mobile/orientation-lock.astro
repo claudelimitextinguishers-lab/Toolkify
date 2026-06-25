@@ -1,0 +1,90 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+// Tool metadata
+const name = "Orientation Lock Check";
+const category = "mobile";
+const tier = "Mobile Sensor Tools";
+const description = "Verify screen rotation responses, lock alignments, and display geometry.";
+---
+
+<Layout 
+  title={`${name} - BoardTools`}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+>
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Home</a>
+        <span>/</span>
+        <a href="/" class="hover:text-primary">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 mt-1">
+        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+          {name}
+        </h1>
+        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+      </div>
+      <p class="text-base text-slate max-w-xl">
+        {description}
+      </p>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- Left: Interactive Form / Control Panel -->
+      <div class="lg:col-span-8 card-base flex flex-col gap-6">
+        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+          Calculator Workspace
+        </h2>
+
+        <!-- Placeholder UI Container -->
+        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
+          <div class="text-4xl">📱</div>
+          <div class="flex flex-col gap-2">
+            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
+            <p class="text-xs text-slate max-w-sm leading-relaxed">
+              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
+            </p>
+          </div>
+          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
+            Interactive Workspace Under Development
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Documentation / Details Sidebar -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        <!-- How it works -->
+        <div class="card-base bg-surface-soft flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
+          </p>
+          <div class="h-[1px] bg-hairline my-1"></div>
+          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
+          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
+            <li>100% Client-Side calculation</li>
+            <li>No data sent to external servers</li>
+            <li>Local state persistence in browser</li>
+          </ul>
+        </div>
+
+        <!-- Privacy Guard (Pastel Accent) -->
+        <div class="card-feature-rose flex flex-col gap-3">
+          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
+          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
+          <p class="text-xs ${themeColorText} leading-relaxed">
+            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

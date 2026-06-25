@@ -7,11 +7,15 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	toolName?: string;
+	toolCategory?: string;
 }
 
 const { 
 	title = "BoardTools - The Visual Workspace Tools Suite", 
-	description = "A gorgeous Miro-inspired suite of client-side web utility tools including whiteboard, JSON formatter, contrast checker, base64 tool, and more. 100% private." 
+	description = "A gorgeous Miro-inspired suite of client-side web utility tools including whiteboard, JSON formatter, contrast checker, base64 tool, and more. 100% private.",
+	toolName,
+	toolCategory
 } = Astro.props;
 ---
 <!doctype html>
@@ -74,7 +78,7 @@ const {
 		<RequestToolPopup />
 
 		<!-- Activity Tracker for Workspace History -->
-		<script is:inline>
+		<script is:inline define:vars={{ toolName, toolCategory }}>
 			(() => {
 				const path = window.location.pathname.replace(/\/$/, ""); // Strip trailing slash if present
 				const normalizedPath = path === "" ? "/" : path;
@@ -96,9 +100,9 @@ const {
 						'/tools/contrast-checker': 'design',
 						'/tools/svg-previewer': 'design'
 					};
-					const name = toolNameMap[normalizedPath];
-					const category = toolCategoryMap[normalizedPath];
-					if (name) {
+					const name = toolName || toolNameMap[normalizedPath];
+					const category = toolCategory || toolCategoryMap[normalizedPath];
+					if (name && category) {
 						let recents = [];
 						try {
 							recents = JSON.parse(localStorage.getItem('recent_tools') || '[]');
