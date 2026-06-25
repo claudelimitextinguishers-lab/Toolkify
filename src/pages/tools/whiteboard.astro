@@ -63,17 +63,33 @@ import Layout from '../../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- Right Top Action Bar (Download & Clear) -->
-    <div class="absolute right-4 top-4 z-20 flex gap-2.5 p-2 bg-canvas border border-hairline rounded-xl shadow-modal">
+    <!-- Right Top Action Bar (Download, Save, Load, Clear) -->
+    <div class="absolute right-4 top-4 z-20 flex gap-2 p-1.5 bg-canvas border border-hairline rounded-xl shadow-modal items-center">
+      <button 
+        id="btn-import-project" 
+        class="button-secondary py-1.5 px-3 text-xs !rounded-lg border-hairline-strong hover:bg-surface cursor-pointer"
+        title="Load a saved boardtools project file (.json)"
+      >
+        Import JSON
+      </button>
+      <button 
+        id="btn-export-project" 
+        class="button-secondary py-1.5 px-3 text-xs !rounded-lg border-hairline-strong hover:bg-surface cursor-pointer"
+        title="Download project as file (.json)"
+      >
+        Export JSON
+      </button>
+      <input type="file" id="import-project-file" class="hidden" accept=".json" />
+      <div class="h-5 w-[1px] bg-hairline"></div>
       <button 
         id="btn-clear" 
-        class="button-secondary py-1.5 px-3.5 text-xs !rounded-lg border-hairline-strong hover:bg-surface cursor-pointer"
+        class="button-secondary py-1.5 px-3 text-xs !rounded-lg border-hairline-strong hover:bg-surface text-coral-dark dark:text-brand-coral cursor-pointer"
       >
         Clear Board
       </button>
       <button 
         id="btn-export" 
-        class="button-primary py-1.5 px-4 text-xs !rounded-lg hover:button-primary-active cursor-pointer"
+        class="button-primary py-1.5 px-3.5 text-xs !rounded-lg hover:button-primary-active cursor-pointer"
       >
         Export PNG
       </button>
@@ -632,6 +648,92 @@ import Layout from '../../layouts/Layout.astro';
         link.href = exportCanvas.toDataURL();
         link.click();
       }
+    });
+  }
+
+  // Export JSON Project File
+  const exportProjBtn = document.getElementById('btn-export-project');
+  if (exportProjBtn && canvas) {
+    exportProjBtn.addEventListener('click', () => {
+      try {
+        const projectData = {
+          notes: notes,
+          drawings: canvas.toDataURL(),
+          version: '1.0.0',
+          timestamp: Date.now()
+        };
+        const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.download = `boardtools_project_${Date.now()}.json`;
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        URL.revokeObjectURL(link.href);
+      } catch (e) {
+        alert('Failed to export project: ' + e);
+      }
+    });
+  }
+
+  // Import JSON Project File
+  const importProjBtn = document.getElementById('btn-import-project');
+  const importFileInput = document.getElementById('import-project-file') as HTMLInputElement | null;
+
+  if (importProjBtn && importFileInput) {
+    importProjBtn.addEventListener('click', () => {
+      importFileInput.click();
+    });
+
+    importFileInput.addEventListener('change', (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const content = event.target?.result as string;
+          const parsed = JSON.parse(content);
+
+          if (!parsed.notes && !parsed.drawings) {
+            alert('Invalid project file format.');
+            return;
+          }
+
+          if (confirm('Importing this project will clear your current whiteboard drawings and notes. Proceed?')) {
+            // Clear existing notes from DOM
+            if (stickyContainer) {
+              stickyContainer.innerHTML = '';
+            }
+            notes = [];
+
+            // Load new notes
+            if (parsed.notes && Array.isArray(parsed.notes)) {
+              notes = parsed.notes;
+              notes.forEach(note => {
+                renderStickyNoteHTML(note);
+              });
+            }
+
+            // Load drawings layer
+            if (ctx && canvas && parsed.drawings) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              const img = new Image();
+              img.onload = () => {
+                ctx.drawImage(img, 0, 0);
+                saveBoardState();
+              };
+              img.src = parsed.drawings;
+            } else if (ctx && canvas) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              saveBoardState();
+            }
+          }
+        } catch (err) {
+          alert('Failed to parse project file: ' + err);
+        }
+        // Reset file input value so same file can be re-imported
+        importFileInput.value = '';
+      };
+      reader.readAsText(file);
     });
   }
 

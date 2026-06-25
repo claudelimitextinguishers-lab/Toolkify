@@ -1,0 +1,180 @@
+---
+---
+
+<div 
+  id="floating-request-container" 
+  class="fixed bottom-6 right-6 z-40 hidden flex-col items-end gap-2 max-w-sm w-full font-sans select-none"
+>
+  <!-- Collapsed state bubble -->
+  <div 
+    id="request-collapsed-bubble" 
+    class="flex items-center gap-3 bg-primary text-canvas px-4 py-3 rounded-full shadow-modal border border-charcoal cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+  >
+    <div class="flex items-center gap-2">
+      <span class="text-base animate-bounce">💡</span>
+      <span class="font-display font-medium text-xs tracking-tight">Need a custom tool? Request it!</span>
+    </div>
+    <button 
+      id="close-collapsed-bubble" 
+      class="text-on-dark-muted hover:text-on-dark font-bold text-sm cursor-pointer p-0.5" 
+      title="Dismiss prompt"
+      aria-label="Dismiss prompt"
+    >
+      &times;
+    </button>
+  </div>
+
+  <!-- Expanded state card -->
+  <div 
+    id="request-expanded-card" 
+    class="hidden flex-col gap-4 p-5 rounded-2xl bg-canvas border border-hairline shadow-modal w-[320px] sm:w-[340px] text-left animate-scale-in"
+  >
+    <div class="flex justify-between items-start">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">💡</span>
+        <h3 class="font-display font-semibold text-sm text-primary">Request a Custom Tool</h3>
+      </div>
+      <button 
+        id="close-expanded-card" 
+        class="text-stone hover:text-primary font-bold text-base cursor-pointer p-0.5"
+        aria-label="Close form"
+      >
+        &times;
+      </button>
+    </div>
+    
+    <p class="text-xs text-slate leading-relaxed">
+      Need a JSON converter, cron scheduler, or JWT validator? Give us your email and idea—we'll build it locally next.
+    </p>
+
+    <form id="popup-request-form" class="flex flex-col gap-2.5">
+      <div class="flex flex-col gap-1">
+        <label for="popup-email" class="text-[10px] font-bold text-slate uppercase tracking-wider">Email Address</label>
+        <input 
+          type="email" 
+          id="popup-email" 
+          required 
+          placeholder="your@email.com" 
+          class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+        />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="popup-tool-desc" class="text-[10px] font-bold text-slate uppercase tracking-wider">What tool should we build?</label>
+        <input 
+          type="text" 
+          id="popup-tool-desc" 
+          required 
+          placeholder="e.g. JWT Decoder, YAML to JSON..." 
+          class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+        />
+      </div>
+
+      <button 
+        type="submit" 
+        class="button-primary w-full !py-2 !text-xs mt-1 hover:button-primary-active"
+      >
+        Send Request
+      </button>
+    </form>
+
+    <!-- Popup success message -->
+    <div id="popup-success-msg" class="hidden flex-col items-center justify-center text-center py-4 gap-2">
+      <span class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm">✓</span>
+      <span class="text-xs font-semibold text-primary">Request Logged Locally!</span>
+      <span class="text-[10px] text-slate">Thanks! We will notify you when it launches.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById('floating-request-container');
+  const collapsed = document.getElementById('request-collapsed-bubble');
+  const expanded = document.getElementById('request-expanded-card');
+  const closeCollapsed = document.getElementById('close-collapsed-bubble');
+  const closeExpanded = document.getElementById('close-expanded-card');
+  const form = document.getElementById('popup-request-form') as HTMLFormElement | null;
+  const successMsg = document.getElementById('popup-success-msg');
+
+  // Load delay: Show popup after 3.5 seconds if not dismissed
+  window.addEventListener('load', () => {
+    const isDismissed = localStorage.getItem('dismissed_request_popup');
+    if (!isDismissed && container) {
+      setTimeout(() => {
+        container.classList.remove('hidden');
+        container.classList.add('flex');
+        container.classList.add('animate-fade-in-up');
+      }, 3500);
+    }
+  });
+
+  // Expand popup on bubble click
+  if (collapsed && expanded) {
+    collapsed.addEventListener('click', (e) => {
+      // Don't expand if click was on the close button
+      if (e.target === closeCollapsed || closeCollapsed?.contains(e.target as Node)) {
+        return;
+      }
+      collapsed.classList.add('hidden');
+      expanded.classList.remove('hidden');
+      expanded.classList.add('flex');
+    });
+  }
+
+  // Close collapsed bubble
+  if (closeCollapsed && container) {
+    closeCollapsed.addEventListener('click', () => {
+      container.classList.add('hidden');
+      localStorage.setItem('dismissed_request_popup', 'true');
+    });
+  }
+
+  // Close expanded card
+  if (closeExpanded && container && collapsed && expanded) {
+    closeExpanded.addEventListener('click', () => {
+      expanded.classList.remove('flex');
+      expanded.classList.add('hidden');
+      collapsed.classList.remove('hidden');
+      // Clicking close also dismisses it for future page views
+      localStorage.setItem('dismissed_request_popup', 'true');
+    });
+  }
+
+  // Handle Form Submission
+  if (form && successMsg && expanded) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const emailVal = (document.getElementById('popup-email') as HTMLInputElement | null)?.value;
+      const toolVal = (document.getElementById('popup-tool-desc') as HTMLInputElement | null)?.value;
+
+      if (emailVal && toolVal) {
+        const submission = {
+          email: emailVal,
+          tool: toolVal,
+          timestamp: Date.now(),
+          source: 'popup'
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('requested_tools') || '[]');
+          existing.push(submission);
+          localStorage.setItem('requested_tools', JSON.stringify(existing));
+        } catch(err) {}
+
+        // Hide form fields and display success msg
+        form.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+        successMsg.classList.add('flex');
+
+        // Dismiss completely after 3 seconds
+        setTimeout(() => {
+          if (container) {
+            container.classList.add('hidden');
+          }
+          localStorage.setItem('dismissed_request_popup', 'true');
+        }, 3000);
+      }
+    });
+  }
+</script>

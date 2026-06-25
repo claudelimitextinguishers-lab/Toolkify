@@ -4,126 +4,130 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
   <!-- Hero Section -->
-  <section class="bg-canvas border-b border-hairline py-16 md:py-24 px-4">
-    <div class="max-w-[800px] mx-auto text-center flex flex-col items-center gap-6">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-yellow border border-yellow-light text-yellow-dark rounded-full text-xs font-semibold">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep animate-ping"></span>
-        Zero Server Overhead &bull; 100% Private Sandbox
-      </div>
-      
-      <h1 class="font-display font-medium text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.1] text-primary">
-        See how teams get great done, <span class="bg-brand-yellow px-1 rounded-sm">tool by tool.</span>
-      </h1>
-      
-      <p class="font-display text-base md:text-lg text-slate max-w-xl leading-relaxed">
-        An interactive, private-by-design utility sandbox for developers and designers. Drag sticky notes, format code, and optimize graphics in seconds.
-      </p>
+  <section class="bg-canvas border-b border-hairline py-16 lg:py-24 px-4 overflow-hidden relative">
+    <!-- Vibrant background grid pattern -->
+    <div class="absolute inset-0 dot-grid opacity-25 pointer-events-none"></div>
 
-      <!-- Instant Filter / Search Pill -->
-      <div class="w-full max-w-lg mt-4">
-        <div class="relative flex items-center">
-          <input 
-            type="text" 
-            id="tool-search" 
-            placeholder="Search tools (e.g. JSON, Whiteboard, UUID...)" 
-            class="text-input w-full pr-12 focus:border-brand-blue"
-          />
-          <div class="absolute right-4 text-stone pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
+    <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      <!-- Left Hero Content -->
+      <div class="lg:col-span-6 flex flex-col gap-6 items-start text-left animate-fade-in-up">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-yellow border border-yellow-light text-yellow-dark rounded-full text-xs font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep animate-ping"></span>
+          Zero Server Overhead &bull; 100% Private Sandbox
         </div>
-      </div>
-
-      <!-- Pill Tabs for Category Filter -->
-      <div class="flex flex-wrap justify-center gap-2.5 mt-2" id="filter-tabs-container">
-        <button class="pill-tab pill-tab-active" data-category="all">All Tools</button>
-        <button class="pill-tab" data-category="collaboration">Collaboration</button>
-        <button class="pill-tab" data-category="developer">Developer</button>
-        <button class="pill-tab" data-category="design">Design</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Workspace Section -->
-  <section class="bg-surface py-16 px-4">
-    <div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-      <!-- Description -->
-      <div class="lg:col-span-5 flex flex-col gap-6">
-        <div class="badge-tag-yellow self-start">FEATURED WORKSPACE</div>
-        <h2 class="font-display font-medium text-3xl md:text-4xl text-primary tracking-tight leading-tight">
-          Visual Board: Collaborative Mockups & Wireframes
-        </h2>
-        <p class="text-sm md:text-base text-slate leading-relaxed">
-          Create sticky notes, sketch vectors, draw flows, and lay out designs on a zoomable, infinitely flexible board. Runs fully offline and exports to PNG locally.
+        
+        <h1 class="font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-[-2.5px] leading-[1.05] text-primary">
+          See how teams get great done, <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none">tool by tool.</span>
+        </h1>
+        
+        <p class="font-display text-base md:text-lg text-slate max-w-xl leading-relaxed">
+          An interactive visual utility sandbox for developers and designers. Draw sketches, place sticky notes, format code, and persist workspace states locally.
         </p>
-        <div class="flex flex-col gap-3 text-sm text-slate">
-          <div class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            <span>Pastel Sticky notes with full-text editing</span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            <span>Freehand sketching, lines, and boxes</span>
-          </div>
-          <div class="flex items-center gap-2.5">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            <span>Instant local download of boards</span>
+
+        <!-- Instant Filter / Search Pill -->
+        <div class="w-full max-w-lg mt-2">
+          <div class="relative flex items-center">
+            <input 
+              type="text" 
+              id="tool-search" 
+              placeholder="Search tools (e.g. JSON, Whiteboard, UUID...)" 
+              class="text-input w-full pr-12 focus:border-brand-blue"
+            />
+            <div class="absolute right-4 text-stone pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
           </div>
         </div>
-        <a href="/tools/whiteboard" class="button-primary self-start mt-2">
-          Open Whiteboard &rarr;
-        </a>
+
+        <!-- Pill Tabs for Category Filter -->
+        <div class="flex flex-wrap gap-2.5 mt-2" id="filter-tabs-container">
+          <button class="pill-tab pill-tab-active" data-category="all">All Tools</button>
+          <button class="pill-tab" data-category="collaboration">Collaboration</button>
+          <button class="pill-tab" data-category="developer">Developer</button>
+          <button class="pill-tab" data-category="design">Design</button>
+        </div>
       </div>
 
-      <!-- Preview Card -->
-      <div class="lg:col-span-7">
-        <div class="whiteboard-mockup overflow-hidden aspect-[16/10] flex flex-col relative group">
-          <!-- Canvas Top Menu -->
-          <div class="h-10 border-b border-hairline bg-surface/50 flex items-center px-4 justify-between select-none">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-brand-red"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-success-accent"></span>
-            </div>
-            <span class="text-xs text-stone font-medium">BoardTools Visual Canvas (Demo)</span>
-          </div>
-          <!-- Canvas Grid Mockup -->
-          <div class="flex-grow bg-canvas dot-grid relative overflow-hidden flex items-center justify-center p-8 select-none">
-            <!-- Draw mockup notes and lines -->
-            <div class="absolute top-[20%] left-[15%] w-24 h-24 bg-brand-yellow shadow-card rounded-sm rotate-[-3deg] p-2 flex flex-col justify-between font-display text-[10px] text-primary">
-              <span class="font-medium">Define MVP</span>
-              <span class="text-stone text-[8px] self-end">#yellow</span>
-            </div>
-            <div class="absolute top-[40%] right-[20%] w-24 h-24 bg-brand-teal text-primary shadow-card rounded-sm rotate-[5deg] p-2 flex flex-col justify-between font-display text-[10px]">
-              <span class="font-medium">Design System!</span>
-              <span class="text-moss-dark text-[8px] self-end">#teal</span>
-            </div>
-            <div class="absolute bottom-[20%] left-[30%] w-24 h-24 bg-brand-rose shadow-card rounded-sm rotate-[-1deg] p-2 flex flex-col justify-between font-display text-[10px] text-primary">
-              <span class="font-medium">SEO Audit</span>
-              <span class="text-stone text-[8px] self-end">#rose</span>
+      <!-- Right Immersive Interactive Sandbox Widget -->
+      <div class="lg:col-span-6 w-full animate-fade-in-up delay-200">
+        <div class="whiteboard-mockup overflow-hidden aspect-[16/10] flex flex-col relative shadow-mockup glow-border-card animate-float-slow" id="home-board-container">
+          <!-- Canvas Top Menu Toolbar -->
+          <div class="h-11 border-b border-hairline bg-surface/85 backdrop-blur-md flex items-center px-4 justify-between select-none">
+            <!-- Left tools -->
+            <div class="flex items-center gap-1.5">
+              <button id="hero-tool-pen" class="p-1.5 rounded-md bg-surface border border-hairline-strong text-primary cursor-pointer hover:bg-hairline transition-colors" title="Sketch Pen">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+              </button>
+              <button id="hero-tool-sticky" class="p-1.5 rounded-md hover:bg-surface text-slate cursor-pointer transition-colors" title="Add Note">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </button>
+              <div class="w-[1px] h-4 bg-hairline"></div>
+              <button id="hero-tool-uuid" class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-blue cursor-pointer transition-colors" title="Add UUID Note">+ UUID Note</button>
+              <button id="hero-tool-base64" class="px-2 py-0.5 rounded bg-surface hover:bg-hairline border border-hairline text-[9px] font-bold text-brand-teal cursor-pointer transition-colors" title="Add Base64 Note">+ Base64 Note</button>
             </div>
             
-            <svg class="absolute w-full h-full pointer-events-none stroke-brand-blue" fill="none" stroke-width="2">
-              <path d="M 180 140 Q 250 180 320 180" stroke-dasharray="4" />
-              <path d="M 380 200 L 420 220" />
+            <!-- Right side controls -->
+            <div class="flex items-center gap-1.5">
+              <button id="toggle-multiplayer" class="px-2 py-0.5 rounded-full bg-surface hover:bg-hairline text-[9px] font-semibold text-slate border border-hairline flex items-center gap-1 cursor-pointer transition-colors">
+                <span class="w-1.5 h-1.5 rounded-full bg-stone" id="multiplayer-dot"></span>
+                <span>Cursors</span>
+              </button>
+              <button id="hero-tool-clear" class="p-1.5 rounded hover:bg-surface text-stone cursor-pointer transition-colors" title="Clear drawings">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas & Notes Area -->
+          <div class="flex-grow bg-canvas dot-grid relative overflow-hidden" id="home-board-canvas">
+            <!-- Simulated cursors layer -->
+            <div id="simulated-cursors" class="absolute inset-0 pointer-events-none z-35"></div>
+
+            <!-- Notes layer -->
+            <div id="home-notes-container" class="absolute inset-0 pointer-events-none z-10"></div>
+            
+            <!-- Drawings Canvas -->
+            <canvas id="home-sketch-canvas" class="absolute top-0 left-0 w-full h-full cursor-crosshair z-20"></canvas>
+            
+            <!-- SVG curves that connect notes dynamically -->
+            <svg class="absolute inset-0 pointer-events-none stroke-brand-blue animate-pulse z-0" fill="none" stroke-width="1.5" id="home-connecting-lines" style="width:100%; height:100%;">
+              <path d="M 0 0" stroke-dasharray="4" id="home-path-1" />
+              <path d="M 0 0" stroke-dasharray="4" id="home-path-2" class="stroke-brand-teal" />
             </svg>
             
-            <!-- Floating prompt -->
-            <div class="absolute bottom-4 right-4 bg-primary text-canvas px-3 py-1.5 rounded-full text-xs font-medium shadow-modal flex items-center gap-1.5 group-hover:scale-105 transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-yellow" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
-              Double click anywhere to draw
+            <!-- Floating tip -->
+            <div class="absolute bottom-3 right-3 bg-primary text-canvas px-2.5 py-1.2 rounded-full text-[9px] font-medium shadow-modal flex items-center gap-1 select-none pointer-events-none opacity-80 z-40">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-brand-yellow" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
+              Drag sticky notes or sketch with pen tool!
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- Directory Section -->
   <section class="bg-canvas py-16 px-4 border-b border-hairline">
     <div class="max-w-[1280px] mx-auto">
+      <!-- Recent History Workspaces Container (Dynamically populated) -->
+      <div id="recent-workspaces-section" class="hidden mb-12 animate-fade-in-up delay-75">
+        <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider block mb-3.5 select-none">Quick Jump Back</span>
+        <div id="recent-workspaces-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Dynamic nodes -->
+        </div>
+        <div class="h-[1px] bg-hairline mt-12"></div>
+      </div>
+
       <div class="flex flex-col md:flex-row justify-between items-baseline gap-4 mb-10">
         <div>
           <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">All Sandbox Tools</span>
@@ -137,7 +141,7 @@ import Layout from '../layouts/Layout.astro';
       <!-- Tool Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
         <!-- Whiteboard Card -->
-        <div class="tool-card card-feature-yellow flex flex-col justify-between gap-8 group cursor-pointer" data-category="collaboration" data-title="Whiteboard Sketchpad Canvas Sticky Notes">
+        <div class="tool-card card-feature-yellow flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-75" data-category="collaboration" data-title="Whiteboard Sketchpad Canvas Sticky Notes">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">COLLABORATION</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Visual Whiteboard</h3>
@@ -151,7 +155,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- JSON Formatter Card -->
-        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer" data-category="developer" data-title="JSON Formatter Validator Parser Format Minify Beautify">
+        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-100" data-category="developer" data-title="JSON Formatter Validator Parser Format Minify Beautify">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">DEVELOPER</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">JSON Formatter</h3>
@@ -165,7 +169,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- Base64 Card -->
-        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer" data-category="developer" data-title="Base64 URL Encoder Decoder Converter text">
+        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-150" data-category="developer" data-title="Base64 URL Encoder Decoder Converter text">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">DEVELOPER</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Base64 & URL Tool</h3>
@@ -179,11 +183,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- UUID & Hash Card -->
-        <div class="tool-card card-feature-rose flex flex-col justify-between gap-8 group cursor-pointer" data-category="developer" data-title="UUID Hash Generator MD5 SHA-1 SHA-256 Bulk ID text">
+        <div class="tool-card card-feature-rose flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-200" data-category="developer" data-title="UUID Hash Generator MD5 SHA-1 SHA-256 Bulk ID text">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-purple bg-rose-light text-primary self-start">DEVELOPER</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">UUID & Hash Gen</h3>
-            <p class="text-sm text-slate leading-relaxed font-normal">
+            <p class="text-sm text-slate leading-relaxed font-normal font-sans">
               Bulk generate secure UUID v4 tokens or hash target input strings using MD5, SHA-1, or SHA-256 engines locally.
             </p>
           </div>
@@ -193,7 +197,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- Contrast Checker Card -->
-        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer" data-category="design" data-title="Contrast Checker WCAG Accessibility color palette AA AAA">
+        <div class="tool-card card-feature-teal flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-250" data-category="design" data-title="Contrast Checker WCAG Accessibility color palette AA AAA">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">DESIGN</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">Contrast Checker</h3>
@@ -207,7 +211,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
 
         <!-- SVG Previewer Card -->
-        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer" data-category="design" data-title="SVG Optimizer Previewer Editor XML scale sanitization">
+        <div class="tool-card card-feature-coral flex flex-col justify-between gap-8 group cursor-pointer card-hover-effect animate-fade-in-up delay-300" data-category="design" data-title="SVG Optimizer Previewer Editor XML scale sanitization">
           <div class="flex flex-col gap-3">
             <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">DESIGN</span>
             <h3 class="font-display font-medium text-2xl text-primary tracking-tight">SVG Optimizer</h3>
@@ -219,12 +223,117 @@ import Layout from '../layouts/Layout.astro';
             Optimize SVG &rarr;
           </a>
         </div>
+
+        <!-- Request a Tool Grid Card -->
+        <div class="card-base border-dashed border-2 border-hairline-strong flex flex-col justify-between gap-4 p-6 hover:shadow-mockup transition-all group animate-fade-in-up delay-300 select-text" id="request-grid-card">
+          <div class="flex flex-col gap-3">
+            <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start">SUGGEST</span>
+            <h3 class="font-display font-medium text-xl text-primary tracking-tight">Request a Tool</h3>
+            <p class="text-xs text-slate leading-relaxed font-sans font-normal">
+              Need a JWT parser, cron expression builder, or epoch converter? Request it here! We build our utilities completely client-side.
+            </p>
+          </div>
+          
+          <form id="grid-request-form" class="flex flex-col gap-2 pointer-events-auto">
+            <input 
+              type="email" 
+              id="grid-request-email" 
+              required 
+              placeholder="Enter email address" 
+              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+            />
+            <input 
+              type="text" 
+              id="grid-request-desc" 
+              required 
+              placeholder="What tool do you want next?" 
+              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
+            />
+            <button 
+              type="submit" 
+              class="button-primary w-full !py-2 !text-xs hover:button-primary-active mt-1"
+            >
+              Submit Idea
+            </button>
+          </form>
+
+          <div id="grid-request-success" class="hidden flex-col items-center justify-center text-center py-4 gap-2">
+            <span class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm">✓</span>
+            <span class="text-xs font-semibold text-primary">Idea Submitted!</span>
+            <span class="text-[10px] text-slate font-medium">Thanks! We've saved your request.</span>
+          </div>
+        </div>
       </div>
       
       <!-- Empty state when no search matches -->
       <div id="empty-state" class="hidden text-center py-16 border border-dashed border-hairline rounded-xl mt-6">
         <p class="text-slate font-medium">No tools found matching your criteria.</p>
         <button id="clear-search-btn" class="button-ghost text-brand-blue text-sm mt-2 font-medium">Clear search queries</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Reviews & Testimonials Section -->
+  <section class="bg-canvas py-16 px-4 border-t border-hairline relative z-10">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="text-center mb-12 flex flex-col gap-2">
+        <span class="text-xs font-semibold text-brand-blue uppercase tracking-wider">User Reviews</span>
+        <h2 class="font-display font-medium text-3xl text-primary tracking-tight">What Creators Say About BoardTools</h2>
+        <p class="text-sm text-slate max-w-md mx-auto">
+          Read testimonials from developers and designers who build interfaces using our secure client-side sandbox.
+        </p>
+      </div>
+
+      <!-- Reviews Feed Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="homepage-reviews-grid">
+        <!-- Static review 1 -->
+        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-surface-yellow border border-yellow-light text-yellow-dark shadow-subtle">
+          <p class="text-xs leading-relaxed opacity-95 italic">
+            "Absolutely loving the interactive whiteboard widget on the homepage! I was able to sketch out a wireframe flow while simultaneously using the UUID and Base64 cards."
+          </p>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="w-8 h-8 rounded-full bg-yellow-light border border-yellow-dark/20 flex items-center justify-center font-bold text-xs select-none">DV</div>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary">Darnell Vance</span>
+              <span class="text-[9px] opacity-75">Senior Product Designer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static review 2 -->
+        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-teal-light border border-hairline text-moss-dark shadow-subtle">
+          <p class="text-xs leading-relaxed opacity-95 italic">
+            "The fact that this tool runs 100% locally is a lifesaver. Our company has extremely strict policies about pasting credentials or data into third-party sites."
+          </p>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="w-8 h-8 rounded-full bg-teal-light border border-moss-dark/20 flex items-center justify-center font-bold text-xs select-none">AR</div>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary">Aisha Rahman</span>
+              <span class="text-[9px] opacity-75">Full Stack Developer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static review 3 -->
+        <div class="flex flex-col justify-between gap-4 p-6 rounded-2xl bg-coral-light border border-hairline text-coral-dark shadow-subtle">
+          <p class="text-xs leading-relaxed opacity-95 italic">
+            "Clean aesthetic, very Miro-esque. The Contrast Checker works flawlessly for auditing AA/AAA scores. I'd love to see a JWT decoder added in a future update!"
+          </p>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="w-8 h-8 rounded-full bg-coral-light border border-coral-dark/20 flex items-center justify-center font-bold text-xs select-none">MC</div>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary">Marcus Cheng</span>
+              <span class="text-[9px] opacity-75">UI Engineer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Write a Review CTA -->
+      <div class="flex justify-center mt-10">
+        <a href="/review" class="button-primary text-sm hover:button-primary-active flex items-center gap-2">
+          <span>★</span> Review Our Website <span>★</span>
+        </a>
       </div>
     </div>
   </section>
@@ -274,6 +383,40 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Feature Highlights Bar -->
+  <section class="bg-surface/50 border-t border-b border-hairline py-10 px-4 relative select-none z-10">
+    <div class="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up delay-300">
+      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-teal/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
+        <div class="w-10 h-10 rounded-full bg-teal-light border border-hairline text-moss-dark flex items-center justify-center font-bold text-sm select-none">🔒</div>
+        <div class="flex flex-col">
+          <span class="text-xs font-semibold text-primary">100% Private Sandbox</span>
+          <span class="text-[10px] text-stone">All tools run client-side</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-yellow/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
+        <div class="w-10 h-10 rounded-full bg-surface-yellow border border-yellow-light text-yellow-dark flex items-center justify-center font-bold text-sm select-none">🎨</div>
+        <div class="flex flex-col">
+          <span class="text-xs font-semibold text-primary">Interactive Canvas</span>
+          <span class="text-[10px] text-stone">Draw & place sticky notes live</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-blue/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
+        <div class="w-10 h-10 rounded-full bg-surface-pricing-featured border border-hairline text-brand-blue flex items-center justify-center font-bold text-sm select-none">💾</div>
+        <div class="flex flex-col">
+          <span class="text-xs font-semibold text-primary">Local JSON Projects</span>
+          <span class="text-[10px] text-stone">Save/load workspaces to disk</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-2xl bg-canvas/40 border border-hairline/60 hover:border-brand-coral/30 hover:bg-canvas/80 transition-all duration-300 font-sans">
+        <div class="w-10 h-10 rounded-full bg-coral-light border border-hairline text-coral-dark flex items-center justify-center font-bold text-sm select-none">⚡</div>
+        <div class="flex flex-col">
+          <span class="text-xs font-semibold text-primary">Zero Server Lag</span>
+          <span class="text-[10px] text-stone">Instant local executions</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA Banner Dark -->
   <section class="bg-canvas py-16 px-4">
     <div class="max-w-[1280px] mx-auto bg-primary text-canvas rounded-3xl p-12 text-center flex flex-col items-center gap-6 shadow-mockup">
@@ -292,7 +435,94 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
-  // Add live filter search capability
+  // ============================================
+  // GRID REQUEST A TOOL FORM LOGIC
+  // ============================================
+  const gridForm = document.getElementById('grid-request-form') as HTMLFormElement | null;
+  const gridSuccess = document.getElementById('grid-request-success');
+
+  if (gridForm && gridSuccess) {
+    gridForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailVal = (document.getElementById('grid-request-email') as HTMLInputElement | null)?.value;
+      const toolVal = (document.getElementById('grid-request-desc') as HTMLInputElement | null)?.value;
+
+      if (emailVal && toolVal) {
+        const submission = {
+          email: emailVal,
+          tool: toolVal,
+          timestamp: Date.now(),
+          source: 'grid'
+        };
+
+        try {
+          const existing = JSON.parse(localStorage.getItem('requested_tools') || '[]');
+          existing.push(submission);
+          localStorage.setItem('requested_tools', JSON.stringify(existing));
+        } catch(err) {}
+
+        gridForm.classList.add('hidden');
+        gridSuccess.classList.remove('hidden');
+        gridSuccess.classList.add('flex');
+      }
+    });
+  }
+
+  // ============================================
+  // HOMEPAGE DYNAMIC REVIEWS FEED LOGIC
+  // ============================================
+  const homepageReviewsGrid = document.getElementById('homepage-reviews-grid');
+  if (homepageReviewsGrid) {
+    try {
+      const localReviews = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+      if (localReviews.length > 0) {
+        const pastelClasses = [
+          "bg-surface-yellow border border-yellow-light text-yellow-dark",
+          "bg-teal-light border border-hairline text-moss-dark",
+          "bg-coral-light border border-hairline text-coral-dark",
+          "bg-rose-light border border-hairline text-primary"
+        ];
+
+        localReviews.slice(0, 3).forEach((item: any, index: number) => {
+          const colorClass = pastelClasses[index % pastelClasses.length];
+          const starsHTML = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+          
+          const card = document.createElement('div');
+          card.className = `flex flex-col justify-between gap-4 p-6 rounded-2xl ${colorClass} shadow-subtle animate-fade-in-up`;
+          
+          const initials = (item.name || 'U').split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase();
+          
+          card.innerHTML = `
+            <div class="flex flex-col gap-3">
+              <div class="flex justify-between items-start">
+                <span class="text-xs font-bold text-brand-yellow-deep">${starsHTML}</span>
+                <span class="bg-success-accent/15 text-success-accent border border-success-accent/25 text-[8px] font-bold px-1.5 py-0.5 rounded-full">New</span>
+              </div>
+              <p class="text-xs leading-relaxed opacity-95 italic font-sans font-normal">
+                "${item.review}"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 mt-2">
+              <div class="w-8 h-8 rounded-full ${colorClass} filter brightness-95 flex items-center justify-center font-bold text-xs select-none border border-black/10 text-primary">
+                ${initials}
+              </div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-primary">${item.name}</span>
+                <span class="text-[9px] opacity-75">${item.title || 'User'}</span>
+              </div>
+            </div>
+          `;
+          homepageReviewsGrid.insertBefore(card, homepageReviewsGrid.firstChild);
+        });
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  // ============================================
+  // TOOL FILTER & SEARCH LOGIC
+  // ============================================
   const searchInput = document.getElementById('tool-search') as HTMLInputElement | null;
   const filterTabs = document.querySelectorAll('#filter-tabs-container button');
   const toolCards = document.querySelectorAll('.tool-card');
@@ -379,4 +609,484 @@ import Layout from '../layouts/Layout.astro';
       }
     });
   });
+
+  // ============================================
+  // IMMERSIVE HERO WHITEBOARD SANDBOX
+  // ============================================
+  const homeCanvas = document.getElementById('home-board-canvas') as HTMLElement | null;
+  const notesContainer = document.getElementById('home-notes-container');
+  const heroPenBtn = document.getElementById('hero-tool-pen');
+  const heroStickyBtn = document.getElementById('hero-tool-sticky');
+  const heroSketchCanvas = document.getElementById('home-sketch-canvas') as HTMLCanvasElement | null;
+  const heroCtx = heroSketchCanvas?.getContext('2d');
+  
+  let activeHeroTool: 'pen' | 'sticky' = 'sticky';
+  let isDrawingHero = false;
+  let lastHeroX = 0;
+  let lastHeroY = 0;
+  let heroNotes: Array<{id: string, el: HTMLElement, type: string}> = [];
+
+  function setHeroTool(tool: 'pen' | 'sticky') {
+    activeHeroTool = tool;
+    if (tool === 'pen') {
+      heroPenBtn?.classList.add('bg-primary', 'text-canvas');
+      heroPenBtn?.classList.remove('bg-surface', 'text-slate');
+      heroStickyBtn?.classList.remove('bg-primary', 'text-canvas');
+      heroStickyBtn?.classList.add('bg-surface', 'text-slate');
+      if (heroSketchCanvas) {
+        heroSketchCanvas.style.pointerEvents = 'auto'; // allow drawing
+        heroSketchCanvas.style.cursor = 'crosshair';
+      }
+    } else {
+      heroStickyBtn?.classList.add('bg-primary', 'text-canvas');
+      heroStickyBtn?.classList.remove('bg-surface', 'text-slate');
+      heroPenBtn?.classList.remove('bg-primary', 'text-canvas');
+      heroPenBtn?.classList.add('bg-surface', 'text-slate');
+      if (heroSketchCanvas) {
+        heroSketchCanvas.style.pointerEvents = 'none'; // click through to drag notes
+        heroSketchCanvas.style.cursor = 'default';
+      }
+    }
+  }
+
+  // Draw Line Connector SVG paths between note-1 -> note-2 -> note-3
+  function updateLines() {
+    const canvasEl = document.getElementById('home-board-canvas');
+    const n1 = canvasEl?.querySelector('[data-id="note-1"]') as HTMLElement | null;
+    const n2 = canvasEl?.querySelector('[data-id="note-2"]') as HTMLElement | null;
+    const n3 = canvasEl?.querySelector('[data-id="note-3"]') as HTMLElement | null;
+    const path1 = document.getElementById('home-path-1');
+    const path2 = document.getElementById('home-path-2');
+    
+    if (canvasEl && n1 && n2 && path1) {
+      const r1 = { x: n1.offsetLeft + n1.offsetWidth / 2, y: n1.offsetTop + n1.offsetHeight / 2 };
+      const r2 = { x: n2.offsetLeft + n2.offsetWidth / 2, y: n2.offsetTop + n2.offsetHeight / 2 };
+      path1.setAttribute('d', `M ${r1.x} ${r1.y} Q ${(r1.x + r2.x)/2} ${(r1.y + r2.y)/2 - 30} ${r2.x} ${r2.y}`);
+    }
+
+    if (canvasEl && n2 && n3 && path2) {
+      const r2 = { x: n2.offsetLeft + n2.offsetWidth / 2, y: n2.offsetTop + n2.offsetHeight / 2 };
+      const r3 = { x: n3.offsetLeft + n3.offsetWidth / 2, y: n3.offsetTop + n3.offsetHeight / 2 };
+      path2.setAttribute('d', `M ${r2.x} ${r2.y} Q ${(r2.x + r3.x)/2} ${(r2.y + r3.y)/2 + 30} ${r3.x} ${r3.y}`);
+    }
+  }
+
+  function initStickyDrag(el: HTMLElement) {
+    let isMoving = false;
+    let startOffsetX = 0;
+    let startOffsetY = 0;
+
+    el.addEventListener('mousedown', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') return;
+      isMoving = true;
+      const rect = el.getBoundingClientRect();
+      startOffsetX = e.clientX - rect.left;
+      startOffsetY = e.clientY - rect.top;
+      el.style.zIndex = '30';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isMoving) return;
+      const canvasEl = document.getElementById('home-board-canvas');
+      if (canvasEl) {
+        const rect = canvasEl.getBoundingClientRect();
+        let x = e.clientX - rect.left - startOffsetX;
+        let y = e.clientY - rect.top - startOffsetY;
+
+        x = Math.max(0, Math.min(x, rect.width - el.offsetWidth));
+        y = Math.max(0, Math.min(y, rect.height - el.offsetHeight));
+
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        updateLines();
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isMoving) {
+        isMoving = false;
+        el.style.zIndex = '';
+      }
+    });
+
+    // Touch support for dragging
+    el.addEventListener('touchstart', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT') return;
+      isMoving = true;
+      const rect = el.getBoundingClientRect();
+      startOffsetX = e.touches[0].clientX - rect.left;
+      startOffsetY = e.touches[0].clientY - rect.top;
+      el.style.zIndex = '30';
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isMoving) return;
+      const canvasEl = document.getElementById('home-board-canvas');
+      if (canvasEl) {
+        const rect = canvasEl.getBoundingClientRect();
+        let x = e.touches[0].clientX - rect.left - startOffsetX;
+        let y = e.touches[0].clientY - rect.top - startOffsetY;
+
+        x = Math.max(0, Math.min(x, rect.width - el.offsetWidth));
+        y = Math.max(0, Math.min(y, rect.height - el.offsetHeight));
+
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        updateLines();
+      }
+    });
+
+    document.addEventListener('touchend', () => {
+      if (isMoving) {
+        isMoving = false;
+        el.style.zIndex = '';
+      }
+    });
+  }
+
+  function spawnHeroNote(id: string, x: number, y: number, text: string, color: string, type = 'normal') {
+    if (!notesContainer) return;
+
+    const note = document.createElement('div');
+    note.id = id;
+    note.dataset.id = id;
+    note.style.left = `${x}px`;
+    note.style.top = `${y}px`;
+    note.style.backgroundColor = color;
+    
+    let textColor = '#1c1c1e';
+    let subText = '#yellow';
+    if (color === '#0fbcb0') {
+      textColor = '#050038';
+      subText = '#teal';
+    } else if (color === '#ff9999') {
+      textColor = '#600000';
+      subText = '#coral';
+    } else if (color === '#ffd8f4') {
+      textColor = '#1c1c1e';
+      subText = '#rose';
+    }
+
+    note.className = 'absolute w-24 h-24 shadow-card rounded-sm p-2 flex flex-col justify-between font-display text-[10px] cursor-grab active:cursor-grabbing select-none pointer-events-auto transition-shadow hover:shadow-mockup';
+    note.style.transform = `rotate(${(Math.random() * 6 - 3).toFixed(1)}deg)`;
+    note.style.color = textColor;
+
+    if (type === 'uuid') {
+      note.innerHTML = `
+        <div class="flex flex-col gap-1 w-full h-[62px] pointer-events-auto">
+          <span class="font-bold text-[8px] uppercase text-brand-blue tracking-wide select-none">UUID v4 Token</span>
+          <textarea readonly class="w-full h-full bg-transparent border-none outline-none resize-none font-mono text-[8px] select-all leading-tight text-primary">${text}</textarea>
+        </div>
+        <span class="text-[8px] opacity-70 self-end pointer-events-none">#uuid</span>
+      `;
+    } else if (type === 'base64') {
+      note.innerHTML = `
+        <div class="flex flex-col gap-1 w-full h-[62px] pointer-events-auto">
+          <input type="text" placeholder="Type..." class="w-full bg-canvas/60 border border-black/15 rounded px-1 text-[8px] font-sans outline-none h-4 text-primary base64-input-box" />
+          <textarea readonly placeholder="Result..." class="w-full h-[38px] bg-transparent border-none outline-none resize-none font-mono text-[7px] select-all leading-tight text-primary base64-output-box"></textarea>
+        </div>
+        <span class="text-[8px] opacity-70 self-end pointer-events-none">#base64</span>
+      `;
+      // Attach encoder listener
+      setTimeout(() => {
+        const inp = note.querySelector('.base64-input-box') as HTMLInputElement | null;
+        const out = note.querySelector('.base64-output-box') as HTMLTextAreaElement | null;
+        if (inp && out) {
+          inp.addEventListener('input', () => {
+            try {
+              out.value = inp.value ? btoa(unescape(encodeURIComponent(inp.value))) : '';
+            } catch(e) {
+              out.value = 'Error...';
+            }
+          });
+        }
+      }, 50);
+    } else {
+      note.innerHTML = `
+        <textarea class="font-medium bg-transparent border-none outline-none resize-none h-[62px] select-text overflow-hidden text-primary" style="font-size:10px; line-height:1.25; color: ${textColor}">${text}</textarea>
+        <span class="text-[8px] opacity-70 self-end pointer-events-none">${subText}</span>
+      `;
+    }
+
+    notesContainer.appendChild(note);
+    heroNotes.push({ id, el: note, type });
+    initStickyDrag(note);
+    updateLines();
+  }
+
+  // Spawn initial starting sticky notes
+  spawnHeroNote('note-1', 40, 30, 'Define MVP & Workspaces', '#ffd02f', 'normal');
+  spawnHeroNote('note-2', 240, 90, 'Refine Brand Guidelines', '#0fbcb0', 'normal');
+  spawnHeroNote('note-3', 110, 160, 'Local SEO & Speed Audit', '#ffd8f4', 'normal');
+
+  // Sketch Drawing Listeners
+  function resizeHeroCanvas() {
+    if (heroSketchCanvas && heroSketchCanvas.parentElement) {
+      const temp = document.createElement('canvas');
+      temp.width = heroSketchCanvas.width;
+      temp.height = heroSketchCanvas.height;
+      const tCtx = temp.getContext('2d');
+      if (tCtx) tCtx.drawImage(heroSketchCanvas, 0, 0);
+
+      heroSketchCanvas.width = heroSketchCanvas.parentElement.clientWidth;
+      heroSketchCanvas.height = heroSketchCanvas.parentElement.clientHeight;
+
+      if (heroCtx) {
+        heroCtx.lineCap = 'round';
+        heroCtx.lineJoin = 'round';
+        heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+        heroCtx.lineWidth = 4;
+        heroCtx.drawImage(temp, 0, 0);
+      }
+    }
+  }
+
+  if (heroSketchCanvas && heroCtx) {
+    resizeHeroCanvas();
+    window.addEventListener('resize', resizeHeroCanvas);
+
+    heroSketchCanvas.addEventListener('mousedown', (e) => {
+      if (activeHeroTool !== 'pen') return;
+      isDrawingHero = true;
+      const rect = heroSketchCanvas.getBoundingClientRect();
+      lastHeroX = e.clientX - rect.left;
+      lastHeroY = e.clientY - rect.top;
+    });
+
+    heroSketchCanvas.addEventListener('mousemove', (e) => {
+      if (!isDrawingHero || !heroCtx) return;
+      const rect = heroSketchCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      heroCtx.beginPath();
+      heroCtx.moveTo(lastHeroX, lastHeroY);
+      heroCtx.lineTo(x, y);
+      heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+      heroCtx.stroke();
+      
+      lastHeroX = x;
+      lastHeroY = y;
+    });
+
+    heroSketchCanvas.addEventListener('mouseup', () => { isDrawingHero = false; });
+    heroSketchCanvas.addEventListener('mouseout', () => { isDrawingHero = false; });
+
+    // Touch support for sketching
+    heroSketchCanvas.addEventListener('touchstart', (e) => {
+      if (activeHeroTool !== 'pen') return;
+      isDrawingHero = true;
+      const rect = heroSketchCanvas.getBoundingClientRect();
+      lastHeroX = e.touches[0].clientX - rect.left;
+      lastHeroY = e.touches[0].clientY - rect.top;
+    });
+
+    heroSketchCanvas.addEventListener('touchmove', (e) => {
+      if (!isDrawingHero || !heroCtx) return;
+      const rect = heroSketchCanvas.getBoundingClientRect();
+      const x = e.touches[0].clientX - rect.left;
+      const y = e.touches[0].clientY - rect.top;
+
+      heroCtx.beginPath();
+      heroCtx.moveTo(lastHeroX, lastHeroY);
+      heroCtx.lineTo(x, y);
+      heroCtx.strokeStyle = document.documentElement.classList.contains('dark') ? '#ffffff' : '#1c1c1e';
+      heroCtx.stroke();
+      
+      lastHeroX = x;
+      lastHeroY = y;
+    });
+
+    heroSketchCanvas.addEventListener('touchend', () => { isDrawingHero = false; });
+  }
+
+  // Tool Bar Switches
+  if (heroPenBtn) heroPenBtn.addEventListener('click', () => setHeroTool('pen'));
+  if (heroStickyBtn) heroStickyBtn.addEventListener('click', () => setHeroTool('sticky'));
+
+  setHeroTool('sticky'); // Default state is dragging notes
+
+  // Clear drawings layer
+  const heroClearBtn = document.getElementById('hero-tool-clear');
+  if (heroClearBtn && heroSketchCanvas && heroCtx) {
+    heroClearBtn.addEventListener('click', () => {
+      heroCtx.clearRect(0, 0, heroSketchCanvas.width, heroSketchCanvas.height);
+    });
+  }
+
+  // Quick Action - Spawn UUID Sticky Note
+  const heroUuidBtn = document.getElementById('hero-tool-uuid');
+  if (heroUuidBtn) {
+    heroUuidBtn.addEventListener('click', () => {
+      const uuid = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+      const canvasEl = document.getElementById('home-board-canvas');
+      const w = canvasEl?.clientWidth || 400;
+      const h = canvasEl?.clientHeight || 250;
+      spawnHeroNote('uuid_' + Date.now(), w/2 - 48, h/2 - 48, uuid, '#ffd8f4', 'uuid');
+      setHeroTool('sticky');
+    });
+  }
+
+  // Quick Action - Spawn Base64 Sticky Note
+  const heroBase64Btn = document.getElementById('hero-tool-base64');
+  if (heroBase64Btn) {
+    heroBase64Btn.addEventListener('click', () => {
+      const canvasEl = document.getElementById('home-board-canvas');
+      const w = canvasEl?.clientWidth || 400;
+      const h = canvasEl?.clientHeight || 250;
+      spawnHeroNote('b64_' + Date.now(), w/2 - 48, h/2 - 48, '', '#ff9999', 'base64');
+      setHeroTool('sticky');
+    });
+  }
+
+  // Double click canvas to add note
+  if (homeCanvas) {
+    homeCanvas.addEventListener('dblclick', (e) => {
+      if (e.target !== homeCanvas && e.target !== heroSketchCanvas) return;
+      const rect = homeCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left - 48;
+      const y = e.clientY - rect.top - 48;
+
+      const colors = ['#ffd02f', '#ff9999', '#0fbcb0', '#ffd8f4'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      spawnHeroNote('note_' + Date.now(), x, y, 'Double click to edit', randomColor, 'normal');
+    });
+  }
+
+  // ============================================
+  // MULTIPLAYER SIMULATOR LOGIC
+  // ============================================
+  let multiplayerInterval: any = null;
+  let multiplayerActive = false;
+  const simCursorsContainer = document.getElementById('simulated-cursors');
+  const toggleMultiplayerBtn = document.getElementById('toggle-multiplayer');
+  const mpDot = document.getElementById('multiplayer-dot');
+
+  const simulatedUsers = [
+    { name: 'Jaina 🎨', color: '#ff9999', cursorColor: '#ff9999', textColor: '#600000', x: 20, y: 30 },
+    { name: 'Claude 🤖', color: '#0fbcb0', cursorColor: '#0fbcb0', textColor: '#050038', x: 80, y: 20 },
+    { name: 'Astro 🚀', color: '#ffd02f', cursorColor: '#ffd02f', textColor: '#1c1c1e', x: 50, y: 70 }
+  ];
+
+  function setupSimulatedCursors() {
+    if (!simCursorsContainer) return;
+    simCursorsContainer.innerHTML = '';
+    
+    simulatedUsers.forEach((user, idx) => {
+      const cursorDiv = document.createElement('div');
+      cursorDiv.id = `sim-user-${idx}`;
+      cursorDiv.className = 'absolute pointer-events-none z-30 flex items-center gap-1';
+      cursorDiv.style.left = `${user.x}%`;
+      cursorDiv.style.top = `${user.y}%`;
+      cursorDiv.style.transition = 'left 1.5s cubic-bezier(0.25, 1, 0.5, 1), top 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+      
+      cursorDiv.innerHTML = `
+        <svg class="w-4 h-4 filter drop-shadow" style="color: ${user.cursorColor}" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 3l16 9-6.5 1.5L20 20l-3 1.5-6.5-6.5L4 18V3z" />
+        </svg>
+        <span class="text-[8px] text-white font-bold px-1.5 py-0.5 rounded-full whitespace-nowrap shadow" style="background-color: ${user.color}; color: ${user.textColor}">
+          ${user.name}
+        </span>
+      `;
+      simCursorsContainer.appendChild(cursorDiv);
+    });
+  }
+
+  function moveSimulatedCursors() {
+    simulatedUsers.forEach((user, idx) => {
+      const cursor = document.getElementById(`sim-user-${idx}`);
+      if (cursor) {
+        const newX = Math.floor(Math.random() * 70) + 10;
+        const newY = Math.floor(Math.random() * 70) + 10;
+        cursor.style.left = `${newX}%`;
+        cursor.style.top = `${newY}%`;
+
+        if (Math.random() > 0.8) {
+          const label = cursor.querySelector('span');
+          if (label) {
+            const origText = label.textContent;
+            label.textContent = `${user.name} (editing...)`;
+            setTimeout(() => {
+              label.textContent = origText;
+            }, 1000);
+          }
+        }
+      }
+    });
+  }
+
+  if (toggleMultiplayerBtn && mpDot) {
+    toggleMultiplayerBtn.addEventListener('click', () => {
+      multiplayerActive = !multiplayerActive;
+      if (multiplayerActive) {
+        toggleMultiplayerBtn.classList.add('bg-primary', 'text-canvas', 'border-primary');
+        toggleMultiplayerBtn.classList.remove('bg-surface', 'text-slate');
+        mpDot.classList.add('bg-success-accent');
+        mpDot.classList.remove('bg-stone');
+        setupSimulatedCursors();
+        moveSimulatedCursors();
+        multiplayerInterval = setInterval(moveSimulatedCursors, 2200);
+      } else {
+        toggleMultiplayerBtn.classList.remove('bg-primary', 'text-canvas', 'border-primary');
+        toggleMultiplayerBtn.classList.add('bg-surface', 'text-slate');
+        mpDot.classList.remove('bg-success-accent');
+        mpDot.classList.add('bg-stone');
+        clearInterval(multiplayerInterval);
+        if (simCursorsContainer) simCursorsContainer.innerHTML = '';
+      }
+    });
+  }
+
+  // ============================================
+  // WORKSPACE HISTORY RENDER
+  // ============================================
+  const recentSection = document.getElementById('recent-workspaces-section');
+  const recentList = document.getElementById('recent-workspaces-list');
+
+  if (recentSection && recentList) {
+    try {
+      const recents = JSON.parse(localStorage.getItem('recent_tools') || '[]');
+      if (recents.length > 0) {
+        recentSection.classList.remove('hidden');
+        recentList.innerHTML = '';
+        
+        recents.forEach(item => {
+          let bgClass = 'bg-surface-yellow border border-yellow-light text-yellow-dark';
+          let iconChar = 'W';
+          if (item.category === 'developer') {
+            bgClass = 'bg-surface-pricing-featured border border-hairline text-brand-blue';
+            iconChar = 'D';
+          } else if (item.category === 'design') {
+            bgClass = 'bg-teal-light border border-hairline text-moss-dark';
+            iconChar = 'S';
+          } else if (item.category === 'collaboration') {
+            bgClass = 'bg-surface-yellow border border-yellow-light text-yellow-dark';
+            iconChar = 'W';
+          }
+
+          const card = document.createElement('a');
+          card.href = item.path;
+          card.className = 'flex items-center gap-3 p-3.5 bg-canvas/60 border border-hairline rounded-xl hover:-translate-y-1 hover:shadow-subtle transition-all duration-200 group';
+          card.innerHTML = `
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-xs ${bgClass} select-none">
+              ${iconChar}
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors">${item.name}</span>
+              <span class="text-[10px] text-stone uppercase tracking-wide font-semibold mt-0.5">${item.category}</span>
+            </div>
+          `;
+          recentList.appendChild(card);
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
 </script>

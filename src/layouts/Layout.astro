@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import RequestToolPopup from '../components/RequestToolPopup.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -68,5 +69,51 @@ const {
 
 		<!-- Footer -->
 		<Footer />
+
+		<!-- Floating Request Tool Popup -->
+		<RequestToolPopup />
+
+		<!-- Activity Tracker for Workspace History -->
+		<script is:inline>
+			(() => {
+				const path = window.location.pathname.replace(/\/$/, ""); // Strip trailing slash if present
+				const normalizedPath = path === "" ? "/" : path;
+
+				if (normalizedPath.startsWith('/tools/')) {
+					const toolNameMap = {
+						'/tools/whiteboard': 'Visual Whiteboard',
+						'/tools/json-formatter': 'JSON Formatter',
+						'/tools/base64-url': 'Base64 & URL Tool',
+						'/tools/uuid-hash': 'UUID & Hash Gen',
+						'/tools/contrast-checker': 'Contrast Checker',
+						'/tools/svg-previewer': 'SVG Optimizer'
+					};
+					const toolCategoryMap = {
+						'/tools/whiteboard': 'collaboration',
+						'/tools/json-formatter': 'developer',
+						'/tools/base64-url': 'developer',
+						'/tools/uuid-hash': 'developer',
+						'/tools/contrast-checker': 'design',
+						'/tools/svg-previewer': 'design'
+					};
+					const name = toolNameMap[normalizedPath];
+					const category = toolCategoryMap[normalizedPath];
+					if (name) {
+						let recents = [];
+						try {
+							recents = JSON.parse(localStorage.getItem('recent_tools') || '[]');
+						} catch (e) {}
+						
+						// Filter out this tool if already in list
+						recents = recents.filter(t => t.path !== normalizedPath);
+						// Prepend current tool
+						recents.unshift({ name, path: normalizedPath, category, timestamp: Date.now() });
+						// Limit to 4 recent tools
+						recents = recents.slice(0, 4);
+						localStorage.setItem('recent_tools', JSON.stringify(recents));
+					}
+				}
+			})();
+		</script>
 	</body>
 </html>

@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Privacy Policy - BoardTools"
+  description="Privacy Guarantee: BoardTools runs 100% in your local browser sandbox. No user inputs, JSON logs, or sketch codes are ever sent to a server."
+>
+  <section class="max-w-[800px] w-full mx-auto px-4 py-12 flex flex-col gap-8 animate-fade-in-up">
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Home</a>
+        <span>/</span>
+        <span class="text-brand-blue">Privacy Policy</span>
+      </div>
+      <h1 class="font-display font-medium text-4xl tracking-tight text-primary mt-1">
+        Privacy Policy
+      </h1>
+      <p class="text-xs text-slate">Last updated: June 25, 2026</p>
+    </div>
+
+    <!-- Core Principle Highlight -->
+    <div class="p-6 bg-success-accent/10 border border-success-accent rounded-2xl flex flex-col sm:flex-row gap-4 items-start">
+      <div class="text-2xl pt-0.5">🔒</div>
+      <div class="flex flex-col gap-2">
+        <h2 class="font-display font-semibold text-base text-primary">The 100% Browser Execution Guarantee</h2>
+        <p class="text-xs text-slate leading-relaxed">
+          At BoardTools, we believe your data belongs strictly on your machine. This website is compiled as a static stack of HTML, CSS, and client-side Javascript. We do not maintain any data collection backend. No strings, parameters, files, design variables, or canvas states ever cross your network interface.
+        </p>
+      </div>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="flex flex-col gap-6 text-sm text-slate leading-relaxed font-sans">
+      <h3 class="font-display font-semibold text-lg text-primary mt-4">1. Data We Do Not Collect</h3>
+      <p>
+        When you paste text into the JSON Formatter, convert keys inside the Base64 & URL Tool, generate cryptographic hashes, or review code in the SVG Previewer:
+      </p>
+      <ul class="list-disc pl-5 flex flex-col gap-2">
+        <li><strong>No Server Transmission:</strong> The text variables remain within your browser's V8 runtime thread.</li>
+        <li><strong>No Server Logs:</strong> Since executions do not hit a server API, no debug payloads, payload values, or inputs are recorded in any access log.</li>
+        <li><strong>No Telemetry Tracking:</strong> We do not deploy active keylogging telemetry, session recordings, or input analyzers.</li>
+      </ul>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-4">2. Browser Local Storage (`localStorage`)</h3>
+      <p>
+        To make the user experience convenient, BoardTools utilizes your browser's standard database storage:
+      </p>
+      <ul class="list-disc pl-5 flex flex-col gap-2">
+        <li><strong>Whiteboard & Sketches:</strong> Draggable notes, drawn coordinates, and background colors are saved to your local database so they persist if you reload the tab.</li>
+        <li><strong>Tool History:</strong> A record of the last four tools you loaded is stored locally to populate the "Quick Jump Back" section on the home page.</li>
+        <li><strong>Local Reviews:</strong> Any rating or review submitted on this website is written to your local sandbox so you can inspect your changes instantly.</li>
+      </ul>
+      <p>
+        You can clear all local storage variables at any time by running the developer terminal console command `localStorage.clear()` or resetting site cookies in your browser settings.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-4">3. Security Sandboxing</h3>
+      <p>
+        All inputs are treated strictly as unparsed strings. We apply rigorous escaping to variables compiled inside preview tools (e.g. SVG preview fields) to prevent cross-site scripting (XSS) issues in your browser runtime.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-4">4. Cookies and Advertising</h3>
+      <p>
+        BoardTools does not set tracking cookies, cookie ID tokens, or target marketing pixels. We do not display dynamic network advertisements, and do not track your user profile across the web.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-4">5. Contacting Us</h3>
+      <p>
+        If you have questions about our offline architecture, you may inspect the open source codebase directly on GitHub or contact us via our simulated form on the <a href="/contact" class="text-brand-blue hover:underline">Contact Page</a>.
+      </p>
+    </div>
+  </section>
+</Layout>
