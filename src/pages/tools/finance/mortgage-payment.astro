@@ -531,9 +531,11 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
                 <div class="col-span-12 sm:col-span-7">
                   <label
                     for="property-tax-dollar"
-                    class="text-[10px] font-semibold text-slate"
-                    >Property Tax ($/yr)</label
+                    class="text-[10px] font-semibold text-slate flex justify-between"
                   >
+                    <span>Property Tax ($/yr)</span>
+                    <span id="tax-annual-val" class="font-mono text-stone font-normal">$4,800/yr</span>
+                  </label>
                   <input
                     type="number"
                     id="property-tax-dollar"
@@ -1229,6 +1231,45 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
                 value="6.5"
                 min="0.1"
                 max="20"
+                step="0.1"
+                class="text-input"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-hairline pt-4">
+            <div class="flex flex-col gap-1">
+              <label
+                for="rentbuy-appreciation"
+                class="text-xs font-semibold text-charcoal"
+                >Property Appreciation (%)</label
+              >
+              <input
+                type="number"
+                id="rentbuy-appreciation"
+                value="3.5"
+                min="0"
+                max="25"
+                step="0.1"
+                class="text-input"
+                inputmode="decimal"
+                autocomplete="off"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label
+                for="rentbuy-maintenance"
+                class="text-xs font-semibold text-charcoal"
+                >Annual Maintenance (%)</label
+              >
+              <input
+                type="number"
+                id="rentbuy-maintenance"
+                value="1.0"
+                min="0"
+                max="15"
                 step="0.1"
                 class="text-input"
                 inputmode="decimal"
@@ -2633,6 +2674,12 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
   const rentbuyReturn = document.getElementById(
     "rentbuy-return",
   ) as HTMLInputElement;
+  const rentbuyAppreciation = document.getElementById(
+    "rentbuy-appreciation",
+  ) as HTMLInputElement;
+  const rentbuyMaintenance = document.getElementById(
+    "rentbuy-maintenance",
+  ) as HTMLInputElement;
 
   // Dynamic Output Elements
   const monthlyPaymentDisplay = document.getElementById(
@@ -3136,6 +3183,8 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
     rentbuyRate,
     rentbuyHoldingSlider,
     rentbuyReturn,
+    rentbuyAppreciation,
+    rentbuyMaintenance,
   ].forEach((input) => {
     input?.addEventListener("input", () => calculate());
   });
@@ -3689,22 +3738,45 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
         totalInterest: refiCumCost,
       });
     }
+    let refiRemainingBalance = balance;
+    currentCumCost = 0;
+    refiCumCost = fees;
 
-    exportDataList = refiSchedule.map((row) => ({
-      monthNumber: row.monthNumber,
-      year: row.year,
-      monthName: row.monthName,
-      payment: payNew,
-      principal: payNew - balance * rNew, // mock values
-      interest: balance * rNew,
-      pmi: 0,
-      extra: 0,
-      totalInterest: row.totalInterest,
-      balance: Math.max(
-        0,
-        balance - row.monthNumber * (payNew - balance * rNew),
-      ),
-    }));
+    exportDataList = [];
+    for (let m = 1; m <= timelineLen; m++) {
+      if (m <= curTermMonths) {
+        currentCumCost += payCur;
+      }
+
+      let principal = 0;
+      let interest = 0;
+      let payment = 0;
+
+      if (m <= newTermMonths) {
+        if (refiRemainingBalance > 0) {
+          interest = refiRemainingBalance * rNew;
+          principal = payNew - interest;
+          if (principal > refiRemainingBalance) {
+            principal = refiRemainingBalance;
+          }
+          payment = principal + interest;
+          refiRemainingBalance = Math.max(0, refiRemainingBalance - principal);
+        }
+        refiCumCost += payment;
+      }
+
+      exportDataList.push({
+        monthNumber: m,
+        year: Math.floor((m - 1) / 12) + 1,
+        monthName: monthNames[(m - 1) % 12],
+        payment: payment,
+        principal: principal,
+        interest: interest,
+        currentCumCost: currentCumCost,
+        refiCumCost: refiCumCost,
+        balance: refiRemainingBalance,
+      });
+    }
 
     if (crossoverChartTitle)
       crossoverChartTitle.textContent =
@@ -3741,16 +3813,18 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
 
     const rBuy = rate / 12 / 100;
     const loanAmount = Math.max(0, price - dp);
-    const n = 30 * 12; // buy is based on 30-year default
+    const n = purchaseLoanTerm * 12; // buy is based on user entered loan term
     const monthlyPI =
       rBuy === 0
         ? loanAmount / n
         : (loanAmount * (rBuy * Math.pow(1 + rBuy, n))) /
           (Math.pow(1 + rBuy, n) - 1);
 
-    // Initial tax and insurance defaults
-    const taxMonthly = (price * 0.012) / 12; // 1.2%
-    const insMonthly = 1200 / 12;
+    // Initial tax and insurance defaults from inputs
+    const taxRate = parseFloat(propertyTaxRateInput.value) || 1.2;
+    const taxMonthly = (price * (taxRate / 100)) / 12;
+    const insAnnual = parseFloat(homeInsuranceInput.value) || 1200;
+    const insMonthly = insAnnual / 12;
     const buyMonthlyPITI = monthlyPI + taxMonthly + insMonthly;
 
     // Simulation over Holding years
@@ -3763,6 +3837,8 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
     let currentHomeValue = price;
 
     const rentBuyTimeline: any[] = [];
+    const appreciationRate = parseFloat(rentbuyAppreciation.value) || 3.5;
+    const maintenanceRate = parseFloat(rentbuyMaintenance.value) || 1.0;
 
     for (let yr = 1; yr <= holdingYrs; yr++) {
       const currentYearRent = rent * Math.pow(1 + rentIncrease / 100, yr - 1);
@@ -3772,8 +3848,8 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
       // Rent savings grows in index funds
       rentCashFlow = rentCashFlow * (1 + marketReturn / 100);
 
-      // Buying costs (Mortgage + Maintenance typical 1%)
-      const annualMaintenance = currentHomeValue * 0.01;
+      // Buying costs (Mortgage + Maintenance from inputs)
+      const annualMaintenance = currentHomeValue * (maintenanceRate / 100);
       const annualBuySpent = buyMonthlyPITI * 12 + annualMaintenance;
       buyTotalSpent += annualBuySpent;
 
@@ -3785,7 +3861,7 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
       }
 
       // Appreciate Home
-      currentHomeValue = currentHomeValue * (1 + 0.035); // 3.5% default appreciation
+      currentHomeValue = currentHomeValue * (1 + appreciationRate / 100);
 
       // Invest monthly difference: renter vs buyer opportunity savings
       const renterMonthlyOutlay = currentYearRent + renterIns / 12;
@@ -3870,7 +3946,7 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
       year: row.year,
       monthName: row.monthName,
       payment: row.rentPaid,
-      principal: row.homeValue - row.loanBalance,
+      principal: row.homeValue,
       interest: row.loanBalance,
       pmi: 0,
       extra: 0,
@@ -4432,8 +4508,8 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
             <td class="py-2.5 px-4 text-right font-semibold text-primary" data-label="New Payment" data-col="payment">${formatCurrency(row.payment)}</td>
             <td class="py-2.5 px-4 text-right" data-label="Principal Portion" data-col="principal">${formatCurrency(row.principal)}</td>
             <td class="py-2.5 px-4 text-right" data-label="Interest Portion" data-col="interest">${formatCurrency(row.interest)}</td>
-            <td class="py-2.5 px-4 text-right text-stone" data-label="Current Loan Cum. Cost" data-col="extra">${formatCurrency(row.balance)}</td>
-            <td class="py-2.5 px-4 text-right text-brand-blue" data-label="Refinanced Cum. Cost" data-col="total-interest">${formatCurrency(row.totalInterest)}</td>
+            <td class="py-2.5 px-4 text-right text-stone" data-label="Current Loan Cum. Cost" data-col="extra">${formatCurrency(row.currentCumCost)}</td>
+            <td class="py-2.5 px-4 text-right text-brand-blue" data-label="Refinanced Cum. Cost" data-col="total-interest">${formatCurrency(row.refiCumCost)}</td>
             <td class="py-2.5 px-4 text-right font-semibold text-primary" data-label="Remaining Balance" data-col="balance">${formatCurrency(row.balance)}</td>
           </tr>
         `;
@@ -4789,7 +4865,7 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
       });
     } else if (currentMode === "refinance") {
       csvContent +=
-        "Month,Payment,Principal,Interest,Current Loan Cum Cost,Refi Loan Cum Cost,Remaining Balance\r\n";
+        "Month,New Payment,Principal Portion,Interest Portion,Current Loan Cum Cost,Refinanced Cum Cost,Remaining Balance\r\n";
       exportDataList.forEach((row) => {
         csvContent +=
           [
@@ -4797,8 +4873,8 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
             row.payment.toFixed(2),
             row.principal.toFixed(2),
             row.interest.toFixed(2),
-            row.balance.toFixed(2),
-            row.totalInterest.toFixed(2),
+            row.currentCumCost.toFixed(2),
+            row.refiCumCost.toFixed(2),
             row.balance.toFixed(2),
           ].join(",") + "\r\n";
       });
