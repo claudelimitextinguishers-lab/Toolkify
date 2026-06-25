@@ -1,0 +1,219 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Base64 & URL Encoder/Decoder Converter - BoardTools"
+  description="Convert raw text input to Base64 hashes, decode Base64 strings, or encode/decode URLs dynamically. Fully client-side conversions."
+>
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue">Base64 & URL</span>
+      </div>
+      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">Base64 & URL Converter</h1>
+      <p class="text-sm text-slate">Safely encode or decode values to/from Base64 hashes and standard URL formatting blocks.</p>
+    </div>
+
+    <!-- Controls Selector Grid -->
+    <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface rounded-xl border border-hairline">
+      <!-- Mode selectors -->
+      <div class="flex flex-wrap gap-2.5" id="mode-tabs-container">
+        <button class="pill-tab pill-tab-active" data-mode="b64-encode">Base64 Encode</button>
+        <button class="pill-tab" data-mode="b64-decode">Base64 Decode</button>
+        <button class="pill-tab" data-mode="url-encode">URL Encode</button>
+        <button class="pill-tab" data-mode="url-decode">URL Decode</button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Live toggle state -->
+        <span class="text-xs text-stone font-semibold uppercase">Convert Real-Time:</span>
+        <span class="inline-flex items-center px-2 py-0.5 bg-success-accent/20 text-success-accent rounded text-[10px] font-bold">Enabled</span>
+      </div>
+    </div>
+
+    <!-- Editor panels -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Source Panel -->
+      <div class="card-base flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <label for="converter-input" id="lbl-input-title" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+            Raw Source Text
+          </label>
+          <div class="flex gap-2">
+            <button id="btn-sample-txt" class="text-xs text-brand-blue hover:underline cursor-pointer">Load Sample</button>
+            <button id="btn-clear" class="text-xs text-stone hover:text-primary cursor-pointer">Clear</button>
+          </div>
+        </div>
+
+        <textarea 
+          id="converter-input" 
+          placeholder="Type or paste text string to convert..." 
+          class="w-full h-[300px] p-4 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
+        ></textarea>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="card-base flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span id="lbl-output-title" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+            Base64 Result Output
+          </span>
+          <button 
+            id="btn-copy" 
+            class="button-secondary py-1 px-3 text-xs !rounded-md hover:bg-surface flex items-center gap-1.5 cursor-pointer"
+          >
+            Copy Result
+          </button>
+        </div>
+
+        <textarea 
+          id="converter-output" 
+          readonly 
+          placeholder="Output will generate here..." 
+          class="w-full h-[300px] p-4 font-mono text-sm bg-surface border border-hairline rounded-lg outline-none select-all text-primary"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="error-banner" class="hidden card-base bg-brand-red/35 border-brand-red-dark flex flex-col gap-2">
+      <h3 class="font-display font-semibold text-brand-red-dark text-sm">Decoding Failure</h3>
+      <p id="error-msg" class="text-sm font-mono text-primary"></p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  let activeMode = 'b64-encode'; // 'b64-encode', 'b64-decode', 'url-encode', 'url-decode'
+
+  const txtInput = document.getElementById('converter-input') as HTMLTextAreaElement | null;
+  const txtOutput = document.getElementById('converter-output') as HTMLTextAreaElement | null;
+  const errorBanner = document.getElementById('error-banner');
+  const errorMsg = document.getElementById('error-msg');
+  const tabs = document.querySelectorAll('#mode-tabs-container button');
+
+  const btnClear = document.getElementById('btn-clear');
+  const btnSample = document.getElementById('btn-sample-txt');
+  const btnCopy = document.getElementById('btn-copy');
+
+  const lblInput = document.getElementById('lbl-input-title');
+  const lblOutput = document.getElementById('lbl-output-title');
+
+  // Trigger translations
+  function convert() {
+    if (!txtInput || !txtOutput) return;
+
+    const value = txtInput.value;
+    if (!value) {
+      txtOutput.value = '';
+      errorBanner?.classList.add('hidden');
+      return;
+    }
+
+    try {
+      errorBanner?.classList.add('hidden');
+      if (activeMode === 'b64-encode') {
+        // Handle Unicode characters correctly with btoa/encodeURIComponent
+        const b64 = btoa(encodeURIComponent(value).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            return String.fromCharCode(parseInt(p1, 16));
+        }));
+        txtOutput.value = b64;
+      } else if (activeMode === 'b64-decode') {
+        const decoded = decodeURIComponent(atob(value).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        txtOutput.value = decoded;
+      } else if (activeMode === 'url-encode') {
+        txtOutput.value = encodeURIComponent(value);
+      } else if (activeMode === 'url-decode') {
+        txtOutput.value = decodeURIComponent(value);
+      }
+    } catch (e: any) {
+      txtOutput.value = '';
+      errorBanner?.classList.remove('hidden');
+      if (errorMsg) {
+        errorMsg.textContent = e.message || 'The input string could not be decoded. Ensure the string is correctly formatted.';
+      }
+    }
+  }
+
+  // Handle Tab Switch
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      tabs.forEach(t => t.classList.remove('pill-tab-active'));
+      const clicked = e.currentTarget as HTMLButtonElement;
+      clicked.classList.add('pill-tab-active');
+
+      activeMode = clicked.dataset.mode || 'b64-encode';
+      
+      // Update labels dynamically
+      if (lblInput && lblOutput) {
+        if (activeMode === 'b64-encode') {
+          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Raw Source Text`;
+          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Base64 Encoded Output`;
+        } else if (activeMode === 'b64-decode') {
+          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Base64 Hashed String`;
+          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Decoded Plain Text`;
+        } else if (activeMode === 'url-encode') {
+          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>Clean URL Address`;
+          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>Encoded URL Parameter`;
+        } else if (activeMode === 'url-decode') {
+          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>Encoded URL parameter`;
+          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>Clean URL Address`;
+        }
+      }
+
+      convert();
+    });
+  });
+
+  // Handle Text inputs
+  if (txtInput) {
+    txtInput.addEventListener('input', convert);
+  }
+
+  // Clear action
+  if (btnClear && txtInput && txtOutput) {
+    btnClear.addEventListener('click', () => {
+      txtInput.value = '';
+      txtOutput.value = '';
+      errorBanner?.classList.add('hidden');
+    });
+  }
+
+  // Sample Loader
+  if (btnSample && txtInput) {
+    btnSample.addEventListener('click', () => {
+      if (activeMode === 'b64-encode' || activeMode === 'url-encode') {
+        txtInput.value = 'Miro-inspired BoardTools suite! Fully Client-Side & Secure.';
+      } else if (activeMode === 'b64-decode') {
+        txtInput.value = 'TWlyby1pbnNwaXJlZCBCb2FyZFRvb2xzIHN1aXRlISBGdWxseSBDbGllbnQtU2lkZSAmIFNlY3VyZS4=';
+      } else if (activeMode === 'url-decode') {
+        txtInput.value = 'Miro-inspired%20BoardTools%20suite!%20Fully%20Client-Side%20%26%20Secure.';
+      }
+      convert();
+    });
+  }
+
+  // Copy Action
+  if (btnCopy && txtOutput) {
+    btnCopy.addEventListener('click', () => {
+      const text = txtOutput.value;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          const origHTML = btnCopy.innerHTML;
+          btnCopy.innerHTML = '✓ Copied!';
+          setTimeout(() => {
+            btnCopy.innerHTML = origHTML;
+          }, 1500);
+        });
+      }
+    });
+  }
+</script>

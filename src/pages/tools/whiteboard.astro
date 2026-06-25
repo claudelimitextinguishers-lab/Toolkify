@@ -1,0 +1,641 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Visual Board Sketchpad & Draggable Sticky Notes - BoardTools"
+  description="Draw diagrams, place color-rich sticky notes, sketch flows, and collaborate visually. Completely local, private, and offline-ready whiteboard."
+>
+  <div class="flex-grow flex flex-col h-[calc(100vh-104px)] overflow-hidden relative select-none">
+    <!-- Whiteboard Toolbar (Floating Sidebar) -->
+    <div class="absolute left-4 top-4 z-20 flex flex-col gap-2 p-2 bg-canvas border border-hairline rounded-xl shadow-modal">
+      <!-- Draw Pen tool -->
+      <button 
+        id="tool-pen" 
+        class="w-10 h-10 rounded-lg flex items-center justify-center text-primary bg-surface border border-hairline-strong cursor-pointer" 
+        title="Pen Tool"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+        </svg>
+      </button>
+
+      <!-- Sticky note tool -->
+      <button 
+        id="tool-sticky" 
+        class="w-10 h-10 rounded-lg flex items-center justify-center text-slate hover:bg-surface hover:text-ink cursor-pointer" 
+        title="Add Sticky Note"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </button>
+
+      <!-- Eraser tool -->
+      <button 
+        id="tool-eraser" 
+        class="w-10 h-10 rounded-lg flex items-center justify-center text-slate hover:bg-surface hover:text-ink cursor-pointer" 
+        title="Eraser Tool"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </button>
+
+      <div class="h-[1px] bg-hairline my-1"></div>
+
+      <!-- Pen Color selectors (Only visible when pen is active) -->
+      <div id="pen-options" class="flex flex-col gap-2">
+        <button id="pen-color-primary" class="w-6 h-6 mx-auto rounded-full bg-primary ring-2 ring-primary ring-offset-1 border border-hairline-strong cursor-pointer" data-color="#1c1c1e" title="Black"></button>
+        <button class="w-6 h-6 mx-auto rounded-full bg-brand-blue border border-hairline cursor-pointer" data-color="#4262ff" title="Blue"></button>
+        <button class="w-6 h-6 mx-auto rounded-full bg-brand-teal border border-hairline cursor-pointer" data-color="#0fbcb0" title="Teal"></button>
+        <button class="w-6 h-6 mx-auto rounded-full bg-brand-coral border border-hairline cursor-pointer" data-color="#ff9999" title="Coral"></button>
+        <button class="w-6 h-6 mx-auto rounded-full bg-brand-yellow border border-hairline cursor-pointer" data-color="#ffd02f" title="Yellow"></button>
+        
+        <div class="h-[1px] bg-hairline my-1"></div>
+
+        <!-- Pen width selector -->
+        <select id="pen-width" class="text-[10px] font-semibold text-slate bg-surface border border-hairline rounded px-1 py-0.5 outline-none cursor-pointer">
+          <option value="3">Small</option>
+          <option value="6" selected>Medium</option>
+          <option value="12">Large</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right Top Action Bar (Download & Clear) -->
+    <div class="absolute right-4 top-4 z-20 flex gap-2.5 p-2 bg-canvas border border-hairline rounded-xl shadow-modal">
+      <button 
+        id="btn-clear" 
+        class="button-secondary py-1.5 px-3.5 text-xs !rounded-lg border-hairline-strong hover:bg-surface cursor-pointer"
+      >
+        Clear Board
+      </button>
+      <button 
+        id="btn-export" 
+        class="button-primary py-1.5 px-4 text-xs !rounded-lg hover:button-primary-active cursor-pointer"
+      >
+        Export PNG
+      </button>
+    </div>
+
+    <!-- Center tip instruction bubble -->
+    <div class="absolute left-1/2 bottom-6 transform -translate-x-1/2 z-20 bg-primary/95 text-canvas text-xs px-4 py-2 rounded-full shadow-modal font-medium flex items-center gap-2 pointer-events-none select-none animate-bounce">
+      <span class="w-2 h-2 rounded-full bg-brand-yellow"></span>
+      <span>Double click empty canvas to add a new Sticky Note! Drag notes to organize.</span>
+    </div>
+
+    <!-- The Sandbox Board Area -->
+    <div 
+      id="board-canvas-container" 
+      class="flex-grow w-full h-full bg-canvas dot-grid overflow-hidden relative cursor-crosshair"
+    >
+      <!-- Draw Canvas -->
+      <canvas id="drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+
+      <!-- Overlay notes container -->
+      <div id="sticky-notes-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Setup standard state variables
+  let activeTool = 'pen'; // 'pen', 'sticky', 'eraser'
+  const isCurrentlyDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+  let strokeColor = isCurrentlyDark ? '#ffffff' : '#1c1c1e';
+  let strokeWidth = 6;
+  let isDrawing = false;
+  let lastX = 0;
+  let lastY = 0;
+  let notes: Array<{id: string, x: number, y: number, text: string, color: string}> = [];
+
+  const canvas = document.getElementById('drawing-canvas') as HTMLCanvasElement;
+  const ctx = canvas ? canvas.getContext('2d') : null;
+
+  const primaryColorBtn = document.getElementById('pen-color-primary') as HTMLButtonElement | null;
+  function updatePrimaryPenColor() {
+    if (primaryColorBtn) {
+      const isDark = document.documentElement.classList.contains('dark');
+      const targetColor = isDark ? '#ffffff' : '#1c1c1e';
+      primaryColorBtn.dataset.color = targetColor;
+      primaryColorBtn.title = isDark ? 'White' : 'Black';
+      if (strokeColor === '#1c1c1e' || strokeColor === '#ffffff') {
+        strokeColor = targetColor;
+        if (ctx) ctx.strokeStyle = strokeColor;
+        
+        // Update selection UI highlight ring
+        const colorBtns = document.querySelectorAll('#pen-options button');
+        colorBtns.forEach(b => b.classList.remove('ring-2', 'ring-primary', 'ring-offset-1'));
+        primaryColorBtn.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
+      }
+    }
+  }
+
+  // Bind theme change hook
+  window.addEventListener('theme-change', updatePrimaryPenColor);
+  const boardContainer = document.getElementById('board-canvas-container');
+  const stickyContainer = document.getElementById('sticky-notes-container');
+
+  // Set sizing
+  function resizeCanvas() {
+    if (canvas && boardContainer) {
+      // Save canvas state before resizing
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      if (tempCtx) tempCtx.drawImage(canvas, 0, 0);
+
+      canvas.width = boardContainer.clientWidth;
+      canvas.height = boardContainer.clientHeight;
+
+      if (ctx) {
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = strokeWidth;
+        // Restore contents
+        ctx.drawImage(tempCanvas, 0, 0);
+      }
+    }
+  }
+
+  // Initialize Canvas
+  if (canvas && ctx) {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Set initial ctx configs
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = strokeWidth;
+  }
+
+  // Load from local storage
+  function loadBoardState() {
+    const savedNotes = localStorage.getItem('board_notes');
+    const savedDrawings = localStorage.getItem('board_drawings');
+    
+    if (savedNotes && stickyContainer) {
+      notes = JSON.parse(savedNotes);
+      notes.forEach(note => renderStickyNoteHTML(note));
+    }
+
+    if (savedDrawings && canvas && ctx) {
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+      };
+      img.src = savedDrawings;
+    }
+  }
+
+  // Save to local storage
+  function saveBoardState() {
+    localStorage.setItem('board_notes', JSON.stringify(notes));
+    if (canvas) {
+      localStorage.setItem('board_drawings', canvas.toDataURL());
+    }
+  }
+
+  // Drawing event handlers
+  function startDraw(e: MouseEvent | TouchEvent) {
+    if (activeTool === 'sticky') return;
+    isDrawing = true;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const rect = canvas.getBoundingClientRect();
+    lastX = clientX - rect.left;
+    lastY = clientY - rect.top;
+  }
+
+  function draw(e: MouseEvent | TouchEvent) {
+    if (!isDrawing || !ctx) return;
+    
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
+
+    if (activeTool === 'eraser') {
+      const isDark = document.documentElement.classList.contains('dark');
+      ctx.strokeStyle = isDark ? '#0c0c0e' : '#ffffff'; // canvas color
+      ctx.lineWidth = 24;
+    } else {
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = strokeWidth;
+    }
+    
+    ctx.stroke();
+    lastX = x;
+    lastY = y;
+  }
+
+  function stopDraw() {
+    if (isDrawing) {
+      isDrawing = false;
+      saveBoardState();
+    }
+  }
+
+  // Mouse canvas drawing actions
+  if (canvas) {
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseout', stopDraw);
+
+    // Touch support
+    canvas.addEventListener('touchstart', (e) => {
+      startDraw(e);
+      e.preventDefault();
+    }, {passive: false});
+    canvas.addEventListener('touchmove', (e) => {
+      draw(e);
+      e.preventDefault();
+    }, {passive: false});
+    canvas.addEventListener('touchend', stopDraw);
+  }
+
+  // Add Double Click on board container to add note
+  if (boardContainer) {
+    boardContainer.addEventListener('dblclick', (e) => {
+      if (e.target === canvas || e.target === boardContainer) {
+        const rect = boardContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left - 80; // Offset by ~half note width
+        const y = e.clientY - rect.top - 80;
+        
+        const newNote = {
+          id: 'note_' + Date.now(),
+          x: x > 0 ? x : 10,
+          y: y > 0 ? y : 10,
+          text: 'New Sticky note\nDouble-click to edit',
+          color: '#ffd02f' // Default Canary Yellow
+        };
+
+        notes.push(newNote);
+        renderStickyNoteHTML(newNote);
+        saveBoardState();
+      }
+    });
+  }
+
+  // Add button sticky note adder
+  const toolStickyBtn = document.getElementById('tool-sticky');
+  if (toolStickyBtn) {
+    toolStickyBtn.addEventListener('click', () => {
+      const containerRect = boardContainer?.getBoundingClientRect();
+      const x = containerRect ? (containerRect.width / 2) - 80 : 100;
+      const y = containerRect ? (containerRect.height / 2) - 80 : 100;
+
+      const newNote = {
+        id: 'note_' + Date.now(),
+        x: x,
+        y: y,
+        text: 'New Sticky Note',
+        color: '#ff9999' // Pastel Coral
+      };
+
+      notes.push(newNote);
+      renderStickyNoteHTML(newNote);
+      saveBoardState();
+    });
+  }
+
+  // Render HTML node of sticky note
+  function renderStickyNoteHTML(note: {id: string, x: number, y: number, text: string, color: string}) {
+    if (!stickyContainer) return;
+
+    const noteDiv = document.createElement('div');
+    noteDiv.id = note.id;
+    noteDiv.style.left = `${note.x}px`;
+    noteDiv.style.top = `${note.y}px`;
+    noteDiv.style.backgroundColor = note.color;
+    // Set custom text color depending on color palette
+    if (note.color === '#0fbcb0') { // Teal
+      noteDiv.style.color = '#050038';
+    } else if (note.color === '#ff9999') { // Coral
+      noteDiv.style.color = '#600000';
+    } else {
+      noteDiv.style.color = '#1c1c1e';
+    }
+
+    noteDiv.className = `absolute w-40 h-40 p-3 shadow-card rounded-sm flex flex-col justify-between pointer-events-auto cursor-grab active:cursor-grabbing font-display text-[12px] overflow-hidden select-text transition-shadow hover:shadow-mockup`;
+    noteDiv.setAttribute('draggable', 'false'); // Custom drag physics
+
+    // Text box editor
+    const textBox = document.createElement('textarea');
+    textBox.className = 'w-full h-[110px] bg-transparent border-none outline-none resize-none font-medium select-text';
+    textBox.value = note.text;
+    textBox.placeholder = 'Type something...';
+
+    textBox.addEventListener('input', () => {
+      note.text = textBox.value;
+      saveBoardState();
+    });
+
+    // Toolbar inside note
+    const toolbar = document.createElement('div');
+    toolbar.className = 'flex items-center justify-between text-[10px] pt-1 border-t border-black/5 select-none pointer-events-auto';
+
+    // Color swap dots
+    const colorsDiv = document.createElement('div');
+    colorsDiv.className = 'flex gap-1';
+    
+    const palette = ['#ffd02f', '#ff9999', '#0fbcb0', '#ffd8f4'];
+    palette.forEach(c => {
+      const dot = document.createElement('button');
+      dot.className = `w-3.5 h-3.5 rounded-full border border-black/10 cursor-pointer`;
+      dot.style.backgroundColor = c;
+      dot.addEventListener('click', () => {
+        note.color = c;
+        noteDiv.style.backgroundColor = c;
+        
+        if (c === '#0fbcb0') {
+          noteDiv.style.color = '#050038';
+        } else if (c === '#ff9999') {
+          noteDiv.style.color = '#600000';
+        } else {
+          noteDiv.style.color = '#1c1c1e';
+        }
+        
+        saveBoardState();
+      });
+      colorsDiv.appendChild(dot);
+    });
+
+    // Delete Button
+    const delBtn = document.createElement('button');
+    delBtn.className = 'text-black/50 hover:text-black font-semibold cursor-pointer';
+    delBtn.innerHTML = 'Delete';
+    delBtn.addEventListener('click', () => {
+      noteDiv.remove();
+      notes = notes.filter(n => n.id !== note.id);
+      saveBoardState();
+    });
+
+    toolbar.appendChild(colorsDiv);
+    toolbar.appendChild(delBtn);
+
+    noteDiv.appendChild(textBox);
+    noteDiv.appendChild(toolbar);
+
+    // Draggable math logic
+    let isMoving = false;
+    let startOffsetX = 0;
+    let startOffsetY = 0;
+
+    noteDiv.addEventListener('mousedown', (e) => {
+      // Do not trigger drag if editing text box
+      if (e.target === textBox || e.target === delBtn || (e.target as HTMLElement).tagName === 'BUTTON') return;
+      
+      isMoving = true;
+      const rect = noteDiv.getBoundingClientRect();
+      startOffsetX = e.clientX - rect.left;
+      startOffsetY = e.clientY - rect.top;
+      
+      noteDiv.classList.remove('hover:shadow-mockup');
+      noteDiv.classList.add('shadow-modal');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isMoving) return;
+
+      const containerRect = boardContainer?.getBoundingClientRect();
+      if (containerRect) {
+        let x = e.clientX - containerRect.left - startOffsetX;
+        let y = e.clientY - containerRect.top - startOffsetY;
+
+        // Boundaries
+        if (x < 0) x = 0;
+        if (x > containerRect.width - 160) x = containerRect.width - 160;
+        if (y < 0) y = 0;
+        if (y > containerRect.height - 160) y = containerRect.height - 160;
+
+        noteDiv.style.left = `${x}px`;
+        noteDiv.style.top = `${y}px`;
+        
+        note.x = x;
+        note.y = y;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isMoving) {
+        isMoving = false;
+        noteDiv.classList.add('hover:shadow-mockup');
+        noteDiv.classList.remove('shadow-modal');
+        saveBoardState();
+      }
+    });
+
+    // Touch support for drag
+    noteDiv.addEventListener('touchstart', (e) => {
+      if (e.target === textBox || e.target === delBtn || (e.target as HTMLElement).tagName === 'BUTTON') return;
+      isMoving = true;
+      const rect = noteDiv.getBoundingClientRect();
+      startOffsetX = e.touches[0].clientX - rect.left;
+      startOffsetY = e.touches[0].clientY - rect.top;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isMoving) return;
+      const containerRect = boardContainer?.getBoundingClientRect();
+      if (containerRect) {
+        let x = e.touches[0].clientX - containerRect.left - startOffsetX;
+        let y = e.touches[0].clientY - containerRect.top - startOffsetY;
+
+        if (x < 0) x = 0;
+        if (x > containerRect.width - 160) x = containerRect.width - 160;
+        if (y < 0) y = 0;
+        if (y > containerRect.height - 160) y = containerRect.height - 160;
+
+        noteDiv.style.left = `${x}px`;
+        noteDiv.style.top = `${y}px`;
+        
+        note.x = x;
+        note.y = y;
+      }
+    });
+
+    document.addEventListener('touchend', () => {
+      if (isMoving) {
+        isMoving = false;
+        saveBoardState();
+      }
+    });
+
+    stickyContainer.appendChild(noteDiv);
+  }
+
+  // Sidebar Tool selection toggles
+  const penTool = document.getElementById('tool-pen');
+  const stickyTool = document.getElementById('tool-sticky');
+  const eraserTool = document.getElementById('tool-eraser');
+  const penOptions = document.getElementById('pen-options');
+  const penWidthSelect = document.getElementById('pen-width');
+
+  function selectTool(tool: string) {
+    activeTool = tool;
+    
+    // Update button states
+    [penTool, stickyTool, eraserTool].forEach(btn => {
+      if (!btn) return;
+      btn.classList.remove('bg-surface', 'border-hairline-strong', 'text-primary');
+      btn.classList.add('text-slate', 'hover:bg-surface', 'hover:text-ink');
+    });
+
+    if (tool === 'pen' && penTool) {
+      penTool.classList.add('bg-surface', 'border-hairline-strong', 'text-primary');
+      penTool.classList.remove('text-slate');
+      penOptions?.classList.remove('opacity-40', 'pointer-events-none');
+    } else if (tool === 'sticky' && stickyTool) {
+      stickyTool.classList.add('bg-surface', 'border-hairline-strong', 'text-primary');
+      stickyTool.classList.remove('text-slate');
+      penOptions?.classList.add('opacity-40', 'pointer-events-none');
+    } else if (tool === 'eraser' && eraserTool) {
+      eraserTool.classList.add('bg-surface', 'border-hairline-strong', 'text-primary');
+      eraserTool.classList.remove('text-slate');
+      penOptions?.classList.add('opacity-40', 'pointer-events-none');
+    }
+  }
+
+  if (penTool) penTool.addEventListener('click', () => selectTool('pen'));
+  if (eraserTool) eraserTool.addEventListener('click', () => selectTool('eraser'));
+
+  // Color swap event handling
+  const colorBtns = document.querySelectorAll('#pen-options button');
+  colorBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Remove ring from all
+      colorBtns.forEach(b => b.classList.remove('ring-2', 'ring-primary', 'ring-offset-1'));
+      
+      const current = e.currentTarget as HTMLButtonElement;
+      current.classList.add('ring-2', 'ring-primary', 'ring-offset-1');
+      strokeColor = current.dataset.color || '#1c1c1e';
+      
+      if (ctx) ctx.strokeStyle = strokeColor;
+      selectTool('pen');
+    });
+  });
+
+  // Width event handling
+  if (penWidthSelect) {
+    penWidthSelect.addEventListener('change', (e) => {
+      strokeWidth = parseInt((e.target as HTMLSelectElement).value) || 6;
+      if (ctx) ctx.lineWidth = strokeWidth;
+    });
+  }
+
+  // Clear Board Action
+  const clearBtn = document.getElementById('btn-clear');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear your sketches and sticky notes?')) {
+        // Clear drawings
+        if (ctx && canvas) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        // Clear HTML sticky notes
+        if (stickyContainer) {
+          stickyContainer.innerHTML = '';
+        }
+        notes = [];
+        saveBoardState();
+      }
+    });
+  }
+
+  // Export board as PNG
+  const exportBtn = document.getElementById('btn-export');
+  if (exportBtn && canvas) {
+    exportBtn.addEventListener('click', () => {
+      // Create a unified dummy canvas to draw sketches + stickies
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = canvas.width;
+      exportCanvas.height = canvas.height;
+      
+      const exCtx = exportCanvas.getContext('2d');
+      if (exCtx) {
+        const isDark = document.documentElement.classList.contains('dark');
+        // Fill canvas background first
+        exCtx.fillStyle = isDark ? '#0c0c0e' : '#ffffff';
+        exCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+        // Draw grid dots
+        exCtx.fillStyle = isDark ? '#222226' : '#c7cad5';
+        for (let x = 0; x < exportCanvas.width; x += 16) {
+          for (let y = 0; y < exportCanvas.height; y += 16) {
+            exCtx.fillRect(x, y, 1.2, 1.2);
+          }
+        }
+
+        // Draw drawing layer
+        exCtx.drawImage(canvas, 0, 0);
+
+        // Draw each sticky note manually
+        notes.forEach(note => {
+          // Draw rect
+          exCtx.fillStyle = note.color;
+          exCtx.shadowColor = 'rgba(5, 0, 56, 0.08)';
+          exCtx.shadowBlur = 8;
+          exCtx.shadowOffsetX = 0;
+          exCtx.shadowOffsetY = 4;
+          exCtx.fillRect(note.x, note.y, 160, 160);
+          
+          // Draw border
+          exCtx.strokeStyle = 'rgba(5, 0, 56, 0.05)';
+          exCtx.lineWidth = 1;
+          exCtx.strokeRect(note.x, note.y, 160, 160);
+
+          // Reset shadows for text
+          exCtx.shadowColor = 'transparent';
+          exCtx.shadowBlur = 0;
+          exCtx.shadowOffsetX = 0;
+          exCtx.shadowOffsetY = 0;
+
+          // Draw note text wrapping
+          if (note.color === '#0fbcb0') {
+            exCtx.fillStyle = '#050038';
+          } else if (note.color === '#ff9999') {
+            exCtx.fillStyle = '#600000';
+          } else {
+            exCtx.fillStyle = '#1c1c1e';
+          }
+          
+          exCtx.font = '500 12px Inter, sans-serif';
+          
+          // Custom text wrapper
+          const words = note.text.split('\n');
+          let lineY = note.y + 24;
+          words.forEach(lineText => {
+            // Draw simple lines up to note height bounds
+            if (lineY < note.y + 140) {
+              exCtx.fillText(lineText, note.x + 12, lineY, 136);
+              lineY += 16;
+            }
+          });
+        });
+
+        // Trigger download
+        const link = document.createElement('a');
+        link.download = 'boardtools_workspace.png';
+        link.href = exportCanvas.toDataURL();
+        link.click();
+      }
+    });
+  }
+
+  // Load state on startup
+  loadBoardState();
+  updatePrimaryPenColor();
+</script>

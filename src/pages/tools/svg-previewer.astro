@@ -1,0 +1,330 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="SVG Code Previewer & Optimizer - BoardTools"
+  description="Paste or upload vector SVG codes to preview them in real-time on canvas grids. Beautify XML elements and sanitize dimensions instantly."
+>
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue">SVG Previewer</span>
+      </div>
+      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">SVG Previewer & Optimizer</h1>
+      <p class="text-sm text-slate">Inspect SVG graphics, prettify XML nodes, sanitize dimensions to viewBox, and compress vector markup.</p>
+    </div>
+
+    <!-- Interface Panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+      <!-- Input Panel -->
+      <div class="card-base flex flex-col gap-4 min-h-[450px]">
+        <div class="flex items-center justify-between">
+          <label for="svg-input" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+            SVG XML Markup
+          </label>
+          <div class="flex gap-2.5">
+            <button id="btn-load-sample" class="text-xs text-brand-blue hover:underline cursor-pointer">Load Sample</button>
+            <button id="btn-clear" class="text-xs text-stone hover:text-primary cursor-pointer">Clear</button>
+          </div>
+        </div>
+
+        <textarea 
+          id="svg-input" 
+          placeholder='Paste SVG code here... e.g. <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="red" /></svg>' 
+          class="flex-grow w-full h-[350px] p-4 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
+        ></textarea>
+      </div>
+
+      <!-- Preview Panel -->
+      <div class="card-base flex flex-col gap-4 min-h-[450px]">
+        <div class="flex items-center justify-between">
+          <span class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+            Live Grid Preview
+          </span>
+          <div class="flex gap-2">
+            <button id="btn-copy" class="button-secondary py-1 px-3 text-xs !rounded-md hover:bg-surface cursor-pointer">Copy Code</button>
+            <button id="btn-download" class="button-primary py-1 px-3 text-xs !rounded-md hover:button-primary-active cursor-pointer">Download File</button>
+          </div>
+        </div>
+
+        <!-- Render Target Frame (Checkered Grid) -->
+        <div 
+          id="svg-preview-frame" 
+          class="flex-grow w-full h-[350px] checkered-grid border border-hairline rounded-lg flex items-center justify-center p-8 bg-canvas overflow-hidden"
+        >
+          <div id="svg-render-container" class="w-full h-full flex items-center justify-center">
+            <span class="text-stone text-xs select-none">SVG output will render here...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Panel -->
+    <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface rounded-xl border border-hairline">
+      <div class="flex flex-wrap gap-2.5">
+        <button id="btn-format" class="button-secondary py-2 px-5 text-sm hover:bg-canvas cursor-pointer">Prettify Markup</button>
+        <button id="btn-minify" class="button-secondary py-2 px-5 text-sm hover:bg-canvas cursor-pointer">Minify XML</button>
+        <button id="btn-sanitize" class="button-primary py-2 px-5 text-sm hover:button-primary-active cursor-pointer" title="Make SVG responsive by swapping width/height with viewBox">
+          Make Responsive
+        </button>
+      </div>
+
+      <!-- Status Indicator -->
+      <div id="xml-status" class="flex items-center gap-2 text-xs font-semibold">
+        <span class="bg-surface-yellow border border-yellow-light text-yellow-dark px-3 py-1 rounded-full">Waiting for input...</span>
+      </div>
+    </div>
+
+    <!-- XML Warning Panel -->
+    <div id="error-panel" class="hidden card-base bg-brand-red/35 border-brand-red-dark flex flex-col gap-2">
+      <h3 class="font-display font-semibold text-brand-red-dark text-sm">XML Parsing Failure</h3>
+      <p id="error-message" class="text-sm font-mono text-primary leading-relaxed"></p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const svgInput = document.getElementById('svg-input') as HTMLTextAreaElement | null;
+  const renderContainer = document.getElementById('svg-render-container');
+  const errorPanel = document.getElementById('error-panel');
+  const errorMessage = document.getElementById('error-message');
+  const statusContainer = document.getElementById('xml-status');
+
+  const btnClear = document.getElementById('btn-clear');
+  const btnSample = document.getElementById('btn-load-sample');
+  const btnCopy = document.getElementById('btn-copy');
+  const btnDownload = document.getElementById('btn-download');
+
+  const btnFormat = document.getElementById('btn-format');
+  const btnMinify = document.getElementById('btn-minify');
+  const btnSanitize = document.getElementById('btn-sanitize');
+
+  const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Interactive Design Accent Circle -->
+  <circle cx="50" cy="50" r="40" fill="#ffd02f" stroke="#1c1c1e" stroke-width="4" />
+  <!-- Accent Inner Square -->
+  <rect x="35" y="35" width="30" height="30" fill="#4262ff" rx="4" />
+  <path d="M 42 50 L 58 50 M 50 42 L 50 58" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+</svg>`;
+
+  function updateStatus(type: 'idle' | 'success' | 'error', msg: string) {
+    if (!statusContainer) return;
+    if (type === 'idle') {
+      statusContainer.innerHTML = `<span class="bg-surface-yellow border border-yellow-light text-yellow-dark px-3 py-1 rounded-full">${msg}</span>`;
+      errorPanel?.classList.add('hidden');
+    } else if (type === 'success') {
+      statusContainer.innerHTML = `<span class="bg-success-accent/25 border border-success-accent text-moss-dark px-3 py-1 rounded-full">${msg}</span>`;
+      errorPanel?.classList.add('hidden');
+    } else if (type === 'error') {
+      statusContainer.innerHTML = `<span class="bg-brand-red border border-brand-red-dark text-coral-dark px-3 py-1 rounded-full">${msg}</span>`;
+      errorPanel?.classList.remove('hidden');
+    }
+  }
+
+  // Parse and render SVG code safely
+  function parseAndRender() {
+    if (!svgInput || !renderContainer) return;
+
+    const value = svgInput.value.trim();
+    if (!value) {
+      renderContainer.innerHTML = `<span class="text-stone text-xs select-none">SVG output will render here...</span>`;
+      updateStatus('idle', 'Waiting for input...');
+      return;
+    }
+
+    // Try parsing as XML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(value, 'image/svg+xml');
+    const parserError = doc.querySelector('parsererror');
+
+    if (parserError) {
+      renderContainer.innerHTML = `<span class="text-brand-red-dark text-xs font-medium">XML Error</span>`;
+      updateStatus('error', '✗ Invalid XML syntax');
+      if (errorMessage) {
+        errorMessage.textContent = parserError.textContent || 'Unknown XML parsing error.';
+      }
+    } else {
+      // Valid SVG
+      // Check if root element is svg
+      const rootNode = doc.documentElement;
+      if (rootNode.tagName.toLowerCase() !== 'svg') {
+        renderContainer.innerHTML = `<span class="text-brand-red-dark text-xs font-medium">Missing Root &lt;svg&gt; Tag</span>`;
+        updateStatus('error', '✗ Missing root <svg> wrapper');
+        if (errorMessage) {
+          errorMessage.textContent = 'The pasted XML document does not have a top-level <svg> tag wrapper.';
+        }
+        return;
+      }
+
+      // Add full width and height styles for preview inside the box
+      rootNode.setAttribute('style', 'max-width: 100%; max-height: 100%; object-fit: contain;');
+      
+      // Inject nodes
+      renderContainer.innerHTML = '';
+      renderContainer.appendChild(rootNode.cloneNode(true));
+      updateStatus('success', '✓ Valid Vector SVG');
+    }
+  }
+
+  // Load sample
+  if (btnSample && svgInput) {
+    btnSample.addEventListener('click', () => {
+      svgInput.value = sampleSVG;
+      parseAndRender();
+    });
+  }
+
+  // Clear Text
+  if (btnClear && svgInput) {
+    btnClear.addEventListener('click', () => {
+      svgInput.value = '';
+      parseAndRender();
+    });
+  }
+
+  // Code formats
+  if (btnFormat && svgInput) {
+    btnFormat.addEventListener('click', () => {
+      const code = svgInput.value.trim();
+      if (!code) return;
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(code, 'image/svg+xml');
+      if (doc.querySelector('parsererror')) return;
+
+      // Simple XML beautifier
+      const serializer = new XMLSerializer();
+      let raw = serializer.serializeToString(doc);
+
+      // Add basic node spacing indentation
+      let formatted = '';
+      let indent = 0;
+      const reg = /(>)(<)(\/*)/g;
+      raw = raw.replace(reg, '$1\r\n$2$3');
+      const lines = raw.split('\r\n');
+      
+      lines.forEach(line => {
+        let padding = 0;
+        if (line.match(/.+<\/\w[^>]*>$/)) {
+          padding = 0;
+        } else if (line.match(/^<\/\w/)) {
+          if (indent !== 0) indent -= 2;
+        } else if (line.match(/^<\w[^>]*[^\/]>$/)) {
+          padding = 2;
+        }
+        
+        formatted += ' '.repeat(indent) + line + '\n';
+        indent += padding;
+      });
+
+      svgInput.value = formatted.trim();
+      parseAndRender();
+    });
+  }
+
+  // Minify SVG
+  if (btnMinify && svgInput) {
+    btnMinify.addEventListener('click', () => {
+      const code = svgInput.value.trim();
+      if (!code) return;
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(code, 'image/svg+xml');
+      if (doc.querySelector('parsererror')) return;
+
+      // Strip comments
+      const iterator = doc.createNodeIterator(doc.documentElement, NodeFilter.SHOW_COMMENT);
+      let commentNode = iterator.nextNode();
+      while (commentNode) {
+        commentNode.parentNode?.removeChild(commentNode);
+        commentNode = iterator.nextNode();
+      }
+
+      // Serialize minified version without tabs/newlines
+      const serializer = new XMLSerializer();
+      const raw = serializer.serializeToString(doc);
+      const minified = raw.replace(/>\s+</g, '><').trim();
+
+      svgInput.value = minified;
+      parseAndRender();
+    });
+  }
+
+  // Make Responsive (Sanitize dimensions)
+  if (btnSanitize && svgInput) {
+    btnSanitize.addEventListener('click', () => {
+      const code = svgInput.value.trim();
+      if (!code) return;
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(code, 'image/svg+xml');
+      if (doc.querySelector('parsererror')) return;
+
+      const svgNode = doc.documentElement;
+      const w = svgNode.getAttribute('width');
+      const h = svgNode.getAttribute('height');
+      const viewbox = svgNode.getAttribute('viewBox');
+
+      // Create viewBox if missing but width and height exist
+      if (!viewbox && w && h) {
+        // Clean px units
+        const cleanW = w.replace(/px/g, '').trim();
+        const cleanH = h.replace(/px/g, '').trim();
+        svgNode.setAttribute('viewBox', `0 0 ${cleanW} ${cleanH}`);
+      }
+
+      // Strip fixed sizing
+      svgNode.removeAttribute('width');
+      svgNode.removeAttribute('height');
+
+      const serializer = new XMLSerializer();
+      const sanitized = serializer.serializeToString(doc);
+      
+      svgInput.value = sanitized;
+      parseAndRender();
+    });
+  }
+
+  // Copy code
+  if (btnCopy && svgInput) {
+    btnCopy.addEventListener('click', () => {
+      const val = svgInput.value;
+      if (val) {
+        navigator.clipboard.writeText(val).then(() => {
+          const orig = btnCopy.innerHTML;
+          btnCopy.innerHTML = '✓ Copied!';
+          setTimeout(() => {
+            btnCopy.innerHTML = orig;
+          }, 1500);
+        });
+      }
+    });
+  }
+
+  // Download SVG
+  if (btnDownload && svgInput) {
+    btnDownload.addEventListener('click', () => {
+      const code = svgInput.value;
+      if (code) {
+        const blob = new Blob([code], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = 'vector_boardtools.svg';
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    });
+  }
+
+  // Input listeners
+  if (svgInput) {
+    svgInput.addEventListener('input', parseAndRender);
+  }
+</script>

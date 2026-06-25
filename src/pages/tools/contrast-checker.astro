@@ -1,0 +1,319 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="WCAG Accessibility Color Contrast Checker - BoardTools"
+  description="Audit background and foreground text color contrast ratios. Check WCAG 2.1 compliance for AA & AAA ratings instantly in real-time."
+>
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue">Contrast Checker</span>
+      </div>
+      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">Color Contrast Checker</h1>
+      <p class="text-sm text-slate">Audit color pairings against WCAG 2.1 accessibility specifications for normal and large text scales.</p>
+    </div>
+
+    <!-- Interface Panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <!-- Left controls panel: Inputs & Presets (5 cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-6 card-base">
+        <h2 class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center justify-between">
+          <span>Audit Parameters</span>
+          <!-- Swap Button -->
+          <button id="btn-swap-colors" class="text-xs text-brand-blue hover:underline flex items-center gap-1 cursor-pointer" title="Swap Foreground & Background">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            Swap Colors
+          </button>
+        </h2>
+
+        <!-- Color pickers -->
+        <div class="flex flex-col gap-4">
+          <!-- Foreground -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Text Color (Foreground)</span>
+              <span id="fg-val-hex" class="font-mono text-stone font-normal">#1C1C1E</span>
+            </label>
+            <div class="flex gap-2">
+              <input type="color" id="fg-picker" value="#1c1c1e" class="w-12 h-10 border border-hairline-strong rounded cursor-pointer p-0.5" />
+              <input type="text" id="fg-text" value="#1C1C1E" class="text-input flex-grow" maxlength="7" />
+            </div>
+          </div>
+
+          <!-- Background -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Background Color</span>
+              <span id="bg-val-hex" class="font-mono text-stone font-normal">#FFFFFF</span>
+            </label>
+            <div class="flex gap-2">
+              <input type="color" id="bg-picker" value="#ffffff" class="w-12 h-10 border border-hairline-strong rounded cursor-pointer p-0.5" />
+              <input type="text" id="bg-text" value="#FFFFFF" class="text-input flex-grow" maxlength="7" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="flex flex-col gap-2.5">
+          <span class="text-xs font-semibold text-slate uppercase tracking-wider">Quick Miro Palette Audits</span>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="btn-preset text-xs p-2 rounded border border-hairline bg-brand-yellow text-primary font-medium hover:opacity-90 cursor-pointer" data-fg="#1c1c1e" data-bg="#ffd02f">
+              Yellow Board
+            </button>
+            <button class="btn-preset text-xs p-2 rounded border border-hairline bg-teal-light text-moss-dark font-medium hover:opacity-90 cursor-pointer" data-fg="#187574" data-bg="#c3faf5">
+              Teal Board
+            </button>
+            <button class="btn-preset text-xs p-2 rounded border border-hairline bg-coral-light text-coral-dark font-medium hover:opacity-90 cursor-pointer" data-fg="#600000" data-bg="#ffc6c6">
+              Coral Board
+            </button>
+            <button class="btn-preset text-xs p-2 rounded border border-hairline bg-rose-light text-primary font-medium hover:opacity-90 cursor-pointer" data-fg="#1c1c1e" data-bg="#fde0f0">
+              Rose Board
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right panel: Results & Live Preview (7 cols) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <!-- Giant Score Card -->
+        <div class="card-base flex flex-col sm:flex-row items-center justify-between gap-6 bg-surface">
+          <div class="flex flex-col gap-1 text-center sm:text-left">
+            <span class="text-xs font-semibold text-slate uppercase tracking-wider">Contrast Ratio Score</span>
+            <div id="ratio-display" class="font-display font-medium text-5xl tracking-tight text-primary">21.0:1</div>
+          </div>
+
+          <!-- Compliance badges -->
+          <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
+            <!-- Normal Text AA -->
+            <div class="flex flex-col items-center p-2.5 bg-canvas rounded-lg border border-hairline text-center gap-1">
+              <span class="text-[10px] font-semibold text-stone uppercase">Normal AA (4.5)</span>
+              <span id="badge-norm-aa" class="text-xs font-bold text-success-accent">PASS</span>
+            </div>
+            <!-- Normal Text AAA -->
+            <div class="flex flex-col items-center p-2.5 bg-canvas rounded-lg border border-hairline text-center gap-1">
+              <span class="text-[10px] font-semibold text-stone uppercase">Normal AAA (7.0)</span>
+              <span id="badge-norm-aaa" class="text-xs font-bold text-success-accent">PASS</span>
+            </div>
+            <!-- Large Text AA -->
+            <div class="flex flex-col items-center p-2.5 bg-canvas rounded-lg border border-hairline text-center gap-1">
+              <span class="text-[10px] font-semibold text-stone uppercase">Large AA (3.0)</span>
+              <span id="badge-large-aa" class="text-xs font-bold text-success-accent">PASS</span>
+            </div>
+            <!-- Large Text AAA -->
+            <div class="flex flex-col items-center p-2.5 bg-canvas rounded-lg border border-hairline text-center gap-1">
+              <span class="text-[10px] font-semibold text-stone uppercase">Large AAA (4.5)</span>
+              <span id="badge-large-aaa" class="text-xs font-bold text-success-accent">PASS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Preview Block -->
+        <div class="card-base flex-grow flex flex-col gap-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+              Aesthetic Rendering Sandbox
+            </span>
+            <!-- Size Slider -->
+            <div class="flex items-center gap-2">
+              <label for="font-slider" class="text-xs font-semibold text-slate">Font Size</label>
+              <input type="range" id="font-slider" min="14" max="56" value="24" class="w-24 cursor-pointer" />
+              <span id="lbl-font-size" class="text-xs font-mono font-semibold text-stone w-8">24px</span>
+            </div>
+          </div>
+
+          <!-- Preview Frame -->
+          <div 
+            id="preview-frame" 
+            class="flex-grow min-h-[200px] border border-hairline rounded-lg flex flex-col justify-center p-8 transition-colors duration-200 shadow-subtle overflow-auto bg-canvas text-primary"
+          >
+            <h3 id="preview-heading" class="font-display font-medium tracking-tight mb-2">
+              Pack my box with five dozen liquor jugs.
+            </h3>
+            <p id="preview-body" class="text-sm max-w-md leading-relaxed font-normal">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit urna a arcu tincidunt varius.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Picker Elements
+  const fgPicker = document.getElementById('fg-picker') as HTMLInputElement | null;
+  const fgText = document.getElementById('fg-text') as HTMLInputElement | null;
+  const fgLabelHex = document.getElementById('fg-val-hex');
+
+  const bgPicker = document.getElementById('bg-picker') as HTMLInputElement | null;
+  const bgText = document.getElementById('bg-text') as HTMLInputElement | null;
+  const bgLabelHex = document.getElementById('bg-val-hex');
+
+  const btnSwap = document.getElementById('btn-swap-colors');
+  const presets = document.querySelectorAll('.btn-preset');
+
+  // Preview elements
+  const fontSlider = document.getElementById('font-slider') as HTMLInputElement | null;
+  const fontLabel = document.getElementById('lbl-font-size');
+  const previewFrame = document.getElementById('preview-frame');
+  const previewHeading = document.getElementById('preview-heading') as HTMLElement | null;
+  const previewBody = document.getElementById('preview-body') as HTMLElement | null;
+
+  // Score elements
+  const ratioDisplay = document.getElementById('ratio-display');
+  const badgeNormAA = document.getElementById('badge-norm-aa');
+  const badgeNormAAA = document.getElementById('badge-norm-aaa');
+  const badgeLargeAA = document.getElementById('badge-large-aa');
+  const badgeLargeAAA = document.getElementById('badge-large-aaa');
+
+  // Math conversions
+  function hexToRgb(hex: string) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    const cleanHex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cleanHex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 0, g: 0, b: 0 };
+  }
+
+  function getLuminance(r: number, g: number, b: number): number {
+    const a = [r, g, b].map(v => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  }
+
+  function auditContrast() {
+    if (!fgText || !bgText) return;
+    
+    let fg = fgText.value.trim();
+    let bg = bgText.value.trim();
+
+    // Force hex tags
+    if (!fg.startsWith('#')) fg = '#' + fg;
+    if (!bg.startsWith('#')) bg = '#' + bg;
+
+    // Validate lengths
+    if (fg.length !== 7 || bg.length !== 7) return;
+
+    // Sync labels
+    if (fgLabelHex) fgLabelHex.textContent = fg.toUpperCase();
+    if (bgLabelHex) bgLabelHex.textContent = bg.toUpperCase();
+
+    // Sync Pickers
+    if (fgPicker) fgPicker.value = fg.toLowerCase();
+    if (bgPicker) bgPicker.value = bg.toLowerCase();
+
+    // Sync Preview Styles
+    if (previewFrame) {
+      previewFrame.style.backgroundColor = bg;
+      previewFrame.style.color = fg;
+    }
+
+    const rgbFg = hexToRgb(fg);
+    const rgbBg = hexToRgb(bg);
+
+    const lumFg = getLuminance(rgbFg.r, rgbFg.g, rgbFg.b);
+    const lumBg = getLuminance(rgbBg.r, rgbBg.g, rgbBg.b);
+
+    const ratio = lumFg > lumBg 
+      ? (lumFg + 0.05) / (lumBg + 0.05)
+      : (lumBg + 0.05) / (lumFg + 0.05);
+
+    // Render Displays
+    if (ratioDisplay) {
+      ratioDisplay.textContent = `${ratio.toFixed(1)}:1`;
+    }
+
+    // Evaluate badges
+    const normAA = ratio >= 4.5;
+    const normAAA = ratio >= 7.0;
+    const largeAA = ratio >= 3.0;
+    const largeAAA = ratio >= 4.5;
+
+    renderBadge(badgeNormAA, normAA);
+    renderBadge(badgeNormAAA, normAAA);
+    renderBadge(badgeLargeAA, largeAA);
+    renderBadge(badgeLargeAAA, largeAAA);
+  }
+
+  function renderBadge(el: HTMLElement | null, pass: boolean) {
+    if (!el) return;
+    if (pass) {
+      el.className = 'text-xs font-bold text-success-accent';
+      el.textContent = 'PASS';
+    } else {
+      el.className = 'text-xs font-bold text-brand-red-dark';
+      el.textContent = 'FAIL';
+    }
+  }
+
+  // Hook Pickers & Text Fields
+  if (fgPicker && fgText) {
+    fgPicker.addEventListener('input', () => {
+      fgText.value = fgPicker.value.toUpperCase();
+      auditContrast();
+    });
+    fgText.addEventListener('input', () => {
+      auditContrast();
+    });
+  }
+
+  if (bgPicker && bgText) {
+    bgPicker.addEventListener('input', () => {
+      bgText.value = bgPicker.value.toUpperCase();
+      auditContrast();
+    });
+    bgText.addEventListener('input', () => {
+      auditContrast();
+    });
+  }
+
+  // Swap Hook
+  if (btnSwap && fgText && bgText) {
+    btnSwap.addEventListener('click', () => {
+      const temp = fgText.value;
+      fgText.value = bgText.value;
+      bgText.value = temp;
+      auditContrast();
+    });
+  }
+
+  // Preset hooks
+  presets.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const current = e.currentTarget as HTMLButtonElement;
+      if (fgText && bgText) {
+        fgText.value = current.dataset.fg || '#1c1c1e';
+        bgText.value = current.dataset.bg || '#ffffff';
+        auditContrast();
+      }
+    });
+  });
+
+  // Slider Hook
+  if (fontSlider && fontLabel) {
+    fontSlider.addEventListener('input', (e) => {
+      const size = (e.target as HTMLInputElement).value;
+      fontLabel.textContent = `${size}px`;
+      if (previewHeading) {
+        previewHeading.style.fontSize = `${size}px`;
+      }
+    });
+  }
+
+  // Init audit
+  auditContrast();
+</script>

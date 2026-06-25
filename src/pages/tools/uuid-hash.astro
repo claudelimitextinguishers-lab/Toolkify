@@ -1,0 +1,288 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="UUID v4 & Cryptographic Hash Generator - BoardTools"
+  description="Generate random v4 UUID tokens individually or in bulk. Calculate SHA-256, SHA-512, and SHA-1 hashes of any string locally."
+>
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
+        <a href="/" class="hover:text-primary">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue">UUID & Hash</span>
+      </div>
+      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">UUID & Hash Generator</h1>
+      <p class="text-sm text-slate">Bulk-generate random UUID v4 identifiers or calculate secure cryptographic digests of text strings.</p>
+    </div>
+
+    <!-- Layout: Two Columns for the Two Sub-Tools -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <!-- Left Column: UUID Generator -->
+      <div class="card-base flex flex-col gap-6">
+        <div class="flex items-center gap-2 pb-2 border-b border-hairline">
+          <span class="w-3 h-3 rounded-full bg-brand-yellow"></span>
+          <h2 class="font-display font-medium text-xl text-primary">UUID v4 Generator</h2>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <!-- Count Selector -->
+          <div class="flex items-center justify-between gap-4">
+            <label for="uuid-count" class="text-sm font-semibold text-charcoal">Quantity to Generate</label>
+            <input 
+              type="number" 
+              id="uuid-count" 
+              value="5" 
+              min="1" 
+              max="100" 
+              class="w-20 text-input text-center !h-10"
+            />
+          </div>
+
+          <!-- Options -->
+          <div class="flex gap-6 py-1">
+            <label class="flex items-center gap-2 text-sm text-slate cursor-pointer select-none">
+              <input type="checkbox" id="uuid-uppercase" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
+              Uppercase
+            </label>
+            <label class="flex items-center gap-2 text-sm text-slate cursor-pointer select-none">
+              <input type="checkbox" id="uuid-no-hyphens" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
+              Remove Hyphens
+            </label>
+          </div>
+
+          <button 
+            id="btn-gen-uuid" 
+            class="button-primary py-2 w-full hover:button-primary-active mt-2"
+          >
+            Generate UUIDs
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-2 mt-2">
+          <div class="flex justify-between items-center text-xs font-semibold text-slate">
+            <span>Generated Result List</span>
+            <button id="btn-copy-uuid" class="text-brand-blue hover:underline cursor-pointer">Copy List</button>
+          </div>
+          <textarea 
+            id="uuid-output" 
+            readonly 
+            rows="8"
+            placeholder="Generated UUID lists will appear here..." 
+            class="w-full p-3 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none select-all text-primary"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Right Column: Hash Calculator -->
+      <div class="card-base flex flex-col gap-6">
+        <div class="flex items-center gap-2 pb-2 border-b border-hairline">
+          <span class="w-3 h-3 rounded-full bg-brand-teal"></span>
+          <h2 class="font-display font-medium text-xl text-primary">Cryptographic Hash Digest</h2>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <label for="hash-input" class="text-sm font-semibold text-charcoal">Source Text Input</label>
+          <textarea 
+            id="hash-input" 
+            placeholder="Type your plain text string here for real-time hash generation..." 
+            rows="3"
+            class="w-full p-3 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
+          ></textarea>
+        </div>
+
+        <!-- Hash Results -->
+        <div class="flex flex-col gap-4">
+          <!-- SHA-256 -->
+          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
+            <div class="flex justify-between items-center text-xs font-semibold">
+              <span class="text-moss-dark">SHA-256 (Recommended)</span>
+              <button data-copy-target="sha256-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+            </div>
+            <input 
+              type="text" 
+              id="sha256-output" 
+              readonly 
+              placeholder="SHA-256 digest output..."
+              class="w-full bg-transparent border-none p-0 outline-none font-mono text-sm text-primary select-all"
+            />
+          </div>
+
+          <!-- SHA-512 -->
+          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
+            <div class="flex justify-between items-center text-xs font-semibold">
+              <span class="text-slate">SHA-512</span>
+              <button data-copy-target="sha512-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+            </div>
+            <input 
+              type="text" 
+              id="sha512-output" 
+              readonly 
+              placeholder="SHA-512 digest output..."
+              class="w-full bg-transparent border-none p-0 outline-none font-mono text-xs text-primary select-all"
+            />
+          </div>
+
+          <!-- SHA-1 -->
+          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
+            <div class="flex justify-between items-center text-xs font-semibold">
+              <span class="text-slate">SHA-1 (Legacy)</span>
+              <button data-copy-target="sha1-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+            </div>
+            <input 
+              type="text" 
+              id="sha1-output" 
+              readonly 
+              placeholder="SHA-1 digest output..."
+              class="w-full bg-transparent border-none p-0 outline-none font-mono text-sm text-primary select-all"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // UUID v4 Generator Code
+  const uuidCountInput = document.getElementById('uuid-count') as HTMLInputElement | null;
+  const uuidUppercase = document.getElementById('uuid-uppercase') as HTMLInputElement | null;
+  const uuidNoHyphens = document.getElementById('uuid-no-hyphens') as HTMLInputElement | null;
+  const btnGenUuid = document.getElementById('btn-gen-uuid');
+  const uuidOutput = document.getElementById('uuid-output') as HTMLTextAreaElement | null;
+  const btnCopyUuid = document.getElementById('btn-copy-uuid');
+
+  function generateUUIDv4(): string {
+    // Cryptographically secure random values
+    const tempUrl = URL.createObjectURL(new Blob());
+    const uuid = tempUrl.toString().split('/').pop() || '';
+    URL.revokeObjectURL(tempUrl);
+
+    // Fallback standard RFC4122 v4 generator if blob URL splits fail
+    if (uuid.length !== 36) {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+    return uuid;
+  }
+
+  function handleGenerateUUIDs() {
+    if (!uuidOutput || !uuidCountInput) return;
+
+    let count = parseInt(uuidCountInput.value) || 1;
+    if (count < 1) count = 1;
+    if (count > 100) count = 100;
+
+    const list: string[] = [];
+    const isUpper = uuidUppercase?.checked || false;
+    const isNoHyphens = uuidNoHyphens?.checked || false;
+
+    for (let i = 0; i < count; i++) {
+      let id = generateUUIDv4();
+      if (isNoHyphens) {
+        id = id.replace(/-/g, '');
+      }
+      if (isUpper) {
+        id = id.toUpperCase();
+      }
+      list.push(id);
+    }
+
+    uuidOutput.value = list.join('\n');
+  }
+
+  if (btnGenUuid) {
+    btnGenUuid.addEventListener('click', handleGenerateUUIDs);
+  }
+
+  if (btnCopyUuid && uuidOutput) {
+    btnCopyUuid.addEventListener('click', () => {
+      const list = uuidOutput.value;
+      if (list) {
+        navigator.clipboard.writeText(list).then(() => {
+          const orig = btnCopyUuid.innerHTML;
+          btnCopyUuid.innerHTML = 'Copied!';
+          setTimeout(() => {
+            btnCopyUuid.innerHTML = orig;
+          }, 1500);
+        });
+      }
+    });
+  }
+
+  // Trigger initial list on load
+  handleGenerateUUIDs();
+
+  // Hash Generator Code
+  const hashInput = document.getElementById('hash-input') as HTMLTextAreaElement | null;
+  const sha256Val = document.getElementById('sha256-output') as HTMLInputElement | null;
+  const sha512Val = document.getElementById('sha512-output') as HTMLInputElement | null;
+  const sha1Val = document.getElementById('sha1-output') as HTMLInputElement | null;
+
+  async function calculateHashes() {
+    if (!hashInput || !sha256Val || !sha512Val || !sha1Val) return;
+
+    const value = hashInput.value;
+    if (!value) {
+      sha256Val.value = '';
+      sha512Val.value = '';
+      sha1Val.value = '';
+      return;
+    }
+
+    const enc = new TextEncoder();
+    const data = enc.encode(value);
+
+    try {
+      // SHA-256
+      const hash256 = await crypto.subtle.digest('SHA-256', data);
+      sha256Val.value = hex(hash256);
+
+      // SHA-512
+      const hash512 = await crypto.subtle.digest('SHA-512', data);
+      sha512Val.value = hex(hash512);
+
+      // SHA-1
+      const hash1 = await crypto.subtle.digest('SHA-1', data);
+      sha1Val.value = hex(hash1);
+    } catch (e) {
+      console.error('Cryptographic calculation failure', e);
+    }
+  }
+
+  function hex(buffer: ArrayBuffer): string {
+    const bytes = new Uint8Array(buffer);
+    return Array.from(bytes)
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  if (hashInput) {
+    hashInput.addEventListener('input', calculateHashes);
+  }
+
+  // Handle Hash outputs Copy buttons
+  const copyButtons = document.querySelectorAll('[data-copy-target]');
+  copyButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const targetId = (e.currentTarget as HTMLButtonElement).dataset.copyTarget || '';
+      const input = document.getElementById(targetId) as HTMLInputElement | null;
+      
+      if (input && input.value) {
+        navigator.clipboard.writeText(input.value).then(() => {
+          const clicked = e.currentTarget as HTMLButtonElement;
+          const orig = clicked.innerHTML;
+          clicked.innerHTML = 'Copied!';
+          setTimeout(() => {
+            clicked.innerHTML = orig;
+          }, 1500);
+        });
+      }
+    });
+  });
+</script>
