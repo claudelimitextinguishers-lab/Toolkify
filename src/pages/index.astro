@@ -101,7 +101,7 @@ const tools = [
     name: "Take-Home Pay / Paycheck Calculator",
     desc: "Estimate your net take-home salary after federal, state, and local tax deductions.",
     category: "finance",
-    path: "/tools/finance/take-home-pay",
+    path: "/tools/finance/paycheck-calculator",
     badgeText: "FINANCE",
     badgeClass: "badge-tag-yellow bg-yellow-light text-yellow-dark",
     cardClass: "card-feature-yellow",
@@ -2586,7 +2586,7 @@ const tools = [
         recentSection.classList.remove("hidden");
         recentList.innerHTML = "";
 
-        recents.forEach((item) => {
+        recents.forEach((item: any) => {
           let bgClass =
             "bg-surface-yellow border border-yellow-light text-yellow-dark";
           let iconChar = "W";
@@ -2607,12 +2607,18 @@ const tools = [
           card.href = item.path;
           card.className =
             "flex items-center gap-3 p-3.5 bg-canvas/60 border border-hairline rounded-xl hover:-translate-y-1 hover:shadow-subtle transition-all duration-200 group";
+          
+          let displayName = item.name || "";
+          if (displayName.startsWith("Universal ")) {
+            displayName = displayName.replace(/^Universal\s+/, "");
+          }
+
           card.innerHTML = `
             <div class="w-8 h-8 rounded-lg flex items-center justify-center font-display font-bold text-xs ${bgClass} select-none">
               ${iconChar}
             </div>
             <div class="flex flex-col">
-              <span class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors">${item.name}</span>
+              <span class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors">${displayName}</span>
               <span class="text-[10px] text-stone uppercase tracking-wide font-semibold mt-0.5">${item.category}</span>
             </div>
           `;
