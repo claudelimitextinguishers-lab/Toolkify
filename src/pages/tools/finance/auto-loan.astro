@@ -13,78 +13,1575 @@ const description = "Determine monthly payments, total interest, and overall cos
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Auto Loan Calculator",
+      "url": "https://boardtools.app/tools/finance/auto-loan",
+      "description": "Interactive client-side auto loan payment calculator supporting trade-ins, down payment toggles, sales tax, fees, balloon payments, and USD/INR currencies.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12">
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1 class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary">
           {name}
         </h1>
         <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How auto loan calculator works"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Mode / New vs Used Toggle (Miro Pill Style) -->
+    <div class="flex items-center justify-between border-b border-hairline pb-3">
+      <div class="flex rounded-full bg-surface p-1 border border-hairline">
+        <button
+          type="button"
+          id="cond-new-btn"
+          class="text-xs px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer bg-primary text-canvas"
+        >
+          🚗 New Car
+        </button>
+        <button
+          type="button"
+          id="cond-used-btn"
+          class="text-xs px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer text-slate"
+        >
+          🚙 Used Car
+        </button>
+      </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left: Interactive Form (7 Columns) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2 class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Purchase Details
+          </h2>
+
+          <!-- Row 1: Vehicle Price & Trade-in Value -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="vehicle-price" class="text-xs font-semibold text-charcoal flex justify-between">
+                <span>Vehicle Price</span>
+                <span class="currency-label text-stone font-normal">USD ($)</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="vehicle-price"
+                  value="35000"
+                  min="500"
+                  max="10000000"
+                  step="500"
+                  class="text-input pl-7 font-mono text-sm"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label for="trade-in" class="text-xs font-semibold text-charcoal flex justify-between">
+                <span>Trade-in Value</span>
+                <span class="currency-label text-stone font-normal">USD ($)</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="trade-in"
+                  value="5000"
+                  min="0"
+                  max="1000000"
+                  step="100"
+                  class="text-input pl-7 font-mono text-sm"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
-          </button>
+
+          <!-- Row 2: Down Payment with $ / % Toggle -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between text-xs font-semibold text-charcoal">
+              <span>Down Payment</span>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline">
+                <button
+                  type="button"
+                  id="down-payment-toggle-dollar"
+                  class="text-[10px] px-3 py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+                >
+                  $
+                </button>
+                <button
+                  type="button"
+                  id="down-payment-toggle-percent"
+                  class="text-[10px] px-3 py-1 rounded-full font-bold transition-all cursor-pointer text-slate"
+                >
+                  %
+                </button>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- Dollar input -->
+              <div class="relative" id="down-payment-dollar-wrapper">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="down-payment-dollar"
+                  value="7000"
+                  min="0"
+                  class="text-input pl-7 font-mono text-sm"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+              <!-- Percentage input -->
+              <div class="relative" id="down-payment-percent-wrapper">
+                <input
+                  type="number"
+                  id="down-payment-percent"
+                  value="20"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  class="text-input pr-7 font-mono text-sm"
+                  inputmode="decimal"
+                  autocomplete="off"
+                />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium">%</span>
+              </div>
+              
+              <!-- Extra info element (Calculated amount/percentage dynamically) -->
+              <div class="flex items-center text-xs text-stone font-mono sm:col-span-2" id="down-payment-feedback">
+                Down Payment: $7,000 (20.0% of vehicle price)
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Loan Term presets & slider -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Loan Term</span>
+              <span id="loan-term-val" class="font-mono text-stone font-bold">60 months (5 years)</span>
+            </label>
+            <div class="grid grid-cols-6 gap-1">
+              {
+                [24, 36, 48, 60, 72, 84].map((months) => (
+                  <button
+                    type="button"
+                    class="preset-term-btn text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer border border-hairline text-slate bg-canvas hover:border-hairline-strong active:scale-95 flex items-center justify-center"
+                    data-term={months}
+                  >
+                    {months}m
+                  </button>
+                ))
+              }
+            </div>
+            <div class="flex items-center gap-3 mt-1.5">
+              <input
+                type="range"
+                id="loan-term-range"
+                min="12"
+                max="96"
+                value="60"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Loan Term Custom Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="loan-term-input"
+                  min="12"
+                  max="96"
+                  value="60"
+                  class="text-input pr-8 py-1 text-xs text-center font-mono h-8"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">mo</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 4: Annual Interest Rate with Slider -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Annual Interest Rate</span>
+              <span id="interest-rate-val" class="font-mono text-stone font-bold">5.50%</span>
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="interest-rate-range"
+                min="0.1"
+                max="25"
+                value="5.5"
+                step="0.05"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Interest Rate Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="interest-rate-input"
+                  min="0.1"
+                  max="25"
+                  value="5.5"
+                  step="0.01"
+                  class="text-input pr-5 py-1 text-xs text-center font-mono h-8"
+                  inputmode="decimal"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">%</span>
+              </div>
+            </div>
+            <div id="condition-hint" class="text-[11px] text-brand-blue font-semibold">
+              Typical rate for new car financing.
+            </div>
+          </div>
+
+          <!-- Row 5: Loan Start Date -->
+          <div class="flex flex-col gap-1.5">
+            <label for="loan-start-date" class="text-xs font-semibold text-charcoal">
+              First Payment / Start Date
+            </label>
+            <input
+              type="date"
+              id="loan-start-date"
+              class="text-input font-mono text-sm"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Collapsible Advanced Options Toggle -->
+          <div class="border-t border-hairline pt-4 mt-2">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Options (Taxes, Fees, Balloon Payment)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Advanced Panel content -->
+            <div
+              id="advanced-panel"
+              class="hidden overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
+            >
+              <!-- Currency Selector & Credit Score Hint Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label for="currency-selector" class="text-[11px] font-semibold text-slate">
+                    Currency System
+                  </label>
+                  <select id="currency-selector" class="text-input py-1 text-xs font-medium">
+                    <option value="USD">$ USD (U.S. Dollars)</option>
+                    <option value="INR">₹ INR (Indian Rupees)</option>
+                    <option value="CAD">$ CAD (Canadian Dollars)</option>
+                    <option value="GBP">£ GBP (British Pounds)</option>
+                    <option value="AUD">$ AUD (Australian Dollars)</option>
+                    <option value="EUR">€ EUR (Euros)</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="credit-score" class="text-[11px] font-semibold text-slate">
+                    Estimated Credit Score Range
+                  </label>
+                  <select id="credit-score" class="text-input py-1 text-xs font-medium">
+                    <option value="excellent">Excellent (720 - 850)</option>
+                    <option value="good" selected>Good (690 - 719)</option>
+                    <option value="fair">Fair (630 - 689)</option>
+                    <option value="poor">Poor (300 - 629)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Credit Score Rate suggestion box -->
+              <div id="credit-rate-alert" class="card-feature-teal !p-3 !rounded-lg text-[11px] flex flex-col gap-1">
+                <span class="font-bold text-moss-dark">Credit Profile suggestion:</span>
+                <span id="credit-rate-text" class="text-slate leading-relaxed">
+                  Loading credit recommendation...
+                </span>
+              </div>
+
+              <!-- Taxes & Fees Row -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label for="sales-tax" class="text-[11px] font-semibold text-slate">
+                    Sales Tax Rate (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="sales-tax"
+                      value="6.25"
+                      min="0"
+                      max="40"
+                      step="0.01"
+                      class="text-input pr-6 font-mono text-xs"
+                      inputmode="decimal"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs">%</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="doc-fees" class="text-[11px] font-semibold text-slate flex justify-between">
+                    <span>Doc Fees</span>
+                    <span class="currency-symbol text-stone font-normal">$</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone text-xs currency-symbol">$</span>
+                    <input
+                      type="number"
+                      id="doc-fees"
+                      value="150"
+                      min="0"
+                      class="text-input pl-6 font-mono text-xs"
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="reg-fees" class="text-[11px] font-semibold text-slate flex justify-between">
+                    <span>Registration</span>
+                    <span class="currency-symbol text-stone font-normal">$</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone text-xs currency-symbol">$</span>
+                    <input
+                      type="number"
+                      id="reg-fees"
+                      value="250"
+                      min="0"
+                      class="text-input pl-6 font-mono text-xs"
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Balloon Payment -->
+              <div class="flex flex-col gap-1.5">
+                <label for="balloon-payment" class="text-[11px] font-semibold text-slate flex justify-between">
+                  <span>Balloon Payment (Optional final payment)</span>
+                  <span class="currency-symbol text-stone font-normal">$</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                  <input
+                    type="number"
+                    id="balloon-payment"
+                    value="0"
+                    min="0"
+                    class="text-input pl-7 font-mono text-sm"
+                    inputmode="numeric"
+                    placeholder="0"
+                  />
+                </div>
+                <div class="text-[10px] text-slate leading-relaxed">
+                  Common in used car lease-buyout financing. A lump-sum paid at the end of the loan reduces monthly installments.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
+      <!-- Right: Sidebar details (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
         <!-- How it works -->
         <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
-        </div>
+          <h3 class="font-display font-semibold text-base text-primary">Calculation Guide</h3>
+          
+          <div class="card-feature-teal !p-3 !rounded-lg text-[11px] flex flex-col gap-1">
+            <span class="font-bold text-moss-dark">💱 Currency Toggling:</span>
+            <span class="text-slate leading-relaxed">
+              You can change the currency system ($ USD, ₹ INR, £ GBP, € EUR, etc.) inside the <strong>Advanced Options</strong> panel to dynamically reformat all values.
+            </span>
+          </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+          <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
+            <h4 class="font-bold text-primary uppercase text-[10px] tracking-wider mt-1">How to use the tool:</h4>
+            <ol class="list-decimal pl-4 flex flex-col gap-1.5">
+              <li><strong>Enter purchase price</strong>, down payment (value or percentage), and any trade-in vehicle value.</li>
+              <li><strong>Select your loan term</strong> (presets or custom monthly slider) and enter the annual interest rate.</li>
+              <li><strong>Expand Advanced Options</strong> if you want to include sales tax, doc fees, or an optional balloon payment.</li>
+              <li><strong>Review analysis</strong> below the fold or click the <em>"View Results"</em> sticky button on mobile. Export your schedule to CSV or Excel instantly.</li>
+            </ol>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Results Section (Always below inputs, scrolled to via "View Results") -->
+    <div id="results-column" class="flex flex-col gap-6 mt-8 border-t border-hairline pt-8">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display font-semibold text-2xl text-primary flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"></span>
+          Payment Summary & Analysis
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left: Net Payments Hero (6 Columns) -->
+        <div class="lg:col-span-6 card-base flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-success-accent/10 rounded-full blur-3xl"></div>
+          
+          <div class="flex flex-col gap-4 z-10">
+            <div>
+              <span class="text-xs font-bold text-slate uppercase tracking-wider block">Estimated Monthly Payment</span>
+              <div id="monthly-payment-display" class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono">
+                $0.00
+              </div>
+            </div>
+
+            <!-- Basic stats row -->
+            <div class="grid grid-cols-2 gap-4 border-t border-hairline pt-4 mt-2">
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Total Loan Amount</span>
+                <span id="loan-amount-display" class="font-display font-semibold text-base text-primary font-mono select-all">$0.00</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Total Interest Paid</span>
+                <span id="total-interest-display" class="font-display font-semibold text-base text-primary font-mono select-all">$0.00</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 border-t border-hairline pt-4">
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Total Financing Cost</span>
+                <span id="total-cost-display" class="font-display font-semibold text-base text-success-accent font-mono select-all">$0.00</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5">(Car Price + Tax + Fees + Interest)</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Effective APR</span>
+                <span id="effective-apr-display" class="font-display font-semibold text-base text-primary font-mono select-all">5.50%</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5">(Includes Doc Fees)</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col border-t border-hairline pt-4">
+              <span class="text-[10px] uppercase font-bold text-slate">Estimated Payoff Date</span>
+              <span id="payoff-date-display" class="font-display font-semibold text-base text-primary select-all">December 2030</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Graphic SVG Donut / Summary details (6 Columns) -->
+        <div class="lg:col-span-6 card-base grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <div class="sm:col-span-5 flex flex-col items-center justify-center min-h-[160px]">
+            <div class="relative w-40 h-40">
+              <svg id="donut-svg" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="var(--color-hairline)" stroke-width="12" fill="transparent"></circle>
+                <g id="donut-segments"></g>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span class="text-[9px] text-stone font-semibold uppercase">Principal Ratio</span>
+                <span id="donut-percent" class="font-display font-bold text-lg text-primary">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legend details -->
+          <div class="sm:col-span-7 flex flex-col gap-3">
+            <h3 class="text-xs font-semibold text-slate uppercase tracking-wider pb-1 border-b border-hairline-soft">
+              Total Cost Breakdown
+            </h3>
+            <ul class="flex flex-col gap-2">
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+                  <span class="text-charcoal font-medium">Principal Financed</span>
+                </span>
+                <span id="legend-principal-val" class="font-mono font-semibold">$0 (0%)</span>
+              </li>
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+                  <span class="text-charcoal font-medium">Total Interest</span>
+                </span>
+                <span id="legend-interest-val" class="font-mono font-semibold">$0 (0%)</span>
+              </li>
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow-deep"></span>
+                  <span class="text-charcoal font-medium">Down Payment</span>
+                </span>
+                <span id="legend-downpayment-val" class="font-mono font-semibold">$0 (0%)</span>
+              </li>
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+                  <span class="text-charcoal font-medium">Taxes & Fees</span>
+                </span>
+                <span id="legend-taxfees-val" class="font-mono font-semibold">$0 (0%)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Schedule Table Card -->
+      <div class="card-base flex flex-col gap-4 p-4 sm:p-6 mt-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2">
+          <h3 class="font-display font-semibold text-base text-primary">Amortization Schedule</h3>
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="csv-export-btn"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              id="excel-export-btn"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono">
+                <th class="py-2.5 px-3">Pmt #</th>
+                <th class="py-2.5 px-3">Date</th>
+                <th class="py-2.5 px-3 text-right">Payment</th>
+                <th class="py-2.5 px-3 text-right">Principal</th>
+                <th class="py-2.5 px-3 text-right">Interest</th>
+                <th class="py-2.5 px-3 text-right">Remaining Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amortization-table-body">
+              <!-- JS populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <button
+          type="button"
+          id="toggle-amortization-btn"
+          class="w-full text-center text-xs py-2 bg-surface hover:bg-hairline text-slate font-semibold rounded-full border border-hairline-soft transition-all cursor-pointer mt-2"
+        >
+          Show Full Schedule (60 payments)
+        </button>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 mt-6">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span id="mobile-summary-title" class="text-[10px] uppercase font-bold text-stone">Monthly Payment</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">$0.00</span>
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">How the Auto Loan Suite Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Basic Finance Terminology</h4>
+        <p>
+          Your monthly payment is calculated based on the net loan amount. Net loan amount is the Vehicle Price, minus your Down Payment, minus any Trade-in Value, plus any Sales Taxes and dealer documentation / registration fees.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Dynamic Down Payment Calculations</h4>
+        <p>
+          Toggle between entering a fixed dollar amount ($) or a percentage of the vehicle price (%). Changing the vehicle price will keep your percentage option proportional or your fixed dollar option static, adjusting other metrics automatically.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Balloon Payments</h4>
+        <p>
+          A balloon payment is a larger-than-usual one-time payment due at the end of your loan term. By reserving a portion of the principal to be paid as a lump sum at the end, your regular monthly payments are significantly reduced. Interest is still paid on the balloon amount throughout the term.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Effective APR Calculation</h4>
+        <p>
+          Unlike standard calculators that display the nominal rate, our engine computes a true Effective APR (Annual Percentage Rate) by solving for the internal rate of return (IRR). This accounts for front-end documentation and registration fees, showing you the real economic rate of borrowing.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side script module -->
+  <script>
+    // DOM Elements
+    const vehiclePriceInput = document.getElementById("vehicle-price") as HTMLInputElement;
+    const tradeInInput = document.getElementById("trade-in") as HTMLInputElement;
+    const downPaymentDollar = document.getElementById("down-payment-dollar") as HTMLInputElement;
+    const downPaymentPercent = document.getElementById("down-payment-percent") as HTMLInputElement;
+    const downPaymentDollarWrapper = document.getElementById("down-payment-dollar-wrapper");
+    const downPaymentPercentWrapper = document.getElementById("down-payment-percent-wrapper");
+    const downPaymentToggleDollar = document.getElementById("down-payment-toggle-dollar");
+    const downPaymentTogglePercent = document.getElementById("down-payment-toggle-percent");
+    const downPaymentFeedback = document.getElementById("down-payment-feedback");
+
+    const loanTermRange = document.getElementById("loan-term-range") as HTMLInputElement;
+    const loanTermInput = document.getElementById("loan-term-input") as HTMLInputElement;
+    const loanTermValLabel = document.getElementById("loan-term-val");
+    const presetTermButtons = document.querySelectorAll(".preset-term-btn");
+
+    const interestRateRange = document.getElementById("interest-rate-range") as HTMLInputElement;
+    const interestRateInput = document.getElementById("interest-rate-input") as HTMLInputElement;
+    const interestRateValLabel = document.getElementById("interest-rate-val");
+
+    const condNewBtn = document.getElementById("cond-new-btn");
+    const condUsedBtn = document.getElementById("cond-used-btn");
+    const conditionHint = document.getElementById("condition-hint");
+
+    const loanStartDateInput = document.getElementById("loan-start-date") as HTMLInputElement;
+
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+
+    const currencySelector = document.getElementById("currency-selector") as HTMLSelectElement;
+    const creditScoreSelect = document.getElementById("credit-score") as HTMLSelectElement;
+    const creditRateText = document.getElementById("credit-rate-text");
+
+    const salesTaxInput = document.getElementById("sales-tax") as HTMLInputElement;
+    const docFeesInput = document.getElementById("doc-fees") as HTMLInputElement;
+    const regFeesInput = document.getElementById("reg-fees") as HTMLInputElement;
+    const balloonPaymentInput = document.getElementById("balloon-payment") as HTMLInputElement;
+
+    // Outputs
+    const monthlyPaymentDisplay = document.getElementById("monthly-payment-display");
+    const loanAmountDisplay = document.getElementById("loan-amount-display");
+    const totalInterestDisplay = document.getElementById("total-interest-display");
+    const totalCostDisplay = document.getElementById("total-cost-display");
+    const effectiveAprDisplay = document.getElementById("effective-apr-display");
+    const payoffDateDisplay = document.getElementById("payoff-date-display");
+
+    const legendPrincipalVal = document.getElementById("legend-principal-val");
+    const legendInterestVal = document.getElementById("legend-interest-val");
+    const legendDownpaymentVal = document.getElementById("legend-downpayment-val");
+
+    const donutSvg = document.getElementById("donut-svg");
+    const donutSegments = document.getElementById("donut-segments");
+    const donutPercent = document.getElementById("donut-percent");
+
+    const amortizationTableBody = document.getElementById("amortization-table-body");
+    const toggleAmortizationBtn = document.getElementById("toggle-amortization-btn") as HTMLButtonElement;
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const excelExportBtn = document.getElementById("excel-export-btn");
+    const resetBtn = document.getElementById("reset-btn");
+
+    // Modal
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // State Variables
+    let currentCurrency = "USD";
+    let isDownPaymentPercentMode = false;
+    let isUsedVehicle = false;
+    let showFullAmortization = false;
+    let amortizationData: any[] = [];
+
+    // Currency Formatting Map
+    const CURRENCY_MAP: Record<string, { symbol: string; locale: string }> = {
+      USD: { symbol: "$", locale: "en-US" },
+      INR: { symbol: "₹", locale: "en-IN" },
+      CAD: { symbol: "$", locale: "en-CA" },
+      GBP: { symbol: "£", locale: "en-GB" },
+      AUD: { symbol: "$", locale: "en-AU" },
+      EUR: { symbol: "€", locale: "en-IE" }
+    };
+
+    // Credit score average interest rates guidelines (typical)
+    const CREDIT_RATES_SUGGESTION: Record<string, { newRange: string; usedRange: string; newAvg: number; usedAvg: number }> = {
+      excellent: { newRange: "5.0% - 6.2%", usedRange: "5.8% - 7.0%", newAvg: 5.5, usedAvg: 6.4 },
+      good: { newRange: "6.2% - 7.5%", usedRange: "7.0% - 9.0%", newAvg: 6.8, usedAvg: 8.0 },
+      fair: { newRange: "7.5% - 11.5%", usedRange: "9.0% - 13.5%", newAvg: 9.5, usedAvg: 11.2 },
+      poor: { newRange: "11.5% - 18.0%", usedRange: "13.5% - 21.0%", newAvg: 14.8, usedAvg: 17.5 }
+    };
+
+    // Set Default Start Date to next month
+    function setDefaultStartDate() {
+      const d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      // Format to YYYY-MM-DD
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = "01"; // Default to 1st of month
+      const year = d.getFullYear();
+      loanStartDateInput.value = `${year}-${month}-${day}`;
+    }
+
+    // Toggle Down Payment mode
+    function setDownPaymentMode(isPercent: boolean) {
+      isDownPaymentPercentMode = isPercent;
+      if (isPercent) {
+        downPaymentPercentWrapper?.classList.remove("hidden");
+        downPaymentDollarWrapper?.classList.add("hidden");
+        downPaymentTogglePercent?.classList.add("bg-primary", "text-canvas");
+        downPaymentTogglePercent?.classList.remove("text-slate");
+        downPaymentToggleDollar?.classList.remove("bg-primary", "text-canvas");
+        downPaymentToggleDollar?.classList.add("text-slate");
+      } else {
+        downPaymentPercentWrapper?.classList.add("hidden");
+        downPaymentDollarWrapper?.classList.remove("hidden");
+        downPaymentToggleDollar?.classList.add("bg-primary", "text-canvas");
+        downPaymentToggleDollar?.classList.remove("text-slate");
+        downPaymentTogglePercent?.classList.remove("bg-primary", "text-canvas");
+        downPaymentTogglePercent?.classList.add("text-slate");
+      }
+      calculate();
+    }
+
+    // Update Condition UI (New vs Used)
+    function setVehicleCondition(isUsed: boolean, skipInputUpdate = false) {
+      isUsedVehicle = isUsed;
+      if (isUsed) {
+        condUsedBtn?.classList.add("bg-primary", "text-canvas");
+        condUsedBtn?.classList.remove("text-slate");
+        condNewBtn?.classList.remove("bg-primary", "text-canvas");
+        condNewBtn?.classList.add("text-slate");
+        if (conditionHint) conditionHint.textContent = "Typical rate for used car financing (usually higher).";
+      } else {
+        condNewBtn?.classList.add("bg-primary", "text-canvas");
+        condNewBtn?.classList.remove("text-slate");
+        condUsedBtn?.classList.remove("bg-primary", "text-canvas");
+        condUsedBtn?.classList.add("text-slate");
+        if (conditionHint) conditionHint.textContent = "Typical rate for new car financing.";
+      }
+      updateCreditHint();
+      if (!skipInputUpdate) {
+        // Automatically adjust interest rate based on averages
+        const score = creditScoreSelect.value;
+        const avg = isUsed ? CREDIT_RATES_SUGGESTION[score].usedAvg : CREDIT_RATES_SUGGESTION[score].newAvg;
+        interestRateInput.value = avg.toString();
+        interestRateRange.value = avg.toString();
+        if (interestRateValLabel) interestRateValLabel.textContent = `${avg.toFixed(2)}%`;
+      }
+      calculate();
+    }
+
+    // Dynamic Credit Score Suggestions
+    function updateCreditHint() {
+      const score = creditScoreSelect.value;
+      const sugg = CREDIT_RATES_SUGGESTION[score];
+      if (creditRateText && sugg) {
+        const range = isUsedVehicle ? sugg.usedRange : sugg.newRange;
+        const avg = isUsedVehicle ? sugg.usedAvg : sugg.newAvg;
+        creditRateText.innerHTML = `Suggested rate: <strong class="text-moss-dark">${range}</strong> (Avg: ${avg}%). <button type="button" id="apply-sugg-rate-btn" class="underline text-brand-blue font-bold cursor-pointer ml-1">Apply sugg. rate</button>`;
+        
+        // Add handler inside suggestion link
+        document.getElementById("apply-sugg-rate-btn")?.addEventListener("click", () => {
+          interestRateInput.value = avg.toString();
+          interestRateRange.value = avg.toString();
+          if (interestRateValLabel) interestRateValLabel.textContent = `${avg.toFixed(2)}%`;
+          calculate();
+        });
+      }
+    }
+
+    // Currency symbols and label updates
+    function updateCurrencyFormatting() {
+      currentCurrency = currencySelector.value;
+      const symbols = document.querySelectorAll(".currency-symbol");
+      const labels = document.querySelectorAll(".currency-label");
+      
+      const currencyInfo = CURRENCY_MAP[currentCurrency] || CURRENCY_MAP.USD;
+      const symbolChar = currencyInfo.symbol;
+      const labelText = `${currentCurrency} (${symbolChar})`;
+
+      symbols.forEach(el => el.textContent = symbolChar);
+      labels.forEach(el => el.textContent = labelText);
+
+      // Adjust input step levels for INR
+      if (currentCurrency === "INR") {
+        vehiclePriceInput.step = "50000";
+        tradeInInput.step = "10000";
+        downPaymentDollar.step = "10000";
+        docFeesInput.step = "1000";
+        regFeesInput.step = "1000";
+        balloonPaymentInput.step = "50000";
+      } else {
+        vehiclePriceInput.step = "500";
+        tradeInInput.step = "100";
+        downPaymentDollar.step = "500";
+        docFeesInput.step = "50";
+        regFeesInput.step = "50";
+        balloonPaymentInput.step = "1000";
+      }
+    }
+
+    // High fidelity currency formatting helper (handles standard and Lakhs/Crores)
+    function formatCurrency(val: number): string {
+      const currencyInfo = CURRENCY_MAP[currentCurrency] || CURRENCY_MAP.USD;
+      return new Intl.NumberFormat(currencyInfo.locale, {
+        style: "currency",
+        currency: currentCurrency,
+        minimumFractionDigits: currentCurrency === "INR" ? 0 : 2,
+        maximumFractionDigits: currentCurrency === "INR" ? 0 : 2
+      }).format(val);
+    }
+
+    // Newton-Raphson Solver for Internal Rate of Return (IRR) to determine true APR
+    function solveEffectiveAPR(
+      financedPrincipal: number, // Net Loan Amount (includes fees/taxes if financed)
+      actualPricePaid: number,   // Cash price that is borrowing (Price - TradeIn - DownPayment)
+      monthlyPayment: number,
+      balloon: number,
+      termMonths: number
+    ): number {
+      // The true APR equates the cash Price difference (actualPricePaid) to the present value of payments:
+      // actualPricePaid = Sum_{k=1}^n [ MonthlyPayment / (1 + r)^k ] + Balloon / (1 + r)^n
+      // Solve for r (monthly rate), APR = r * 12 * 100
+      
+      const target = actualPricePaid;
+      if (target <= 0 || monthlyPayment <= 0) return 0;
+
+      let r = 0.05 / 12; // Initial guess (5% annual)
+      const maxIterations = 100;
+      const tolerance = 1e-7;
+
+      for (let i = 0; i < maxIterations; i++) {
+        let pv = 0;
+        let df_dr = 0; // Derivative w.r.t r
+        
+        for (let k = 1; k <= termMonths; k++) {
+          const discount = Math.pow(1 + r, -k);
+          pv += monthlyPayment * discount;
+          df_dr -= k * monthlyPayment * discount / (1 + r);
+        }
+        
+        const balloonDiscount = Math.pow(1 + r, -termMonths);
+        pv += balloon * balloonDiscount;
+        df_dr -= termMonths * balloon * balloonDiscount / (1 + r);
+
+        const diff = pv - target;
+        if (Math.abs(diff) < tolerance) {
+          break;
+        }
+
+        if (df_dr === 0) break;
+        r = r - diff / df_dr;
+
+        // Keep rate in logical boundary
+        if (r < -0.99) r = -0.99;
+      }
+
+      const annualRate = r * 12 * 100;
+      return Math.max(0, annualRate);
+    }
+
+    // Main Calculator math engine
+    function calculate() {
+      const price = Math.max(0, parseFloat(vehiclePriceInput.value) || 0);
+      const tradeIn = Math.max(0, parseFloat(tradeInInput.value) || 0);
+      
+      // Handle down payment dual modes
+      let downPayment = 0;
+      if (isDownPaymentPercentMode) {
+        const pct = Math.min(100, Math.max(0, parseFloat(downPaymentPercent.value) || 0));
+        downPayment = (price * pct) / 100;
+        downPaymentDollar.value = Math.round(downPayment).toString();
+      } else {
+        downPayment = Math.min(price, Math.max(0, parseFloat(downPaymentDollar.value) || 0));
+        const pct = price > 0 ? (downPayment / price) * 100 : 0;
+        downPaymentPercent.value = pct.toFixed(1);
+      }
+
+      // Feedback label
+      if (downPaymentFeedback) {
+        const pctVal = price > 0 ? ((downPayment / price) * 100).toFixed(1) : "0.0";
+        downPaymentFeedback.textContent = `Down Payment: ${formatCurrency(downPayment)} (${pctVal}% of vehicle price)`;
+      }
+
+      const term = Math.max(1, parseInt(loanTermInput.value, 10) || 12);
+      const rate = Math.max(0, parseFloat(interestRateInput.value) || 0);
+
+      // Advanced options values
+      const taxRate = Math.max(0, parseFloat(salesTaxInput.value) || 0);
+      const docFees = Math.max(0, parseFloat(docFeesInput.value) || 0);
+      const regFees = Math.max(0, parseFloat(regFeesInput.value) || 0);
+      const balloon = Math.min(price, Math.max(0, parseFloat(balloonPaymentInput.value) || 0));
+
+      // Sales Tax is calculated on (Vehicle Price - Trade-in Value) (tax credits standard in most states)
+      const taxablePrice = Math.max(0, price - tradeIn);
+      const salesTax = (taxablePrice * taxRate) / 100;
+
+      // Net Loan Amount
+      const fees = docFees + regFees;
+      const loanAmount = Math.max(0, price - downPayment - tradeIn + salesTax + fees);
+
+      // Monthly payment formula w/ balloon
+      let monthlyPayment = 0;
+      const monthlyRate = rate / (12 * 100);
+
+      if (loanAmount > 0) {
+        if (monthlyRate === 0) {
+          monthlyPayment = (loanAmount - balloon) / term;
+        } else {
+          // Standard Balloon payment formula
+          const discountFactor = Math.pow(1 + monthlyRate, -term);
+          monthlyPayment = ((loanAmount - balloon * discountFactor) * monthlyRate) / (1 - discountFactor);
+        }
+      }
+
+      // Total Cost breakdown
+      // Total installments + balloon + down payment + trade-in
+      const totalInstallments = monthlyPayment * term;
+      const totalCost = totalInstallments + balloon + downPayment + tradeIn;
+      const totalInterest = Math.max(0, (totalInstallments + balloon) - loanAmount);
+
+      // Calculate Effective APR (includes doc fees to reveal exact real economic costs)
+      const cashDifference = price - downPayment - tradeIn;
+      const effectiveAPR = solveEffectiveAPR(loanAmount, cashDifference, monthlyPayment, balloon, term);
+
+      // Payoff Date
+      let payoffText = "N/A";
+      if (loanStartDateInput.value) {
+        const parts = loanStartDateInput.value.split("-");
+        const startDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        startDate.setMonth(startDate.getMonth() + term);
+        const formatOptions: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
+        payoffText = startDate.toLocaleDateString('en-US', formatOptions);
+      }
+
+      // Update Outputs DOM
+      if (monthlyPaymentDisplay) monthlyPaymentDisplay.textContent = formatCurrency(monthlyPayment);
+      if (loanAmountDisplay) loanAmountDisplay.textContent = formatCurrency(loanAmount);
+      if (totalInterestDisplay) totalInterestDisplay.textContent = formatCurrency(totalInterest);
+      if (totalCostDisplay) totalCostDisplay.textContent = formatCurrency(totalCost);
+      if (effectiveAprDisplay) {
+        // If there are zero fees, APR is identical to interest rate
+        const aprToDisplay = fees > 0 ? effectiveAPR : rate;
+        effectiveAprDisplay.textContent = `${aprToDisplay.toFixed(2)}%`;
+      }
+      if (payoffDateDisplay) payoffDateDisplay.textContent = payoffText;
+
+      // Update Mobile Summary HUD
+      const mobileHUDVal = document.getElementById("mobile-summary-value");
+      if (mobileHUDVal) mobileHUDVal.textContent = formatCurrency(monthlyPayment);
+
+      // Amortization Schedule Data Generation
+      generateAmortizationData(loanAmount, monthlyRate, monthlyPayment, term, balloon);
+
+      // Render Charts/Donut
+      renderDonutChart(loanAmount, totalInterest, downPayment, salesTax + fees);
+
+      // Save to localStorage
+      saveState();
+    }
+
+    // Generate Amortization Table array
+    function generateAmortizationData(principal: number, monthlyRate: number, monthlyPayment: number, term: number, balloon: number) {
+      amortizationData = [];
+      let balance = principal;
+      const startDateVal = loanStartDateInput.value;
+      let currentDate = new Date();
+      if (startDateVal) {
+        const parts = startDateVal.split("-");
+        currentDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+      }
+
+      for (let i = 1; i <= term; i++) {
+        const interest = balance * monthlyRate;
+        let principalPaid = monthlyPayment - interest;
+        
+        // Final row adjustment
+        if (i === term) {
+          principalPaid = balance - balloon;
+        }
+
+        balance = balance - principalPaid;
+        if (balance < 0.01) balance = 0;
+
+        const dateOptions: Intl.DateTimeFormatOptions = { month: 'short', year: 'numeric' };
+        const dateStr = currentDate.toLocaleDateString('en-US', dateOptions);
+
+        amortizationData.push({
+          num: i,
+          date: dateStr,
+          payment: monthlyPayment,
+          principal: principalPaid,
+          interest: interest,
+          balance: i === term ? balloon : balance
+        });
+
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+
+      renderAmortizationTable();
+    }
+
+    // Render schedule to DOM
+    function renderAmortizationTable() {
+      if (!amortizationTableBody) return;
+      const rowsToShow = showFullAmortization ? amortizationData.length : Math.min(6, amortizationData.length);
+      
+      let html = "";
+      for (let i = 0; i < rowsToShow; i++) {
+        const row = amortizationData[i];
+        html += `
+          <tr class="border-b border-hairline-soft font-mono text-[11px] text-slate hover:bg-surface-soft transition-all">
+            <td class="py-2 px-3 font-semibold text-primary">${row.num}</td>
+            <td class="py-2 px-3">${row.date}</td>
+            <td class="py-2 px-3 text-right text-primary font-semibold">${formatCurrency(row.payment)}</td>
+            <td class="py-2 px-3 text-right">${formatCurrency(row.principal)}</td>
+            <td class="py-2 px-3 text-right text-brand-coral">${formatCurrency(row.interest)}</td>
+            <td class="py-2 px-3 text-right text-primary font-semibold">${formatCurrency(row.balance)}</td>
+          </tr>
+        `;
+      }
+      amortizationTableBody.innerHTML = html;
+
+      // Update button label
+      if (toggleAmortizationBtn) {
+        toggleAmortizationBtn.textContent = showFullAmortization 
+          ? "Collapse Schedule" 
+          : `Show Full Schedule (${amortizationData.length} payments)`;
+      }
+    }
+
+    // SVG Donut Chart Visual
+    function renderDonutChart(principal: number, interest: number, downPayment: number, taxAndFees: number) {
+      if (!donutSegments) return;
+
+      const total = principal + interest + downPayment + taxAndFees;
+      if (total === 0) return;
+
+      const pPct = (principal / total) * 100;
+      const iPct = (interest / total) * 100;
+      const dPct = (downPayment / total) * 100;
+      const tfPct = (taxAndFees / total) * 100;
+
+      // Update Legends labels
+      if (legendPrincipalVal) legendPrincipalVal.textContent = `${formatCurrency(principal)} (${pPct.toFixed(1)}%)`;
+      if (legendInterestVal) legendInterestVal.textContent = `${formatCurrency(interest)} (${iPct.toFixed(1)}%)`;
+      if (legendDownpaymentVal) legendDownpaymentVal.textContent = `${formatCurrency(downPayment)} (${dPct.toFixed(1)}%)`;
+      
+      const tfEl = document.getElementById("legend-taxfees-val");
+      if (tfEl) tfEl.textContent = `${formatCurrency(taxAndFees)} (${tfPct.toFixed(1)}%)`;
+
+      if (donutPercent) donutPercent.textContent = `${pPct.toFixed(0)}%`;
+
+      // Draw SVG segments
+      let accumulatedPercent = 0;
+      let svgHtml = "";
+      const radius = 40;
+      const circumference = 2 * Math.PI * radius;
+
+      const slices = [
+        { pct: pPct, color: "var(--color-brand-blue, #4262ff)" },
+        { pct: iPct, color: "var(--color-brand-coral, #ff9999)" },
+        { pct: dPct, color: "var(--color-brand-yellow-deep, #fcb900)" },
+        { pct: tfPct, color: "var(--color-brand-teal, #0fbcb0)" }
+      ];
+
+      slices.forEach(slice => {
+        if (slice.pct <= 0) return;
+        const strokeDashArray = `${(slice.pct / 100) * circumference} ${circumference}`;
+        const strokeDashOffset = -((accumulatedPercent / 100) * circumference);
+        
+        svgHtml += `
+          <circle
+            cx="50"
+            cy="50"
+            r="${radius}"
+            stroke="${slice.color}"
+            stroke-width="12"
+            fill="transparent"
+            stroke-dasharray="${strokeDashArray}"
+            stroke-dashoffset="${strokeDashOffset}"
+            stroke-linecap="round"
+            class="transition-all duration-500"
+          />
+        `;
+        accumulatedPercent += slice.pct;
+      });
+
+      donutSegments.innerHTML = svgHtml;
+    }
+
+    // Active Highlight Preset Buttons
+    function updateActivePresetButton() {
+      const term = parseInt(loanTermInput.value, 10);
+      presetTermButtons.forEach(btn => {
+        const val = parseInt(btn.getAttribute("data-term") || "0", 10);
+        if (val === term) {
+          btn.classList.add("bg-primary", "text-canvas", "border-primary");
+          btn.classList.remove("bg-canvas", "text-slate", "border-hairline");
+        } else {
+          btn.classList.remove("bg-primary", "text-canvas", "border-primary");
+          btn.classList.add("bg-canvas", "text-slate", "border-hairline");
+        }
+      });
+    }
+
+    // Sync input range & value fields
+    function syncRangeInput(rangeEl: HTMLInputElement, inputEl: HTMLInputElement, labelEl: HTMLElement | null, formatter: (v: number) => string) {
+      rangeEl.addEventListener("input", (e) => {
+        const val = (e.target as HTMLInputElement).value;
+        inputEl.value = val;
+        if (labelEl) labelEl.textContent = formatter(parseFloat(val));
+        calculate();
+        updateActivePresetButton();
+      });
+
+      inputEl.addEventListener("input", (e) => {
+        const val = parseFloat((e.target as HTMLInputElement).value) || 0;
+        rangeEl.value = val.toString();
+        if (labelEl) labelEl.textContent = formatter(val);
+        calculate();
+        updateActivePresetButton();
+      });
+    }
+
+    // LocalStorage Load/Save
+    function loadState() {
+      try {
+        const savedPrice = localStorage.getItem("autoloan-price");
+        const savedTrade = localStorage.getItem("autoloan-trade");
+        const savedDownType = localStorage.getItem("autoloan-downtype");
+        const savedDownVal = localStorage.getItem("autoloan-downval");
+        const savedTerm = localStorage.getItem("autoloan-term");
+        const savedRate = localStorage.getItem("autoloan-rate");
+        const savedCondition = localStorage.getItem("autoloan-condition");
+        const savedStart = localStorage.getItem("autoloan-start");
+        const savedCurrency = localStorage.getItem("autoloan-currency");
+        const savedCredit = localStorage.getItem("autoloan-credit");
+        const savedTax = localStorage.getItem("autoloan-tax");
+        const savedDoc = localStorage.getItem("autoloan-doc");
+        const savedReg = localStorage.getItem("autoloan-reg");
+        const savedBalloon = localStorage.getItem("autoloan-balloon");
+
+        if (savedPrice !== null) vehiclePriceInput.value = savedPrice;
+        if (savedTrade !== null) tradeInInput.value = savedTrade;
+        if (savedDownType !== null) {
+          isDownPaymentPercentMode = savedDownType === "percent";
+        }
+        if (savedDownVal !== null) {
+          if (isDownPaymentPercentMode) {
+            downPaymentPercent.value = savedDownVal;
+          } else {
+            downPaymentDollar.value = savedDownVal;
+          }
+        }
+        if (savedTerm !== null) {
+          loanTermInput.value = savedTerm;
+          loanTermRange.value = savedTerm;
+        }
+        if (savedRate !== null) {
+          interestRateInput.value = savedRate;
+          interestRateRange.value = savedRate;
+        }
+        if (savedCondition !== null) {
+          isUsedVehicle = savedCondition === "used";
+        }
+        if (savedStart !== null) {
+          loanStartDateInput.value = savedStart;
+        } else {
+          setDefaultStartDate();
+        }
+        if (savedCurrency !== null) {
+          currencySelector.value = savedCurrency;
+        }
+        if (savedCredit !== null) {
+          creditScoreSelect.value = savedCredit;
+        }
+        if (savedTax !== null) salesTaxInput.value = savedTax;
+        if (savedDoc !== null) docFeesInput.value = savedDoc;
+        if (savedReg !== null) regFeesInput.value = savedReg;
+        if (savedBalloon !== null) balloonPaymentInput.value = savedBalloon;
+
+        // Apply visual updates
+        setDownPaymentMode(isDownPaymentPercentMode);
+        setVehicleCondition(isUsedVehicle, true);
+        updateCurrencyFormatting();
+        updateCreditHint();
+      } catch (e) {
+        console.warn("Failed loading state from localStorage", e);
+        setDefaultStartDate();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem("autoloan-price", vehiclePriceInput.value);
+        localStorage.setItem("autoloan-trade", tradeInInput.value);
+        localStorage.setItem("autoloan-downtype", isDownPaymentPercentMode ? "percent" : "dollar");
+        localStorage.setItem("autoloan-downval", isDownPaymentPercentMode ? downPaymentPercent.value : downPaymentDollar.value);
+        localStorage.setItem("autoloan-term", loanTermInput.value);
+        localStorage.setItem("autoloan-rate", interestRateInput.value);
+        localStorage.setItem("autoloan-condition", isUsedVehicle ? "used" : "new");
+        localStorage.setItem("autoloan-start", loanStartDateInput.value);
+        localStorage.setItem("autoloan-currency", currencySelector.value);
+        localStorage.setItem("autoloan-credit", creditScoreSelect.value);
+        localStorage.setItem("autoloan-tax", salesTaxInput.value);
+        localStorage.setItem("autoloan-doc", docFeesInput.value);
+        localStorage.setItem("autoloan-reg", regFeesInput.value);
+        localStorage.setItem("autoloan-balloon", balloonPaymentInput.value);
+      } catch (e) {
+        console.warn("Failed saving state to localStorage", e);
+      }
+    }
+
+    // Export CSV Amortization schedule
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Payment #,Date,Payment,Principal,Interest,Remaining Balance\r\n";
+
+      amortizationData.forEach(row => {
+        const cleanPayment = row.payment.toFixed(2);
+        const cleanPrincipal = row.principal.toFixed(2);
+        const cleanInterest = row.interest.toFixed(2);
+        const cleanBalance = row.balance.toFixed(2);
+        csvContent += `${row.num},${row.date},${cleanPayment},${cleanPrincipal},${cleanInterest},${cleanBalance}\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Amortization_Schedule_${loanTermInput.value}m.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Export Excel Amortization schedule
+    function exportToExcel() {
+      if (amortizationData.length === 0) return;
+      const termVal = loanTermInput.value;
+      const currencySymbol = CURRENCY_MAP[currentCurrency]?.symbol || "$";
+      
+      let tableRows = "";
+      amortizationData.forEach(row => {
+        tableRows += `
+          <tr>
+            <td>${row.num}</td>
+            <td>${row.date}</td>
+            <td>${row.payment.toFixed(2)}</td>
+            <td>${row.principal.toFixed(2)}</td>
+            <td>${row.interest.toFixed(2)}</td>
+            <td>${row.balance.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      const html = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>Amortization Schedule</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+          <![endif]-->
+          <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #e2e8f0; padding: 8px; font-family: sans-serif; font-size: 12px; }
+            th { background-color: #f7fafc; font-weight: bold; }
+            .header-row { font-size: 14px; font-weight: bold; background-color: #edf2f7; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr class="header-row">
+              <td colspan="6">Amortization Schedule (${termVal} Months, Currency: ${currentCurrency} ${currencySymbol})</td>
+            </tr>
+            <tr style="background-color: #f7fafc; font-weight: bold;">
+              <td>Pmt #</td>
+              <td>Date</td>
+              <td>Payment Amount</td>
+              <td>Principal Paid</td>
+              <td>Interest Paid</td>
+              <td>Remaining Balance</td>
+            </tr>
+            ${tableRows}
+          </table>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Amortization_Schedule_${termVal}m_${Date.now()}.xls`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // DOM Loaded listeners binding
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+
+      // Sliders bindings
+      syncRangeInput(loanTermRange, loanTermInput, loanTermValLabel, (v) => `${v} months (${(v/12).toFixed(1)} years)`);
+      syncRangeInput(interestRateRange, interestRateInput, interestRateValLabel, (v) => `${v.toFixed(2)}%`);
+
+      // Core Inputs
+      vehiclePriceInput.addEventListener("input", calculate);
+      tradeInInput.addEventListener("input", calculate);
+      downPaymentDollar.addEventListener("input", calculate);
+      downPaymentPercent.addEventListener("input", calculate);
+
+      // Down Payment toggle binds
+      downPaymentToggleDollar?.addEventListener("click", () => setDownPaymentMode(false));
+      downPaymentTogglePercent?.addEventListener("click", () => setDownPaymentMode(true));
+
+      // Presets term
+      presetTermButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const val = btn.getAttribute("data-term") || "60";
+          loanTermInput.value = val;
+          loanTermRange.value = val;
+          if (loanTermValLabel) {
+            const num = parseInt(val, 10);
+            loanTermValLabel.textContent = `${num} months (${(num/12).toFixed(1)} years)`;
+          }
+          updateActivePresetButton();
+          calculate();
+        });
+      });
+
+      // Conditions
+      condNewBtn?.addEventListener("click", () => setVehicleCondition(false));
+      condUsedBtn?.addEventListener("click", () => setVehicleCondition(true));
+
+      loanStartDateInput.addEventListener("input", calculate);
+
+      // Advanced Toggle action
+      advancedToggleBtn?.addEventListener("click", () => {
+        if (advancedPanel) {
+          const isHidden = advancedPanel.classList.contains("hidden");
+          if (isHidden) {
+            advancedPanel.classList.remove("hidden");
+            advancedChevron?.classList.add("rotate-180");
+          } else {
+            advancedPanel.classList.add("hidden");
+            advancedChevron?.classList.remove("rotate-180");
+          }
+        }
+      });
+
+      // Advanced inputs
+      currencySelector.addEventListener("change", () => {
+        updateCurrencyFormatting();
+        calculate();
+      });
+
+      creditScoreSelect.addEventListener("change", () => {
+        updateCreditHint();
+        // Trigger auto update of suggests
+        const score = creditScoreSelect.value;
+        const avg = isUsedVehicle ? CREDIT_RATES_SUGGESTION[score].usedAvg : CREDIT_RATES_SUGGESTION[score].newAvg;
+        interestRateInput.value = avg.toString();
+        interestRateRange.value = avg.toString();
+        if (interestRateValLabel) interestRateValLabel.textContent = `${avg.toFixed(2)}%`;
+        calculate();
+      });
+
+      salesTaxInput.addEventListener("input", calculate);
+      docFeesInput.addEventListener("input", calculate);
+      regFeesInput.addEventListener("input", calculate);
+      balloonPaymentInput.addEventListener("input", calculate);
+
+      // Amortization toggle
+      toggleAmortizationBtn.addEventListener("click", () => {
+        showFullAmortization = !showFullAmortization;
+        renderAmortizationTable();
+      });
+
+      // Export CSV & Excel listeners
+      csvExportBtn?.addEventListener("click", exportToCSV);
+      excelExportBtn?.addEventListener("click", exportToExcel);
+
+      // Reset
+      resetBtn?.addEventListener("click", () => {
+        localStorage.clear();
+        vehiclePriceInput.value = "35000";
+        tradeInInput.value = "5000";
+        downPaymentDollar.value = "7000";
+        downPaymentPercent.value = "20";
+        loanTermInput.value = "60";
+        loanTermRange.value = "60";
+        interestRateInput.value = "5.5";
+        interestRateRange.value = "5.5";
+        currencySelector.value = "USD";
+        creditScoreSelect.value = "good";
+        salesTaxInput.value = "6.25";
+        docFeesInput.value = "150";
+        regFeesInput.value = "250";
+        balloonPaymentInput.value = "0";
+
+        isDownPaymentPercentMode = false;
+        isUsedVehicle = false;
+        showFullAmortization = false;
+
+        setDefaultStartDate();
+        setDownPaymentMode(false);
+        setVehicleCondition(false, true);
+        updateCurrencyFormatting();
+        updateCreditHint();
+        calculate();
+      });
+
+      // Modal guides
+      howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+      closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+      modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+      // Mobile sticky bar scroll sync
+      const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+      const resultsColumn = document.getElementById("results-column");
+      if (mobileStickyBar && resultsColumn) {
+        window.addEventListener("scroll", () => {
+          const rect = resultsColumn.getBoundingClientRect();
+          // Hide when results section is in view
+          if (rect.top <= window.innerHeight - 80) {
+            mobileStickyBar.style.transform = "translateY(100%)";
+          } else {
+            mobileStickyBar.style.transform = "translateY(0)";
+          }
+        });
+      }
+
+      const mobileScrollBtn = document.getElementById("mobile-scroll-results-btn");
+      if (mobileScrollBtn && resultsColumn) {
+        mobileScrollBtn.addEventListener("click", () => {
+          resultsColumn.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+
+      // Initial execution
+      updateActivePresetButton();
+      calculate();
+    });
+  </script>
 </Layout>
