@@ -70,12 +70,27 @@ const description =
         <div class="flex flex-col gap-3">
           <!-- Bill Amount -->
           <div class="flex flex-col gap-1">
-            <label for="bill-amount" class="text-[11px] font-semibold text-charcoal flex justify-between">
-              <span>Bill Amount</span>
-              <span class="text-stone font-normal">USD ($)</span>
-            </label>
+            <div class="flex items-center justify-between">
+              <label for="bill-amount" class="text-[11px] font-semibold text-charcoal">
+                Bill Amount
+              </label>
+              <!-- Currency Select -->
+              <select
+                id="currency-select"
+                class="text-[10px] font-semibold py-1 px-2.5 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                aria-label="Currency Select"
+              >
+                <option value="USD" selected>$ USD</option>
+                <option value="CAD">$ CAD</option>
+                <option value="GBP">£ GBP</option>
+                <option value="AUD">$ AUD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="INR">₹ INR</option>
+                <option value="Custom">Custom / Other</option>
+              </select>
+            </div>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold">$</span>
+              <span id="currency-prefix" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold">$</span>
               <input
                 type="number"
                 id="bill-amount"
@@ -88,6 +103,18 @@ const description =
                 placeholder="0.00"
                 autocomplete="off"
               />
+            </div>
+          </div>
+
+          <!-- Custom Currency Inputs (Hidden by default) -->
+          <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
+              <input type="text" id="custom-currency-code" value="USD" class="text-input" placeholder="e.g. USD, GBP, EUR" />
             </div>
           </div>
 
@@ -239,8 +266,13 @@ const description =
     </div>
   </section>
 
-  <!-- Script logic -->
   <script>
+    // State variables
+    let currentCurrency = "USD";
+    let currentCurrencySymbol = "$";
+    let currentCurrencyCode = "USD";
+    let currentTipPct = 15;
+
     // DOM Elements
     const billAmountInput = document.getElementById("bill-amount") as HTMLInputElement;
     const tipPctLabel = document.getElementById("tip-pct-label");
@@ -257,14 +289,32 @@ const description =
     const outputTotalPerson = document.getElementById("output-total-person");
     const resetBtn = document.getElementById("reset-btn");
 
-    let currentTipPct = 15;
+    const currencySelect = document.getElementById("currency-select") as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById("custom-currency-symbol") as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById("custom-currency-code") as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById("custom-currency-container");
+    const currencyPrefix = document.getElementById("currency-prefix");
 
     // Load initial values from localStorage if available
     function loadState() {
       try {
+        const savedCurrency = localStorage.getItem("tip-calculator-currency");
+        const savedCustomSymbol = localStorage.getItem("tip-calculator-custom-symbol");
+        const savedCustomCode = localStorage.getItem("tip-calculator-custom-code");
         const savedTip = localStorage.getItem("tip-calculator-tip-pct");
         const savedSplit = localStorage.getItem("tip-calculator-split");
         const savedBill = localStorage.getItem("tip-calculator-bill");
+
+        if (savedCustomSymbol && customCurrencySymbolInput) {
+          customCurrencySymbolInput.value = savedCustomSymbol;
+        }
+        if (savedCustomCode && customCurrencyCodeInput) {
+          customCurrencyCodeInput.value = savedCustomCode;
+        }
+        if (savedCurrency && currencySelect) {
+          currencySelect.value = savedCurrency;
+        }
+        updateCurrencyFromSelect();
 
         if (savedTip !== null) {
           currentTipPct = parseInt(savedTip, 10);
@@ -288,12 +338,55 @@ const description =
     // Save values to localStorage
     function saveState() {
       try {
+        localStorage.setItem("tip-calculator-currency", currentCurrency);
+        localStorage.setItem("tip-calculator-custom-symbol", currentCurrencySymbol);
+        localStorage.setItem("tip-calculator-custom-code", currentCurrencyCode);
         localStorage.setItem("tip-calculator-tip-pct", currentTipPct.toString());
         localStorage.setItem("tip-calculator-split", splitPeopleInput.value);
         localStorage.setItem("tip-calculator-bill", billAmountInput.value);
       } catch (e) {
         console.warn("Failed to save state to localStorage:", e);
       }
+    }
+
+    // Update Currency Choice
+    function updateCurrencyFromSelect() {
+      if (!currencySelect) return;
+      const val = currencySelect.value;
+      currentCurrency = val;
+
+      if (val === "USD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "USD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "CAD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "CAD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "GBP") {
+        currentCurrencySymbol = "£";
+        currentCurrencyCode = "GBP";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "AUD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "AUD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "EUR") {
+        currentCurrencySymbol = "€";
+        currentCurrencyCode = "EUR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "INR") {
+        currentCurrencySymbol = "₹";
+        currentCurrencyCode = "INR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "$";
+        currentCurrencyCode = customCurrencyCodeInput?.value || "USD";
+      }
+
+      if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+      calculate();
     }
 
     // High fidelity currency calculation
@@ -320,10 +413,14 @@ const description =
 
     // Format utility helper
     function formatCurrency(val: number): string {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD"
-      }).format(val);
+      const locale = currentCurrencyCode === "INR" ? "en-IN" : undefined;
+      return (
+        currentCurrencySymbol +
+        val.toLocaleString(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      );
     }
 
     // Active button highlight toggle
@@ -403,9 +500,31 @@ const description =
       calculate();
     });
 
+    // Currency controls
+    currencySelect?.addEventListener("change", updateCurrencyFromSelect);
+    customCurrencySymbolInput?.addEventListener("input", () => {
+      if (currentCurrency === "Custom") {
+        currentCurrencySymbol = customCurrencySymbolInput.value || "$";
+        if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+        calculate();
+      }
+    });
+    customCurrencyCodeInput?.addEventListener("input", () => {
+      if (currentCurrency === "Custom") {
+        currentCurrencyCode = customCurrencyCodeInput.value || "USD";
+        calculate();
+      }
+    });
+
     resetBtn?.addEventListener("click", () => {
       billAmountInput.value = "100.00";
       splitPeopleInput.value = "1";
+      if (currencySelect) {
+        currencySelect.value = "USD";
+      }
+      if (customCurrencySymbolInput) customCurrencySymbolInput.value = "$";
+      if (customCurrencyCodeInput) customCurrencyCodeInput.value = "USD";
+      updateCurrencyFromSelect();
       setTipPercentage(15);
       calculate();
     });

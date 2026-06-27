@@ -111,12 +111,27 @@ const description = "Determine monthly payments, total interest, and overall cos
           <!-- Row 1: Vehicle Price & Trade-in Value -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="flex flex-col gap-1.5">
-              <label for="vehicle-price" class="text-xs font-semibold text-charcoal flex justify-between">
-                <span>Vehicle Price</span>
-                <span class="currency-label text-stone font-normal">USD ($)</span>
-              </label>
+              <div class="flex items-center justify-between">
+                <label for="vehicle-price" class="text-xs font-semibold text-charcoal">
+                  Vehicle Price
+                </label>
+                <!-- Currency Select -->
+                <select
+                  id="currency-select"
+                  class="text-[10px] font-semibold py-1 px-2.5 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                  aria-label="Currency Select"
+                >
+                  <option value="USD" selected>$ USD</option>
+                  <option value="CAD">$ CAD</option>
+                  <option value="GBP">£ GBP</option>
+                  <option value="AUD">$ AUD</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
+                  <option value="Custom">Custom / Other</option>
+                </select>
+              </div>
               <div class="relative">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <span id="currency-prefix" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
                 <input
                   type="number"
                   id="vehicle-price"
@@ -150,6 +165,18 @@ const description = "Determine monthly payments, total interest, and overall cos
                   autocomplete="off"
                 />
               </div>
+            </div>
+          </div>
+
+          <!-- Custom Currency Inputs (Hidden by default) -->
+          <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
+              <input type="text" id="custom-currency-code" value="USD" class="text-input" placeholder="e.g. USD, GBP, EUR" />
             </div>
           </div>
 
@@ -334,33 +361,17 @@ const description = "Determine monthly payments, total interest, and overall cos
               id="advanced-panel"
               class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
             >
-              <!-- Currency Selector & Credit Score Hint Row -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="flex flex-col gap-1.5">
-                  <label for="currency-selector" class="text-[11px] font-semibold text-slate">
-                    Currency System
-                  </label>
-                  <select id="currency-selector" class="text-input py-1 text-xs font-medium">
-                    <option value="USD">$ USD (U.S. Dollars)</option>
-                    <option value="INR">₹ INR (Indian Rupees)</option>
-                    <option value="CAD">$ CAD (Canadian Dollars)</option>
-                    <option value="GBP">£ GBP (British Pounds)</option>
-                    <option value="AUD">$ AUD (Australian Dollars)</option>
-                    <option value="EUR">€ EUR (Euros)</option>
-                  </select>
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label for="credit-score" class="text-[11px] font-semibold text-slate">
-                    Estimated Credit Score Range
-                  </label>
-                  <select id="credit-score" class="text-input py-1 text-xs font-medium">
-                    <option value="excellent">Excellent (720 - 850)</option>
-                    <option value="good" selected>Good (690 - 719)</option>
-                    <option value="fair">Fair (630 - 689)</option>
-                    <option value="poor">Poor (300 - 629)</option>
-                  </select>
-                </div>
+              <!-- Credit Score Range -->
+              <div class="flex flex-col gap-1.5">
+                <label for="credit-score" class="text-[11px] font-semibold text-slate">
+                  Estimated Credit Score Range
+                </label>
+                <select id="credit-score" class="text-input py-1 text-xs font-medium">
+                  <option value="excellent">Excellent (720 - 850)</option>
+                  <option value="good" selected>Good (690 - 719)</option>
+                  <option value="fair">Fair (630 - 689)</option>
+                  <option value="poor">Poor (300 - 629)</option>
+                </select>
               </div>
 
               <!-- Credit Score Rate suggestion box -->
@@ -461,13 +472,7 @@ const description = "Determine monthly payments, total interest, and overall cos
         <!-- How it works -->
         <div class="card-base bg-surface-soft flex flex-col gap-4">
           <h3 class="font-display font-semibold text-base text-primary">Calculation Guide</h3>
-          
-          <div class="card-feature-teal !p-3 !rounded-lg text-[11px] flex flex-col gap-1">
-            <span class="font-bold text-moss-dark">💱 Currency Toggling:</span>
-            <span class="text-slate leading-relaxed">
-              You can change the currency system ($ USD, ₹ INR, £ GBP, € EUR, etc.) inside the <strong>Advanced Options</strong> panel to dynamically reformat all values.
-            </span>
-          </div>
+
 
           <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
             <h4 class="font-bold text-primary uppercase text-[10px] tracking-wider mt-1">How to use the tool:</h4>
@@ -756,7 +761,11 @@ const description = "Determine monthly payments, total interest, and overall cos
     const advancedPanel = document.getElementById("advanced-panel");
     const advancedChevron = document.getElementById("advanced-chevron");
 
-    const currencySelector = document.getElementById("currency-selector") as HTMLSelectElement;
+    const currencySelect = document.getElementById("currency-select") as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById("custom-currency-symbol") as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById("custom-currency-code") as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById("custom-currency-container");
+    const currencyPrefix = document.getElementById("currency-prefix");
     const creditScoreSelect = document.getElementById("credit-score") as HTMLSelectElement;
     const creditRateText = document.getElementById("credit-rate-text");
 
@@ -795,20 +804,12 @@ const description = "Determine monthly payments, total interest, and overall cos
 
     // State Variables
     let currentCurrency = "USD";
+    let currentCurrencySymbol = "$";
+    let currentCurrencyCode = "USD";
     let isDownPaymentPercentMode = false;
     let isUsedVehicle = false;
     let showFullAmortization = false;
     let amortizationData: any[] = [];
-
-    // Currency Formatting Map
-    const CURRENCY_MAP: Record<string, { symbol: string; locale: string }> = {
-      USD: { symbol: "$", locale: "en-US" },
-      INR: { symbol: "₹", locale: "en-IN" },
-      CAD: { symbol: "$", locale: "en-CA" },
-      GBP: { symbol: "£", locale: "en-GB" },
-      AUD: { symbol: "$", locale: "en-AU" },
-      EUR: { symbol: "€", locale: "en-IE" }
-    };
 
     // Credit score average interest rates guidelines (typical)
     const CREDIT_RATES_SUGGESTION: Record<string, { newRange: string; usedRange: string; newAvg: number; usedAvg: number }> = {
@@ -902,19 +903,52 @@ const description = "Determine monthly payments, total interest, and overall cos
 
     // Currency symbols and label updates
     function updateCurrencyFormatting() {
-      currentCurrency = currencySelector.value;
+      if (!currencySelect) return;
+      const val = currencySelect.value;
+      currentCurrency = val;
+
+      if (val === "USD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "USD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "CAD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "CAD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "GBP") {
+        currentCurrencySymbol = "£";
+        currentCurrencyCode = "GBP";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "AUD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "AUD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "EUR") {
+        currentCurrencySymbol = "€";
+        currentCurrencyCode = "EUR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "INR") {
+        currentCurrencySymbol = "₹";
+        currentCurrencyCode = "INR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "$";
+        currentCurrencyCode = customCurrencyCodeInput?.value || "USD";
+      }
+
       const symbols = document.querySelectorAll(".currency-symbol");
       const labels = document.querySelectorAll(".currency-label");
       
-      const currencyInfo = CURRENCY_MAP[currentCurrency] || CURRENCY_MAP.USD;
-      const symbolChar = currencyInfo.symbol;
+      const symbolChar = currentCurrencySymbol;
       const labelText = `${currentCurrency} (${symbolChar})`;
 
+      if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
       symbols.forEach(el => el.textContent = symbolChar);
       labels.forEach(el => el.textContent = labelText);
 
-      // Adjust input step levels for INR
-      if (currentCurrency === "INR") {
+      // Adjust input step levels for INR or custom INR
+      if (currentCurrencyCode === "INR") {
         vehiclePriceInput.step = "50000";
         tradeInInput.step = "10000";
         downPaymentDollar.step = "10000";
@@ -931,15 +965,16 @@ const description = "Determine monthly payments, total interest, and overall cos
       }
     }
 
-    // High fidelity currency formatting helper (handles standard and Lakhs/Crores)
+    // High fidelity currency formatting helper
     function formatCurrency(val: number): string {
-      const currencyInfo = CURRENCY_MAP[currentCurrency] || CURRENCY_MAP.USD;
-      return new Intl.NumberFormat(currencyInfo.locale, {
-        style: "currency",
-        currency: currentCurrency,
-        minimumFractionDigits: currentCurrency === "INR" ? 0 : 2,
-        maximumFractionDigits: currentCurrency === "INR" ? 0 : 2
-      }).format(val);
+      const locale = currentCurrencyCode === "INR" ? "en-IN" : undefined;
+      return (
+        currentCurrencySymbol +
+        val.toLocaleString(locale, {
+          minimumFractionDigits: currentCurrencyCode === "INR" ? 0 : 2,
+          maximumFractionDigits: currentCurrencyCode === "INR" ? 0 : 2
+        })
+      );
     }
 
     // Newton-Raphson Solver for Internal Rate of Return (IRR) to determine true APR
@@ -1289,6 +1324,8 @@ const description = "Determine monthly payments, total interest, and overall cos
       const savedCondition = getSafeItem("autoloan-condition");
       const savedStart = getSafeItem("autoloan-start");
       const savedCurrency = getSafeItem("autoloan-currency");
+      const savedCustomSymbol = getSafeItem("autoloan-custom-symbol");
+      const savedCustomCode = getSafeItem("autoloan-custom-code");
       const savedCredit = getSafeItem("autoloan-credit");
       const savedTax = getSafeItem("autoloan-tax");
       const savedDoc = getSafeItem("autoloan-doc");
@@ -1323,8 +1360,14 @@ const description = "Determine monthly payments, total interest, and overall cos
       } else {
         setDefaultStartDate();
       }
-      if (savedCurrency !== null) {
-        currencySelector.value = savedCurrency;
+      if (savedCustomSymbol && customCurrencySymbolInput) {
+        customCurrencySymbolInput.value = savedCustomSymbol;
+      }
+      if (savedCustomCode && customCurrencyCodeInput) {
+        customCurrencyCodeInput.value = savedCustomCode;
+      }
+      if (savedCurrency && currencySelect) {
+        currencySelect.value = savedCurrency;
       }
       if (savedCredit !== null) {
         creditScoreSelect.value = savedCredit;
@@ -1360,7 +1403,9 @@ const description = "Determine monthly payments, total interest, and overall cos
       setSafeItem("autoloan-rate", interestRateInput.value);
       setSafeItem("autoloan-condition", isUsedVehicle ? "used" : "new");
       setSafeItem("autoloan-start", loanStartDateInput.value);
-      setSafeItem("autoloan-currency", currencySelector.value);
+      setSafeItem("autoloan-currency", currentCurrency);
+      setSafeItem("autoloan-custom-symbol", currentCurrencySymbol);
+      setSafeItem("autoloan-custom-code", currentCurrencyCode);
       setSafeItem("autoloan-credit", creditScoreSelect.value);
       setSafeItem("autoloan-tax", salesTaxInput.value);
       setSafeItem("autoloan-doc", docFeesInput.value);
@@ -1396,7 +1441,7 @@ const description = "Determine monthly payments, total interest, and overall cos
       // which allows basic formatting but might prompt format-mismatch warnings in Excel.
       if (amortizationData.length === 0) return;
       const termVal = loanTermInput.value;
-      const currencySymbol = CURRENCY_MAP[currentCurrency]?.symbol || "$";
+      const currencySymbol = currentCurrencySymbol;
       
       let tableRows = "";
       amortizationData.forEach(row => {
@@ -1528,9 +1573,26 @@ const description = "Determine monthly payments, total interest, and overall cos
       });
 
       // Advanced inputs
-      currencySelector.addEventListener("change", () => {
+      currencySelect?.addEventListener("change", () => {
         updateCurrencyFormatting();
         calculate();
+      });
+
+      customCurrencySymbolInput?.addEventListener("input", () => {
+        if (currentCurrency === "Custom") {
+          currentCurrencySymbol = customCurrencySymbolInput.value || "$";
+          if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+          updateCurrencyFormatting();
+          calculate();
+        }
+      });
+
+      customCurrencyCodeInput?.addEventListener("input", () => {
+        if (currentCurrency === "Custom") {
+          currentCurrencyCode = customCurrencyCodeInput.value || "USD";
+          updateCurrencyFormatting();
+          calculate();
+        }
       });
 
       creditScoreSelect.addEventListener("change", () => {
@@ -1563,7 +1625,7 @@ const description = "Determine monthly payments, total interest, and overall cos
       resetBtn?.addEventListener("click", () => {
         if (typeof localStorage !== 'undefined') {
           try {
-            ['price','trade','downtype','downval','term','rate','condition','start','currency','credit','tax','doc','reg','balloon'].forEach(k => localStorage.removeItem('autoloan-' + k));
+            ['price','trade','downtype','downval','term','rate','condition','start','currency','custom-symbol','custom-code','credit','tax','doc','reg','balloon'].forEach(k => localStorage.removeItem('autoloan-' + k));
           } catch (e) {
             console.warn("Failed targeting keys in localStorage", e);
           }
@@ -1576,7 +1638,11 @@ const description = "Determine monthly payments, total interest, and overall cos
         loanTermRange.value = "60";
         interestRateInput.value = "5.5";
         interestRateRange.value = "5.5";
-        currencySelector.value = "USD";
+        if (currencySelect) {
+          currencySelect.value = "USD";
+        }
+        if (customCurrencySymbolInput) customCurrencySymbolInput.value = "$";
+        if (customCurrencyCodeInput) customCurrencyCodeInput.value = "USD";
         creditScoreSelect.value = "good";
         salesTaxInput.value = "6.25";
         docFeesInput.value = "150";
