@@ -1,90 +1,1550 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Compound Interest Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Calculate the future value of your savings or investments using compound interest formulas.";
+const description =
+  "Project the future value of your savings or investments using compound interest, recurring contributions, inflation adjustments, and tax calculations.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Compound Interest Calculator",
+      "url": "https://boardtools.app/tools/finance/compound-interest",
+      "description": "Interactive real-time compound interest calculator with inflation adjustment, tax calculations, dynamic SVG charts, and year-by-year growth breakdown.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 sm:py-8 flex flex-col gap-5 sm:gap-6 animate-fade-in-up pb-24 lg:pb-16"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1.5">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+      </nav>
+
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3 mt-0.5">
+        <h1 class="font-display font-medium text-2xl sm:text-3xl tracking-tight text-primary">
           {name}
         </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        <span
+          class="bg-surface-pricing-featured text-brand-blue text-[10px] sm:text-xs py-0.5 sm:py-1 px-2.5 sm:px-3 rounded-full font-semibold uppercase"
+          >{tier}</span
+        >
+
+        <button
+          type="button"
+          id="info-modal-btn"
+          class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>How compounding works</span>
+        </button>
+
+        <button
+          type="button"
+          id="reset-btn"
+          class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+            ></path>
+          </svg>
+          <span>Reset</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-xs sm:text-sm text-slate max-w-xl mt-1">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Above the Fold: Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
+      <!-- Left Column: Inputs (7 Cols) -->
+      <div class="lg:col-span-7 flex flex-col gap-4 sm:gap-5">
+        <div class="card-base p-4 sm:p-5 flex flex-col gap-4 sm:gap-5">
+          <h2 class="font-display font-semibold text-base sm:text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Investment Parameters
+          </h2>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+          <!-- Currency & Principal Amount -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <label for="principal-amount" class="text-[11px] font-semibold text-charcoal">
+                Initial Investment (Principal)
+              </label>
+              <!-- Currency Select -->
+              <select
+                id="currency-select"
+                class="text-[10px] font-semibold py-1 px-2.5 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                aria-label="Currency Select"
+              >
+                <option value="USD" selected>$ USD</option>
+                <option value="CAD">$ CAD</option>
+                <option value="GBP">£ GBP</option>
+                <option value="AUD">$ AUD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="INR">₹ INR</option>
+                <option value="Custom">Custom / Other</option>
+              </select>
+            </div>
+            <div class="relative">
+              <span id="currency-prefix" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold">$</span>
+              <input
+                type="number"
+                id="principal-amount"
+                value="10000"
+                min="0"
+                max="1000000000"
+                step="100"
+                class="text-input pl-7 text-sm font-mono"
+                inputmode="numeric"
+                autocomplete="off"
+              />
+            </div>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+
+          <!-- Custom Currency Inputs (Hidden by default) -->
+          <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
+              <input type="text" id="custom-currency-code" value="USD" class="text-input" placeholder="e.g. USD, GBP, EUR" />
+            </div>
+          </div>
+
+          <!-- Annual Interest Rate slider + numeric input -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between text-[11px] font-semibold text-charcoal">
+              <span>Annual Interest Rate (%)</span>
+              <span id="interest-rate-label" class="font-mono text-stone font-bold">8.0%</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="interest-rate-range"
+                min="0.1"
+                max="30"
+                value="8.0"
+                step="0.1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Interest Rate Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="interest-rate"
+                  min="0.1"
+                  max="100"
+                  value="8.0"
+                  step="0.01"
+                  class="text-input pr-5 py-1 text-xs text-center font-mono h-8"
+                  inputmode="decimal"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time Horizon (Years) presets + slider -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between text-[11px] font-semibold text-charcoal">
+              <span>Time Period (Years)</span>
+              <span id="time-period-label" class="font-mono text-stone font-bold">10 years</span>
+            </div>
+            <!-- Quick Presets -->
+            <div class="grid grid-cols-6 gap-1">
+              {
+                [1, 3, 5, 10, 20, 30].map((yr) => (
+                  <button
+                    type="button"
+                    class="preset-year-btn text-[10px] sm:text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer border border-hairline text-slate bg-canvas hover:border-hairline-strong active:scale-95 flex items-center justify-center"
+                    data-year={yr}
+                  >
+                    {yr}y
+                  </button>
+                ))
+              }
+            </div>
+            <div class="flex items-center gap-3 mt-1">
+              <input
+                type="range"
+                id="time-period-range"
+                min="1"
+                max="50"
+                value="10"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Time Horizon Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="time-period"
+                  min="1"
+                  max="100"
+                  value="10"
+                  class="text-input pr-6 py-1 text-xs text-center font-mono h-8"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">yrs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compounding Frequency -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-semibold text-charcoal">Compounding Frequency</label>
+            <div class="grid grid-cols-4 gap-1">
+              {
+                ['Daily', 'Monthly', 'Quarterly', 'Annually'].map((freq) => (
+                  <button
+                    type="button"
+                    class="compound-freq-btn text-[10px] sm:text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer border border-hairline text-slate bg-canvas hover:border-hairline-strong active:scale-95 flex items-center justify-center"
+                    data-freq={freq.toLowerCase()}
+                  >
+                    {freq}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Regular Contributions -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="contribution-amount" class="text-[11px] font-semibold text-charcoal">
+                Regular Contribution Additions
+              </label>
+              <div class="relative">
+                <span class="currency-symbol absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold">$</span>
+                <input
+                  type="number"
+                  id="contribution-amount"
+                  value="500"
+                  min="0"
+                  max="100000000"
+                  step="10"
+                  class="text-input pl-7 text-sm font-mono"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[11px] font-semibold text-charcoal">Contribution Frequency</label>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline h-11 items-center">
+                <button
+                  type="button"
+                  id="contrib-monthly"
+                  class="w-1/2 text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+                >
+                  Monthly
+                </button>
+                <button
+                  type="button"
+                  id="contrib-annually"
+                  class="w-1/2 text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+                >
+                  Annually
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Toggle Options Section -->
+          <div class="border-t border-hairline pt-3 mt-1">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Options (Inflation, Taxes, Timings)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Advanced Options Panel (Expands smoothly) -->
+            <div
+              id="advanced-panel"
+              class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-3"
+            >
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-[11px] font-semibold text-slate">Contribution Timing</label>
+                  <div class="flex rounded-full bg-surface p-0.5 border border-hairline h-9 items-center">
+                    <button
+                      type="button"
+                      id="timing-beginning"
+                      class="w-1/2 text-[10px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+                    >
+                      Beginning
+                    </button>
+                    <button
+                      type="button"
+                      id="timing-end"
+                      class="w-1/2 text-[10px] py-1 rounded-full font-bold transition-all cursor-pointer text-slate"
+                    >
+                      End of Period
+                    </button>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="start-date" class="text-[11px] font-semibold text-slate">
+                    Calculation Start Date
+                  </label>
+                  <input
+                    type="date"
+                    id="start-date"
+                    class="text-input !h-9 text-xs font-mono"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label for="inflation-rate" class="text-[11px] font-semibold text-slate">
+                    Annual Inflation Rate (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="inflation-rate"
+                      value="0.0"
+                      min="0"
+                      max="50"
+                      step="0.1"
+                      class="text-input !h-9 text-xs font-mono pr-6"
+                      inputmode="decimal"
+                      placeholder="0.0"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs">%</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="tax-rate" class="text-[11px] font-semibold text-slate">
+                    Estimated Tax Rate (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="tax-rate"
+                      value="0.0"
+                      min="0"
+                      max="100"
+                      step="0.1"
+                      class="text-input !h-9 text-xs font-mono pr-6"
+                      inputmode="decimal"
+                      placeholder="0.0"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs">%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Quick Core Outputs Hero (5 Cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-5 justify-between">
+        <div class="card-feature-teal p-5 sm:p-6 flex flex-col justify-between h-full relative overflow-hidden rounded-xl">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/20 rounded-full blur-2xl"></div>
+
+          <div class="flex flex-col gap-5 z-10">
+            <!-- Hero Future Value -->
+            <div class="flex flex-col">
+              <span class="text-[10px] sm:text-xs font-bold text-moss-dark/70 uppercase tracking-wider block">Projected Future Value</span>
+              <div
+                id="hero-future-value"
+                class="font-display font-semibold text-3xl sm:text-4xl lg:text-5xl text-primary font-mono select-all transition-all duration-300"
+              >
+                $0.00
+              </div>
+            </div>
+
+            <!-- Total Principal & Total Interest Breakdown -->
+            <div class="grid grid-cols-2 gap-4 pb-4 border-b border-moss-dark/10">
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-bold text-moss-dark/70 tracking-wider">Total Contributed</span>
+                <span id="hero-contributed" class="font-display font-semibold text-base sm:text-lg text-primary font-mono select-all">$0.00</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-bold text-moss-dark/70 tracking-wider">Total Interest</span>
+                <span id="hero-interest" class="font-display font-semibold text-base sm:text-lg text-primary font-mono select-all">$0.00</span>
+              </div>
+            </div>
+
+            <!-- Advanced Metrics indicators (shown dynamically below fold but highlighted here) -->
+            <div class="flex flex-col gap-2 pt-1 text-[11px] text-moss-dark/95">
+              <div class="flex justify-between items-center hidden" id="adjusted-real-badge">
+                <span>Real Purchasing Power (Adjusted for Inflation):</span>
+                <span id="badge-real-val" class="font-bold font-mono">$0.00</span>
+              </div>
+              <div class="flex justify-between items-center hidden" id="adjusted-tax-badge">
+                <span>Estimated Value After Tax:</span>
+                <span id="badge-tax-val" class="font-bold font-mono">$0.00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Target Maturity Date:</span>
+                <span id="badge-target-date" class="font-semibold font-mono">June 2036</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom View Results action -->
+          <div class="mt-6 z-10">
+            <button
+              type="button"
+              id="view-results-btn"
+              class="w-full button-primary !text-xs !py-2.5 !px-4 hover:bg-charcoal active:scale-98 shadow-subtle flex items-center justify-center gap-1"
+            >
+              <span>View Detailed Results</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 13l-7 7-7-7m14-6l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Below the Fold: Results & Amortization Section -->
+    <div id="results-section" class="flex flex-col gap-6 mt-6 border-t border-hairline pt-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h2 class="font-display font-semibold text-xl sm:text-2xl text-primary flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"></span>
+          Detailed Projection Breakdown
+        </h2>
+        
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="copy-results-btn"
+            class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+            </svg>
+            <span>Copy Results</span>
+          </button>
+          
+          <button
+            type="button"
+            id="csv-export-btn"
+            class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Export CSV</span>
           </button>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <!-- SVG Interactive Stacked Bar Chart (7 Cols) -->
+        <div class="lg:col-span-7 card-base flex flex-col justify-between p-4 sm:p-5">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-display font-semibold text-sm text-primary">Balance Accumulation Chart</h3>
+            <div class="flex items-center gap-3 text-[10px] text-slate">
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded bg-brand-blue"></span> Principal
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded bg-brand-coral"></span> Contributions
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded bg-brand-yellow-deep"></span> Interest
+              </span>
+            </div>
+          </div>
+
+          <!-- Dynamic SVG Graphic Area -->
+          <div class="w-full relative min-h-[220px] sm:min-h-[280px] bg-surface-soft/60 rounded-lg p-2.5 border border-hairline">
+            <div id="chart-tooltip" class="absolute pointer-events-none bg-primary/95 text-canvas text-[10px] font-mono p-2 rounded-lg shadow-modal hidden z-20 flex flex-col gap-1 border border-hairline-strong"></div>
+            <svg id="growth-svg" class="w-full h-[200px] sm:h-[260px]" viewBox="0 0 600 260" preserveAspectRatio="none">
+              <!-- Grid Lines, Area polygons, Interactive bars will be rendered via JS -->
+            </svg>
+          </div>
+          <div class="text-[10px] text-stone mt-2 text-center leading-normal">
+            Hover over the bars in the chart to inspect your projected investment composition for that specific year.
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Inflation & Tax Impact + Summary Details (5 Cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          <div class="card-base bg-surface-soft/60 flex flex-col gap-4 p-4 sm:p-5 h-full justify-between">
+            <h3 class="font-display font-semibold text-sm text-primary pb-2 border-b border-hairline">
+              Real Return Analysis
+            </h3>
+            
+            <div class="flex flex-col gap-3">
+              <!-- Real inflation impact card -->
+              <div id="inflation-impact-block" class="card-base !p-3 !rounded-lg border border-hairline flex flex-col gap-1.5 bg-canvas">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-semibold text-charcoal">Nominal Future Value:</span>
+                  <span id="impact-nominal-val" class="font-mono font-bold">$0.00</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-semibold text-slate">Inflation Adjusted (Real):</span>
+                  <span id="impact-real-val" class="font-mono font-bold text-brand-blue">$0.00</span>
+                </div>
+                <p class="text-[10px] text-stone leading-relaxed mt-1" id="inflation-impact-desc">
+                  Based on a 0% inflation rate, your purchasing power remains equivalent to nominal gains.
+                </p>
+              </div>
+
+              <!-- Real tax impact card -->
+              <div id="tax-impact-block" class="card-base !p-3 !rounded-lg border border-hairline flex flex-col gap-1.5 bg-canvas">
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-semibold text-charcoal">Pre-Tax Return Gains:</span>
+                  <span id="impact-pretax-gains" class="font-mono font-bold">$0.00</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                  <span class="font-semibold text-slate">Post-Tax Total Value:</span>
+                  <span id="impact-posttax-val" class="font-mono font-bold text-brand-coral">$0.00</span>
+                </div>
+                <p class="text-[10px] text-stone leading-relaxed mt-1" id="tax-impact-desc">
+                  Based on a 0% tax rate, you retain 100% of interest growth.
+                </p>
+              </div>
+            </div>
+
+            <div class="text-[10px] text-slate leading-relaxed border-t border-hairline pt-3">
+              <strong>Private Execution Sandbox:</strong> All interest computations, compounding schedules, and tax reports are processed locally inside your browser sandbox. None of your data is sent to external services.
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Growth Schedule Table Card -->
+      <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2">
+          <h3 class="font-display font-semibold text-sm sm:text-base text-primary">Annual Compounding Growth Schedule</h3>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono">
+                <th class="py-2.5 px-3">Year</th>
+                <th class="py-2.5 px-3 text-right">Contributions (Yr)</th>
+                <th class="py-2.5 px-3 text-right">Interest Earned (Yr)</th>
+                <th class="py-2.5 px-3 text-right">Cumulative Contributed</th>
+                <th class="py-2.5 px-3 text-right">Cumulative Interest</th>
+                <th class="py-2.5 px-3 text-right">Ending Balance</th>
+              </tr>
+            </thead>
+            <tbody id="growth-table-body">
+              <!-- JS populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <button
+          type="button"
+          id="toggle-schedule-btn"
+          class="w-full text-center text-xs py-2 bg-surface hover:bg-hairline text-slate font-semibold rounded-full border border-hairline-soft transition-all cursor-pointer mt-2"
+        >
+          Show Full Schedule
+        </button>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 mt-4">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
     </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase font-bold text-stone">Future Value</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">$0.00</span>
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help / Info Modal -->
+  <div
+    id="info-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">How Compound Interest Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. What is Compound Interest?</h4>
+        <p>
+          Unlike simple interest, which is earned only on the initial principal, compound interest is earned on both the initial principal and all accumulated interest from previous periods. It creates an exponential growth curve.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. The Impact of Compounding Frequency</h4>
+        <p>
+          The more frequently interest compounds (e.g., Daily vs Annually), the faster your balance grows. Daily compounding yields slightly more than monthly or annual compounding because gains are reinvested sooner.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Regular Contributions & Timing</h4>
+        <p>
+          Adding regular contributions dramatically multiplies the final returns. Making contributions at the **Beginning** of compounding periods rather than the **End** gives your cash an extra period to earn interest, noticeably increasing final future value over long time horizons.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Real Value vs Nominal Value</h4>
+        <p>
+          Inflation reduces the purchasing power of your money over time. While your nominal balance grows to a large number, the **Real Value** adjusts that future sum to show what it would buy in today's dollars.
+        </p>
+
+        <h4 class="font-semibold text-primary">5. Tax Drag</h4>
+        <p>
+          Taxes on investment gains reduce the final amount you take home. Our engine simulates a post-tax return where the tax rate is applied to the earned interest portion at the end of the term.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side script logic -->
+  <script>
+    // State variables
+    let currentCurrency = "USD";
+    let currentCurrencySymbol = "$";
+    let currentCurrencyCode = "USD";
+    let isAnnualContribution = false;
+    let currentCompounding = "monthly";
+    let isBeginningTiming = true;
+    let showFullSchedule = false;
+    let yearlyScheduleData: any[] = [];
+
+    // DOM Elements
+    const principalInput = document.getElementById("principal-amount") as HTMLInputElement;
+    const interestRange = document.getElementById("interest-rate-range") as HTMLInputElement;
+    const interestInput = document.getElementById("interest-rate") as HTMLInputElement;
+    const interestLabel = document.getElementById("interest-rate-label");
+    const timeRange = document.getElementById("time-period-range") as HTMLInputElement;
+    const timeInput = document.getElementById("time-period") as HTMLInputElement;
+    const timeLabel = document.getElementById("time-period-label");
+    const contribInput = document.getElementById("contribution-amount") as HTMLInputElement;
+    const startDateInput = document.getElementById("start-date") as HTMLInputElement;
+    const inflationInput = document.getElementById("inflation-rate") as HTMLInputElement;
+    const taxInput = document.getElementById("tax-rate") as HTMLInputElement;
+
+    const currencySelect = document.getElementById("currency-select") as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById("custom-currency-symbol") as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById("custom-currency-code") as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById("custom-currency-container");
+    const currencyPrefix = document.getElementById("currency-prefix");
+    const currencySymbols = document.querySelectorAll(".currency-symbol");
+
+    const presetYearButtons = document.querySelectorAll(".preset-year-btn");
+    const compoundFreqButtons = document.querySelectorAll(".compound-freq-btn");
+    const contribMonthlyBtn = document.getElementById("contrib-monthly");
+    const contribAnnuallyBtn = document.getElementById("contrib-annually");
+
+    const timingBeginningBtn = document.getElementById("timing-beginning");
+    const timingEndBtn = document.getElementById("timing-end");
+
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+
+    const heroFutureValue = document.getElementById("hero-future-value");
+    const heroContributed = document.getElementById("hero-contributed");
+    const heroInterest = document.getElementById("hero-interest");
+    const badgeRealVal = document.getElementById("badge-real-val");
+    const badgeTaxVal = document.getElementById("badge-tax-val");
+    const badgeTargetDate = document.getElementById("badge-target-date");
+    const adjustedRealBadge = document.getElementById("adjusted-real-badge");
+    const adjustedTaxBadge = document.getElementById("adjusted-tax-badge");
+
+    const impactNominalVal = document.getElementById("impact-nominal-val");
+    const impactRealVal = document.getElementById("impact-real-val");
+    const inflationImpactDesc = document.getElementById("inflation-impact-desc");
+    const impactPretaxGains = document.getElementById("impact-pretax-gains");
+    const impactPosttaxVal = document.getElementById("impact-posttax-val");
+    const taxImpactDesc = document.getElementById("tax-impact-desc");
+
+    const tableBody = document.getElementById("growth-table-body");
+    const toggleScheduleBtn = document.getElementById("toggle-schedule-btn") as HTMLButtonElement;
+    const copyResultsBtn = document.getElementById("copy-results-btn");
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const viewResultsBtn = document.getElementById("view-results-btn");
+    const mobileScrollBtn = document.getElementById("mobile-scroll-results-btn");
+
+    const infoModalBtn = document.getElementById("info-modal-btn");
+    const infoModal = document.getElementById("info-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // Currency Formatting Utility
+    function formatVal(value: number): string {
+      const locale = currentCurrencyCode === "INR" ? "en-IN" : undefined;
+      return (
+        currentCurrencySymbol +
+        value.toLocaleString(locale, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        })
+      );
+    }
+
+    // Set Default Start Date
+    function setDefaultStartDate() {
+      const d = new Date();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      startDateInput.value = `${d.getFullYear()}-${month}-${day}`;
+    }
+
+    // Calculate Maturity Date
+    function getMaturityDate(years: number): string {
+      const start = startDateInput.value ? new Date(startDateInput.value) : new Date();
+      start.setFullYear(start.getFullYear() + years);
+      return start.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    }
+
+    // Update Presets UI Highlight
+    function updatePresetsUI() {
+      const timeYr = parseInt(timeInput.value, 10);
+      presetYearButtons.forEach(btn => {
+        const val = parseInt(btn.getAttribute("data-year") || "0", 10);
+        if (val === timeYr) {
+          btn.classList.add("bg-primary", "text-canvas", "border-primary");
+          btn.classList.remove("bg-canvas", "text-slate", "border-hairline");
+        } else {
+          btn.classList.remove("bg-primary", "text-canvas", "border-primary");
+          btn.classList.add("bg-canvas", "text-slate", "border-hairline");
+        }
+      });
+
+      compoundFreqButtons.forEach(btn => {
+        const val = btn.getAttribute("data-freq");
+        if (val === currentCompounding) {
+          btn.classList.add("bg-primary", "text-canvas", "border-primary");
+          btn.classList.remove("bg-canvas", "text-slate", "border-hairline");
+        } else {
+          btn.classList.remove("bg-primary", "text-canvas", "border-primary");
+          btn.classList.add("bg-canvas", "text-slate", "border-hairline");
+        }
+      });
+    }
+
+    // Local Storage State Persistence
+    function loadState() {
+      try {
+        const savedCurrency = localStorage.getItem("ci-calc-currency");
+        const savedCustomSymbol = localStorage.getItem("ci-calc-custom-symbol");
+        const savedCustomCode = localStorage.getItem("ci-calc-custom-code");
+        const savedPrincipal = localStorage.getItem("ci-calc-principal");
+        const savedInterest = localStorage.getItem("ci-calc-interest");
+        const savedTime = localStorage.getItem("ci-calc-time");
+        const savedCompounding = localStorage.getItem("ci-calc-compounding");
+        const savedContrib = localStorage.getItem("ci-calc-contrib");
+        const savedContribFreq = localStorage.getItem("ci-calc-contrib-freq");
+        const savedTiming = localStorage.getItem("ci-calc-timing");
+        const savedStartDate = localStorage.getItem("ci-calc-start-date");
+        const savedInflation = localStorage.getItem("ci-calc-inflation");
+        const savedTax = localStorage.getItem("ci-calc-tax");
+
+        if (savedCustomSymbol && customCurrencySymbolInput) {
+          customCurrencySymbolInput.value = savedCustomSymbol;
+        }
+        if (savedCustomCode && customCurrencyCodeInput) {
+          customCurrencyCodeInput.value = savedCustomCode;
+        }
+        if (savedCurrency && currencySelect) {
+          currencySelect.value = savedCurrency;
+        }
+        updateCurrencyFromSelect();
+
+        if (savedPrincipal) principalInput.value = savedPrincipal;
+        if (savedInterest) {
+          interestInput.value = savedInterest;
+          interestRange.value = savedInterest;
+        }
+        if (savedTime) {
+          timeInput.value = savedTime;
+          timeRange.value = savedTime;
+        }
+        if (savedCompounding) currentCompounding = savedCompounding;
+        if (savedContrib) contribInput.value = savedContrib;
+        if (savedContribFreq) toggleContribFreq(savedContribFreq === "annually");
+        if (savedTiming) toggleTiming(savedTiming === "beginning");
+        if (savedStartDate) startDateInput.value = savedStartDate;
+        if (savedInflation) inflationInput.value = savedInflation;
+        if (savedTax) taxInput.value = savedTax;
+      } catch (e) {
+        console.warn("Storage read failure", e);
+      }
+    }
+
+    // Save State Persistence
+    function saveState() {
+      try {
+        localStorage.setItem("ci-calc-currency", currentCurrency);
+        localStorage.setItem("ci-calc-custom-symbol", currentCurrencySymbol);
+        localStorage.setItem("ci-calc-custom-code", currentCurrencyCode);
+        localStorage.setItem("ci-calc-principal", principalInput.value);
+        localStorage.setItem("ci-calc-interest", interestInput.value);
+        localStorage.setItem("ci-calc-time", timeInput.value);
+        localStorage.setItem("ci-calc-compounding", currentCompounding);
+        localStorage.setItem("ci-calc-contrib", contribInput.value);
+        localStorage.setItem("ci-calc-contrib-freq", isAnnualContribution ? "annually" : "monthly");
+        localStorage.setItem("ci-calc-timing", isBeginningTiming ? "beginning" : "end");
+        localStorage.setItem("ci-calc-start-date", startDateInput.value);
+        localStorage.setItem("ci-calc-inflation", inflationInput.value);
+        localStorage.setItem("ci-calc-tax", taxInput.value);
+      } catch (e) {
+        console.warn("Storage write failure", e);
+      }
+    }
+
+    // Update Currency Choice
+    function updateCurrencyFromSelect() {
+      if (!currencySelect) return;
+      const val = currencySelect.value;
+      currentCurrency = val;
+
+      if (val === "USD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "USD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "CAD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "CAD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "GBP") {
+        currentCurrencySymbol = "£";
+        currentCurrencyCode = "GBP";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "AUD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "AUD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "EUR") {
+        currentCurrencySymbol = "€";
+        currentCurrencyCode = "EUR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "INR") {
+        currentCurrencySymbol = "₹";
+        currentCurrencyCode = "INR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "$";
+        currentCurrencyCode = customCurrencyCodeInput?.value || "USD";
+      }
+
+      if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+      currencySymbols.forEach(el => el.textContent = currentCurrencySymbol);
+      calculate();
+    }
+
+    // Toggle timing options
+    function toggleTiming(isBeginning: boolean) {
+      isBeginningTiming = isBeginning;
+      if (isBeginning) {
+        timingBeginningBtn?.classList.add("bg-primary", "text-canvas");
+        timingBeginningBtn?.classList.remove("text-slate");
+        timingEndBtn?.classList.remove("bg-primary", "text-canvas");
+        timingEndBtn?.classList.add("text-slate");
+      } else {
+        timingEndBtn?.classList.add("bg-primary", "text-canvas");
+        timingEndBtn?.classList.remove("text-slate");
+        timingBeginningBtn?.classList.remove("bg-primary", "text-canvas");
+        timingBeginningBtn?.classList.add("text-slate");
+      }
+      calculate();
+    }
+
+    // Toggle contribution frequency
+    function toggleContribFreq(isAnnual: boolean) {
+      isAnnualContribution = isAnnual;
+      if (isAnnual) {
+        contribAnnuallyBtn?.classList.add("bg-primary", "text-canvas");
+        contribAnnuallyBtn?.classList.remove("text-slate");
+        contribMonthlyBtn?.classList.remove("bg-primary", "text-canvas");
+        contribMonthlyBtn?.classList.add("text-slate");
+      } else {
+        contribMonthlyBtn?.classList.add("bg-primary", "text-canvas");
+        contribMonthlyBtn?.classList.remove("text-slate");
+        contribAnnuallyBtn?.classList.remove("bg-primary", "text-canvas");
+        contribAnnuallyBtn?.classList.add("text-slate");
+      }
+      calculate();
+    }
+
+    // Main Calculations Engine
+    function calculate() {
+      const principal = Math.max(0, parseFloat(principalInput.value) || 0);
+      const interestRate = Math.max(0, parseFloat(interestInput.value) || 0) / 100;
+      const years = Math.max(1, parseInt(timeInput.value, 10) || 1);
+      const contribution = Math.max(0, parseFloat(contribInput.value) || 0);
+      const inflationRate = Math.max(0, parseFloat(inflationInput.value) || 0) / 100;
+      const taxRate = Math.max(0, parseFloat(taxInput.value) || 0) / 100;
+
+      // Update Labels
+      if (interestLabel) interestLabel.textContent = `${(interestRate * 100).toFixed(1)}%`;
+      if (timeLabel) timeLabel.textContent = `${years} year${years > 1 ? 's' : ''}`;
+
+      // Reset array data
+      yearlyScheduleData = [];
+
+      let balance = principal;
+      let cumContributions = principal;
+      let cumInterest = 0;
+
+      // Loop year-by-year, and month-by-month inside
+      for (let y = 1; y <= years; y++) {
+        let yrContrib = 0;
+        let yrInterestStart = cumInterest;
+        let yrContribStart = cumContributions;
+
+        for (let m = 1; m <= 12; m++) {
+          // Monthly Contributions
+          if (!isAnnualContribution) {
+            if (isBeginningTiming) {
+              balance += contribution;
+              cumContributions += contribution;
+              yrContrib += contribution;
+            }
+          }
+
+          // Annual Contributions at Month 1 (Beginning)
+          if (isAnnualContribution && m === 1 && isBeginningTiming) {
+            balance += contribution;
+            cumContributions += contribution;
+            yrContrib += contribution;
+          }
+
+          // Compounding Growth Calculations
+          let compoundFactor = 0;
+          if (currentCompounding === "monthly") {
+            compoundFactor = interestRate / 12;
+            balance *= (1 + compoundFactor);
+          } else if (currentCompounding === "quarterly" && m % 3 === 0) {
+            compoundFactor = interestRate / 4;
+            balance *= (1 + compoundFactor);
+          } else if (currentCompounding === "annually" && m === 12) {
+            compoundFactor = interestRate;
+            balance *= (1 + compoundFactor);
+          } else if (currentCompounding === "daily") {
+            const daysInMonth = 30.436875;
+            compoundFactor = Math.pow(1 + interestRate / 365, daysInMonth) - 1;
+            balance *= (1 + compoundFactor);
+          }
+
+          // Monthly Contributions (End of period)
+          if (!isAnnualContribution && !isBeginningTiming) {
+            balance += contribution;
+            cumContributions += contribution;
+            yrContrib += contribution;
+          }
+
+          // Annual Contributions at Month 12 (End of period)
+          if (isAnnualContribution && m === 12 && !isBeginningTiming) {
+            balance += contribution;
+            cumContributions += contribution;
+            yrContrib += contribution;
+          }
+        }
+
+        const totalGrowthThisYear = balance - yrContribStart - yrContrib;
+        cumInterest += totalGrowthThisYear;
+
+        yearlyScheduleData.push({
+          year: y,
+          contributionsThisYear: yrContrib,
+          interestThisYear: totalGrowthThisYear,
+          cumulativeContributions: cumContributions,
+          cumulativeInterest: cumInterest,
+          endingBalance: balance
+        });
+      }
+
+      // Calculations details outputs
+      const futureVal = balance;
+      const totalContributed = cumContributions;
+      const totalInterest = futureVal - totalContributed;
+
+      // Inflation adjustment: FV / (1 + inf)^years
+      const realValue = futureVal / Math.pow(1 + inflationRate, years);
+      // Tax adjustment: principal + contributions + (totalInterest * (1 - taxRate))
+      const postTaxValue = totalContributed + (totalInterest * (1 - taxRate));
+
+      // Display key numbers above the fold
+      if (heroFutureValue) heroFutureValue.textContent = formatVal(futureVal);
+      if (heroContributed) heroContributed.textContent = formatVal(totalContributed);
+      if (heroInterest) heroInterest.textContent = formatVal(totalInterest);
+
+      const formattedMaturity = getMaturityDate(years);
+      if (badgeTargetDate) badgeTargetDate.textContent = formattedMaturity;
+
+      // Mobile sticky update
+      const mobileVal = document.getElementById("mobile-summary-value");
+      if (mobileVal) mobileVal.textContent = formatVal(futureVal);
+
+      // Inflation impact block
+      if (inflationRate > 0) {
+        adjustedRealBadge?.classList.remove("hidden");
+        if (badgeRealVal) badgeRealVal.textContent = formatVal(realValue);
+        if (impactNominalVal) impactNominalVal.textContent = formatVal(futureVal);
+        if (impactRealVal) impactRealVal.textContent = formatVal(realValue);
+        if (inflationImpactDesc) {
+          const loss = futureVal - realValue;
+          inflationImpactDesc.innerHTML = `Over ${years} years, inflation of ${(inflationRate*100).toFixed(1)}% reduces your purchasing power by <strong class="text-brand-blue">${formatVal(loss)}</strong> in today's money.`;
+        }
+      } else {
+        adjustedRealBadge?.classList.add("hidden");
+        if (impactNominalVal) impactNominalVal.textContent = formatVal(futureVal);
+        if (impactRealVal) impactRealVal.textContent = formatVal(futureVal);
+        if (inflationImpactDesc) {
+          inflationImpactDesc.textContent = "Enter an inflation rate in Advanced Options to calculate real returns adjusted for future purchasing power.";
+        }
+      }
+
+      // Tax impact block
+      if (taxRate > 0) {
+        adjustedTaxBadge?.classList.remove("hidden");
+        if (badgeTaxVal) badgeTaxVal.textContent = formatVal(postTaxValue);
+        if (impactPretaxGains) impactPretaxGains.textContent = formatVal(totalInterest);
+        if (impactPosttaxVal) impactPosttaxVal.textContent = formatVal(postTaxValue);
+        if (taxImpactDesc) {
+          const taxesPaid = totalInterest * taxRate;
+          taxImpactDesc.innerHTML = `Estimated tax liability on accumulated gains at maturity is <strong class="text-brand-coral">${formatVal(taxesPaid)}</strong> (calculated at ${(taxRate*100).toFixed(1)}%).`;
+        }
+      } else {
+        adjustedTaxBadge?.classList.add("hidden");
+        if (impactPretaxGains) impactPretaxGains.textContent = formatVal(totalInterest);
+        if (impactPosttaxVal) impactPosttaxVal.textContent = formatVal(futureVal);
+        if (taxImpactDesc) {
+          taxImpactDesc.textContent = "Enter a tax rate in Advanced Options to check estimated post-tax investment values.";
+        }
+      }
+
+      renderTable();
+      renderChart(principal, futureVal);
+      saveState();
+    }
+
+    // Render Table Rows (dynamic limits)
+    function renderTable() {
+      if (!tableBody) return;
+      tableBody.innerHTML = "";
+
+      const visibleRows = showFullSchedule ? yearlyScheduleData.length : Math.min(5, yearlyScheduleData.length);
+
+      for (let i = 0; i < visibleRows; i++) {
+        const row = yearlyScheduleData[i];
+        const tr = document.createElement("tr");
+        tr.className = "border-b border-hairline-soft hover:bg-surface-soft/40 font-mono transition-colors";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-primary">Year ${row.year}</td>
+          <td class="py-2.5 px-3 text-right text-slate">${formatVal(row.contributionsThisYear)}</td>
+          <td class="py-2.5 px-3 text-right text-success-accent">+${formatVal(row.interestThisYear)}</td>
+          <td class="py-2.5 px-3 text-right text-slate">${formatVal(row.cumulativeContributions)}</td>
+          <td class="py-2.5 px-3 text-right text-slate">${formatVal(row.cumulativeInterest)}</td>
+          <td class="py-2.5 px-3 text-right font-bold text-primary">${formatVal(row.endingBalance)}</td>
+        `;
+        tableBody.appendChild(tr);
+      }
+
+      if (toggleScheduleBtn) {
+        if (showFullSchedule) {
+          toggleScheduleBtn.textContent = `Collapse Schedule (Show 5 Years)`;
+        } else {
+          toggleScheduleBtn.textContent = `Show Full Year-by-Year Schedule (${yearlyScheduleData.length} Years)`;
+        }
+      }
+    }
+
+    // Render SVG Stacked Bar Chart
+    function renderChart(principal: number, futureVal: number) {
+      const svg = document.getElementById("growth-svg");
+      if (!svg) return;
+      svg.innerHTML = "";
+
+      const numYears = yearlyScheduleData.length;
+      const width = 600;
+      const height = 260;
+      const paddingLeft = 60;
+      const paddingRight = 20;
+      const paddingTop = 20;
+      const paddingBottom = 30;
+
+      const chartWidth = width - paddingLeft - paddingRight;
+      const chartHeight = height - paddingTop - paddingBottom;
+
+      const maxVal = futureVal || 1000;
+
+      // Add Grid Lines
+      const gridCount = 5;
+      for (let i = 0; i <= gridCount; i++) {
+        const yVal = maxVal * (i / gridCount);
+        const yPos = height - paddingBottom - (chartHeight * (i / gridCount));
+
+        // Line
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", paddingLeft.toString());
+        line.setAttribute("y1", yPos.toString());
+        line.setAttribute("x2", (width - paddingRight).toString());
+        line.setAttribute("y2", yPos.toString());
+        line.setAttribute("stroke", "var(--color-hairline-soft)");
+        line.setAttribute("stroke-width", "1");
+        if (i > 0) line.setAttribute("stroke-dasharray", "3,3");
+        svg.appendChild(line);
+
+        // Text Y labels
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", (paddingLeft - 8).toString());
+        text.setAttribute("y", (yPos + 4).toString());
+        text.setAttribute("text-anchor", "end");
+        text.setAttribute("font-size", "9px");
+        text.setAttribute("font-family", "monospace");
+        text.setAttribute("fill", "var(--color-stone)");
+
+        // Format short numbers
+        let formattedLabel = formatVal(yVal);
+        if (yVal >= 1000000) formattedLabel = currentCurrencySymbol + (yVal / 1000000).toFixed(1) + "M";
+        else if (yVal >= 1000) formattedLabel = currentCurrencySymbol + (yVal / 1000).toFixed(0) + "K";
+        text.textContent = formattedLabel;
+        svg.appendChild(text);
+      }
+
+      // Render Bar Columns
+      const barWidth = Math.max(4, Math.floor(chartWidth / numYears) - 4);
+      const tooltip = document.getElementById("chart-tooltip");
+
+      yearlyScheduleData.forEach((data, index) => {
+        const xPos = paddingLeft + (index * (chartWidth / numYears)) + ((chartWidth / numYears - barWidth) / 2);
+
+        // Segment ratios
+        const balanceTotal = data.endingBalance;
+        const interestAmt = data.cumulativeInterest;
+        const contribAmt = data.cumulativeContributions - principal;
+        const principalAmt = principal;
+
+        // Heights
+        const hPrincipal = (principalAmt / maxVal) * chartHeight;
+        const hContrib = (contribAmt / maxVal) * chartHeight;
+        const hInterest = (interestAmt / maxVal) * chartHeight;
+
+        const yPrincipal = height - paddingBottom - hPrincipal;
+        const yContrib = yPrincipal - hContrib;
+        const yInterest = yContrib - hInterest;
+
+        // Principal Segment (Blue)
+        const rectPrincipal = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rectPrincipal.setAttribute("x", xPos.toString());
+        rectPrincipal.setAttribute("y", yPrincipal.toString());
+        rectPrincipal.setAttribute("width", barWidth.toString());
+        rectPrincipal.setAttribute("height", hPrincipal.toString());
+        rectPrincipal.setAttribute("fill", "#4262ff"); // brand blue
+        svg.appendChild(rectPrincipal);
+
+        // Contributions Segment (Coral)
+        if (hContrib > 0) {
+          const rectContrib = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rectContrib.setAttribute("x", xPos.toString());
+          rectContrib.setAttribute("y", yContrib.toString());
+          rectContrib.setAttribute("width", barWidth.toString());
+          rectContrib.setAttribute("height", hContrib.toString());
+          rectContrib.setAttribute("fill", "#ff9999"); // brand coral
+          svg.appendChild(rectContrib);
+        }
+
+        // Interest Segment (Yellow)
+        if (hInterest > 0) {
+          const rectInterest = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          rectInterest.setAttribute("x", xPos.toString());
+          rectInterest.setAttribute("y", yInterest.toString());
+          rectInterest.setAttribute("width", barWidth.toString());
+          rectInterest.setAttribute("height", hInterest.toString());
+          rectInterest.setAttribute("fill", "#fcb900"); // yellow deep
+          svg.appendChild(rectInterest);
+        }
+
+        // Invisible trigger bar for tooltip interactions
+        const trigger = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        trigger.setAttribute("x", xPos.toString());
+        trigger.setAttribute("y", paddingTop.toString());
+        trigger.setAttribute("width", barWidth.toString());
+        trigger.setAttribute("height", chartHeight.toString());
+        trigger.setAttribute("fill", "transparent");
+        trigger.style.cursor = "pointer";
+
+        trigger.addEventListener("mouseenter", (e) => {
+          if (tooltip) {
+            tooltip.classList.remove("hidden");
+            tooltip.innerHTML = `
+              <div class="font-bold text-center border-b border-hairline pb-1 mb-1 text-primary">Year ${data.year}</div>
+              <div>Principal: <span class="font-semibold text-brand-blue">${formatVal(principalAmt)}</span></div>
+              <div>Contributions: <span class="font-semibold text-brand-coral">${formatVal(contribAmt)}</span></div>
+              <div>Interest: <span class="font-semibold text-brand-yellow-deep">${formatVal(interestAmt)}</span></div>
+              <div class="font-bold pt-1 border-t border-hairline mt-1">Total: <span class="text-success-accent">${formatVal(balanceTotal)}</span></div>
+            `;
+            
+            // move positioning AFTER removing hidden, so offsetWidth is readable
+            const rect = (e.target as SVGElement).getBoundingClientRect();
+            const parentRect = tooltip.parentElement?.getBoundingClientRect();
+            if (parentRect) {
+              let tooltipLeft = rect.left - parentRect.left + (barWidth / 2) - 60;
+              const tooltipTop = rect.top - parentRect.top - 100;
+              
+              // Clamp left and right edges so tooltip doesn't overflow parent container
+              tooltipLeft = Math.max(5, tooltipLeft);
+              const tooltipWidth = tooltip.offsetWidth || 120;
+              if (tooltipLeft + tooltipWidth > parentRect.width - 5) {
+                tooltipLeft = parentRect.width - tooltipWidth - 5;
+              }
+              
+              tooltip.style.left = `${tooltipLeft}px`;
+              tooltip.style.top = `${Math.max(5, tooltipTop)}px`;
+            }
+          }
+        });
+
+        trigger.addEventListener("mouseleave", () => {
+          tooltip?.classList.add("hidden");
+        });
+
+        svg.appendChild(trigger);
+
+        // Add X Labels dynamically (Years)
+        if (numYears <= 15 || (index % Math.ceil(numYears / 10) === 0) || index === numYears - 1) {
+          const textX = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          textX.setAttribute("x", (xPos + barWidth / 2).toString());
+          textX.setAttribute("y", (height - paddingBottom + 16).toString());
+          textX.setAttribute("text-anchor", "middle");
+          textX.setAttribute("font-size", "9px");
+          textX.setAttribute("font-family", "monospace");
+          textX.setAttribute("fill", "var(--color-slate)");
+          textX.textContent = `Yr ${data.year}`;
+          svg.appendChild(textX);
+        }
+      });
+    }
+
+    // Export CSV Utility
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Year,Annual Contributions,Annual Interest,Cumulative Contributions,Cumulative Interest,Ending Balance\n";
+
+      yearlyScheduleData.forEach(row => {
+        csvContent += `${row.year},${row.contributionsThisYear.toFixed(2)},${row.interestThisYear.toFixed(2)},${row.cumulativeContributions.toFixed(2)},${row.cumulativeInterest.toFixed(2)},${row.endingBalance.toFixed(2)}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `compound_interest_schedule_${currentCurrency}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Copy Results Utility
+    function copyResults() {
+      const text = `
+Compound Interest Projection Summary:
+------------------------------------
+Maturity Date: ${getMaturityDate(parseInt(timeInput.value, 10))}
+Projected Future Value: ${heroFutureValue?.textContent}
+Total Contributed: ${heroContributed?.textContent}
+Total Interest Earned: ${heroInterest?.textContent}
+Inflation Adjusted Value: ${badgeRealVal?.textContent || "N/A"}
+Post-Tax Value: ${badgeTaxVal?.textContent || "N/A"}
+Calculated 100% privately via BoardTools.
+      `.trim();
+
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = copyResultsBtn ? copyResultsBtn.innerHTML : "";
+        if (copyResultsBtn) {
+          copyResultsBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-success-accent">Copied!</span>
+          `;
+          setTimeout(() => {
+            copyResultsBtn.innerHTML = originalText;
+          }, 2000);
+        }
+      });
+    }
+
+    // Register Event Listeners
+    principalInput?.addEventListener("input", calculate);
+    
+    // Sliders sync with numeric fields
+    interestRange?.addEventListener("input", (e) => {
+      interestInput.value = (e.target as HTMLInputElement).value;
+      calculate();
+    });
+    interestInput?.addEventListener("input", (e) => {
+      interestRange.value = (e.target as HTMLInputElement).value;
+      calculate();
+    });
+    interestInput?.addEventListener("blur", () => {
+      interestInput.value = Math.max(0.1, Math.min(100, parseFloat(interestInput.value) || 8)).toFixed(2);
+      interestRange.value = interestInput.value;
+      calculate();
+    });
+
+    timeRange?.addEventListener("input", (e) => {
+      timeInput.value = (e.target as HTMLInputElement).value;
+      calculate();
+    });
+    timeInput?.addEventListener("input", (e) => {
+      timeRange.value = (e.target as HTMLInputElement).value;
+      calculate();
+    });
+    timeInput?.addEventListener("blur", () => {
+      timeInput.value = Math.max(1, Math.min(100, parseInt(timeInput.value, 10) || 10)).toString();
+      timeRange.value = timeInput.value;
+      calculate();
+    });
+
+    contribInput?.addEventListener("input", calculate);
+    startDateInput?.addEventListener("input", calculate);
+    inflationInput?.addEventListener("input", calculate);
+    taxInput?.addEventListener("input", calculate);
+
+    // Currency controls
+    currencySelect?.addEventListener("change", updateCurrencyFromSelect);
+    customCurrencySymbolInput?.addEventListener("input", () => {
+      if (currentCurrency === "Custom") {
+        currentCurrencySymbol = customCurrencySymbolInput.value || "$";
+        if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+        currencySymbols.forEach(el => el.textContent = currentCurrencySymbol);
+        calculate();
+      }
+    });
+    customCurrencyCodeInput?.addEventListener("input", () => {
+      if (currentCurrency === "Custom") {
+        currentCurrencyCode = customCurrencyCodeInput.value || "USD";
+        calculate();
+      }
+    });
+
+    // Quick presets
+    presetYearButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const val = btn.getAttribute("data-year") || "10";
+        timeInput.value = val;
+        timeRange.value = val;
+        updatePresetsUI();
+        calculate();
+      });
+    });
+
+    compoundFreqButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const freq = btn.getAttribute("data-freq") || "monthly";
+        currentCompounding = freq;
+        updatePresetsUI();
+        calculate();
+      });
+    });
+
+    contribMonthlyBtn?.addEventListener("click", () => toggleContribFreq(false));
+    contribAnnuallyBtn?.addEventListener("click", () => toggleContribFreq(true));
+    timingBeginningBtn?.addEventListener("click", () => toggleTiming(true));
+    timingEndBtn?.addEventListener("click", () => toggleTiming(false));
+
+    // Advanced Options accordion
+    advancedToggleBtn?.addEventListener("click", () => {
+      const isCollapsed = advancedPanel?.style.maxHeight === "0px" || !advancedPanel?.style.maxHeight;
+      if (isCollapsed && advancedPanel && advancedChevron) {
+        advancedPanel.style.maxHeight = "500px";
+        advancedChevron.style.transform = "rotate(180deg)";
+      } else if (advancedPanel && advancedChevron) {
+        advancedPanel.style.maxHeight = "0px";
+        advancedChevron.style.transform = "rotate(0deg)";
+      }
+    });
+
+    // Detailed table show / collapse trigger
+    toggleScheduleBtn?.addEventListener("click", () => {
+      showFullSchedule = !showFullSchedule;
+      renderTable();
+    });
+
+    // Copy, CSV & Reset
+    copyResultsBtn?.addEventListener("click", copyResults);
+    csvExportBtn?.addEventListener("click", exportToCSV);
+
+    resetBtn?.addEventListener("click", () => {
+      principalInput.value = "10000";
+      interestInput.value = "8.0";
+      interestRange.value = "8.0";
+      timeInput.value = "10";
+      timeRange.value = "10";
+      contribInput.value = "500";
+      inflationInput.value = "0.0";
+      taxInput.value = "0.0";
+      currentCompounding = "monthly";
+      isAnnualContribution = false;
+      isBeginningTiming = true;
+      showFullSchedule = false;
+      setDefaultStartDate();
+      if (currencySelect) {
+        currencySelect.value = "USD";
+      }
+      if (customCurrencySymbolInput) customCurrencySymbolInput.value = "$";
+      if (customCurrencyCodeInput) customCurrencyCodeInput.value = "USD";
+      updateCurrencyFromSelect();
+      toggleContribFreq(false);
+      toggleTiming(true);
+      updatePresetsUI();
+      calculate();
+    });
+
+    // Scroll buttons
+    viewResultsBtn?.addEventListener("click", () => {
+      document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
+    });
+    mobileScrollBtn?.addEventListener("click", () => {
+      document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Sticky mobile bar scroll reveal
+    window.addEventListener("scroll", () => {
+      const stickyBar = document.getElementById("mobile-sticky-bar");
+      const resultsSection = document.getElementById("results-section");
+      if (stickyBar && resultsSection) {
+        const threshold = resultsSection.getBoundingClientRect().top + window.scrollY - 300;
+        if (window.scrollY > 150 && window.scrollY < threshold) {
+          stickyBar.style.transform = "translateY(0)";
+        } else {
+          stickyBar.style.transform = "translateY(100%)";
+        }
+      }
+    });
+
+    // Info Modal Events
+    infoModalBtn?.addEventListener("click", () => {
+      infoModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      infoModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      infoModal?.classList.add("hidden");
+    });
+    infoModal?.addEventListener("click", (e) => {
+      if (e.target === infoModal) {
+        infoModal.classList.add("hidden");
+      }
+    });
+
+    // Initialize Page
+    setDefaultStartDate();
+    loadState();
+    updatePresetsUI();
+    calculate();
+  </script>
 </Layout>
