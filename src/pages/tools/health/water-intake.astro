@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Water Intake Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Determine recommended daily water intake volume targets based on weight and activity levels.";
+const description = "Calculate your recommended daily water intake based on body weight, activity level, climate, pregnancy status, and advanced dietary factors.";
 ---
 
 <Layout 
@@ -13,78 +13,1291 @@ const description = "Determine recommended daily water intake volume targets bas
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Water Intake Calculator",
+      "url": "https://boardtools.app/tools/health/water-intake",
+      "description": "Interactive client-side water intake calculator with personalized adjustments for exercise, climate, altitude, pregnancy, diet, and diuretic consumption.",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+      <div class="flex items-center justify-between mt-0.5 gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        <button
+          type="button"
+          id="reset-btn"
+          class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+          aria-label="Reset calculator inputs"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+          </svg>
+          <span>Reset</span>
+        </button>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🏥</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        
+        <!-- Left Pane: Inputs -->
+        <div class="flex flex-col gap-3 print:hidden">
+          <!-- Unit Toggle (Miro Pill Style) -->
+          <div class="flex flex-col gap-1">
+            <label class="text-[11px] font-semibold text-charcoal">Measurement Unit</label>
+            <div class="flex rounded-full bg-surface p-0.5 border border-hairline self-start">
+              <button
+                type="button"
+                id="unit-metric-btn"
+                class="text-[11px] px-4 py-1 rounded-full font-bold transition-all cursor-pointer text-slate"
+              >
+                Metric (kg)
+              </button>
+              <button
+                type="button"
+                id="unit-imperial-btn"
+                class="text-[11px] px-4 py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+              >
+                Imperial (lb)
+              </button>
+            </div>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+
+          <!-- Weight Inputs -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-[11px] font-semibold text-charcoal flex justify-between">
+              <span>Body Weight</span>
+              <span id="weight-label" class="font-mono text-stone font-semibold">160 lb</span>
+            </label>
+
+            <!-- Metric Weight (KG) -->
+            <div id="metric-weight-container" class="flex items-center gap-2 hidden">
+              <input
+                type="range"
+                id="weight-metric-range"
+                min="30"
+                max="250"
+                value="70"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Weight in Kilograms Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="weight-metric-input"
+                  min="30"
+                  max="250"
+                  value="70"
+                  class="text-input pr-7 py-1 text-xs text-center font-mono h-8"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">kg</span>
+              </div>
+            </div>
+
+            <!-- Imperial Weight (LBS) -->
+            <div id="imperial-weight-container" class="flex items-center gap-2">
+              <input
+                type="range"
+                id="weight-lbs-range"
+                min="65"
+                max="550"
+                value="160"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Weight in Pounds Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="weight-lbs-input"
+                  min="65"
+                  max="550"
+                  value="160"
+                  class="text-input pr-7 py-1 text-xs text-center font-mono h-8"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">lb</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Level Selector -->
+          <div class="flex flex-col gap-1">
+            <label for="activity-select" class="text-[11px] font-semibold text-charcoal">Daily Activity Level</label>
+            <select
+              id="activity-select"
+              class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+            >
+              <option value="sedentary">Sedentary (No exercise, desk job)</option>
+              <option value="light" selected>Lightly Active (Exercise 1-3 days/week, ~30 mins)</option>
+              <option value="moderate">Moderately Active (Exercise 3-5 days/week, ~60 mins)</option>
+              <option value="very">Very Active (Hard exercise daily, physical job)</option>
+              <option value="extra">Extra Active (Intense training/athletic workouts)</option>
+            </select>
+          </div>
+
+          <!-- Climate/Environment Selector -->
+          <div class="flex flex-col gap-1">
+            <label for="climate-select" class="text-[11px] font-semibold text-charcoal">Climate & Environment</label>
+            <select
+              id="climate-select"
+              class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+            >
+              <option value="temperate" selected>Temperate / Cold (Normal indoor/outdoor temp)</option>
+              <option value="warm">Warm / Mildly Humid (Warmer weather or active heat)</option>
+              <option value="hot">Hot / Extremely Humid (Summer heat, high sweat environment)</option>
+              <option value="dry">Dry / Arid (Dry high desert, low humidity)</option>
+            </select>
+          </div>
+
+          <!-- Pregnancy/Breastfeeding Checkbox -->
+          <div class="flex flex-col gap-1.5 pt-1.5 border-t border-hairline-soft/50">
+            <label class="text-[11px] font-semibold text-charcoal">Special Condition Adjustments (Optional)</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                id="pregnant-btn"
+                class="flex items-center gap-1.5 p-2 border border-hairline rounded-lg text-left transition-all bg-canvas hover:bg-surface select-none relative"
+              >
+                <div class="w-3.5 h-3.5 rounded border border-hairline-strong flex items-center justify-center bg-canvas shrink-0">
+                  <span class="hidden text-brand-blue font-bold text-[9px]">&#10003;</span>
+                </div>
+                <div>
+                  <span class="block text-[11px] font-bold text-primary leading-tight">Pregnancy</span>
+                  <span class="block text-[8px] text-stone mt-0.5">+350ml / 12oz</span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                id="breastfeeding-btn"
+                class="flex items-center gap-1.5 p-2 border border-hairline rounded-lg text-left transition-all bg-canvas hover:bg-surface select-none relative"
+              >
+                <div class="w-3.5 h-3.5 rounded border border-hairline-strong flex items-center justify-center bg-canvas shrink-0">
+                  <span class="hidden text-brand-blue font-bold text-[9px]">&#10003;</span>
+                </div>
+                <div>
+                  <span class="block text-[11px] font-bold text-primary leading-tight">Breastfeeding</span>
+                  <span class="block text-[8px] text-stone mt-0.5">+800ml / 27oz</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Advanced Options Drawer -->
+          <div class="border-t border-hairline-soft pt-2 mt-1">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-[11px] font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1">
+                ⚙ Advanced Hydration Parameters (Altitude, Diuretics, Diet)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div id="advanced-panel" class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-3 mt-1.5">
+              
+              <!-- Exercise Overrides -->
+              <div class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft/50">
+                <div class="flex flex-col gap-1">
+                  <label for="workout-duration" class="text-[10px] font-semibold text-slate">Specific Workout Duration</label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="workout-duration"
+                      min="0"
+                      max="360"
+                      placeholder="e.g. 45"
+                      class="text-input py-1 text-xs font-mono h-8"
+                      inputmode="numeric"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">min</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="workout-intensity" class="text-[10px] font-semibold text-slate">Workout Intensity</label>
+                  <select
+                    id="workout-intensity"
+                    class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+                  >
+                    <option value="low">Low (Yoga, Stretching)</option>
+                    <option value="moderate" selected>Moderate (Jogging, Weights)</option>
+                    <option value="high">High (HIIT, Running, Spinning)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Altitude & Diet Option -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                  <label for="altitude-select" class="text-[10px] font-semibold text-slate">Altitude Level</label>
+                  <select
+                    id="altitude-select"
+                    class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+                  >
+                    <option value="sea" selected>Low Altitude (&lt; 5,000 ft / 1,500m)</option>
+                    <option value="high">High Altitude (> 5,000 ft / 1,500m)</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="diet-select" class="text-[10px] font-semibold text-slate">Dietary Moisture</label>
+                  <select
+                    id="diet-select"
+                    class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+                  >
+                    <option value="standard" selected>Standard (Avg fruits & veggies)</option>
+                    <option value="water-rich">Water-Rich (High fruit/veg intake)</option>
+                    <option value="dry-processed">Dry Foods (Mostly grains & processed)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Diuretic Adjustments -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="flex flex-col gap-1">
+                  <label for="caffeine-drinks" class="text-[10px] font-semibold text-slate">Caffeinated Drinks (Daily)</label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="caffeine-drinks"
+                      min="0"
+                      max="15"
+                      value="0"
+                      class="text-input py-1 text-xs font-mono h-8"
+                      inputmode="numeric"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">cups</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <label for="alcohol-drinks" class="text-[10px] font-semibold text-slate">Alcoholic Drinks (Daily)</label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="alcohol-drinks"
+                      min="0"
+                      max="10"
+                      value="0"
+                      class="text-input py-1 text-xs font-mono h-8"
+                      inputmode="numeric"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">glasses</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end mt-1">
+                <button
+                  type="button"
+                  id="advanced-view-result-btn"
+                  class="inline-flex items-center gap-1 text-[10px] font-semibold px-3 py-1 bg-primary hover:bg-charcoal text-canvas rounded-full transition-all cursor-pointer shadow-subtle"
+                >
+                  View Result &darr;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Pane: Outputs & Interactive Water Visual -->
+        <div id="results-card" class="card-feature-teal flex flex-col justify-between p-4 sm:p-5 relative overflow-hidden rounded-xl border border-moss-dark/10 print:border-none print:shadow-none print:p-0">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/35 rounded-full blur-2xl pointer-events-none print:hidden"></div>
+          
+          <div class="flex flex-col gap-3.5 z-10 w-full">
+            <!-- Results Header -->
+            <div class="flex items-center justify-between border-b border-moss-dark/10 pb-2">
+              <span class="text-[10px] uppercase font-extrabold text-moss-dark/70 tracking-widest">Recommended Fluid Target</span>
+              <span class="flex h-2 w-2 relative print:hidden">
+                <span id="status-pulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-accent opacity-75"></span>
+                <span id="status-dot" class="relative inline-flex rounded-full h-2 w-2 bg-success-accent"></span>
+              </span>
+            </div>
+
+            <!-- Warning/Doctor Advice Banner (Hidden by default) -->
+            <div id="medical-advice-banner" class="hidden p-2 rounded-lg bg-brand-rose border border-brand-red text-[10px] text-coral-dark leading-normal flex flex-col gap-0.5">
+              <span class="font-bold flex items-center gap-1">⚠️ Medical Disclaimer & Guidance</span>
+              <p id="medical-advice-msg">For special medical conditions (kidney disease, congestive heart failure, pregnancy complications), do not rely on automated calculators. Please consult your physician directly for hydration plans.</p>
+            </div>
+
+            <!-- Target Output -->
+            <div class="flex items-stretch justify-between gap-4">
+              <div class="flex flex-col justify-center">
+                <span class="text-[10px] uppercase font-bold text-slate block">Daily Hydration Target</span>
+                <div class="flex items-baseline gap-1 mt-1">
+                  <span id="output-water-liters" class="font-display font-black text-3.5xl sm:text-4xl text-primary font-mono tracking-tight leading-none">2.8</span>
+                  <span class="text-xs font-semibold text-stone">Liters / day</span>
+                </div>
+                <div class="text-[11px] font-mono text-stone font-semibold mt-1">
+                  &asymp; <span id="output-water-ounces">95</span> fl oz
+                </div>
+              </div>
+
+              <!-- Interactive Floating Glass Fill Graphic -->
+              <div class="w-24 h-24 sm:w-28 sm:h-28 shrink-0 flex items-center justify-center relative select-none">
+                <!-- SVG Water Glass Outline & Fill -->
+                <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <clipPath id="glass-clip">
+                      <path d="M25 15 L32 85 A8 8 0 0 0 40 92 L60 92 A8 8 0 0 0 68 85 L75 15 Z" />
+                    </clipPath>
+                  </defs>
+                  
+                  <!-- Water Fill Area -->
+                  <g clip-path="url(#glass-clip)">
+                    <rect id="water-fill" x="0" y="50" width="100" height="100" fill="#4262ff" class="transition-all duration-700 ease-out" />
+                    <!-- Highlight wave -->
+                    <path d="M 0 50 Q 25 46, 50 50 T 100 50 L 100 100 L 0 100 Z" fill="#2a41b6" opacity="0.3" class="transition-all duration-700 ease-out" id="water-wave" />
+                  </g>
+
+                  <!-- Glass Outer Outline -->
+                  <path d="M25 15 L32 85 A8 8 0 0 0 40 92 L60 92 A8 8 0 0 0 68 85 L75 15" stroke="#187574" stroke-width="3" stroke-linecap="round" />
+                  
+                  <!-- Rim reflection -->
+                  <ellipse cx="50" cy="15" rx="25" ry="3" stroke="#187574" stroke-width="2" />
+                </svg>
+                <!-- Percentage text overlayed inside the glass -->
+                <span id="glass-percent" class="absolute bottom-6 text-[10px] font-bold text-canvas font-mono tracking-tight shadow-sm select-none">56%</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Glasses Counter Visual -->
+            <div class="flex flex-col gap-1 border-t border-moss-dark/10 pt-3">
+              <div class="flex items-center justify-between text-[9px] uppercase font-bold text-slate">
+                <span>Standard Glasses Required</span>
+                <span id="glasses-count-label" class="font-mono text-primary font-semibold">11.2 Glasses (250ml / 8oz each)</span>
+              </div>
+              
+              <!-- Glasses Grid -->
+              <div id="glasses-grid" class="flex flex-wrap gap-1 mt-1.5 py-1 justify-start">
+                <!-- Javascript will inject 16 small cup icons -->
+              </div>
+            </div>
+
+            <!-- General Plain-Language Estimate Note -->
+            <div id="advice-box" class="text-[11px] text-moss-dark leading-relaxed pt-2 border-t border-moss-dark/5">
+              <p id="advice-text">
+                Your estimated hydration baseline is <strong>2.4 Liters</strong>. Based on light activity and temperate weather, we added adjustments to target <strong>2.8 Liters</strong> per day.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Button directly beneath input workspace -->
+      <div class="flex justify-center pt-2 print:hidden">
+        <button
+          type="button"
+          id="toggle-breakdown-btn"
+          class="button-primary text-xs py-2 px-6 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          <span>View Detailed Breakdown & Analysis</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Detailed Breakdown & Analysis Section (Same Page) -->
+    <div id="breakdown-section" class="max-h-0 overflow-hidden transition-all duration-500 flex flex-col gap-4 print:max-h-none print:overflow-visible">
+      <div class="card-base p-4 sm:p-5 flex flex-col gap-4 mt-2 print:border-none print:shadow-none print:p-0">
+        <div class="flex items-center justify-between border-b border-hairline pb-2">
+          <h2 class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+            </svg>
+            Personalized Hydration Analysis
+          </h2>
+          <button
+            type="button"
+            id="export-pdf-btn"
+            class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle print:hidden"
+            aria-label="Export report to PDF"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Export Report</span>
           </button>
         </div>
-      </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Contribution Factors Bar Chart -->
+          <div class="border border-hairline rounded-xl p-3 bg-surface-soft flex flex-col gap-2 print:border-none print:bg-transparent">
+            <span class="text-[10px] uppercase font-bold text-slate">Water Source Contributions</span>
+            <div class="flex flex-col gap-2.5 pt-1.5">
+              <!-- Baseline -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between text-[10px] font-bold">
+                  <span class="text-charcoal">Baseline (Body Weight)</span>
+                  <span id="contrib-baseline-val" class="font-mono text-primary">2,450 ml</span>
+                </div>
+                <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                  <div id="contrib-baseline-bar" class="h-full bg-brand-blue" style="width: 80%;"></div>
+                </div>
+              </div>
+              <!-- Activity -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between text-[10px] font-bold">
+                  <span class="text-charcoal">Exercise / Activity</span>
+                  <span id="contrib-activity-val" class="font-mono text-primary">350 ml</span>
+                </div>
+                <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                  <div id="contrib-activity-bar" class="h-full bg-success-accent" style="width: 15%;"></div>
+                </div>
+              </div>
+              <!-- Climate -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between text-[10px] font-bold">
+                  <span class="text-charcoal">Climate & Environment</span>
+                  <span id="contrib-climate-val" class="font-mono text-primary">0 ml</span>
+                </div>
+                <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                  <div id="contrib-climate-bar" class="h-full bg-brand-yellow-deep" style="width: 0%;"></div>
+                </div>
+              </div>
+              <!-- Other adjustments -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between text-[10px] font-bold">
+                  <span class="text-charcoal">Special Factors (Diet, Diuretics, pregnancy, etc.)</span>
+                  <span id="contrib-other-val" class="font-mono text-primary">0 ml</span>
+                </div>
+                <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                  <div id="contrib-other-bar" class="h-full bg-brand-coral" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggested Hourly Hydration Schedule -->
+          <div class="border border-hairline rounded-xl p-3 bg-surface-soft flex flex-col gap-2 print:border-none print:bg-transparent">
+            <span class="text-[10px] uppercase font-bold text-slate">Suggested Hourly Hydration Schedule</span>
+            <div class="flex flex-col gap-1.5 pt-1 text-[11px] font-medium font-mono text-charcoal">
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>08:00 AM (Upon Waking)</span>
+                <span id="sched-wake" class="font-bold text-brand-blue">350 ml / 12 oz</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>10:30 AM (Mid-Morning)</span>
+                <span id="sched-midmorning" class="font-bold text-brand-blue">400 ml / 14 oz</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>01:00 PM (Lunch Companion)</span>
+                <span id="sched-lunch" class="font-bold text-brand-blue">400 ml / 14 oz</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>03:30 PM (Mid-Afternoon)</span>
+                <span id="sched-afternoon" class="font-bold text-brand-blue">450 ml / 15 oz</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>06:30 PM (Dinner Companion)</span>
+                <span id="sched-dinner" class="font-bold text-brand-blue">400 ml / 14 oz</span>
+              </div>
+              <div class="flex justify-between py-1 border-b border-hairline-soft/50">
+                <span>09:00 PM (Evening Wind-down)</span>
+                <span id="sched-evening" class="font-bold text-brand-blue">400 ml / 14 oz</span>
+              </div>
+              <div id="workout-schedule-row" class="flex justify-between py-1 border-b border-hairline-soft/50 hidden">
+                <span class="text-success-accent font-bold">During Workout</span>
+                <span id="sched-workout" class="font-bold text-success-accent">400 ml / 14 oz</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Detailed Scientific summary explanation -->
+        <div id="scientific-analysis-box" class="text-[11px] text-slate leading-relaxed border-t border-hairline pt-3 mt-1 flex flex-col gap-2">
+          <p id="analysis-summary-para">
+            Your personalized baseline fluid need is estimated at <strong>2.4 liters</strong>. Hydration supports core cellular homeostasis, blood pressure regulation, cognitive acuity, digestive efficacy, and thermoregulatory efficiency.
+          </p>
+          <p>
+            When sweating under physical training or hot weather, your body releases mineral electrolytes. Ensure you adjust sodium, potassium, and magnesium alongside large volumes of pure water to avoid hyponatremia.
           </p>
         </div>
       </div>
     </div>
+
+    <!-- Science and limitations educational banner -->
+    <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2 print:border-none print:shadow-none print:p-0">
+      <h3 class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Understanding Hydration Guidelines & Biology
+      </h3>
+      <div class="text-[11px] sm:text-xs text-slate leading-relaxed flex flex-col gap-2.5">
+        <p>
+          Water makes up about 60% of body weight and is critical for every physiological system. Hydration requirements vary widely:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1 text-slate font-medium">
+          <li><strong>Altitude Effects:</strong> Higher altitudes (>5,000 ft) feature lower barometric pressure. Breath rates increase, speeding up evaporation of respiratory moisture. Adjusting your intake upward offsets this.</li>
+          <li><strong>Sweat and Intensity:</strong> Sweating rates are highly individual. Professional athletes can lose over 1.5 liters of sweat per hour. Drinking to match sweat rate rather than over-hydrating is key.</li>
+          <li><strong>Diuretic Properties:</strong> Caffeine and alcohol trigger temporary urinary frequency, increasing water output. Offsetting diuretic intake prevents chronic mild dehydration.</li>
+          <li><strong>Food vs Fluid:</strong> An average person receives about 20% of their daily hydration from moisture in foods (especially raw fruits like watermelon or berries).</li>
+        </ul>
+        <p class="text-[10px] text-stone mt-1">
+          Disclaimer: Hydration targets are estimates. Specific conditions like chronic kidney disease (CKD), congestive heart failure, or severe liver disease restrict fluid intake. Always follow direct directives from a clinical physician.
+        </p>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Client-side script module -->
+  <script>
+    // State variables
+    let currentUnit = "imperial"; // metric | imperial
+    let weightKg = 72;
+    let weightLbs = 160;
+    let activityLevel = "light"; // sedentary, light, moderate, very, extra
+    let climate = "temperate"; // temperate, warm, hot, dry
+    let isPregnant = false;
+    let isBreastfeeding = false;
+
+    // Advanced parameters
+    let hasCustomWorkout = false;
+    let workoutDuration = 0;
+    let workoutIntensity = "moderate";
+    let altitude = "sea"; // sea, high
+    let dietStyle = "standard"; // standard, water-rich, dry-processed
+    let caffeineCups = 0;
+    let alcoholDrinks = 0;
+
+    let targetLiters = 2.8;
+
+    // DOM Elements
+    const unitMetricBtn = document.getElementById("unit-metric-btn");
+    const unitImperialBtn = document.getElementById("unit-imperial-btn");
+    const weightLabel = document.getElementById("weight-label");
+
+    const metricWeightContainer = document.getElementById("metric-weight-container");
+    const imperialWeightContainer = document.getElementById("imperial-weight-container");
+    const weightMetricRange = document.getElementById("weight-metric-range") as HTMLInputElement;
+    const weightMetricInput = document.getElementById("weight-metric-input") as HTMLInputElement;
+    const weightLbsRange = document.getElementById("weight-lbs-range") as HTMLInputElement;
+    const weightLbsInput = document.getElementById("weight-lbs-input") as HTMLInputElement;
+
+    const activitySelect = document.getElementById("activity-select") as HTMLSelectElement;
+    const climateSelect = document.getElementById("climate-select") as HTMLSelectElement;
+
+    const pregnantBtn = document.getElementById("pregnant-btn");
+    const breastfeedingBtn = document.getElementById("breastfeeding-btn");
+
+    // Advanced Options Elements
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+    const workoutDurationInput = document.getElementById("workout-duration") as HTMLInputElement;
+    const workoutIntensitySelect = document.getElementById("workout-intensity") as HTMLSelectElement;
+    const altitudeSelect = document.getElementById("altitude-select") as HTMLSelectElement;
+    const dietSelect = document.getElementById("diet-select") as HTMLSelectElement;
+    const caffeineInput = document.getElementById("caffeine-drinks") as HTMLInputElement;
+    const alcoholInput = document.getElementById("alcohol-drinks") as HTMLInputElement;
+    const advancedViewResultBtn = document.getElementById("advanced-view-result-btn");
+
+    // Output Displays
+    const outputLiters = document.getElementById("output-water-liters");
+    const outputOunces = document.getElementById("output-water-ounces");
+    const waterFill = document.getElementById("water-fill");
+    const waterWave = document.getElementById("water-wave");
+    const glassPercent = document.getElementById("glass-percent");
+    const glassesCountLabel = document.getElementById("glasses-count-label");
+    const glassesGrid = document.getElementById("glasses-grid");
+    const adviceText = document.getElementById("advice-text");
+    const medicalAdviceBanner = document.getElementById("medical-advice-banner");
+
+    // Breakdown Elements
+    const toggleBreakdownBtn = document.getElementById("toggle-breakdown-btn");
+    const breakdownSection = document.getElementById("breakdown-section");
+    const exportPdfBtn = document.getElementById("export-pdf-btn");
+
+    // Contribution displays
+    const contribBaselineVal = document.getElementById("contrib-baseline-val");
+    const contribActivityVal = document.getElementById("contrib-activity-val");
+    const contribClimateVal = document.getElementById("contrib-climate-val");
+    const contribOtherVal = document.getElementById("contrib-other-val");
+
+    const contribBaselineBar = document.getElementById("contrib-baseline-bar");
+    const contribActivityBar = document.getElementById("contrib-activity-bar");
+    const contribClimateBar = document.getElementById("contrib-climate-bar");
+    const contribOtherBar = document.getElementById("contrib-other-bar");
+
+    // Hourly Schedule displays
+    const schedWake = document.getElementById("sched-wake");
+    const schedMidmorning = document.getElementById("sched-midmorning");
+    const schedLunch = document.getElementById("sched-lunch");
+    const schedAfternoon = document.getElementById("sched-afternoon");
+    const schedDinner = document.getElementById("sched-dinner");
+    const schedEvening = document.getElementById("sched-evening");
+    const schedWorkout = document.getElementById("sched-workout");
+    const workoutScheduleRow = document.getElementById("workout-schedule-row");
+
+    const analysisSummaryPara = document.getElementById("analysis-summary-para");
+    const resetBtn = document.getElementById("reset-btn");
+
+    // Enforce scrolling to top on refresh/load
+    window.addEventListener("beforeunload", () => {
+      window.scrollTo(0, 0);
+    });
+
+    // Load state from localStorage
+    function loadState() {
+      try {
+        const savedUnit = localStorage.getItem("water-unit");
+        const savedWeightKg = localStorage.getItem("water-weight-kg");
+        const savedWeightLbs = localStorage.getItem("water-weight-lbs");
+        const savedActivity = localStorage.getItem("water-activity");
+        const savedClimate = localStorage.getItem("water-climate");
+        const savedPregnant = localStorage.getItem("water-pregnant");
+        const savedBreastfeeding = localStorage.getItem("water-breastfeeding");
+        const savedWorkoutDur = localStorage.getItem("water-workout-dur");
+        const savedWorkoutInt = localStorage.getItem("water-workout-int");
+        const savedAltitude = localStorage.getItem("water-altitude");
+        const savedDiet = localStorage.getItem("water-diet");
+        const savedCaffeine = localStorage.getItem("water-caffeine");
+        const savedAlcohol = localStorage.getItem("water-alcohol");
+
+        if (savedUnit) currentUnit = savedUnit;
+        if (savedWeightKg) weightKg = parseInt(savedWeightKg, 10);
+        if (savedWeightLbs) weightLbs = parseInt(savedWeightLbs, 10);
+        if (savedActivity) activityLevel = savedActivity;
+        if (savedClimate) climate = savedClimate;
+        if (savedPregnant) isPregnant = savedPregnant === "true";
+        if (savedBreastfeeding) isBreastfeeding = savedBreastfeeding === "true";
+
+        if (savedWorkoutDur) workoutDuration = parseInt(savedWorkoutDur, 10);
+        if (savedWorkoutInt) workoutIntensity = savedWorkoutInt;
+        if (savedAltitude) altitude = savedAltitude;
+        if (savedDiet) dietStyle = savedDiet;
+        if (savedCaffeine) caffeineCups = parseInt(savedCaffeine, 10);
+        if (savedAlcohol) alcoholDrinks = parseInt(savedAlcohol, 10);
+
+        // Apply to DOM fields
+        if (activitySelect) activitySelect.value = activityLevel;
+        if (climateSelect) climateSelect.value = climate;
+
+        if (workoutDurationInput) workoutDurationInput.value = workoutDuration > 0 ? workoutDuration.toString() : "";
+        if (workoutIntensitySelect) workoutIntensitySelect.value = workoutIntensity;
+        if (altitudeSelect) altitudeSelect.value = altitude;
+        if (dietSelect) dietSelect.value = dietStyle;
+        if (caffeineInput) caffeineInput.value = caffeineCups.toString();
+        if (alcoholInput) alcoholInput.value = alcoholDrinks.toString();
+
+      } catch (e) {
+        console.warn("Failed loading state from localStorage:", e);
+      }
+      updateInputsFromState();
+      updateUnitUI();
+      updateLabels();
+      calculate();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem("water-unit", currentUnit);
+        localStorage.setItem("water-weight-kg", weightKg.toString());
+        localStorage.setItem("water-weight-lbs", weightLbs.toString());
+        localStorage.setItem("water-activity", activityLevel);
+        localStorage.setItem("water-climate", climate);
+        localStorage.setItem("water-pregnant", isPregnant.toString());
+        localStorage.setItem("water-breastfeeding", isBreastfeeding.toString());
+        localStorage.setItem("water-workout-dur", workoutDuration.toString());
+        localStorage.setItem("water-workout-int", workoutIntensity);
+        localStorage.setItem("water-altitude", altitude);
+        localStorage.setItem("water-diet", dietStyle);
+        localStorage.setItem("water-caffeine", caffeineCups.toString());
+        localStorage.setItem("water-alcohol", alcoholDrinks.toString());
+      } catch (e) {
+        console.warn("Failed saving state to localStorage:", e);
+      }
+    }
+
+    function updateInputsFromState() {
+      if (weightMetricRange) weightMetricRange.value = weightKg.toString();
+      if (weightMetricInput) weightMetricInput.value = weightKg.toString();
+      if (weightLbsRange) weightLbsRange.value = weightLbs.toString();
+      if (weightLbsInput) weightLbsInput.value = weightLbs.toString();
+
+      // Pregnancy/Breastfeeding button states
+      updateSpecialConditionUI();
+    }
+
+    function updateSpecialConditionUI() {
+      if (pregnantBtn) {
+        const checkbox = pregnantBtn.querySelector("div > span");
+        if (isPregnant) {
+          pregnantBtn.classList.add("border-brand-blue", "bg-surface-pricing-featured");
+          pregnantBtn.classList.remove("border-hairline", "bg-canvas");
+          checkbox?.classList.remove("hidden");
+        } else {
+          pregnantBtn.classList.remove("border-brand-blue", "bg-surface-pricing-featured");
+          pregnantBtn.classList.add("border-hairline", "bg-canvas");
+          checkbox?.classList.add("hidden");
+        }
+      }
+
+      if (breastfeedingBtn) {
+        const checkbox = breastfeedingBtn.querySelector("div > span");
+        if (isBreastfeeding) {
+          breastfeedingBtn.classList.add("border-brand-blue", "bg-surface-pricing-featured");
+          breastfeedingBtn.classList.remove("border-hairline", "bg-canvas");
+          checkbox?.classList.remove("hidden");
+        } else {
+          breastfeedingBtn.classList.remove("border-brand-blue", "bg-surface-pricing-featured");
+          breastfeedingBtn.classList.add("border-hairline", "bg-canvas");
+          checkbox?.classList.add("hidden");
+        }
+      }
+    }
+
+    function updateUnitUI() {
+      if (currentUnit === "metric") {
+        unitMetricBtn?.classList.add("bg-primary", "text-canvas");
+        unitMetricBtn?.classList.remove("text-slate");
+        unitImperialBtn?.classList.remove("bg-primary", "text-canvas");
+        unitImperialBtn?.classList.add("text-slate");
+
+        metricWeightContainer?.classList.remove("hidden");
+        imperialWeightContainer?.classList.add("hidden");
+      } else {
+        unitImperialBtn?.classList.add("bg-primary", "text-canvas");
+        unitImperialBtn?.classList.remove("text-slate");
+        unitMetricBtn?.classList.remove("bg-primary", "text-canvas");
+        unitMetricBtn?.classList.add("text-slate");
+
+        imperialWeightContainer?.classList.remove("hidden");
+        metricWeightContainer?.classList.add("hidden");
+      }
+    }
+
+    function updateLabels() {
+      if (weightLabel) {
+        if (currentUnit === "metric") {
+          weightLabel.textContent = `${weightKg} kg`;
+        } else {
+          weightLabel.textContent = `${weightLbs} lb`;
+        }
+      }
+    }
+
+    // Core Calculation Logic
+    function calculate() {
+      // 1. Get active weight in kilograms for baseline
+      const activeWeightKg = currentUnit === "metric" ? weightKg : weightLbs / 2.20462;
+      
+      // Baseline calculation: 35 ml per kg of body weight
+      const baselineMl = activeWeightKg * 35;
+
+      // 2. Activity Adjustment
+      let activityMl = 0;
+      hasCustomWorkout = workoutDuration > 0;
+
+      if (hasCustomWorkout) {
+        // Specific minutes overrides the general selector
+        let factor = 12; // moderate = 12 ml per minute
+        if (workoutIntensity === "low") factor = 7;
+        else if (workoutIntensity === "high") factor = 17;
+
+        activityMl = workoutDuration * factor;
+      } else {
+        // Fallback to general activity selector
+        if (activityLevel === "light") activityMl = 350;
+        else if (activityLevel === "moderate") activityMl = 700;
+        else if (activityLevel === "very") activityMl = 1050;
+        else if (activityLevel === "extra") activityMl = 1400;
+      }
+
+      // 3. Climate Adjustment
+      let climateMl = 0;
+      if (climate === "warm") climateMl = 250;
+      else if (climate === "hot") climateMl = 600;
+      else if (climate === "dry") climateMl = 400;
+
+      // 4. Special Pregnancy / Breastfeeding factors
+      let specialMl = 0;
+      if (isPregnant) specialMl += 350;
+      if (isBreastfeeding) specialMl += 800;
+
+      // 5. Advanced Factors
+      let advancedMl = 0;
+      // Altitude
+      if (altitude === "high") advancedMl += 500;
+      // Diet moisture
+      if (dietStyle === "water-rich") advancedMl -= 300;
+      else if (dietStyle === "dry-processed") advancedMl += 200;
+      // Diuretics
+      advancedMl += caffeineCups * 150;
+      advancedMl += alcoholDrinks * 250;
+
+      // Calculate final target volume
+      const totalMl = Math.max(1200, baselineMl + activityMl + climateMl + specialMl + advancedMl);
+      targetLiters = parseFloat((totalMl / 1000).toFixed(1));
+      const targetOunces = Math.round(totalMl * 0.033814);
+
+      // Update text outputs
+      if (outputLiters) outputLiters.textContent = targetLiters.toFixed(1);
+      if (outputOunces) outputOunces.textContent = targetOunces.toString();
+
+      // Dynamic Glass Fill percentage based on max capacity of 5.5 Liters
+      const maxLiters = 5.5;
+      const fillPercentage = Math.min(100, Math.max(20, Math.round((targetLiters / maxLiters) * 100)));
+      if (waterFill) {
+        // SVG coordinate Y goes from 0 (top) to 100 (bottom)
+        const yValue = 92 - ((fillPercentage / 100) * 77); // boundaries: glass base is ~92, rim is ~15
+        waterFill.setAttribute("y", yValue.toString());
+        waterFill.setAttribute("height", (92 - yValue).toString());
+      }
+      if (waterWave) {
+        const yValue = 92 - ((fillPercentage / 100) * 77);
+        waterWave.setAttribute("d", `M 0 ${yValue} Q 25 ${yValue - 4}, 50 ${yValue} T 100 ${yValue} L 100 100 L 0 100 Z`);
+      }
+      if (glassPercent) {
+        glassPercent.textContent = `${fillPercentage}%`;
+      }
+
+      // Glass Grid Display (250ml / 8oz cups count)
+      const exactGlasses = totalMl / 250;
+      if (glassesCountLabel) {
+        glassesCountLabel.textContent = `${exactGlasses.toFixed(1)} Glasses (250ml / 8oz each)`;
+      }
+
+      if (glassesGrid) {
+        glassesGrid.innerHTML = "";
+        const maxCupsToRender = 16;
+        const activeCups = Math.min(maxCupsToRender, Math.round(exactGlasses));
+        
+        for (let i = 1; i <= maxCupsToRender; i++) {
+          const cup = document.createElement("div");
+          cup.className = `w-7 h-8 flex flex-col justify-end p-0.5 rounded-b-md border transition-all duration-300 relative ${
+            i <= activeCups 
+              ? "bg-brand-blue/90 border-brand-blue text-canvas shadow-subtle scale-105" 
+              : "bg-canvas border-hairline text-slate/30"
+          }`;
+          cup.setAttribute("title", `Glass ${i}`);
+          
+          // Inner wave overlay
+          cup.innerHTML = `
+            <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[8px] font-bold select-none ${
+              i <= activeCups ? "text-canvas" : "text-stone"
+            }">${i}</span>
+            <div class="w-full h-1/2 bg-canvas/30 rounded-b-sm"></div>
+          `;
+          glassesGrid.appendChild(cup);
+        }
+      }
+
+      // Doctor/Medical condition warnings
+      if (isPregnant || isBreastfeeding) {
+        medicalAdviceBanner?.classList.remove("hidden");
+      } else {
+        medicalAdviceBanner?.classList.add("hidden");
+      }
+
+      // Dynamic summary advice box text
+      if (adviceText) {
+        adviceText.innerHTML = `
+          Your estimated hydration baseline is <strong>${(baselineMl / 1000).toFixed(1)} Liters</strong>. 
+          ${activityMl > 0 ? `Physical activity adjustments add <strong>+${(activityMl / 1000).toFixed(2)}L</strong>.` : ""} 
+          ${climateMl > 0 ? `Climate temperature adjustments add <strong>+${(climateMl / 1000).toFixed(2)}L</strong>.` : ""} 
+          ${specialMl > 0 ? `Pregnancy/maternity adjustments add <strong>+${(specialMl / 1000).toFixed(2)}L</strong>.` : ""} 
+          ${advancedMl !== 0 ? `Other factors (altitude, diet, diuretics) modify target by <strong>${advancedMl > 0 ? "+" : ""}${(advancedMl / 1000).toFixed(2)}L</strong>.` : ""}
+          Your recommended daily intake is <strong>${targetLiters.toFixed(1)} Liters</strong>.
+        `;
+      }
+
+      // Update Breakdown details
+      updateBreakdownUI(baselineMl, activityMl, climateMl, specialMl + advancedMl, totalMl);
+      
+      saveState();
+    }
+
+    function updateBreakdownUI(baseline: number, activity: number, climateVol: number, otherVol: number, total: number) {
+      // Contribution Values text
+      if (contribBaselineVal) contribBaselineVal.textContent = `${Math.round(baseline)} ml`;
+      if (contribActivityVal) contribActivityVal.textContent = `${Math.round(activity)} ml`;
+      if (contribClimateVal) contribClimateVal.textContent = `${Math.round(climateVol)} ml`;
+      
+      const otherLabel = otherVol < 0 ? `-${Math.round(Math.abs(otherVol))} ml` : `${Math.round(otherVol)} ml`;
+      if (contribOtherVal) contribOtherVal.textContent = otherLabel;
+
+      // Contribution Percentages bar widths
+      const pBaseline = Math.round((baseline / total) * 100);
+      const pActivity = Math.round((activity / total) * 100);
+      const pClimate = Math.round((climateVol / total) * 100);
+      const pOther = Math.max(0, Math.round((otherVol / total) * 100)); // clamp to 0 if negative
+
+      if (contribBaselineBar) contribBaselineBar.style.width = `${pBaseline}%`;
+      if (contribActivityBar) contribActivityBar.style.width = `${pActivity}%`;
+      if (contribClimateBar) contribClimateBar.style.width = `${pClimate}%`;
+      if (contribOtherBar) contribOtherBar.style.width = `${pOther}%`;
+
+      // Hourly Schedule Timeline estimates (Spread total over waking hours)
+      // Waking day timeline allocation:
+
+      let baseWakingTotal = total;
+      const isWorkoutShown = hasCustomWorkout || activityLevel !== "sedentary";
+      if (isWorkoutShown) {
+        // Show workout row
+        workoutScheduleRow?.classList.remove("hidden");
+        const workoutVol = Math.round(total * 0.15);
+        baseWakingTotal = total - workoutVol;
+        if (schedWorkout) schedWorkout.textContent = `${workoutVol} ml / ${Math.round(workoutVol * 0.033814)} oz`;
+      } else {
+        workoutScheduleRow?.classList.add("hidden");
+        baseWakingTotal = total;
+      }
+
+      const wakeVol = Math.round(baseWakingTotal * 0.18);
+      const midmVol = Math.round(baseWakingTotal * 0.16);
+      const lunchVol = Math.round(baseWakingTotal * 0.16);
+      const afternoonVol = Math.round(baseWakingTotal * 0.18);
+      const dinnerVol = Math.round(baseWakingTotal * 0.16);
+      const eveningVol = Math.round(baseWakingTotal * 0.16);
+
+      if (schedWake) schedWake.textContent = `${wakeVol} ml / ${Math.round(wakeVol * 0.033814)} oz`;
+      if (schedMidmorning) schedMidmorning.textContent = `${midmVol} ml / ${Math.round(midmVol * 0.033814)} oz`;
+      if (schedLunch) schedLunch.textContent = `${lunchVol} ml / ${Math.round(lunchVol * 0.033814)} oz`;
+      if (schedAfternoon) schedAfternoon.textContent = `${afternoonVol} ml / ${Math.round(afternoonVol * 0.033814)} oz`;
+      if (schedDinner) schedDinner.textContent = `${dinnerVol} ml / ${Math.round(dinnerVol * 0.033814)} oz`;
+      if (schedEvening) schedEvening.textContent = `${eveningVol} ml / ${Math.round(eveningVol * 0.033814)} oz`;
+
+      // Written Summary text
+      if (analysisSummaryPara) {
+        let conditionText = "";
+        if (isPregnant) conditionText = " Because of pregnancy status, your baseline hydration needs are elevated to maintain amniotic fluid volumes and maternal vascular levels.";
+        if (isBreastfeeding) conditionText = " Breastfeeding requires high daily fluid volume to sustain healthy lactation without dehydrating maternal tissues.";
+
+        let climateText = " Your temperate environment is ideal for standard sweat rates.";
+        if (climate === "warm" || climate === "hot") climateText = " Due to hot temperatures, significant fluid is lost via sweating. Drinking consistently keeps your core body temperature regulated.";
+        else if (climate === "dry") climateText = " In arid regions, sweat evaporates almost instantly, making dehydration a hidden risk.";
+
+        analysisSummaryPara.innerHTML = `
+          Based on your weight of <strong>${currentUnit === 'metric' ? weightKg + ' kg' : weightLbs + ' lb'}</strong>, your minimum baseline need to sustain cellular function is <strong>${(baseline / 1000).toFixed(2)} liters</strong> daily.${conditionText}${climateText} 
+          Your final target is estimated at <strong>${targetLiters.toFixed(1)} liters</strong>. Keep a water bottle handy and sip throughout the day to avoid sudden thirst indicators.
+        `;
+      }
+    }
+
+    // Input Events listeners
+    if (weightMetricRange && weightMetricInput) {
+      weightMetricRange.addEventListener("input", () => {
+        weightKg = parseInt(weightMetricRange.value, 10);
+        weightMetricInput.value = weightKg.toString();
+        // keep lbs in sync
+        weightLbs = Math.round(weightKg * 2.20462);
+        if (weightLbsRange) weightLbsRange.value = weightLbs.toString();
+        if (weightLbsInput) weightLbsInput.value = weightLbs.toString();
+        updateLabels();
+        calculate();
+      });
+
+      weightMetricInput.addEventListener("input", () => {
+        let val = parseInt(weightMetricInput.value, 10) || 0;
+        val = Math.max(30, Math.min(250, val));
+        weightKg = val;
+        weightMetricRange.value = weightKg.toString();
+        // keep lbs in sync
+        weightLbs = Math.round(weightKg * 2.20462);
+        if (weightLbsRange) weightLbsRange.value = weightLbs.toString();
+        if (weightLbsInput) weightLbsInput.value = weightLbs.toString();
+        updateLabels();
+        calculate();
+      });
+    }
+
+    if (weightLbsRange && weightLbsInput) {
+      weightLbsRange.addEventListener("input", () => {
+        weightLbs = parseInt(weightLbsRange.value, 10);
+        weightLbsInput.value = weightLbs.toString();
+        // keep kg in sync
+        weightKg = Math.round(weightLbs / 2.20462);
+        if (weightMetricRange) weightMetricRange.value = weightKg.toString();
+        if (weightMetricInput) weightMetricInput.value = weightKg.toString();
+        updateLabels();
+        calculate();
+      });
+
+      weightLbsInput.addEventListener("input", () => {
+        let val = parseInt(weightLbsInput.value, 10) || 0;
+        val = Math.max(65, Math.min(550, val));
+        weightLbs = val;
+        weightLbsRange.value = weightLbs.toString();
+        // keep kg in sync
+        weightKg = Math.round(weightLbs / 2.20462);
+        if (weightMetricRange) weightMetricRange.value = weightKg.toString();
+        if (weightMetricInput) weightMetricInput.value = weightKg.toString();
+        updateLabels();
+        calculate();
+      });
+    }
+
+    // Units buttons
+    unitMetricBtn?.addEventListener("click", () => {
+      currentUnit = "metric";
+      updateUnitUI();
+      updateLabels();
+      calculate();
+    });
+
+    unitImperialBtn?.addEventListener("click", () => {
+      currentUnit = "imperial";
+      updateUnitUI();
+      updateLabels();
+      calculate();
+    });
+
+    // Selects
+    activitySelect?.addEventListener("change", () => {
+      activityLevel = activitySelect.value;
+      calculate();
+    });
+
+    climateSelect?.addEventListener("change", () => {
+      climate = climateSelect.value;
+      calculate();
+    });
+
+    // Pregnancy / Breastfeeding toggles
+    pregnantBtn?.addEventListener("click", () => {
+      isPregnant = !isPregnant;
+      updateSpecialConditionUI();
+      calculate();
+    });
+
+    breastfeedingBtn?.addEventListener("click", () => {
+      isBreastfeeding = !isBreastfeeding;
+      updateSpecialConditionUI();
+      calculate();
+    });
+
+    // Advanced toggle
+    advancedToggleBtn?.addEventListener("click", () => {
+      if (advancedPanel) {
+        const isCollapsed = advancedPanel.classList.contains("max-h-0");
+        if (isCollapsed) {
+          advancedPanel.classList.remove("max-h-0", "overflow-hidden");
+          advancedPanel.classList.add("max-h-[500px]", "overflow-visible");
+          advancedChevron?.classList.add("rotate-180");
+        } else {
+          advancedPanel.classList.remove("max-h-[500px]", "overflow-visible");
+          advancedPanel.classList.add("max-h-0", "overflow-hidden");
+          advancedChevron?.classList.remove("rotate-180");
+        }
+      }
+    });
+
+    // Scroll function helper
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+
+    // Advanced inputs
+    workoutDurationInput?.addEventListener("input", () => {
+      const val = parseInt(workoutDurationInput.value, 10) || 0;
+      workoutDuration = Math.max(0, Math.min(360, val));
+      calculate();
+    });
+
+    workoutDurationInput?.addEventListener("blur", () => {
+      const val = parseInt(workoutDurationInput.value, 10);
+      if (workoutDurationInput.value === "" || isNaN(val)) {
+        workoutDuration = 0;
+        workoutDurationInput.value = "";
+      } else {
+        workoutDuration = Math.max(0, Math.min(360, val));
+        workoutDurationInput.value = workoutDuration.toString();
+      }
+      calculate();
+    });
+
+    workoutIntensitySelect?.addEventListener("change", () => {
+      workoutIntensity = workoutIntensitySelect.value;
+      calculate();
+    });
+
+    altitudeSelect?.addEventListener("change", () => {
+      altitude = altitudeSelect.value;
+      calculate();
+    });
+
+    dietSelect?.addEventListener("change", () => {
+      dietStyle = dietSelect.value;
+      calculate();
+    });
+
+    caffeineInput?.addEventListener("input", () => {
+      caffeineCups = parseInt(caffeineInput.value, 10) || 0;
+      calculate();
+    });
+
+    alcoholInput?.addEventListener("input", () => {
+      alcoholDrinks = parseInt(alcoholInput.value, 10) || 0;
+      calculate();
+    });
+
+    // View result smooth scrolls
+    advancedViewResultBtn?.addEventListener("click", () => {
+      const resultsCard = document.getElementById("results-card");
+      if (resultsCard) {
+        resultsCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        resultsCard.classList.add("ring-2", "ring-brand-blue");
+        setTimeout(() => {
+          resultsCard.classList.remove("ring-2", "ring-brand-blue");
+        }, 1500);
+      }
+    });
+
+    // Detailed Breakdown toggle
+    toggleBreakdownBtn?.addEventListener("click", () => {
+      if (breakdownSection) {
+        const isCollapsed = breakdownSection.classList.contains("max-h-0");
+        if (isCollapsed) {
+          breakdownSection.classList.remove("max-h-0");
+          breakdownSection.classList.add("max-h-[2000px]");
+          setTimeout(() => {
+            scrollToElementWithOffset("breakdown-section", 60);
+          }, 100);
+        } else {
+          breakdownSection.classList.remove("max-h-[2000px]");
+          breakdownSection.classList.add("max-h-0");
+        }
+      }
+    });
+
+    // Export PDF
+    exportPdfBtn?.addEventListener("click", () => {
+      if (breakdownSection && breakdownSection.classList.contains("max-h-0")) {
+        breakdownSection.classList.remove("max-h-0");
+        breakdownSection.classList.add("max-h-[2000px]");
+      }
+      window.print();
+    });
+
+    // Reset button
+    resetBtn?.addEventListener("click", () => {
+      const keys = [
+        "water-unit",
+        "water-weight-kg",
+        "water-weight-lbs",
+        "water-activity",
+        "water-climate",
+        "water-pregnant",
+        "water-breastfeeding",
+        "water-workout-dur",
+        "water-workout-int",
+        "water-altitude",
+        "water-diet",
+        "water-caffeine",
+        "water-alcohol"
+      ];
+      keys.forEach(k => localStorage.removeItem(k));
+
+      currentUnit = "imperial";
+      weightKg = 72;
+      weightLbs = 160;
+      activityLevel = "light";
+      climate = "temperate";
+      isPregnant = false;
+      isBreastfeeding = false;
+      workoutDuration = 0;
+      workoutIntensity = "moderate";
+      altitude = "sea";
+      dietStyle = "standard";
+      caffeineCups = 0;
+      alcoholDrinks = 0;
+
+      if (activitySelect) activitySelect.value = "light";
+      if (climateSelect) climateSelect.value = "temperate";
+      if (workoutDurationInput) workoutDurationInput.value = "";
+      if (workoutIntensitySelect) workoutIntensitySelect.value = "moderate";
+      if (altitudeSelect) altitudeSelect.value = "sea";
+      if (dietSelect) dietSelect.value = "standard";
+      if (caffeineInput) caffeineInput.value = "0";
+      if (alcoholInput) alcoholInput.value = "0";
+
+      updateInputsFromState();
+      updateUnitUI();
+      updateLabels();
+      calculate();
+
+      // close sections
+      if (advancedPanel) {
+        advancedPanel.classList.remove("max-h-[500px]", "overflow-visible");
+        advancedPanel.classList.add("max-h-0", "overflow-hidden");
+      }
+      advancedChevron?.classList.remove("rotate-180");
+      if (breakdownSection) {
+        breakdownSection.classList.remove("max-h-[2000px]");
+        breakdownSection.classList.add("max-h-0");
+      }
+    });
+
+    // Initialize state
+    loadState();
+  </script>
 </Layout>
