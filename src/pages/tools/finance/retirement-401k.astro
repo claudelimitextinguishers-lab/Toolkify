@@ -1,90 +1,2076 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "401(k) / Retirement Savings Calculator";
+const name = "401(k) & Retirement Savings Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Project your retirement savings balance and future income based on annual contributions.";
+const description =
+  "Project your retirement savings balance and future income based on annual contributions, employer matches, and compound growth across multiple countries.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "401(k) & Retirement Savings Calculator",
+      "url": "https://boardtools.app/tools/finance/retirement-401k",
+      "description": "Interactive multi-country retirement savings projection calculator, supporting US 401(k), CA RRSP/TFSA, UK Pensions, AU Superannuation, and Indian EPF/NPS systems with SVG charts and growth schedules.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12"
+  >
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav
+        class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1
+          id="tool-title"
+          class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary"
+        >
           {name}
         </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        <span
+          class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase"
+          >{tier}</span
+        >
+
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How retirement calculator works"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Actions / Reset Bar -->
+    <div class="flex items-center justify-start border-b border-hairline pb-3">
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3.5 h-3.5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+          ></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Main Workspace Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Pane: Inputs (7 Columns) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2
+            class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2"
+          >
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Personal & Contribution Details
+          </h2>
+
+          <!-- Warning Alert Box for Caps (hidden by default) -->
+          <div
+            id="contribution-warning"
+            class="card-feature-rose !p-3 !rounded-lg text-[11px] flex flex-col gap-1 hidden"
+          >
+            <span class="font-bold text-coral-dark"
+              >⚠️ Contribution Limit Warning:</span
+            >
+            <span id="warning-text" class="text-slate leading-relaxed">
+              Your contribution exceeds the localized annual limit.
+            </span>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
-          </button>
+
+          <!-- Age inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="current-age"
+                class="text-xs font-semibold text-charcoal flex justify-between"
+              >
+                <span>Current Age</span>
+                <span
+                  id="current-age-val"
+                  class="font-mono text-stone font-bold">25 yrs</span
+                >
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="range"
+                  id="current-age-range"
+                  min="15"
+                  max="80"
+                  value="25"
+                  class="w-full cursor-pointer accent-brand-blue"
+                />
+                <input
+                  type="number"
+                  id="current-age"
+                  value="25"
+                  min="15"
+                  max="80"
+                  class="text-input w-20 text-center font-mono text-xs h-8 py-1"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="retirement-age"
+                class="text-xs font-semibold text-charcoal flex justify-between"
+              >
+                <span>Retirement Age</span>
+                <span
+                  id="retirement-age-val"
+                  class="font-mono text-stone font-bold">65 yrs</span
+                >
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="range"
+                  id="retirement-age-range"
+                  min="40"
+                  max="90"
+                  value="65"
+                  class="w-full cursor-pointer accent-brand-blue"
+                />
+                <input
+                  type="number"
+                  id="retirement-age"
+                  value="65"
+                  min="40"
+                  max="90"
+                  class="text-input w-20 text-center font-mono text-xs h-8 py-1"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Age Presets -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[10px] font-semibold text-stone uppercase tracking-wider"
+              >Quick Age Presets:</span
+            >
+            <div class="grid grid-cols-6 gap-1.5">
+              {
+                [55, 60, 62, 65, 67, 70].map((age) => (
+                  <button
+                    type="button"
+                    class="preset-age-btn text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer border border-hairline text-slate bg-canvas hover:border-hairline-strong active:scale-95 flex items-center justify-center"
+                    data-age={age}
+                  >
+                    {age}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Balance and Salary -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center">
+                <label
+                  for="current-balance"
+                  class="text-xs font-semibold text-charcoal"
+                >
+                  Current Retirement Balance
+                </label>
+                <select
+                  id="currency-select"
+                  class="text-[11px] font-semibold py-0.5 px-2 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                  aria-label="Currency Select"
+                >
+                  <option value="USD" selected>$ USD</option>
+                  <option value="CAD">$ CAD</option>
+                  <option value="GBP">£ GBP</option>
+                  <option value="AUD">$ AUD</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="relative">
+                <span
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="current-balance"
+                  value="10000"
+                  min="0"
+                  step="1000"
+                  class="text-input pl-7 font-mono text-sm w-full"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="annual-salary"
+                class="text-xs font-semibold text-charcoal"
+              >
+                Annual Salary
+              </label>
+              <div class="relative">
+                <span
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="annual-salary"
+                  value="75000"
+                  min="0"
+                  step="1000"
+                  class="text-input pl-7 font-mono text-sm w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Contribution rate -->
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="your-contribution-rate"
+              class="text-xs font-semibold text-charcoal flex justify-between"
+            >
+              <span>Your Contribution Rate</span>
+              <span
+                id="your-contribution-val"
+                class="font-mono text-stone font-bold">8% ($6,000/yr)</span
+              >
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="your-contribution-range"
+                min="0"
+                max="100"
+                value="8"
+                step="0.5"
+                class="w-full cursor-pointer accent-brand-blue"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="your-contribution-rate"
+                  min="0"
+                  max="100"
+                  value="8"
+                  step="0.1"
+                  class="text-input pr-5 py-1 text-xs text-center font-mono h-8"
+                />
+                <span
+                  class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]"
+                  >%</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Employer Match rate & limit -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="employer-match"
+                class="text-xs font-semibold text-charcoal"
+              >
+                Employer Match Rate (%)
+              </label>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="employer-match"
+                  value="50"
+                  min="0"
+                  max="200"
+                  step="1"
+                  class="text-input pr-5 font-mono text-sm"
+                />
+                <span
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-stone text-sm"
+                  >%</span
+                >
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="employer-match-limit"
+                class="text-xs font-semibold text-charcoal"
+              >
+                Employer Match Limit (% of salary)
+              </label>
+              <div class="relative">
+                <input
+                  type="number"
+                  id="employer-match-limit"
+                  value="6"
+                  min="0"
+                  max="50"
+                  step="0.5"
+                  class="text-input pr-5 font-mono text-sm"
+                />
+                <span
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-stone text-sm"
+                  >%</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Expected Return -->
+          <div class="flex flex-col gap-1.5">
+            <label
+              for="expected-return"
+              class="text-xs font-semibold text-charcoal flex justify-between"
+            >
+              <span>Expected Annual Return</span>
+              <span
+                id="expected-return-val"
+                class="font-mono text-stone font-bold">7.00%</span
+              >
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="expected-return-range"
+                min="1"
+                max="15"
+                value="7"
+                step="0.1"
+                class="w-full cursor-pointer accent-brand-blue"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="expected-return"
+                  min="1"
+                  max="15"
+                  value="7"
+                  step="0.05"
+                  class="text-input pr-5 py-1 text-xs text-center font-mono h-8"
+                />
+                <span
+                  class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]"
+                  >%</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsible Advanced Options Toggle -->
+          <div class="border-t border-hairline pt-4 mt-2">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Options (Inflation, Growth, Taxes & Limits)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Advanced Panel -->
+            <div
+              id="advanced-panel"
+              class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
+            >
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="inflation-rate"
+                    class="text-[11px] font-semibold text-slate"
+                  >
+                    Annual Inflation Rate (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="inflation-rate"
+                      value="2.5"
+                      min="0"
+                      max="15"
+                      step="0.1"
+                      class="text-input pr-6 font-mono text-xs w-full"
+                    />
+                    <span
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs"
+                      >%</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="salary-growth"
+                    class="text-[11px] font-semibold text-slate"
+                  >
+                    Annual Salary Growth (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="salary-growth"
+                      value="3.0"
+                      min="0"
+                      max="15"
+                      step="0.1"
+                      class="text-input pr-6 font-mono text-xs w-full"
+                    />
+                    <span
+                      class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs"
+                      >%</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Custom Currency overrides if custom selected -->
+              <div
+                id="custom-currency-container"
+                class="grid grid-cols-2 gap-3 hidden border-t border-hairline-soft pt-2"
+              >
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="custom-currency-symbol"
+                    class="text-[10px] font-semibold text-slate"
+                    >Currency Symbol</label
+                  >
+                  <input
+                    type="text"
+                    id="custom-currency-symbol"
+                    value="$"
+                    class="text-input"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="custom-currency-code"
+                    class="text-[10px] font-semibold text-slate"
+                    >Currency Code</label
+                  >
+                  <input
+                    type="text"
+                    id="custom-currency-code"
+                    value="USD"
+                    class="text-input"
+                  />
+                </div>
+              </div>
+
+              <!-- Account Type & Filing Status (Updates dynamically per country) -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="account-type"
+                    id="account-type-label"
+                    class="text-[11px] font-semibold text-slate"
+                  >
+                    Account Type
+                  </label>
+                  <select
+                    id="account-type"
+                    class="text-input py-1 text-xs font-medium w-full"
+                  >
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="filing-status"
+                    id="filing-status-label"
+                    class="text-[11px] font-semibold text-slate"
+                  >
+                    Filing Status
+                  </label>
+                  <select
+                    id="filing-status"
+                    class="text-input py-1 text-xs font-medium w-full"
+                  >
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Catch up toggle -->
+              <div
+                class="flex items-center justify-between bg-surface p-3 rounded-xl border border-hairline-soft"
+              >
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-charcoal"
+                    >Catch-up Contributions</span
+                  >
+                  <span id="catchup-description" class="text-[10px] text-stone"
+                    >Enable higher annual limit for age 50+ (US only)</span
+                  >
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="catchup-toggle"
+                    class="sr-only peer"
+                  />
+                  <div
+                    class="w-9 h-5 bg-hairline-strong peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-hairline after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blue"
+                  >
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <!-- Right Pane: Summary Outputs (5 Columns, above the fold) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <!-- Hero Summary Card -->
+        <div
+          id="hero-summary-card"
+          class="scroll-mt-20 card-base flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-success-accent/10 rounded-full blur-3xl"
+          >
+          </div>
+
+          <div class="flex flex-col gap-4 z-10">
+            <div>
+              <span
+                class="text-[10px] font-bold text-slate uppercase tracking-wider block"
+                >Projected Balance at Retirement</span
+              >
+              <div
+                id="projected-balance-display"
+                class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono"
+              >
+                $0.00
+              </div>
+            </div>
+
+            <!-- Stats rows -->
+            <div
+              class="grid grid-cols-2 gap-4 border-t border-hairline pt-4 mt-2"
+            >
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-bold text-stone"
+                  >Total You Contributed</span
+                >
+                <span
+                  id="total-contributed-display"
+                  class="font-display font-semibold text-base text-primary font-mono select-all"
+                  >$0.00</span
+                >
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-bold text-stone"
+                  >Employer Match Earned</span
+                >
+                <span
+                  id="total-match-display"
+                  class="font-display font-semibold text-base text-primary font-mono select-all"
+                  >$0.00</span
+                >
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 border-t border-hairline pt-4">
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-bold text-stone"
+                  >Est. Monthly Retirement Income</span
+                >
+                <span
+                  id="monthly-income-display"
+                  class="font-display font-semibold text-2xl text-success-accent font-mono select-all"
+                  >$0.00/mo</span
+                >
+                <span class="text-[9px] text-stone leading-tight mt-0.5"
+                  >(Based on standard 4% annual withdrawal rule)</span
+                >
+              </div>
+            </div>
+
+            <div class="flex flex-col border-t border-hairline pt-4">
+              <button
+                type="button"
+                id="scroll-results-btn"
+                class="button-primary text-xs w-full py-2.5 rounded-full flex items-center justify-center gap-1.5 shadow-subtle hover:scale-105 active:scale-95 transition-all"
+              >
+                View Detailed Results &rarr;
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Dynamic tax note / guidance widget -->
+        <div class="card-base bg-surface-soft flex flex-col gap-4">
+          <h3
+            class="font-display font-semibold text-sm text-primary flex items-center gap-2"
+          >
+            <span class="w-2 h-2 rounded-full bg-brand-teal"></span>
+            Tax Advantage Summary
+          </h3>
+          <p id="tax-note-content" class="text-xs text-slate leading-relaxed">
+            Loading localized details...
           </p>
         </div>
       </div>
     </div>
+
+    <!-- Detailed Results Section (Below the fold) -->
+    <div
+      id="results-column"
+      class="scroll-mt-20 flex flex-col gap-6 mt-8 border-t border-hairline pt-8"
+    >
+      <div class="flex items-center justify-between">
+        <h2
+          class="font-display font-semibold text-2xl text-primary flex items-center gap-2"
+        >
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"
+          ></span>
+          Retirement Growth Analysis
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Stacked Bar Chart (7 Columns) -->
+        <div class="lg:col-span-7 card-base flex flex-col gap-4">
+          <h3
+            class="text-xs font-semibold text-slate uppercase tracking-wider pb-1 border-b border-hairline-soft"
+          >
+            Retirement Account Composition Over Time
+          </h3>
+
+          <!-- Stacked Bar Chart SVG -->
+          <div
+            class="w-full min-h-[220px] flex items-center justify-center py-2"
+          >
+            <svg
+              id="growth-chart-svg"
+              class="w-full h-48"
+              viewBox="0 0 500 200"
+              preserveAspectRatio="none"
+            >
+              <!-- Grid Lines & Bars will be drawn dynamically -->
+            </svg>
+          </div>
+
+          <!-- Legend details -->
+          <div
+            class="grid grid-cols-3 gap-2 text-center text-xs mt-2 border-t border-hairline-soft pt-3"
+          >
+            <div class="flex items-center justify-center gap-2">
+              <span class="w-3 h-3 rounded bg-[#4262ff]"></span>
+              <span class="text-charcoal font-medium">Contributions</span>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+              <span class="w-3 h-3 rounded bg-[#0fbcb0]"></span>
+              <span class="text-charcoal font-medium">Employer Match</span>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+              <span class="w-3 h-3 rounded bg-[#fcb900]"></span>
+              <span class="text-charcoal font-medium">Compound Interest</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real vs Nominal Card (5 Columns) -->
+        <div
+          class="lg:col-span-5 card-base flex flex-col justify-between gap-4"
+        >
+          <div>
+            <h3
+              class="text-xs font-semibold text-slate uppercase tracking-wider pb-1 border-b border-hairline-soft"
+            >
+              Real vs Nominal Purchasing Power
+            </h3>
+            <p class="text-xs text-slate mt-2 leading-relaxed">
+              Inflation reduces the purchasing power of your money over time.
+              While your nominal balance represents the raw currency amount in
+              the future, the real balance shows what that money is worth in
+              today's terms.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-3 mt-4">
+            <div
+              class="flex justify-between items-center text-xs border-b border-hairline-soft pb-2"
+            >
+              <span class="text-stone">Nominal Balance (Retirement)</span>
+              <span
+                id="nominal-balance-val"
+                class="font-mono font-bold text-primary">$0</span
+              >
+            </div>
+            <div
+              class="flex justify-between items-center text-xs border-b border-hairline-soft pb-2"
+            >
+              <span class="text-stone">Real Balance (Inflation-Adjusted)</span>
+              <span
+                id="real-balance-val"
+                class="font-mono font-bold text-brand-blue">$0</span
+              >
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-stone">Inflation Loss Percentage</span>
+              <span
+                id="inflation-loss-pct"
+                class="font-mono font-bold text-brand-coral">0%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Growth Amortization / Schedule Card -->
+      <div class="card-base flex flex-col gap-4 p-4 sm:p-6 mt-4">
+        <div
+          class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2"
+        >
+          <h3 class="font-display font-semibold text-base text-primary">
+            Year-by-Year Growth Table
+          </h3>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="copy-results-btn"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                ></path>
+              </svg>
+              <span>Copy Data</span>
+            </button>
+            <button
+              type="button"
+              id="csv-export-btn"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                ></path>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              id="excel-export-btn"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5 text-success-accent"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
+              </svg>
+              <span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr
+                class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono"
+              >
+                <th class="py-2.5 px-3">Age</th>
+                <th class="py-2.5 px-3 text-right">Nominal Salary</th>
+                <th class="py-2.5 px-3 text-right">Your Additions</th>
+                <th class="py-2.5 px-3 text-right">Employer Match</th>
+                <th class="py-2.5 px-3 text-right">End Balance (Nominal)</th>
+                <th class="py-2.5 px-3 text-right">End Balance (Real)</th>
+              </tr>
+            </thead>
+            <tbody id="growth-table-body">
+              <!-- JS populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <button
+          type="button"
+          id="toggle-growth-btn"
+          class="w-full text-center text-xs py-2 bg-surface hover:bg-hairline text-slate font-semibold rounded-full border border-hairline-soft transition-all cursor-pointer mt-2"
+        >
+          Show Full Schedule
+        </button>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard -->
+    <div
+      class="flex items-center justify-between text-[10px] text-slate px-1 mt-6"
+    >
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase font-bold text-stone"
+        >Est. Retirement Pot</span
+      >
+      <span
+        id="mobile-summary-value"
+        class="font-display font-bold text-lg text-primary font-mono"
+        >$0.00</span
+      >
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          How Retirement Savings Work
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer font-bold"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Compound Growth</h4>
+        <p>
+          Your contributions, combined with any employer match, grow over time
+          due to compounding interest. Over long periods (such as 30 to 40
+          years), growth represents the majority of your total retirement
+          balance.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Employer Match</h4>
+        <p>
+          Many employer retirement accounts match your contributions up to a
+          specific percentage of your annual salary. Always aim to contribute at
+          least enough to capture the full match limit—this is essentially "free
+          money" adding to your future wealth.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. The 4% Withdrawal Rule</h4>
+        <p>
+          The 4% rule is a standard guideline to project sustainable annual
+          withdrawals in retirement without running out of funds. Your estimated
+          monthly retirement income is calculated as: `(Retirement Balance *
+          0.04) / 12`.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          4. Real vs. Nominal Purchasing Power
+        </h4>
+        <p>
+          Due to inflation, a dollar today will buy more than a dollar in the
+          future. We discount your future nominal balance by the expected
+          inflation rate to show your projected balance in today's real
+          purchasing power terms.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Script logic -->
+  <script>
+    // Multi-country rules configuration
+    interface CountryConfig {
+      countryName: string;
+      toolTitle: string;
+      currencySymbol: string;
+      currencyCode: string;
+      limitNormal: number;
+      limitCatchup: number;
+      catchupAge: number;
+      defaultMatchRate: number;
+      defaultMatchLimit: number;
+      taxNote: string;
+      accountTypes: { id: string; name: string }[];
+      filingStatuses: { id: string; name: string }[];
+    }
+
+    const COUNTRY_DATA: Record<string, CountryConfig> = {
+      USD: {
+        countryName: "United States",
+        toolTitle: "401(k) Calculator",
+        currencySymbol: "$",
+        currencyCode: "USD",
+        limitNormal: 23000,
+        limitCatchup: 30500,
+        catchupAge: 50,
+        defaultMatchRate: 50,
+        defaultMatchLimit: 6,
+        taxNote:
+          "Contributions to Traditional 401(k) / IRA are tax-deductible; growth is tax-deferred. Roth contributions are made post-tax; withdrawals in retirement are tax-free.",
+        accountTypes: [
+          { id: "traditional_401k", name: "Traditional 401(k)" },
+          { id: "roth_401k", name: "Roth 401(k)" },
+          { id: "traditional_ira", name: "Traditional IRA" },
+          { id: "roth_ira", name: "Roth IRA" },
+        ],
+        filingStatuses: [
+          { id: "single", name: "Single" },
+          { id: "joint", name: "Married Filing Jointly" },
+          { id: "head", name: "Head of Household" },
+        ],
+      },
+      CAD: {
+        countryName: "Canada",
+        toolTitle: "RRSP/TFSA Calculator",
+        currencySymbol: "$",
+        currencyCode: "CAD",
+        limitNormal: 31560,
+        limitCatchup: 31560,
+        catchupAge: 999,
+        defaultMatchRate: 100,
+        defaultMatchLimit: 4,
+        taxNote:
+          "RRSP contributions reduce your taxable income; tax is paid upon withdrawal. TFSA contributions are post-tax, and all growth and withdrawals are completely tax-free.",
+        accountTypes: [
+          { id: "rrsp", name: "Registered Retirement Savings Plan (RRSP)" },
+          { id: "tfsa", name: "Tax-Free Savings Account (TFSA)" },
+        ],
+        filingStatuses: [
+          { id: "individual", name: "Individual" },
+          { id: "coupled", name: "Coupled / Family" },
+        ],
+      },
+      GBP: {
+        countryName: "United Kingdom",
+        toolTitle: "Pension Calculator",
+        currencySymbol: "£",
+        currencyCode: "GBP",
+        limitNormal: 60000,
+        limitCatchup: 60000,
+        catchupAge: 999,
+        defaultMatchRate: 60,
+        defaultMatchLimit: 3,
+        taxNote:
+          "Pensions offer tax relief at your marginal tax rate. Up to 25% of the pension pot can be withdrawn tax-free from age 55 (rising to 57 in 2028).",
+        accountTypes: [
+          { id: "workplace", name: "Workplace Pension" },
+          { id: "sipp", name: "Self-Invested Personal Pension (SIPP)" },
+        ],
+        filingStatuses: [{ id: "standard", name: "Standard Taxpayer" }],
+      },
+      AUD: {
+        countryName: "Australia",
+        toolTitle: "Super Calculator",
+        currencySymbol: "$",
+        currencyCode: "AUD",
+        limitNormal: 30000,
+        limitCatchup: 30000,
+        catchupAge: 999,
+        defaultMatchRate: 100,
+        defaultMatchLimit: 11.5,
+        taxNote:
+          "Concessional contributions are taxed at a flat 15% within the fund (much lower than personal income tax). Non-concessional contributions are made post-tax.",
+        accountTypes: [
+          {
+            id: "super_concessional",
+            name: "Concessional Super Contributions",
+          },
+          {
+            id: "super_nonconcessional",
+            name: "Non-concessional Super Contributions",
+          },
+        ],
+        filingStatuses: [{ id: "individual", name: "Individual" }],
+      },
+      EUR: {
+        countryName: "Europe",
+        toolTitle: "Pension Calculator",
+        currencySymbol: "€",
+        currencyCode: "EUR",
+        limitNormal: 50000,
+        limitCatchup: 50000,
+        catchupAge: 999,
+        defaultMatchRate: 100,
+        defaultMatchLimit: 5,
+        taxNote:
+          "Pension schemes in Europe often offer tax deductions on contributions and tax-exempt investment growth, with benefits taxed as income on withdrawal.",
+        accountTypes: [
+          { id: "pension_pillar2", name: "Workplace Pension (Pillar II)" },
+          { id: "pension_pillar3", name: "Private Pension Plan (Pillar III)" },
+        ],
+        filingStatuses: [
+          { id: "single", name: "Single" },
+          { id: "joint", name: "Joint / Married" },
+        ],
+      },
+      INR: {
+        countryName: "India",
+        toolTitle: "EPF/NPS Calculator",
+        currencySymbol: "₹",
+        currencyCode: "INR",
+        limitNormal: 150000,
+        limitCatchup: 150000,
+        catchupAge: 999,
+        defaultMatchRate: 100,
+        defaultMatchLimit: 12,
+        taxNote:
+          "EPF and PPF enjoy EEE (Exempt-Exempt-Exempt) tax status. NPS offers up to ₹1.5L deduction under 80C + ₹50,000 additional under 80CCD(1B).",
+        accountTypes: [
+          { id: "epf", name: "Employees' Provident Fund (EPF)" },
+          { id: "nps", name: "National Pension System (NPS)" },
+          { id: "ppf", name: "Public Provident Fund (PPF)" },
+        ],
+        filingStatuses: [
+          { id: "standard", name: "Standard Tax Regime" },
+          { id: "new", name: "New Tax Regime" },
+        ],
+      },
+      Custom: {
+        countryName: "Custom",
+        toolTitle: "Retirement Savings Calculator",
+        currencySymbol: "$",
+        currencyCode: "USD",
+        limitNormal: 1000000,
+        limitCatchup: 1000000,
+        catchupAge: 999,
+        defaultMatchRate: 100,
+        defaultMatchLimit: 5,
+        taxNote:
+          "Tax advantages depend on your local jurisdiction and specific retirement account policies.",
+        accountTypes: [
+          { id: "custom_account", name: "Custom Retirement Account" },
+        ],
+        filingStatuses: [{ id: "custom_status", name: "Standard" }],
+      },
+    };
+
+    // DOM Elements
+    const toolTitle = document.getElementById("tool-title");
+    const currencySelect = document.getElementById(
+      "currency-select",
+    ) as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById(
+      "custom-currency-symbol",
+    ) as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById(
+      "custom-currency-code",
+    ) as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById(
+      "custom-currency-container",
+    );
+
+    const currentAgeRange = document.getElementById(
+      "current-age-range",
+    ) as HTMLInputElement;
+    const currentAgeInput = document.getElementById(
+      "current-age",
+    ) as HTMLInputElement;
+    const currentAgeValLabel = document.getElementById("current-age-val");
+
+    const retirementAgeRange = document.getElementById(
+      "retirement-age-range",
+    ) as HTMLInputElement;
+    const retirementAgeInput = document.getElementById(
+      "retirement-age",
+    ) as HTMLInputElement;
+    const retirementAgeValLabel = document.getElementById("retirement-age-val");
+    const presetAgeButtons = document.querySelectorAll(".preset-age-btn");
+
+    const currentBalanceInput = document.getElementById(
+      "current-balance",
+    ) as HTMLInputElement;
+    const annualSalaryInput = document.getElementById(
+      "annual-salary",
+    ) as HTMLInputElement;
+
+    const yourContributionRange = document.getElementById(
+      "your-contribution-range",
+    ) as HTMLInputElement;
+    const yourContributionInput = document.getElementById(
+      "your-contribution-rate",
+    ) as HTMLInputElement;
+    const yourContributionValLabel = document.getElementById(
+      "your-contribution-val",
+    );
+
+    const employerMatchInput = document.getElementById(
+      "employer-match",
+    ) as HTMLInputElement;
+    const employerMatchLimitInput = document.getElementById(
+      "employer-match-limit",
+    ) as HTMLInputElement;
+
+    const expectedReturnRange = document.getElementById(
+      "expected-return-range",
+    ) as HTMLInputElement;
+    const expectedReturnInput = document.getElementById(
+      "expected-return",
+    ) as HTMLInputElement;
+    const expectedReturnValLabel = document.getElementById(
+      "expected-return-val",
+    );
+
+    const inflationRateInput = document.getElementById(
+      "inflation-rate",
+    ) as HTMLInputElement;
+    const salaryGrowthInput = document.getElementById(
+      "salary-growth",
+    ) as HTMLInputElement;
+    const accountTypeSelect = document.getElementById(
+      "account-type",
+    ) as HTMLSelectElement;
+    const filingStatusSelect = document.getElementById(
+      "filing-status",
+    ) as HTMLSelectElement;
+    const catchupToggle = document.getElementById(
+      "catchup-toggle",
+    ) as HTMLInputElement;
+
+    // Warning
+    const contributionWarning = document.getElementById("contribution-warning");
+    const warningText = document.getElementById("warning-text");
+
+    // Outputs
+    const projectedBalanceDisplay = document.getElementById(
+      "projected-balance-display",
+    );
+    const totalContributedDisplay = document.getElementById(
+      "total-contributed-display",
+    );
+    const totalMatchDisplay = document.getElementById("total-match-display");
+    const monthlyIncomeDisplay = document.getElementById(
+      "monthly-income-display",
+    );
+    const taxNoteContent = document.getElementById("tax-note-content");
+
+    // Real vs Nominal Outputs
+    const nominalBalanceVal = document.getElementById("nominal-balance-val");
+    const realBalanceVal = document.getElementById("real-balance-val");
+    const inflationLossPct = document.getElementById("inflation-loss-pct");
+
+    // Table / Controls
+    const growthTableBody = document.getElementById("growth-table-body");
+    const toggleGrowthBtn = document.getElementById(
+      "toggle-growth-btn",
+    ) as HTMLButtonElement;
+    const copyResultsBtn = document.getElementById("copy-results-btn");
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const excelExportBtn = document.getElementById("excel-export-btn");
+    const resetBtn = document.getElementById("reset-btn");
+
+    // Modals & Advanced
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // State Variables
+    let currentCurrency = "USD";
+    let showFullGrowth = false;
+    let projectionYearsData: {
+      age: number;
+      salary: number;
+      additions: number;
+      match: number;
+      balance: number;
+      realBalance: number;
+    }[] = [];
+
+    // Helper functions
+    function formatCurrency(amount: number): string {
+      const config = COUNTRY_DATA[currentCurrency] || COUNTRY_DATA.Custom;
+      const symbol =
+        currentCurrency === "Custom"
+          ? customCurrencySymbolInput?.value || "$"
+          : config.currencySymbol;
+
+      // Formatting options
+      const formatted = amount.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      });
+      return `${symbol}${formatted}`;
+    }
+
+    function updateFilingAndAccountOptions() {
+      const config = COUNTRY_DATA[currentCurrency] || COUNTRY_DATA.Custom;
+
+      // Update Account Types Select
+      if (accountTypeSelect) {
+        accountTypeSelect.innerHTML = "";
+        config.accountTypes.forEach((t) => {
+          const opt = document.createElement("option");
+          opt.value = t.id;
+          opt.textContent = t.name;
+          accountTypeSelect.appendChild(opt);
+        });
+      }
+
+      // Update Filing Statuses Select
+      if (filingStatusSelect) {
+        filingStatusSelect.innerHTML = "";
+        config.filingStatuses.forEach((s) => {
+          const opt = document.createElement("option");
+          opt.value = s.id;
+          opt.textContent = s.name;
+          filingStatusSelect.appendChild(opt);
+        });
+      }
+
+      // Update Tax Note
+      if (taxNoteContent) {
+        taxNoteContent.textContent = config.taxNote;
+      }
+
+      // Update Tool Title dynamically
+      if (toolTitle) {
+        toolTitle.textContent = `${config.toolTitle} & Retirement Savings`;
+      }
+    }
+
+    function calculate() {
+      const config = COUNTRY_DATA[currentCurrency] || COUNTRY_DATA.Custom;
+
+      const currAge = parseInt(currentAgeInput.value, 10) || 25;
+      let retAge = parseInt(retirementAgeInput.value, 10) || 65;
+
+      if (retAge <= currAge) {
+        retAge = currAge + 1;
+        retirementAgeInput.value = retAge.toString();
+        retirementAgeRange.value = retAge.toString();
+        if (retirementAgeValLabel)
+          retirementAgeValLabel.textContent = `${retAge} yrs`;
+      }
+
+      const currentBalance = parseFloat(currentBalanceInput.value) || 0;
+      let salary = parseFloat(annualSalaryInput.value) || 0;
+      const contribRate = (parseFloat(yourContributionInput.value) || 0) / 100;
+      const matchRate = (parseFloat(employerMatchInput.value) || 0) / 100;
+      const matchLimit = (parseFloat(employerMatchLimitInput.value) || 0) / 100;
+      const expectedReturn = (parseFloat(expectedReturnInput.value) || 0) / 100;
+      const inflationRate = (parseFloat(inflationRateInput.value) || 0) / 100;
+      const salaryGrowth = (parseFloat(salaryGrowthInput.value) || 0) / 100;
+
+      // Limits setup
+      const isCatchup = catchupToggle.checked;
+      let limitCap = config.limitNormal;
+
+      // Update labels with real-time numbers
+      const annualContribEst = salary * contribRate;
+      if (yourContributionValLabel) {
+        yourContributionValLabel.textContent = `${(contribRate * 100).toFixed(1)}% (${formatCurrency(annualContribEst)}/yr)`;
+      }
+
+      // Projections loop variables
+      let balance = currentBalance;
+      let totalContributed = 0;
+      let totalMatch = 0;
+      projectionYearsData = [];
+
+      const yearsToRetire = retAge - currAge;
+
+      // Compounding return calculation setup
+      const monthlyReturn = Math.pow(1 + expectedReturn, 1 / 12) - 1;
+
+      // Warnings state check
+      let warningTriggered = false;
+
+      for (let y = 0; y < yearsToRetire; y++) {
+        const age = currAge + y;
+        const currentYearSalary = salary * Math.pow(1 + salaryGrowth, y);
+
+        // Local limits check per age
+        let localizedLimit = config.limitNormal;
+        if (isCatchup && age >= config.catchupAge) {
+          localizedLimit = config.limitCatchup;
+          limitCap = config.limitCatchup;
+        }
+
+        let yourAnnualContribution = currentYearSalary * contribRate;
+        if (yourAnnualContribution > localizedLimit) {
+          yourAnnualContribution = localizedLimit;
+          warningTriggered = true;
+        }
+
+        // Match calculation: capped at match limit as percentage of salary
+        const baseMatchAmount = currentYearSalary * matchLimit;
+        const actualMatchInput = currentYearSalary * contribRate;
+        const matchEligible = Math.min(actualMatchInput, baseMatchAmount);
+        const employerAnnualMatch = matchEligible * matchRate;
+
+        totalContributed += yourAnnualContribution;
+        totalMatch += employerAnnualMatch;
+
+        // Apply contributions and compound monthly
+        const annualAdditions = yourAnnualContribution + employerAnnualMatch;
+        const monthlyAddition = annualAdditions / 12;
+
+        for (let m = 0; m < 12; m++) {
+          balance = (balance + monthlyAddition) * (1 + monthlyReturn);
+        }
+
+        // Real balance (inflation adjusted)
+        const realBalance = balance / Math.pow(1 + inflationRate, y + 1);
+
+        projectionYearsData.push({
+          age: age + 1,
+          salary: currentYearSalary,
+          additions: yourAnnualContribution,
+          match: employerAnnualMatch,
+          balance: balance,
+          realBalance: realBalance,
+        });
+      }
+
+      // Warning display logic
+      if (contributionWarning && warningText) {
+        if (warningTriggered) {
+          contributionWarning.classList.remove("hidden");
+          warningText.textContent = `You are hitting the annual tax-advantaged contribution cap of ${formatCurrency(limitCap)} (or age 50+ catch-up cap of ${formatCurrency(config.limitCatchup)}) for ${config.countryName}. Any excess savings will not be projected.`;
+        } else {
+          contributionWarning.classList.add("hidden");
+        }
+      }
+
+      // Display Hero outputs
+      if (projectedBalanceDisplay)
+        projectedBalanceDisplay.textContent = formatCurrency(balance);
+      if (totalContributedDisplay)
+        totalContributedDisplay.textContent = formatCurrency(totalContributed);
+      if (totalMatchDisplay)
+        totalMatchDisplay.textContent = formatCurrency(totalMatch);
+
+      // Monthly retirement income (4% rule)
+      const monthlyIncome = (balance * 0.04) / 12;
+      if (monthlyIncomeDisplay)
+        monthlyIncomeDisplay.textContent = `${formatCurrency(monthlyIncome)}/mo`;
+
+      // Real vs Nominal details
+      const inflationLoss =
+        balance -
+        (projectionYearsData[projectionYearsData.length - 1]?.realBalance ||
+          balance);
+      const lossPct = balance > 0 ? (inflationLoss / balance) * 100 : 0;
+
+      if (nominalBalanceVal)
+        nominalBalanceVal.textContent = formatCurrency(balance);
+      if (realBalanceVal)
+        realBalanceVal.textContent = formatCurrency(
+          projectionYearsData[projectionYearsData.length - 1]?.realBalance ||
+            balance,
+        );
+      if (inflationLossPct)
+        inflationLossPct.textContent = `${lossPct.toFixed(1)}%`;
+
+      // Mobile sticky update
+      const mobileVal = document.getElementById("mobile-summary-value");
+      if (mobileVal) mobileVal.textContent = formatCurrency(balance);
+
+      renderGrowthTable();
+      renderChart(totalContributed, totalMatch, balance);
+      saveState();
+    }
+
+    function renderGrowthTable() {
+      if (!growthTableBody) return;
+
+      const rowsToShow = showFullGrowth
+        ? projectionYearsData
+        : projectionYearsData.slice(0, 6);
+      let html = "";
+
+      rowsToShow.forEach((row) => {
+        html += `
+          <tr class="border-b border-hairline hover:bg-surface/50 font-mono text-[11px] text-charcoal">
+            <td class="py-2.5 px-3 font-semibold text-slate">${row.age}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(row.salary)}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(row.additions)}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(row.match)}</td>
+            <td class="py-2.5 px-3 text-right text-primary font-semibold">${formatCurrency(row.balance)}</td>
+            <td class="py-2.5 px-3 text-right text-brand-blue font-semibold">${formatCurrency(row.realBalance)}</td>
+          </tr>
+        `;
+      });
+
+      growthTableBody.innerHTML = html;
+
+      // Update button label
+      if (toggleGrowthBtn) {
+        toggleGrowthBtn.textContent = showFullGrowth
+          ? "Collapse Schedule"
+          : `Show Full Schedule (${projectionYearsData.length} years)`;
+      }
+    }
+
+    // Chart Renderer: Draw SVG stacked bar chart
+    function renderChart(contrib: number, match: number, total: number) {
+      const svg = document.getElementById("growth-chart-svg");
+      if (!svg) return;
+
+      const data = projectionYearsData;
+      if (data.length === 0) return;
+
+      // Draw responsive SVG bars
+      const width = 500;
+      const height = 200;
+      const paddingLeft = 40;
+      const paddingRight = 10;
+      const paddingTop = 20;
+      const paddingBottom = 20;
+
+      const plotWidth = width - paddingLeft - paddingRight;
+      const plotHeight = height - paddingTop - paddingBottom;
+
+      // Find max balance to scale Y axis
+      const maxBalance = Math.max(...data.map((d) => d.balance));
+
+      // Calculate step for X axis (draw ~10 bars max to avoid overcrowding)
+      const step = Math.max(1, Math.ceil(data.length / 15));
+
+      let chartContentHtml = "";
+
+      // Draw grid lines
+      const gridCount = 4;
+      for (let i = 0; i <= gridCount; i++) {
+        const yVal = (i / gridCount) * maxBalance;
+        const yPos = height - paddingBottom - (i / gridCount) * plotHeight;
+
+        // Lines
+        chartContentHtml += `
+          <line x1="${paddingLeft}" y1="${yPos}" x2="${width - paddingRight}" y2="${yPos}" stroke="var(--color-hairline)" stroke-width="1" stroke-dasharray="2,2" />
+          <text x="${paddingLeft - 5}" y="${yPos + 4}" font-size="8" fill="var(--color-stone)" text-anchor="end" font-family="monospace">
+            ${formatCurrency(yVal)}
+          </text>
+        `;
+      }
+
+      // Draw Bars
+      const barWidth = Math.max(2, (plotWidth / data.length) * 0.7);
+
+      data.forEach((d, idx) => {
+        const xPos = paddingLeft + (idx / data.length) * plotWidth;
+
+        const scale = plotHeight / maxBalance;
+        const contribHeight = d.additions * scale;
+        const matchHeight = d.match * scale;
+        const growthHeight = Math.max(0, (d.balance - d.additions - d.match) * scale);
+
+        // Draw stacked parts (bottom: contributions, middle: match, top: interest)
+        const yContrib = height - paddingBottom - contribHeight;
+        const yMatch = yContrib - matchHeight;
+        const yGrowth = yMatch - growthHeight;
+
+        chartContentHtml += `
+          <rect x="${xPos}" y="${yContrib}" width="${barWidth}" height="${contribHeight}" fill="#4262ff" rx="1" />
+          <rect x="${xPos}" y="${yMatch}" width="${barWidth}" height="${matchHeight}" fill="#0fbcb0" rx="1" />
+          <rect x="${xPos}" y="${yGrowth}" width="${barWidth}" height="${growthHeight}" fill="#fcb900" rx="1" />
+        `;
+
+        // Age labels on X axis
+        if (idx % step === 0 || idx === data.length - 1) {
+          chartContentHtml += `
+            <text x="${xPos + barWidth / 2}" y="${height - 5}" font-size="8" fill="var(--color-slate)" text-anchor="middle" font-family="monospace">
+              ${d.age}
+            </text>
+          `;
+        }
+      });
+
+      svg.innerHTML = chartContentHtml;
+    }
+
+    // Sync input range & value fields
+    function syncRangeInput(
+      rangeEl: HTMLInputElement,
+      inputEl: HTMLInputElement,
+      labelEl: HTMLElement | null,
+      formatter: (v: number) => string,
+    ) {
+      rangeEl.addEventListener("input", (e) => {
+        const val = (e.target as HTMLInputElement).value;
+        inputEl.value = val;
+        if (labelEl) labelEl.textContent = formatter(parseFloat(val));
+        calculate();
+      });
+
+      inputEl.addEventListener("input", (e) => {
+        let val = parseFloat((e.target as HTMLInputElement).value) || 0;
+        const min = parseFloat(inputEl.min || "0");
+        const max = parseFloat(inputEl.max || "100");
+        val = Math.max(min, Math.min(max, val));
+        rangeEl.value = val.toString();
+        if (labelEl) labelEl.textContent = formatter(val);
+        calculate();
+      });
+    }
+
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent +=
+        "Age,Nominal Salary,Your Additions,Employer Match,End Balance (Nominal),End Balance (Real)\r\n";
+
+      projectionYearsData.forEach((row) => {
+        csvContent += `${row.age},${row.salary.toFixed(2)},${row.additions.toFixed(2)},${row.match.toFixed(2)},${row.balance.toFixed(2)},${row.realBalance.toFixed(2)}\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Retirement_Projection_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToExcel() {
+      if (projectionYearsData.length === 0) return;
+
+      let tableRows = "";
+      projectionYearsData.forEach((row) => {
+        tableRows += `
+          <tr>
+            <td>${row.age}</td>
+            <td>${row.salary.toFixed(2)}</td>
+            <td>${row.additions.toFixed(2)}</td>
+            <td>${row.match.toFixed(2)}</td>
+            <td>${row.balance.toFixed(2)}</td>
+            <td>${row.realBalance.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      const html = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>Retirement Schedule</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+          <![endif]-->
+          <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #e2e8f0; padding: 8px; font-family: sans-serif; font-size: 12px; }
+            th { background-color: #f7fafc; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr style="background-color: #f7fafc; font-weight: bold;">
+              <td>Age</td>
+              <td>Nominal Salary</td>
+              <td>Your Additions</td>
+              <td>Employer Match</td>
+              <td>End Balance (Nominal)</td>
+              <td>End Balance (Real)</td>
+            </tr>
+            ${tableRows}
+          </table>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Retirement_Schedule_${Date.now()}.xls`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function copyToClipboard() {
+      let text =
+        "Age\tSalary\tContributions\tEmployer Match\tNominal Balance\tReal Balance\n";
+      projectionYearsData.forEach((row) => {
+        text += `${row.age}\t${row.salary.toFixed(0)}\t${row.additions.toFixed(0)}\t${row.match.toFixed(0)}\t${row.balance.toFixed(0)}\t${row.realBalance.toFixed(0)}\n`;
+      });
+
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          if (copyResultsBtn) {
+            const prevText = copyResultsBtn.innerHTML;
+            copyResultsBtn.innerHTML = `<span>✔ Copied!</span>`;
+            setTimeout(() => {
+              copyResultsBtn.innerHTML = prevText;
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.error("Could not copy text: ", err);
+        });
+    }
+
+    // LocalStorage Load/Save
+    function loadState() {
+      const getSafeItem = (key: string): string | null => {
+        if (typeof localStorage === "undefined") return null;
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
+      };
+
+      const savedCurrency = getSafeItem("retirement-currency");
+      const savedAge = getSafeItem("retirement-age-val");
+      const savedRetAge = getSafeItem("retirement-retage-val");
+      const savedBalance = getSafeItem("retirement-balance");
+      const savedSalary = getSafeItem("retirement-salary");
+      const savedContrib = getSafeItem("retirement-contrib");
+      const savedMatch = getSafeItem("retirement-match");
+      const savedMatchLimit = getSafeItem("retirement-matchlimit");
+      const savedReturn = getSafeItem("retirement-return");
+      const savedInflation = getSafeItem("retirement-inflation");
+      const savedGrowth = getSafeItem("retirement-growth");
+      const savedCatchup = getSafeItem("retirement-catchup");
+
+      if (savedCurrency !== null) {
+        currentCurrency = savedCurrency;
+        currencySelect.value = savedCurrency;
+      }
+      if (savedAge !== null) {
+        currentAgeInput.value = savedAge;
+        currentAgeRange.value = savedAge;
+      }
+      if (savedRetAge !== null) {
+        retirementAgeInput.value = savedRetAge;
+        retirementAgeRange.value = savedRetAge;
+      }
+      if (savedBalance !== null) currentBalanceInput.value = savedBalance;
+      if (savedSalary !== null) annualSalaryInput.value = savedSalary;
+      if (savedContrib !== null) {
+        yourContributionInput.value = savedContrib;
+        yourContributionRange.value = savedContrib;
+      }
+      if (savedMatch !== null) employerMatchInput.value = savedMatch;
+      if (savedMatchLimit !== null)
+        employerMatchLimitInput.value = savedMatchLimit;
+      if (savedReturn !== null) {
+        expectedReturnInput.value = savedReturn;
+        expectedReturnRange.value = savedReturn;
+      }
+      if (savedInflation !== null) inflationRateInput.value = savedInflation;
+      if (savedGrowth !== null) salaryGrowthInput.value = savedGrowth;
+      if (savedCatchup !== null)
+        catchupToggle.checked = savedCatchup === "true";
+
+      // Reformat symbols and trigger first calculations
+      updateFilingAndAccountOptions();
+      updateCurrencyLabels();
+    }
+
+    function saveState() {
+      if (typeof localStorage === "undefined") return;
+
+      const setSafeItem = (key: string, val: string) => {
+        try {
+          localStorage.setItem(key, val);
+        } catch (e) {}
+      };
+
+      setSafeItem("retirement-currency", currentCurrency);
+      setSafeItem("retirement-age-val", currentAgeInput.value);
+      setSafeItem("retirement-retage-val", retirementAgeInput.value);
+      setSafeItem("retirement-balance", currentBalanceInput.value);
+      setSafeItem("retirement-salary", annualSalaryInput.value);
+      setSafeItem("retirement-contrib", yourContributionInput.value);
+      setSafeItem("retirement-match", employerMatchInput.value);
+      setSafeItem("retirement-matchlimit", employerMatchLimitInput.value);
+      setSafeItem("retirement-return", expectedReturnInput.value);
+      setSafeItem("retirement-inflation", inflationRateInput.value);
+      setSafeItem("retirement-growth", salaryGrowthInput.value);
+      setSafeItem(
+        "retirement-catchup",
+        catchupToggle.checked ? "true" : "false",
+      );
+    }
+
+    function updateCurrencyLabels() {
+      const config = COUNTRY_DATA[currentCurrency] || COUNTRY_DATA.Custom;
+      const symbol =
+        currentCurrency === "Custom"
+          ? customCurrencySymbolInput?.value || "$"
+          : config.currencySymbol;
+
+      // Update all elements with class 'currency-symbol'
+      document.querySelectorAll(".currency-symbol").forEach((el) => {
+        el.textContent = symbol;
+      });
+    }
+
+    // Set defaults per country
+    function handleCountryChange() {
+      currentCurrency = currencySelect.value;
+      const config = COUNTRY_DATA[currentCurrency] || COUNTRY_DATA.Custom;
+
+      // Pre-fill employer match limits based on country defaults
+      employerMatchInput.value = config.defaultMatchRate.toString();
+      employerMatchLimitInput.value = config.defaultMatchLimit.toString();
+
+      // Show/Hide custom currency box
+      if (currentCurrency === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+      } else {
+        customCurrencyContainer?.classList.add("hidden");
+      }
+
+      // Configure catchup toggle description based on selection
+      const catchupDesc = document.getElementById("catchup-description");
+      if (catchupDesc) {
+        if (currentCurrency === "USD") {
+          catchupDesc.textContent =
+            "Enable higher annual limit for age 50+ (adds $7,500)";
+        } else {
+          catchupDesc.textContent = `Enable catch-up contribution limits (Not supported or customized for ${config.countryName})`;
+        }
+      }
+
+      updateFilingAndAccountOptions();
+      updateCurrencyLabels();
+      calculate();
+    }
+
+    // DOM Loaded Listeners
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+
+      // Sync range & values
+      syncRangeInput(
+        currentAgeRange,
+        currentAgeInput,
+        currentAgeValLabel,
+        (v) => `${v} yrs`,
+      );
+      syncRangeInput(
+        retirementAgeRange,
+        retirementAgeInput,
+        retirementAgeValLabel,
+        (v) => `${v} yrs`,
+      );
+      syncRangeInput(
+        yourContributionRange,
+        yourContributionInput,
+        null,
+        (v) => `${v}%`,
+      );
+      syncRangeInput(
+        expectedReturnRange,
+        expectedReturnInput,
+        expectedReturnValLabel,
+        (v) => `${v.toFixed(2)}%`,
+      );
+
+      // Inputs listeners
+      currentBalanceInput.addEventListener("input", calculate);
+      annualSalaryInput.addEventListener("input", calculate);
+      employerMatchInput.addEventListener("input", calculate);
+      employerMatchLimitInput.addEventListener("input", calculate);
+      inflationRateInput.addEventListener("input", calculate);
+      salaryGrowthInput.addEventListener("input", calculate);
+      catchupToggle.addEventListener("change", calculate);
+      accountTypeSelect?.addEventListener("change", calculate);
+      filingStatusSelect?.addEventListener("change", calculate);
+
+      // Presets
+      presetAgeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const val = btn.getAttribute("data-age") || "65";
+          retirementAgeInput.value = val;
+          retirementAgeRange.value = val;
+          if (retirementAgeValLabel)
+            retirementAgeValLabel.textContent = `${val} yrs`;
+          calculate();
+        });
+      });
+
+      // Currency Select
+      currencySelect?.addEventListener("change", handleCountryChange);
+      customCurrencySymbolInput?.addEventListener("input", () => {
+        updateCurrencyLabels();
+        calculate();
+      });
+      customCurrencyCodeInput?.addEventListener("input", () => {
+        calculate();
+      });
+
+      // Advanced Toggle
+      advancedToggleBtn?.addEventListener("click", () => {
+        if (advancedPanel) {
+          const isCollapsed = advancedPanel.classList.contains("max-h-0");
+          if (isCollapsed) {
+            advancedPanel.classList.remove("max-h-0");
+            advancedPanel.classList.add("max-h-[2000px]");
+            advancedChevron?.classList.add("rotate-180");
+          } else {
+            advancedPanel.classList.remove("max-h-[2000px]");
+            advancedPanel.classList.add("max-h-0");
+            advancedChevron?.classList.remove("rotate-180");
+          }
+        }
+      });
+
+      // Growth table toggle
+      toggleGrowthBtn?.addEventListener("click", () => {
+        showFullGrowth = !showFullGrowth;
+        renderGrowthTable();
+      });
+
+      // Exports
+      csvExportBtn?.addEventListener("click", exportToCSV);
+      excelExportBtn?.addEventListener("click", exportToExcel);
+      copyResultsBtn?.addEventListener("click", copyToClipboard);
+
+      // Reset action
+      resetBtn?.addEventListener("click", () => {
+        if (typeof localStorage !== "undefined") {
+          try {
+            [
+              "currency",
+              "age-val",
+              "retage-val",
+              "balance",
+              "salary",
+              "contrib",
+              "match",
+              "matchlimit",
+              "return",
+              "inflation",
+              "growth",
+              "catchup",
+            ].forEach((k) => localStorage.removeItem("retirement-" + k));
+          } catch (e) {}
+        }
+        currentAgeInput.value = "25";
+        currentAgeRange.value = "25";
+        if (currentAgeValLabel) currentAgeValLabel.textContent = "25 yrs";
+        retirementAgeInput.value = "65";
+        retirementAgeRange.value = "65";
+        if (retirementAgeValLabel) retirementAgeValLabel.textContent = "65 yrs";
+        currentBalanceInput.value = "10000";
+        annualSalaryInput.value = "75000";
+        yourContributionInput.value = "8";
+        yourContributionRange.value = "8";
+        expectedReturnInput.value = "7";
+        expectedReturnRange.value = "7";
+        if (expectedReturnValLabel)
+          expectedReturnValLabel.textContent = "7.00%";
+        inflationRateInput.value = "2.5";
+        salaryGrowthInput.value = "3.0";
+        catchupToggle.checked = false;
+        currencySelect.value = "USD";
+        currentCurrency = "USD";
+
+        handleCountryChange();
+      });
+
+      // Modals
+      howItWorksBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.remove("hidden"),
+      );
+      closeModalBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+      modalOkBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+
+      // Scroll helpers
+      const scrollResultsBtn = document.getElementById("scroll-results-btn");
+      const resultsColumn = document.getElementById("results-column");
+      if (scrollResultsBtn && resultsColumn) {
+        scrollResultsBtn.addEventListener("click", () => {
+          resultsColumn.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+
+      const mobileScrollBtn = document.getElementById(
+        "mobile-scroll-results-btn",
+      );
+      const heroSummaryCard = document.getElementById("hero-summary-card");
+      if (mobileScrollBtn && heroSummaryCard) {
+        mobileScrollBtn.addEventListener("click", () => {
+          heroSummaryCard.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+
+      // Mobile sticky bar scroll check
+      const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+      if (mobileStickyBar && heroSummaryCard) {
+        const handleScroll = () => {
+          const rect = heroSummaryCard.getBoundingClientRect();
+          if (rect.top <= window.innerHeight - 80) {
+            mobileStickyBar.style.transform = "translateY(100%)";
+          } else {
+            mobileStickyBar.style.transform = "translateY(0)";
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+      }
+
+      // Initial run
+      calculate();
+    });
+  </script>
 </Layout>
