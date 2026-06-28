@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "SIP Return Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Calculate prospective maturity returns on systematic investment plans over selected periods.";
+const description = "Calculate prospective returns and final maturity value on Systematic Investment Plans (SIP) with annual step-up contribution growth and lump-sum top-up options.";
 ---
 
 <Layout 
@@ -13,78 +13,1394 @@ const description = "Calculate prospective maturity returns on systematic invest
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SIP Return Calculator",
+      "url": "https://boardtools.app/tools/finance/sip-return",
+      "description": "Premium interactive Systematic Investment Plan (SIP) return calculator supporting annual step-up percentages, lump-sum top-ups, CSV/Excel exports, and dynamic what-if sensitivity comparisons.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12">
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1 class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary">
           {name}
         </h1>
         <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How SIP calculator works"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Toolbar: Reset Button -->
+    <div class="flex items-center justify-start border-b border-hairline pb-3">
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left: Interactive Form (7 Columns) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2 class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Investment Parameters
+          </h2>
+
+          <!-- Currency & Initial Settings Row -->
+          <div class="flex items-center justify-between">
+            <label for="currency-select" class="text-xs font-semibold text-charcoal">Select Currency</label>
+            <select
+              id="currency-select"
+              class="text-xs font-semibold py-0.5 px-2 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+              aria-label="Currency Select"
+            >
+              <option value="INR" selected>₹ INR</option>
+              <option value="USD">$ USD</option>
+              <option value="CAD">$ CAD</option>
+              <option value="GBP">£ GBP</option>
+              <option value="AUD">$ AUD</option>
+              <option value="EUR">€ EUR</option>
+              <option value="Custom">Custom / Other</option>
+            </select>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
-          </button>
+
+          <!-- Custom Currency Inputs (Hidden by default) -->
+          <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
+              <input type="text" id="custom-currency-symbol" value="₹" class="text-input" placeholder="e.g. $, £, €, ₹" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
+              <input type="text" id="custom-currency-code" value="INR" class="text-input" placeholder="e.g. USD, GBP, EUR, INR" />
+            </div>
+          </div>
+
+          <!-- Monthly Investment Slider & Input -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Monthly Investment</span>
+              <span class="currency-label text-stone font-semibold">INR (₹)</span>
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="monthly-amt-range"
+                min="500"
+                max="1000000"
+                value="25000"
+                step="500"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Monthly Investment Slider"
+              />
+              <div class="relative w-28 shrink-0">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">₹</span>
+                <input
+                  type="number"
+                  id="monthly-amt-input"
+                  min="500"
+                  max="10000000"
+                  value="25000"
+                  step="500"
+                  class="text-input pl-6 pr-2 py-1 text-xs text-right font-mono h-8 w-full"
+                  inputmode="numeric"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Expected Annual Return Rate Slider & Input -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Expected Annual Return Rate</span>
+              <span id="rate-display-val" class="font-mono text-stone font-bold">12.00%</span>
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="rate-range"
+                min="1"
+                max="30"
+                value="12"
+                step="0.1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Expected Annual Return Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="rate-input"
+                  min="1"
+                  max="30"
+                  value="12"
+                  step="0.05"
+                  class="text-input pr-5 py-1 text-xs text-center font-mono h-8 w-full"
+                  inputmode="decimal"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Investment Duration (Years) Slider & Input -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Investment Duration</span>
+              <span id="duration-display-val" class="font-mono text-stone font-bold">10 years (120 months)</span>
+            </label>
+            <div class="flex items-center gap-3">
+              <input
+                type="range"
+                id="duration-range"
+                min="1"
+                max="40"
+                value="10"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Investment Duration Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="duration-input"
+                  min="1"
+                  max="40"
+                  value="10"
+                  step="1"
+                  class="text-input pr-7 py-1 text-xs text-center font-mono h-8 w-full"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">yrs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Collapsible Section (Step-up, Lump Sum, Compounding Freq) -->
+          <div class="border-t border-hairline pt-4 mt-2">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Parameters (Step-up, Lump sum, Frequency)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div
+              id="advanced-panel"
+              class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
+            >
+              <!-- Step-up SIP Section -->
+              <div class="flex flex-col gap-2 p-3 bg-surface rounded-xl border border-hairline">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-charcoal">Enable Annual Step-up Contribution?</span>
+                  <input
+                    type="checkbox"
+                    id="enable-step-up"
+                    class="accent-brand-blue w-4 h-4 cursor-pointer"
+                  />
+                </div>
+                <div id="step-up-controls" class="hidden flex-col gap-2 pt-2 border-t border-hairline-soft animate-fade-in-up">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[11px] font-semibold text-slate">Annual Step-up Increment</label>
+                    <span id="step-up-pct-val" class="text-xs font-mono font-bold text-stone">10%</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <input
+                      type="range"
+                      id="step-up-pct-range"
+                      min="1"
+                      max="50"
+                      value="10"
+                      step="1"
+                      class="w-full cursor-pointer accent-brand-blue"
+                      aria-label="Annual Step up slider"
+                    />
+                    <div class="relative w-16 shrink-0">
+                      <input
+                        type="number"
+                        id="step-up-pct-input"
+                        min="1"
+                        max="50"
+                        value="10"
+                        class="text-input pr-5 py-1 text-xs text-center font-mono h-8 w-full"
+                        inputmode="numeric"
+                      />
+                      <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">%</span>
+                    </div>
+                  </div>
+                  <p class="text-[10px] text-stone leading-relaxed">
+                    Automatically increases your monthly investment contribution by this percentage once every year.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Lump Sum Top-up -->
+              <div class="flex flex-col gap-1.5">
+                <label for="lump-sum-input" class="text-[11px] font-semibold text-slate flex justify-between">
+                  <span>One-time Lump Sum Top-up (Initial Investment)</span>
+                  <span class="currency-label text-stone">INR (₹)</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">₹</span>
+                  <input
+                    type="number"
+                    id="lump-sum-input"
+                    value="0"
+                    min="0"
+                    max="100000000"
+                    step="5000"
+                    class="text-input pl-6 pr-2 font-mono text-xs w-full"
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+
+              <!-- Compounding Frequency -->
+              <div class="flex flex-col gap-1.5">
+                <label for="compounding-select" class="text-[11px] font-semibold text-slate">Compounding Frequency</label>
+                <select id="compounding-select" class="text-input py-1 text-xs font-medium">
+                  <option value="monthly" selected>Monthly Compounding (Standard for Mutual Funds)</option>
+                  <option value="yearly">Yearly Compounding</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
+      <!-- Right: Guide Panel (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
         <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+          <h3 class="font-display font-semibold text-base text-primary">SIP Calculation Guide</h3>
+          <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
+            <ol class="list-decimal pl-4 flex flex-col gap-1.5">
+              <li><strong>Set investment parameters:</strong> Adjust the monthly SIP contribution amount, duration, and target interest rate using the sliders or direct inputs.</li>
+              <li><strong>Toggle Advanced Options</strong> to include an annual step-up increment matching your salary increases or a one-time lump-sum top-up at the start.</li>
+              <li><strong>Verify outputs below</strong> instantly: review total contributions, returns generated, and final maturity wealth.</li>
+              <li><strong>Export or copy results</strong> using the buttons in the breakdown section. Adjust live parameters in the What-If block.</li>
+            </ol>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
+        <!-- Privacy Assurance Card -->
         <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY ASSURED</span>
+          <h3 class="font-display font-semibold text-base text-primary">Private Client-Side Sandbox</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            All calculation engines, data tables, and variables process strictly inside your web browser sandbox. No user inputs are ever logged, sent, or saved online.
           </p>
         </div>
       </div>
     </div>
+
+    <!-- Results Section -->
+    <div id="results-column" class="flex flex-col gap-6 mt-8 border-t border-hairline pt-8">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display font-semibold text-2xl text-primary flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"></span>
+          Returns Summary & Maturity Value
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left: Financial Figures (6 Columns) -->
+        <div class="lg:col-span-6 card-base flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-success-accent/10 rounded-full blur-3xl"></div>
+          
+          <div class="flex flex-col gap-4 z-10">
+            <div>
+              <span class="text-xs font-bold text-slate uppercase tracking-wider block">Estimated Maturity Value</span>
+              <div id="maturity-display" class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono">
+                ₹0
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 border-t border-hairline pt-4 mt-2">
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Total Invested Amount</span>
+                <span id="invested-display" class="font-display font-semibold text-base text-primary font-mono select-all">₹0</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Estimated Wealth Gained</span>
+                <span id="returns-display" class="font-display font-semibold text-base text-success-accent font-mono select-all">₹0</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col border-t border-hairline pt-4">
+              <span class="text-[10px] uppercase font-bold text-slate">Target Completion Date</span>
+              <span id="completion-date-display" class="font-display font-semibold text-base text-primary">June 2036</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Donut SVG Chart (6 Columns) -->
+        <div class="lg:col-span-6 card-base grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+          <div class="sm:col-span-5 flex flex-col items-center justify-center min-h-[160px]">
+            <div class="relative w-40 h-40">
+              <svg id="donut-svg" class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" stroke="var(--color-hairline)" stroke-width="12" fill="transparent"></circle>
+                <g id="donut-segments"></g>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span class="text-[9px] text-stone font-semibold uppercase">Wealth Ratio</span>
+                <span id="donut-percent" class="font-display font-bold text-lg text-primary">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legends -->
+          <div class="sm:col-span-7 flex flex-col gap-3">
+            <h3 class="text-xs font-semibold text-slate uppercase tracking-wider pb-1 border-b border-hairline-soft">
+              Portfolio Composition
+            </h3>
+            <ul class="flex flex-col gap-2">
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+                  <span class="text-charcoal font-medium">Total Invested</span>
+                </span>
+                <span id="legend-invested-val" class="font-mono font-semibold">₹0 (0%)</span>
+              </li>
+              <li class="flex items-center justify-between text-xs">
+                <span class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-success-accent"></span>
+                  <span class="text-charcoal font-medium">Estimated Wealth Gained</span>
+                </span>
+                <span id="legend-returns-val" class="font-mono font-semibold">₹0 (0%)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule & Detailed Table Card -->
+      <div class="card-base flex flex-col gap-4 p-4 sm:p-6 mt-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2">
+          <h3 class="font-display font-semibold text-base text-primary">Year-by-Year Growth Breakdown</h3>
+          <div class="grid grid-cols-3 gap-1.5 sm:flex sm:items-center sm:gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              id="csv-export-btn"
+              class="inline-flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-semibold px-2 sm:px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle w-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              <span><span class="hidden sm:inline">Export </span>CSV</span>
+            </button>
+            <button
+              type="button"
+              id="excel-export-btn"
+              class="inline-flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-semibold px-2 sm:px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle w-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <span><span class="hidden sm:inline">Export </span>Excel</span>
+            </button>
+            <button
+              type="button"
+              id="copy-results-btn"
+              class="inline-flex items-center justify-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-semibold px-2 sm:px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle w-full"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+              </svg>
+              <span>Copy<span class="hidden sm:inline"> Results</span></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono">
+                <th class="py-2.5 px-3">Year</th>
+                <th class="py-2.5 px-3 text-right">Monthly Investment</th>
+                <th class="py-2.5 px-3 text-right">Cumulative Invested</th>
+                <th class="py-2.5 px-3 text-right">Wealth Gained</th>
+                <th class="py-2.5 px-3 text-right">Year-End Balance</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-table-body">
+              <!-- Dynamically populated year-by-year schedule -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Live Sensitivity / What-if block -->
+      <div class="card-base flex flex-col gap-4 p-5 sm:p-6 mt-4">
+        <h3 class="font-display font-semibold text-base text-primary">What-If / Sensitivity Analysis</h3>
+        <p class="text-xs text-slate">See how adjusting key variables impacts your final maturity value compared to your baseline plan.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 border-t border-hairline-soft pt-4">
+          <!-- Adjust investment slider -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex justify-between text-xs font-semibold">
+              <span>What-If Monthly Investment</span>
+              <span id="whatif-monthly-display" class="font-mono text-brand-blue">₹0</span>
+            </div>
+            <input
+              type="range"
+              id="whatif-monthly-slider"
+              min="500"
+              max="200000"
+              step="500"
+              value="25000"
+              class="w-full cursor-pointer accent-brand-blue"
+            />
+          </div>
+
+          <!-- Adjust expected rate slider -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex justify-between text-xs font-semibold">
+              <span>What-If Expected Return Rate</span>
+              <span id="whatif-rate-display" class="font-mono text-brand-blue">0.0%</span>
+            </div>
+            <input
+              type="range"
+              id="whatif-rate-slider"
+              min="1"
+              max="30"
+              step="0.2"
+              value="12"
+              class="w-full cursor-pointer accent-brand-blue"
+            />
+          </div>
+        </div>
+
+        <!-- What if results row -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-hairline-soft pt-4 mt-2 font-mono text-xs">
+          <div class="flex flex-col">
+            <span class="text-[10px] text-stone uppercase font-bold">New Maturity Value</span>
+            <span id="whatif-maturity-val" class="font-semibold text-sm text-primary">₹0</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] text-stone uppercase font-bold">New Total Invested</span>
+            <span id="whatif-invested-val" class="font-semibold text-sm text-slate">₹0</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] text-stone uppercase font-bold">Maturity Difference</span>
+            <span id="whatif-diff-val" class="font-semibold text-sm text-success-accent">₹0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Private Execution Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 mt-6">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase font-bold text-stone">Maturity Value</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">₹0</span>
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">How the SIP Return Engine Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer font-bold"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. SIP Future Value Compounding</h4>
+        <p>
+          A Systematic Investment Plan (SIP) allows recurring contributions. By default, standard financial plans compound returns monthly since contributions are monthly.
+          Our standard engine calculates future value at the start of each month (annuity due) using:
+        </p>
+        <div class="p-2.5 bg-surface font-mono rounded-lg border border-hairline text-center text-primary">
+          FV = P &times; [ (1 + i)<sup>n</sup> - 1 ] &times; (1 + i) / i
+        </div>
+        <p>
+          Where <strong>P</strong> is the monthly investment, <strong>i</strong> is the monthly interest rate (r / 12 / 100), and <strong>n</strong> is the number of months.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Annual Step-up Calculations</h4>
+        <p>
+          A step-up SIP increases your monthly contribution annually. This reflects real-world career promotions and wage increments.
+          Since the monthly investment changes every 12 months, our engine uses a monthly step-simulation loop:
+        </p>
+        <p class="italic">
+          For each month: the contribution increases by the step-up percent at each 12-month interval boundary, and standard compounding returns apply:
+          <code>balance = (balance + monthlyContribution) * (1 + monthlyRate)</code>.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Compounding Frequency Alternatives</h4>
+        <p>
+          You can toggle the compounding frequency. Standard mutual funds assume monthly, but selecting Yearly Compounding converts the rate to a yearly compounding equivalent before applying monthly contributions.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Estimates and Market Risk Disclaimer</h4>
+        <p class="text-stone">
+          Calculations are mathematical estimates assuming constant returns. Real mutual fund or equity returns are subject to volatility, inflation, and market risks.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Script block for client logic -->
+  <script>
+    // Inputs
+    const currencySelect = document.getElementById("currency-select") as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById("custom-currency-symbol") as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById("custom-currency-code") as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById("custom-currency-container");
+
+    const monthlyAmtRange = document.getElementById("monthly-amt-range") as HTMLInputElement;
+    const monthlyAmtInput = document.getElementById("monthly-amt-input") as HTMLInputElement;
+
+    const rateRange = document.getElementById("rate-range") as HTMLInputElement;
+    const rateInput = document.getElementById("rate-input") as HTMLInputElement;
+    const rateDisplayVal = document.getElementById("rate-display-val");
+
+    const durationRange = document.getElementById("duration-range") as HTMLInputElement;
+    const durationInput = document.getElementById("duration-input") as HTMLInputElement;
+    const durationDisplayVal = document.getElementById("duration-display-val");
+
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+
+    const enableStepUp = document.getElementById("enable-step-up") as HTMLInputElement;
+    const stepUpControls = document.getElementById("step-up-controls");
+    const stepUpPctRange = document.getElementById("step-up-pct-range") as HTMLInputElement;
+    const stepUpPctInput = document.getElementById("step-up-pct-input") as HTMLInputElement;
+    const stepUpPctVal = document.getElementById("step-up-pct-val");
+
+    const lumpSumInput = document.getElementById("lump-sum-input") as HTMLInputElement;
+    const compoundingSelect = document.getElementById("compounding-select") as HTMLSelectElement;
+
+    // Outputs
+    const maturityDisplay = document.getElementById("maturity-display");
+    const investedDisplay = document.getElementById("invested-display");
+    const returnsDisplay = document.getElementById("returns-display");
+    const completionDateDisplay = document.getElementById("completion-date-display");
+
+    // Donut SVG
+    const donutSegments = document.getElementById("donut-segments");
+    const donutPercent = document.getElementById("donut-percent");
+    const legendInvestedVal = document.getElementById("legend-invested-val");
+    const legendReturnsVal = document.getElementById("legend-returns-val");
+
+    // Actions & What-if
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const excelExportBtn = document.getElementById("excel-export-btn");
+    const copyResultsBtn = document.getElementById("copy-results-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const scheduleTableBody = document.getElementById("schedule-table-body");
+
+    const whatifMonthlySlider = document.getElementById("whatif-monthly-slider") as HTMLInputElement;
+    const whatifMonthlyDisplay = document.getElementById("whatif-monthly-display");
+    const whatifRateSlider = document.getElementById("whatif-rate-slider") as HTMLInputElement;
+    const whatifRateDisplay = document.getElementById("whatif-rate-display");
+    const whatifMaturityVal = document.getElementById("whatif-maturity-val");
+    const whatifInvestedVal = document.getElementById("whatif-invested-val");
+    const whatifDiffVal = document.getElementById("whatif-diff-val");
+
+    // Modal
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // State Variables
+    let currentCurrency = "INR";
+    let currentCurrencySymbol = "₹";
+    let currentCurrencyCode = "INR";
+
+    let calculatedInvested = 0;
+    let calculatedMaturity = 0;
+    let scheduleData: any[] = [];
+
+    let copyTimeout: any = null;
+    let copyOriginalText = "";
+
+    // Currency updates
+    function updateCurrencyFormatting() {
+      if (!currencySelect) return;
+      const val = currencySelect.value;
+      currentCurrency = val;
+
+      if (val === "INR") {
+        currentCurrencySymbol = "₹";
+        currentCurrencyCode = "INR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "USD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "USD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "CAD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "CAD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "GBP") {
+        currentCurrencySymbol = "£";
+        currentCurrencyCode = "GBP";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "AUD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "AUD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "EUR") {
+        currentCurrencySymbol = "€";
+        currentCurrencyCode = "EUR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (val === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "₹";
+        currentCurrencyCode = customCurrencyCodeInput?.value || "INR";
+      }
+
+      const symbols = document.querySelectorAll(".currency-symbol");
+      const labels = document.querySelectorAll(".currency-label");
+      
+      const symbolChar = currentCurrencySymbol;
+      const labelText = `${currentCurrency} (${symbolChar})`;
+
+      symbols.forEach(el => el.textContent = symbolChar);
+      labels.forEach(el => el.textContent = labelText);
+
+      // Adjust input bounds/steps dynamically
+      if (currentCurrencyCode === "INR") {
+        monthlyAmtRange.max = "1000000";
+        monthlyAmtInput.max = "1000000";
+        monthlyAmtRange.step = "500";
+        whatifMonthlySlider.max = "1000000";
+        whatifMonthlySlider.step = "500";
+        lumpSumInput.max = "100000000";
+        lumpSumInput.step = "5000";
+      } else {
+        monthlyAmtRange.max = "100000";
+        monthlyAmtInput.max = "100000";
+        monthlyAmtRange.step = "50";
+        whatifMonthlySlider.max = "100000";
+        whatifMonthlySlider.step = "50";
+        lumpSumInput.max = "10000000";
+        lumpSumInput.step = "250";
+      }
+    }
+
+    // High fidelity formatter
+    function formatCurrency(val: number): string {
+      const locale = currentCurrencyCode === "INR" ? "en-IN" : "en-US";
+      const isINR = currentCurrencyCode === "INR";
+      return (
+        currentCurrencySymbol +
+        val.toLocaleString(locale, {
+          minimumFractionDigits: isINR ? 0 : 2,
+          maximumFractionDigits: isINR ? 0 : 2
+        })
+      );
+    }
+
+    // Core Compounding Engine
+    function runSIPEngine(
+      baseSIP: number,
+      annualRate: number,
+      totalYears: number,
+      stepUpPct: number,
+      lumpSum: number,
+      compoundingFreq: string
+    ) {
+      const totalMonths = totalYears * 12;
+      let balance = lumpSum;
+      let totalInvested = lumpSum;
+      let currentMonthlyContrib = baseSIP;
+
+      // Rate conversions
+      // Standard monthly compounding: monthly rate is annualRate / 12
+      // Yearly compounding frequency: monthly rate = (1 + annualRate)^(1/12) - 1
+      let monthlyRate = 0;
+      if (compoundingFreq === "monthly") {
+        monthlyRate = annualRate / 12 / 100;
+      } else {
+        monthlyRate = Math.pow(1 + annualRate / 100, 1 / 12) - 1;
+      }
+
+      const yearBreakdown = [];
+      let yearInvested = lumpSum;
+
+      for (let month = 1; month <= totalMonths; month++) {
+        // Apply annual step-up increment boundary
+        if (month > 1 && (month - 1) % 12 === 0) {
+          currentMonthlyContrib = currentMonthlyContrib * (1 + stepUpPct / 100);
+        }
+
+        // Add monthly investment to contribution totals
+        totalInvested += currentMonthlyContrib;
+        yearInvested += currentMonthlyContrib;
+
+        // Compound returns at beginning of month (standard annuity due)
+        balance = (balance + currentMonthlyContrib) * (1 + monthlyRate);
+
+        // Record yearly metrics
+        if (month % 12 === 0) {
+          const yearNum = month / 12;
+          const yearEndBal = balance;
+          const yearReturns = Math.max(0, yearEndBal - totalInvested);
+
+          yearBreakdown.push({
+            year: yearNum,
+            monthlyInvestment: currentMonthlyContrib,
+            cumulativeInvested: totalInvested,
+            wealthGained: yearReturns,
+            balance: yearEndBal
+          });
+        }
+      }
+
+      return {
+        totalInvested: Math.round(totalInvested),
+        maturityValue: Math.round(balance),
+        yearsBreakdown: yearBreakdown
+      };
+    }
+
+    // Main Calculation orchestrator
+    function calculate() {
+      // Clamping inputs to valid (non-negative) numbers
+      if (parseFloat(monthlyAmtInput.value) < 0) monthlyAmtInput.value = "0";
+      if (parseFloat(durationInput.value) < 0) durationInput.value = "0";
+      if (parseFloat(lumpSumInput.value) < 0) lumpSumInput.value = "0";
+      if (parseFloat(stepUpPctInput.value) < 0) stepUpPctInput.value = "0";
+
+      const baseSIP = Math.max(0, parseFloat(monthlyAmtInput.value) || 0);
+      const rate = Math.max(0.1, parseFloat(rateInput.value) || 0.1);
+      const years = Math.max(1, parseInt(durationInput.value, 10) || 1);
+      
+      const isStepUp = enableStepUp.checked;
+      const stepUpPct = isStepUp ? (parseFloat(stepUpPctInput.value) || 0) : 0;
+      const lumpSum = Math.max(0, parseFloat(lumpSumInput.value) || 0);
+      const frequency = compoundingSelect.value;
+
+      // Run engine
+      const results = runSIPEngine(baseSIP, rate, years, stepUpPct, lumpSum, frequency);
+
+      calculatedInvested = results.totalInvested;
+      calculatedMaturity = results.maturityValue;
+      scheduleData = results.yearsBreakdown;
+
+      const estimatedReturns = Math.max(0, calculatedMaturity - calculatedInvested);
+
+      // DOM Outputs
+      if (maturityDisplay) maturityDisplay.textContent = formatCurrency(calculatedMaturity);
+      if (investedDisplay) investedDisplay.textContent = formatCurrency(calculatedInvested);
+      if (returnsDisplay) returnsDisplay.textContent = formatCurrency(estimatedReturns);
+
+      // Mobile sticky HUD
+      const mobileHUDVal = document.getElementById("mobile-summary-value");
+      if (mobileHUDVal) mobileHUDVal.textContent = formatCurrency(calculatedMaturity);
+
+      // Estimated Date
+      const d = new Date();
+      d.setFullYear(d.getFullYear() + years);
+      const formatOptions: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
+      if (completionDateDisplay) completionDateDisplay.textContent = d.toLocaleDateString('en-US', formatOptions);
+
+      // Sync sensitivity default values if not interacted
+      if (document.activeElement !== whatifMonthlySlider && document.activeElement !== whatifRateSlider) {
+        whatifMonthlySlider.value = baseSIP.toString();
+        whatifRateSlider.value = rate.toString();
+      }
+
+      // Render chart, breakdown, and sensitivity
+      renderDonutChart(calculatedInvested, estimatedReturns);
+      renderTable();
+      calculateWhatIf();
+      saveState();
+    }
+
+    // Donut SVG Render
+    function renderDonutChart(invested: number, returns: number) {
+      if (!donutSegments) return;
+
+      const total = invested + returns;
+      if (total === 0) return;
+
+      const investedPct = (invested / total) * 100;
+      const returnsPct = (returns / total) * 100;
+
+      if (legendInvestedVal) legendInvestedVal.textContent = `${formatCurrency(invested)} (${investedPct.toFixed(1)}%)`;
+      if (legendReturnsVal) legendReturnsVal.textContent = `${formatCurrency(returns)} (${returnsPct.toFixed(1)}%)`;
+      if (donutPercent) donutPercent.textContent = `${returnsPct.toFixed(0)}%`;
+
+      const radius = 40;
+      const circumference = 2 * Math.PI * radius;
+      
+      const slices = [
+        { pct: investedPct, color: "var(--color-brand-blue, #4262ff)" },
+        { pct: returnsPct, color: "var(--color-success-accent, #00b473)" }
+      ];
+
+      let accumulatedPercent = 0;
+      let svgHtml = "";
+
+      slices.forEach(slice => {
+        if (slice.pct <= 0) return;
+        const strokeDashArray = `${(slice.pct / 100) * circumference} ${circumference}`;
+        const strokeDashOffset = -((accumulatedPercent / 100) * circumference);
+
+        svgHtml += `
+          <circle
+            cx="50"
+            cy="50"
+            r="${radius}"
+            stroke="${slice.color}"
+            stroke-width="12"
+            fill="transparent"
+            stroke-dasharray="${strokeDashArray}"
+            stroke-dashoffset="${strokeDashOffset}"
+            stroke-linecap="round"
+            class="transition-all duration-300"
+          />
+        `;
+        accumulatedPercent += slice.pct;
+      });
+
+      donutSegments.innerHTML = svgHtml;
+    }
+
+    // Render Growth Table
+    function renderTable() {
+      if (!scheduleTableBody) return;
+      let html = "";
+
+      scheduleData.forEach(row => {
+        html += `
+          <tr class="border-b border-hairline-soft font-mono text-[11px] text-slate hover:bg-surface-soft transition-all">
+            <td class="py-2.5 px-3 font-semibold text-primary">Year ${row.year}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(row.monthlyInvestment)}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(row.cumulativeInvested)}</td>
+            <td class="py-2.5 px-3 text-right text-success-accent">${formatCurrency(row.wealthGained)}</td>
+            <td class="py-2.5 px-3 text-right text-primary font-bold">${formatCurrency(row.balance)}</td>
+          </tr>
+        `;
+      });
+
+      scheduleTableBody.innerHTML = html;
+    }
+
+    // What If Calculation
+    function calculateWhatIf() {
+      const whatifMonthly = parseFloat(whatifMonthlySlider.value) || 0;
+      const whatifRate = parseFloat(whatifRateSlider.value) || 0.1;
+      const years = Math.max(1, parseInt(durationInput.value, 10) || 1);
+      const isStepUp = enableStepUp.checked;
+      const stepUpPct = isStepUp ? (parseFloat(stepUpPctInput.value) || 0) : 0;
+      const lumpSum = Math.max(0, parseFloat(lumpSumInput.value) || 0);
+      const frequency = compoundingSelect.value;
+
+      const results = runSIPEngine(whatifMonthly, whatifRate, years, stepUpPct, lumpSum, frequency);
+
+      if (whatifMonthlyDisplay) whatifMonthlyDisplay.textContent = formatCurrency(whatifMonthly);
+      if (whatifRateDisplay) whatifRateDisplay.textContent = `${whatifRate.toFixed(1)}%`;
+
+      if (whatifMaturityVal) whatifMaturityVal.textContent = formatCurrency(results.maturityValue);
+      if (whatifInvestedVal) whatifInvestedVal.textContent = formatCurrency(results.totalInvested);
+
+      const diff = results.maturityValue - calculatedMaturity;
+      if (whatifDiffVal) {
+        const sign = diff >= 0 ? "+" : "";
+        whatifDiffVal.textContent = sign + formatCurrency(diff);
+        if (diff >= 0) {
+          whatifDiffVal.className = "font-semibold text-sm text-success-accent";
+        } else {
+          whatifDiffVal.className = "font-semibold text-sm text-brand-red-dark";
+        }
+      }
+    }
+
+    // Export Helpers
+    function exportToCSV() {
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Year,Monthly Investment,Cumulative Invested,Wealth Gained,Year-End Balance\r\n";
+
+      scheduleData.forEach(row => {
+        csvContent += `${row.year},${row.monthlyInvestment},${row.cumulativeInvested},${row.wealthGained},${row.balance}\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `SIP_Return_Schedule_${durationInput.value}y_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToExcel() {
+      if (scheduleData.length === 0) return;
+      const termVal = durationInput.value;
+      const currencySymbol = currentCurrencySymbol;
+      
+      let tableRows = "";
+      scheduleData.forEach(row => {
+        tableRows += `
+          <tr>
+            <td>Year ${row.year}</td>
+            <td>${row.monthlyInvestment}</td>
+            <td>${row.cumulativeInvested}</td>
+            <td>${row.wealthGained}</td>
+            <td>${row.balance}</td>
+          </tr>
+        `;
+      });
+
+      const html = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>SIP Breakdown</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+          <![endif]-->
+          <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #e2e8f0; padding: 8px; font-family: sans-serif; font-size: 12px; }
+            th { background-color: #f7fafc; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr style="font-size: 14px; font-weight: bold; background-color: #edf2f7;">
+              <td colspan="5">SIP Returns Schedule (${termVal} Years, Currency: ${currentCurrency} ${currencySymbol})</td>
+            </tr>
+            <tr style="background-color: #f7fafc; font-weight: bold;">
+              <td>Year</td>
+              <td>Monthly Investment</td>
+              <td>Cumulative Invested</td>
+              <td>Wealth Gained</td>
+              <td>Year-End Balance</td>
+            </tr>
+            ${tableRows}
+          </table>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `SIP_Return_Schedule_${termVal}y_${Date.now()}.xls`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Copy Results trigger
+    function copyResults() {
+      const summaryText = 
+`SIP Return Calculation Summary
+--------------------------------
+Monthly Investment: ${formatCurrency(parseFloat(monthlyAmtInput.value) || 0)}
+Expected Returns Rate: ${parseFloat(rateInput.value).toFixed(2)}%
+Duration: ${durationInput.value} years
+Annual Step-up: ${enableStepUp.checked ? stepUpPctInput.value + '%' : 'Disabled'}
+Initial Lump Sum: ${formatCurrency(parseFloat(lumpSumInput.value) || 0)}
+
+Maturity Value: ${formatCurrency(calculatedMaturity)}
+Total Invested: ${formatCurrency(calculatedInvested)}
+Wealth Gained: ${formatCurrency(Math.max(0, calculatedMaturity - calculatedInvested))}
+Generated by BoardTools SIP Return Calculator`;
+
+      navigator.clipboard.writeText(summaryText)
+        .then(() => {
+          if (copyResultsBtn) {
+            if (copyTimeout) {
+              clearTimeout(copyTimeout);
+            } else {
+              copyOriginalText = copyResultsBtn.innerHTML;
+            }
+            copyResultsBtn.innerHTML = "✓ Copied!";
+            copyTimeout = setTimeout(() => {
+              copyResultsBtn.innerHTML = copyOriginalText;
+              copyTimeout = null;
+            }, 2000);
+          }
+        })
+        .catch(err => {
+          console.error("Failed to copy text", err);
+        });
+    }
+
+    // Range Sync
+    function syncRangeInput(rangeEl: HTMLInputElement, inputEl: HTMLInputElement, labelEl: HTMLElement | null, formatter: (v: number) => string) {
+      rangeEl.addEventListener("input", (e) => {
+        const val = (e.target as HTMLInputElement).value;
+        inputEl.value = val;
+        if (labelEl) labelEl.textContent = formatter(parseFloat(val));
+        calculate();
+      });
+
+      inputEl.addEventListener("input", (e) => {
+        let val = parseFloat((e.target as HTMLInputElement).value) || 0;
+        const min = parseFloat(inputEl.min || "0");
+        const max = parseFloat(inputEl.max || "100");
+        val = Math.max(min, Math.min(max, val));
+        rangeEl.value = val.toString();
+        if (labelEl) labelEl.textContent = formatter(val);
+        calculate();
+      });
+    }
+
+    // Local Storage State
+    function loadState() {
+      const getSafeItem = (key: string): string | null => {
+        if (typeof localStorage === 'undefined') return null;
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
+      };
+
+      const savedAmt = getSafeItem("sip-amt");
+      const savedRate = getSafeItem("sip-rate");
+      const savedDuration = getSafeItem("sip-duration");
+      const savedCurrency = getSafeItem("sip-currency");
+      const savedCustomSymbol = getSafeItem("sip-custom-symbol");
+      const savedCustomCode = getSafeItem("sip-custom-code");
+      const savedStepUpEnabled = getSafeItem("sip-stepup-enabled");
+      const savedStepUpVal = getSafeItem("sip-stepup-val");
+      const savedLump = getSafeItem("sip-lump");
+      const savedFreq = getSafeItem("sip-freq");
+
+      if (savedCurrency && currencySelect) {
+        currencySelect.value = savedCurrency;
+      }
+      if (savedCustomSymbol && customCurrencySymbolInput) {
+        customCurrencySymbolInput.value = savedCustomSymbol;
+      }
+      if (savedCustomCode && customCurrencyCodeInput) {
+        customCurrencyCodeInput.value = savedCustomCode;
+      }
+      updateCurrencyFormatting();
+
+      if (savedAmt !== null) {
+        monthlyAmtInput.value = savedAmt;
+        monthlyAmtRange.value = savedAmt;
+      }
+      if (savedRate !== null) {
+        rateInput.value = savedRate;
+        rateRange.value = savedRate;
+        if (rateDisplayVal) rateDisplayVal.textContent = `${parseFloat(savedRate).toFixed(2)}%`;
+      }
+      if (savedDuration !== null) {
+        durationInput.value = savedDuration;
+        durationRange.value = savedDuration;
+        if (durationDisplayVal) durationDisplayVal.textContent = `${savedDuration} years (${parseInt(savedDuration) * 12} months)`;
+      }
+      if (savedStepUpEnabled !== null) {
+        enableStepUp.checked = savedStepUpEnabled === "true";
+      }
+      if (savedStepUpVal !== null) {
+        stepUpPctInput.value = savedStepUpVal;
+        stepUpPctRange.value = savedStepUpVal;
+        if (stepUpPctVal) stepUpPctVal.textContent = `${savedStepUpVal}%`;
+      }
+      if (savedLump !== null) {
+        lumpSumInput.value = savedLump;
+      }
+      if (savedFreq && compoundingSelect) {
+        compoundingSelect.value = savedFreq;
+      }
+
+      // Step-up layout state toggle
+      if (enableStepUp.checked) {
+        stepUpControls?.classList.remove("hidden");
+      } else {
+        stepUpControls?.classList.add("hidden");
+      }
+    }
+
+    let saveStateTimeout: any = null;
+    function saveState() {
+      if (saveStateTimeout) clearTimeout(saveStateTimeout);
+      saveStateTimeout = setTimeout(() => {
+        if (typeof localStorage === 'undefined') return;
+        
+        const setSafeItem = (key: string, val: string) => {
+          try {
+            localStorage.setItem(key, val);
+          } catch (e) {}
+        };
+
+        setSafeItem("sip-amt", monthlyAmtInput.value);
+        setSafeItem("sip-rate", rateInput.value);
+        setSafeItem("sip-duration", durationInput.value);
+        setSafeItem("sip-currency", currentCurrency);
+        setSafeItem("sip-custom-symbol", currentCurrencySymbol);
+        setSafeItem("sip-custom-code", currentCurrencyCode);
+        setSafeItem("sip-stepup-enabled", enableStepUp.checked.toString());
+        setSafeItem("sip-stepup-val", stepUpPctInput.value);
+        setSafeItem("sip-lump", lumpSumInput.value);
+        setSafeItem("sip-freq", compoundingSelect.value);
+      }, 400);
+    }
+
+    // Scroll to with offset
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+
+    // Event Bindings
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+
+      // Sliders bindings
+      syncRangeInput(monthlyAmtRange, monthlyAmtInput, null, (v) => v.toString());
+      syncRangeInput(rateRange, rateInput, rateDisplayVal, (v) => `${v.toFixed(2)}%`);
+      syncRangeInput(durationRange, durationInput, durationDisplayVal, (v) => `${v} years (${v * 12} months)`);
+      syncRangeInput(stepUpPctRange, stepUpPctInput, stepUpPctVal, (v) => `${v}%`);
+
+      // Inputs calculate triggers
+      monthlyAmtInput.addEventListener("input", calculate);
+      rateInput.addEventListener("input", calculate);
+      durationInput.addEventListener("input", calculate);
+      lumpSumInput.addEventListener("input", calculate);
+      compoundingSelect.addEventListener("change", calculate);
+
+      // Enable step up toggle action
+      enableStepUp.addEventListener("change", () => {
+        if (enableStepUp.checked) {
+          stepUpControls?.classList.remove("hidden");
+        } else {
+          stepUpControls?.classList.add("hidden");
+        }
+        calculate();
+      });
+
+      // Currency Select
+      currencySelect?.addEventListener("change", () => {
+        updateCurrencyFormatting();
+        calculate();
+      });
+
+      customCurrencySymbolInput?.addEventListener("input", () => {
+        if (currentCurrency === "Custom") {
+          currentCurrencySymbol = customCurrencySymbolInput.value || "₹";
+          updateCurrencyFormatting();
+          calculate();
+        }
+      });
+
+      customCurrencyCodeInput?.addEventListener("input", () => {
+        if (currentCurrency === "Custom") {
+          currentCurrencyCode = customCurrencyCodeInput.value || "INR";
+          updateCurrencyFormatting();
+          calculate();
+        }
+      });
+
+      // Advanced Options Toggle
+      advancedToggleBtn?.addEventListener("click", () => {
+        if (advancedPanel) {
+          const isCollapsed = advancedPanel.classList.contains("max-h-0");
+          if (isCollapsed) {
+            advancedPanel.classList.remove("max-h-0");
+            advancedPanel.classList.add("max-h-[1000px]");
+            advancedChevron?.classList.add("rotate-180");
+          } else {
+            advancedPanel.classList.remove("max-h-[1000px]");
+            advancedPanel.classList.add("max-h-0");
+            advancedChevron?.classList.remove("rotate-180");
+          }
+        }
+      });
+
+      // Sensitivity Sliders bindings
+      whatifMonthlySlider.addEventListener("input", () => {
+        calculateWhatIf();
+      });
+      whatifRateSlider.addEventListener("input", () => {
+        calculateWhatIf();
+      });
+
+      // Export Actions
+      csvExportBtn?.addEventListener("click", exportToCSV);
+      excelExportBtn?.addEventListener("click", exportToExcel);
+      copyResultsBtn?.addEventListener("click", copyResults);
+
+      // Reset action
+      resetBtn?.addEventListener("click", () => {
+        if (typeof localStorage !== 'undefined') {
+          try {
+            ['amt','rate','duration','currency','custom-symbol','custom-code','stepup-enabled','stepup-val','lump','freq'].forEach(k => localStorage.removeItem('sip-' + k));
+          } catch (e) {}
+        }
+
+        monthlyAmtInput.value = "25000";
+        monthlyAmtRange.value = "25000";
+        rateInput.value = "12";
+        rateRange.value = "12";
+        if (rateDisplayVal) rateDisplayVal.textContent = "12.00%";
+        durationInput.value = "10";
+        durationRange.value = "10";
+        if (durationDisplayVal) durationDisplayVal.textContent = "10 years (120 months)";
+        
+        enableStepUp.checked = false;
+        stepUpControls?.classList.add("hidden");
+        stepUpPctInput.value = "10";
+        stepUpPctRange.value = "10";
+        if (stepUpPctVal) stepUpPctVal.textContent = "10%";
+        
+        lumpSumInput.value = "0";
+        compoundingSelect.value = "monthly";
+        
+        if (currencySelect) currencySelect.value = "INR";
+        if (customCurrencySymbolInput) customCurrencySymbolInput.value = "₹";
+        if (customCurrencyCodeInput) customCurrencyCodeInput.value = "INR";
+
+        updateCurrencyFormatting();
+        calculate();
+      });
+
+      // Modal Binds
+      howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+      closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+      modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+      // Mobile sticky bar scroll sync
+      const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+      const resultsColumn = document.getElementById("results-column");
+      if (mobileStickyBar && resultsColumn) {
+        const handleScroll = () => {
+          const rect = resultsColumn.getBoundingClientRect();
+          if (rect.top <= window.innerHeight - 80) {
+            mobileStickyBar.style.transform = "translateY(100%)";
+          } else {
+            mobileStickyBar.style.transform = "translateY(0)";
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+      }
+
+      const mobileScrollBtn = document.getElementById("mobile-scroll-results-btn");
+      if (mobileScrollBtn && resultsColumn) {
+        mobileScrollBtn.addEventListener("click", () => {
+          scrollToElementWithOffset("results-column", 80);
+        });
+      }
+
+      // Initial execution
+      calculate();
+    });
+  </script>
 </Layout>
