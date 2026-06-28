@@ -1,90 +1,1025 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Federal Tax Bracket Calculator";
+const name = "Federal Income Tax Bracket Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Determine your federal marginal income tax brackets and effective tax rate calculations.";
+const description = "Calculate your U.S. federal income tax, marginal tax rate, effective tax rate, and visualize how your income is distributed across tax brackets for the selected tax year.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Federal Income Tax Bracket Calculator",
+      "url": "https://boardtools.app/tools/finance/federal-tax-bracket",
+      "description": "Interactive client-side federal income tax bracket calculator using official inflation-adjusted tax rates, supporting standard/itemized deductions and stacked bar visualization.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12">
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1 class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary">
           {name}
         </h1>
         <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How tax bracket calculator works"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Mode / Action Header -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline pb-3">
+      <div class="flex items-center gap-2">
+        <label for="tax-year" class="text-xs font-bold text-slate uppercase tracking-wider">
+          Tax Year
+        </label>
+        <select
+          id="tax-year"
+          class="text-xs font-semibold bg-canvas border border-hairline text-primary rounded-md py-1 px-2.5 focus:outline-none focus:ring-1 focus:ring-brand-blue cursor-pointer"
+        >
+          <option value="2026" selected>2026 (Filed in 2027)</option>
+          <option value="2025">2025 (Filed in 2026)</option>
+          <option value="2024">2024 (Filed in 2025)</option>
+        </select>
+      </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left: Inputs (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2 class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Income & Filing Details
+          </h2>
+
+          <!-- Filing Status -->
+          <div class="flex flex-col gap-1.5">
+            <label for="filing-status" class="text-xs font-semibold text-charcoal">
+              Filing Status
+            </label>
+            <select id="filing-status" class="text-input" aria-label="Filing Status">
+              <option value="single" selected>Single</option>
+              <option value="mfj">Married Filing Jointly</option>
+              <option value="mfs">Married Filing Separately</option>
+              <option value="hoh">Head of Household</option>
+            </select>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
-          </button>
+
+          <!-- Annual Gross Income -->
+          <div class="flex flex-col gap-1.5">
+            <label for="gross-income" class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Annual Gross Income</span>
+              <span class="text-stone font-normal">USD ($)</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium">$</span>
+              <input
+                type="text"
+                id="gross-income"
+                value="75,000"
+                class="text-input pl-7 font-mono text-sm"
+                inputmode="numeric"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <!-- Pre-Tax Deductions -->
+          <div class="flex flex-col gap-1.5">
+            <label for="pretax-deductions" class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Pre-Tax Deductions (401k, HSA, etc.)</span>
+              <span class="text-stone font-normal">USD ($)</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium">$</span>
+              <input
+                type="text"
+                id="pretax-deductions"
+                value="5,000"
+                class="text-input pl-7 font-mono text-sm"
+                inputmode="numeric"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <!-- Deduction Type Toggle -->
+          <div class="flex flex-col gap-2 pt-2 border-t border-hairline-soft">
+            <div class="flex items-center justify-between text-xs font-semibold text-charcoal">
+              <span>Federal Deduction Method</span>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline">
+                <button
+                  type="button"
+                  id="deduction-toggle-standard"
+                  class="text-[10px] px-3.5 py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+                >
+                  Standard
+                </button>
+                <button
+                  type="button"
+                  id="deduction-toggle-itemized"
+                  class="text-[10px] px-3.5 py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+                >
+                  Itemized
+                </button>
+              </div>
+            </div>
+
+            <!-- Standard Deduction Display -->
+            <div id="standard-deduction-wrapper" class="flex flex-col gap-1">
+              <label for="standard-deduction-amt" class="text-[10px] font-semibold text-slate">Auto-filled Standard Deduction</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium">$</span>
+                <input
+                  type="text"
+                  id="standard-deduction-amt"
+                  value="16,100"
+                  class="text-input pl-7 font-mono text-xs bg-surface text-stone cursor-not-allowed"
+                  disabled
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- Itemized Deduction Input -->
+            <div id="itemized-deduction-wrapper" class="flex flex-col gap-1 hidden">
+              <label for="itemized-deduction-amt" class="text-[10px] font-semibold text-slate">Enter Itemized Deductions</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium">$</span>
+                <input
+                  type="text"
+                  id="itemized-deduction-amt"
+                  value="18,000"
+                  class="text-input pl-7 font-mono text-xs"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div id="deduction-feedback" class="text-[11px] text-stone font-mono mt-1">
+              Total Deductions: $21,100 (reduces your taxable income)
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculation Guide Card -->
+        <div class="card-base bg-surface-soft flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-base text-primary">Deductions and Taxable Income</h3>
+          <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
+            <p>
+              Your tax is not calculated on your total gross income, but on your <strong>taxable income</strong>.
+            </p>
+            <div class="p-3 bg-canvas rounded-lg border border-hairline font-mono text-[11px] text-charcoal flex flex-col gap-1 shadow-subtle">
+              <div class="flex justify-between">
+                <span>Gross Income:</span>
+                <span id="formula-gross">$75,000</span>
+              </div>
+              <div class="flex justify-between text-brand-red-dark">
+                <span>- Pre-Tax Deductions:</span>
+                <span id="formula-pretax">-$5,000</span>
+              </div>
+              <div class="flex justify-between text-brand-red-dark">
+                <span>- Fed Deduction:</span>
+                <span id="formula-fed">-$16,100</span>
+              </div>
+              <div class="flex justify-between border-t border-hairline-strong pt-1 font-bold text-success-accent">
+                <span>= Taxable Income:</span>
+                <span id="formula-taxable">$53,900</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <!-- Right: Results (7 Columns) -->
+      <div id="results-column" class="lg:col-span-7 flex flex-col gap-6">
+        <!-- Results Summary Hero Card -->
+        <div class="card-base flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-success-accent/10 rounded-full blur-3xl"></div>
+          
+          <div class="flex flex-col gap-5 z-10">
+            <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+              <div>
+                <span class="text-xs font-bold text-slate uppercase tracking-wider block">Estimated Federal Tax Owed</span>
+                <div id="tax-owed-display" class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono">
+                  $7,330
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs font-bold text-slate uppercase tracking-wider block">You Keep</span>
+                <div id="you-keep-display" class="font-display font-bold text-3xl sm:text-4xl text-success-accent font-mono">
+                  90.2%
+                </div>
+              </div>
+            </div>
+
+            <!-- Basic stats row -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Effective Rate</span>
+                <span id="effective-rate-display" class="font-display font-semibold text-base text-primary font-mono select-all">9.77%</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5" title="Total Tax Owed divided by Gross Income">Tax / Gross Income</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Marginal Rate</span>
+                <span id="marginal-rate-display" class="font-display font-semibold text-base text-primary font-mono select-all">22.0%</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5" title="The bracket your highest dollar is taxed in">Top Bracket Rate</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">Taxable Income</span>
+                <span id="taxable-income-display" class="font-display font-semibold text-base text-primary font-mono select-all">$53,900</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5">Subject to brackets</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-slate">After-Tax Income</span>
+                <span id="after-tax-display" class="font-display font-semibold text-base text-success-accent font-mono select-all">$67,670</span>
+                <span class="text-[8px] text-stone leading-tight mt-0.5">Gross minus Fed Tax</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Visual Bar Chart Card -->
+        <div class="card-base flex flex-col gap-4">
+          <h3 class="text-xs font-semibold text-slate uppercase tracking-wider pb-1 border-b border-hairline-soft">
+            Income Distribution Across Brackets
+          </h3>
+          <div class="flex flex-col gap-3">
+            <!-- Progress Bar Container -->
+            <div id="bracket-chart-bar" class="w-full h-8 rounded-lg overflow-hidden flex bg-surface border border-hairline shadow-subtle">
+              <!-- JS will inject segments dynamically -->
+            </div>
+            
+            <!-- Legend indicators -->
+            <div id="bracket-chart-legend" class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs pt-1">
+              <!-- JS populated legend -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Bracket Breakdown Table Card -->
+        <div class="card-base flex flex-col gap-4 p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-hairline pb-2">
+            <h3 class="font-display font-semibold text-base text-primary">
+              Detailed Bracket Breakdown
+            </h3>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                id="csv-export-btn"
+                class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle truncate"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+              <button
+                type="button"
+                id="excel-export-btn"
+                class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle truncate"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>Export Excel</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono">
+                  <th class="py-2.5 px-3">Rate</th>
+                  <th class="py-2.5 px-3">Taxable Range</th>
+                  <th class="py-2.5 px-3 text-right">Income in Bracket</th>
+                  <th class="py-2.5 px-3 text-right">Tax Owed</th>
+                </tr>
+              </thead>
+              <tbody id="breakdown-table-body">
+                <!-- JS populated rows -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 mt-6">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span id="mobile-summary-title" class="text-[10px] uppercase font-bold text-stone font-mono">Est. Tax Owed</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">$7,330</span>
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">How Federal Tax Brackets Work</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Progressive Tax System</h4>
+        <p>
+          The United States uses a progressive income tax system. This means that your income is taxed in layers, with higher rates applying to higher segments of income. You do not pay your highest marginal tax rate on your entire income.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Taxable Income vs. Gross Income</h4>
+        <p>
+          Before applying the tax rates, your gross income is reduced by your deductions. You can deduct pre-tax expenses (like traditional 401k or HSA contributions) and either a standard deduction or itemized deductions.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Marginal vs. Effective Rate</h4>
+        <ul class="list-disc pl-4 flex flex-col gap-1">
+          <li><strong>Marginal Tax Rate</strong>: The tax rate applied to the last dollar of your taxable income (your highest bracket).</li>
+          <li><strong>Effective Tax Rate</strong>: The actual percentage of your gross income paid in taxes. Calculated as: <code>Total Tax / Gross Income</code>.</li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">4. Tax Brackets & Inflation</h4>
+        <p>
+          These brackets represent the inflation-adjusted tax tables for the selected calendar year, incorporating the IRS indexation updates.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side script module -->
+  <script>
+    // Tax Bracket Data by Year
+    interface Bracket {
+      rate: number;
+      min: number;
+      max: number; // Use Infinity for the top bracket
+    }
+
+    const BRACKETS_BY_YEAR: Record<string, Record<string, Bracket[]>> = {
+      "2026": {
+        single: [
+          { rate: 0.10, min: 0, max: 12400 },
+          { rate: 0.12, min: 12400, max: 50400 },
+          { rate: 0.22, min: 50400, max: 105700 },
+          { rate: 0.24, min: 105700, max: 201775 },
+          { rate: 0.32, min: 201775, max: 256225 },
+          { rate: 0.35, min: 256225, max: 640600 },
+          { rate: 0.37, min: 640600, max: Infinity }
+        ],
+        mfj: [
+          { rate: 0.10, min: 0, max: 24800 },
+          { rate: 0.12, min: 24800, max: 100800 },
+          { rate: 0.22, min: 100800, max: 211400 },
+          { rate: 0.24, min: 211400, max: 403550 },
+          { rate: 0.32, min: 403550, max: 512450 },
+          { rate: 0.35, min: 512450, max: 768700 },
+          { rate: 0.37, min: 768700, max: Infinity }
+        ],
+        mfs: [
+          { rate: 0.10, min: 0, max: 12400 },
+          { rate: 0.12, min: 12400, max: 50400 },
+          { rate: 0.22, min: 50400, max: 105700 },
+          { rate: 0.24, min: 105700, max: 201775 },
+          { rate: 0.32, min: 201775, max: 256225 },
+          { rate: 0.35, min: 256225, max: 384350 },
+          { rate: 0.37, min: 384350, max: Infinity }
+        ],
+        hoh: [
+          { rate: 0.10, min: 0, max: 17700 },
+          { rate: 0.12, min: 17700, max: 67450 },
+          { rate: 0.22, min: 67450, max: 105700 },
+          { rate: 0.24, min: 105700, max: 201750 },
+          { rate: 0.32, min: 201750, max: 256200 },
+          { rate: 0.35, min: 256200, max: 640600 },
+          { rate: 0.37, min: 640600, max: Infinity }
+        ]
+      },
+      "2025": {
+        single: [
+          { rate: 0.10, min: 0, max: 11925 },
+          { rate: 0.12, min: 11925, max: 48475 },
+          { rate: 0.22, min: 48475, max: 103350 },
+          { rate: 0.24, min: 103350, max: 197300 },
+          { rate: 0.32, min: 197300, max: 250525 },
+          { rate: 0.35, min: 250525, max: 626350 },
+          { rate: 0.37, min: 626350, max: Infinity }
+        ],
+        mfj: [
+          { rate: 0.10, min: 0, max: 23850 },
+          { rate: 0.12, min: 23850, max: 96950 },
+          { rate: 0.22, min: 96950, max: 206700 },
+          { rate: 0.24, min: 206700, max: 394600 },
+          { rate: 0.32, min: 394600, max: 501050 },
+          { rate: 0.35, min: 501050, max: 751600 },
+          { rate: 0.37, min: 751600, max: Infinity }
+        ],
+        mfs: [
+          { rate: 0.10, min: 0, max: 11925 },
+          { rate: 0.12, min: 11925, max: 48475 },
+          { rate: 0.22, min: 48475, max: 103350 },
+          { rate: 0.24, min: 103350, max: 197300 },
+          { rate: 0.32, min: 197300, max: 250525 },
+          { rate: 0.35, min: 250525, max: 375800 },
+          { rate: 0.37, min: 375800, max: Infinity }
+        ],
+        hoh: [
+          { rate: 0.10, min: 0, max: 17000 },
+          { rate: 0.12, min: 17000, max: 64850 },
+          { rate: 0.22, min: 64850, max: 103350 },
+          { rate: 0.24, min: 103350, max: 197300 },
+          { rate: 0.32, min: 197300, max: 250500 },
+          { rate: 0.35, min: 250500, max: 626350 },
+          { rate: 0.37, min: 626350, max: Infinity }
+        ]
+      },
+      "2024": {
+        single: [
+          { rate: 0.10, min: 0, max: 11600 },
+          { rate: 0.12, min: 11600, max: 47150 },
+          { rate: 0.22, min: 47150, max: 100525 },
+          { rate: 0.24, min: 100525, max: 191950 },
+          { rate: 0.32, min: 191950, max: 243725 },
+          { rate: 0.35, min: 243725, max: 609350 },
+          { rate: 0.37, min: 609350, max: Infinity }
+        ],
+        mfj: [
+          { rate: 0.10, min: 0, max: 23200 },
+          { rate: 0.12, min: 23200, max: 94300 },
+          { rate: 0.22, min: 94300, max: 201050 },
+          { rate: 0.24, min: 201050, max: 383900 },
+          { rate: 0.32, min: 383900, max: 487450 },
+          { rate: 0.35, min: 487450, max: 731200 },
+          { rate: 0.37, min: 731200, max: Infinity }
+        ],
+        mfs: [
+          { rate: 0.10, min: 0, max: 11600 },
+          { rate: 0.12, min: 11600, max: 47150 },
+          { rate: 0.22, min: 47150, max: 100525 },
+          { rate: 0.24, min: 100525, max: 191950 },
+          { rate: 0.32, min: 191950, max: 243725 },
+          { rate: 0.35, min: 243725, max: 365600 },
+          { rate: 0.37, min: 365600, max: Infinity }
+        ],
+        hoh: [
+          { rate: 0.10, min: 0, max: 16550 },
+          { rate: 0.12, min: 16550, max: 63100 },
+          { rate: 0.22, min: 63100, max: 100500 },
+          { rate: 0.24, min: 100500, max: 191950 },
+          { rate: 0.32, min: 191950, max: 243700 },
+          { rate: 0.35, min: 243700, max: 609350 },
+          { rate: 0.37, min: 609350, max: Infinity }
+        ]
+      }
+    };
+
+    const STANDARD_DEDUCTIONS_BY_YEAR: Record<string, Record<string, number>> = {
+      "2026": {
+        single: 16100,
+        mfj: 32200,
+        mfs: 16100,
+        hoh: 24150
+      },
+      "2025": {
+        single: 15750,
+        mfj: 31500,
+        mfs: 15750,
+        hoh: 23625
+      },
+      "2024": {
+        single: 14600,
+        mfj: 29200,
+        mfs: 14600,
+        hoh: 21900
+      }
+    };
+
+    const BRACKET_COLORS = [
+      "#c3faf5", // 10% (Teal light)
+      "#fff4c4", // 12% (Yellow light)
+      "#ffc6c6", // 22% (Coral light)
+      "#ffd8f4", // 24% (Rose light)
+      "#ffe6cd", // 32% (Orange light)
+      "#fbd4d4", // 35% (Red light)
+      "#eef0f3"  // 37% (Hairline soft)
+    ];
+
+    const BRACKET_BORDER_COLORS = [
+      "#0fbcb0", // 10% (Teal)
+      "#fcb900", // 12% (Yellow deep)
+      "#ff9999", // 22% (Coral)
+      "#fde0f0", // 24% (Pink/Rose)
+      "#746019", // 32% (Yellow dark)
+      "#e3c5c5", // 35% (Red dark)
+      "#c7cad5"  // 37% (Hairline strong)
+    ];
+
+    // DOM Elements
+    const taxYearSelect = document.getElementById("tax-year") as HTMLSelectElement;
+    const filingStatusSelect = document.getElementById("filing-status") as HTMLSelectElement;
+    const grossIncomeInput = document.getElementById("gross-income") as HTMLInputElement;
+    const pretaxDeductionsInput = document.getElementById("pretax-deductions") as HTMLInputElement;
+    const standardDeductionAmtInput = document.getElementById("standard-deduction-amt") as HTMLInputElement;
+    const itemizedDeductionAmtInput = document.getElementById("itemized-deduction-amt") as HTMLInputElement;
+    const deductionToggleStandard = document.getElementById("deduction-toggle-standard") as HTMLButtonElement;
+    const deductionToggleItemized = document.getElementById("deduction-toggle-itemized") as HTMLButtonElement;
+    const standardDeductionWrapper = document.getElementById("standard-deduction-wrapper");
+    const itemizedDeductionWrapper = document.getElementById("itemized-deduction-wrapper");
+    const deductionFeedback = document.getElementById("deduction-feedback");
+
+    const formulaGross = document.getElementById("formula-gross");
+    const formulaPretax = document.getElementById("formula-pretax");
+    const formulaFed = document.getElementById("formula-fed");
+    const formulaTaxable = document.getElementById("formula-taxable");
+
+    const taxOwedDisplay = document.getElementById("tax-owed-display");
+    const youKeepDisplay = document.getElementById("you-keep-display");
+    const effectiveRateDisplay = document.getElementById("effective-rate-display");
+    const marginalRateDisplay = document.getElementById("marginal-rate-display");
+    const taxableIncomeDisplay = document.getElementById("taxable-income-display");
+    const afterTaxDisplay = document.getElementById("after-tax-display");
+
+    const bracketChartBar = document.getElementById("bracket-chart-bar");
+    const bracketChartLegend = document.getElementById("bracket-chart-legend");
+    const breakdownTableBody = document.getElementById("breakdown-table-body");
+
+    const mobileSummaryValue = document.getElementById("mobile-summary-value");
+    const mobileScrollResultsBtn = document.getElementById("mobile-scroll-results-btn");
+    const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const resetBtn = document.getElementById("reset-btn");
+
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const excelExportBtn = document.getElementById("excel-export-btn");
+
+    // State Variables
+    let isItemized = false;
+    let lastCalculatedBreakdown: { bracket: Bracket; incomeInBracket: number; taxOwed: number }[] = [];
+
+    // Helper functions
+    function parseFormattedNumber(val: string): number {
+      return parseFloat(val.replace(/,/g, "")) || 0;
+    }
+
+    function formatNumber(val: number): string {
+      return Math.round(val).toLocaleString("en-US");
+    }
+
+    function formatCurrency(val: number): string {
+      return "$" + formatNumber(val);
+    }
+
+    function setupCommaFormatting(input: HTMLInputElement) {
+      input.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        const selectionStart = target.selectionStart;
+        const selectionEnd = target.selectionEnd;
+        const originalLength = target.value.length;
+
+        const cleanVal = target.value.replace(/[^0-9.]/g, "");
+        const parts = cleanVal.split(".");
+        
+        // Format integer part
+        const integerPart = parts[0] ? parseInt(parts[0], 10).toLocaleString("en-US") : "";
+        let formatted = integerPart;
+        if (parts.length > 1) {
+          formatted += "." + parts[1].substring(0, 2);
+        }
+
+        target.value = formatted;
+
+        // Restore cursor position roughly
+        if (selectionStart !== null && selectionEnd !== null) {
+          const newLength = target.value.length;
+          const diff = newLength - originalLength;
+          target.setSelectionRange(selectionStart + diff, selectionEnd + diff);
+        }
+
+        calculateTax();
+      });
+    }
+
+    // Scroll tracking: Hide the mobile sticky summary when the results section is scrolled into view
+    function handleScroll() {
+      const resultsSection = document.getElementById("results-column");
+      if (!mobileStickyBar || !resultsSection) return;
+
+      const rect = resultsSection.getBoundingClientRect();
+      const isDestinationVisible = rect.top < window.innerHeight - 100;
+
+      if (isDestinationVisible) {
+        mobileStickyBar.classList.add("translate-y-full");
+        mobileStickyBar.classList.remove("translate-y-0");
+      } else {
+        mobileStickyBar.classList.remove("translate-y-full");
+        mobileStickyBar.classList.add("translate-y-0");
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+
+    // Modal Control
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal?.classList.add("hidden");
+      }
+    });
+
+    // Toggle Deductions
+    deductionToggleStandard?.addEventListener("click", () => {
+      isItemized = false;
+      deductionToggleStandard.classList.add("bg-primary", "text-canvas");
+      deductionToggleStandard.classList.remove("text-slate");
+      deductionToggleItemized.classList.remove("bg-primary", "text-canvas");
+      deductionToggleItemized.classList.add("text-slate");
+      standardDeductionWrapper?.classList.remove("hidden");
+      itemizedDeductionWrapper?.classList.add("hidden");
+      calculateTax();
+    });
+
+    deductionToggleItemized?.addEventListener("click", () => {
+      isItemized = true;
+      deductionToggleItemized.classList.add("bg-primary", "text-canvas");
+      deductionToggleItemized.classList.remove("text-slate");
+      deductionToggleStandard.classList.remove("bg-primary", "text-canvas");
+      deductionToggleStandard.classList.add("text-slate");
+      standardDeductionWrapper?.classList.add("hidden");
+      itemizedDeductionWrapper?.classList.remove("hidden");
+      calculateTax();
+    });
+
+    // Reset Functionality
+    resetBtn?.addEventListener("click", () => {
+      taxYearSelect.value = "2026";
+      filingStatusSelect.value = "single";
+      grossIncomeInput.value = "75,000";
+      pretaxDeductionsInput.value = "5,000";
+      itemizedDeductionAmtInput.value = "18,000";
+      
+      // Reset deductions to standard
+      isItemized = false;
+      deductionToggleStandard.classList.add("bg-primary", "text-canvas");
+      deductionToggleStandard.classList.remove("text-slate");
+      deductionToggleItemized.classList.remove("bg-primary", "text-canvas");
+      deductionToggleItemized.classList.add("text-slate");
+      standardDeductionWrapper?.classList.remove("hidden");
+      itemizedDeductionWrapper?.classList.add("hidden");
+
+      calculateTax();
+    });
+
+    // Scroll to results on mobile
+    mobileScrollResultsBtn?.addEventListener("click", () => {
+      const resultsSection = document.getElementById("results-column");
+      if (resultsSection) {
+        const offset = 70; // account for navbar height
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = resultsSection.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    });
+
+    // Export CSV Trigger
+    csvExportBtn?.addEventListener("click", () => {
+      const taxYear = taxYearSelect.value;
+      const filingStatus = filingStatusSelect.value;
+      const grossIncome = parseFormattedNumber(grossIncomeInput.value);
+      
+      // Calculate total tax owed
+      let totalTax = 0;
+      lastCalculatedBreakdown.forEach(item => totalTax += item.taxOwed);
+
+      let csv = "Federal Tax Bracket Breakdown\n";
+      csv += `Tax Year,${taxYear}\n`;
+      csv += `Filing Status,${filingStatus.toUpperCase()}\n`;
+      csv += `Gross Income,${grossIncome}\n`;
+      csv += `Total Tax Owed,${totalTax.toFixed(2)}\n\n`;
+      csv += "Rate,Taxable Range,Income in Bracket,Tax Owed\n";
+      
+      lastCalculatedBreakdown.forEach((item) => {
+        const rangeText = item.bracket.max === Infinity 
+          ? `${item.bracket.min}+`
+          : `${item.bracket.min}-${item.bracket.max}`;
+        csv += `${(item.bracket.rate * 100).toFixed(0)}%,"${rangeText}",${item.incomeInBracket.toFixed(2)},${item.taxOwed.toFixed(2)}\n`;
+      });
+      
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `federal_tax_breakdown_${taxYear}_${filingStatus}.csv`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Export Excel Trigger
+    excelExportBtn?.addEventListener("click", () => {
+      const taxYear = taxYearSelect.value;
+      const filingStatus = filingStatusSelect.value;
+      const grossIncome = parseFormattedNumber(grossIncomeInput.value);
+      
+      let totalTax = 0;
+      lastCalculatedBreakdown.forEach(item => totalTax += item.taxOwed);
+
+      let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">`;
+      html += `<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Tax Bracket Breakdown</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
+      html += `<body>`;
+      html += `<h2>Federal Tax Bracket Breakdown (${taxYear})</h2>`;
+      html += `<p><b>Filing Status:</b> ${filingStatus.toUpperCase()}</p>`;
+      html += `<p><b>Gross Income:</b> $${grossIncome.toLocaleString()}</p>`;
+      html += `<p><b>Total Tax Owed:</b> $${totalTax.toLocaleString()}</p>`;
+      html += `<table border="1">`;
+      html += `<tr style="background-color:#f2f2f2; font-weight:bold;">`;
+      html += `<th>Rate</th><th>Taxable Range</th><th>Income in Bracket</th><th>Tax Owed</th>`;
+      html += `</tr>`;
+      
+      lastCalculatedBreakdown.forEach((item) => {
+        const rangeText = item.bracket.max === Infinity 
+          ? `$${item.bracket.min.toLocaleString()}+`
+          : `$${item.bracket.min.toLocaleString()} - $${item.bracket.max.toLocaleString()}`;
+        html += `<tr>`;
+        html += `<td>${(item.bracket.rate * 100).toFixed(0)}%</td>`;
+        html += `<td>${rangeText}</td>`;
+        html += `<td>$${item.incomeInBracket.toFixed(2)}</td>`;
+        html += `<td>$${item.taxOwed.toFixed(2)}</td>`;
+        html += `</tr>`;
+      });
+      
+      html += `</table></body></html>`;
+      
+      const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `federal_tax_breakdown_${taxYear}_${filingStatus}.xls`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Calculation Engine
+    function calculateTax() {
+      const taxYear = taxYearSelect.value;
+      const filingStatus = filingStatusSelect.value;
+      const grossIncome = parseFormattedNumber(grossIncomeInput.value);
+      const pretaxDeductions = parseFormattedNumber(pretaxDeductionsInput.value);
+      
+      // Get standard deduction for current year and status
+      const yearDeductions = STANDARD_DEDUCTIONS_BY_YEAR[taxYear] || STANDARD_DEDUCTIONS_BY_YEAR["2026"];
+      const standardDeductionAmt = yearDeductions[filingStatus] || 0;
+      standardDeductionAmtInput.value = standardDeductionAmt.toLocaleString("en-US");
+
+      const selectedDeduction = isItemized ? parseFormattedNumber(itemizedDeductionAmtInput.value) : standardDeductionAmt;
+      const totalDeductions = pretaxDeductions + selectedDeduction;
+      const taxableIncome = Math.max(0, grossIncome - totalDeductions);
+
+      // Calculations
+      const yearBrackets = BRACKETS_BY_YEAR[taxYear] || BRACKETS_BY_YEAR["2026"];
+      const brackets = yearBrackets[filingStatus] || yearBrackets.single;
+      let totalTax = 0;
+      const breakdown: { bracket: Bracket; incomeInBracket: number; taxOwed: number }[] = [];
+      let marginalRate = 0;
+
+      for (let i = 0; i < brackets.length; i++) {
+        const b = brackets[i];
+        let incomeInBracket = 0;
+
+        if (taxableIncome > b.min) {
+          const limit = b.max;
+          const applicableIncome = Math.min(taxableIncome, limit);
+          incomeInBracket = applicableIncome - b.min;
+          const taxOwed = incomeInBracket * b.rate;
+          totalTax += taxOwed;
+          marginalRate = b.rate;
+          breakdown.push({ bracket: b, incomeInBracket, taxOwed });
+        } else {
+          breakdown.push({ bracket: b, incomeInBracket: 0, taxOwed: 0 });
+        }
+      }
+
+      // Keep reference of active breakdown for export
+      lastCalculatedBreakdown = breakdown;
+
+      const effectiveRate = grossIncome > 0 ? (totalTax / grossIncome) : 0;
+      const afterTaxIncome = grossIncome - totalTax;
+      const keepPercent = grossIncome > 0 ? (afterTaxIncome / grossIncome * 100) : 100;
+
+      // Update basic displays
+      if (taxOwedDisplay) taxOwedDisplay.textContent = formatCurrency(totalTax);
+      if (youKeepDisplay) youKeepDisplay.textContent = keepPercent.toFixed(1) + "%";
+      if (effectiveRateDisplay) effectiveRateDisplay.textContent = (effectiveRate * 100).toFixed(2) + "%";
+      if (marginalRateDisplay) marginalRateDisplay.textContent = (marginalRate * 100).toFixed(1) + "%";
+      if (taxableIncomeDisplay) taxableIncomeDisplay.textContent = formatCurrency(taxableIncome);
+      if (afterTaxDisplay) afterTaxDisplay.textContent = formatCurrency(afterTaxIncome);
+      if (mobileSummaryValue) mobileSummaryValue.textContent = formatCurrency(totalTax);
+
+      // Update Deduction Card feedback
+      if (deductionFeedback) {
+        deductionFeedback.textContent = `Total Deductions: ${formatCurrency(totalDeductions)} (reduces your taxable income)`;
+      }
+
+      // Update Formula Guide
+      if (formulaGross) formulaGross.textContent = formatCurrency(grossIncome);
+      if (formulaPretax) formulaPretax.textContent = `-${formatCurrency(pretaxDeductions)}`;
+      if (formulaFed) formulaFed.textContent = `-${formatCurrency(selectedDeduction)}`;
+      if (formulaTaxable) formulaTaxable.textContent = formatCurrency(taxableIncome);
+
+      // Update Breakdown Table
+      if (breakdownTableBody) {
+        breakdownTableBody.innerHTML = "";
+        breakdown.forEach((item, index) => {
+          const isActive = item.incomeInBracket > 0;
+          const tr = document.createElement("tr");
+          tr.className = `border-b border-hairline-soft font-mono text-[11px] transition-colors ${
+            isActive ? "bg-surface-yellow/20 font-semibold text-primary" : "text-stone opacity-60"
+          }`;
+
+          const rangeText = item.bracket.max === Infinity 
+            ? `${formatCurrency(item.bracket.min)}+`
+            : `${formatCurrency(item.bracket.min)} - ${formatCurrency(item.bracket.max)}`;
+
+          tr.innerHTML = `
+            <td class="py-2.5 px-3">
+              <span class="inline-flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full border border-hairline-strong" style="background-color: ${BRACKET_COLORS[index]}"></span>
+                ${(item.bracket.rate * 100).toFixed(0)}%
+              </span>
+            </td>
+            <td class="py-2.5 px-3">${rangeText}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(item.incomeInBracket)}</td>
+            <td class="py-2.5 px-3 text-right">${formatCurrency(item.taxOwed)}</td>
+          `;
+          breakdownTableBody.appendChild(tr);
+        });
+      }
+
+      // Update Stacked Bar Chart & Legend
+      if (bracketChartBar && bracketChartLegend) {
+        bracketChartBar.innerHTML = "";
+        bracketChartLegend.innerHTML = "";
+
+        const totalTaxable = taxableIncome || 1; // prevent divide by zero visual bugs
+
+        breakdown.forEach((item, index) => {
+          const percentage = (item.incomeInBracket / totalTaxable) * 100;
+          if (percentage > 0) {
+            const segment = document.createElement("div");
+            segment.style.width = `${percentage}%`;
+            segment.style.backgroundColor = BRACKET_COLORS[index];
+            segment.style.borderColor = BRACKET_BORDER_COLORS[index];
+            segment.className = "h-full border-r last:border-r-0 transition-all cursor-pointer relative group flex items-center justify-center";
+            
+            // Tooltip or label inside if large enough
+            if (percentage > 8) {
+              const label = document.createElement("span");
+              label.className = "text-[9px] font-bold text-primary truncate px-1";
+              label.textContent = `${(item.bracket.rate * 100).toFixed(0)}%`;
+              segment.appendChild(label);
+            }
+
+            // Interactive hover tooltip content
+            segment.title = `Rate: ${(item.bracket.rate * 100).toFixed(0)}% | Income: ${formatCurrency(item.incomeInBracket)} | Tax: ${formatCurrency(item.taxOwed)}`;
+            bracketChartBar.appendChild(segment);
+          }
+
+          // Build Legend item
+          const legendItem = document.createElement("div");
+          legendItem.className = "flex items-center gap-1.5 text-[11px] text-slate";
+          legendItem.innerHTML = `
+            <span class="w-3 h-3 rounded-full border border-hairline-strong shrink-0" style="background-color: ${BRACKET_COLORS[index]}"></span>
+            <span class="truncate">${(item.bracket.rate * 100).toFixed(0)}% Bracket: <strong>${formatCurrency(item.incomeInBracket)}</strong></span>
+          `;
+          bracketChartLegend.appendChild(legendItem);
+        });
+      }
+
+      // Trigger scroll listener to set initial sticky bar visibility state
+      handleScroll();
+    }
+
+    // Set up listeners
+    taxYearSelect.addEventListener("change", calculateTax);
+    filingStatusSelect.addEventListener("change", calculateTax);
+    setupCommaFormatting(grossIncomeInput);
+    setupCommaFormatting(pretaxDeductionsInput);
+    setupCommaFormatting(itemizedDeductionAmtInput);
+
+    // Initial run
+    calculateTax();
+  </script>
 </Layout>
