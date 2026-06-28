@@ -1,90 +1,1254 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Clicks Per Second";
+const name = "Clicks Per Second (CPS) Test";
 const category = "engagement";
 const tier = "Engagement Tools";
-const description = "Test mouse clicking speed and track clicks per second (CPS) in a speed window.";
+const description =
+  "Test your mouse clicking or touchscreen tapping speed. Measure your clicks per second (CPS) over standard intervals and reach elite speed tiers.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Clicks Per Second (CPS) Test",
+      "url": "https://boardtools.app/tools/engagement/clicks-per-second",
+      "description": "Interactive, highly precise Clicks Per Second (CPS) Test to measure clicking speed and motor reflexes across 1s, 5s, 10s, and 60s windows with audio-visual feedback.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section
+    class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-3"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-rose-light text-coral-dark text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap"
+            >{tier}</span
+          >
+        </div>
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <!-- Audio Toggle -->
+          <button
+            type="button"
+            id="audio-toggle"
+            class="inline-flex items-center justify-center w-8 h-8 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Toggle sound effects"
+            title="Toggle sound effects"
+          >
+            <svg
+              id="sound-on-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+              ></path>
+            </svg>
+            <svg
+              id="sound-off-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 hidden"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3"
+              ></path>
+            </svg>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">⌨️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <!-- Reset Button -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset test data"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div
+      class="card-base p-4 sm:p-5 flex flex-col gap-4 dark-plum-theme relative overflow-hidden"
+    >
+      <!-- Background glow overlay for plum flavor -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-plum-bg/40 to-plum-bg/10 pointer-events-none"
+      >
+      </div>
+
+      <!-- Duration Selector / Options row -->
+      <div
+        class="flex items-center justify-between z-10 border-b border-plum-border/40 pb-3 flex-wrap gap-2"
+      >
+        <div class="flex items-center gap-2">
+          <span
+            class="text-[11px] uppercase font-bold text-plum-accent tracking-wider"
+            >Duration:</span
+          >
+          <div class="flex items-center gap-1" id="duration-select-container">
+            <button class="duration-btn active" data-seconds="5">5s</button>
+            <button class="duration-btn" data-seconds="1">1s</button>
+            <button class="duration-btn" data-seconds="10">10s</button>
+            <button class="duration-btn" data-seconds="60">60s</button>
+          </div>
+        </div>
+        <div
+          class="text-[10px] text-plum-text-muted font-mono select-none"
+          id="keyboard-hint"
+        >
+          Click or Tap the arena to start
+        </div>
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch z-10"
+      >
+        <!-- Left Pane: Interactive Click Arena -->
+        <div class="flex flex-col gap-2 relative">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-plum-text-bright"
+              >Click Arena</span
+            >
+            <span
+              class="text-[10px] font-mono text-plum-text-muted"
+              id="cps-tracker">0.00 CPS</span
+            >
+          </div>
+
+          <!-- Click Arena Box -->
+          <div
+            id="click-arena"
+            tabindex="0"
+            class="flex-1 min-h-[160px] sm:min-h-[320px] rounded-xl border border-plum-border bg-plum-surface flex flex-col items-center justify-center text-center p-4 sm:p-6 cursor-pointer select-none relative overflow-hidden transition-all duration-300 focus:outline-none touch-action-none"
+            aria-label="Click speed test arena"
+          >
+            <!-- Particle Grid (Decorative background) -->
+            <div
+              class="absolute inset-0 grid grid-cols-8 grid-rows-8 opacity-[0.04] pointer-events-none transition-opacity duration-500"
+              id="arena-grid"
+            >
+              {
+                Array.from({ length: 64 }).map(() => (
+                  <div class="border-[0.5px] border-plum-accent" />
+                ))
+              }
+            </div>
+
+            <!-- Linear Depleting Progress Indicator -->
+            <div
+              class="absolute top-0 left-0 h-1.5 bg-gradient-to-r from-plum-accent to-brand-coral transition-all duration-75 w-full pointer-events-none"
+              id="timer-bar"
+            >
+            </div>
+
+            <!-- Canvas for particle explosions -->
+            <canvas
+              id="particles-canvas"
+              class="absolute inset-0 pointer-events-none z-0"></canvas>
+
+            <!-- Main Content Elements -->
+            <div
+              class="z-10 flex flex-col items-center gap-1.5 sm:gap-3 w-full pointer-events-none"
+            >
+              <span
+                id="arena-icon"
+                class="text-3xl sm:text-5xl transition-transform duration-300 animate-float-slow"
+                >🖱️</span
+              >
+              <h2
+                id="arena-title"
+                class="font-display font-bold text-base sm:text-2xl text-plum-text-bright leading-tight max-w-xs transition-colors duration-200"
+              >
+                Click to Start Test
+              </h2>
+              <p
+                id="arena-instructions"
+                class="text-[10px] sm:text-xs text-plum-text-muted max-w-xs leading-relaxed transition-colors duration-200"
+              >
+                The timer will start automatically on your very first click!
+              </p>
+            </div>
+          </div>
+
+          <!-- Dedicated Restart Button -->
+          <button
+            type="button"
+            id="restart-test-btn"
+            class="hidden w-full inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 bg-plum-accent text-canvas rounded-full transition-all cursor-pointer shadow-subtle hover:bg-plum-accent/90 animate-fade-in-up mt-1"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Restart Test</span>
+          </button>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Right Pane: Performance Dashboard & Tiers -->
+        <div
+          class="flex flex-col justify-between p-3 sm:p-5 relative overflow-hidden rounded-xl border border-plum-border bg-plum-surface shadow-inner min-h-[180px] sm:min-h-[320px]"
+        >
+          <!-- Interactive background elements -->
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-plum-accent/10 rounded-full blur-2xl pointer-events-none"
+          >
+          </div>
+
+          <div
+            class="flex flex-col gap-2 sm:gap-4 z-10 w-full h-full justify-between"
+          >
+            <!-- Results Header -->
+            <div
+              class="flex items-center justify-between border-b border-plum-border/40 pb-1.5 sm:pb-2"
+            >
+              <span
+                class="text-[10px] uppercase font-extrabold text-plum-accent tracking-widest"
+                >CPS Dashboard</span
+              >
+              <div class="flex items-center gap-1.5">
+                <span
+                  class="text-[10px] font-mono text-plum-text-muted"
+                  id="state-indicator">Status: Idle</span
+                >
+                <span class="flex h-2 w-2 relative">
+                  <span
+                    id="status-pulse"
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75"
+                  ></span>
+                  <span
+                    id="status-dot"
+                    class="relative inline-flex rounded-full h-2 w-2 bg-stone"
+                  ></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Themed Visual Container / Results Reveal -->
+            <div
+              id="themed-reveal-container"
+              class="flex flex-col items-center justify-center py-2 sm:py-4 relative min-h-[90px] sm:min-h-[160px] bg-black/20 rounded-xl border border-plum-border/20 backdrop-blur-sm shadow-inner transition-all duration-300"
+            >
+              <!-- Default state / live dashboard readout -->
+              <div
+                id="dashboard-readout"
+                class="flex flex-col items-center gap-0.5 sm:gap-1 w-full px-4"
+              >
+                <span
+                  class="text-[9px] sm:text-[10px] uppercase font-bold text-plum-text-muted"
+                  >Clicks Per Second</span
+                >
+                <div class="flex items-baseline gap-1 mt-0.5">
+                  <span
+                    id="output-cps"
+                    class="font-display font-black text-4xl sm:text-6xl text-plum-text-bright font-mono tracking-tight leading-none"
+                    >0.00</span
+                  >
+                  <span
+                    class="text-[10px] sm:text-xs font-semibold text-plum-accent"
+                    >CPS</span
+                  >
+                </div>
+
+                <!-- Quick secondary metrics -->
+                <div
+                  class="grid grid-cols-2 gap-4 w-full mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-plum-border/30 text-center"
+                >
+                  <div class="flex flex-col">
+                    <span
+                      class="text-[8px] uppercase font-bold text-plum-text-muted"
+                      >Total Clicks</span
+                    >
+                    <span
+                      id="output-total-clicks"
+                      class="text-xs sm:text-sm font-mono font-bold text-plum-text-bright"
+                      >0</span
+                    >
+                  </div>
+                  <div class="flex flex-col">
+                    <span
+                      class="text-[8px] uppercase font-bold text-plum-text-muted"
+                      >Remaining Time</span
+                    >
+                    <span
+                      id="output-time-left"
+                      class="text-xs sm:text-sm font-mono font-bold text-plum-text-bright"
+                      >--</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Animated Cockpit / Speedlines / Neon Targets for Tier Payoffs -->
+              <div
+                id="pilot-radar"
+                class="radar-hud-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden"
+              >
+                <div class="radar-line"></div>
+                <div class="radar-crosshair"></div>
+                <div
+                  class="hud-text absolute bottom-2 left-2 text-[8px] font-mono text-brand-yellow font-bold"
+                >
+                  MACH_SPEED: PILOT_LOCKED
+                </div>
+              </div>
+
+              <div
+                id="racer-speedlines"
+                class="speedline-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden"
+              >
+                <div class="checkered-flag-bg"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+
+              <div
+                id="gamer-neon"
+                class="neon-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden"
+              >
+                <div class="neon-ring"></div>
+                <div class="gaming-crosshair"></div>
+              </div>
+
+              <div
+                id="sloth-anim"
+                class="sloth-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden flex items-center justify-center"
+              >
+                <span class="text-4xl animate-bounce">💤</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Advice / Classification -->
+            <div
+              id="classification-box"
+              class="text-xs text-plum-text-muted leading-relaxed pt-2 sm:pt-3 border-t border-plum-border/40"
+            >
+              <div class="flex flex-wrap gap-1.5 items-center">
+                <span
+                  class="text-[9px] uppercase font-extrabold text-plum-text-muted"
+                  >Tier Classification:</span
+                >
+                <span
+                  id="classification-badge"
+                  class="bg-plum-border/30 text-plum-text-muted text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider"
+                  >Not Classified</span
+                >
+              </div>
+              <p
+                id="main-context-text"
+                class="font-medium text-[10px] sm:text-[11px] mt-1 sm:mt-1.5 text-plum-text-muted"
+              >
+                Complete a test to discover your clicking tier. Select a
+                duration and start tapping.
+              </p>
+            </div>
+
+            <!-- Action buttons / Share -->
+            <div
+              id="action-btn-row"
+              class="hidden items-center gap-2 pt-1"
+            >
+              <button
+                type="button"
+                id="share-btn"
+                class="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 bg-plum-accent text-canvas rounded-full transition-all cursor-pointer shadow-subtle hover:bg-plum-accent/90"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.684 10.742l4.622-2.311m0 0a3 3 0 10-3.664-3.664L8.684 10.742m0 0a3 3 0 100 4.516l4.622 2.311m0 0a3 3 0 103.664-3.664l-4.622-2.311"
+                  ></path>
+                </svg>
+                <span>Share Results</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Educational details panel -->
+    <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
+      <h3
+        class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 text-brand-blue"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        Understanding Clicks Per Second (CPS)
+      </h3>
+      <div
+        class="text-[11px] sm:text-xs text-slate leading-relaxed flex flex-col gap-2"
+      >
+        <p>
+          Clicks Per Second (CPS) is a standard benchmark used primarily in
+          competitive gaming (especially in titles like Minecraft, OSU!, and
+          MOBAs) to measure a player's motor speed and physical reflex
+          capability.
+        </p>
+        <p class="font-semibold text-charcoal">Advanced Clicking Techniques:</p>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5 text-slate font-medium">
+          <li>
+            <strong>Jitter Clicking:</strong> Tensing the forearm and wrist muscles
+            to vibrate the finger rapidly on the mouse button, pushing CPS up to 10–14.
+          </li>
+          <li>
+            <strong>Butterfly Clicking:</strong> Alternating clicks between the index
+            and middle fingers on the same button to achieve 15–20 CPS.
+          </li>
+          <li>
+            <strong>Drag Clicking:</strong> Dragging a textured finger down the mouse
+            button to utilize friction, generating rapid mechanical switch triggers
+            (can reach 30+ CPS).
+          </li>
+        </ul>
+        <p class="text-[10px] text-stone mt-1">
+          Hardware latency from USB polling rates, mechanical debounce
+          algorithms, and browser input scheduling can affect registered speeds.
+        </p>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Client-Side Speed Evaluation
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Client-side Logic Module -->
+  <script>
+    type TestState = "idle" | "playing" | "finished";
+    let currentState: TestState = "idle";
+
+    // State parameters
+    let totalClicks = 0;
+    let selectedDuration = 5; // Default 5s
+    let startTime = 0;
+    let timerFrameId: number | null = null;
+    let soundEnabled = true;
+    let audioCtx: AudioContext | null = null;
+
+    // DOM Elements
+    const clickArena = document.getElementById("click-arena");
+    const arenaTitle = document.getElementById("arena-title");
+    const arenaInstructions = document.getElementById("arena-instructions");
+    const arenaIcon = document.getElementById("arena-icon");
+    const timerBar = document.getElementById("timer-bar");
+    const cpsTracker = document.getElementById("cps-tracker");
+    const stateIndicator = document.getElementById("state-indicator");
+    const statusDot = document.getElementById("status-dot");
+    const statusPulse = document.getElementById("status-pulse");
+
+    const outputCPS = document.getElementById("output-cps");
+    const outputTotalClicks = document.getElementById("output-total-clicks");
+    const outputTimeLeft = document.getElementById("output-time-left");
+
+    const durationBtns = document.querySelectorAll(".duration-btn");
+    const audioToggle = document.getElementById("audio-toggle");
+    const soundOnIcon = document.getElementById("sound-on-icon");
+    const soundOffIcon = document.getElementById("sound-off-icon");
+    const resetBtn = document.getElementById("reset-btn");
+    const shareBtn = document.getElementById("share-btn");
+    const actionBtnRow = document.getElementById("action-btn-row");
+    const restartTestBtn = document.getElementById("restart-test-btn");
+
+    // Classification elements
+    const classificationBadge = document.getElementById("classification-badge");
+    const mainContextText = document.getElementById("main-context-text");
+
+    // Tier Anim Panels
+    const pilotRadar = document.getElementById("pilot-radar");
+    const racerSpeedlines = document.getElementById("racer-speedlines");
+    const gamerNeon = document.getElementById("gamer-neon");
+    const slothAnim = document.getElementById("sloth-anim");
+    const dashboardReadout = document.getElementById("dashboard-readout");
+
+    // Particles setup
+    const canvas = document.getElementById(
+      "particles-canvas",
+    ) as HTMLCanvasElement;
+    const ctx = canvas ? canvas.getContext("2d") : null;
+    let particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+      alpha: number;
+    }> = [];
+    let animating = false;
+
+    function resizeCanvas() {
+      if (canvas && clickArena) {
+        canvas.width = clickArena.clientWidth;
+        canvas.height = clickArena.clientHeight;
+      }
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    // Audio synthesizer helper
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (
+          window.AudioContext || (window as any).webkitAudioContext
+        )();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(
+      freq: number,
+      type: OscillatorType,
+      duration: number,
+      volume: number = 0.1,
+    ) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+        gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.0001,
+          ctx.currentTime + duration,
+        );
+
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (err) {
+        console.warn("AudioContext playback error:", err);
+      }
+    }
+
+    function spawnParticles(x: number, y: number) {
+      if (!ctx) return;
+      const count = 12;
+      const colors = ["#e040a9", "#ff9999", "#ffffff", "#ffd02f"];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 4;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: 2 + Math.random() * 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+        });
+      }
+      if (!animating) {
+        animateParticles();
+      }
+    }
+
+    function animateParticles() {
+      if (!ctx || !canvas) return;
+      if (particles.length === 0 && currentState !== "playing") {
+        animating = false;
+        return;
+      }
+      animating = true;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.04;
+        if (p.alpha <= 0) return false;
+        ctx!.save();
+        ctx!.globalAlpha = p.alpha;
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx!.fillStyle = p.color;
+        ctx!.fill();
+        ctx!.restore();
+        return true;
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // Reset and Initial values
+    function init() {
+      resetTest();
+    }
+
+    function resetTest() {
+      currentState = "idle";
+      totalClicks = 0;
+      if (timerFrameId) {
+        cancelAnimationFrame(timerFrameId);
+        timerFrameId = null;
+      }
+
+      // Reset UI elements
+      if (timerBar) timerBar.style.width = "100%";
+      if (cpsTracker) cpsTracker.textContent = "0.00 CPS";
+      if (stateIndicator) stateIndicator.textContent = "Status: Idle";
+      if (arenaIcon) arenaIcon.textContent = "🖱️";
+      if (arenaTitle) arenaTitle.textContent = "Click to Start Test";
+      if (arenaInstructions)
+        arenaInstructions.textContent =
+          "The timer will start automatically on your very first click!";
+
+      if (statusDot)
+        statusDot.className =
+          "relative inline-flex rounded-full h-2 w-2 bg-stone";
+      if (statusPulse)
+        statusPulse.className =
+          "animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75";
+
+      if (outputCPS) outputCPS.textContent = "0.00";
+      if (outputTotalClicks) outputTotalClicks.textContent = "0";
+      if (outputTimeLeft)
+        outputTimeLeft.textContent = selectedDuration.toFixed(1) + "s";
+
+      if (classificationBadge) {
+        classificationBadge.textContent = "Not Classified";
+        classificationBadge.className =
+          "bg-plum-border/30 text-plum-text-muted text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider";
+      }
+      if (mainContextText) {
+        mainContextText.textContent =
+          "Complete a test to discover your clicking tier. Select a duration and start tapping.";
+      }
+
+      // Hide all overlay anim components
+      pilotRadar?.classList.add("hidden");
+      racerSpeedlines?.classList.add("hidden");
+      gamerNeon?.classList.add("hidden");
+      slothAnim?.classList.add("hidden");
+      dashboardReadout?.classList.remove("hidden");
+      actionBtnRow?.classList.add("hidden");
+      actionBtnRow?.classList.remove("flex");
+      restartTestBtn?.classList.add("hidden");
+    }
+
+    // Timer Loop
+    function updateTimer() {
+      if (currentState !== "playing") return;
+      const now = performance.now();
+      const elapsed = (now - startTime) / 1000;
+      const remaining = Math.max(0, selectedDuration - elapsed);
+
+      // Update linear timer bar
+      if (timerBar) {
+        const percent = (remaining / selectedDuration) * 100;
+        timerBar.style.width = `${percent}%`;
+      }
+
+      // Update stats dashboard
+      const currentCPS = elapsed > 0 ? totalClicks / elapsed : 0;
+      if (cpsTracker) cpsTracker.textContent = `${currentCPS.toFixed(2)} CPS`;
+      if (outputCPS) outputCPS.textContent = currentCPS.toFixed(2);
+      if (outputTimeLeft)
+        outputTimeLeft.textContent = `${remaining.toFixed(1)}s`;
+
+      if (remaining <= 0) {
+        finishTest();
+      } else {
+        timerFrameId = requestAnimationFrame(updateTimer);
+      }
+    }
+
+    function startTest() {
+      currentState = "playing";
+      startTime = performance.now();
+      totalClicks = 1; // Count first click immediately
+      if (outputTotalClicks) outputTotalClicks.textContent = "1";
+      if (stateIndicator) stateIndicator.textContent = "Status: Testing";
+
+      if (statusDot)
+        statusDot.className =
+          "relative inline-flex rounded-full h-2 w-2 bg-rose-500";
+      if (statusPulse)
+        statusPulse.className =
+          "animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75";
+
+      if (arenaTitle) arenaTitle.textContent = "CLICK FAST!";
+      if (arenaInstructions)
+        arenaInstructions.textContent = "Keep clicking as fast as you can!";
+      if (arenaIcon) arenaIcon.textContent = "⚡";
+
+      playTone(440, "sine", 0.1, 0.1);
+      timerFrameId = requestAnimationFrame(updateTimer);
+    }
+
+    function registerClick(e: PointerEvent) {
+      if (currentState === "finished") {
+        return;
+      }
+
+      // Handle canvas coordinates
+      if (clickArena) {
+        const rect = clickArena.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+        spawnParticles(clickX, clickY);
+      }
+
+      if (currentState === "idle") {
+        startTest();
+      } else if (currentState === "playing") {
+        totalClicks++;
+        if (outputTotalClicks)
+          outputTotalClicks.textContent = totalClicks.toString();
+        playTone(600 + Math.min(totalClicks * 5, 400), "sine", 0.08, 0.15);
+
+        // Instant click scale feedback
+        if (clickArena) {
+          clickArena.style.transform = "scale(0.97)";
+          setTimeout(() => {
+            if (clickArena) clickArena.style.transform = "";
+          }, 50);
+        }
+      }
+    }
+
+    function finishTest() {
+      currentState = "finished";
+      if (timerFrameId) cancelAnimationFrame(timerFrameId);
+      if (timerBar) timerBar.style.width = "0%";
+      if (stateIndicator) stateIndicator.textContent = "Status: Finished";
+
+      if (statusDot)
+        statusDot.className =
+          "relative inline-flex rounded-full h-2 w-2 bg-emerald-500";
+      if (statusPulse)
+        statusPulse.className =
+          "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75";
+
+      if (arenaTitle) arenaTitle.textContent = "Time Up!";
+      if (arenaInstructions)
+        arenaInstructions.textContent = "Review your score in the dashboard.";
+      if (arenaIcon) arenaIcon.textContent = "🏆";
+
+      const finalCPS = totalClicks / selectedDuration;
+      if (outputCPS) outputCPS.textContent = finalCPS.toFixed(2);
+      if (outputTimeLeft) outputTimeLeft.textContent = "0.0s";
+
+      playTone(523.25, "triangle", 0.15, 0.15); // C5
+      setTimeout(() => playTone(659.25, "triangle", 0.15, 0.15), 100); // E5
+      setTimeout(() => playTone(783.99, "triangle", 0.15, 0.15), 200); // G5
+      setTimeout(() => playTone(1046.5, "triangle", 0.3, 0.2), 300); // C6
+
+      // Evaluate Tiers
+      evaluateCPS(finalCPS);
+
+      actionBtnRow?.classList.remove("hidden");
+      actionBtnRow?.classList.add("flex");
+      restartTestBtn?.classList.remove("hidden");
+    }
+
+    function evaluateCPS(cps: number) {
+      let classification = "";
+      let badgeStyle = "";
+      let adviceMsg = "";
+
+      // Hide all overlay anim components first
+      pilotRadar?.classList.add("hidden");
+      racerSpeedlines?.classList.add("hidden");
+      gamerNeon?.classList.add("hidden");
+      slothAnim?.classList.add("hidden");
+      dashboardReadout?.classList.remove("hidden");
+
+      if (cps >= 12) {
+        classification = "Fighter Jet Pilot";
+        badgeStyle =
+          "bg-brand-yellow text-primary border border-brand-yellow-deep shadow-[0_0_12px_rgba(252,185,0,0.4)]";
+        adviceMsg = `Super-sonic speed! Your CPS of ${cps.toFixed(2)} is comparable to elite fighter jet pilots. Incredible finger speed.`;
+        pilotRadar?.classList.remove("hidden");
+        dashboardReadout?.classList.add("hidden");
+      } else if (cps >= 10 && cps < 12) {
+        classification = "F1 Racer";
+        badgeStyle =
+          "bg-brand-blue text-canvas border border-blue-pressed shadow-[0_0_12px_rgba(66,98,255,0.4)]";
+        adviceMsg = `High-octane clicker! An average of ${cps.toFixed(2)} clicks per second places you in F1 racing driver tiers.`;
+        racerSpeedlines?.classList.remove("hidden");
+        dashboardReadout?.classList.add("hidden");
+      } else if (cps >= 7 && cps < 10) {
+        classification = "Pro Gamer";
+        badgeStyle =
+          "bg-success-accent text-canvas border border-moss-dark shadow-[0_0_12px_rgba(0,180,115,0.4)]";
+        adviceMsg = `Twitch reflex locked! An average of ${cps.toFixed(2)} CPS is perfect for competitive esports.`;
+        gamerNeon?.classList.remove("hidden");
+        dashboardReadout?.classList.add("hidden");
+      } else if (cps >= 4 && cps < 7) {
+        classification = "Casual Clicker";
+        badgeStyle =
+          "bg-plum-border/40 border border-plum-accent text-plum-text-bright";
+        adviceMsg = `Good effort! Your clicking speed of ${cps.toFixed(2)} CPS is within the standard healthy average for desktop users.`;
+      } else {
+        classification = "Sleepy Sloth";
+        badgeStyle = "bg-brand-coral text-canvas border border-coral-dark";
+        adviceMsg = `Reflex speed is ${cps.toFixed(2)} CPS. Wake up, close background tabs, and try again!`;
+        slothAnim?.classList.remove("hidden");
+        dashboardReadout?.classList.add("hidden");
+      }
+
+      if (classificationBadge) {
+        classificationBadge.textContent = classification;
+        classificationBadge.className = `text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider ${badgeStyle}`;
+      }
+
+      if (mainContextText) {
+        mainContextText.textContent = adviceMsg;
+      }
+    }
+
+    // Attach Event Listeners
+    clickArena?.addEventListener("pointerdown", (e: PointerEvent) => {
+      e.preventDefault();
+      getAudioContext();
+      registerClick(e);
+    });
+
+    // Spacebar trigger handler
+    clickArena?.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        getAudioContext();
+        // Emulate pointer event coordinates for center
+        if (clickArena) {
+          const rect = clickArena.getBoundingClientRect();
+          const pointerEvent = new PointerEvent("pointerdown", {
+            clientX: rect.left + rect.width / 2,
+            clientY: rect.top + rect.height / 2,
+          });
+          registerClick(pointerEvent);
+        }
+      }
+    });
+
+    // Reset button
+    resetBtn?.addEventListener("click", () => {
+      resetTest();
+    });
+
+    // Dedicated Restart button
+    restartTestBtn?.addEventListener("click", () => {
+      resetTest();
+    });
+
+    // Duration buttons
+    durationBtns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        if (currentState === "playing") {
+          target.classList.add("opacity-50", "cursor-not-allowed");
+          setTimeout(() => {
+            target.classList.remove("opacity-50", "cursor-not-allowed");
+          }, 400);
+          return;
+        }
+        selectedDuration = parseInt(
+          target.getAttribute("data-seconds") || "5",
+          10,
+        );
+        if (currentState === "finished") {
+          resetTest();
+        }
+        durationBtns.forEach((b) => b.classList.remove("active"));
+        target.classList.add("active");
+        if (outputTimeLeft)
+          outputTimeLeft.textContent = selectedDuration.toFixed(1) + "s";
+      });
+    });
+
+    // Audio Toggle Setting
+    audioToggle?.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundOnIcon?.classList.remove("hidden");
+        soundOffIcon?.classList.add("hidden");
+      } else {
+        soundOnIcon?.classList.add("hidden");
+        soundOffIcon?.classList.remove("hidden");
+      }
+    });
+
+    // Share results copy to clipboard
+    shareBtn?.addEventListener("click", () => {
+      const finalCPS = totalClicks / selectedDuration;
+      const textToCopy = `I scored ${finalCPS.toFixed(2)} CPS (Clicks Per Second) on BoardTools CPS Test! Duration: ${selectedDuration}s. Try to beat my score!`;
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share Results";
+            span.textContent = "Copied to Clipboard!";
+            setTimeout(() => {
+              span.textContent = originalText;
+            }, 2000);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    });
+
+    // Initial page load
+    init();
+  </script>
+
+  <!-- Animation & Effect Styles -->
+  <style>
+    /* Dark Plum variables override classes */
+    .dark-plum-theme {
+      --plum-bg: #2d1226;
+      --plum-accent: #e040a9;
+      --plum-accent-deep: #b82a84;
+      --plum-border: rgba(224, 64, 169, 0.25);
+      --plum-surface: rgba(30, 9, 23, 0.85);
+      --plum-text-muted: #d6cbd3;
+      --plum-text-bright: #ffffff;
+    }
+
+    #restart-test-btn,
+    #share-btn {
+      background-color: var(--plum-accent) !important;
+      color: #ffffff !important;
+    }
+    #restart-test-btn:hover,
+    #share-btn:hover {
+      background-color: var(--plum-accent-deep) !important;
+    }
+
+    .duration-btn {
+      background-color: transparent;
+      border: 1px solid var(--plum-border);
+      color: var(--plum-text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .duration-btn.active,
+    .duration-btn:hover {
+      background-color: var(--plum-accent);
+      color: #ffffff;
+      border-color: var(--plum-accent);
+      box-shadow: 0 0 8px rgba(224, 64, 169, 0.4);
+    }
+
+    /* Radar / Cockpit HUD effect styles */
+    .radar-hud-effect {
+      background: radial-gradient(
+        circle,
+        rgba(240, 64, 169, 0.12) 0%,
+        rgba(28, 28, 30, 0.97) 100%
+      );
+      border: 2px solid var(--plum-accent);
+    }
+    .radar-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--plum-accent),
+        transparent
+      );
+      top: 0;
+      animation: radar-sweep-anim 2.5s infinite linear;
+    }
+    @keyframes radar-sweep-anim {
+      0% {
+        top: 0%;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        top: 100%;
+        opacity: 0;
+      }
+    }
+    .radar-crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--plum-accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: crosshair-pulse 1.2s infinite ease-in-out;
+    }
+    .radar-crosshair::before,
+    .radar-crosshair::after {
+      content: "";
+      position: absolute;
+      background: var(--plum-accent);
+    }
+    .radar-crosshair::before {
+      top: 50%;
+      left: -10px;
+      width: 60px;
+      height: 1px;
+    }
+    .radar-crosshair::after {
+      left: 50%;
+      top: -10px;
+      width: 1px;
+      height: 60px;
+    }
+    @keyframes crosshair-pulse {
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+      }
+    }
+
+    /* Speedlines (F1 style) */
+    .speedline-effect {
+      background: #1c1c1e;
+    }
+    .checkered-flag-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      background-image:
+        linear-gradient(45deg, #ffffff 25%, transparent 25%),
+        linear-gradient(-45deg, #ffffff 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ffffff 75%),
+        linear-gradient(-45deg, transparent 75%, #ffffff 75%);
+      background-size: 20px 20px;
+      background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0px;
+    }
+    .speedline-effect .line {
+      position: absolute;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(224, 64, 169, 0.7),
+        transparent
+      );
+      height: 2px;
+      width: 100px;
+      animation: f1-line-move 0.4s infinite linear;
+    }
+    .speedline-effect .line:nth-child(2) {
+      top: 25%;
+      left: -100px;
+      animation-delay: 0s;
+    }
+    .speedline-effect .line:nth-child(3) {
+      top: 45%;
+      left: -100px;
+      animation-delay: 0.1s;
+    }
+    .speedline-effect .line:nth-child(4) {
+      top: 65%;
+      left: -100px;
+      animation-delay: 0.2s;
+    }
+    .speedline-effect .line:nth-child(5) {
+      top: 85%;
+      left: -100px;
+      animation-delay: 0.3s;
+    }
+    @keyframes f1-line-move {
+      0% {
+        left: -100px;
+        width: 50px;
+      }
+      100% {
+        left: 100%;
+        width: 150px;
+      }
+    }
+
+    /* Pro Gamer neon crosshair effect */
+    .neon-effect {
+      background: #0d0e12;
+      box-shadow: inset 0 0 20px rgba(224, 64, 169, 0.4);
+    }
+    .neon-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      border: 2px dashed var(--plum-accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: rotating-ring 6s infinite linear;
+      opacity: 0.6;
+    }
+    @keyframes rotating-ring {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+    .gaming-crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--plum-accent);
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: neon-spin-anim 3s infinite linear;
+      box-shadow: 0 0 10px var(--plum-accent);
+    }
+    @keyframes neon-spin-anim {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* Sloth effect */
+    .sloth-effect {
+      background: #2a2c35;
+    }
+  </style>
 </Layout>
