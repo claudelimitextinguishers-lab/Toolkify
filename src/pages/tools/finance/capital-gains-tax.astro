@@ -1,90 +1,2661 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Capital Gains Tax Estimator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Estimate federal capital gains taxes on profits from stocks, crypto, or real estate sales.";
+const description =
+  "Estimate capital gains taxes on profits from stocks, crypto, or real estate sales across multiple countries.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Capital Gains Tax Estimator",
+      "url": "/tools/finance/capital-gains-tax",
+      "description": "Calculate capital gains taxes dynamically for stocks, crypto, or real estate. Supports U.S. ordinary/NIIT rates, Canada inclusion limits, UK allowances, Australia discounts, and India STCG/LTCG rules.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12"
+  >
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav
+        class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1
+          class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary"
+        >
           {name}
         </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        <span
+          class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase"
+          >{tier}</span
+        >
+
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How capital gains tax estimator works"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Mode / Toolbar (Pill Style) -->
+    <div class="flex items-center justify-start border-b border-hairline pb-3">
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+          ></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Custom Currency Overlay (Hidden by default) -->
+    <div
+      id="custom-currency-container"
+      class="grid grid-cols-2 gap-3 p-4 bg-surface rounded-xl border border-hairline hidden animate-fade-in-up"
+    >
+      <div class="flex flex-col gap-1.5">
+        <label
+          for="custom-currency-symbol"
+          class="text-[10px] font-semibold text-slate">Currency Symbol</label
+        >
+        <input
+          type="text"
+          id="custom-currency-symbol"
+          value="$"
+          class="text-input"
+          placeholder="e.g. $, £, €, ₹"
+        />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label
+          for="custom-currency-code"
+          class="text-[10px] font-semibold text-slate">Currency Code</label
+        >
+        <input
+          type="text"
+          id="custom-currency-code"
+          value="USD"
+          class="text-input"
+          placeholder="e.g. USD, GBP, EUR"
+        />
+      </div>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left: Interactive Form (7 Columns) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2
+            class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2"
+          >
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Asset & Profit details
+          </h2>
+
+          <!-- Asset Type preset buttons -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal">Asset Type</label
+            >
+            <div
+              id="asset-type-container"
+              class="grid grid-cols-2 sm:grid-cols-5 gap-2"
+            >
+              <button
+                type="button"
+                data-asset="stocks"
+                class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
+                >📈 Stocks</button
+              >
+              <button
+                type="button"
+                data-asset="crypto"
+                class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
+                >🪙 Crypto</button
+              >
+              <button
+                type="button"
+                data-asset="real-estate"
+                class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
+                >🏠 Real Estate</button
+              >
+              <button
+                type="button"
+                data-asset="funds"
+                class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
+                >💼 Funds</button
+              >
+              <button
+                type="button"
+                data-asset="other"
+                class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
+                >📦 Other</button
+              >
+            </div>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+
+          <!-- Purchase & Sale Price -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <label
+                  for="purchase-price"
+                  class="text-xs font-semibold text-charcoal"
+                  >Purchase Price</label
+                >
+                <select
+                  id="currency-select"
+                  class="text-[10px] font-bold py-0.5 px-2 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                  aria-label="Currency and Country Select"
+                >
+                  <option value="USD" selected>$ USD</option>
+                  <option value="CAD">$ CAD</option>
+                  <option value="GBP">£ GBP</option>
+                  <option value="AUD">$ AUD</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="relative">
+                <span
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="purchase-price"
+                  value="10000"
+                  min="0"
+                  class="text-input pl-7 font-mono text-sm"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="sale-price"
+                class="text-xs font-semibold text-charcoal">Sale Price</label
+              >
+              <div class="relative">
+                <span
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="sale-price"
+                  value="25000"
+                  min="0"
+                  class="text-input pl-7 font-mono text-sm"
+                />
+              </div>
+              <div
+                id="capital-loss-warning"
+                class="hidden text-[10px] text-brand-blue font-semibold mt-1"
+              >
+              </div>
+            </div>
+          </div>
+
+          <!-- Holding Period and Ordinary Annual Income -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label
+                class="text-xs font-semibold text-charcoal flex justify-between"
+              >
+                <span>Holding Period</span>
+                <span
+                  id="holding-period-info-label"
+                  class="text-[10px] text-stone font-normal"
+                  >US Rules: > 1 year is Long-Term</span
+                >
+              </label>
+              <div
+                class="flex rounded-full bg-surface p-1 border border-hairline"
+              >
+                <button
+                  type="button"
+                  id="holding-short-btn"
+                  class="flex-1 text-center text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer bg-primary text-canvas"
+                  >Short-Term</button
+                >
+                <button
+                  type="button"
+                  id="holding-long-btn"
+                  class="flex-1 text-center text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer text-slate"
+                  >Long-Term</button
+                >
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="annual-income"
+                class="text-xs font-semibold text-charcoal flex justify-between"
+              >
+                <span>Annual Ordinary Income</span>
+                <span class="text-[10px] text-stone font-normal"
+                  >For tax brackets</span
+                >
+              </label>
+              <div class="relative">
+                <span
+                  class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol"
+                  >$</span
+                >
+                <input
+                  type="number"
+                  id="annual-income"
+                  value="75000"
+                  min="0"
+                  class="text-input pl-7 font-mono text-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Options Accordion Toggle -->
+          <div class="border-t border-hairline pt-4 mt-2">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Options +
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Advanced Panel content -->
+            <div
+              id="advanced-panel"
+              class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
+            >
+              <!-- Dates Section -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="purchase-date"
+                    class="text-[11px] font-semibold text-slate"
+                    >Purchase Date</label
+                  >
+                  <input
+                    type="date"
+                    id="purchase-date"
+                    class="text-input text-xs"
+                  />
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="sale-date"
+                    class="text-[11px] font-semibold text-slate"
+                    >Sale Date</label
+                  >
+                  <input
+                    type="date"
+                    id="sale-date"
+                    class="text-input text-xs"
+                  />
+                </div>
+              </div>
+
+              <!-- Improvements & Selling Fees -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="improvements"
+                    class="text-[11px] font-semibold text-slate flex justify-between"
+                  >
+                    <span>Improvements / Costs added</span>
+                    <span class="currency-symbol text-stone font-normal">$</span
+                    >
+                  </label>
+                  <div class="relative">
+                    <span
+                      class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs currency-symbol"
+                      >$</span
+                    >
+                    <input
+                      type="number"
+                      id="improvements"
+                      value="0"
+                      min="0"
+                      class="text-input pl-6 text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label
+                    for="selling-fees"
+                    class="text-[11px] font-semibold text-slate flex justify-between"
+                  >
+                    <span>Selling Fees / Commissions</span>
+                    <span class="currency-symbol text-stone font-normal">$</span
+                    >
+                  </label>
+                  <div class="relative">
+                    <span
+                      class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs currency-symbol"
+                      >$</span
+                    >
+                    <input
+                      type="number"
+                      id="selling-fees"
+                      value="0"
+                      min="0"
+                      class="text-input pl-6 text-xs"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Filing Status & State/Province selectors -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div id="filing-status-container" class="flex flex-col gap-1.5">
+                  <label
+                    for="filing-status"
+                    class="text-[11px] font-semibold text-slate"
+                    >Filing Status</label
+                  >
+                  <select id="filing-status" class="text-input text-xs py-1.5">
+                    <option value="single" selected>Single</option>
+                    <option value="joint">Married / Joint</option>
+                    <option value="hoh">Head of Household</option>
+                  </select>
+                </div>
+
+                <div id="state-select-container" class="flex flex-col gap-1.5">
+                  <label
+                    for="state-select"
+                    id="state-select-label"
+                    class="text-[11px] font-semibold text-slate"
+                    >State Tax Residency</label
+                  >
+                  <select id="state-select" class="text-input text-xs py-1.5">
+                    <!-- Dynamic -->
+                  </select>
+                  <div
+                    id="province-warning"
+                    class="hidden text-[10px] text-brand-red font-semibold mt-1"
+                  >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Country-specific advanced toggles -->
+              <div
+                id="country-advanced-fields"
+                class="flex flex-col gap-3 pt-2 border-t border-hairline-soft"
+              >
+                <!-- UK: Allowance toggle -->
+                <div
+                  id="field-uk-allowance"
+                  class="hidden items-center justify-between py-1"
+                >
+                  <span class="text-xs font-semibold text-charcoal"
+                    >CGT Annual Exempt Amount Used?</span
+                  >
+                  <input
+                    type="checkbox"
+                    id="uk-allowance-checkbox"
+                    class="accent-brand-blue w-4 h-4 cursor-pointer"
+                  />
+                </div>
+
+                <!-- UK/AUS: Primary Residence Exemption -->
+                <div
+                  id="field-primary-residence"
+                  class="hidden items-center justify-between py-1"
+                >
+                  <span class="text-xs font-semibold text-charcoal"
+                    >Eligible for Primary Residence Exemption?</span
+                  >
+                  <input
+                    type="checkbox"
+                    id="primary-residence-checkbox"
+                    class="accent-brand-blue w-4 h-4 cursor-pointer"
+                  />
+                </div>
+
+                <!-- India: Indexation toggle -->
+                <div id="field-in-indexation" class="hidden flex-col gap-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold text-charcoal"
+                      >Use pre-July 2024 indexation (20% with indexation)?</span
+                    >
+                    <input
+                      type="checkbox"
+                      id="in-indexation-checkbox"
+                      class="accent-brand-blue w-4 h-4 cursor-pointer"
+                    />
+                  </div>
+                  <div
+                    class="relative hidden"
+                    id="indexation-factors-container"
+                  >
+                    <label
+                      for="indexation-multiplier"
+                      class="text-[10px] text-stone"
+                      >Indexation multiplier factor (CII inflation ratio)</label
+                    >
+                    <input
+                      type="number"
+                      id="indexation-multiplier"
+                      value="1.2"
+                      step="0.01"
+                      class="text-input text-xs"
+                    />
+                  </div>
+                </div>
+
+                <!-- Generic Europe flat tax rate slider -->
+                <div id="field-eu-flat-rate" class="hidden flex-col gap-1.5">
+                  <label
+                    class="text-[11px] font-semibold text-slate flex justify-between"
+                  >
+                    <span>European Tax Rate</span>
+                    <span id="eu-flat-rate-display" class="font-mono text-stone"
+                      >25%</span
+                    >
+                  </label>
+                  <input
+                    type="range"
+                    id="eu-flat-rate-slider"
+                    min="0"
+                    max="60"
+                    value="25"
+                    class="w-full cursor-pointer accent-brand-blue"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Output Pane Above Fold (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div
+          id="estimated-tax-card"
+          class="card-base bg-surface relative overflow-hidden flex flex-col gap-6 p-6"
+        >
+          <div
+            class="absolute top-0 right-0 w-24 h-24 bg-success-accent/10 rounded-full blur-2xl"
+          >
+          </div>
+
+          <div class="flex flex-col gap-1 z-10 text-center md:text-left">
+            <span
+              class="text-xs font-bold text-slate uppercase tracking-wider block"
+              >Estimated Tax Owed</span
+            >
+            <div
+              id="tax-owed-display"
+              class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary font-mono select-all"
+            >
+              $0.00
+            </div>
+          </div>
+
+          <div
+            class="grid grid-cols-3 gap-3 border-t border-hairline pt-4 z-10 font-mono"
+          >
+            <div class="flex flex-col">
+              <span class="text-[9px] uppercase font-bold text-slate"
+                >Net Profit</span
+              >
+              <span
+                id="net-profit-display"
+                class="font-semibold text-xs sm:text-sm text-success-accent select-all"
+                >$0.00</span
+              >
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[9px] uppercase font-bold text-slate"
+                >Effective Rate</span
+              >
+              <span
+                id="effective-rate-display"
+                class="font-semibold text-xs sm:text-sm text-primary select-all"
+                >0.0%</span
+              >
+            </div>
+            <div class="flex flex-col">
+              <span class="text-[9px] uppercase font-bold text-slate"
+                >Applied Bracket</span
+              >
+              <span
+                id="applied-bracket-display"
+                class="font-semibold text-[10px] text-primary truncate"
+                >Standard</span
+              >
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col items-center justify-center pt-2 border-t border-hairline z-10"
+          >
+            <div class="relative w-36 h-36">
+              <svg
+                id="donut-svg"
+                class="w-full h-full transform -rotate-90"
+                viewBox="0 0 100 100"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  stroke="var(--color-hairline)"
+                  stroke-width="12"
+                  fill="transparent"></circle>
+                <g id="donut-segments"></g>
+              </svg>
+              <div
+                class="absolute inset-0 flex flex-col items-center justify-center text-center"
+              >
+                <span class="text-[8px] text-stone font-semibold uppercase"
+                  >Profit Kept</span
+                >
+                <span
+                  id="donut-percent"
+                  class="font-display font-bold text-base text-primary">0%</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="w-full flex flex-col gap-1.5 mt-4 text-[10px] text-slate"
+            >
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5"
+                  ><span class="w-2 h-2 rounded-full bg-slate-300"></span>Basis
+                  Cost</span
+                >
+                <span id="legend-basis-val" class="font-semibold">$0.00</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5"
+                  ><span class="w-2 h-2 rounded-full bg-brand-coral"></span>Tax
+                  Paid</span
+                >
+                <span id="legend-tax-val" class="font-semibold">$0.00</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5"
+                  ><span class="w-2 h-2 rounded-full bg-success-accent"
+                  ></span>Net Profit</span
+                >
+                <span id="legend-profit-val" class="font-semibold">$0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="scroll-to-results-btn"
+            class="w-full button-primary text-xs py-2 px-4 rounded-full text-center flex items-center justify-center gap-1 transition-all cursor-pointer"
+          >
+            <span>View Detailed Breakdown</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Below Fold Detailed Results -->
+    <div
+      id="results-column"
+      class="flex flex-col gap-6 mt-8 border-t border-hairline pt-8"
+    >
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+      >
+        <h2
+          id="detailed-breakdown-heading"
+          class="font-display font-semibold text-2xl text-primary flex items-center gap-2"
+        >
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"
+          ></span>
+          Detailed Tax Breakdowns
+        </h2>
+        <div
+          class="grid grid-cols-3 gap-2 w-full sm:flex sm:items-center sm:w-auto"
+        >
+          <button
+            type="button"
+            id="csv-export-btn"
+            class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle truncate"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            <span class="truncate">Export CSV</span>
+          </button>
+          <button
+            type="button"
+            id="excel-export-btn"
+            class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle truncate"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            <span class="truncate">Export Excel</span>
+          </button>
+          <button
+            type="button"
+            id="copy-results-btn"
+            class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer truncate"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+              ></path>
+            </svg>
+            <span class="truncate">Copy Results</span>
           </button>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Breakdown table (7 columns) -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+          <div class="card-base flex flex-col gap-4 p-5 sm:p-6">
+            <h3 class="font-display font-semibold text-base text-primary">
+              Calculation Breakdown
+            </h3>
+            <div class="w-full overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr
+                    class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono"
+                  >
+                    <th class="py-2.5 px-3">Item / Category</th>
+                    <th class="py-2.5 px-3 text-right">Value</th>
+                  </tr>
+                </thead>
+                <tbody id="breakdown-table-body" class="font-mono">
+                  <!-- Dynamically populated rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- What-if Sale Price slider -->
+          <div class="card-base flex flex-col gap-4 p-5 sm:p-6">
+            <h3 class="font-display font-semibold text-base text-primary">
+              What-If Sale Price Analysis
+            </h3>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between text-xs font-semibold">
+                <span>Adjust Sale Price</span>
+                <span
+                  id="whatif-price-display"
+                  class="font-mono text-brand-blue">$25,000</span
+                >
+              </div>
+              <input
+                type="range"
+                id="whatif-slider"
+                min="0"
+                max="100000"
+                step="500"
+                class="w-full cursor-pointer accent-brand-blue"
+              />
+              <div
+                class="grid grid-cols-2 gap-4 mt-2 text-xs font-semibold border-t border-hairline-soft pt-3"
+              >
+                <div class="flex flex-col">
+                  <span class="text-[10px] text-stone">New Profit</span>
+                  <span id="whatif-profit" class="font-mono text-success-accent"
+                    >$0.00</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] text-stone">New Tax Estimate</span>
+                  <span id="whatif-tax" class="font-mono text-brand-coral"
+                    >$0.00</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Notes and Bracket Reference (5 columns) -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          <div class="card-base bg-surface-soft flex flex-col gap-4 p-5 sm:p-6">
+            <h3
+              id="ref-brackets-title"
+              class="font-display font-semibold text-base text-primary"
+            >
+              Tax Reference Brackets
+            </h3>
+            <div
+              class="w-full overflow-x-auto border border-hairline rounded-xl"
+            >
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr
+                    class="bg-surface text-stone border-b border-hairline font-semibold text-[10px] uppercase font-mono"
+                  >
+                    <th class="py-2 px-2.5">Income Limit</th>
+                    <th class="py-2 px-2.5 text-right">Rate</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="ref-brackets-tbody"
+                  class="font-mono text-xs text-charcoal"
+                >
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+            <div
+              id="country-notes-box"
+              class="text-xs text-slate leading-relaxed border-t border-hairline-soft pt-3 flex flex-col gap-2"
+            >
+              <!-- Country specific terms & exemption notes -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div
+      class="flex items-center justify-between text-[10px] text-slate px-1 mt-6"
+    >
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span class="text-[10px] uppercase font-bold text-stone"
+        >Estimated Tax</span
+      >
+      <span
+        id="mobile-summary-value"
+        class="font-display font-bold text-lg text-primary font-mono"
+        >$0.00</span
+      >
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          How Capital Gains Tax Works
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <p>
+          Capital Gains Tax (CGT) is levied on the profits earned from selling
+          capital assets like stocks, bonds, cryptocurrency, or real estate. The
+          taxable gain is generally calculated as the sale price minus the
+          purchase price and eligible costs (such as transaction fees or
+          improvements).
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          1. Short-Term vs. Long-Term Gains
+        </h4>
+        <p>
+          Holding periods determine whether gains are taxed at ordinary income
+          rates or concessionary rates:
+          <ul class="list-disc pl-4 flex flex-col gap-1 mt-1">
+            <li>
+              <strong>United States</strong>: Assets held &gt; 1 year are taxed
+              at preferential long-term rates (0%, 15%, 20%). Short-term gains
+              are taxed at ordinary income slabs.
+            </li>
+            <li>
+              <strong>Australia</strong>: Assets held &gt; 1 year receive a 50%
+              discount on the taxable gain.
+            </li>
+            <li>
+              <strong>Canada</strong>: No distinction in holding period, but
+              capital gains have a 50% inclusion rate (increasing to 66.67% on
+              annual gains over $250k).
+            </li>
+            <li>
+              <strong>India</strong>: Varies by asset. Listed stocks require 12
+              months for long-term status, while real estate requires 24 months.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Sub-National Taxes</h4>
+        <p>
+          State or provincial capital gains taxes apply in the US and Canada. In
+          the US, state tax applies to your total gain. In Canada, provincial
+          tax applies to the included portion of the gain.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. Net Investment Income Tax (NIIT)
+        </h4>
+        <p>
+          In the US, an additional 3.8% NIIT applies to investment income if
+          your total MAGI exceeds threshold limits ($200,000 for single,
+          $250,000 for joint filers).
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // US Federal Income brackets (2024 ordinary income rates for STCG stacking)
+    const US_FED_ORDINARY = {
+      single: [
+        { limit: 11600, rate: 0.1 },
+        { limit: 47150, rate: 0.12 },
+        { limit: 100525, rate: 0.22 },
+        { limit: 191950, rate: 0.24 },
+        { limit: 243725, rate: 0.32 },
+        { limit: 609350, rate: 0.35 },
+        { limit: Infinity, rate: 0.37 },
+      ],
+      joint: [
+        { limit: 23200, rate: 0.1 },
+        { limit: 94300, rate: 0.12 },
+        { limit: 201050, rate: 0.22 },
+        { limit: 383900, rate: 0.24 },
+        { limit: 487450, rate: 0.32 },
+        { limit: 731200, rate: 0.35 },
+        { limit: Infinity, rate: 0.37 },
+      ],
+      hoh: [
+        { limit: 16550, rate: 0.1 },
+        { limit: 63100, rate: 0.12 },
+        { limit: 100500, rate: 0.22 },
+        { limit: 191950, rate: 0.24 },
+        { limit: 243700, rate: 0.32 },
+        { limit: 609350, rate: 0.35 },
+        { limit: Infinity, rate: 0.37 },
+      ],
+    };
+
+    // US Federal Long Term Capital Gains brackets (2024)
+    const US_FED_LTCG = {
+      single: [
+        { limit: 47025, rate: 0.0 },
+        { limit: 518900, rate: 0.15 },
+        { limit: Infinity, rate: 0.2 },
+      ],
+      joint: [
+        { limit: 94050, rate: 0.0 },
+        { limit: 583750, rate: 0.15 },
+        { limit: Infinity, rate: 0.2 },
+      ],
+      hoh: [
+        { limit: 63000, rate: 0.0 },
+        { limit: 551350, rate: 0.15 },
+        { limit: Infinity, rate: 0.2 },
+      ],
+    };
+
+    // US State capital gains tax rates (approx flat or max rates)
+    const US_STATE_RATES: Record<string, { name: string; rate: number }> = {
+      AL: { name: "Alabama", rate: 0.05 },
+      AK: { name: "Alaska", rate: 0.0 },
+      AZ: { name: "Arizona", rate: 0.025 },
+      AR: { name: "Arkansas", rate: 0.044 },
+      CA: { name: "California", rate: 0.133 },
+      CO: { name: "Colorado", rate: 0.044 },
+      CT: { name: "Connecticut", rate: 0.0699 },
+      DE: { name: "Delaware", rate: 0.066 },
+      FL: { name: "Florida", rate: 0.0 },
+      GA: { name: "Georgia", rate: 0.0549 },
+      HI: { name: "Hawaii", rate: 0.0725 },
+      ID: { name: "Idaho", rate: 0.058 },
+      IL: { name: "Illinois", rate: 0.0495 },
+      IN: { name: "Indiana", rate: 0.0305 },
+      IA: { name: "Iowa", rate: 0.057 },
+      KS: { name: "Kansas", rate: 0.057 },
+      KY: { name: "Kentucky", rate: 0.04 },
+      LA: { name: "Louisiana", rate: 0.0425 },
+      ME: { name: "Maine", rate: 0.0715 },
+      MD: { name: "Maryland", rate: 0.0575 },
+      MA: { name: "Massachusetts", rate: 0.05 },
+      MI: { name: "Michigan", rate: 0.0425 },
+      MN: { name: "Minnesota", rate: 0.0985 },
+      MS: { name: "Mississippi", rate: 0.047 },
+      MO: { name: "Missouri", rate: 0.048 },
+      MT: { name: "Montana", rate: 0.059 },
+      NE: { name: "Nebraska", rate: 0.0584 },
+      NV: { name: "Nevada", rate: 0.0 },
+      NH: { name: "New Hampshire", rate: 0.0 },
+      NJ: { name: "New Jersey", rate: 0.1075 },
+      NM: { name: "New Mexico", rate: 0.059 },
+      NY: { name: "New York", rate: 0.109 },
+      NC: { name: "North Carolina", rate: 0.045 },
+      ND: { name: "North Dakota", rate: 0.025 },
+      OH: { name: "Ohio", rate: 0.035 },
+      OK: { name: "Oklahoma", rate: 0.0475 },
+      OR: { name: "Oregon", rate: 0.099 },
+      PA: { name: "Pennsylvania", rate: 0.0307 },
+      RI: { name: "Rhode Island", rate: 0.0599 },
+      SC: { name: "South Carolina", rate: 0.064 },
+      SD: { name: "South Dakota", rate: 0.0 },
+      TN: { name: "Tennessee", rate: 0.0 },
+      TX: { name: "Texas", rate: 0.0 },
+      UT: { name: "Utah", rate: 0.0465 },
+      VT: { name: "Vermont", rate: 0.0875 },
+      VA: { name: "Virginia", rate: 0.0575 },
+      WA: { name: "Washington (Gains > $250k)", rate: 0.07 },
+      WV: { name: "West Virginia", rate: 0.0512 },
+      WI: { name: "Wisconsin", rate: 0.0765 },
+      WY: { name: "Wyoming", rate: 0.0 },
+    };
+
+    // Canada Federal brackets (2024)
+    const CA_FED_BRACKETS = [
+      { limit: 55867, rate: 0.15 },
+      { limit: 111733, rate: 0.205 },
+      { limit: 173205, rate: 0.26 },
+      { limit: 246752, rate: 0.29 },
+      { limit: Infinity, rate: 0.33 },
+    ];
+
+    // Canada provincial flat/progressive rates
+    const CA_PROVINCES: Record<
+      string,
+      { name: string; brackets: { limit: number; rate: number }[] }
+    > = {
+      ON: {
+        name: "Ontario",
+        brackets: [
+          { limit: 51446, rate: 0.0505 },
+          { limit: 102894, rate: 0.0915 },
+          { limit: 150000, rate: 0.1116 },
+          { limit: 220000, rate: 0.1216 },
+          { limit: Infinity, rate: 0.1316 },
+        ],
+      },
+      BC: {
+        name: "British Columbia",
+        brackets: [
+          { limit: 47937, rate: 0.0506 },
+          { limit: 95875, rate: 0.077 },
+          { limit: 110076, rate: 0.105 },
+          { limit: 133664, rate: 0.1229 },
+          { limit: 181816, rate: 0.147 },
+          { limit: 252752, rate: 0.168 },
+          { limit: Infinity, rate: 0.205 },
+        ],
+      },
+      QC: {
+        name: "Quebec",
+        brackets: [
+          { limit: 51780, rate: 0.14 },
+          { limit: 103545, rate: 0.19 },
+          { limit: 126000, rate: 0.24 },
+          { limit: Infinity, rate: 0.2575 },
+        ],
+      },
+      AB: {
+        name: "Alberta",
+        brackets: [
+          { limit: 148269, rate: 0.1 },
+          { limit: 177922, rate: 0.12 },
+          { limit: 237230, rate: 0.13 },
+          { limit: 355845, rate: 0.14 },
+          { limit: Infinity, rate: 0.15 },
+        ],
+      },
+      MB: {
+        name: "Manitoba",
+        brackets: [
+          { limit: 47000, rate: 0.108 },
+          { limit: 100000, rate: 0.1275 },
+          { limit: Infinity, rate: 0.174 },
+        ],
+      },
+      SK: {
+        name: "Saskatchewan",
+        brackets: [
+          { limit: 52057, rate: 0.105 },
+          { limit: 148734, rate: 0.125 },
+          { limit: Infinity, rate: 0.145 },
+        ],
+      },
+      NS: {
+        name: "Nova Scotia",
+        brackets: [
+          { limit: 29590, rate: 0.0879 },
+          { limit: 59180, rate: 0.1495 },
+          { limit: 93000, rate: 0.1667 },
+          { limit: 150000, rate: 0.175 },
+          { limit: Infinity, rate: 0.21 },
+        ],
+      },
+      NB: {
+        name: "New Brunswick",
+        brackets: [
+          { limit: 49958, rate: 0.094 },
+          { limit: 99916, rate: 0.14 },
+          { limit: 185064, rate: 0.16 },
+          { limit: Infinity, rate: 0.195 },
+        ],
+      },
+      NL: {
+        name: "Newfoundland and Labrador",
+        brackets: [
+          { limit: 43198, rate: 0.087 },
+          { limit: 86395, rate: 0.145 },
+          { limit: 154244, rate: 0.158 },
+          { limit: 215943, rate: 0.178 },
+          { limit: 275000, rate: 0.198 },
+          { limit: 500000, rate: 0.208 },
+          { limit: 1000000, rate: 0.213 },
+          { limit: 2000000, rate: 0.218 },
+          { limit: Infinity, rate: 0.23 },
+        ],
+      },
+      PE: {
+        name: "Prince Edward Island",
+        brackets: [
+          { limit: 32656, rate: 0.0965 },
+          { limit: 64300, rate: 0.1363 },
+          { limit: 105000, rate: 0.1665 },
+          { limit: 140000, rate: 0.18 },
+          { limit: Infinity, rate: 0.1875 },
+        ],
+      },
+      YT: {
+        name: "Yukon",
+        brackets: [
+          { limit: 55867, rate: 0.064 },
+          { limit: 111733, rate: 0.09 },
+          { limit: 173205, rate: 0.109 },
+          { limit: 500000, rate: 0.128 },
+          { limit: Infinity, rate: 0.15 },
+        ],
+      },
+      NT: {
+        name: "Northwest Territories",
+        brackets: [
+          { limit: 50597, rate: 0.059 },
+          { limit: 101198, rate: 0.086 },
+          { limit: 164525, rate: 0.122 },
+          { limit: Infinity, rate: 0.1405 },
+        ],
+      },
+      NU: {
+        name: "Nunavut",
+        brackets: [
+          { limit: 53268, rate: 0.04 },
+          { limit: 106537, rate: 0.07 },
+          { limit: 173205, rate: 0.09 },
+          { limit: Infinity, rate: 0.115 },
+        ],
+      },
+    };
+
+    // Australia Tax Slabs (Stage 3 cuts starting July 1, 2024)
+    const AU_SLABS = [
+      { limit: 18200, rate: 0.0 },
+      { limit: 45000, rate: 0.16 },
+      { limit: 135000, rate: 0.3 },
+      { limit: 190000, rate: 0.37 },
+      { limit: Infinity, rate: 0.45 },
+    ];
+
+    // India Slabs (2024-25 New Regime slabs for STCG debt/RE)
+    const IN_SLABS = [
+      { limit: 300000, rate: 0.0 },
+      { limit: 600000, rate: 0.05 },
+      { limit: 900000, rate: 0.1 },
+      { limit: 1200000, rate: 0.15 },
+      { limit: 1500000, rate: 0.2 },
+      { limit: Infinity, rate: 0.3 },
+    ];
+
+    // DOM Elements
+    const currencySelect = document.getElementById(
+      "currency-select",
+    ) as HTMLSelectElement;
+    const customCurrencyContainer = document.getElementById(
+      "custom-currency-container",
+    );
+    const customCurrencySymbolInput = document.getElementById(
+      "custom-currency-symbol",
+    ) as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById(
+      "custom-currency-code",
+    ) as HTMLInputElement;
+
+    const purchasePriceInput = document.getElementById(
+      "purchase-price",
+    ) as HTMLInputElement;
+    const salePriceInput = document.getElementById(
+      "sale-price",
+    ) as HTMLInputElement;
+    const annualIncomeInput = document.getElementById(
+      "annual-income",
+    ) as HTMLInputElement;
+
+    const holdingShortBtn = document.getElementById("holding-short-btn");
+    const holdingLongBtn = document.getElementById("holding-long-btn");
+    const holdingPeriodInfoLabel = document.getElementById(
+      "holding-period-info-label",
+    );
+
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+
+    const purchaseDateInput = document.getElementById(
+      "purchase-date",
+    ) as HTMLInputElement;
+    const saleDateInput = document.getElementById(
+      "sale-date",
+    ) as HTMLInputElement;
+    const improvementsInput = document.getElementById(
+      "improvements",
+    ) as HTMLInputElement;
+    const sellingFeesInput = document.getElementById(
+      "selling-fees",
+    ) as HTMLInputElement;
+
+    const filingStatusSelect = document.getElementById(
+      "filing-status",
+    ) as HTMLSelectElement;
+    const stateSelect = document.getElementById(
+      "state-select",
+    ) as HTMLSelectElement;
+    const stateSelectLabel = document.getElementById("state-select-label");
+    const stateSelectContainer = document.getElementById(
+      "state-select-container",
+    );
+    const filingStatusContainer = document.getElementById(
+      "filing-status-container",
+    );
+
+    const fieldUkAllowance = document.getElementById("field-uk-allowance");
+    const fieldPrimaryResidence = document.getElementById(
+      "field-primary-residence",
+    );
+    const fieldInIndexation = document.getElementById("field-in-indexation");
+    const fieldEuFlatRate = document.getElementById("field-eu-flat-rate");
+
+    const ukAllowanceCheckbox = document.getElementById(
+      "uk-allowance-checkbox",
+    ) as HTMLInputElement;
+    const primaryResidenceCheckbox = document.getElementById(
+      "primary-residence-checkbox",
+    ) as HTMLInputElement;
+    const inIndexationCheckbox = document.getElementById(
+      "in-indexation-checkbox",
+    ) as HTMLInputElement;
+    const indexationMultiplier = document.getElementById(
+      "indexation-multiplier",
+    ) as HTMLInputElement;
+    const indexationFactorsContainer = document.getElementById(
+      "indexation-factors-container",
+    );
+    const euFlatRateSlider = document.getElementById(
+      "eu-flat-rate-slider",
+    ) as HTMLInputElement;
+    const euFlatRateDisplay = document.getElementById("eu-flat-rate-display");
+
+    // Outputs
+    const taxOwedDisplay = document.getElementById("tax-owed-display");
+    const netProfitDisplay = document.getElementById("net-profit-display");
+    const effectiveRateDisplay = document.getElementById(
+      "effective-rate-display",
+    );
+    const appliedBracketDisplay = document.getElementById(
+      "applied-bracket-display",
+    );
+
+    const legendBasisVal = document.getElementById("legend-basis-val");
+    const legendTaxVal = document.getElementById("legend-tax-val");
+    const legendProfitVal = document.getElementById("legend-profit-val");
+    const donutSegments = document.getElementById("donut-segments");
+    const donutPercent = document.getElementById("donut-percent");
+
+    const breakdownTableBody = document.getElementById("breakdown-table-body");
+    const refBracketsTbody = document.getElementById("ref-brackets-tbody");
+    const refBracketsTitle = document.getElementById("ref-brackets-title");
+    const countryNotesBox = document.getElementById("country-notes-box");
+
+    const whatifPriceDisplay = document.getElementById("whatif-price-display");
+    const whatifSlider = document.getElementById(
+      "whatif-slider",
+    ) as HTMLInputElement;
+    const whatifProfit = document.getElementById("whatif-profit");
+    const whatifTax = document.getElementById("whatif-tax");
+
+    const copyResultsBtn = document.getElementById("copy-results-btn");
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const excelExportBtn = document.getElementById("excel-export-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const scrollToResultsBtn = document.getElementById("scroll-to-results-btn");
+
+    let isHoldingLong = false;
+    let selectedAsset = "stocks";
+    let currentBreakdownRows: { label: string; value: number }[] = [];
+    let currentEffectiveRateFraction = 0;
+
+    // Progressive calculation utility
+    function calculateProgressive(
+      taxable: number,
+      brackets: { limit: number; rate: number }[],
+    ) {
+      let tax = 0;
+      let prevLimit = 0;
+      for (let b of brackets) {
+        if (taxable > prevLimit) {
+          const portion = Math.min(taxable, b.limit) - prevLimit;
+          tax += portion * b.rate;
+          prevLimit = b.limit;
+        } else {
+          break;
+        }
+      }
+      return tax;
+    }
+
+    // Helper to synchronize advanced fields based on asset and country
+    function syncAdvancedFieldVisibility() {
+      const country = currencySelect.value;
+
+      // UK: Allowance toggle
+      if (country === "GBP") {
+        fieldUkAllowance?.classList.add("flex");
+        fieldUkAllowance?.classList.remove("hidden");
+      } else {
+        fieldUkAllowance?.classList.add("hidden");
+        fieldUkAllowance?.classList.remove("flex");
+      }
+
+      // UK/AUS: Primary Residence Exemption
+      if (
+        selectedAsset === "real-estate" &&
+        (country === "GBP" || country === "AUD")
+      ) {
+        fieldPrimaryResidence?.classList.add("flex");
+        fieldPrimaryResidence?.classList.remove("hidden");
+      } else {
+        fieldPrimaryResidence?.classList.add("hidden");
+        fieldPrimaryResidence?.classList.remove("flex");
+      }
+
+      // India: Indexation toggle
+      if (selectedAsset === "real-estate" && country === "INR") {
+        fieldInIndexation?.classList.add("flex");
+        fieldInIndexation?.classList.remove("hidden");
+      } else {
+        fieldInIndexation?.classList.add("hidden");
+        fieldInIndexation?.classList.remove("flex");
+        indexationFactorsContainer?.classList.add("hidden");
+      }
+
+      // Europe flat rate
+      if (country === "EUR") {
+        fieldEuFlatRate?.classList.add("flex");
+        fieldEuFlatRate?.classList.remove("hidden");
+      } else {
+        fieldEuFlatRate?.classList.add("hidden");
+        fieldEuFlatRate?.classList.remove("flex");
+      }
+    }
+
+    // Initialize state selectors based on country
+    function updateLayoutForCountry() {
+      const country = currencySelect.value;
+      // Reset specific fields
+      stateSelectContainer?.classList.add("hidden");
+      filingStatusContainer?.classList.remove("hidden");
+      customCurrencyContainer?.classList.add("hidden");
+
+      if (country === "USD") {
+        stateSelectContainer?.classList.remove("hidden");
+        if (stateSelectLabel)
+          stateSelectLabel.textContent = "State Tax Residency";
+        let stateHtml = `<option value="NONE">No State Tax (0%)</option>`;
+        Object.keys(US_STATE_RATES).forEach((code) => {
+          stateHtml += `<option value="${code}">${US_STATE_RATES[code].name} (${(US_STATE_RATES[code].rate * 100).toFixed(1)}%)</option>`;
+        });
+        if (stateSelect) stateSelect.innerHTML = stateHtml;
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent =
+            "US Rules: > 1 year is Long-Term";
+      } else if (country === "CAD") {
+        stateSelectContainer?.classList.remove("hidden");
+        if (stateSelectLabel)
+          stateSelectLabel.textContent = "Province / Territory";
+        let provHtml = "";
+        Object.keys(CA_PROVINCES).forEach((code) => {
+          provHtml += `<option value="${code}">${CA_PROVINCES[code].name} (${code})</option>`;
+        });
+        if (stateSelect) stateSelect.innerHTML = provHtml;
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent =
+            "Canada: Same rate, 50% or 66.7% inclusion";
+      } else if (country === "GBP") {
+        filingStatusContainer?.classList.add("hidden"); // UK is individual assessment
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent =
+            "UK Rules: Slabs stack on Income";
+      } else if (country === "AUD") {
+        filingStatusContainer?.classList.add("hidden"); // AUS is individual assessment
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent =
+            "Australia: >12 months gets 50% discount";
+      } else if (country === "EUR") {
+        filingStatusContainer?.classList.add("hidden");
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent =
+            "Generic EU: Flat tax rate applies";
+      } else if (country === "INR") {
+        filingStatusContainer?.classList.add("hidden");
+        const holdingThreshold =
+          selectedAsset === "stocks" || selectedAsset === "funds"
+            ? "1 year"
+            : "2 years";
+        if (holdingPeriodInfoLabel)
+          holdingPeriodInfoLabel.textContent = `India: > ${holdingThreshold} is Long-Term`;
+      } else if (country === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+      }
+
+      syncAdvancedFieldVisibility();
+      updateCurrencySymbols();
+    }
+
+    // Set symbols
+    function getCurrencySymbolAndCode() {
+      const country = currencySelect.value;
+      if (country === "USD") return { symbol: "$", code: "USD" };
+      if (country === "CAD") return { symbol: "$", code: "CAD" };
+      if (country === "GBP") return { symbol: "£", code: "GBP" };
+      if (country === "AUD") return { symbol: "$", code: "AUD" };
+      if (country === "EUR") return { symbol: "€", code: "EUR" };
+      if (country === "INR") return { symbol: "₹", code: "INR" };
+      if (country === "Custom") {
+        return {
+          symbol: customCurrencySymbolInput.value || "$",
+          code: customCurrencyCodeInput.value || "USD",
+        };
+      }
+      return { symbol: "$", code: "USD" };
+    }
+
+    function updateCurrencySymbols() {
+      const { symbol } = getCurrencySymbolAndCode();
+      document.querySelectorAll(".currency-symbol").forEach((el) => {
+        el.textContent = symbol;
+      });
+    }
+
+    function formatCurrency(val: number) {
+      const { symbol, code } = getCurrencySymbolAndCode();
+      if (code === "INR") {
+        // Indian number formatting
+        return (
+          symbol +
+          " " +
+          val.toLocaleString("en-IN", { maximumFractionDigits: 2 })
+        );
+      }
+      return (
+        symbol +
+        val.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+
+    // Date calculations to update holding period
+    function syncDatesAndHolding() {
+      if (!purchaseDateInput.value || !saleDateInput.value) return;
+      const start = new Date(purchaseDateInput.value);
+      const end = new Date(saleDateInput.value);
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) return;
+
+      const diffTime = Math.abs(end.getTime() - start.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      const years = diffDays / 365.25;
+
+      const country = currencySelect.value;
+      let longTermThresholdYears = 1.0;
+
+      if (
+        country === "INR" &&
+        (selectedAsset === "real-estate" || selectedAsset === "other")
+      ) {
+        longTermThresholdYears = 2.0; // 24 months
+      }
+
+      if (years >= longTermThresholdYears) {
+        toggleHolding(true);
+      } else {
+        toggleHolding(false);
+      }
+    }
+
+    function toggleHolding(long: boolean) {
+      isHoldingLong = long;
+      if (long) {
+        holdingLongBtn?.classList.add("bg-primary", "text-canvas");
+        holdingLongBtn?.classList.remove("text-slate");
+        holdingShortBtn?.classList.remove("bg-primary", "text-canvas");
+        holdingShortBtn?.classList.add("text-slate");
+      } else {
+        holdingShortBtn?.classList.add("bg-primary", "text-canvas");
+        holdingShortBtn?.classList.remove("text-slate");
+        holdingLongBtn?.classList.remove("bg-primary", "text-canvas");
+        holdingLongBtn?.classList.add("text-slate");
+      }
+    }
+
+    // Asset button styling
+    function updateAssetSelection(asset: string) {
+      selectedAsset = asset;
+      document.querySelectorAll(".asset-btn").forEach((btn) => {
+        const type = btn.getAttribute("data-asset");
+        if (type === asset) {
+          btn.className =
+            "asset-btn text-xs py-2 rounded-xl font-bold border-2 border-brand-blue bg-surface-pricing-featured text-brand-blue transition-all active:scale-95";
+        } else {
+          btn.className =
+            "asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95";
+        }
+      });
+
+      syncAdvancedFieldVisibility();
+      calculate();
+    }
+
+    // Calculation Engine
+    function calculate() {
+      currentBreakdownRows = [];
+
+      // Clamp inputs to 0
+      if (parseFloat(purchasePriceInput.value) < 0)
+        purchasePriceInput.value = "0";
+      if (parseFloat(salePriceInput.value) < 0) salePriceInput.value = "0";
+      if (parseFloat(annualIncomeInput.value) < 0)
+        annualIncomeInput.value = "0";
+      if (parseFloat(improvementsInput.value) < 0)
+        improvementsInput.value = "0";
+      if (parseFloat(sellingFeesInput.value) < 0) sellingFeesInput.value = "0";
+
+      const country = currencySelect.value;
+      const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+      const salePrice = parseFloat(salePriceInput.value) || 0;
+      const improvements = parseFloat(improvementsInput.value) || 0;
+      const sellingFees = parseFloat(sellingFeesInput.value) || 0;
+      const annualIncome = parseFloat(annualIncomeInput.value) || 0;
+
+      // Show warning if capital loss
+      const capitalLossWarning = document.getElementById(
+        "capital-loss-warning",
+      );
+      if (purchasePrice > salePrice) {
+        if (capitalLossWarning) {
+          capitalLossWarning.textContent =
+            "Purchase price exceeds sale price: Capital loss detected (no tax owed).";
+          capitalLossWarning.classList.add("block");
+          capitalLossWarning.classList.remove("hidden");
+        }
+      } else {
+        if (capitalLossWarning) {
+          capitalLossWarning.classList.add("hidden");
+          capitalLossWarning.classList.remove("block");
+        }
+      }
+
+      let filingStatus = filingStatusSelect.value as "single" | "joint" | "hoh";
+      if (
+        filingStatus !== "single" &&
+        filingStatus !== "joint" &&
+        filingStatus !== "hoh"
+      ) {
+        filingStatus = "single";
+      }
+
+      const totalBasis = purchasePrice + improvements;
+      const netProceeds = salePrice - sellingFees;
+      const grossGain = Math.max(0, netProceeds - totalBasis);
+
+      // Dynamically set whatifSlider max
+      whatifSlider.max = Math.max(salePrice * 3, 100000).toString();
+
+      let taxOwed = 0;
+      let appliedBracket = "N/A";
+
+      currentBreakdownRows.push(
+        { label: "Sale Price", value: salePrice },
+        { label: "Less: Selling Fees", value: sellingFees },
+        { label: "Net Proceeds", value: netProceeds },
+        { label: "Purchase Price", value: purchasePrice },
+        { label: "Add: Improvements", value: improvements },
+        { label: "Adjusted Basis Cost", value: totalBasis },
+        { label: "Total Capital Gain", value: grossGain },
+      );
+
+      const breakdownRows = currentBreakdownRows;
+      let bracketRows: { limit: string; rate: string }[] = [];
+      let notes = "";
+
+      // 1. UNITED STATES
+      if (country === "USD") {
+        const stateCode = stateSelect.value;
+        const stateRate =
+          stateCode !== "NONE" ? US_STATE_RATES[stateCode]?.rate || 0 : 0;
+
+        let fedTax = 0;
+        let niitTax = 0;
+
+        if (!isHoldingLong) {
+          // Short term stacked on ordinary income
+          const ordinaryBrackets = US_FED_ORDINARY[filingStatus];
+          const taxWithoutGain = calculateProgressive(
+            annualIncome,
+            ordinaryBrackets,
+          );
+          const taxWithGain = calculateProgressive(
+            annualIncome + grossGain,
+            ordinaryBrackets,
+          );
+          fedTax = Math.max(0, taxWithGain - taxWithoutGain);
+          appliedBracket = "Short-Term Slabs";
+
+          // Bracket visualization
+          ordinaryBrackets.forEach((b) => {
+            bracketRows.push({
+              limit:
+                b.limit === Infinity ? "Over" : `$${b.limit.toLocaleString()}`,
+              rate: `${(b.rate * 100).toFixed(0)}%`,
+            });
+          });
+        } else {
+          // Long term stacked on ordinary income
+          const ltcgBrackets = US_FED_LTCG[filingStatus];
+          const combinedIncome = annualIncome + grossGain;
+
+          let prevLimit = 0;
+
+          for (let b of ltcgBrackets) {
+            // Find portion of gain falling into this bracket
+            // Slabs apply to combinedIncome
+            const lowerBound = Math.max(annualIncome, prevLimit);
+            const upperBound = Math.min(combinedIncome, b.limit);
+
+            if (upperBound > lowerBound) {
+              const portion = upperBound - lowerBound;
+              fedTax += portion * b.rate;
+            }
+            prevLimit = b.limit;
+          }
+          appliedBracket = "Long-Term Preferential";
+
+          ltcgBrackets.forEach((b) => {
+            bracketRows.push({
+              limit:
+                b.limit === Infinity ? "Over" : `$${b.limit.toLocaleString()}`,
+              rate: `${(b.rate * 100).toFixed(0)}%`,
+            });
+          });
+        }
+
+        // NIIT calculation
+        let niitThreshold = 200000;
+        if (filingStatus === "joint") {
+          niitThreshold = 250000;
+        } else if (filingStatus === "hoh") {
+          niitThreshold = 200000;
+        }
+        const magi = annualIncome + grossGain;
+        if (magi > niitThreshold) {
+          const excessMagi = magi - niitThreshold;
+          const taxableNiitAmount = Math.min(grossGain, excessMagi);
+          niitTax = taxableNiitAmount * 0.038;
+        }
+
+        const stateTax = grossGain * stateRate;
+        taxOwed = fedTax + niitTax + stateTax;
+
+        breakdownRows.push({
+          label: "Federal Capital Gains Tax",
+          value: fedTax,
+        });
+        if (niitTax > 0)
+          breakdownRows.push({
+            label: "Net Investment Income Tax (NIIT 3.8%)",
+            value: niitTax,
+          });
+        if (stateTax > 0 && US_STATE_RATES[stateCode])
+          breakdownRows.push({
+            label: `${US_STATE_RATES[stateCode].name} State Tax`,
+            value: stateTax,
+          });
+
+        notes = `State tax is calculated at a flat/marginal rate where applicable. NIIT triggers above $200k MAGI ($250k Joint).`;
+
+        // 2. CANADA
+      } else if (country === "CAD") {
+        const provCode = stateSelect.value;
+        const provData = CA_PROVINCES[provCode];
+        let provBrackets = provData?.brackets;
+
+        const warningEl = document.getElementById("province-warning");
+        if (!provBrackets) {
+          provBrackets = [];
+          if (warningEl) {
+            warningEl.textContent = `Warning: Missing tax bracket data for selected province/territory (${provCode}).`;
+            warningEl.classList.add("block");
+            warningEl.classList.remove("hidden");
+          }
+        } else {
+          if (warningEl) {
+            warningEl.classList.add("hidden");
+            warningEl.classList.remove("block");
+          }
+        }
+
+        // Canada 2024 new rules: 50% inclusion under $250k, 2/3 (66.67%) above $250k
+        let inclusionRate = 0.5;
+        let taxableGain = 0;
+        if (grossGain <= 250000) {
+          taxableGain = grossGain * 0.5;
+          inclusionRate = 0.5;
+        } else {
+          taxableGain = 250000 * 0.5 + (grossGain - 250000) * (2 / 3);
+          inclusionRate = grossGain > 0 ? taxableGain / grossGain : 0.5;
+        }
+
+        // Stacking taxable gain on ordinary income for Federal + Provincial tax
+        const fedTaxWithout = calculateProgressive(
+          annualIncome,
+          CA_FED_BRACKETS,
+        );
+        const fedTaxWith = calculateProgressive(
+          annualIncome + taxableGain,
+          CA_FED_BRACKETS,
+        );
+        const fedTax = fedTaxWith - fedTaxWithout;
+
+        const provTaxWithout = calculateProgressive(annualIncome, provBrackets);
+        const provTaxWith = calculateProgressive(
+          annualIncome + taxableGain,
+          provBrackets,
+        );
+        const provTax = provTaxWith - provTaxWithout;
+
+        taxOwed = fedTax + provTax;
+        appliedBracket = `Avg Inclusion: ${(inclusionRate * 100).toFixed(1)}%`;
+
+        breakdownRows.push({
+          label: "Effective Taxable Gain (Included)",
+          value: taxableGain,
+        });
+        breakdownRows.push({
+          label: "Federal Income Tax on Gain",
+          value: fedTax,
+        });
+        breakdownRows.push({
+          label: "Provincial Income Tax on Gain",
+          value: provTax,
+        });
+
+        CA_FED_BRACKETS.forEach((b) => {
+          bracketRows.push({
+            limit:
+              b.limit === Infinity ? "Over" : `$${b.limit.toLocaleString()}`,
+            rate: `${(b.rate * 100).toFixed(1)}%`,
+          });
+        });
+
+        notes = `Canada taxes 50% of capital gains. Starting June 25, 2024, gains above $250,000 are subject to a 66.67% inclusion rate. Small business shares may qualify for the Lifetime Capital Gains Exemption (LCGE).`;
+
+        // 3. UNITED KINGDOM
+      } else if (country === "GBP") {
+        // CGT allowance is £3,000
+        const allowanceUsed = ukAllowanceCheckbox.checked;
+        const allowance = allowanceUsed ? 0 : 3000;
+        const taxableGain = Math.max(0, grossGain - allowance);
+
+        const isRealEstate = selectedAsset === "real-estate";
+        const primaryExempt = primaryResidenceCheckbox.checked;
+
+        if (primaryExempt && isRealEstate) {
+          taxOwed = 0;
+          appliedBracket = "Private Residence Relief";
+        } else {
+          // Stacking on income to see basic/higher rate taxpayer threshold
+          // Basic rate limit is £37,700 taxable (which corresponds to total income of £50,270 with £12,570 Personal Allowance)
+          const taxableIncome = Math.max(0, annualIncome - 12570);
+          const basicRateLimit = 37700;
+
+          // Standard rates: 10% basic, 20% higher. Residential property: 18% basic, 24% higher
+          const basicRate = isRealEstate ? 0.18 : 0.1;
+          const higherRate = isRealEstate ? 0.24 : 0.2;
+
+          let basicBandRemaining = Math.max(0, basicRateLimit - taxableIncome);
+
+          let basicTaxable = Math.min(taxableGain, basicBandRemaining);
+          let higherTaxable = Math.max(0, taxableGain - basicBandRemaining);
+
+          taxOwed = basicTaxable * basicRate + higherTaxable * higherRate;
+          appliedBracket =
+            higherTaxable > 0
+              ? "Higher Rate (20%/24%)"
+              : "Basic Rate (10%/18%)";
+
+          breakdownRows.push({
+            label: "CGT Annual Allowance Offset",
+            value: -allowance,
+          });
+          breakdownRows.push({ label: "Taxable Gain", value: taxableGain });
+          if (basicTaxable > 0)
+            breakdownRows.push({
+              label: `Gain taxed at Basic Rate (${(basicRate * 100).toFixed(0)}%)`,
+              value: basicTaxable * basicRate,
+            });
+          if (higherTaxable > 0)
+            breakdownRows.push({
+              label: `Gain taxed at Higher Rate (${(higherRate * 100).toFixed(0)}%)`,
+              value: higherTaxable * higherRate,
+            });
+
+          bracketRows.push({
+            limit: "Basic Rate Band",
+            rate: `${(basicRate * 100).toFixed(0)}%`,
+          });
+          bracketRows.push({
+            limit: "Higher/Additional",
+            rate: `${(higherRate * 100).toFixed(0)}%`,
+          });
+        }
+
+        notes = `UK allowance for 2024/25 is £3,000. Residential property CGT rates are 18% / 24% (reduced from 28% in 2024). Business Asset Disposal Relief (BADR) allows a flat 10% rate for qualifying shares.`;
+
+        // 4. AUSTRALIA
+      } else if (country === "AUD") {
+        const isRealEstate = selectedAsset === "real-estate";
+        const primaryExempt = primaryResidenceCheckbox.checked;
+
+        if (primaryExempt && isRealEstate) {
+          taxOwed = 0;
+          appliedBracket = "Main Residence Exemption";
+        } else {
+          // 50% discount if held > 12 months
+          const discountRate = isHoldingLong ? 0.5 : 1.0;
+          const netTaxableGain = grossGain * discountRate;
+
+          // Medicare levy: 2%
+          const baseTaxWithout = calculateProgressive(annualIncome, AU_SLABS);
+          const baseTaxWith = calculateProgressive(
+            annualIncome + netTaxableGain,
+            AU_SLABS,
+          );
+          const baseTax = baseTaxWith - baseTaxWithout;
+          const medicareTax = netTaxableGain * 0.02;
+
+          taxOwed = baseTax + medicareTax;
+          appliedBracket = isHoldingLong
+            ? "Discounted (50%) Slabs"
+            : "Ordinary Income Slabs";
+
+          breakdownRows.push({
+            label: "CGT Holding Discount",
+            value: isHoldingLong ? grossGain * 0.5 : 0,
+          });
+          breakdownRows.push({
+            label: "Medicare Levy (2.0%)",
+            value: medicareTax,
+          });
+          breakdownRows.push({ label: "Income Tax on Gain", value: baseTax });
+
+          AU_SLABS.forEach((b) => {
+            bracketRows.push({
+              limit:
+                b.limit === Infinity ? "Over" : `$${b.limit.toLocaleString()}`,
+              rate: `${(b.rate * 100).toFixed(0)}%`,
+            });
+          });
+        }
+
+        notes = `Australia offers a 50% discount on capital gains for individuals holding assets for over 1 year. Net gain is added to taxable income and taxed at progressive tax rates + 2% Medicare levy. Note: Medicare Levy Surcharge is not modeled.`;
+
+        // 5. EUROPE
+      } else if (country === "EUR") {
+        const ratePercent = parseFloat(euFlatRateSlider.value) || 25;
+        const rateDecimal = ratePercent / 100;
+        taxOwed = grossGain * rateDecimal;
+        appliedBracket = `Flat Rate ${ratePercent}%`;
+
+        breakdownRows.push({
+          label: `European flat tax on gain`,
+          value: taxOwed,
+        });
+        bracketRows.push({
+          limit: "User-adjusted Flat Rate",
+          rate: `${ratePercent}%`,
+        });
+
+        notes = `European capital gains tax rates vary widely by nation (e.g. Germany is ~26.375% Abgeltungsteuer, France is 30% flat tax). Adjust the slider to match your specific country.`;
+
+        // 6. INDIA
+      } else if (country === "INR") {
+        let finalTax = 0;
+
+        if (selectedAsset === "stocks" || selectedAsset === "funds") {
+          // Equity / Equity Mutual Funds (Jul 2024 budget changes)
+          if (!isHoldingLong) {
+            finalTax = grossGain * 0.2; // Short Term Equity Flat 20%
+            appliedBracket = "Equity STCG (20%)";
+            breakdownRows.push({
+              label: "Short Term Equity CG Tax (20%)",
+              value: finalTax,
+            });
+          } else {
+            // Long Term Equity 12.5% over ₹1.25L exemption
+            const exemption = 125000;
+            const taxableGain = Math.max(0, grossGain - exemption);
+            finalTax = taxableGain * 0.125;
+            appliedBracket = "Equity LTCG (12.5%)";
+            breakdownRows.push({
+              label: "LTCG Exemption (₹1.25L)",
+              value: Math.min(grossGain, exemption),
+            });
+            breakdownRows.push({
+              label: "Long Term Equity CG Tax (12.5%)",
+              value: finalTax,
+            });
+          }
+        } else {
+          // Real Estate / Debt / Others
+          if (!isHoldingLong) {
+            // Stack on ordinary income slabs
+            const taxWithout = calculateProgressive(annualIncome, IN_SLABS);
+            const taxWith = calculateProgressive(
+              annualIncome + grossGain,
+              IN_SLABS,
+            );
+            finalTax = taxWith - taxWithout;
+            appliedBracket = "Slab Rates";
+            breakdownRows.push({
+              label: "Short Term Capital Slabs Tax",
+              value: finalTax,
+            });
+          } else {
+            // Long term Real Estate or Debt
+            if (
+              selectedAsset === "real-estate" &&
+              inIndexationCheckbox.checked
+            ) {
+              // Pre-July 2024 assets option: 20% with indexation
+              const factor = parseFloat(indexationMultiplier.value) || 1.0;
+              const indexedBasis = totalBasis * factor;
+              const indexedGain = Math.max(0, netProceeds - indexedBasis);
+              finalTax = indexedGain * 0.2;
+              appliedBracket = "LTCG 20% (Indexed)";
+              breakdownRows.push({
+                label: "Indexed Cost Basis",
+                value: indexedBasis,
+              });
+              breakdownRows.push({
+                label: "Indexed Capital Gain",
+                value: indexedGain,
+              });
+              breakdownRows.push({
+                label: "Tax at 20% with indexation",
+                value: finalTax,
+              });
+            } else {
+              // Standard post-July 2024 LTCG: 12.5% flat without indexation
+              finalTax = grossGain * 0.125;
+              appliedBracket = "LTCG 12.5% (Flat)";
+              breakdownRows.push({
+                label: "Long Term CG Tax (12.5%)",
+                value: finalTax,
+              });
+            }
+          }
+        }
+
+        // Add 4% Cess
+        const cess = finalTax * 0.04;
+        taxOwed = finalTax + cess;
+
+        breakdownRows.push({
+          label: "Health & Education Cess (4%)",
+          value: cess,
+        });
+
+        IN_SLABS.forEach((b) => {
+          bracketRows.push({
+            limit:
+              b.limit === Infinity
+                ? "Over"
+                : `₹${b.limit.toLocaleString("en-IN")}`,
+            rate: `${(b.rate * 100).toFixed(0)}%`,
+          });
+        });
+
+        notes = `India budget 2024: Equity STCG is 20%, LTCG is 12.5% (with exemption up to ₹1.25L). Real estate LTCG is 12.5% without indexation (taxpayers can choose 20% with indexation for pre-Jul 2024 assets). Flat 4% cess applies.`;
+
+        // 7. CUSTOM
+      } else {
+        // Simple default calculation
+        taxOwed = grossGain * (isHoldingLong ? 0.15 : 0.25);
+        appliedBracket = isHoldingLong
+          ? "Custom LTCG (15%)"
+          : "Custom STCG (25%)";
+        breakdownRows.push({
+          label: "Custom capital gains tax estimate",
+          value: taxOwed,
+        });
+        notes =
+          "Custom calculation uses a basic flat rate assumption (STCG: 25%, LTCG: 15%). Customize symbols in the advanced options.";
+      }
+
+      // Net profit after tax
+      const netProfit = grossGain - taxOwed;
+      const effectiveRate = grossGain > 0 ? (taxOwed / grossGain) * 100 : 0;
+      currentEffectiveRateFraction = grossGain > 0 ? taxOwed / grossGain : 0;
+
+      // Update Outputs
+      if (taxOwedDisplay) taxOwedDisplay.textContent = formatCurrency(taxOwed);
+      if (netProfitDisplay)
+        netProfitDisplay.textContent = formatCurrency(netProfit);
+      if (effectiveRateDisplay)
+        effectiveRateDisplay.textContent = `${effectiveRate.toFixed(1)}%`;
+      if (appliedBracketDisplay)
+        appliedBracketDisplay.textContent = appliedBracket;
+
+      const mobileVal = document.getElementById("mobile-summary-value");
+      if (mobileVal) mobileVal.textContent = formatCurrency(taxOwed);
+
+      // Donut SVG updates
+      if (legendBasisVal)
+        legendBasisVal.textContent = formatCurrency(totalBasis);
+      if (legendTaxVal) legendTaxVal.textContent = formatCurrency(taxOwed);
+      if (legendProfitVal)
+        legendProfitVal.textContent = formatCurrency(netProfit);
+
+      const totalValForChart = totalBasis + taxOwed + netProfit;
+      if (totalValForChart > 0) {
+        const basisPercent = (totalBasis / totalValForChart) * 100;
+        const taxPercent = (taxOwed / totalValForChart) * 100;
+        const profitPercent = (netProfit / totalValForChart) * 100;
+
+        let accumOffset = 0;
+        let svgHtml = "";
+
+        // Cost segment (Basis)
+        const costStroke = 2 * Math.PI * 40 * (basisPercent / 100);
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="rgb(209, 213, 219)" stroke-width="12" stroke-dasharray="${costStroke} ${251.2 - costStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+        accumOffset += costStroke;
+
+        // Tax segment
+        const taxStroke = 2 * Math.PI * 40 * (taxPercent / 100);
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-brand-coral)" stroke-width="12" stroke-dasharray="${taxStroke} ${251.2 - taxStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+        accumOffset += taxStroke;
+
+        // Profit segment
+        const profitStroke = 2 * Math.PI * 40 * (profitPercent / 100);
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-success-accent)" stroke-width="12" stroke-dasharray="${profitStroke} ${251.2 - profitStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+
+        if (donutSegments) donutSegments.innerHTML = svgHtml;
+        if (donutPercent)
+          donutPercent.textContent = `${profitPercent.toFixed(0)}%`;
+      }
+
+      // Populate breakdown table
+      if (breakdownTableBody) {
+        let tableHtml = "";
+        breakdownRows.forEach((row) => {
+          tableHtml += `
+            <tr class="border-b border-hairline-soft hover:bg-surface-soft">
+              <td class="py-2.5 px-3 text-slate font-medium">${row.label}</td>
+              <td class="py-2.5 px-3 text-right font-bold text-primary">${formatCurrency(row.value)}</td>
+            </tr>
+          `;
+        });
+        breakdownTableBody.innerHTML = tableHtml;
+      }
+
+      // Populate reference brackets table
+      if (refBracketsTbody) {
+        if (bracketRows.length === 0) {
+          refBracketsTbody.innerHTML = `<tr><td colspan="2" class="py-3 text-center text-stone">Flat tax rate structure. No brackets.</td></tr>`;
+        } else {
+          let bHtml = "";
+          bracketRows.forEach((r) => {
+            bHtml += `
+              <tr class="border-b border-hairline-soft hover:bg-surface-soft">
+                <td class="py-2 px-2.5 text-slate">${r.limit}</td>
+                <td class="py-2 px-2.5 text-right font-bold text-primary">${r.rate}</td>
+              </tr>
+            `;
+          });
+          refBracketsTbody.innerHTML = bHtml;
+        }
+      }
+
+      if (refBracketsTitle) {
+        refBracketsTitle.textContent = `${country} Reference Brackets`;
+      }
+
+      if (countryNotesBox) {
+        countryNotesBox.innerHTML = `
+          <div class="card-feature-teal !p-3 !rounded-lg text-[11px] flex flex-col gap-1.5">
+            <span class="font-bold text-moss-dark">Taxation Note Summary:</span>
+            <span class="text-slate leading-relaxed">${notes}</span>
+          </div>
+        `;
+      }
+
+      // Save state to localStorage (debounced)
+      saveState();
+    }
+
+    // Slider for What-If
+    function updateWhatif() {
+      const whatifVal = parseFloat(whatifSlider.value) || 0;
+      if (whatifPriceDisplay)
+        whatifPriceDisplay.textContent = formatCurrency(whatifVal);
+
+      // Re-run simplified calculation logic for what-if
+      const purchasePrice = parseFloat(purchasePriceInput.value) || 0;
+      const improvements = parseFloat(improvementsInput.value) || 0;
+      const sellingFees = parseFloat(sellingFeesInput.value) || 0;
+      const totalBasis = purchasePrice + improvements;
+      const netProceeds = whatifVal - sellingFees;
+      const grossGain = Math.max(0, netProceeds - totalBasis);
+
+      const estimatedTax = grossGain * currentEffectiveRateFraction;
+      const estimatedProfit = grossGain - estimatedTax;
+
+      if (whatifTax) whatifTax.textContent = formatCurrency(estimatedTax);
+      if (whatifProfit)
+        whatifProfit.textContent = formatCurrency(estimatedProfit);
+    }
+
+    function exportToCSV() {
+      if (currentBreakdownRows.length === 0) return;
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Item / Category,Value\r\n";
+
+      currentBreakdownRows.forEach((row) => {
+        csvContent += `"${row.label.replace(/"/g, '""')}",${row.value.toFixed(2)}\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute(
+        "download",
+        `Capital_Gains_Tax_Breakdown_${Date.now()}.csv`,
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToExcel() {
+      if (currentBreakdownRows.length === 0) return;
+
+      const isUnsupported = /MSIE|Trident|Edge\/\d./i.test(navigator.userAgent);
+      if (isUnsupported) {
+        console.warn(
+          "Excel export might have limited compatibility on this browser. CSV export is recommended as a fallback.",
+        );
+      }
+
+      let tableRows = "";
+      currentBreakdownRows.forEach((row) => {
+        tableRows += `
+          <tr>
+            <td>${row.label}</td>
+            <td>${row.value.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      const html = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>CGT Breakdown</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+          <![endif]-->
+          <style>
+            table { border-collapse: collapse; }
+            th, td { border: 1px solid #e2e8f0; padding: 8px; font-family: sans-serif; font-size: 12px; }
+            th { background-color: #f7fafc; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr style="background-color: #f7fafc; font-weight: bold;">
+              <td>Item / Category</td>
+              <td>Value</td>
+            </tr>
+            ${tableRows}
+          </table>
+        </body>
+        </html>
+      `;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Capital_Gains_Tax_Breakdown_${Date.now()}.xls`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Save/Load state
+    let saveStateTimeout: any = null;
+    function saveState() {
+      if (saveStateTimeout) clearTimeout(saveStateTimeout);
+      saveStateTimeout = setTimeout(() => {
+        if (typeof localStorage === "undefined") return;
+        try {
+          localStorage.setItem("cgt_country", currencySelect.value);
+          localStorage.setItem("cgt_purchase_price", purchasePriceInput.value);
+          localStorage.setItem("cgt_sale_price", salePriceInput.value);
+          localStorage.setItem("cgt_income", annualIncomeInput.value);
+          localStorage.setItem("cgt_holding_long", isHoldingLong.toString());
+          localStorage.setItem("cgt_asset", selectedAsset);
+          localStorage.setItem("cgt_purchase_date", purchaseDateInput.value);
+          localStorage.setItem("cgt_sale_date", saleDateInput.value);
+          localStorage.setItem("cgt_improvements", improvementsInput.value);
+          localStorage.setItem("cgt_selling_fees", sellingFeesInput.value);
+          localStorage.setItem("cgt_filing", filingStatusSelect.value);
+          localStorage.setItem("cgt_state", stateSelect.value);
+          localStorage.setItem("cgt_eu_flat_rate", euFlatRateSlider.value);
+          localStorage.setItem(
+            "cgt_custom_currency_symbol",
+            customCurrencySymbolInput.value,
+          );
+          localStorage.setItem(
+            "cgt_custom_currency_code",
+            customCurrencyCodeInput.value,
+          );
+        } catch (e) {
+          console.warn("localStorage save failed", e);
+        }
+      }, 400);
+    }
+
+    function loadState() {
+      if (typeof localStorage === "undefined") return;
+      try {
+        const country = localStorage.getItem("cgt_country") || "USD";
+        currencySelect.value = country;
+
+        const asset = localStorage.getItem("cgt_asset") || "stocks";
+        selectedAsset = asset;
+
+        // Populate options first
+        updateLayoutForCountry();
+
+        const state = localStorage.getItem("cgt_state");
+        if (state && stateSelect) stateSelect.value = state;
+
+        purchasePriceInput.value =
+          localStorage.getItem("cgt_purchase_price") || "10000";
+        salePriceInput.value =
+          localStorage.getItem("cgt_sale_price") || "25000";
+        annualIncomeInput.value = localStorage.getItem("cgt_income") || "75000";
+
+        const long = localStorage.getItem("cgt_holding_long");
+        if (long) toggleHolding(long === "true");
+
+        purchaseDateInput.value =
+          localStorage.getItem("cgt_purchase_date") || "";
+        saleDateInput.value = localStorage.getItem("cgt_sale_date") || "";
+        improvementsInput.value =
+          localStorage.getItem("cgt_improvements") || "0";
+        sellingFeesInput.value =
+          localStorage.getItem("cgt_selling_fees") || "0";
+        filingStatusSelect.value =
+          localStorage.getItem("cgt_filing") || "single";
+
+        euFlatRateSlider.value =
+          localStorage.getItem("cgt_eu_flat_rate") || "25";
+        if (euFlatRateDisplay)
+          euFlatRateDisplay.textContent = `${euFlatRateSlider.value}%`;
+        customCurrencySymbolInput.value =
+          localStorage.getItem("cgt_custom_currency_symbol") || "$";
+        customCurrencyCodeInput.value =
+          localStorage.getItem("cgt_custom_currency_code") || "USD";
+
+        updateAssetSelection(selectedAsset);
+      } catch (e) {
+        console.warn("localStorage load failed", e);
+      }
+    }
+
+    // Scroll offset utility
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+
+    // Setup event listeners
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+
+      // Asset preset selection
+      document.querySelectorAll(".asset-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const asset = btn.getAttribute("data-asset") || "stocks";
+          updateAssetSelection(asset);
+        });
+      });
+
+      // Inputs
+      [
+        purchasePriceInput,
+        salePriceInput,
+        annualIncomeInput,
+        improvementsInput,
+        sellingFeesInput,
+        filingStatusSelect,
+        stateSelect,
+        indexationMultiplier,
+      ].forEach((input) => {
+        input?.addEventListener("input", calculate);
+        input?.addEventListener("change", calculate);
+      });
+
+      // Checkboxes
+      [
+        ukAllowanceCheckbox,
+        primaryResidenceCheckbox,
+        inIndexationCheckbox,
+      ].forEach((box) => {
+        box?.addEventListener("change", calculate);
+      });
+
+      inIndexationCheckbox?.addEventListener("change", () => {
+        if (inIndexationCheckbox.checked) {
+          indexationFactorsContainer?.classList.remove("hidden");
+        } else {
+          indexationFactorsContainer?.classList.add("hidden");
+        }
+      });
+
+      // Holding period toggles
+      holdingShortBtn?.addEventListener("click", () => {
+        toggleHolding(false);
+        calculate();
+      });
+      holdingLongBtn?.addEventListener("click", () => {
+        toggleHolding(true);
+        calculate();
+      });
+
+      // Dates
+      purchaseDateInput.addEventListener("change", () => {
+        syncDatesAndHolding();
+        calculate();
+      });
+      saleDateInput.addEventListener("change", () => {
+        syncDatesAndHolding();
+        calculate();
+      });
+
+      // Country selector
+      currencySelect.addEventListener("change", () => {
+        updateLayoutForCountry();
+        calculate();
+      });
+
+      customCurrencySymbolInput.addEventListener("input", () => {
+        updateCurrencySymbols();
+        calculate();
+      });
+      customCurrencyCodeInput.addEventListener("input", () => {
+        updateCurrencySymbols();
+        calculate();
+      });
+
+      // EU Rate Slider
+      euFlatRateSlider.addEventListener("input", () => {
+        if (euFlatRateDisplay)
+          euFlatRateDisplay.textContent = `${euFlatRateSlider.value}%`;
+        calculate();
+      });
+
+      // Advanced Toggle
+      advancedToggleBtn?.addEventListener("click", () => {
+        if (advancedPanel) {
+          const isCollapsed = advancedPanel.classList.contains("max-h-0");
+          if (isCollapsed) {
+            advancedPanel.classList.remove("max-h-0");
+            advancedPanel.classList.add("max-h-[2000px]");
+            advancedChevron?.classList.add("rotate-180");
+          } else {
+            advancedPanel.classList.remove("max-h-[2000px]");
+            advancedPanel.classList.add("max-h-0");
+            advancedChevron?.classList.remove("rotate-180");
+          }
+        }
+      });
+
+      // What-if price analysis
+      whatifSlider.addEventListener("input", updateWhatif);
+
+      // Copy results
+      copyResultsBtn?.addEventListener("click", () => {
+        const text =
+          `Capital Gains Tax Calculation Results:\n` +
+          `Asset: ${selectedAsset.toUpperCase()}\n` +
+          `Purchase Price: ${purchasePriceInput.value}\n` +
+          `Sale Price: ${salePriceInput.value}\n` +
+          `Gain: ${formatCurrency(Math.max(0, parseFloat(salePriceInput.value) - parseFloat(purchasePriceInput.value)))}\n` +
+          `Tax Owed: ${taxOwedDisplay?.textContent}\n` +
+          `Net Profit: ${netProfitDisplay?.textContent}\n` +
+          `Effective Tax Rate: ${effectiveRateDisplay?.textContent}`;
+        navigator.clipboard.writeText(text);
+
+        // Visual feedback
+        const originalText = copyResultsBtn.innerHTML;
+        copyResultsBtn.innerHTML = `<span>✓ Copied!</span>`;
+        setTimeout(() => {
+          copyResultsBtn.innerHTML = originalText;
+        }, 2000);
+      });
+
+      // Reset
+      resetBtn?.addEventListener("click", () => {
+        if (typeof localStorage !== "undefined") {
+          try {
+            [
+              "country",
+              "purchase_price",
+              "sale_price",
+              "income",
+              "holding_long",
+              "asset",
+              "purchase_date",
+              "sale_date",
+              "improvements",
+              "selling_fees",
+              "filing",
+              "state",
+              "eu_flat_rate",
+              "custom_currency_symbol",
+              "custom_currency_code",
+            ].forEach((k) => localStorage.removeItem("cgt_" + k));
+          } catch (e) {}
+        }
+        purchasePriceInput.value = "10000";
+        salePriceInput.value = "25000";
+        annualIncomeInput.value = "75000";
+        purchaseDateInput.value = "";
+        saleDateInput.value = "";
+        improvementsInput.value = "0";
+        sellingFeesInput.value = "0";
+        filingStatusSelect.value = "single";
+        currencySelect.value = "USD";
+        ukAllowanceCheckbox.checked = false;
+        primaryResidenceCheckbox.checked = false;
+        inIndexationCheckbox.checked = false;
+        euFlatRateSlider.value = "25";
+        customCurrencySymbolInput.value = "$";
+        customCurrencyCodeInput.value = "USD";
+
+        toggleHolding(false);
+        updateAssetSelection("stocks");
+        updateLayoutForCountry();
+        calculate();
+      });
+
+      // Scroll to results binding
+      scrollToResultsBtn?.addEventListener("click", () => {
+        scrollToElementWithOffset("detailed-breakdown-heading", 80);
+      });
+
+      const mobileScrollBtn = document.getElementById(
+        "mobile-scroll-results-btn",
+      );
+      mobileScrollBtn?.addEventListener("click", () => {
+        scrollToElementWithOffset("estimated-tax-card", 80);
+      });
+
+      // Export buttons listeners
+      csvExportBtn?.addEventListener("click", exportToCSV);
+      excelExportBtn?.addEventListener("click", exportToExcel);
+
+      // Help Modal
+      howItWorksBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.remove("hidden"),
+      );
+      closeModalBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+      modalOkBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+      howItWorksModal?.addEventListener("click", (e) => {
+        if (e.target === howItWorksModal) {
+          howItWorksModal.classList.add("hidden");
+        }
+      });
+
+      // Mobile sticky bar scroll sync
+      const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+      const estimatedTaxCard = document.getElementById("estimated-tax-card");
+      if (mobileStickyBar && estimatedTaxCard) {
+        const handleScroll = () => {
+          const rect = estimatedTaxCard.getBoundingClientRect();
+          // Vanish when reached the estimated tax card (120px offset to account for navbar)
+          if (rect.top <= 120) {
+            mobileStickyBar.style.transform = "translateY(100%)";
+          } else {
+            mobileStickyBar.style.transform = "translateY(0)";
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+      }
+
+      // Initial execution
+      updateLayoutForCountry();
+      updateAssetSelection("stocks");
+    });
+  </script>
 </Layout>
