@@ -245,6 +245,7 @@ const description = "Calculate Body Mass Index and evaluate healthy weight class
                 <option value="" selected>Not Specified</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
+                <option value="other">Other</option>
               </select>
             </div>
           </div>
@@ -795,6 +796,8 @@ const description = "Calculate Body Mass Index and evaluate healthy weight class
         badges.push("♂ Male Context");
       } else if (sex === "female") {
         badges.push("♀ Female Context");
+      } else if (sex === "other") {
+        badges.push("⚧ Other Context");
       }
 
       // Limitations note for athletes or body types

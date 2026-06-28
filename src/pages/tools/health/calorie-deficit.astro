@@ -95,7 +95,7 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
           <!-- Sex & Age Inputs -->
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1">
-              <label for="sex-select" class="text-[11px] font-semibold text-charcoal">Biological Sex</label>
+              <label for="sex-select" class="text-[11px] font-semibold text-charcoal">Sex</label>
               <select
                 id="sex-select"
                 class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
@@ -103,6 +103,7 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
               >
                 <option value="male" selected>Male</option>
                 <option value="female">Female</option>
+                <option value="other">Other</option>
               </select>
             </div>
             <div class="flex flex-col gap-1">
@@ -885,8 +886,11 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
         // Use Mifflin-St Jeor formula
         if (sex === "male") {
           bmr = (10 * activeWeightKg) + (6.25 * activeHeightCm) - (5 * age) + 5;
-        } else {
+        } else if (sex === "female") {
           bmr = (10 * activeWeightKg) + (6.25 * activeHeightCm) - (5 * age) - 161;
+        } else {
+          // Average of Male (+5) and Female (-161) constants
+          bmr = (10 * activeWeightKg) + (6.25 * activeHeightCm) - (5 * age) - 78;
         }
       }
 
@@ -936,8 +940,8 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
         }
       }
 
-      // Check safety floors (Medically recognized standard: 1200 kcal for females, 1500 kcal for males)
-      const floor = sex === "male" ? 1500 : 1200;
+      // Check safety floors (Medically recognized standard: 1200 kcal for females, 1500 kcal for males, 1350 kcal for other)
+      const floor = sex === "male" ? 1500 : (sex === "female" ? 1200 : 1350);
       let isSafe = true;
 
       if (targetCalories < floor) {
