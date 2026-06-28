@@ -13,78 +13,1688 @@ const description = "Analyze debt payoff timelines and estimate total interest s
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Student Loan Payoff Calculator",
+      "url": "https://boardtools.app/tools/finance/student-loan-payoff",
+      "description": "Interactive student loan payoff calculator with multi-country repayment rules, grace period calculations, amortization schedule, SVG payoff curve chart, and CSV export.",
+      "applicationCategory": "FinancialApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12">
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+      <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
+      </nav>
       <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
+        <h1 class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary">
           {name}
         </h1>
         <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
+        
+        <button
+          type="button"
+          id="how-it-works-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          aria-label="How student loan calculator works"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>How it works</span>
+        </button>
       </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl">
         {description}
       </p>
     </div>
 
+    <!-- Toolbar: Reset -->
+    <div class="flex items-center justify-end border-b border-hairline pb-3">
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
+
     <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Column: Inputs (7 Columns) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="card-base flex flex-col gap-5">
+          <h2 class="font-display font-semibold text-lg text-primary pb-2 border-b border-hairline flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Loan Information
+          </h2>
+
+          <!-- Row 1: Loan Balance & Currency Select -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <label for="loan-balance" class="text-xs font-semibold text-charcoal">
+                  Loan Balance
+                </label>
+                <!-- Currency Select -->
+                <select
+                  id="currency-select"
+                  class="text-[10px] font-semibold py-1 px-2.5 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
+                  aria-label="Currency Select"
+                >
+                  <option value="USD" selected>$ USD</option>
+                  <option value="CAD">$ CAD</option>
+                  <option value="GBP">£ GBP</option>
+                  <option value="AUD">$ AUD</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
+                  <option value="Custom">Custom / Other</option>
+                </select>
+              </div>
+              <div class="relative">
+                <span id="currency-prefix" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="loan-balance"
+                  value="30000"
+                  min="500"
+                  max="10000000"
+                  step="500"
+                  class="text-input pl-7 font-mono text-sm"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <!-- Annual Interest Rate with Slider -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-xs font-semibold text-charcoal flex justify-between">
+                <span>Annual Interest Rate</span>
+                <span id="interest-rate-val" class="font-mono text-stone font-bold">5.50%</span>
+              </label>
+              <div class="flex items-center gap-3">
+                <input
+                  type="range"
+                  id="interest-rate-range"
+                  min="0.1"
+                  max="20"
+                  value="5.5"
+                  step="0.05"
+                  class="w-full cursor-pointer accent-brand-blue"
+                  aria-label="Interest Rate Slider"
+                />
+                <div class="relative w-20 shrink-0">
+                  <input
+                    type="number"
+                    id="interest-rate-input"
+                    min="0.1"
+                    max="30"
+                    value="5.5"
+                    step="0.01"
+                    class="text-input pr-5 py-1 text-xs text-center font-mono h-8"
+                    inputmode="decimal"
+                  />
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">%</span>
+                </div>
+              </div>
+              <div id="rate-hint" class="text-[10px] text-brand-blue font-semibold">
+                Typical federal student loan rate.
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Currency Inputs (Hidden by default) -->
+          <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
+              <input type="text" id="custom-currency-code" value="USD" class="text-input" placeholder="e.g. USD, GBP, EUR" />
+            </div>
+          </div>
+
+          <!-- Row 2: Current Monthly Payment & Extra Monthly Payment -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="current-payment" class="text-xs font-semibold text-charcoal flex justify-between">
+                <span id="current-payment-label">Current Monthly Payment</span>
+                <span class="text-[10px] text-stone font-normal">(Auto-calculated if 0)</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="current-payment"
+                  value="0"
+                  min="0"
+                  max="100000"
+                  step="10"
+                  class="text-input pl-7 font-mono text-sm"
+                  inputmode="numeric"
+                  placeholder="Calculated"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label for="extra-payment" class="text-xs font-semibold text-charcoal flex justify-between">
+                <span>Extra Monthly Payment</span>
+                <span class="text-[10px] text-success-accent font-semibold">Payoff Acceleration</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-medium currency-symbol">$</span>
+                <input
+                  type="number"
+                  id="extra-payment"
+                  value="100"
+                  min="0"
+                  max="100000"
+                  step="10"
+                  class="text-input pl-7 font-mono text-sm bg-surface-pricing-featured"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Loan Term presets & slider -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-charcoal flex justify-between">
+              <span>Loan Term</span>
+              <span id="loan-term-val" class="font-mono text-stone font-bold">10 years (120 months)</span>
+            </label>
+            <div class="grid grid-cols-6 gap-1">
+              {
+                [5, 10, 15, 20, 25, 30].map((years) => (
+                  <button
+                    type="button"
+                    class="preset-term-btn text-xs py-1.5 rounded-full font-semibold transition-all cursor-pointer border border-hairline text-slate bg-canvas hover:border-hairline-strong active:scale-95 flex items-center justify-center"
+                    data-term={years}
+                  >
+                    {years}y
+                  </button>
+                ))
+              }
+            </div>
+            <div class="flex items-center gap-3 mt-1.5">
+              <input
+                type="range"
+                id="loan-term-range"
+                min="1"
+                max="30"
+                value="10"
+                step="1"
+                class="w-full cursor-pointer accent-brand-blue"
+                aria-label="Loan Term Custom Slider"
+              />
+              <div class="relative w-20 shrink-0">
+                <input
+                  type="number"
+                  id="loan-term-input"
+                  min="1"
+                  max="40"
+                  value="10"
+                  class="text-input pr-8 py-1 text-xs text-center font-mono h-8"
+                  inputmode="numeric"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">yrs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collapsible Advanced Options Toggle -->
+          <div class="border-t border-hairline pt-4 mt-2">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1.5">
+                ⚙ Advanced Options +
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Advanced Panel content -->
+            <div
+              id="advanced-panel"
+              class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-4 border-t border-hairline-soft mt-3 pt-4"
+            >
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Loan Type select -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="loan-type" class="text-[11px] font-semibold text-slate">
+                    Loan Type
+                  </label>
+                  <select id="loan-type" class="text-input py-1 text-xs font-medium">
+                    <!-- Loaded dynamically per country -->
+                  </select>
+                </div>
+
+                <!-- Grace / Moratorium Period (months) -->
+                <div class="flex flex-col gap-1.5">
+                  <label for="grace-period" id="grace-period-label" class="text-[11px] font-semibold text-slate">
+                    Grace Period (months)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="grace-period"
+                      value="0"
+                      min="0"
+                      max="120"
+                      step="1"
+                      class="text-input pr-12 font-mono text-xs"
+                      inputmode="numeric"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs">months</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Origination Fee & Start Date -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label for="origination-fee" class="text-[11px] font-semibold text-slate">
+                    Origination / Processing Fee (%)
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="origination-fee"
+                      value="0"
+                      min="0"
+                      max="10"
+                      step="0.05"
+                      class="text-input pr-6 font-mono text-xs"
+                      inputmode="decimal"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-xs">%</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                  <label for="start-date" class="text-[11px] font-semibold text-slate">
+                    Repayment Start Date
+                  </label>
+                  <input
+                    type="date"
+                    id="start-date"
+                    class="text-input font-mono text-xs"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar outputs / hero outputs (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <!-- Core Key Outputs Pane -->
+        <div class="card-feature-teal flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6 border border-hairline-soft min-h-[360px]">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/20 rounded-full blur-3xl"></div>
+          
+          <div class="flex flex-col gap-5 z-10">
+            <div>
+              <span id="output-hero-label" class="text-xs font-bold text-moss-dark uppercase tracking-wider block">Monthly Payment</span>
+              <div id="monthly-payment-display" class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono">
+                $0.00
+              </div>
+              <span id="monthly-payment-subtitle" class="text-[10px] text-slate block mt-1">Based on standard amortization term</span>
+            </div>
+
+            <!-- Basic stats row -->
+            <div class="grid grid-cols-2 gap-4 border-t border-moss-dark/15 pt-4 mt-2">
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-moss-dark/80">Payoff Date</span>
+                <span id="payoff-date-display" class="font-display font-semibold text-base text-primary select-all">December 2036</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] uppercase font-bold text-moss-dark/80">Total Interest Paid</span>
+                <span id="total-interest-display" class="font-display font-semibold text-base text-primary font-mono select-all">$0.00</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col border-t border-moss-dark/15 pt-4">
+              <span class="text-[10px] uppercase font-bold text-moss-dark/80">Payoff Duration</span>
+              <span id="payoff-duration-display" class="font-display font-semibold text-base text-primary select-all">10 Years</span>
+            </div>
+          </div>
+
+          <div class="mt-6 z-10">
+            <button
+              type="button"
+              id="view-results-btn"
+              class="w-full button-primary !text-xs !py-3 !px-4 hover:bg-charcoal active:scale-98 shadow-subtle flex items-center justify-center gap-1.5 transition-all duration-300"
+            >
+              <span>View Detailed Results</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 13l-7 7-7-7m14-6l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section (Always below inputs, scrolled to via "View Results") -->
+    <div id="results-column" class="flex flex-col gap-6 mt-8 border-t border-hairline pt-8">
+      <div id="payment-warning" class="hidden p-4 bg-surface border border-brand-red/30 text-brand-red-dark rounded-xl text-xs font-semibold flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-red-dark shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <span id="payment-warning-text"></span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+        <h2 class="font-display font-semibold text-2xl text-primary flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-success-accent animate-pulse"></span>
+          Repayment Analysis & Comparison
         </h2>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">💰</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <!-- Exports -->
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="copy-results-btn"
+            class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+            </svg>
+            <span>Copy Results</span>
+          </button>
+          <button
+            type="button"
+            id="csv-export-btn"
+            class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Export CSV</span>
           </button>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <!-- Comparison Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Standard Plan Card -->
+        <div class="card-base bg-surface-soft border border-hairline p-6 flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-base text-primary flex items-center gap-2 border-b border-hairline-soft pb-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-slate"></span>
+            Standard Repayment Plan
+          </h3>
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Monthly Repayment:</span>
+              <span id="std-monthly-payment" class="font-mono font-bold text-primary">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Total Interest Paid:</span>
+              <span id="std-total-interest" class="font-mono font-bold text-primary">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Payoff Timeframe:</span>
+              <span id="std-payoff-time" class="font-mono font-bold text-primary">10 Years</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Total Amount Repaid:</span>
+              <span id="std-total-paid" class="font-mono font-bold text-primary">$0.00</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-yellow flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Accelerated Plan Card -->
+        <div class="card-base bg-surface-pricing-featured border-2 border-brand-blue/30 p-6 flex flex-col gap-4 relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-brand-yellow text-primary text-[9px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+            Savings Plan
+          </div>
+          <h3 class="font-display font-semibold text-base text-primary flex items-center gap-2 border-b border-hairline-soft pb-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            With Extra Payments Plan
+          </h3>
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Total Payment (incl. Extra):</span>
+              <span id="acc-monthly-payment" class="font-mono font-bold text-brand-blue">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Total Interest Paid:</span>
+              <span id="acc-total-interest" class="font-mono font-bold text-primary">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Accelerated Payoff:</span>
+              <span id="acc-payoff-time" class="font-mono font-bold text-success-accent">5.4 Years</span>
+            </div>
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-slate font-medium">Interest Saved:</span>
+              <span id="acc-interest-saved" class="font-mono font-extrabold text-success-accent">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-xs border-t border-hairline-soft pt-2 mt-1">
+              <span class="text-slate font-bold">Time Saved:</span>
+              <span id="acc-time-saved" class="font-mono font-bold text-success-accent">4.6 Years (55 months)</span>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Dynamic Visual Curve & Country Notes -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- SVG Line Chart (7 Columns) -->
+        <div class="lg:col-span-7 card-base flex flex-col justify-between p-4 sm:p-5">
+          <div class="flex justify-between items-center mb-3">
+            <h3 class="font-display font-semibold text-sm text-primary">Loan Balance Payoff Curve</h3>
+            <div class="flex items-center gap-3 text-[10px] text-slate">
+              <span class="flex items-center gap-1">
+                <span class="w-3 h-0.5 border-t-2 border-stone inline-block"></span> Standard Plan
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-3 h-0.5 border-t-2 border-brand-blue inline-block"></span> Extra Payments Plan
+              </span>
+            </div>
+          </div>
+
+          <!-- Dynamic SVG Graphic Area -->
+          <div class="w-full relative min-h-[220px] sm:min-h-[280px] bg-surface-soft/60 rounded-lg p-2.5 border border-hairline">
+            <div id="chart-tooltip" class="absolute pointer-events-none bg-primary/95 text-canvas text-[10px] font-mono p-2 rounded-lg shadow-modal hidden z-20 flex flex-col gap-1 border border-hairline-strong"></div>
+            <svg id="growth-svg" class="w-full h-[200px] sm:h-[260px]" viewBox="0 0 600 260" preserveAspectRatio="none">
+              <!-- Grid Lines, Area polygons, Interactive bars will be rendered via JS -->
+            </svg>
+          </div>
+          <div class="text-[10px] text-stone mt-2 text-center leading-normal">
+            Hover over the payoff curves to inspect the projected remaining balance for that year.
+          </div>
+        </div>
+
+        <!-- Country Specific Note box (5 Columns) -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          <div class="card-base bg-surface-soft/60 flex flex-col gap-4 p-5 h-full justify-between">
+            <div class="flex flex-col gap-3">
+              <h3 class="font-display font-semibold text-sm text-primary pb-2 border-b border-hairline flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow-deep"></span>
+                Country Context & Rules
+              </h3>
+              
+              <!-- Info Box (will be updated dynamically by JS) -->
+              <div id="country-rule-box" class="card-base !p-3.5 !rounded-lg border border-hairline-soft bg-canvas text-xs flex flex-col gap-2">
+                <span id="country-rule-title" class="font-bold text-moss-dark">United States Rules</span>
+                <span id="country-rule-text" class="text-slate leading-relaxed">
+                  US federal student loans have a 6-month grace period before payments begin. Unsubsidized federal and private student loans accrue interest during the grace period, which then capitalizes (is added to the principal balance) when standard repayment commences. Section 221 allows writing off student loan interest up to $2,500 annually.
+                </span>
+              </div>
+            </div>
+
+            <div class="text-[10px] text-slate leading-relaxed border-t border-hairline pt-3 flex items-center gap-2">
+              <span class="text-success-accent">✔</span>
+              <span><strong>Client-Side:</strong> Calculations are processed fully locally in your browser session for maximum security.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Schedule Table Card -->
+      <div class="card-base flex flex-col gap-4 p-4 sm:p-6 mt-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2">
+          <h3 class="font-display font-semibold text-base text-primary">Amortization Schedule</h3>
+          <div class="flex items-center gap-2 mt-1 sm:mt-0">
+            <button
+              type="button"
+              id="table-csv-export-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              id="table-excel-export-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-surface text-stone border-b border-hairline uppercase text-[10px] font-bold tracking-wider font-mono">
+                <th class="py-2.5 px-3">Pmt #</th>
+                <th class="py-2.5 px-3">Date</th>
+                <th class="py-2.5 px-3 text-right">Standard payment</th>
+                <th class="py-2.5 px-3 text-right">Standard Interest</th>
+                <th class="py-2.5 px-3 text-right">With Extra Payment</th>
+                <th class="py-2.5 px-3 text-right">Extra Interest</th>
+                <th class="py-2.5 px-3 text-right">Accelerated Balance</th>
+              </tr>
+            </thead>
+            <tbody id="amortization-table-body">
+              <!-- JS populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <button
+          type="button"
+          id="toggle-amortization-btn"
+          class="w-full text-center text-xs py-2 bg-surface hover:bg-hairline text-slate font-semibold rounded-full border border-hairline-soft transition-all cursor-pointer mt-2"
+        >
+          Show Full Schedule
+        </button>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 mt-6">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
     </div>
   </section>
+
+  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <div
+    id="mobile-sticky-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
+  >
+    <div class="flex flex-col">
+      <span id="mobile-summary-title" class="text-[10px] uppercase font-bold text-stone">Monthly Payment</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">$0.00</span>
+    </div>
+    <button
+      type="button"
+      id="mobile-scroll-results-btn"
+      class="button-primary text-xs !py-2 !px-4 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer"
+    >
+      View Results &rarr;
+    </button>
+  </div>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+         <h3 class="font-display font-semibold text-lg text-primary">How the Student Loan Calculator Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Grace Period & Moratorium</h4>
+        <p>
+          Grace / Moratorium periods occur before active repayment begins. For unsubsidized or commercial bank loans (e.g. US Unsubsidized, India Education loans), interest accumulates during this phase and is added (capitalized) to the loan balance when regular monthly payments start.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Accelerated Savings Calculation</h4>
+        <p>
+          By paying even a small extra monthly amount, you directly pay down your principal balance. This shrinks the overall principal pool, cutting interest costs exponentially and shaving months or years off your payoff timeline.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Country-Specific System</h4>
+        <p>
+          Selecting a country/currency changes rules instantly:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5">
+          <li><strong>US ($):</strong> Focuses on federal standards, offering tax savings and income-driven notes.</li>
+          <li><strong>Canada ($):</strong> Aligns with NSLSC interest suspension on federal student loans.</li>
+          <li><strong>United Kingdom (£):</strong> Accommodates Plan thresholds with threshold-based write-offs.</li>
+          <li><strong>Australia ($):</strong> Applies indexation-only updates reflecting CPI trends.</li>
+          <li><strong>India (₹):</strong> Aligns with IBA course moratorium rules and Section 80E tax deductions.</li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side script module -->
+  <script>
+    // State variables
+    let currentCurrency = "USD";
+    let currentCurrencySymbol = "$";
+    let currentCurrencyCode = "USD";
+    let showFullAmortization = false;
+    let amortizationData: any[] = [];
+    let standardAmortizationData: any[] = [];
+
+    // Country profiles
+    const COUNTRY_PROFILES: Record<string, {
+      defaultRate: number;
+      defaultTerm: number;
+      rateHint: string;
+      termLabel: string;
+      gracePeriodLabel: string;
+      defaultGrace: number;
+      paymentLabel: string;
+      loanTypes: string[];
+      ruleTitle: string;
+      ruleText: string;
+    }> = {
+      USD: {
+        defaultRate: 5.5,
+        defaultTerm: 10,
+        rateHint: "Typical federal student loan rate.",
+        termLabel: "Loan Term",
+        gracePeriodLabel: "Grace Period (months)",
+        defaultGrace: 6,
+        paymentLabel: "Monthly Payment",
+        loanTypes: ["Federal Subsidized", "Federal Unsubsidized", "Private Loan"],
+        ruleTitle: "United States Rules",
+        ruleText: "US federal student loans have a 6-month grace period before payments begin. Unsubsidized federal and private student loans accrue interest during the grace period, which then capitalizes (is added to the principal balance) when standard repayment commences. Section 221 allows writing off student loan interest up to $2,500 annually."
+      },
+      CAD: {
+        defaultRate: 7.2,
+        defaultTerm: 10,
+        rateHint: "Typical Prime + provincial student loan margin.",
+        termLabel: "Repayment Term",
+        gracePeriodLabel: "Grace Period / Non-repayment (months)",
+        defaultGrace: 6,
+        paymentLabel: "Monthly Repayment",
+        loanTypes: ["Integrated Student Loan (NSLSC)", "Provincial Only (e.g. OSAP)", "Private Student Line of Credit"],
+        ruleTitle: "Canada Rules",
+        ruleText: "Federal student loans in Canada feature a 6-month grace period where no payments are due. Note that since 2023, federal student loans no longer accumulate interest. However, private loans and provincial portions may still accrue interest. The Repayment Assistance Plan (RAP) can lower monthly payments to $0 if income falls below threshold limits."
+      },
+      GBP: {
+        defaultRate: 6.0,
+        defaultTerm: 30,
+        rateHint: "Linked to UK Retail Price Index (RPI).",
+        termLabel: "Loan Write-off Term",
+        gracePeriodLabel: "Non-repayment Period (months)",
+        defaultGrace: 0,
+        paymentLabel: "Monthly Repayment",
+        loanTypes: ["Plan 1 Student Loan", "Plan 2 Student Loan", "Plan 5 Student Loan", "Postgraduate Loan"],
+        ruleTitle: "United Kingdom Rules",
+        ruleText: "UK Student Loans are repaid via Plan levels, operating as a 9% graduate tax above specific annual income thresholds (Plan 1: £24,990, Plan 2: £27,295, Plan 5: £25,000). Remaining debt is written off after 30 years (Plan 1/2) or 40 years (Plan 5)."
+      },
+      AUD: {
+        defaultRate: 4.5,
+        defaultTerm: 15,
+        rateHint: "Average historical HELP Indexation Rate (CPI).",
+        termLabel: "Indexation/Amortization Term",
+        gracePeriodLabel: "Study Period (months)",
+        defaultGrace: 0,
+        paymentLabel: "Repayment Contribution",
+        loanTypes: ["HECS-HELP Loan", "VET Student Loan", "Private Education Loan"],
+        ruleTitle: "Australia Rules",
+        ruleText: "HECS-HELP student loans do not charge commercial interest. Instead, they are indexed annually to match the Consumer Price Index (CPI) inflation rate. Repayments are income-contingent, calculated dynamically between 1.0% to 10.0% once annual taxable income surpasses the AUD 54,435 entry threshold."
+      },
+      EUR: {
+        defaultRate: 3.5,
+        defaultTerm: 10,
+        rateHint: "Standard state-sponsored or commercial EU bank rate.",
+        termLabel: "Amortization Term",
+        gracePeriodLabel: "Grace Period (months)",
+        defaultGrace: 12,
+        paymentLabel: "Monthly Installment",
+        loanTypes: ["State-Subsidized Student Loan", "Commercial Education Loan"],
+        ruleTitle: "European Union Context",
+        ruleText: "Typical EU education loans are state-subsidized with low fixed interest rates or provided by major banks. Many EU nations support generous grace periods (ranging from 12 to 24 months) post-graduation before standard amortization installments commence."
+      },
+      INR: {
+        defaultRate: 9.5,
+        defaultTerm: 15,
+        rateHint: "Standard RBI guidelines education loan rate.",
+        termLabel: "Repayment Tenure",
+        gracePeriodLabel: "Moratorium Period (months)",
+        defaultGrace: 12,
+        paymentLabel: "Equated Monthly Installment (EMI)",
+        loanTypes: ["Secured Education Loan", "Unsecured Education Loan"],
+        ruleTitle: "India Rules (RBI & Section 80E)",
+        ruleText: "India education loans support a moratorium period covering the course duration plus 12 months. Simple interest is charged during study, capitalising upon repayment start. Section 80E of the Income Tax Act provides 100% deduction on student loan interest paid for up to 8 years."
+      }
+    };
+
+    // DOM Elements
+    const loanBalanceInput = document.getElementById("loan-balance") as HTMLInputElement;
+    const interestRateRange = document.getElementById("interest-rate-range") as HTMLInputElement;
+    const interestRateInput = document.getElementById("interest-rate-input") as HTMLInputElement;
+    const interestRateValLabel = document.getElementById("interest-rate-val");
+    const rateHint = document.getElementById("rate-hint");
+
+    const currentPaymentInput = document.getElementById("current-payment") as HTMLInputElement;
+    const currentPaymentLabel = document.getElementById("current-payment-label");
+    const extraPaymentInput = document.getElementById("extra-payment") as HTMLInputElement;
+
+    const loanTermRange = document.getElementById("loan-term-range") as HTMLInputElement;
+    const loanTermInput = document.getElementById("loan-term-input") as HTMLInputElement;
+    const loanTermValLabel = document.getElementById("loan-term-val");
+    const presetTermButtons = document.querySelectorAll(".preset-term-btn");
+
+    const loanTypeSelect = document.getElementById("loan-type") as HTMLSelectElement;
+    const gracePeriodInput = document.getElementById("grace-period") as HTMLInputElement;
+    const gracePeriodLabel = document.getElementById("grace-period-label");
+    const originationFeeInput = document.getElementById("origination-fee") as HTMLInputElement;
+    const startDateInput = document.getElementById("start-date") as HTMLInputElement;
+
+    const currencySelect = document.getElementById("currency-select") as HTMLSelectElement;
+    const customCurrencySymbolInput = document.getElementById("custom-currency-symbol") as HTMLInputElement;
+    const customCurrencyCodeInput = document.getElementById("custom-currency-code") as HTMLInputElement;
+    const customCurrencyContainer = document.getElementById("custom-currency-container");
+    const currencyPrefix = document.getElementById("currency-prefix");
+
+    const monthlyPaymentDisplay = document.getElementById("monthly-payment-display");
+    const payoffDateDisplay = document.getElementById("payoff-date-display");
+    const totalInterestDisplay = document.getElementById("total-interest-display");
+    const payoffDurationDisplay = document.getElementById("payoff-duration-display");
+
+    const stdMonthlyPayment = document.getElementById("std-monthly-payment");
+    const stdTotalInterest = document.getElementById("std-total-interest");
+    const stdPayoffTime = document.getElementById("std-payoff-time");
+    const stdTotalPaid = document.getElementById("std-total-paid");
+
+    const accMonthlyPayment = document.getElementById("acc-monthly-payment");
+    const accTotalInterest = document.getElementById("acc-total-interest");
+    const accPayoffTime = document.getElementById("acc-payoff-time");
+    const accInterestSaved = document.getElementById("acc-interest-saved");
+    const accTimeSaved = document.getElementById("acc-time-saved");
+
+    const countryRuleTitle = document.getElementById("country-rule-title");
+    const countryRuleText = document.getElementById("country-rule-text");
+
+    const amortizationTableBody = document.getElementById("amortization-table-body");
+    const toggleAmortizationBtn = document.getElementById("toggle-amortization-btn") as HTMLButtonElement;
+    const csvExportBtn = document.getElementById("csv-export-btn");
+    const tableCsvExportBtn = document.getElementById("table-csv-export-btn");
+    const tableExcelExportBtn = document.getElementById("table-excel-export-btn");
+    const copyResultsBtn = document.getElementById("copy-results-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const viewResultsBtn = document.getElementById("view-results-btn");
+
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel");
+    const advancedChevron = document.getElementById("advanced-chevron");
+
+    const mobileSummaryValue = document.getElementById("mobile-summary-value");
+    const mobileScrollResultsBtn = document.getElementById("mobile-scroll-results-btn");
+
+    // Default repayment start date setup
+    function setDefaultStartDate() {
+      const d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      startDateInput.value = `${year}-${month}-01`;
+    }
+
+    // Set Default Currency Formatting
+    function formatVal(value: number): string {
+      const locale = currentCurrencyCode === "INR" ? "en-IN" : undefined;
+      return (
+        currentCurrencySymbol +
+        value.toLocaleString(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      );
+    }
+
+    // Toggle Advanced Panel
+    let advancedOpen = false;
+    advancedToggleBtn?.addEventListener("click", () => {
+      advancedOpen = !advancedOpen;
+      if (advancedPanel && advancedChevron) {
+        if (advancedOpen) {
+          advancedPanel.style.maxHeight = "500px";
+          advancedChevron.style.transform = "rotate(180deg)";
+        } else {
+          advancedPanel.style.maxHeight = "0px";
+          advancedChevron.style.transform = "rotate(0deg)";
+        }
+      }
+    });
+
+    // Modal Events
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Scroll to results
+    function scrollToResults() {
+      const el = document.getElementById("results-column");
+      el?.scrollIntoView({ behavior: "smooth" });
+    }
+    viewResultsBtn?.addEventListener("click", scrollToResults);
+    mobileScrollResultsBtn?.addEventListener("click", scrollToResults);
+
+    // Country/Currency state updates
+    function applyCountrySelection(currencyKey: string, skipCalculate = false) {
+      const profile = COUNTRY_PROFILES[currencyKey] || COUNTRY_PROFILES["USD"];
+      currentCurrency = currencyKey;
+
+      if (currencyKey === "USD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "USD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "CAD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "CAD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "GBP") {
+        currentCurrencySymbol = "£";
+        currentCurrencyCode = "GBP";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "AUD") {
+        currentCurrencySymbol = "$";
+        currentCurrencyCode = "AUD";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "EUR") {
+        currentCurrencySymbol = "€";
+        currentCurrencyCode = "EUR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "INR") {
+        currentCurrencySymbol = "₹";
+        currentCurrencyCode = "INR";
+        customCurrencyContainer?.classList.add("hidden");
+      } else if (currencyKey === "Custom") {
+        customCurrencyContainer?.classList.remove("hidden");
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "$";
+        currentCurrencyCode = customCurrencyCodeInput?.value || "USD";
+      }
+
+      // Update prefixes
+      if (currencyPrefix) currencyPrefix.textContent = currentCurrencySymbol;
+      document.querySelectorAll(".currency-symbol").forEach(el => el.textContent = currentCurrencySymbol);
+
+      // Apply Profile values
+      interestRateRange.value = profile.defaultRate.toString();
+      interestRateInput.value = profile.defaultRate.toString();
+      if (interestRateValLabel) interestRateValLabel.textContent = `${profile.defaultRate.toFixed(2)}%`;
+      if (rateHint) rateHint.textContent = profile.rateHint;
+
+      loanTermRange.value = profile.defaultTerm.toString();
+      loanTermInput.value = profile.defaultTerm.toString();
+      updateLoanTermLabel(profile.defaultTerm);
+      
+      gracePeriodInput.value = profile.defaultGrace.toString();
+      if (gracePeriodLabel) gracePeriodLabel.textContent = profile.gracePeriodLabel;
+
+      if (currentPaymentLabel) currentPaymentLabel.textContent = `Current ${profile.paymentLabel}`;
+      const heroLabel = document.getElementById("output-hero-label");
+      if (heroLabel) heroLabel.textContent = profile.paymentLabel;
+
+      // Populate Loan Types select
+      if (loanTypeSelect) {
+        loanTypeSelect.innerHTML = "";
+        profile.loanTypes.forEach(t => {
+          const opt = document.createElement("option");
+          opt.value = t;
+          opt.textContent = t;
+          loanTypeSelect.appendChild(opt);
+        });
+      }
+
+      // Context Box
+      if (countryRuleTitle) countryRuleTitle.textContent = profile.ruleTitle;
+      if (countryRuleText) countryRuleText.textContent = profile.ruleText;
+
+      updatePresetsUI();
+      if (!skipCalculate) {
+        calculate();
+      }
+    }
+
+    currencySelect?.addEventListener("change", () => applyCountrySelection(currencySelect.value));
+    customCurrencySymbolInput?.addEventListener("input", () => {
+      currentCurrencySymbol = customCurrencySymbolInput.value || "$";
+      applyCountrySelection("Custom");
+    });
+    customCurrencyCodeInput?.addEventListener("input", () => {
+      currentCurrencyCode = customCurrencyCodeInput.value || "USD";
+      applyCountrySelection("Custom");
+    });
+
+    function updateLoanTermLabel(years: number) {
+      if (loanTermValLabel) {
+        loanTermValLabel.textContent = `${years} year${years > 1 ? 's' : ''} (${years * 12} months)`;
+      }
+    }
+
+    // Preset term buttons
+    presetTermButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const val = parseInt(btn.getAttribute("data-term") || "10", 10);
+        loanTermRange.value = val.toString();
+        loanTermInput.value = val.toString();
+        updateLoanTermLabel(val);
+        updatePresetsUI();
+        calculate();
+      });
+    });
+
+    function updatePresetsUI() {
+      const termYr = parseInt(loanTermInput.value, 10);
+      presetTermButtons.forEach(btn => {
+        const val = parseInt(btn.getAttribute("data-term") || "0", 10);
+        if (val === termYr) {
+          btn.classList.add("bg-primary", "text-canvas", "border-primary");
+          btn.classList.remove("bg-canvas", "text-slate", "border-hairline");
+        } else {
+          btn.classList.remove("bg-primary", "text-canvas", "border-primary");
+          btn.classList.add("bg-canvas", "text-slate", "border-hairline");
+        }
+      });
+    }
+
+    // Reset button
+    resetBtn?.addEventListener("click", () => {
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("sl-")) {
+          localStorage.removeItem(key);
+        }
+      });
+      loanBalanceInput.value = "30000";
+      currentPaymentInput.value = "0";
+      extraPaymentInput.value = "100";
+      originationFeeInput.value = "0";
+      currencySelect.value = "USD";
+      applyCountrySelection("USD");
+      setDefaultStartDate();
+    });
+
+    // Range-Numeric synchronizers
+    function setupSync(rangeEl: HTMLInputElement, inputEl: HTMLInputElement, valLabel: HTMLElement | null, suffix: string) {
+      rangeEl.addEventListener("input", () => {
+        inputEl.value = rangeEl.value;
+        if (valLabel) {
+          valLabel.textContent = `${parseFloat(rangeEl.value).toFixed(suffix === "y" ? 0 : 2)}${suffix}`;
+        }
+        updatePresetsUI();
+        calculate();
+      });
+      inputEl.addEventListener("input", () => {
+        const val = Math.min(parseFloat(inputEl.value) || 0, parseFloat(rangeEl.max));
+        rangeEl.value = val.toString();
+        if (valLabel) {
+          valLabel.textContent = `${val.toFixed(suffix === "y" ? 0 : 2)}${suffix}`;
+        }
+        updatePresetsUI();
+        calculate();
+      });
+    }
+    setupSync(interestRateRange, interestRateInput, interestRateValLabel, "%");
+    setupSync(loanTermRange, loanTermInput, null, "y");
+
+    loanTermRange.addEventListener("input", () => {
+      const val = parseInt(loanTermRange.value, 10) || 1;
+      updateLoanTermLabel(val);
+    });
+    loanTermInput.addEventListener("input", () => {
+      const val = parseInt(loanTermInput.value, 10) || 1;
+      updateLoanTermLabel(val);
+    });
+
+    [loanBalanceInput, currentPaymentInput, extraPaymentInput, gracePeriodInput, originationFeeInput, startDateInput, loanTypeSelect].forEach(el => {
+      el?.addEventListener("input", calculate);
+    });
+
+    // Save/Load Storage State
+    function saveState() {
+      try {
+        localStorage.setItem("sl-currency", currentCurrency);
+        localStorage.setItem("sl-balance", loanBalanceInput.value);
+        localStorage.setItem("sl-rate", interestRateInput.value);
+        localStorage.setItem("sl-current-payment", currentPaymentInput.value);
+        localStorage.setItem("sl-extra-payment", extraPaymentInput.value);
+        localStorage.setItem("sl-term", loanTermInput.value);
+        localStorage.setItem("sl-grace", gracePeriodInput.value);
+        localStorage.setItem("sl-fee", originationFeeInput.value);
+        localStorage.setItem("sl-start", startDateInput.value);
+        localStorage.setItem("sl-custom-sym", customCurrencySymbolInput.value);
+        localStorage.setItem("sl-custom-code", customCurrencyCodeInput.value);
+      } catch (e) {
+        console.warn("Storage write failed", e);
+      }
+    }
+
+    function loadState() {
+      try {
+        const sCurr = localStorage.getItem("sl-currency");
+        const sBal = localStorage.getItem("sl-balance");
+        const sRate = localStorage.getItem("sl-rate");
+        const sCurrPmt = localStorage.getItem("sl-current-payment");
+        const sExtra = localStorage.getItem("sl-extra-payment");
+        const sTerm = localStorage.getItem("sl-term");
+        const sGrace = localStorage.getItem("sl-grace");
+        const sFee = localStorage.getItem("sl-fee");
+        const sStart = localStorage.getItem("sl-start");
+        const sSym = localStorage.getItem("sl-custom-sym");
+        const sCode = localStorage.getItem("sl-custom-code");
+
+        if (sSym) customCurrencySymbolInput.value = sSym;
+        if (sCode) customCurrencyCodeInput.value = sCode;
+        if (sCurr) currencySelect.value = sCurr;
+        
+        applyCountrySelection(currencySelect.value, true);
+
+        if (sBal) loanBalanceInput.value = sBal;
+        if (sRate) {
+          interestRateInput.value = sRate;
+          interestRateRange.value = sRate;
+          if (interestRateValLabel) interestRateValLabel.textContent = `${parseFloat(sRate).toFixed(2)}%`;
+        }
+        if (sCurrPmt) currentPaymentInput.value = sCurrPmt;
+        if (sExtra) extraPaymentInput.value = sExtra;
+        if (sTerm) {
+          loanTermInput.value = sTerm;
+          loanTermRange.value = sTerm;
+          updateLoanTermLabel(parseInt(sTerm, 10));
+        }
+        if (sGrace) gracePeriodInput.value = sGrace;
+        if (sFee) originationFeeInput.value = sFee;
+        if (sStart) startDateInput.value = sStart;
+
+        updatePresetsUI();
+        calculate();
+      } catch (e) {
+        console.warn("Storage read failed", e);
+      }
+    }
+
+    // Mathematical Engine
+    function calculate() {
+      saveState();
+
+      const balanceInputVal = Math.max(0, parseFloat(loanBalanceInput.value) || 0);
+      const interestRate = Math.max(0, parseFloat(interestRateInput.value) || 0) / 100;
+      const extraPayment = Math.max(0, parseFloat(extraPaymentInput.value) || 0);
+      const termYears = Math.max(1, parseInt(loanTermInput.value, 10) || 1);
+      const gracePeriodMonths = Math.max(0, parseInt(gracePeriodInput.value, 10) || 0);
+      const originationFeeRate = Math.max(0, parseFloat(originationFeeInput.value) || 0) / 100;
+
+      // Initial Principal adjust with fees
+      const feeAmount = balanceInputVal * originationFeeRate;
+      let initialPrincipal = balanceInputVal + feeAmount;
+
+      // Grace/Moratorium simulation
+      let capitalizedInterest = 0;
+      const isSubsidized = loanTypeSelect.value === "Federal Subsidized";
+      const isCanadaInterestFree = currentCurrency === "CAD" && !loanTypeSelect.value.includes("Private");
+      const isUKorAU = currentCurrency === "GBP" || currentCurrency === "AUD";
+
+      // Accrued interest during grace
+      if (gracePeriodMonths > 0 && !isSubsidized && !isCanadaInterestFree && !isUKorAU) {
+        if (currentCurrency === "INR") {
+          // India typically charges Simple Interest during moratorium, then capitalizes
+          capitalizedInterest = initialPrincipal * (interestRate / 12) * gracePeriodMonths;
+        } else {
+          // Compound Monthly capitalization
+          for (let m = 0; m < gracePeriodMonths; m++) {
+            capitalizedInterest += (initialPrincipal + capitalizedInterest) * (interestRate / 12);
+          }
+        }
+      }
+
+      const totalBalanceAtStart = initialPrincipal + capitalizedInterest;
+      const rMonthly = interestRate / 12;
+      const totalMonths = termYears * 12;
+
+      // Calculate Standard Monthly Payment
+      let stdMonthly = 0;
+      if (rMonthly === 0) {
+        stdMonthly = totalBalanceAtStart / totalMonths;
+      } else {
+        stdMonthly = totalBalanceAtStart * (rMonthly * Math.pow(1 + rMonthly, totalMonths)) / (Math.pow(1 + rMonthly, totalMonths) - 1);
+      }
+
+      // Display Hero standard payoff indicators
+      if (monthlyPaymentDisplay) monthlyPaymentDisplay.textContent = formatVal(stdMonthly);
+      if (mobileSummaryValue) mobileSummaryValue.textContent = formatVal(stdMonthly);
+
+      // Determine the user's defined Payment (defaults to standard if 0 or too low)
+      let customPayment = Math.max(0, parseFloat(currentPaymentInput.value) || 0);
+      if (customPayment <= 0) {
+        customPayment = stdMonthly;
+      }
+
+      // Infinite loop protection checks
+      let warningMsg = "";
+      if (rMonthly > 0) {
+        const stdInterestAccrued = totalBalanceAtStart * rMonthly;
+        if (customPayment <= stdInterestAccrued && customPayment + extraPayment > stdInterestAccrued) {
+          warningMsg = "Warning: The custom monthly payment is less than or equal to the monthly interest accrued. The loan balance will only decrease due to your extra payments.";
+        } else if (customPayment + extraPayment <= stdInterestAccrued) {
+          warningMsg = "Warning: The custom monthly payment (including extra payment) is less than or equal to the monthly interest accrued. The loan balance will never be paid off under this plan.";
+        }
+      }
+
+      const warningEl = document.getElementById("payment-warning");
+      const warningTextEl = document.getElementById("payment-warning-text");
+      if (warningEl && warningTextEl) {
+        if (warningMsg) {
+          warningTextEl.textContent = warningMsg;
+          warningEl.classList.remove("hidden");
+        } else {
+          warningEl.classList.add("hidden");
+        }
+      }
+
+      // Amortization loops
+      const passPrincipal = currentCurrency === "INR" ? initialPrincipal : totalBalanceAtStart;
+      standardAmortizationData = simulateSchedule(passPrincipal, rMonthly, stdMonthly, 0, gracePeriodMonths, startDateInput.value, capitalizedInterest);
+      amortizationData = simulateSchedule(passPrincipal, rMonthly, customPayment, extraPayment, gracePeriodMonths, startDateInput.value, capitalizedInterest);
+
+      // Extract results from schedules
+      const lastAcc = amortizationData[amortizationData.length - 1];
+
+      const stdInterestPaid = standardAmortizationData.reduce((sum, row) => sum + row.interest, 0);
+      const accInterestPaid = amortizationData.reduce((sum, row) => sum + row.interest, 0);
+
+      const stdPayoffDurationMonths = standardAmortizationData.length;
+      const accPayoffDurationMonths = amortizationData.length;
+
+      // Standard Plan Cards UI update
+      if (stdMonthlyPayment) stdMonthlyPayment.textContent = formatVal(stdMonthly);
+      if (stdTotalInterest) stdTotalInterest.textContent = formatVal(stdInterestPaid);
+      if (stdPayoffTime) stdPayoffTime.textContent = formatDuration(stdPayoffDurationMonths);
+      if (stdTotalPaid) stdTotalPaid.textContent = formatVal(totalBalanceAtStart + stdInterestPaid);
+
+      // Accelerated Plan Cards UI update
+      const totalAccPayment = customPayment + extraPayment;
+      if (accMonthlyPayment) accMonthlyPayment.textContent = formatVal(totalAccPayment);
+      if (accTotalInterest) accTotalInterest.textContent = formatVal(accInterestPaid);
+      if (accPayoffTime) accPayoffTime.textContent = formatDuration(accPayoffDurationMonths);
+      
+      const interestSavedVal = Math.max(0, stdInterestPaid - accInterestPaid);
+      if (accInterestSaved) accInterestSaved.textContent = formatVal(interestSavedVal);
+
+      const monthsSavedVal = Math.max(0, stdPayoffDurationMonths - accPayoffDurationMonths);
+      if (accTimeSaved) {
+        accTimeSaved.textContent = `${(monthsSavedVal / 12).toFixed(1)} Years (${monthsSavedVal} months)`;
+      }
+
+      // Dynamic Hero Output Panel Update
+      if (payoffDateDisplay) payoffDateDisplay.textContent = lastAcc ? lastAcc.dateStr : "N/A";
+      if (totalInterestDisplay) totalInterestDisplay.textContent = formatVal(accInterestPaid);
+      if (payoffDurationDisplay) payoffDurationDisplay.textContent = formatDuration(accPayoffDurationMonths);
+
+      // Redraw schedule tables and SVG
+      renderAmortizationTable();
+      renderSVGChart();
+    }
+
+    function formatDuration(months: number): string {
+      const yrs = Math.floor(months / 12);
+      const remainingMonths = months % 12;
+      let out = "";
+      if (yrs > 0) out += `${yrs} Year${yrs > 1 ? 's' : ''}`;
+      if (remainingMonths > 0) {
+        if (out) out += " ";
+        out += `${remainingMonths} Month${remainingMonths > 1 ? 's' : ''}`;
+      }
+      return out || "0 Months";
+    }
+
+    // Amortization simulator
+    function simulateSchedule(
+      principal: number,
+      rMonthly: number,
+      payment: number,
+      extra: number,
+      graceMonths: number,
+      startDateStr: string,
+      capitalizedInterest = 0
+    ) {
+      const schedule: any[] = [];
+      let balance = principal;
+      let currentDate;
+      if (startDateStr) {
+        currentDate = new Date(startDateStr.includes('T') ? startDateStr : `${startDateStr}T00:00:00`);
+      } else {
+        currentDate = new Date();
+      }
+      let index = 1;
+
+      // Inject Grace period phase
+      let totalMoratoriumInterest = 0;
+      if (currentCurrency === "INR") {
+        for (let g = 0; g < graceMonths; g++) {
+          const interestAccrued = principal * rMonthly;
+          totalMoratoriumInterest += interestAccrued;
+
+          schedule.push({
+            paymentNo: index++,
+            dateStr: getMonthName(currentDate),
+            payment: 0,
+            interest: interestAccrued,
+            principal: 0,
+            balance: balance
+          });
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+      }
+
+      if (currentCurrency === "INR") {
+        balance = principal + capitalizedInterest;
+      }
+
+      // Repayment phase
+      let safetyCount = 0;
+      const maxPayments = 600; // 50 years max guard
+
+      while (balance > 0.01 && safetyCount < maxPayments) {
+        const interestAccrued = balance * rMonthly;
+        if (rMonthly > 0 && (payment + extra) <= interestAccrued) {
+          break;
+        }
+        safetyCount++;
+        let scheduledPayment = Math.min(balance + interestAccrued, payment);
+        let actualExtra = Math.min(balance + interestAccrued - scheduledPayment, extra);
+        let totalPaid = scheduledPayment + actualExtra;
+
+        let principalPaid = totalPaid - interestAccrued;
+        if (principalPaid < 0) principalPaid = 0;
+        
+        balance = balance + interestAccrued - totalPaid;
+
+        schedule.push({
+          paymentNo: index++,
+          dateStr: getMonthName(currentDate),
+          payment: scheduledPayment,
+          interest: interestAccrued,
+          principal: principalPaid,
+          balance: Math.max(0, balance)
+        });
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+
+      return schedule;
+    }
+
+    function getMonthName(dateObj: Date): string {
+      return dateObj.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    }
+
+    // Render Table
+    function renderAmortizationTable() {
+      if (!amortizationTableBody) return;
+      amortizationTableBody.innerHTML = "";
+
+      const limit = showFullAmortization ? amortizationData.length : Math.min(6, amortizationData.length);
+
+      for (let i = 0; i < limit; i++) {
+        const row = amortizationData[i];
+        const stdRow = standardAmortizationData[i] || { payment: 0, interest: 0 };
+        
+        const extraPmt = row.payment > 0 ? (parseFloat(extraPaymentInput.value) || 0) : 0;
+        const tr = document.createElement("tr");
+        tr.className = "border-b border-hairline font-mono text-[11px] text-charcoal hover:bg-surface-soft";
+        tr.innerHTML = `
+          <td class="py-2 px-3">${row.paymentNo}</td>
+          <td class="py-2 px-3">${row.dateStr}</td>
+          <td class="py-2 px-3 text-right">${formatVal(stdRow.payment)}</td>
+          <td class="py-2 px-3 text-right">${formatVal(stdRow.interest)}</td>
+          <td class="py-2 px-3 text-right">${formatVal(row.payment > 0 ? row.payment + extraPmt : 0)}</td>
+          <td class="py-2 px-3 text-right">${formatVal(row.interest)}</td>
+          <td class="py-2 px-3 text-right font-bold text-brand-blue">${formatVal(row.balance)}</td>
+        `;
+        amortizationTableBody.appendChild(tr);
+      }
+
+      if (toggleAmortizationBtn) {
+        toggleAmortizationBtn.textContent = showFullAmortization
+          ? `Show Compact View (First 6 payments)`
+          : `Show Full Schedule (${amortizationData.length} payments)`;
+      }
+    }
+
+    toggleAmortizationBtn?.addEventListener("click", () => {
+      showFullAmortization = !showFullAmortization;
+      renderAmortizationTable();
+    });
+
+    // Render SVG Payoff Chart
+    function renderSVGChart() {
+      const svg = document.getElementById("growth-svg");
+      if (!svg) return;
+      svg.innerHTML = "";
+
+      const width = 600;
+      const height = 260;
+      const padding = { top: 20, right: 30, bottom: 30, left: 60 };
+
+      const totalPayments = Math.max(standardAmortizationData.length, amortizationData.length);
+      if (totalPayments <= 1) return;
+
+      let maxBal = parseFloat(loanBalanceInput.value) || 0;
+      if (standardAmortizationData.length > 0 || amortizationData.length > 0) {
+        const stdBalances = standardAmortizationData.map(r => r.balance);
+        const accBalances = amortizationData.map(r => r.balance);
+        maxBal = Math.max(
+          ...(stdBalances.length > 0 ? stdBalances : [0]),
+          ...(accBalances.length > 0 ? accBalances : [0]),
+          maxBal
+        );
+      }
+
+      // Drawing Helper Coordinates
+      const getX = (i: number) => padding.left + (i / (totalPayments - 1)) * (width - padding.left - padding.right);
+      const getY = (bal: number) => padding.top + (1 - (bal / maxBal)) * (height - padding.top - padding.bottom);
+
+      // Grid Lines & Y-axis labels
+      for (let i = 0; i <= 4; i++) {
+        const val = (maxBal * i) / 4;
+        const y = getY(val);
+        
+        // Horizontal gridline
+        const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        grid.setAttribute("x1", padding.left.toString());
+        grid.setAttribute("y1", y.toString());
+        grid.setAttribute("x2", (width - padding.right).toString());
+        grid.setAttribute("y2", y.toString());
+        grid.setAttribute("stroke", "var(--color-hairline-soft)");
+        grid.setAttribute("stroke-dasharray", "4");
+        svg.appendChild(grid);
+
+        // Y label
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", (padding.left - 8).toString());
+        txt.setAttribute("y", (y + 4).toString());
+        txt.setAttribute("text-anchor", "end");
+        txt.setAttribute("fill", "var(--color-stone)");
+        txt.setAttribute("font-size", "9px");
+        txt.setAttribute("font-family", "monospace");
+        txt.textContent = formatVal(val).split(".")[0];
+        svg.appendChild(txt);
+      }
+
+      // X-axis ticks (Year markers)
+      const yrsTotal = Math.ceil(totalPayments / 12);
+      const tickStep = Math.max(1, Math.ceil(yrsTotal / 8));
+
+      for (let yVal = 0; yVal <= yrsTotal; yVal += tickStep) {
+        const i = Math.min(yVal * 12, totalPayments - 1);
+        const x = getX(i);
+
+        const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        tick.setAttribute("x1", x.toString());
+        tick.setAttribute("y1", (height - padding.bottom).toString());
+        tick.setAttribute("x2", x.toString());
+        tick.setAttribute("y2", (height - padding.bottom + 4).toString());
+        tick.setAttribute("stroke", "var(--color-hairline)");
+        svg.appendChild(tick);
+
+        const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        txt.setAttribute("x", x.toString());
+        txt.setAttribute("y", (height - padding.bottom + 16).toString());
+        txt.setAttribute("text-anchor", "middle");
+        txt.setAttribute("fill", "var(--color-stone)");
+        txt.setAttribute("font-size", "9px");
+        txt.setAttribute("font-family", "Roobert PRO, sans-serif");
+        txt.textContent = `Yr ${yVal}`;
+        svg.appendChild(txt);
+      }
+
+      // Payoff curves: Standard curve (dotted/grey) and Accelerated curve (blue)
+      if (standardAmortizationData.length > 1) {
+        const stdPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        let d = `M ${getX(0)} ${getY(parseFloat(loanBalanceInput.value) || 0)}`;
+        standardAmortizationData.forEach((row, i) => {
+          d += ` L ${getX(i)} ${getY(row.balance)}`;
+        });
+        stdPath.setAttribute("d", d);
+        stdPath.setAttribute("fill", "none");
+        stdPath.setAttribute("stroke", "var(--color-stone)");
+        stdPath.setAttribute("stroke-width", "2");
+        stdPath.setAttribute("stroke-dasharray", "4");
+        svg.appendChild(stdPath);
+      }
+
+      if (amortizationData.length > 1) {
+        const accPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        let d = `M ${getX(0)} ${getY(parseFloat(loanBalanceInput.value) || 0)}`;
+        amortizationData.forEach((row, i) => {
+          d += ` L ${getX(i)} ${getY(row.balance)}`;
+        });
+        accPath.setAttribute("d", d);
+        accPath.setAttribute("fill", "none");
+        accPath.setAttribute("stroke", "var(--color-brand-blue)");
+        accPath.setAttribute("stroke-width", "3");
+        svg.appendChild(accPath);
+      }
+    }
+
+    // Export CSV
+    function triggerCsvExport() {
+      let csv = "Payment No,Date,Standard Payment,Standard Interest,Accelerated Payment,Accelerated Interest,Accelerated Remaining Balance\n";
+      amortizationData.forEach((row, i) => {
+        const stdRow = standardAmortizationData[i] || { payment: 0, interest: 0 };
+        const extraPmt = row.payment > 0 ? (parseFloat(extraPaymentInput.value) || 0) : 0;
+        csv += `${row.paymentNo},"${row.dateStr}",${stdRow.payment.toFixed(2)},${stdRow.interest.toFixed(2)},${(row.payment > 0 ? row.payment + extraPmt : 0).toFixed(2)},${row.interest.toFixed(2)},${row.balance.toFixed(2)}\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `student_loan_payoff_schedule_${currentCurrencyCode}.csv`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Export Excel (.xls HTML format)
+    function exportToExcel() {
+      let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">`;
+      html += `<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Amortization Schedule</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
+      html += `<body><table>`;
+      html += `<thead>`;
+      html += `<tr style="background-color: #f1f5f9; font-weight: bold;">`;
+      html += `<th>Payment No</th><th>Date</th><th>Standard Payment</th><th>Standard Interest</th><th>With Extra Payment</th><th>Extra Interest</th><th>Accelerated Balance</th>`;
+      html += `</tr>`;
+      html += `</thead><tbody>`;
+      
+      amortizationData.forEach((row, i) => {
+        const stdRow = standardAmortizationData[i] || { payment: 0, interest: 0 };
+        const extraPmt = row.payment > 0 ? (parseFloat(extraPaymentInput.value) || 0) : 0;
+        html += `<tr>`;
+        html += `<td>${row.paymentNo}</td>`;
+        html += `<td>${row.dateStr}</td>`;
+        html += `<td>${stdRow.payment.toFixed(2)}</td>`;
+        html += `<td>${stdRow.interest.toFixed(2)}</td>`;
+        html += `<td>${(row.payment > 0 ? row.payment + extraPmt : 0).toFixed(2)}</td>`;
+        html += `<td>${row.interest.toFixed(2)}</td>`;
+        html += `<td>${row.balance.toFixed(2)}</td>`;
+        html += `</tr>`;
+      });
+      
+      html += `</tbody></table></body></html>`;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `student_loan_payoff_schedule_${currentCurrencyCode}.xls`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    csvExportBtn?.addEventListener("click", triggerCsvExport);
+    tableCsvExportBtn?.addEventListener("click", triggerCsvExport);
+    tableExcelExportBtn?.addEventListener("click", exportToExcel);
+
+    // Copy Results
+    copyResultsBtn?.addEventListener("click", () => {
+      const summaryText = `Student Loan Payoff Calculator Analysis (${currentCurrencyCode})
+------------------------------------------------------
+Loan Balance: ${formatVal(parseFloat(loanBalanceInput.value) || 0)}
+Annual Interest Rate: ${interestRateInput.value}%
+Grace Period: ${gracePeriodInput.value} months
+
+STANDARD PLAN:
+- Monthly Repayment: ${stdMonthlyPayment?.textContent || ""}
+- Total Interest Paid: ${stdTotalInterest?.textContent || ""}
+- Repayment Term: ${stdPayoffTime?.textContent || ""}
+
+SAVINGS PLAN (With Extra Payments):
+- Monthly Repayment (incl. Extra): ${accMonthlyPayment?.textContent || ""}
+- Accelerated Payoff: ${accPayoffTime?.textContent || ""}
+- Interest Saved: ${accInterestSaved?.textContent || ""}
+- Time Saved: ${accTimeSaved?.textContent || ""}
+------------------------------------------------------
+Calculated at BoardTools.app`;
+
+      navigator.clipboard.writeText(summaryText).then(() => {
+        const prevText = copyResultsBtn.innerHTML;
+        copyResultsBtn.innerHTML = `<span>✔ Copied!</span>`;
+        setTimeout(() => {
+          copyResultsBtn.innerHTML = prevText;
+        }, 2000);
+      });
+    });
+
+    // Chart tooltip event listeners
+    const svgEl = document.getElementById("growth-svg");
+    const tooltipEl = document.getElementById("chart-tooltip");
+    if (svgEl && tooltipEl) {
+      svgEl.addEventListener("mousemove", (e) => {
+        const mouseEvent = e as MouseEvent;
+        const totalPayments = Math.max(standardAmortizationData.length, amortizationData.length);
+        if (totalPayments <= 1) return;
+
+        const rect = svgEl.getBoundingClientRect();
+        const mouseX = mouseEvent.clientX - rect.left;
+        
+        const width = 600;
+        const padding = { top: 20, right: 30, bottom: 30, left: 60 };
+        const svgX = mouseX * (width / rect.width);
+        
+        const chartWidth = width - padding.left - padding.right;
+        const ratio = (svgX - padding.left) / chartWidth;
+        const i = Math.round(ratio * (totalPayments - 1));
+        
+        if (i >= 0 && i < totalPayments) {
+          const stdPoint = standardAmortizationData[i];
+          const accPoint = amortizationData[i];
+          
+          let content = "";
+          if (stdPoint || accPoint) {
+            const dateStr = (stdPoint || accPoint).dateStr;
+            content += `<div class="font-bold border-b border-canvas/20 pb-0.5 mb-1">${dateStr}</div>`;
+            if (stdPoint) {
+              content += `<div>Std: ${formatVal(stdPoint.balance)}</div>`;
+            }
+            if (accPoint) {
+              content += `<div class="text-brand-blue font-semibold">Extra: ${formatVal(accPoint.balance)}</div>`;
+            }
+          }
+          
+          tooltipEl.innerHTML = content;
+          tooltipEl.classList.remove("hidden");
+          
+          let leftPos = mouseEvent.clientX - rect.left + 15;
+          let topPos = mouseEvent.clientY - rect.top + 15;
+          const tooltipWidth = tooltipEl.offsetWidth;
+          const tooltipHeight = tooltipEl.offsetHeight;
+          if (leftPos + tooltipWidth > rect.width) {
+            leftPos = mouseEvent.clientX - rect.left - tooltipWidth - 15;
+          }
+          if (topPos + tooltipHeight > rect.height) {
+            topPos = mouseEvent.clientY - rect.top - tooltipHeight - 15;
+          }
+          
+          tooltipEl.style.left = `${leftPos}px`;
+          tooltipEl.style.top = `${topPos}px`;
+        } else {
+          tooltipEl.classList.add("hidden");
+        }
+      });
+      
+      svgEl.addEventListener("mouseleave", () => {
+        tooltipEl.classList.add("hidden");
+      });
+    }
+
+    // Initialize defaults on start
+    setDefaultStartDate();
+    loadState();
+
+    // Toggle mobile sticky bar visibility based on scroll position/results section visibility
+    const resultsColumnEl = document.getElementById("results-column");
+    const mobileStickyBar = document.getElementById("mobile-sticky-bar");
+    if (resultsColumnEl && mobileStickyBar) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const shouldHide = entry.isIntersecting || entry.boundingClientRect.top < 100;
+          if (shouldHide) {
+            mobileStickyBar.classList.add("translate-y-full");
+          } else {
+            mobileStickyBar.classList.remove("translate-y-full");
+          }
+        });
+      }, {
+        threshold: 0,
+        rootMargin: "-50px 0px 0px 0px"
+      });
+      observer.observe(resultsColumnEl);
+    }
+  </script>
 </Layout>
