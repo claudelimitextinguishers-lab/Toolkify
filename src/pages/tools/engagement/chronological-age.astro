@@ -1,90 +1,1202 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Chronological Age Calculator";
 const category = "engagement";
 const tier = "Engagement Tools";
-const description = "Calculate precise age in years, months, weeks, days, and hours from birthdates.";
+const description =
+  "Calculate your precise chronological age in years, months, weeks, days, and hours. Supports clinical 15-day rounding rules and gestational correction.";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Chronological Age Calculator",
+      "url": "https://boardtools.app/tools/engagement/chronological-age",
+      "description": "Premium Chronological Age Calculator featuring precise date calculations, 15-day clinical rounding, corrected age for prematurity, and a responsive dark plum aesthetic.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section
+    class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-3"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-rose-light text-coral-dark text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap"
+            >{tier}</span
+          >
+        </div>
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <!-- Audio Toggle -->
+          <button
+            type="button"
+            id="audio-toggle"
+            class="inline-flex items-center justify-center w-8 h-8 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Toggle sound effects"
+            title="Toggle sound effects"
+          >
+            <svg
+              id="sound-on-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+              ></path>
+            </svg>
+            <svg
+              id="sound-off-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 hidden"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3"
+              ></path>
+            </svg>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">⌨️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <!-- Reset Button -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset fields"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div
+      class="card-base p-4 sm:p-5 flex flex-col gap-4 dark-plum-theme relative overflow-hidden"
+    >
+      <!-- Background glow overlay for plum flavor -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-plum-bg/40 to-plum-bg/10 pointer-events-none"
+      >
+      </div>
+
+      <!-- Mode Selector / Options Row -->
+      <div
+        class="flex items-center justify-between z-10 border-b border-plum-border/40 pb-3 flex-wrap gap-2"
+      >
+        <div class="flex items-center gap-2">
+          <span
+            class="text-[11px] uppercase font-bold text-plum-accent tracking-wider"
+            >Mode:</span
+          >
+          <div class="flex items-center gap-1" id="mode-select-container">
+            <button class="mode-btn active" id="btn-mode-standard">Standard</button>
+            <button class="mode-btn" id="btn-mode-clinical">Clinical</button>
+          </div>
+        </div>
+        <div
+          class="text-[10px] text-plum-text-muted font-mono select-none"
+          id="mode-hint"
+        >
+          Detailed chronological breakdown (Y/M/W/D/H)
+        </div>
+      </div>
+
+      <!-- Main Layout Grid -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch z-10"
+      >
+        <!-- Left Pane: Input Forms -->
+        <div class="flex flex-col gap-3 justify-between">
+          <div class="flex flex-col gap-3">
+            <h2 class="text-[11px] uppercase font-bold text-plum-text-bright tracking-wider">
+              1. Date Inputs
+            </h2>
+
+            <!-- Birth Date -->
+            <div class="flex flex-col gap-1">
+              <label for="input-dob" class="text-[10px] font-semibold text-plum-text-muted">
+                Date of Birth <span class="text-plum-accent">*</span>
+              </label>
+              <input
+                type="text"
+                id="input-dob"
+                required
+                placeholder="DD/MM/YYYY"
+                inputmode="numeric"
+                aria-invalid="false"
+                aria-describedby="error-banner"
+                class="w-full bg-plum-surface/50 border border-plum-border/40 text-plum-text-bright rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-plum-accent transition-colors font-mono"
+              />
+            </div>
+
+            <!-- Optional Birth Time -->
+            <div class="flex flex-col gap-1">
+              <label for="input-tob" class="text-[10px] font-semibold text-plum-text-muted flex justify-between">
+                <span>Time of Birth <span class="text-[9px] text-stone">(Optional)</span></span>
+              </label>
+              <input
+                type="time"
+                id="input-tob"
+                value="00:00"
+                class="w-full bg-plum-surface/50 border border-plum-border/40 text-plum-text-bright rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-plum-accent transition-colors font-mono"
+              />
+            </div>
+
+            <!-- As Of Date -->
+            <div class="flex flex-col gap-1">
+              <label for="input-asof" class="text-[10px] font-semibold text-plum-text-muted">
+                Calculate Age As Of
+              </label>
+              <input
+                type="text"
+                id="input-asof"
+                placeholder="DD/MM/YYYY"
+                inputmode="numeric"
+                aria-invalid="false"
+                aria-describedby="error-banner"
+                class="w-full bg-plum-surface/50 border border-plum-border/40 text-plum-text-bright rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-plum-accent transition-colors font-mono"
+              />
+            </div>
+
+            <!-- Optional As Of Time -->
+            <div class="flex flex-col gap-1">
+              <label for="input-asof-time" class="text-[10px] font-semibold text-plum-text-muted flex justify-between">
+                <span>Time As Of <span class="text-[9px] text-stone">(Optional)</span></span>
+              </label>
+              <input
+                type="time"
+                id="input-asof-time"
+                class="w-full bg-plum-surface/50 border border-plum-border/40 text-plum-text-bright rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-plum-accent transition-colors font-mono"
+              />
+            </div>
+
+            <!-- Advanced / Clinician Toggles -->
+            <div class="flex flex-col gap-2.5 pt-2 border-t border-plum-border/20">
+              <!-- Gestational Adjustment -->
+              <div class="flex items-center justify-between">
+                <label for="toggle-gestational" class="text-[10px] font-semibold text-plum-text-muted cursor-pointer flex flex-col">
+                  <span>Gestational Correction</span>
+                  <span class="text-[8px] text-stone font-normal">For infants born prematurely (&lt; 37 weeks)</span>
+                </label>
+                <input
+                  type="checkbox"
+                  id="toggle-gestational"
+                  class="w-4 h-4 rounded border-plum-border text-plum-accent focus:ring-plum-accent cursor-pointer"
+                />
+              </div>
+
+              <!-- Gestational Weeks Input (Conditional) -->
+              <div id="gestational-input-wrapper" class="hidden flex-col gap-1 pl-4 border-l-2 border-plum-accent/30 animate-fade-in-up">
+                <label for="input-prematurity" class="text-[9px] uppercase font-bold text-plum-text-muted">
+                  Weeks Premature (1 - 16 weeks)
+                </label>
+                <input
+                  type="number"
+                  id="input-prematurity"
+                  min="1"
+                  max="16"
+                  placeholder="e.g. 4"
+                  class="w-24 bg-plum-surface/50 border border-plum-border/40 text-plum-text-bright rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-plum-accent transition-colors font-mono"
+                />
+              </div>
+
+              <!-- 15-Day Rounding Toggle (Visible in Clinical mode) -->
+              <div id="clinical-rounding-wrapper" class="hidden items-center justify-between animate-fade-in-up">
+                <label for="toggle-rounding" class="text-[10px] font-semibold text-plum-text-muted cursor-pointer flex flex-col">
+                  <span>15-Day Rounding Rule</span>
+                  <span class="text-[8px] text-stone font-normal">Round $\ge$ 15 days up to next month</span>
+                </label>
+                <input
+                  type="checkbox"
+                  id="toggle-rounding"
+                  class="w-4 h-4 rounded border-plum-border text-plum-accent focus:ring-plum-accent cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex gap-2.5 pt-2">
+            <button
+              type="button"
+              id="calculate-btn"
+              class="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2.5 bg-plum-accent text-canvas rounded-full transition-all cursor-pointer shadow-subtle hover:bg-plum-accent/90"
+            >
+              📊 Calculate Age
+            </button>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Right Pane: Results Dashboard -->
+        <div
+          class="flex flex-col justify-between p-3 sm:p-5 relative overflow-hidden rounded-xl border border-plum-border bg-plum-surface shadow-inner min-h-[300px] sm:min-h-[380px]"
+        >
+          <!-- Dynamic Glow -->
+          <div class="absolute top-0 right-0 w-32 h-32 bg-plum-accent/10 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div class="flex flex-col gap-3 sm:gap-4 z-10 w-full h-full justify-between">
+            <!-- Results Header -->
+            <div class="flex items-center justify-between border-b border-plum-border/40 pb-1.5 sm:pb-2">
+              <span class="text-[10px] uppercase font-extrabold text-plum-accent tracking-widest">Age Output</span>
+              <div class="flex items-center gap-1.5">
+                <span class="text-[10px] font-mono text-plum-text-muted" id="status-label">Awaiting Input</span>
+                <span class="flex h-2 w-2 relative">
+                  <span id="status-pulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75"></span>
+                  <span id="status-dot" class="relative inline-flex rounded-full h-2 w-2 bg-stone"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="error-banner" class="hidden bg-brand-red/10 border border-brand-red-dark/30 rounded-lg p-2.5 text-[11px] text-brand-red-dark leading-relaxed animate-fade-in-up">
+              ⚠️ Birthdate cannot be in the future relative to the "as of" date.
+            </div>
+
+            <!-- Results Reveal Container -->
+            <div
+              id="themed-reveal-container"
+              class="flex flex-col items-center justify-center py-3 relative min-h-[160px] bg-black/20 rounded-xl border border-plum-border/20 backdrop-blur-sm shadow-inner transition-all duration-300"
+            >
+              <!-- Initial Idle State -->
+              <div id="idle-readout" class="flex flex-col items-center gap-1.5 px-4 text-center">
+                <span class="text-3xl animate-bounce">📅</span>
+                <span class="text-xs font-semibold text-plum-text-bright">Enter a birth date to calculate</span>
+                <span class="text-[10px] text-plum-text-muted max-w-[200px]">Calculates precise years, months, weeks, days, and hours instantly.</span>
+              </div>
+
+              <!-- Standard Mode Result Grid -->
+              <div id="result-standard-grid" class="hidden w-full grid-cols-3 gap-2 px-3 animate-fade-in-up">
+                <div class="flex flex-col items-center bg-plum-bg/40 p-2 rounded-lg border border-plum-border/10">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Years</span>
+                  <span class="text-2xl sm:text-3xl font-mono font-black text-plum-text-bright mt-0.5" id="val-years">0</span>
+                </div>
+                <div class="flex flex-col items-center bg-plum-bg/40 p-2 rounded-lg border border-plum-border/10">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Months</span>
+                  <span class="text-2xl sm:text-3xl font-mono font-black text-plum-text-bright mt-0.5" id="val-months">0</span>
+                </div>
+                <div class="flex flex-col items-center bg-plum-bg/40 p-2 rounded-lg border border-plum-border/10">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Weeks</span>
+                  <span class="text-2xl sm:text-3xl font-mono font-black text-plum-text-bright mt-0.5" id="val-weeks">0</span>
+                </div>
+                <div class="flex flex-col items-center bg-plum-bg/40 p-2 rounded-lg border border-plum-border/10 col-span-1">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Days</span>
+                  <span class="text-2xl sm:text-3xl font-mono font-black text-plum-text-bright mt-0.5" id="val-days">0</span>
+                </div>
+                <div class="flex flex-col items-center bg-plum-bg/40 p-2 rounded-lg border border-plum-border/10 col-span-2">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Hours</span>
+                  <span class="text-2xl sm:text-3xl font-mono font-black text-plum-text-bright mt-0.5" id="val-hours">0</span>
+                </div>
+                <!-- Chronological Age Row (if gestational correction is active) -->
+                <div id="standard-uncorrected-row" class="hidden text-[10px] text-plum-text-muted mt-2 border-t border-plum-border/20 pt-1.5 w-full text-center">
+                  Chronological Age: <span id="val-uncorrected-standard" class="text-plum-text-bright font-mono">--</span>
+                </div>
+              </div>
+
+              <!-- Clinical Mode Result -->
+              <div id="result-clinical-box" class="hidden flex-col items-center gap-1 px-4 w-full text-center animate-fade-in-up">
+                <span class="text-[9px] uppercase font-bold text-plum-text-muted">Clinical scoring format</span>
+                <div class="font-display font-bold text-base sm:text-lg text-plum-text-bright leading-tight" id="clinical-readout-text">
+                  0 years, 0 months, 0 days
+                </div>
+                <div class="font-mono font-black text-2xl sm:text-3xl text-plum-accent tracking-tight mt-1" id="clinical-readout">
+                  0;0;0
+                </div>
+                <span class="text-[9px] text-stone mt-1" id="clinical-rounding-status">Standard exact calculation</span>
+                <!-- Chronological Clinical Row (if gestational correction is active) -->
+                <div id="clinical-uncorrected-row" class="hidden text-[10px] text-plum-text-muted mt-2 border-t border-plum-border/20 pt-1.5 w-full text-center">
+                  Chronological Age: <span id="val-uncorrected-clinical" class="text-plum-text-bright font-mono">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Milestones / Secondary statistics -->
+            <div id="milestones-box" class="hidden flex-col gap-1 border-t border-plum-border/40 pt-2 animate-fade-in-up">
+              <span class="text-[9px] uppercase font-extrabold text-plum-accent">Total Lifespan Stats (Approx. Years/Months)</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Years</span>
+                  <span id="stat-total-years" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Months</span>
+                  <span id="stat-total-months" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Weeks</span>
+                  <span id="stat-total-weeks" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Days</span>
+                  <span id="stat-total-days" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Hours</span>
+                  <span id="stat-total-hours" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Minutes</span>
+                  <span id="stat-total-minutes" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+                <div class="flex flex-col bg-plum-bg/25 p-1 rounded border border-plum-border/5 col-span-2">
+                  <span class="text-[8px] uppercase font-bold text-plum-text-muted">Total Seconds</span>
+                  <span id="stat-total-seconds" class="text-[11px] font-mono font-bold text-plum-text-bright">--</span>
+                </div>
+              </div>
+              <!-- Gestational Notification Tag -->
+              <div id="gestational-badge" class="hidden bg-plum-accent/20 border border-plum-accent/30 text-plum-text-bright rounded p-1 text-[9px] text-center mt-1">
+                👼 Adjusted for gestational prematurity of <span id="prematurity-weeks-display">0</span> week(s).
+              </div>
+            </div>
+
+            <!-- Action buttons / Share -->
+            <div id="action-btn-row" class="hidden items-center gap-2 pt-1">
+              <button
+                type="button"
+                id="share-btn"
+                class="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 bg-plum-accent text-canvas rounded-full transition-all cursor-pointer shadow-subtle hover:bg-plum-accent/90"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.684 10.742l4.622-2.311m0 0a3 3 0 10-3.664-3.664L8.684 10.742m0 0a3 3 0 100 4.516l4.622 2.311m0 0a3 3 0 103.664-3.664l-4.622-2.311"
+                  ></path>
+                </svg>
+                <span>Copy formatted report</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Educational panel -->
+    <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
+      <h3
+        class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 text-brand-blue"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        Chronological Age Scoring & Standards
+      </h3>
+      <div
+        class="text-[11px] sm:text-xs text-slate leading-relaxed flex flex-col gap-2"
+      >
+        <p>
+          In psychological, developmental, and speech-language assessments, a subject's exact age must be calculated as of the specific test day. This ensures performance is compared against the correct normative standard.
+        </p>
+        <p class="font-semibold text-charcoal">
+          Key Calculation Standards:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5 text-slate font-medium">
+          <li>
+            <strong>Exact Calendar Math:</strong> Calculates exact days elapsed by accounting for varying month lengths (28, 29, 30, or 31 days) and leap years. If the subtraction borrow is needed, the previous month's exact days are used.
+          </li>
+          <li>
+            <strong>15-Day Rounding Rule:</strong> Used by various standard assessment tools (such as Pearson's GDO-R and some speech-language indexes). Under this convention, if the remaining days are 15 or greater, the age rounds up to the next full month. If 14 or fewer, the days are rounded down.
+          </li>
+          <li>
+            <strong>Gestational Correction:</strong> For premature infants (less than 37 weeks gestation), developmental benchmarks should be measured against their adjusted birthdate (Corrected Age) rather than chronological age. This correction is typically applied up to 2 years of age.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Secure Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Client-side Logic Module -->
+  <script>
+    type CalculatorMode = "standard" | "clinical";
+    let activeMode: CalculatorMode = "standard";
+
+    let soundEnabled = true;
+    let audioCtx: AudioContext | null = null;
+
+    // DOM Elements
+    const btnModeStandard = document.getElementById("btn-mode-standard");
+    const btnModeClinical = document.getElementById("btn-mode-clinical");
+    const modeHint = document.getElementById("mode-hint");
+
+    const inputDob = document.getElementById("input-dob") as HTMLInputElement;
+    const inputTob = document.getElementById("input-tob") as HTMLInputElement;
+    const inputAsof = document.getElementById("input-asof") as HTMLInputElement;
+    const inputAsofTime = document.getElementById("input-asof-time") as HTMLInputElement;
+
+    const toggleGestational = document.getElementById("toggle-gestational") as HTMLInputElement;
+    const gestationalInputWrapper = document.getElementById("gestational-input-wrapper");
+    const inputPrematurity = document.getElementById("input-prematurity") as HTMLInputElement;
+
+    const clinicalRoundingWrapper = document.getElementById("clinical-rounding-wrapper");
+    const toggleRounding = document.getElementById("toggle-rounding") as HTMLInputElement;
+
+    const calculateBtn = document.getElementById("calculate-btn");
+    const resetBtn = document.getElementById("reset-btn");
+    const audioToggle = document.getElementById("audio-toggle");
+    const soundOnIcon = document.getElementById("sound-on-icon");
+    const soundOffIcon = document.getElementById("sound-off-icon");
+
+    const statusLabel = document.getElementById("status-label");
+    const statusDot = document.getElementById("status-dot");
+    const statusPulse = document.getElementById("status-pulse");
+
+    const errorBanner = document.getElementById("error-banner");
+    const idleReadout = document.getElementById("idle-readout");
+    const resultStandardGrid = document.getElementById("result-standard-grid");
+    const resultClinicalBox = document.getElementById("result-clinical-box");
+
+    // Standard Value targets
+    const valYears = document.getElementById("val-years");
+    const valMonths = document.getElementById("val-months");
+    const valWeeks = document.getElementById("val-weeks");
+    const valDays = document.getElementById("val-days");
+    const valHours = document.getElementById("val-hours");
+
+    // Clinical Value targets
+    const clinicalReadout = document.getElementById("clinical-readout");
+    const clinicalReadoutText = document.getElementById("clinical-readout-text");
+    const clinicalRoundingStatus = document.getElementById("clinical-rounding-status");
+    const standardUncorrectedRow = document.getElementById("standard-uncorrected-row");
+    const valUncorrectedStandard = document.getElementById("val-uncorrected-standard");
+    const clinicalUncorrectedRow = document.getElementById("clinical-uncorrected-row");
+    const valUncorrectedClinical = document.getElementById("val-uncorrected-clinical");
+
+    // Milestone targets
+    const milestonesBox = document.getElementById("milestones-box");
+    const statTotalYears = document.getElementById("stat-total-years");
+    const statTotalMonths = document.getElementById("stat-total-months");
+    const statTotalWeeks = document.getElementById("stat-total-weeks");
+    const statTotalDays = document.getElementById("stat-total-days");
+    const statTotalHours = document.getElementById("stat-total-hours");
+    const statTotalMinutes = document.getElementById("stat-total-minutes");
+    const statTotalSeconds = document.getElementById("stat-total-seconds");
+    const gestationalBadge = document.getElementById("gestational-badge");
+    const prematurityWeeksDisplay = document.getElementById("prematurity-weeks-display");
+
+    const actionBtnRow = document.getElementById("action-btn-row");
+    const shareBtn = document.getElementById("share-btn");
+
+    // Synthesizer Helper
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq: number, type: OscillatorType, duration: number, volume: number = 0.05) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (err) {
+        console.warn("AudioContext playback error:", err);
+      }
+    }
+
+    function playCalculatedSound() {
+      playTone(587.33, "triangle", 0.1, 0.08); // D5
+      setTimeout(() => playTone(880.00, "triangle", 0.25, 0.08), 80); // A5
+    }
+
+    function playResetSound() {
+      playTone(440, "sine", 0.15, 0.05);
+    }
+
+    // Set Default Dates on Load
+    function setDefaultDates() {
+      const now = new Date();
+      const localDateStr = String(now.getDate()).padStart(2, "0") + "/" + 
+        String(now.getMonth() + 1).padStart(2, "0") + "/" + 
+        now.getFullYear();
+      
+      const localTimeStr = String(now.getHours()).padStart(2, "0") + ":" + 
+        String(now.getMinutes()).padStart(2, "0");
+
+      if (inputAsof) {
+        inputAsof.value = localDateStr;
+      }
+      if (inputAsofTime) {
+        inputAsofTime.value = localTimeStr;
+      }
+    }
+
+    function setupDateFormatter(input: HTMLInputElement | null) {
+      if (!input) return;
+      input.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        let value = target.value.replace(/\D/g, "");
+        if (value.length > 8) value = value.slice(0, 8);
+        
+        let formatted = "";
+        if (value.length > 4) {
+          formatted = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4)}`;
+        } else if (value.length > 2) {
+          formatted = `${value.slice(0, 2)}/${value.slice(2)}`;
+        } else {
+          formatted = value;
+        }
+        
+        const selectionStart = target.selectionStart;
+        const oldLength = target.value.length;
+        
+        target.value = formatted;
+        
+        if (selectionStart !== null && target.value.length !== oldLength) {
+          const addedChars = target.value.length - oldLength;
+          target.setSelectionRange(selectionStart + addedChars, selectionStart + addedChars);
+        }
+      });
+    }
+
+    setupDateFormatter(inputDob);
+    setupDateFormatter(inputAsof);
+
+    setDefaultDates();
+
+    // Mode toggling
+    function setMode(mode: CalculatorMode) {
+      activeMode = mode;
+      if (mode === "standard") {
+        btnModeStandard?.classList.add("active");
+        btnModeClinical?.classList.remove("active");
+        if (modeHint) modeHint.textContent = "Detailed chronological breakdown (Y/M/W/D/H)";
+        clinicalRoundingWrapper?.classList.add("hidden");
+        clinicalRoundingWrapper?.classList.remove("flex");
+      } else {
+        btnModeStandard?.classList.remove("active");
+        btnModeClinical?.classList.add("active");
+        if (modeHint) modeHint.textContent = "Clinical test scoring notation (Y;M;D)";
+        clinicalRoundingWrapper?.classList.remove("hidden");
+        clinicalRoundingWrapper?.classList.add("flex");
+      }
+      playTone(660, "sine", 0.05, 0.04);
+      triggerCalculation(false); // Recalculate silently
+    }
+
+    btnModeStandard?.addEventListener("click", () => setMode("standard"));
+    btnModeClinical?.addEventListener("click", () => setMode("clinical"));
+
+    // Sound toggle
+    audioToggle?.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundOnIcon?.classList.remove("hidden");
+        soundOffIcon?.classList.add("hidden");
+      } else {
+        soundOnIcon?.classList.add("hidden");
+        soundOffIcon?.classList.remove("hidden");
+      }
+    });
+
+    // Gestational Correction show/hide input
+    toggleGestational?.addEventListener("change", () => {
+      if (toggleGestational.checked) {
+        gestationalInputWrapper?.classList.remove("hidden");
+        gestationalInputWrapper?.classList.add("flex");
+        if (inputPrematurity) inputPrematurity.value = "4"; // default to 4 weeks
+      } else {
+        gestationalInputWrapper?.classList.add("hidden");
+        gestationalInputWrapper?.classList.remove("flex");
+        if (inputPrematurity) inputPrematurity.value = "";
+      }
+      triggerCalculation(false);
+    });
+
+    [inputDob, inputTob, inputAsof, inputAsofTime, inputPrematurity, toggleRounding].forEach(el => {
+      el?.addEventListener("change", () => triggerCalculation(false));
+      el?.addEventListener("input", () => triggerCalculation(false));
+    });
+
+    // Helper to parse typed/standard dates flexibly (strictly DD/MM/YYYY)
+    function parseDateInput(value: string): Date | null {
+      value = value.trim();
+      if (!value) return null;
+
+      // Match DD/MM/YYYY exactly
+      const ddmm = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value);
+      if (ddmm) {
+        const d = parseInt(ddmm[1], 10);
+        const m = parseInt(ddmm[2], 10) - 1;
+        const y = parseInt(ddmm[3], 10);
+        const date = new Date(y, m, d);
+        if (date.getFullYear() === y && date.getMonth() === m && date.getDate() === d) {
+          return date;
+        }
+      }
+
+      return null;
+    }
+
+    function parseDateTime(dateStr: string, timeStr: string): Date | null {
+      const parsedDate = parseDateInput(dateStr);
+      if (!parsedDate) return null;
+      
+      const [hours, minutes] = (timeStr || "00:00").split(":").map(x => parseInt(x, 10) || 0);
+      return new Date(parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate(), hours, minutes);
+    }
+
+    // Audit-compliant helper to calculate date subtraction difference
+    // Accounts for both exact calendar month lengths and exact hour-minute day boundaries.
+    function calculateAgeDifference(dob: Date, asOf: Date) {
+      let years = asOf.getFullYear() - dob.getFullYear();
+      let months = asOf.getMonth() - dob.getMonth();
+      let days = asOf.getDate() - dob.getDate();
+
+      // Fix hour/minute borrow: Convert standard clock hours/minutes to minutes of day,
+      // and borrow a whole day if asOf time-of-day is before dob time-of-day.
+      let timeDiffMinutes = (asOf.getHours() * 60 + asOf.getMinutes()) - (dob.getHours() * 60 + dob.getMinutes());
+      if (timeDiffMinutes < 0) {
+        timeDiffMinutes += 24 * 60;
+        days--;
+      }
+      let hours = Math.floor(timeDiffMinutes / 60);
+
+      // Fix date-borrow logic: If days < 0, borrow from months.
+      if (days < 0) {
+        months--;
+        // Determine the actual number of days in the month immediately preceding the asOfDate's month.
+        // We do this by creating a Date at day 0 of the asOf month (which naturally points to the last day of the preceding month).
+        const prevMonth = new Date(asOf.getFullYear(), asOf.getMonth(), 0);
+        const prevMonthDays = prevMonth.getDate();
+
+        // Edge case: If the DOB day exceeds the number of days in the borrowed month (e.g. Feb in leap/non-leap years, EOM DOBs),
+        // we cap the effective start day to the maximum capacity of that borrowed month to prevent negative/underflow days.
+        const effectiveDobDate = Math.min(dob.getDate(), prevMonthDays);
+        days = asOf.getDate() + (prevMonthDays - effectiveDobDate);
+      }
+
+      if (months < 0) {
+        months += 12;
+        years--;
+      }
+
+      const remainingWeeks = Math.floor(days / 7);
+      const remainingDays = days % 7;
+
+      return { years, months, days, hours, remainingWeeks, remainingDays };
+    }
+
+    // Calculate core age math
+    function triggerCalculation(withSound: boolean = true) {
+      if (!inputDob.value) {
+        return; // DOB is required
+      }
+
+      // Parse DOB
+      const dobDate = parseDateTime(inputDob.value, inputTob?.value);
+      if (!dobDate) {
+        showError(true, "⚠️ Please enter a valid Date of Birth (DD/MM/YYYY).");
+        return;
+      }
+
+      // Parse As Of
+      const currentDefaultStr = String(new Date().getDate()).padStart(2, "0") + "/" + 
+        String(new Date().getMonth() + 1).padStart(2, "0") + "/" + 
+        new Date().getFullYear();
+      const asOfDate = parseDateTime(inputAsof.value || currentDefaultStr, inputAsofTime?.value);
+      if (!asOfDate) {
+        showError(true, "⚠️ Please enter a valid As Of Date (DD/MM/YYYY).");
+        return;
+      }
+
+      // Gestational Adjustment (1-16 weeks clamping)
+      let adjustedDob = new Date(dobDate.getTime());
+      const applyCorrection = toggleGestational?.checked && inputPrematurity?.value;
+      let weeksPremature = applyCorrection ? parseInt(inputPrematurity.value, 10) || 0 : 0;
+
+      if (applyCorrection) {
+        // Clamp to stated HTML range (1-16 weeks)
+        if (weeksPremature < 1) weeksPremature = 1;
+        if (weeksPremature > 16) weeksPremature = 16;
+        inputPrematurity.value = weeksPremature.toString();
+
+        // Adjust DOB later (add days)
+        adjustedDob.setDate(adjustedDob.getDate() + (weeksPremature * 7));
+      }
+
+      // Validation
+      if (adjustedDob.getTime() > asOfDate.getTime()) {
+        showError(true, '⚠️ Birthdate cannot be in the future relative to the "as of" date.');
+        return;
+      }
+      showError(false);
+
+      // Total Milestones Calculations (uses corrected DOB if prematurity is applied)
+      const diffMs = asOfDate.getTime() - adjustedDob.getTime();
+      const totalYears = parseFloat((diffMs / (1000 * 60 * 60 * 24 * 365.2425)).toFixed(2));
+      const totalMonths = parseFloat((diffMs / (1000 * 60 * 60 * 24 * 30.4375)).toFixed(1));
+      const totalWeeks = parseFloat((diffMs / (1000 * 60 * 60 * 24 * 7)).toFixed(1));
+      const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor(diffMs / (1000 * 60 * 60));
+      const totalMinutes = Math.floor(diffMs / (1000 * 60));
+      const totalSeconds = Math.floor(diffMs / 1000);
+
+      // Calculate both corrected (adjusted) and chronological age
+      const correctedAge = calculateAgeDifference(adjustedDob, asOfDate);
+      const chronologicalAge = calculateAgeDifference(dobDate, asOfDate);
+
+      // Extract results for display
+      const { years, months, days, hours, remainingWeeks, remainingDays } = correctedAge;
+
+      // Update UI Status indicators
+      if (statusLabel) statusLabel.textContent = "Calculated";
+      if (statusDot) {
+        statusDot.className = "relative inline-flex rounded-full h-2 w-2 bg-emerald-500";
+      }
+      if (statusPulse) {
+        statusPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75";
+      }
+
+      if (withSound) {
+        playCalculatedSound();
+      }
+
+      // Render Display Mode
+      if (activeMode === "standard") {
+        resultStandardGrid?.classList.remove("hidden");
+        resultStandardGrid?.classList.add("grid");
+        resultClinicalBox?.classList.add("hidden");
+
+        // Animate count-up for corrected/adjusted values
+        animateNumber(valYears, years);
+        animateNumber(valMonths, months);
+        animateNumber(valWeeks, remainingWeeks);
+        animateNumber(valDays, remainingDays);
+        animateNumber(valHours, hours);
+
+        // Show/hide chronological age row if gestational correction is active
+        if (applyCorrection && weeksPremature > 0) {
+          standardUncorrectedRow?.classList.remove("hidden");
+          if (valUncorrectedStandard) {
+            valUncorrectedStandard.textContent = `${chronologicalAge.years}y ${chronologicalAge.months}m ${chronologicalAge.remainingWeeks}w ${chronologicalAge.remainingDays}d ${chronologicalAge.hours}h`;
+          }
+        } else {
+          standardUncorrectedRow?.classList.add("hidden");
+        }
+      } else {
+        // Clinical mode Y;M;D scoring
+        resultStandardGrid?.classList.add("hidden");
+        resultStandardGrid?.classList.remove("grid");
+        resultClinicalBox?.classList.remove("hidden");
+        resultClinicalBox?.classList.add("flex");
+
+        // Apply Clinical Rounding Rule (15-Day Rule) on the corrected age
+        let finalYears = years;
+        let finalMonths = months;
+        let finalDays = days;
+        let roundedUp = false;
+
+        const isRoundingEnabled = toggleRounding?.checked;
+
+        if (isRoundingEnabled && days >= 15) {
+          finalMonths++;
+          finalDays = 0; // days rounded off
+          roundedUp = true;
+          if (finalMonths >= 12) {
+            finalMonths = 0;
+            finalYears++;
+          }
+        }
+
+        const clinicalResultStr = roundedUp ? `${finalYears};${finalMonths}` : `${finalYears};${finalMonths};${finalDays}`;
+        if (clinicalReadout) {
+          clinicalReadout.textContent = clinicalResultStr;
+        }
+
+        // Formatted friendly representation
+        let clinicalTextStr = "";
+        if (roundedUp) {
+          clinicalTextStr = `${finalYears} year${finalYears !== 1 ? 's' : ''} ${finalMonths} month${finalMonths !== 1 ? 's' : ''}`;
+        } else {
+          clinicalTextStr = `${finalYears} year${finalYears !== 1 ? 's' : ''} ${finalMonths} month${finalMonths !== 1 ? 's' : ''} ${finalDays} day${finalDays !== 1 ? 's' : ''}`;
+        }
+        if (clinicalReadoutText) {
+          clinicalReadoutText.textContent = clinicalTextStr;
+        }
+
+        if (clinicalRoundingStatus) {
+          if (isRoundingEnabled) {
+            clinicalRoundingStatus.textContent = roundedUp 
+              ? `Rounded UP (days was ${days} >= 15)`
+              : `Rounded DOWN (days was ${days} < 15)`;
+          } else {
+            clinicalRoundingStatus.textContent = "Clinical exact calculation (Rounding off)";
+          }
+        }
+
+        // Show/hide chronological age row in clinical box
+        if (applyCorrection && weeksPremature > 0) {
+          clinicalUncorrectedRow?.classList.remove("hidden");
+          if (valUncorrectedClinical) {
+            let chronoYears = chronologicalAge.years;
+            let chronoMonths = chronologicalAge.months;
+            let chronoDays = chronologicalAge.days;
+            let chronoRoundedUp = false;
+
+            if (isRoundingEnabled && chronoDays >= 15) {
+              chronoMonths++;
+              chronoDays = 0;
+              chronoRoundedUp = true;
+              if (chronoMonths >= 12) {
+                chronoMonths = 0;
+                chronoYears++;
+              }
+            }
+            valUncorrectedClinical.textContent = chronoRoundedUp ? `${chronoYears};${chronoMonths}` : `${chronoYears};${chronoMonths};${chronoDays}`;
+          }
+        } else {
+          clinicalUncorrectedRow?.classList.add("hidden");
+        }
+      }
+
+      // Show Milestones and copy/share buttons
+      milestonesBox?.classList.remove("hidden");
+      milestonesBox?.classList.add("flex");
+      actionBtnRow?.classList.remove("hidden");
+      actionBtnRow?.classList.add("flex");
+      idleReadout?.classList.add("hidden");
+
+      // Update secondary stats
+      if (statTotalYears) statTotalYears.textContent = totalYears.toLocaleString();
+      if (statTotalMonths) statTotalMonths.textContent = totalMonths.toLocaleString();
+      if (statTotalWeeks) statTotalWeeks.textContent = totalWeeks.toLocaleString();
+      if (statTotalDays) statTotalDays.textContent = totalDays.toLocaleString();
+      if (statTotalHours) statTotalHours.textContent = totalHours.toLocaleString();
+      if (statTotalMinutes) statTotalMinutes.textContent = totalMinutes.toLocaleString();
+      if (statTotalSeconds) statTotalSeconds.textContent = totalSeconds.toLocaleString();
+
+      // Prematurity Badge Display
+      if (applyCorrection && weeksPremature > 0) {
+        gestationalBadge?.classList.remove("hidden");
+        if (prematurityWeeksDisplay) prematurityWeeksDisplay.textContent = weeksPremature.toString();
+      } else {
+        gestationalBadge?.classList.add("hidden");
+      }
+
+      // Auto scroll to results container on mobile viewports
+      if (window.innerWidth < 768 && withSound) {
+        const revealContainer = document.getElementById("themed-reveal-container");
+        if (revealContainer) {
+          const navbarHeight = 64;
+          const targetY = revealContainer.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 16;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }
+      }
+    }
+
+    // Numbers animation runner
+    function animateNumber(element: HTMLElement | null, endValue: number) {
+      if (!element) return;
+      let startValue = 0;
+      const duration = 400; // ms
+      const startTime = performance.now();
+
+      function update(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOutQuad = progress * (2 - progress); // basic easing
+        const currentValue = Math.floor(easeOutQuad * endValue);
+        
+        element!.textContent = currentValue.toString();
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          element!.textContent = endValue.toString();
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    function showError(visible: boolean, message: string = '⚠️ Birthdate cannot be in the future relative to the "as of" date.') {
+      if (errorBanner) {
+        errorBanner.textContent = message;
+      }
+      if (visible) {
+        errorBanner?.classList.remove("hidden");
+        resultStandardGrid?.classList.add("hidden");
+        resultClinicalBox?.classList.add("hidden");
+        milestonesBox?.classList.add("hidden");
+        actionBtnRow?.classList.add("hidden");
+        idleReadout?.classList.remove("hidden");
+        inputDob?.setAttribute("aria-invalid", "true");
+        inputAsof?.setAttribute("aria-invalid", "true");
+      } else {
+        errorBanner?.classList.add("hidden");
+        inputDob?.setAttribute("aria-invalid", "false");
+        inputAsof?.setAttribute("aria-invalid", "false");
+      }
+    }
+
+    // Reset Calculator Fields
+    function resetCalculator() {
+      inputDob.value = "";
+      inputTob.value = "00:00";
+      setDefaultDates();
+      
+      toggleGestational.checked = false;
+      gestationalInputWrapper?.classList.add("hidden");
+      gestationalInputWrapper?.classList.remove("flex");
+      if (inputPrematurity) inputPrematurity.value = "";
+
+      toggleRounding.checked = false;
+
+      // Reset Output State
+      if (statusLabel) statusLabel.textContent = "Awaiting Input";
+      if (statusDot) {
+        statusDot.className = "relative inline-flex rounded-full h-2 w-2 bg-stone";
+      }
+      if (statusPulse) {
+        statusPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75";
+      }
+
+      errorBanner?.classList.add("hidden");
+      resultStandardGrid?.classList.add("hidden");
+      resultStandardGrid?.classList.remove("grid");
+      resultClinicalBox?.classList.add("hidden");
+      milestonesBox?.classList.add("hidden");
+      actionBtnRow?.classList.add("hidden");
+      idleReadout?.classList.remove("hidden");
+      
+      standardUncorrectedRow?.classList.add("hidden");
+      clinicalUncorrectedRow?.classList.add("hidden");
+
+      // Reset mode to standard
+      setMode("standard");
+
+      playResetSound();
+    }
+
+    // Attach listeners
+    calculateBtn?.addEventListener("click", () => triggerCalculation(true));
+    resetBtn?.addEventListener("click", resetCalculator);
+
+    // Export formatted report copy logic
+    shareBtn?.addEventListener("click", () => {
+      const dobStr = inputDob.value;
+      const tobStr = inputTob.value || "00:00";
+      const asOfStr = inputAsof.value;
+      const asOfTimeStr = inputAsofTime.value || "00:00";
+
+      const applyCorrection = toggleGestational?.checked && inputPrematurity?.value;
+      const weeksPremature = applyCorrection ? parseInt(inputPrematurity.value, 10) || 0 : 0;
+
+      let reportText = `--- BOARDTOOLS CHRONOLOGICAL AGE REPORT ---\n`;
+      reportText += `Date of Birth: ${dobStr} at ${tobStr}\n`;
+      reportText += `Age calculated as of: ${asOfStr} at ${asOfTimeStr}\n`;
+
+      if (applyCorrection && weeksPremature > 0) {
+        reportText += `Prematurity Correction Applied: ${weeksPremature} week(s)\n`;
+      }
+
+      if (activeMode === "standard") {
+        reportText += `Precise Age Breakdown:\n`;
+        reportText += `- Years: ${valYears?.textContent || 0}\n`;
+        reportText += `- Months: ${valMonths?.textContent || 0}\n`;
+        reportText += `- Weeks: ${valWeeks?.textContent || 0}\n`;
+        reportText += `- Days: ${valDays?.textContent || 0}\n`;
+        reportText += `- Hours: ${valHours?.textContent || 0}\n`;
+      } else {
+        reportText += `Clinical Scoring Age (Y;M;D): ${clinicalReadout?.textContent || "0;0;0"}\n`;
+        reportText += `Rounding Rule (15-Day Rule): ${toggleRounding.checked ? "Yes" : "No"} (${clinicalRoundingStatus?.textContent || ""})\n`;
+      }
+
+      reportText += `Total Milestones:\n`;
+      reportText += `- Total Days Lived: ${statTotalDays?.textContent || "--"}\n`;
+      reportText += `- Total Weeks Lived: ${statTotalWeeks?.textContent || "--"}\n`;
+      reportText += `- Total Hours Lived: ${statTotalHours?.textContent || "--"}\n`;
+      reportText += `------------------------------------------`;
+
+      navigator.clipboard.writeText(reportText).then(() => {
+        const span = shareBtn.querySelector("span");
+        if (span) {
+          const originalText = span.textContent || "Copy formatted report";
+          span.textContent = "Report Copied to Clipboard!";
+          setTimeout(() => {
+            span.textContent = originalText;
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error("Report copy failed: ", err);
+      });
+    });
+  </script>
+
+  <!-- Animation & Effect Styles -->
+  <style>
+    /* Dark Plum Theme variables */
+    .dark-plum-theme {
+      --plum-bg: #2d1226;
+      --plum-accent: #e040a9;
+      --plum-accent-deep: #b82a84;
+      --plum-border: rgba(224, 64, 169, 0.25);
+      --plum-surface: rgba(30, 9, 23, 0.85);
+      --plum-text-muted: #d6cbd3;
+      --plum-text-bright: #ffffff;
+    }
+
+    .mode-btn {
+      background-color: transparent;
+      border: none;
+      color: var(--plum-text-muted);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .mode-btn.active,
+    .mode-btn:hover {
+      background-color: var(--plum-accent);
+      color: #ffffff;
+      box-shadow: 0 0 8px rgba(224, 64, 169, 0.4);
+    }
+
+    /* Calculate button scoped styles */
+    .dark-plum-theme #calculate-btn {
+      background-color: var(--plum-accent) !important;
+      color: #ffffff !important;
+      border: 1px solid transparent !important;
+    }
+    .dark-plum-theme #calculate-btn:hover {
+      background-color: var(--plum-accent-deep) !important;
+    }
+
+    /* Share button scoped styles */
+    .dark-plum-theme #share-btn {
+      background-color: var(--plum-accent) !important;
+      color: #ffffff !important;
+      border: 1px solid transparent !important;
+    }
+    .dark-plum-theme #share-btn:hover {
+      background-color: var(--plum-accent-deep) !important;
+    }
+
+    /* Input focus styling scope */
+    .dark-plum-theme input:focus {
+      border-color: var(--plum-accent) !important;
+      box-shadow: 0 0 0 2px rgba(224, 64, 169, 0.15);
+    }
+  </style>
 </Layout>
