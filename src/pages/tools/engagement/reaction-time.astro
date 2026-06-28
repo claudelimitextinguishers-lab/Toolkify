@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Reaction Time Test";
 const category = "engagement";
 const tier = "Engagement Tools";
-const description = "Measure visual click latency and compare cognitive reaction time against averages.";
+const description = "Test your cognitive reaction time and visual response speed. Check if your reflexes match a fighter pilot, F1 racer, or pro gamer.";
 ---
 
 <Layout 
@@ -13,78 +13,1027 @@ const description = "Measure visual click latency and compare cognitive reaction
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Reaction Time Test",
+      "url": "https://boardtools.app/tools/engagement/reaction-time",
+      "description": "Interactive client-side Reaction Time Test to measure visual stimulus response speed in milliseconds, featuring multi-round trial averages, false start detection, and performance benchmarks.",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-3">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap">{tier}</span>
+        </div>
+        <div class="flex items-center gap-2 self-end sm:self-auto">
+          <!-- Audio Toggle -->
+          <button
+            type="button"
+            id="audio-toggle"
+            class="inline-flex items-center justify-center w-8 h-8 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Toggle sound effects"
+            title="Toggle sound effects"
+          >
+            <svg id="sound-on-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+            <svg id="sound-off-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3" />
+            </svg>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">⌨️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <!-- Reset Button -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset reaction time test data"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        
+        <!-- Left Pane: Interactive Test Box -->
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-charcoal">Test Arena</span>
+            <span class="text-[10px] text-stone font-mono select-none" id="keyboard-hint">Press [Space] or click box</span>
+          </div>
+
+          <!-- Main Interactive Box -->
+          <div
+            id="test-box"
+            tabindex="0"
+            class="flex-1 min-h-[300px] sm:min-h-[340px] rounded-xl border border-hairline-strong bg-surface flex flex-col items-center justify-center text-center p-6 cursor-pointer select-none relative overflow-hidden transition-all duration-300 focus:outline-none"
+            aria-label="Reaction time test click target"
+          >
+            <!-- Particle Grid (Decorative background) -->
+            <div class="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-[0.03] pointer-events-none transition-opacity duration-500" id="particle-grid">
+              {Array.from({ length: 36 }).map(() => <div class="border-[0.5px] border-primary"></div>)}
+            </div>
+
+            <!-- Heartbeat Pulse for Waiting state -->
+            <div id="waiting-pulse" class="absolute w-44 h-44 rounded-full border-4 border-canvas/20 animate-ping-slow pointer-events-none hidden"></div>
+
+            <!-- Content Elements -->
+            <div class="z-10 flex flex-col items-center gap-4 w-full">
+              <span id="test-icon" class="text-5xl transition-transform duration-300">🎯</span>
+              <h2 id="test-title" class="font-display font-bold text-lg sm:text-2xl text-primary leading-tight max-w-xs transition-colors duration-200">
+                Click to Start Test
+              </h2>
+              <p id="test-instructions" class="text-xs text-slate max-w-xs leading-relaxed transition-colors duration-200">
+                Once you click, the box will turn red. Wait for it to turn green, then click instantly!
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Right Pane: Dashboard & Stats -->
+        <div class="card-feature-teal flex flex-col justify-between p-4 sm:p-5 relative overflow-hidden rounded-xl border border-moss-dark/10 bg-gradient-to-br from-teal-light/20 to-teal-light/5">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/35 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div class="flex flex-col gap-4 z-10 w-full h-full justify-between">
+            <!-- Results Header -->
+            <div class="flex items-center justify-between border-b border-moss-dark/10 pb-2">
+              <span class="text-[10px] uppercase font-extrabold text-moss-dark/70 tracking-widest">Performance Dashboard</span>
+              <div class="flex items-center gap-1.5">
+                <span class="text-[10px] font-mono text-moss-dark/80" id="round-indicator">Round 0 of 5</span>
+                <span class="flex h-2 w-2 relative">
+                  <span id="status-pulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75"></span>
+                  <span id="status-dot" class="relative inline-flex rounded-full h-2 w-2 bg-stone"></span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Themed Visual Container -->
+            <div id="themed-animation-container" class="flex flex-col items-center justify-center py-4 relative min-h-[160px] bg-canvas/30 rounded-xl border border-moss-dark/5 backdrop-blur-sm shadow-inner transition-all duration-300">
+              
+              <!-- Default state inside animation container: summary readout -->
+              <div id="dashboard-readout" class="flex flex-col items-center gap-1 w-full px-4">
+                <span class="text-[10px] uppercase font-bold text-slate">Average Response</span>
+                <div class="flex items-baseline gap-1 mt-0.5">
+                  <span id="output-average" class="font-display font-black text-4xl sm:text-5xl text-primary font-mono tracking-tight leading-none">--</span>
+                  <span class="text-xs font-semibold text-stone">ms</span>
+                </div>
+                
+                <!-- Quick secondary metrics -->
+                <div class="grid grid-cols-2 gap-4 w-full mt-3 pt-3 border-t border-hairline/50 text-center">
+                  <div class="flex flex-col">
+                    <span class="text-[8px] uppercase font-bold text-slate">Best Time</span>
+                    <span id="output-best-metric" class="text-xs font-mono font-bold text-primary">--</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="text-[8px] uppercase font-bold text-slate">Consistency (SD)</span>
+                    <span id="output-sd-metric" class="text-xs font-mono font-bold text-primary">--</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Chart Container -->
+              <div id="chart-container" class="absolute inset-0 rounded-xl p-3 flex flex-col justify-end hidden opacity-0 transition-opacity duration-500">
+                <div class="flex justify-between items-center mb-1 text-[8px] font-mono text-stone w-full">
+                  <span>Round Reflex Trend (lower is better)</span>
+                  <span id="output-worst-lbl" class="font-bold">Worst: <span id="output-worst" class="text-brand-coral">--</span></span>
+                </div>
+                <div class="flex-1 w-full relative min-h-[80px]">
+                  <svg id="history-svg" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <!-- Grid Lines -->
+                    <line x1="0" y1="25" x2="100" y2="25" stroke="rgba(24,117,116,0.08)" stroke-width="0.5" stroke-dasharray="2,2"></line>
+                    <line x1="0" y1="50" x2="100" y2="50" stroke="rgba(24,117,116,0.08)" stroke-width="0.5" stroke-dasharray="2,2"></line>
+                    <line x1="0" y1="75" x2="100" y2="75" stroke="rgba(24,117,116,0.08)" stroke-width="0.5" stroke-dasharray="2,2"></line>
+                    <!-- Polyline Graph path -->
+                    <path id="graph-path" fill="none" stroke="#00b473" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d=""></path>
+                    <!-- Dot elements will be programmatically rendered -->
+                    <g id="graph-dots"></g>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Animated Cockpit / Speedlines / Targets will be dynamically activated here -->
+              <div id="cockpit-hud" class="hud-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden">
+                <div class="radar-line"></div>
+                <div class="crosshair-target"></div>
+                <div class="hud-text absolute bottom-2 left-2 text-[8px] font-mono text-success-accent font-bold">LOCK_ON: REFLEX_SECURE</div>
+              </div>
+
+              <div id="speedlines" class="speedline-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+
+              <div id="pro-gamer-neon" class="neon-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden">
+                <div class="gaming-crosshair"></div>
+              </div>
+
+              <div id="sleepy-sloth-anim" class="sloth-effect absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden flex items-center justify-center">
+                <span class="text-4xl animate-bounce">💤</span>
+              </div>
+            </div>
+
+            <!-- Round Pips Tracker -->
+            <div class="flex flex-col gap-1.5 border-t border-moss-dark/10 pt-3">
+              <span class="text-[9px] uppercase font-extrabold text-moss-dark/70">Trial History</span>
+              <div class="grid grid-cols-5 gap-2" id="round-history-pips">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-full h-2 rounded-full bg-hairline-strong/30 border border-hairline-strong/10 transition-all duration-300" data-pip-index={i}></div>
+                    <span class="text-[9px] font-mono font-bold text-stone uppercase">R{i + 1}</span>
+                    <span class="text-[8px] font-mono text-stone" data-time-index={i}>--</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Dynamic Advice / Classification -->
+            <div id="dynamic-context-box" class="text-xs text-moss-dark leading-relaxed pt-3 border-t border-moss-dark/10">
+              <div class="flex flex-wrap gap-1.5 items-center">
+                <span class="text-[9px] uppercase font-extrabold text-moss-dark/70">Reflex Classification:</span>
+                <span id="classification-badge" class="bg-hairline text-slate text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider">Not Classified</span>
+              </div>
+              <p id="main-context-text" class="font-medium text-[11px] mt-1.5">
+                Complete all 5 rounds to evaluate your reaction speed profile. Click the arena to begin.
+              </p>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
+
+    <!-- Educational details/factors panel -->
+    <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
+      <h3 class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Understanding Human Reaction Time
+      </h3>
+      <div class="text-[11px] sm:text-xs text-slate leading-relaxed flex flex-col gap-2">
+        <p>
+          Reaction time is the interval of time between the presentation of a sensory stimulus and the initiation of a motor response. The typical reaction time to visual stimuli for a healthy young adult is approximately <strong>200 to 250 milliseconds</strong>.
+        </p>
+        <p class="font-semibold text-charcoal">Key factors that affect your reaction time include:</p>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5 text-slate font-medium">
+          <li><strong>Fatigue & Sleep:</strong> Lack of sleep significantly degrades response latency. Being awake for 18 hours can impair reflexes to a level comparable to alcohol intoxication.</li>
+          <li><strong>Age:</strong> Cognitive speed peaks in your late teens and early 20s, after which latency increases by approximately 2–3 milliseconds per year of age.</li>
+          <li><strong>Practice & Cognitive Load:</strong> Consistent reflex training can shave off precious milliseconds by strengthening neural pathways. Conversely, high cognitive load or distractions (e.g. background noise) delay responses.</li>
+          <li><strong>Stimulants:</strong> Substances like caffeine can temporarily enhance attention and reduce response latency, though high doses can cause tremors that degrade accuracy.</li>
+        </ul>
+        <p class="text-[10px] text-stone mt-1">
+          Note: Your device's display refresh rate (e.g. 60Hz vs 144Hz) and input device polling rate (mouse click vs touchscreen tap) introduce small hardware latencies (generally 10–50ms) that affect the recorded time.
+        </p>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Evaluation
+      </span>
+      <span>v1.2.0</span>
+    </div>
   </section>
+
+  <!-- Client-side logic module -->
+  <script>
+    // State machine definition
+    type State = 'idle' | 'waiting' | 'stimulus' | 'falsestart' | 'result' | 'complete';
+    let currentState: State = 'idle';
+
+    // Core state variables
+    let roundTimes: number[] = [];
+    const maxRounds = 5;
+    let timerId: number | null = null;
+    let stimulusStartTime = 0;
+
+    // Sound configuration
+    let soundEnabled = true;
+    let audioCtx: AudioContext | null = null;
+
+    // DOM References
+    const testBox = document.getElementById('test-box');
+    const testIcon = document.getElementById('test-icon');
+    const testTitle = document.getElementById('test-title');
+    const testInstructions = document.getElementById('test-instructions');
+    const waitingPulse = document.getElementById('waiting-pulse');
+    const particleGrid = document.getElementById('particle-grid');
+    const keyboardHint = document.getElementById('keyboard-hint');
+
+
+    const roundIndicator = document.getElementById('round-indicator');
+    const statusPulse = document.getElementById('status-pulse');
+    const statusDot = document.getElementById('status-dot');
+
+    const outputAverage = document.getElementById('output-average');
+    const outputBestMetric = document.getElementById('output-best-metric');
+    const outputSdMetric = document.getElementById('output-sd-metric');
+    const outputWorst = document.getElementById('output-worst');
+    const classificationBadge = document.getElementById('classification-badge');
+    const mainContextText = document.getElementById('main-context-text');
+    
+    const audioToggle = document.getElementById('audio-toggle');
+    const soundOnIcon = document.getElementById('sound-on-icon');
+    const soundOffIcon = document.getElementById('sound-off-icon');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // Chart Elements
+    const chartContainer = document.getElementById('chart-container');
+    const dashboardReadout = document.getElementById('dashboard-readout');
+    const graphPath = document.querySelector('#graph-path') as SVGPathElement;
+    const graphDots = document.getElementById('graph-dots');
+
+    // Animations DOM
+    const cockpitHUD = document.getElementById('cockpit-hud');
+    const speedlines = document.getElementById('speedlines');
+    const proGamerNeon = document.getElementById('pro-gamer-neon');
+    const sleepySlothAnim = document.getElementById('sleepy-sloth-anim');
+
+    // Audio synthesizer helper
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq: number, type: OscillatorType, duration: number, volume: number = 0.1) {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+        gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (err) {
+        console.warn('AudioContext playback error:', err);
+      }
+    }
+
+    function playStartBeep() {
+      playTone(1000, 'sine', 0.2, 0.2); // high pitched start go beep
+    }
+
+    function playFailBuzzer() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(130, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(90, ctx.currentTime + 0.3);
+
+        gainNode.gain.setValueAtTime(0.15, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      } catch (err) {}
+    }
+
+    function playVictoryBeep() {
+      playTone(523.25, 'triangle', 0.15, 0.15); // C5
+      setTimeout(() => playTone(659.25, 'triangle', 0.15, 0.15), 100); // E5
+      setTimeout(() => playTone(783.99, 'triangle', 0.15, 0.15), 200); // G5
+      setTimeout(() => playTone(1046.50, 'triangle', 0.3, 0.2), 300); // C6
+    }
+
+    // Toggle Audio Setting
+    audioToggle?.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        soundOnIcon?.classList.remove('hidden');
+        soundOffIcon?.classList.add('hidden');
+      } else {
+        soundOnIcon?.classList.add('hidden');
+        soundOffIcon?.classList.remove('hidden');
+      }
+    });
+
+    // Initialize/Load state from localStorage
+    function init() {
+      try {
+        const savedHistory = localStorage.getItem('reaction-time-history-v3');
+        if (savedHistory) {
+          const parsed = JSON.parse(savedHistory);
+          if (Array.isArray(parsed) && parsed.length === maxRounds) {
+            roundTimes = parsed;
+            currentState = 'complete';
+            updateUI();
+            renderCompletedStats();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to parse localStorage history:', e);
+      }
+      resetTest();
+    }
+
+    function resetTest() {
+      if (timerId !== null) {
+        clearTimeout(timerId);
+        timerId = null;
+      }
+      roundTimes = [];
+      currentState = 'idle';
+      try {
+        localStorage.removeItem('reaction-time-history-v3');
+      } catch (e) {}
+      updateUI();
+    }
+
+    // Handles the transition updates
+    function transitionTo(state: State) {
+      currentState = state;
+      updateUI();
+
+      if (state === 'waiting') {
+        // Trigger randomized delay between 2000ms and 5000ms
+        const delay = 2000 + Math.random() * 3000;
+        timerId = window.setTimeout(() => {
+          if (currentState === 'waiting') {
+            transitionTo('stimulus');
+          }
+        }, delay);
+      } else if (state === 'stimulus') {
+        stimulusStartTime = performance.now();
+        playStartBeep();
+      }
+    }
+
+    // Trigger action (tap or space)
+    function triggerAction(event?: PointerEvent | KeyboardEvent) {
+      if (event) {
+        event.preventDefault();
+      }
+
+      // Initialize Web Audio context on first user click gesture
+      getAudioContext();
+
+      switch (currentState) {
+        case 'idle':
+          roundTimes = [];
+          transitionTo('waiting');
+          break;
+
+        case 'waiting':
+          // Clicked too early (False Start)
+          if (timerId !== null) {
+            clearTimeout(timerId);
+            timerId = null;
+          }
+          playFailBuzzer();
+          transitionTo('falsestart');
+          break;
+
+        case 'falsestart':
+          // Retry the round
+          transitionTo('waiting');
+          break;
+
+        case 'stimulus':
+          // Correct click
+          const endTime = performance.now();
+          const latency = Math.round(endTime - stimulusStartTime);
+          roundTimes.push(latency);
+          
+          if (roundTimes.length >= maxRounds) {
+            playVictoryBeep();
+            transitionTo('complete');
+            try {
+              localStorage.setItem('reaction-time-history-v3', JSON.stringify(roundTimes));
+            } catch (e) {}
+          } else {
+            // play normal round completion click sound
+            playTone(660, 'sine', 0.15, 0.12);
+            transitionTo('result');
+          }
+          break;
+
+        case 'result':
+          // Start next round
+          transitionTo('waiting');
+          break;
+
+        case 'complete':
+          // Reset
+          resetTest();
+          break;
+      }
+    }
+
+    // Dynamic UI styling based on state
+    function updateUI() {
+      // Clean up styles
+      testBox?.classList.remove(
+        'bg-surface',
+        'bg-success-accent',
+        'bg-brand-coral',
+        'animate-shake',
+        'text-white',
+        'shadow-[inset_0_0_80px_rgba(0,0,0,0.4)]'
+      );
+      testBox?.setAttribute('style', ''); // Clear inline backgrounds
+      waitingPulse?.classList.add('hidden');
+      particleGrid?.classList.add('opacity-[0.03]');
+      particleGrid?.classList.remove('opacity-0');
+      keyboardHint?.classList.remove('hidden');
+
+      if (testTitle) testTitle.className = 'font-display font-bold text-lg sm:text-2xl text-primary leading-tight max-w-xs transition-colors duration-200';
+      if (testInstructions) testInstructions.className = 'text-xs text-slate max-w-xs leading-relaxed transition-colors duration-200';
+
+      // Update Round Indicator Text
+      if (roundIndicator) {
+        const roundCount = Math.min(roundTimes.length + (currentState === 'waiting' || currentState === 'stimulus' || currentState === 'falsestart' ? 1 : 0), maxRounds);
+        roundIndicator.textContent = `Round ${roundCount} of 5`;
+      }
+
+      // Hide animation modes
+      cockpitHUD?.classList.add('hidden');
+      speedlines?.classList.add('hidden');
+      proGamerNeon?.classList.add('hidden');
+      sleepySlothAnim?.classList.add('hidden');
+      dashboardReadout?.classList.remove('hidden');
+      chartContainer?.classList.add('hidden');
+      chartContainer?.classList.add('opacity-0');
+
+      switch (currentState) {
+        case 'idle':
+          testBox?.classList.add('bg-surface');
+          if (testIcon) testIcon.textContent = '🎯';
+          if (testTitle) testTitle.textContent = 'Click to Start Test';
+          if (testInstructions) {
+            testInstructions.textContent = 'Once you click, the box will turn red. Wait for it to turn green, then click instantly!';
+          }
+          
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-stone';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75';
+
+          resetPips();
+          break;
+
+        case 'waiting':
+          // Pulsing warning crimson waiting background
+          if (testBox) {
+            testBox.style.background = 'radial-gradient(circle, #e11d48 0%, #9f1239 100%)';
+            testBox.classList.add('text-white', 'shadow-[inset_0_0_80px_rgba(0,0,0,0.4)]');
+          }
+          if (testTitle) {
+            testTitle.textContent = 'Wait for Green...';
+            testTitle.classList.add('text-white');
+          }
+          if (testInstructions) {
+            testInstructions.textContent = 'Hold on! Focus and prepare to tap.';
+            testInstructions.classList.add('text-rose-200');
+          }
+          waitingPulse?.classList.remove('hidden');
+          particleGrid?.classList.add('opacity-0');
+          particleGrid?.classList.remove('opacity-[0.03]');
+          if (testIcon) testIcon.textContent = '🔴';
+
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-rose-500';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-500 opacity-75';
+
+          updatePips();
+          break;
+
+        case 'stimulus':
+          testBox?.classList.add('bg-success-accent', 'text-white');
+          particleGrid?.classList.add('opacity-0');
+          particleGrid?.classList.remove('opacity-[0.03]');
+          if (testIcon) testIcon.textContent = '🟢';
+          if (testTitle) {
+            testTitle.textContent = 'CLICK NOW!';
+            testTitle.classList.add('text-white');
+          }
+          if (testInstructions) {
+            testInstructions.textContent = 'GO GO GO!';
+            testInstructions.classList.add('text-green-100');
+          }
+
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-emerald-500';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75';
+          break;
+
+        case 'falsestart':
+          testBox?.classList.add('bg-brand-coral', 'animate-shake', 'text-white');
+          if (testIcon) testIcon.textContent = '⚠️';
+          if (testTitle) {
+            testTitle.textContent = 'Too Early!';
+            testTitle.classList.add('text-white');
+          }
+          if (testInstructions) {
+            testInstructions.textContent = 'You clicked before the stimulus appeared. Tap to try again.';
+            testInstructions.classList.add('text-red-100');
+          }
+
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-brand-coral';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-coral opacity-75';
+
+          updatePipFalseStart();
+          break;
+
+        case 'result':
+          testBox?.classList.add('bg-surface');
+          const latestTime = roundTimes[roundTimes.length - 1];
+          if (testIcon) testIcon.textContent = '⏱️';
+          if (testTitle) testTitle.textContent = `${latestTime} ms`;
+          if (testInstructions) testInstructions.textContent = 'Good reaction! Click to start the next round.';
+
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-stone';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75';
+
+          updatePips();
+          updateDashboardSummary();
+          break;
+
+        case 'complete':
+          testBox?.classList.add('bg-surface');
+          if (testIcon) testIcon.textContent = '🏆';
+          if (testTitle) testTitle.textContent = 'Test Complete!';
+          if (testInstructions) testInstructions.textContent = 'Review your reflex profile. Click the box to restart.';
+          keyboardHint?.classList.add('hidden');
+
+          if (statusDot) statusDot.className = 'relative inline-flex rounded-full h-2 w-2 bg-emerald-500';
+          if (statusPulse) statusPulse.className = 'animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75';
+
+          updatePips();
+          renderCompletedStats();
+          break;
+      }
+    }
+
+    function resetPips() {
+      for (let i = 0; i < maxRounds; i++) {
+        const pip = document.querySelector(`[data-pip-index="${i}"]`);
+        const timeLbl = document.querySelector(`[data-time-index="${i}"]`);
+        if (pip) {
+          pip.className = 'w-full h-2 rounded-full bg-hairline-strong/30 border border-hairline-strong/10 transition-all duration-300';
+        }
+        if (timeLbl) {
+          timeLbl.textContent = '--';
+          timeLbl.className = 'text-[8px] font-mono text-stone';
+        }
+      }
+      if (outputAverage) outputAverage.textContent = '--';
+      if (outputBestMetric) outputBestMetric.textContent = '--';
+      if (outputSdMetric) outputSdMetric.textContent = '--';
+      if (outputWorst) outputWorst.textContent = '--';
+      if (classificationBadge) {
+        classificationBadge.textContent = 'Not Classified';
+        classificationBadge.className = 'bg-hairline text-slate text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider';
+      }
+      if (mainContextText) {
+        mainContextText.innerHTML = 'Complete all 5 rounds to evaluate your reaction speed profile. Click the arena to begin.';
+      }
+    }
+
+    function updatePips() {
+      // Color completed rounds green
+      roundTimes.forEach((time, index) => {
+        const pip = document.querySelector(`[data-pip-index="${index}"]`);
+        const timeLbl = document.querySelector(`[data-time-index="${index}"]`);
+        if (pip) {
+          pip.className = 'w-full h-2 rounded-full bg-success-accent border border-success-accent/20 transition-all duration-300 scale-y-110';
+        }
+        if (timeLbl) {
+          timeLbl.textContent = `${time}ms`;
+          timeLbl.className = 'text-[8px] font-mono font-bold text-success-accent';
+        }
+      });
+
+      // Highlight current round in blue if waiting/stimulus
+      if (currentState === 'waiting' || currentState === 'stimulus') {
+        const currentIndex = roundTimes.length;
+        const currentPip = document.querySelector(`[data-pip-index="${currentIndex}"]`);
+        if (currentPip) {
+          currentPip.className = 'w-full h-2 rounded-full bg-brand-blue border border-brand-blue/20 animate-pulse transition-all duration-300 scale-y-110';
+        }
+      }
+    }
+
+    function updatePipFalseStart() {
+      const currentIndex = roundTimes.length;
+      const currentPip = document.querySelector(`[data-pip-index="${currentIndex}"]`);
+      const timeLbl = document.querySelector(`[data-time-index="${currentIndex}"]`);
+      if (currentPip) {
+        currentPip.className = 'w-full h-2 rounded-full bg-brand-coral border border-brand-coral/20 transition-all duration-300 scale-y-110';
+      }
+      if (timeLbl) {
+        timeLbl.textContent = 'Early';
+        timeLbl.className = 'text-[8px] font-mono font-bold text-brand-coral';
+      }
+    }
+
+    function calculateStats() {
+      if (roundTimes.length === 0) return { avg: 0, best: 0, worst: 0, sd: 0 };
+      const best = Math.min(...roundTimes);
+      const worst = Math.max(...roundTimes);
+      const sum = roundTimes.reduce((a, b) => a + b, 0);
+      const avg = Math.round(sum / roundTimes.length);
+      
+      // Calculate standard deviation
+      const mean = sum / roundTimes.length;
+      const variance = roundTimes.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / roundTimes.length;
+      const sd = Math.round(Math.sqrt(variance));
+
+      return { avg, best, worst, sd };
+    }
+
+    function updateDashboardSummary() {
+      const { avg, best, sd } = calculateStats();
+      if (outputAverage) outputAverage.textContent = avg.toString();
+      if (outputBestMetric) outputBestMetric.textContent = `${best} ms`;
+      if (outputSdMetric) outputSdMetric.textContent = `±${sd} ms`;
+    }
+
+    // Graph drawing helper
+    function renderHistoryGraph() {
+      if (roundTimes.length < 2 || !graphPath || !graphDots) return;
+
+      const minVal = Math.min(...roundTimes) * 0.85; // buffer
+      const maxVal = Math.max(...roundTimes) * 1.15; // buffer
+      const spread = maxVal - minVal || 1;
+
+      // 5 steps across X axis (0 to 100)
+      const points = roundTimes.map((time, idx) => {
+        const x = (idx / (maxRounds - 1)) * 100;
+        // Y goes from 90 (bottom/slow) to 10 (top/fast)
+        const y = 90 - ((time - minVal) / spread) * 80;
+        return { x, y, val: time };
+      });
+
+      // Build path string
+      const pathStr = points.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      graphPath.setAttribute('d', pathStr);
+
+      // Render dots
+      graphDots.innerHTML = '';
+      points.forEach((p, idx) => {
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', p.x.toString());
+        circle.setAttribute('cy', p.y.toString());
+        circle.setAttribute('r', '3.5');
+        circle.setAttribute('fill', '#00b473');
+        circle.setAttribute('stroke', '#ffffff');
+        circle.setAttribute('stroke-width', '1.5');
+        circle.innerHTML = `<title>Round ${idx + 1}: ${p.val}ms</title>`;
+        
+        // Ripple effect on hover
+        circle.style.cursor = 'pointer';
+        circle.style.transition = 'r 0.15s ease';
+        circle.addEventListener('mouseenter', () => circle.setAttribute('r', '5.5'));
+        circle.addEventListener('mouseleave', () => circle.setAttribute('r', '3.5'));
+
+        graphDots.appendChild(circle);
+      });
+    }
+
+    function renderCompletedStats() {
+      const { avg, best, worst, sd } = calculateStats();
+
+      if (outputAverage) outputAverage.textContent = avg.toString();
+      if (outputBestMetric) outputBestMetric.textContent = `${best} ms`;
+      if (outputSdMetric) outputSdMetric.textContent = `±${sd} ms`;
+      if (outputWorst) outputWorst.textContent = `${worst} ms`;
+
+      // Draw performance chart
+      renderHistoryGraph();
+      dashboardReadout?.classList.add('hidden');
+      chartContainer?.classList.remove('hidden');
+      setTimeout(() => {
+        chartContainer?.classList.remove('opacity-0');
+      }, 50);
+
+      // Evaluate Reflex benchmarks
+      let classification = '';
+      let badgeStyle = '';
+      let adviceMsg = '';
+
+      if (avg < 180) {
+        classification = 'Fighter Jet Pilot';
+        badgeStyle = 'bg-brand-yellow text-primary border border-brand-yellow-deep shadow-[0_0_12px_rgba(252,185,0,0.4)]';
+        adviceMsg = `Astonishing reflexes! Your average reaction speed of <strong>${avg}ms</strong> places you in the elite rank of Fighter Jet Pilots. This level of rapid cognitive-motor response is exceptionally rare in the general public.`;
+        
+        // Show Cockpit Radar effect
+        cockpitHUD?.classList.remove('hidden');
+      } else if (avg >= 180 && avg < 210) {
+        classification = 'F1 Racer';
+        badgeStyle = 'bg-brand-blue text-canvas border border-blue-pressed shadow-[0_0_12px_rgba(66,98,255,0.4)]';
+        adviceMsg = `Incredible response! With an average of <strong>${avg}ms</strong>, you possess the reflexes of an F1 Driver. You are perfectly suited to high-speed decision environments and rapid visual changes.`;
+        
+        // Show Speedlines effect
+        speedlines?.classList.remove('hidden');
+      } else if (avg >= 210 && avg < 240) {
+        classification = 'Pro Gamer';
+        badgeStyle = 'bg-success-accent text-canvas border border-moss-dark shadow-[0_0_12px_rgba(0,180,115,0.4)]';
+        adviceMsg = `Excellent twitch reflexes. Your average of <strong>${avg}ms</strong> ranks you alongside competitive esports athletes. You process visual stimuli faster than over 80% of adults.`;
+        
+        // Show Neon gaming effect
+        proGamerNeon?.classList.remove('hidden');
+      } else if (avg >= 240 && avg < 300) {
+        classification = 'Average Adult';
+        badgeStyle = 'bg-surface border border-hairline-strong text-primary';
+        adviceMsg = `Solid average reflexes. Your reaction speed of <strong>${avg}ms</strong> is right in the center of the normal curve for human visual reaction speeds. Highly functional for everyday tasks.`;
+      } else if (avg >= 300 && avg < 450) {
+        classification = 'Slower than Average';
+        badgeStyle = 'bg-brand-coral/20 text-coral-dark border border-brand-coral/40';
+        adviceMsg = `Your average score of <strong>${avg}ms</strong> is slightly slower than typical standards. This could be due to late-night fatigue, distractions, display panel lag, or normal metabolic variations.`;
+      } else {
+        classification = 'Sleepy Sloth';
+        badgeStyle = 'bg-brand-coral text-canvas border border-coral-dark';
+        adviceMsg = `Reflex speed is <strong>${avg}ms</strong>. Are you a bit sleep-deprived or distracted? Get some rest, close secondary tabs, and try again when fully charged!`;
+        
+        // Show Sloth Sleep animation
+        sleepySlothAnim?.classList.remove('hidden');
+      }
+
+      if (classificationBadge) {
+        classificationBadge.textContent = classification;
+        classificationBadge.className = `text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider ${badgeStyle}`;
+      }
+
+      if (mainContextText) {
+        mainContextText.innerHTML = adviceMsg;
+      }
+    }
+
+    // Attach event listeners
+    testBox?.addEventListener('pointerdown', (e) => {
+      triggerAction(e);
+    });
+
+    // Spacebar trigger handler
+    testBox?.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        triggerAction(e);
+      }
+    });
+
+    // Reset button
+    resetBtn?.addEventListener('click', () => {
+      resetTest();
+    });
+
+    // Cursor reactive grid glow
+    testBox?.addEventListener('pointermove', (e: PointerEvent) => {
+      if (currentState === 'idle' || currentState === 'result' || currentState === 'complete') {
+        const rect = testBox.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        testBox.style.setProperty('--cursor-x', `${x}px`);
+        testBox.style.setProperty('--cursor-y', `${y}px`);
+      }
+    });
+
+    // Initial page load
+    init();
+  </script>
+
+  <!-- Animation & Effect Styles -->
+  <style>
+    /* cursor reactive grid glow styling */
+    #test-box {
+      --cursor-x: 50%;
+      --cursor-y: 50%;
+      position: relative;
+    }
+    #test-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(180px circle at var(--cursor-x) var(--cursor-y), rgba(66,98,255,0.06), transparent 80%);
+      opacity: 0.8;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+    }
+
+    /* Slow pulse animation for waiting screen heartbeat */
+    @keyframes ping-slow {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    .animate-ping-slow {
+      animation: ping-slow 1.8s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+    }
+
+    /* Ripple Click Indicator */
+    @keyframes ripple {
+      to {
+        transform: scale(3) translate(-17%, -17%);
+        opacity: 0;
+      }
+    }
+    .animate-ripple {
+      animation: ripple 0.55s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+
+    /* Shake animation for false starts */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      15%, 45%, 75% { transform: translateX(-6px); }
+      30%, 60%, 90% { transform: translateX(6px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* Radar / Cockpit HUD effect styles */
+    .hud-effect {
+      background: radial-gradient(circle, rgba(24,117,116,0.15) 0%, rgba(28,28,30,0.96) 100%);
+      border: 2px solid #00b473;
+    }
+    .radar-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00b473, transparent);
+      top: 0;
+      animation: radar-sweep 2.5s infinite linear;
+    }
+    @keyframes radar-sweep {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .crosshair-target {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #00b473;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: target-pulse 1.2s infinite ease-in-out;
+    }
+    .crosshair-target::before, .crosshair-target::after {
+      content: '';
+      position: absolute;
+      background: #00b473;
+    }
+    .crosshair-target::before {
+      top: 50%;
+      left: -10px;
+      width: 60px;
+      height: 1px;
+    }
+    .crosshair-target::after {
+      left: 50%;
+      top: -10px;
+      width: 1px;
+      height: 60px;
+    }
+    @keyframes target-pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    /* Speedlines (F1 style) */
+    .speedline-effect {
+      background: #1c1c1e;
+    }
+    .speedline-effect .line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+      height: 2px;
+      width: 100px;
+      animation: move-line 0.4s infinite linear;
+    }
+    .speedline-effect .line:nth-child(1) { top: 25%; left: -100px; animation-delay: 0s; }
+    .speedline-effect .line:nth-child(2) { top: 45%; left: -100px; animation-delay: 0.1s; }
+    .speedline-effect .line:nth-child(3) { top: 65%; left: -100px; animation-delay: 0.2s; }
+    .speedline-effect .line:nth-child(4) { top: 85%; left: -100px; animation-delay: 0.3s; }
+    @keyframes move-line {
+      0% { left: -100px; width: 50px; }
+      100% { left: 100%; width: 150px; }
+    }
+
+    /* Pro Gamer neon crosshair effect */
+    .neon-effect {
+      background: #0d0e12;
+      box-shadow: inset 0 0 20px rgba(0, 180, 115, 0.4);
+    }
+    .gaming-crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #00b473;
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: neon-spin 3s infinite linear;
+      box-shadow: 0 0 10px #00b473;
+    }
+    @keyframes neon-spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Sloth effect */
+    .sloth-effect {
+      background: #2a2c35;
+    }
+  </style>
 </Layout>
