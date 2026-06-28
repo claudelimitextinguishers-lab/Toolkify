@@ -2,10 +2,10 @@
 import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
-const name = "Calorie Burn Estimator";
+const name = "Calorie Burn Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Estimate total calories burned during physical exercises and everyday activities.";
+const description = "Calculate calories burned during exercise and physical activities based on standard MET values, weight, and duration.";
 ---
 
 <Layout 
@@ -13,78 +13,1428 @@ const description = "Estimate total calories burned during physical exercises an
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calorie Burn Calculator",
+      "url": "https://boardtools.app/tools/health/calorie-burn",
+      "description": "Calculate calories burned during various exercises using standard MET (Metabolic Equivalent of Task) values. Personalize by weight, duration, and intensity with detailed breakdowns.",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+      <div class="flex items-center justify-between mt-0.5 gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        <button
+          type="button"
+          id="reset-btn"
+          class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+          aria-label="Reset calculator inputs"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+          </svg>
+          <span>Reset</span>
+        </button>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        
+        <!-- Left Pane: Inputs -->
+        <div class="flex flex-col justify-between gap-3 print:hidden">
+          <div class="flex flex-col gap-3">
+            
+            <!-- Unit Toggle (Miro Pill Style) -->
+            <div class="flex flex-col gap-1">
+              <label class="text-[11px] font-semibold text-charcoal">Measurement Unit</label>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline self-start">
+                <button
+                  type="button"
+                  id="unit-metric-btn"
+                  class="text-[11px] px-4 py-1 rounded-full font-bold transition-all cursor-pointer text-slate"
+                >
+                  Metric (kg)
+                </button>
+                <button
+                  type="button"
+                  id="unit-imperial-btn"
+                  class="text-[11px] px-4 py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+                >
+                  Imperial (lb)
+                </button>
+              </div>
+            </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🏥</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+            <!-- Weight Input -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[11px] font-semibold text-charcoal flex justify-between">
+                <span>Body Weight</span>
+                <span id="weight-label" class="font-mono text-stone font-semibold">154 lb</span>
+              </label>
+              
+              <!-- Metric Weight (KG) -->
+              <div id="metric-weight-container" class="flex items-center gap-2 hidden">
+                <input
+                  type="range"
+                  id="weight-metric-range"
+                  min="30"
+                  max="200"
+                  value="70"
+                  step="1"
+                  class="w-full cursor-pointer accent-brand-blue"
+                  aria-label="Weight in Kilograms Slider"
+                />
+                <div class="relative w-20 shrink-0">
+                  <input
+                    type="number"
+                    id="weight-metric-input"
+                    min="30"
+                    max="200"
+                    value="70"
+                    class="text-input pr-7 py-1 text-xs text-center font-mono h-8"
+                    inputmode="numeric"
+                  />
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">kg</span>
+                </div>
+              </div>
+
+              <!-- Imperial Weight (LBS) -->
+              <div id="imperial-weight-container" class="flex items-center gap-2">
+                <input
+                  type="range"
+                  id="weight-lbs-range"
+                  min="60"
+                  max="450"
+                  value="154"
+                  step="1"
+                  class="w-full cursor-pointer accent-brand-blue"
+                  aria-label="Weight in Pounds Slider"
+                />
+                <div class="relative w-20 shrink-0">
+                  <input
+                    type="number"
+                    id="weight-lbs-input"
+                    min="60"
+                    max="450"
+                    value="154"
+                    class="text-input pr-7 py-1 text-xs text-center font-mono h-8"
+                    inputmode="numeric"
+                  />
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">lb</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Duration Input -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[11px] font-semibold text-charcoal flex justify-between">
+                <span>Duration</span>
+                <span id="duration-label" class="font-mono text-stone font-semibold">30 mins</span>
+              </label>
+              <div class="flex items-center gap-2">
+                <input
+                  type="range"
+                  id="duration-range"
+                  min="1"
+                  max="300"
+                  value="30"
+                  step="1"
+                  class="w-full cursor-pointer accent-brand-blue"
+                  aria-label="Duration in Minutes Slider"
+                />
+                <div class="relative w-24 shrink-0">
+                  <input
+                    type="number"
+                    id="duration-input"
+                    min="1"
+                    max="300"
+                    value="30"
+                    class="text-input pr-9 py-1 text-xs text-center font-mono h-8"
+                    inputmode="numeric"
+                  />
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 text-stone text-[10px]">mins</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Searchable Activity Selection -->
+            <div class="flex flex-col gap-1.5">
+              <label class="text-[11px] font-semibold text-charcoal">Select Activity / Exercise</label>
+              
+              <!-- Search & Filter Controls -->
+              <div class="flex gap-2">
+                <input
+                  type="text"
+                  id="activity-search"
+                  placeholder="🔍 Search walking, running, yoga..."
+                  class="text-input text-xs h-8 flex-1"
+                />
+                <select
+                  id="category-filter"
+                  class="text-input py-1 text-xs h-8 w-[130px] sm:w-1/3 shrink-0 cursor-pointer border border-hairline-strong bg-canvas text-ellipsis overflow-hidden whitespace-nowrap"
+                >
+                  <option value="all">All Categories</option>
+                  <option value="cardio">Cardio & Speed</option>
+                  <option value="gym">Gym & Strength</option>
+                  <option value="sports">Sports & Rec</option>
+                  <option value="daily">Daily Chores</option>
+                </select>
+              </div>
+
+              <!-- Scrollable Activity List -->
+              <div 
+                id="activity-list" 
+                class="border border-hairline rounded-lg h-36 overflow-y-auto p-1 flex flex-col gap-1 bg-surface-soft no-scrollbar"
+              >
+                <!-- Items populated dynamically via Javascript -->
+              </div>
+            </div>
+
+            <!-- Intensity Adjustments (Where relevant) -->
+            <div id="intensity-container" class="flex flex-col gap-1 hidden">
+              <label class="text-[11px] font-semibold text-charcoal">Exercise Intensity</label>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full">
+                <button
+                  type="button"
+                  id="intensity-light"
+                  class="flex-1 text-[10px] py-1 px-1 rounded-full font-bold transition-all cursor-pointer text-slate text-center"
+                >
+                  Light
+                </button>
+                <button
+                  type="button"
+                  id="intensity-moderate"
+                  class="flex-1 text-[10px] py-1 px-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas text-center"
+                >
+                  Moderate
+                </button>
+                <button
+                  type="button"
+                  id="intensity-vigorous"
+                  class="flex-1 text-[10px] py-1 px-1 rounded-full font-bold transition-all cursor-pointer text-slate text-center"
+                >
+                  Vigorous
+                </button>
+              </div>
+            </div>
+
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+
+          <!-- Advanced Options Collapse -->
+          <div class="border-t border-hairline-soft pt-2 mt-1">
+            <button
+              type="button"
+              id="advanced-toggle-btn"
+              class="w-full flex items-center justify-between text-[11px] font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
+            >
+              <span class="flex items-center gap-1">
+                ⚙ Advanced Parameters (BMR Compare, Custom MET)
+              </span>
+              <svg
+                id="advanced-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5 text-stone transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div id="advanced-panel" class="max-h-0 overflow-hidden transition-all duration-300 flex flex-col gap-3 mt-1.5">
+              <div class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft/50">
+                <!-- Biological Sex -->
+                <div class="flex flex-col gap-1">
+                  <label for="sex-select" class="text-[10px] font-semibold text-slate">Sex (for BMR context)</label>
+                  <select
+                    id="sex-select"
+                    class="text-input py-1 text-xs h-8 cursor-pointer border border-hairline-strong bg-canvas"
+                  >
+                    <option value="male" selected>Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other/Unspecified</option>
+                  </select>
+                </div>
+
+                <!-- Age -->
+                <div class="flex flex-col gap-1">
+                  <label for="age-input" class="text-[10px] font-semibold text-slate">Age</label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="age-input"
+                      min="10"
+                      max="100"
+                      value="30"
+                      class="text-input py-1 text-xs font-mono h-8"
+                      inputmode="numeric"
+                    />
+                    <span class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">yrs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <!-- Custom MET Override -->
+                <div class="flex flex-col gap-1">
+                  <label for="custom-met-input" class="text-[10px] font-semibold text-slate">Custom MET Rate</label>
+                  <input
+                    type="number"
+                    id="custom-met-input"
+                    min="0.5"
+                    max="25"
+                    step="0.1"
+                    placeholder="e.g. 5.5"
+                    class="text-input py-1 text-xs font-mono h-8"
+                    inputmode="decimal"
+                  />
+                </div>
+
+                <!-- User Height -->
+                <div class="flex flex-col gap-1">
+                  <label for="height-input" class="text-[10px] font-semibold text-slate">Height (Optional)</label>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="height-input"
+                      min="80"
+                      max="250"
+                      value="175"
+                      class="text-input py-1 text-xs font-mono h-8"
+                      inputmode="numeric"
+                    />
+                    <span id="height-unit-lbl" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone text-[10px]">cm</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end mt-1">
+                <button
+                  type="button"
+                  id="advanced-view-result-btn"
+                  class="inline-flex items-center gap-1 text-[10px] font-semibold px-3 py-1 bg-primary hover:bg-charcoal text-canvas rounded-full transition-all cursor-pointer shadow-subtle animate-pulse"
+                >
+                  View Result &darr;
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Pane: Results Dashboard Card -->
+        <div id="results-card" class="card-feature-teal flex flex-col justify-between p-4 sm:p-5 relative overflow-hidden rounded-xl border border-moss-dark/10 print:border-none print:shadow-none print:p-0">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/35 rounded-full blur-2xl pointer-events-none print:hidden"></div>
+          
+          <div class="flex flex-col gap-3.5 z-10 w-full">
+            <!-- Card Header -->
+            <div class="flex items-center justify-between border-b border-moss-dark/10 pb-2">
+              <span class="text-[10px] uppercase font-extrabold text-moss-dark/70 tracking-widest">Active Calorie Estimator</span>
+              <span class="flex h-2 w-2 relative print:hidden">
+                <span id="status-pulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-accent opacity-75"></span>
+                <span id="status-dot" class="relative inline-flex rounded-full h-2 w-2 bg-success-accent"></span>
+              </span>
+            </div>
+
+            <!-- Main Large Readout -->
+            <div class="flex flex-col">
+              <span class="text-[10px] uppercase font-bold text-slate block" id="exercise-name-lbl">Walking, moderate pace</span>
+              <div class="flex items-baseline gap-1 mt-0.5">
+                <span id="output-calories" class="font-display font-black text-3xl sm:text-4xl text-primary font-mono tracking-tight leading-none">123</span>
+                <span class="text-xs font-semibold text-stone">kcal burned</span>
+              </div>
+            </div>
+
+            <!-- MET details & weight context -->
+            <div class="grid grid-cols-2 gap-3 border-t border-moss-dark/10 pt-3">
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-extrabold text-moss-dark/70">MET Intensity</span>
+                <span id="output-met" class="font-display font-bold text-sm text-primary font-mono">3.5 METs</span>
+                <span class="text-[8px] text-stone">Metabolic equivalents</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[9px] uppercase font-extrabold text-moss-dark/70">Relative Scale</span>
+                <span id="output-ratio" class="font-display font-bold text-sm text-primary font-mono">3.5x rest</span>
+                <span class="text-[8px] text-stone">Burn rate multiplier</span>
+              </div>
+            </div>
+
+            <!-- Equivalence reference comparisons -->
+            <div class="flex flex-col gap-2 border-t border-moss-dark/10 pt-3">
+              <span class="text-[9px] uppercase font-bold text-slate">Activity vs Food Equivalents</span>
+              
+              <div class="flex flex-col gap-1.5 text-[10px] font-medium">
+                <!-- Banana -->
+                <div class="flex flex-col gap-0.5">
+                  <div class="flex justify-between text-slate font-bold">
+                    <span>🍌 1 Banana (~100 kcal)</span>
+                    <span id="eq-banana-pct" class="font-mono text-stone">100%</span>
+                  </div>
+                  <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                    <div id="eq-banana-bar" class="h-full bg-brand-yellow-deep" style="width: 0%;"></div>
+                  </div>
+                </div>
+
+                <!-- Pizza Slice -->
+                <div class="flex flex-col gap-0.5">
+                  <div class="flex justify-between text-slate font-bold">
+                    <span>🍕 1 Pizza Slice (~280 kcal)</span>
+                    <span id="eq-pizza-pct" class="font-mono text-stone">45%</span>
+                  </div>
+                  <div class="w-full h-2 bg-hairline rounded-full overflow-hidden">
+                    <div id="eq-pizza-bar" class="h-full bg-brand-coral" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Disclaimer alert text -->
+            <div id="advice-box" class="text-[10px] text-moss-dark leading-relaxed pt-2 border-t border-moss-dark/5">
+              <p>
+                Calculations based on Metabolic Equivalents (METs). Individual rates vary based on muscle mass, body composition, fitness level, and actual effort.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Button directly beneath input workspace -->
+      <div class="flex justify-center pt-2 print:hidden">
+        <button
+          type="button"
+          id="toggle-breakdown-btn"
+          class="button-primary text-xs py-2 px-6 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          <span>View Detailed Breakdown & Analysis</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Detailed Breakdown & Analysis Section (Same Page) -->
+    <div id="breakdown-section" class="max-h-0 overflow-hidden transition-all duration-500 flex flex-col gap-4 print:max-h-none print:overflow-visible">
+      <div class="card-base p-4 sm:p-5 flex flex-col gap-4 mt-2 print:border-none print:shadow-none print:p-0">
+        
+        <div class="flex items-center justify-between border-b border-hairline pb-2">
+          <h2 class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+            </svg>
+            Personalized Calorie Burn Projection
+          </h2>
+          
+          <button
+            type="button"
+            id="export-pdf-btn"
+            class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle print:hidden"
+            aria-label="Export report to PDF"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Export Report</span>
           </button>
         </div>
-      </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Calories Burned over Time Chart -->
+          <div class="border border-hairline rounded-xl p-3 bg-surface-soft flex flex-col gap-2">
+            <span class="text-[10px] uppercase font-bold text-slate">Calorie Burn Over Duration</span>
+            <div class="w-full h-44 relative bg-canvas rounded-lg border border-hairline flex items-center justify-center p-2">
+              <svg id="time-chart-svg" class="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                <!-- SVG Grid Lines & Labels rendered via JS -->
+              </svg>
+            </div>
+            <div class="flex justify-between text-[8px] font-semibold text-stone">
+              <span>0m</span>
+              <span id="chart-lbl-quarter">-</span>
+              <span id="chart-lbl-half">-</span>
+              <span id="chart-lbl-full">-</span>
+            </div>
+          </div>
+
+          <!-- Activity Comparison Chart -->
+          <div class="border border-hairline rounded-xl p-3 bg-surface-soft flex flex-col gap-2">
+            <span class="text-[10px] uppercase font-bold text-slate">Comparison at Selected Duration</span>
+            <div class="w-full h-44 relative bg-canvas rounded-lg border border-hairline flex items-center justify-center p-2">
+              <svg id="comparison-chart-svg" class="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="none">
+                <!-- SVG Bars rendered via JS -->
+              </svg>
+            </div>
+            <div id="comparison-labels" class="grid grid-cols-4 text-center text-[7px] font-bold text-stone">
+              <span>Walk</span>
+              <span>Run</span>
+              <span>Cycle</span>
+              <span>Selected</span>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Weekly Projections -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-hairline pt-3 mt-1">
+          <div class="border border-hairline rounded-lg p-2.5 bg-canvas flex flex-col items-center text-center shadow-subtle">
+            <span class="text-[8px] uppercase font-bold text-slate">Done 1x / Week</span>
+            <span id="proj-1x" class="font-display font-black text-base text-primary font-mono mt-1">- kcal</span>
+            <span id="proj-1x-fat" class="text-[8px] text-stone mt-0.5">~0.03 kg fat equivalent</span>
+          </div>
+          <div class="border border-brand-blue/30 rounded-lg p-2.5 bg-canvas flex flex-col items-center text-center shadow-subtle relative">
+            <span class="absolute -top-2 bg-success-accent text-canvas text-[6px] font-bold px-1.5 py-0.5 rounded-full uppercase">Healthy Routine</span>
+            <span class="text-[8px] uppercase font-bold text-slate">Done 3x / Week</span>
+            <span id="proj-3x" class="font-display font-black text-base text-brand-blue font-mono mt-1">- kcal</span>
+            <span id="proj-3x-fat" class="text-[8px] text-stone mt-0.5">~0.1 kg fat equivalent</span>
+          </div>
+          <div class="border border-hairline rounded-lg p-2.5 bg-canvas flex flex-col items-center text-center shadow-subtle">
+            <span class="text-[8px] uppercase font-bold text-slate">Done 5x / Week</span>
+            <span id="proj-5x" class="font-display font-black text-base text-primary font-mono mt-1">- kcal</span>
+            <span id="proj-5x-fat" class="text-[8px] text-stone mt-0.5">~0.16 kg fat equivalent</span>
+          </div>
+        </div>
+
+        <!-- Scientific Analysis Commentary Box -->
+        <div id="scientific-analysis-box" class="text-[11px] text-slate leading-relaxed border-t border-hairline pt-3 mt-1 flex flex-col gap-2">
+          <p id="analysis-summary-para">
+            Loading calorie burn analysis based on your physical characteristics...
           </p>
         </div>
+
       </div>
     </div>
+
+    <!-- Science and limitations educational banner -->
+    <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
+      <h3 class="font-display font-semibold text-sm sm:text-base text-primary flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Understanding MET Values & Calorie Burn Metrics
+      </h3>
+      <div class="text-[11px] sm:text-xs text-slate leading-relaxed flex flex-col gap-2.5">
+        <p>
+          A <strong>MET</strong> (Metabolic Equivalent of Task) is a standard physiological measure used to estimate the energy cost of physical activities. 
+          One MET is defined as the energy expended while sitting quietly at rest, equivalent to burning approximately <strong>1 kcal per kilogram of body weight per hour</strong>.
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1 text-slate font-medium">
+          <li><strong>Light Activities (&lt; 3.0 METs):</strong> Slow walking, stretching, light deskwork, or easy yoga.</li>
+          <li><strong>Moderate Activities (3.0 to 6.0 METs):</strong> Brisk walking, recreational cycling, casual swimming, or moderate weightlifting.</li>
+          <li><strong>Vigorous Activities (&gt; 6.0 METs):</strong> Running, competitive sports, HIIT training, or heavy rowing.</li>
+        </ul>
+        <p>
+          <strong>Formula Details:</strong> The basic formula uses your weight (in kilograms) and activity duration to calculate absolute energy expenditure: <code>Calories = MET &times; Weight (kg) &times; Duration (hours)</code>. 
+          This estimate is useful for planning exercise regimens, but does not capture variations in lean muscle mass, biological sex, age, or mechanical efficiency.
+        </p>
+        <p class="text-[10px] text-stone mt-1">
+          Disclaimer: This calculator is provided for educational and fitness planning purposes only. Exercise intensity and calorie rates are generalized approximations. Consult a qualified medical practitioner or trainer before initiating intense athletic training.
+        </p>
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Private, Client-Side Calculations
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Client-side script module -->
+  <script>
+    // State variables
+    let currentUnit = "imperial"; // metric | imperial
+    let weightKg = 70;
+    let weightLbs = 154;
+    let durationMins = 30;
+    let activeActivityId = "walking-moderate";
+    let activeIntensity: "light" | "moderate" | "vigorous" = "moderate";
+    let heightCm = 175;
+    let customMetOverride: number | null = null;
+
+    // Standardized MET Activities list
+    const ACTIVITIES = [
+      {
+        id: "walking",
+        name: "Walking / Hiking",
+        category: "cardio",
+        mets: { light: 2.0, moderate: 3.5, vigorous: 4.8 },
+        hasIntensity: true,
+        desc: "Brisk fitness walking or hiking on trails"
+      },
+      {
+        id: "running",
+        name: "Running / Jogging",
+        category: "cardio",
+        mets: { light: 6.0, moderate: 9.8, vigorous: 12.0 },
+        hasIntensity: true,
+        desc: "Cardiovascular speed running or road jogging"
+      },
+      {
+        id: "cycling",
+        name: "Bicycling / Cycling",
+        category: "cardio",
+        mets: { light: 4.0, moderate: 7.5, vigorous: 11.0 },
+        hasIntensity: true,
+        desc: "Outdoor cycling or indoor stationary bicycle"
+      },
+      {
+        id: "swimming",
+        name: "Swimming",
+        category: "cardio",
+        mets: { light: 4.5, moderate: 7.0, vigorous: 9.5 },
+        hasIntensity: true,
+        desc: "Pool laps swimming or open water swim"
+      },
+      {
+        id: "weightlifting",
+        name: "Weight Lifting / Strength",
+        category: "gym",
+        mets: { light: 2.8, moderate: 4.5, vigorous: 6.0 },
+        hasIntensity: true,
+        desc: "Free weights or machine gym exercises"
+      },
+      {
+        id: "yoga",
+        name: "Yoga / Pilates",
+        category: "gym",
+        mets: { light: 2.0, moderate: 2.8, vigorous: 3.8 },
+        hasIntensity: true,
+        desc: "Core conditioning, flexibility, or flow yoga"
+      },
+      {
+        id: "hiit",
+        name: "HIIT / Calisthenics",
+        category: "gym",
+        mets: { light: 4.0, moderate: 8.0, vigorous: 10.0 },
+        hasIntensity: true,
+        desc: "High intensity interval training or bodyweight circuit"
+      },
+      {
+        id: "tennis",
+        name: "Tennis",
+        category: "sports",
+        mets: { light: 4.5, moderate: 6.0, vigorous: 8.0 },
+        hasIntensity: true,
+        desc: "Singles or doubles racquet sport matches"
+      },
+      {
+        id: "basketball",
+        name: "Basketball",
+        category: "sports",
+        mets: { light: 4.5, moderate: 6.5, vigorous: 8.5 },
+        hasIntensity: true,
+        desc: "Half-court drills or competitive full-court games"
+      },
+      {
+        id: "soccer",
+        name: "Soccer",
+        category: "sports",
+        mets: { light: 5.0, moderate: 7.5, vigorous: 9.0 },
+        hasIntensity: true,
+        desc: "Casual field scrimmage or fast-paced matches"
+      },
+      {
+        id: "golf",
+        name: "Golf (walking)",
+        category: "sports",
+        mets: { light: 3.5, moderate: 4.3, vigorous: 5.3 },
+        hasIntensity: true,
+        desc: "Carrying bags or walking the course"
+      },
+      {
+        id: "gardening",
+        name: "Gardening / Yard Work",
+        category: "daily",
+        mets: { light: 2.0, moderate: 4.0, vigorous: 5.5 },
+        hasIntensity: true,
+        desc: "Mowing, digging, planting, or raking leaves"
+      },
+      {
+        id: "housework",
+        name: "Active Housework",
+        category: "daily",
+        mets: { light: 1.8, moderate: 2.5, vigorous: 3.5 },
+        hasIntensity: true,
+        desc: "Sweeping, vacuuming, carrying groceries"
+      }
+    ];
+
+    // DOM Elements
+    const unitMetricBtn = document.getElementById("unit-metric-btn");
+    const unitImperialBtn = document.getElementById("unit-imperial-btn");
+    const weightLabel = document.getElementById("weight-label");
+    const metricWeightContainer = document.getElementById("metric-weight-container");
+    const imperialWeightContainer = document.getElementById("imperial-weight-container");
+    
+    const weightMetricRange = document.getElementById("weight-metric-range") as HTMLInputElement | null;
+    const weightMetricInput = document.getElementById("weight-metric-input") as HTMLInputElement | null;
+    const weightLbsRange = document.getElementById("weight-lbs-range") as HTMLInputElement | null;
+    const weightLbsInput = document.getElementById("weight-lbs-input") as HTMLInputElement | null;
+
+    const durationLabel = document.getElementById("duration-label");
+    const durationRange = document.getElementById("duration-range") as HTMLInputElement | null;
+    const durationInput = document.getElementById("duration-input") as HTMLInputElement | null;
+
+    const activitySearch = document.getElementById("activity-search") as HTMLInputElement | null;
+    const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement | null;
+    const activityList = document.getElementById("activity-list");
+
+    const intensityContainer = document.getElementById("intensity-container");
+    const intensityLight = document.getElementById("intensity-light");
+    const intensityModerate = document.getElementById("intensity-moderate");
+    const intensityVigorous = document.getElementById("intensity-vigorous");
+
+    // Advanced Drawer DOM
+    const advancedToggleBtn = document.getElementById("advanced-toggle-btn");
+    const advancedPanel = document.getElementById("advanced-panel") as HTMLElement | null;
+    const advancedChevron = document.getElementById("advanced-chevron");
+    const sexSelect = document.getElementById("sex-select") as HTMLSelectElement | null;
+    const ageInput = document.getElementById("age-input") as HTMLInputElement | null;
+    const customMetInput = document.getElementById("custom-met-input") as HTMLInputElement | null;
+    const heightInput = document.getElementById("height-input") as HTMLInputElement | null;
+    const heightUnitLbl = document.getElementById("height-unit-lbl");
+    const advancedViewResultBtn = document.getElementById("advanced-view-result-btn");
+
+    // Output DOM
+    const exerciseNameLbl = document.getElementById("exercise-name-lbl");
+    const outputCalories = document.getElementById("output-calories");
+    const outputMet = document.getElementById("output-met");
+    const outputRatio = document.getElementById("output-ratio");
+    const statusPulse = document.getElementById("status-pulse");
+    const statusDot = document.getElementById("status-dot");
+
+    // Food equivalents
+    const eqBananaPct = document.getElementById("eq-banana-pct");
+    const eqBananaBar = document.getElementById("eq-banana-bar");
+    const eqPizzaPct = document.getElementById("eq-pizza-pct");
+    const eqPizzaBar = document.getElementById("eq-pizza-bar");
+
+    // Detailed Breakdown DOM
+    const toggleBreakdownBtn = document.getElementById("toggle-breakdown-btn");
+    const breakdownSection = document.getElementById("breakdown-section") as HTMLElement | null;
+    const exportPdfBtn = document.getElementById("export-pdf-btn");
+    const timeChartSvg = document.getElementById("time-chart-svg");
+    const comparisonChartSvg = document.getElementById("comparison-chart-svg");
+    const proj1x = document.getElementById("proj-1x");
+    const proj1xFat = document.getElementById("proj-1x-fat");
+    const proj3x = document.getElementById("proj-3x");
+    const proj3xFat = document.getElementById("proj-3x-fat");
+    const proj5x = document.getElementById("proj-5x");
+    const proj5xFat = document.getElementById("proj-5x-fat");
+    const analysisSummaryPara = document.getElementById("analysis-summary-para");
+
+    const chartLblQuarter = document.getElementById("chart-lbl-quarter");
+    const chartLblHalf = document.getElementById("chart-lbl-half");
+    const chartLblFull = document.getElementById("chart-lbl-full");
+
+    const resetBtn = document.getElementById("reset-btn");
+
+    // Enforce scrolling to top on refresh/load
+    window.addEventListener("beforeunload", () => {
+      window.scrollTo(0, 0);
+    });
+
+    // Helper functions for parsing and updating
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+
+    // Load state from localStorage
+    function loadState() {
+      try {
+        const savedUnit = localStorage.getItem("calorie-burn-unit");
+        const savedWeightKg = localStorage.getItem("calorie-burn-wkg");
+        const savedWeightLbs = localStorage.getItem("calorie-burn-wlbs");
+        const savedDuration = localStorage.getItem("calorie-burn-dur");
+        const savedActivity = localStorage.getItem("calorie-burn-act");
+        const savedIntensity = localStorage.getItem("calorie-burn-int");
+        const savedSex = localStorage.getItem("calorie-burn-sex");
+        const savedAge = localStorage.getItem("calorie-burn-age");
+        const savedCustomMet = localStorage.getItem("calorie-burn-custom-met");
+        const savedHeightCm = localStorage.getItem("calorie-burn-h-cm");
+
+        if (savedUnit) currentUnit = savedUnit;
+        if (savedWeightKg) weightKg = parseInt(savedWeightKg, 10);
+        if (savedWeightLbs) weightLbs = parseInt(savedWeightLbs, 10);
+        if (savedDuration) durationMins = parseInt(savedDuration, 10);
+        if (savedActivity) activeActivityId = savedActivity;
+        if (savedIntensity && (savedIntensity === "light" || savedIntensity === "moderate" || savedIntensity === "vigorous")) {
+          activeIntensity = savedIntensity;
+        }
+        
+        if (savedSex && sexSelect) sexSelect.value = savedSex;
+        if (savedAge && ageInput) ageInput.value = savedAge;
+        if (savedCustomMet && customMetInput) {
+          customMetInput.value = savedCustomMet;
+          customMetOverride = parseFloat(savedCustomMet);
+        }
+        if (savedHeightCm) {
+          heightCm = parseInt(savedHeightCm, 10);
+        } else {
+          // fallback to reading height-input if preset
+          const hVal = heightInput ? parseInt(heightInput.value, 10) : 175;
+          if (currentUnit === "metric") {
+            heightCm = hVal;
+          } else {
+            heightCm = Math.round(hVal * 2.54);
+          }
+        }
+
+      } catch (e) {
+        console.warn("Failed loading local state:", e);
+      }
+      updateInputsFromState();
+      updateUnitUI();
+      updateActivityList();
+      calculate();
+    }
+
+    // Save state to localStorage
+    function saveState() {
+      try {
+        localStorage.setItem("calorie-burn-unit", currentUnit);
+        localStorage.setItem("calorie-burn-wkg", weightKg.toString());
+        localStorage.setItem("calorie-burn-wlbs", weightLbs.toString());
+        localStorage.setItem("calorie-burn-dur", durationMins.toString());
+        localStorage.setItem("calorie-burn-act", activeActivityId);
+        localStorage.setItem("calorie-burn-int", activeIntensity);
+        localStorage.setItem("calorie-burn-sex", sexSelect?.value || "male");
+        localStorage.setItem("calorie-burn-age", ageInput?.value || "30");
+        localStorage.setItem("calorie-burn-custom-met", customMetInput?.value || "");
+        localStorage.setItem("calorie-burn-h-cm", heightCm.toString());
+      } catch (e) {
+        console.warn("Failed saving state:", e);
+      }
+    }
+
+    function updateInputsFromState() {
+      if (durationRange) durationRange.value = durationMins.toString();
+      if (durationInput) durationInput.value = durationMins.toString();
+      if (weightMetricRange) weightMetricRange.value = weightKg.toString();
+      if (weightMetricInput) weightMetricInput.value = weightKg.toString();
+      if (weightLbsRange) weightLbsRange.value = weightLbs.toString();
+      if (weightLbsInput) weightLbsInput.value = weightLbs.toString();
+      
+      // Update height input min, max, value
+      if (heightInput) {
+        if (currentUnit === "metric") {
+          heightInput.min = "80";
+          heightInput.max = "250";
+          heightInput.value = heightCm.toString();
+        } else {
+          heightInput.min = "30";
+          heightInput.max = "100";
+          heightInput.value = Math.round(heightCm / 2.54).toString();
+        }
+      }
+    }
+
+    function updateUnitUI() {
+      if (currentUnit === "metric") {
+        unitMetricBtn?.classList.add("bg-primary", "text-canvas");
+        unitMetricBtn?.classList.remove("text-slate");
+        unitImperialBtn?.classList.remove("bg-primary", "text-canvas");
+        unitImperialBtn?.classList.add("text-slate");
+
+        metricWeightContainer?.classList.remove("hidden");
+        imperialWeightContainer?.classList.add("hidden");
+
+        if (weightLabel) weightLabel.textContent = `${weightKg} kg`;
+        if (heightUnitLbl) heightUnitLbl.textContent = "cm";
+      } else {
+        unitImperialBtn?.classList.add("bg-primary", "text-canvas");
+        unitImperialBtn?.classList.remove("text-slate");
+        unitMetricBtn?.classList.remove("bg-primary", "text-canvas");
+        unitMetricBtn?.classList.add("text-slate");
+
+        imperialWeightContainer?.classList.remove("hidden");
+        metricWeightContainer?.classList.add("hidden");
+
+        if (weightLabel) weightLabel.textContent = `${weightLbs} lb`;
+        if (heightUnitLbl) heightUnitLbl.textContent = "in";
+      }
+    }
+
+    function updateActivityList() {
+      if (!activityList) return;
+      activityList.innerHTML = "";
+
+      const query = activitySearch ? activitySearch.value.toLowerCase() : "";
+      const cat = categoryFilter ? categoryFilter.value : "all";
+
+      const filtered = ACTIVITIES.filter(act => {
+        const matchesQuery = act.name.toLowerCase().includes(query) || act.desc.toLowerCase().includes(query);
+        const matchesCategory = cat === "all" || act.category === cat;
+        return matchesQuery && matchesCategory;
+      });
+
+      filtered.forEach(act => {
+        const item = document.createElement("button");
+        item.type = "button";
+        const isActive = act.id === activeActivityId;
+
+        let itemStyle = "border-hairline bg-canvas hover:bg-surface text-slate";
+        if (isActive) {
+          itemStyle = "border-brand-blue bg-surface shadow-[0_0_8px_rgba(66,98,255,0.12)] ring-1 ring-brand-blue/20 text-primary font-semibold";
+        }
+
+        item.className = `flex flex-col p-2 border rounded-md text-left transition-all cursor-pointer relative w-full ${itemStyle}`;
+        item.innerHTML = `
+          <span class="text-[10px] font-bold text-primary block">${act.name}</span>
+          <span class="text-[8px] text-stone font-medium leading-tight mt-0.5">${act.desc}</span>
+        `;
+
+        item.addEventListener("click", () => {
+          activeActivityId = act.id;
+          saveState();
+          updateActivityList();
+          calculate();
+        });
+
+        activityList.appendChild(item);
+      });
+    }
+
+    function calculate() {
+      const selectedActivity = ACTIVITIES.find(act => act.id === activeActivityId) || ACTIVITIES[0];
+      
+      // Determine MET rate
+      let metVal = 1.0;
+      if (customMetOverride !== null && !isNaN(customMetOverride)) {
+        metVal = customMetOverride;
+      } else {
+        const intensities = selectedActivity.mets;
+        metVal = intensities[activeIntensity] || intensities.moderate;
+      }
+
+      // Update Intensity toggle visibility
+      if (selectedActivity.hasIntensity && customMetOverride === null) {
+        intensityContainer?.classList.remove("hidden");
+        // highlight active intensity button
+        [intensityLight, intensityModerate, intensityVigorous].forEach(btn => {
+          btn?.classList.remove("bg-primary", "text-canvas");
+          btn?.classList.add("text-slate");
+        });
+        let activeBtn = intensityModerate;
+        if (activeIntensity === "light") activeBtn = intensityLight;
+        if (activeIntensity === "vigorous") activeBtn = intensityVigorous;
+        activeBtn?.classList.add("bg-primary", "text-canvas");
+        activeBtn?.classList.remove("text-slate");
+      } else {
+        intensityContainer?.classList.add("hidden");
+      }
+
+      // Compute weight in kg
+      const finalWeightKg = currentUnit === "metric" ? weightKg : weightLbs / 2.20462;
+      const durationHours = durationMins / 60;
+
+      // Calories Burned formula: Calories = MET * weight (kg) * duration (hours)
+      const caloriesBurned = Math.round(metVal * finalWeightKg * durationHours);
+
+      // Update basic result card text
+      if (exerciseNameLbl) {
+        if (customMetOverride !== null) {
+          exerciseNameLbl.textContent = `Custom Activity (MET: ${metVal})`;
+        } else {
+          exerciseNameLbl.textContent = `${selectedActivity.name} (${activeIntensity} intensity)`;
+        }
+      }
+      if (outputCalories) outputCalories.textContent = caloriesBurned.toLocaleString();
+      if (outputMet) outputMet.textContent = `${metVal.toFixed(1)} METs`;
+      if (outputRatio) outputRatio.textContent = `${metVal.toFixed(1)}x rest`;
+
+      // Status indicator pulse adjustment
+      if (statusPulse && statusDot) {
+        let pulseColor = "bg-success-accent";
+        if (metVal >= 8.0) {
+          pulseColor = "bg-brand-coral";
+        } else if (metVal >= 4.0) {
+          pulseColor = "bg-brand-yellow-deep";
+        }
+        statusPulse.className = `animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${pulseColor}`;
+        statusDot.className = `relative inline-flex rounded-full h-2 w-2 ${pulseColor}`;
+      }
+
+      // Food Equivalents percentage updates
+      const bananaKcal = 100;
+      const pizzaKcal = 280;
+
+      const bananaPct = Math.min(100, Math.round((caloriesBurned / bananaKcal) * 100));
+      const pizzaPct = Math.min(100, Math.round((caloriesBurned / pizzaKcal) * 100));
+
+      if (eqBananaPct) eqBananaPct.textContent = `${Math.round((caloriesBurned / bananaKcal) * 10) / 10}x Bananas`;
+      if (eqBananaBar) eqBananaBar.style.width = `${bananaPct}%`;
+
+      if (eqPizzaPct) eqPizzaPct.textContent = `${Math.round((caloriesBurned / pizzaKcal) * 10) / 10}x Slice`;
+      if (eqPizzaBar) eqPizzaBar.style.width = `${pizzaPct}%`;
+
+      // Detailed Breakdown Update
+      updateBreakdown(caloriesBurned, metVal, finalWeightKg);
+      
+      saveState();
+    }
+
+    function updateBreakdown(totalBurn: number, metVal: number, finalWeightKg: number) {
+      if (!timeChartSvg || !comparisonChartSvg || !analysisSummaryPara) return;
+
+      // Update projections
+      const burn1x = Math.round(totalBurn);
+      const burn3x = Math.round(totalBurn * 3);
+      const burn5x = Math.round(totalBurn * 5);
+
+      if (proj1x) proj1x.textContent = `${burn1x.toLocaleString()} kcal`;
+      if (proj1xFat) proj1xFat.textContent = `~${(burn1x / 7700).toFixed(2)} kg fat loss equivalent`;
+      if (proj3x) proj3x.textContent = `${burn3x.toLocaleString()} kcal`;
+      if (proj3xFat) proj3xFat.textContent = `~${(burn3x / 7700).toFixed(2)} kg fat loss equivalent`;
+      if (proj5x) proj5x.textContent = `${burn5x.toLocaleString()} kcal`;
+      if (proj5xFat) proj5xFat.textContent = `~${(burn5x / 7700).toFixed(2)} kg fat loss equivalent`;
+
+      // Generate Line Chart: Burn Over Duration
+      // We project for durations: 0, 15m, 30m, 45m, 60m, 90m
+      const chartDurations = [0, 15, 30, 45, 60, 90];
+      const burnValues = chartDurations.map(dur => (metVal * finalWeightKg * (dur / 60)));
+      const maxBurnVal = Math.max(...burnValues, 100);
+
+      // SVG coordinates (viewBox 0 0 100 50)
+      let pathData = "M 0 50";
+      chartDurations.forEach((dur, idx) => {
+        const x = (dur / 90) * 100;
+        const y = 50 - ((burnValues[idx] / maxBurnVal) * 45); // offset from top
+        pathData += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+      });
+
+      timeChartSvg.innerHTML = `
+        <line x1="0" y1="5" x2="100" y2="5" stroke="var(--color-hairline-soft)" stroke-width="0.5" stroke-dasharray="1 1" />
+        <line x1="0" y1="20" x2="100" y2="20" stroke="var(--color-hairline-soft)" stroke-width="0.5" stroke-dasharray="1 1" />
+        <line x1="0" y1="35" x2="100" y2="35" stroke="var(--color-hairline-soft)" stroke-width="0.5" stroke-dasharray="1 1" />
+        <path d="${pathData}" fill="none" stroke="var(--color-brand-blue)" stroke-width="2.5" />
+        <path d="${pathData} L 100 50 L 0 50 Z" fill="url(#blue-grad)" opacity="0.15" />
+        <defs>
+          <linearGradient id="blue-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="var(--color-brand-blue)" />
+            <stop offset="100%" stop-color="var(--color-brand-blue)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+      `;
+
+      if (chartLblQuarter) chartLblQuarter.textContent = "15m";
+      if (chartLblHalf) chartLblHalf.textContent = "45m";
+      if (chartLblFull) chartLblFull.textContent = "90m";
+
+      // Generate Comparison Bar Chart: selected activity vs standard reference points
+      // reference METs: Walk (3.5), Run (9.8), Cycle (7.5) vs selected (metVal)
+      const refActivities = [
+        { name: "Walking", met: 3.5 },
+        { name: "Running", met: 9.8 },
+        { name: "Cycling", met: 7.5 },
+        { name: "Selected", met: metVal }
+      ];
+
+      const refBurns = refActivities.map(ref => Math.round(ref.met * finalWeightKg * (durationMins / 60)));
+      const maxRefBurn = Math.max(...refBurns, 100);
+
+      let barHtml = "";
+      refBurns.forEach((burn, idx) => {
+        const barWidth = 14;
+        const spacing = 10;
+        const x = 6 + idx * (barWidth + spacing);
+        const barHeight = (burn / maxRefBurn) * 40;
+        const y = 45 - barHeight;
+        
+        let barColor = "var(--color-brand-teal)";
+        if (idx === 3) barColor = "var(--color-brand-blue)"; // selected exercise gets brand blue
+        if (refActivities[idx].name === "Running") barColor = "var(--color-brand-coral)";
+
+        barHtml += `
+          <rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="${barColor}" opacity="0.85" />
+          <text x="${x + barWidth/2}" y="${y - 2}" text-anchor="middle" font-size="3" font-family="var(--font-body)" font-weight="bold" fill="var(--color-primary)">${burn}</text>
+        `;
+      });
+
+      comparisonChartSvg.innerHTML = `
+        <line x1="0" y1="45" x2="100" y2="45" stroke="var(--color-hairline)" stroke-width="0.5" />
+        ${barHtml}
+      `;
+
+      // Update text explanation BMR context
+      let height = parseInt(heightInput?.value || "175", 10);
+      if (isNaN(height)) {
+        height = currentUnit === "metric" ? 175 : 69;
+      }
+      let biologicalSex = sexSelect?.value || "male";
+      let userAge = parseInt(ageInput?.value || "30", 10);
+      if (isNaN(userAge)) {
+        userAge = 30;
+      }
+
+      // Estimate rest metabolic rate for same duration
+      // BMR estimate via Mifflin-St Jeor:
+      // Male: 10 * weight (kg) + 6.25 * height (cm) - 5 * age + 5
+      // Female: 10 * weight (kg) + 6.25 * height (cm) - 5 * age - 161
+      let finalHeightCm = height;
+      if (currentUnit === "imperial") {
+        finalHeightCm = height * 2.54;
+      }
+      
+      let baseBmrDaily = 10 * finalWeightKg + 6.25 * finalHeightCm - 5 * userAge;
+      let isUnspecifiedSex = (biologicalSex !== "male" && biologicalSex !== "female");
+      if (biologicalSex === "male") {
+        baseBmrDaily += 5;
+      } else if (biologicalSex === "female") {
+        baseBmrDaily -= 161;
+      } else {
+        baseBmrDaily -= 78; // average of male (+5) and female (-161) Mifflin-St Jeor offsets
+      }
+
+      const bmrKcalForDuration = Math.round((baseBmrDaily / 24) * (durationMins / 60));
+      const netCalorieBurn = Math.max(0, totalBurn - bmrKcalForDuration);
+
+      if (analysisSummaryPara) {
+        let bmrText = `For context, your body would have burned roughly <strong>${bmrKcalForDuration} calories</strong> just resting during this same window.`;
+        if (isUnspecifiedSex) {
+          bmrText = `For context, your body would have burned roughly <strong>${bmrKcalForDuration} calories</strong> resting during this same window (using an average of male and female baseline metrics for unspecified sex).`;
+        }
+
+        analysisSummaryPara.innerHTML = `
+          <p class="mb-2">
+            Based on your body profile, you expended approximately <strong>${totalBurn.toLocaleString()} gross calories</strong> during this ${durationMins}-minute session. 
+            ${bmrText} 
+            This results in a <strong>net exercise burn of ${netCalorieBurn.toLocaleString()} calories</strong> directly attributable to your activity effort.
+          </p>
+          <p>
+            If you perform this routine 3 times a week, you'll accumulate a weekly deficit of <strong>${burn3x.toLocaleString()} calories</strong>, which equals a fat-loss equivalent of <strong>${(burn3x / 7700).toFixed(2)} kg</strong> per week, assuming your diet remains at baseline maintenance level.
+          </p>
+        `;
+      }
+    }
+
+    // Toggle detailed breakdown animation
+    toggleBreakdownBtn?.addEventListener("click", () => {
+      if (breakdownSection) {
+        const isCollapsed = breakdownSection.classList.contains("max-h-0");
+        if (isCollapsed) {
+          breakdownSection.classList.remove("max-h-0");
+          breakdownSection.classList.add("max-h-[2000px]");
+          setTimeout(() => {
+            scrollToElementWithOffset("breakdown-section", 60);
+          }, 100);
+        } else {
+          breakdownSection.classList.remove("max-h-[2000px]");
+          breakdownSection.classList.add("max-h-0");
+        }
+      }
+    });
+
+    // Advanced options panel toggle
+    advancedToggleBtn?.addEventListener("click", () => {
+      if (advancedPanel && advancedChevron) {
+        const isCollapsed = advancedPanel.style.maxHeight === "0px" || !advancedPanel.style.maxHeight;
+        if (isCollapsed) {
+          advancedPanel.style.maxHeight = advancedPanel.scrollHeight + "px";
+          advancedChevron.classList.add("rotate-180");
+        } else {
+          advancedPanel.style.maxHeight = "0px";
+          advancedChevron.classList.remove("rotate-180");
+        }
+      }
+    });
+
+    // View result smooth scroll from advanced panel
+    advancedViewResultBtn?.addEventListener("click", () => {
+      scrollToElementWithOffset("results-card", 80);
+    });
+
+    // Unit toggle button bindings
+    unitMetricBtn?.addEventListener("click", () => {
+      if (currentUnit !== "metric") {
+        currentUnit = "metric";
+        // Convert weight values
+        weightKg = Math.round(weightLbs / 2.20462);
+        updateInputsFromState();
+        updateUnitUI();
+        calculate();
+      }
+    });
+
+    unitImperialBtn?.addEventListener("click", () => {
+      if (currentUnit !== "imperial") {
+        currentUnit = "imperial";
+        // Convert weight values
+        weightLbs = Math.round(weightKg * 2.20462);
+        updateInputsFromState();
+        updateUnitUI();
+        calculate();
+      }
+    });
+
+    // Weight range / input connections
+    weightMetricRange?.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        weightKg = parseInt(target.value, 10);
+        if (weightMetricInput) weightMetricInput.value = weightKg.toString();
+        if (weightLabel) weightLabel.textContent = `${weightKg} kg`;
+        calculate();
+      }
+    });
+
+    weightMetricInput?.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        let val = parseInt(target.value, 10);
+        if (isNaN(val) || val < 30) val = 30;
+        if (val > 200) val = 200;
+        weightKg = val;
+        if (weightMetricRange) weightMetricRange.value = weightKg.toString();
+        target.value = weightKg.toString();
+        if (weightLabel) weightLabel.textContent = `${weightKg} kg`;
+        calculate();
+      }
+    });
+
+    weightLbsRange?.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        weightLbs = parseInt(target.value, 10);
+        if (weightLbsInput) weightLbsInput.value = weightLbs.toString();
+        if (weightLabel) weightLabel.textContent = `${weightLbs} lb`;
+        calculate();
+      }
+    });
+
+    weightLbsInput?.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        let val = parseInt(target.value, 10);
+        if (isNaN(val) || val < 60) val = 60;
+        if (val > 450) val = 450;
+        weightLbs = val;
+        if (weightLbsRange) weightLbsRange.value = weightLbs.toString();
+        target.value = weightLbs.toString();
+        if (weightLabel) weightLabel.textContent = `${weightLbs} lb`;
+        calculate();
+      }
+    });
+
+    // Duration inputs connection
+    durationRange?.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        durationMins = parseInt(target.value, 10);
+        if (durationInput) durationInput.value = durationMins.toString();
+        if (durationLabel) durationLabel.textContent = `${durationMins} mins`;
+        calculate();
+      }
+    });
+
+    durationInput?.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        let val = parseInt(target.value, 10);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > 300) val = 300;
+        durationMins = val;
+        if (durationRange) durationRange.value = durationMins.toString();
+        target.value = durationMins.toString();
+        if (durationLabel) durationLabel.textContent = `${durationMins} mins`;
+        calculate();
+      }
+    });
+
+    // Activity list filtering & search
+    activitySearch?.addEventListener("input", updateActivityList);
+    categoryFilter?.addEventListener("change", updateActivityList);
+
+    // Intensity buttons bindings
+    intensityLight?.addEventListener("click", () => {
+      activeIntensity = "light";
+      calculate();
+    });
+    intensityModerate?.addEventListener("click", () => {
+      activeIntensity = "moderate";
+      calculate();
+    });
+    intensityVigorous?.addEventListener("click", () => {
+      activeIntensity = "vigorous";
+      calculate();
+    });
+
+    // BMR Advanced options change
+    sexSelect?.addEventListener("change", calculate);
+    ageInput?.addEventListener("change", () => {
+      if (ageInput) {
+        let val = parseInt(ageInput.value, 10);
+        if (isNaN(val) || val < 10) val = 10;
+        if (val > 100) val = 100;
+        ageInput.value = val.toString();
+        calculate();
+      }
+    });
+    heightInput?.addEventListener("change", () => {
+      if (heightInput) {
+        let val = parseInt(heightInput.value, 10);
+        if (currentUnit === "metric") {
+          if (isNaN(val) || val < 80) val = 80;
+          if (val > 250) val = 250;
+          heightCm = val;
+        } else {
+          if (isNaN(val) || val < 30) val = 30;
+          if (val > 100) val = 100;
+          heightCm = Math.round(val * 2.54);
+        }
+        heightInput.value = (currentUnit === "metric" ? heightCm : Math.round(heightCm / 2.54)).toString();
+        calculate();
+      }
+    });
+
+    customMetInput?.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target) {
+        const val = parseFloat(target.value);
+        if (!isNaN(val) && val > 0) {
+          customMetOverride = val;
+        } else {
+          customMetOverride = null;
+        }
+        calculate();
+      }
+    });
+
+    // Export / Print PDF handler
+    exportPdfBtn?.addEventListener("click", () => {
+      if (breakdownSection && breakdownSection.classList.contains("max-h-0")) {
+        breakdownSection.classList.remove("max-h-0");
+        breakdownSection.classList.add("max-h-[2000px]");
+        setTimeout(() => {
+          window.print();
+        }, 350);
+      } else {
+        window.print();
+      }
+    });
+
+    // Reset button
+    resetBtn?.addEventListener("click", () => {
+      const keys = [
+        "calorie-burn-unit",
+        "calorie-burn-wkg",
+        "calorie-burn-wlbs",
+        "calorie-burn-dur",
+        "calorie-burn-act",
+        "calorie-burn-int",
+        "calorie-burn-sex",
+        "calorie-burn-age",
+        "calorie-burn-custom-met",
+        "calorie-burn-h-cm"
+      ];
+      keys.forEach(k => localStorage.removeItem(k));
+
+      currentUnit = "imperial";
+      weightKg = 70;
+      weightLbs = 154;
+      durationMins = 30;
+      activeActivityId = "walking";
+      activeIntensity = "moderate";
+      customMetOverride = null;
+      heightCm = 175;
+
+      if (sexSelect) sexSelect.value = "male";
+      if (ageInput) ageInput.value = "30";
+      if (customMetInput) customMetInput.value = "";
+      if (heightInput) heightInput.value = "175";
+      if (activitySearch) activitySearch.value = "";
+      if (categoryFilter) categoryFilter.value = "all";
+
+      // Hide breakdown
+      if (breakdownSection) {
+        breakdownSection.classList.remove("max-h-[2000px]");
+        breakdownSection.classList.add("max-h-0");
+      }
+
+      // Hide advanced drawer
+      if (advancedPanel && advancedChevron) {
+        advancedPanel.style.maxHeight = "0px";
+        advancedChevron.classList.remove("rotate-180");
+      }
+
+      updateInputsFromState();
+      updateUnitUI();
+      updateActivityList();
+      calculate();
+    });
+
+    // Initial load
+    loadState();
+  </script>
 </Layout>
+
+<style>
+  /* Premium print overrides for PDF exports */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #breakdown-section, #breakdown-section * {
+      visibility: visible;
+    }
+    #breakdown-section {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+    }
+    #export-pdf-btn {
+      display: none;
+    }
+  }
+
+  /* Compact styling for scrollbars */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>
