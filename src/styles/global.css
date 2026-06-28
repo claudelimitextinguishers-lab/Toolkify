@@ -402,6 +402,17 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid var(--color-brand-blue);
 }
 
+/* Fix date picker indicator visibility in dark mode */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px;
+  transition: opacity 0.2s ease;
+}
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 /* Custom Grid backgrounds for canvas and previews */
 .dot-grid {
   background-image: radial-gradient(var(--color-hairline-strong) 1px, transparent 1px);
