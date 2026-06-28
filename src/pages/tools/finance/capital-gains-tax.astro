@@ -958,7 +958,7 @@ const description =
         <h4 class="font-semibold text-primary">
           1. Short-Term vs. Long-Term Gains
         </h4>
-        <p>
+        <div>
           Holding periods determine whether gains are taxed at ordinary income
           rates or concessionary rates:
           <ul class="list-disc pl-4 flex flex-col gap-1 mt-1">
@@ -981,7 +981,7 @@ const description =
               months for long-term status, while real estate requires 24 months.
             </li>
           </ul>
-        </p>
+        </div>
 
         <h4 class="font-semibold text-primary">2. Sub-National Taxes</h4>
         <p>
@@ -1680,14 +1680,15 @@ const description =
         }
       }
 
-      let filingStatus = filingStatusSelect.value as "single" | "joint" | "hoh";
+      let rawFilingStatus = filingStatusSelect.value;
       if (
-        filingStatus !== "single" &&
-        filingStatus !== "joint" &&
-        filingStatus !== "hoh"
+        rawFilingStatus !== "single" &&
+        rawFilingStatus !== "joint" &&
+        rawFilingStatus !== "hoh"
       ) {
-        filingStatus = "single";
+        rawFilingStatus = "single";
       }
+      const filingStatus = rawFilingStatus as "single" | "joint" | "hoh";
 
       const totalBasis = purchasePrice + improvements;
       const netProceeds = salePrice - sellingFees;
@@ -1695,6 +1696,12 @@ const description =
 
       // Dynamically set whatifSlider max
       whatifSlider.max = Math.max(salePrice * 3, 100000).toString();
+      if (parseFloat(whatifSlider.value) > parseFloat(whatifSlider.max)) {
+        whatifSlider.value = whatifSlider.max;
+      }
+      // NOTE: Calling updateWhatif() directly inside calculate() during initial load is safe even though
+      // the what-if slider's input event listener hasn't been attached yet, since it's a direct function call.
+      updateWhatif();
 
       let taxOwed = 0;
       let appliedBracket = "N/A";
@@ -1778,8 +1785,6 @@ const description =
         let niitThreshold = 200000;
         if (filingStatus === "joint") {
           niitThreshold = 250000;
-        } else if (filingStatus === "hoh") {
-          niitThreshold = 200000;
         }
         const magi = annualIncome + grossGain;
         if (magi > niitThreshold) {
@@ -1830,14 +1835,11 @@ const description =
         }
 
         // Canada 2024 new rules: 50% inclusion under $250k, 2/3 (66.67%) above $250k
-        let inclusionRate = 0.5;
         let taxableGain = 0;
         if (grossGain <= 250000) {
           taxableGain = grossGain * 0.5;
-          inclusionRate = 0.5;
         } else {
           taxableGain = 250000 * 0.5 + (grossGain - 250000) * (2 / 3);
-          inclusionRate = grossGain > 0 ? taxableGain / grossGain : 0.5;
         }
 
         // Stacking taxable gain on ordinary income for Federal + Provincial tax
@@ -1859,7 +1861,7 @@ const description =
         const provTax = provTaxWith - provTaxWithout;
 
         taxOwed = fedTax + provTax;
-        appliedBracket = `Avg Inclusion: ${(inclusionRate * 100).toFixed(1)}%`;
+        appliedBracket = `Avg Inclusion: ${((grossGain > 0 ? taxableGain / grossGain : 0.5) * 100).toFixed(1)}%`;
 
         breakdownRows.push({
           label: "Effective Taxable Gain (Included)",
@@ -2162,17 +2164,17 @@ const description =
 
         // Cost segment (Basis)
         const costStroke = 2 * Math.PI * 40 * (basisPercent / 100);
-        svgHtml += `<circle cx="50" cy="50" r="40" stroke="rgb(209, 213, 219)" stroke-width="12" stroke-dasharray="${costStroke} ${251.2 - costStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="rgb(209, 213, 219)" stroke-width="12" stroke-dasharray="${costStroke} ${251.2 - costStroke}" stroke-dashoffset="-${accumOffset}" fill="transparent"></circle>`;
         accumOffset += costStroke;
 
         // Tax segment
         const taxStroke = 2 * Math.PI * 40 * (taxPercent / 100);
-        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-brand-coral)" stroke-width="12" stroke-dasharray="${taxStroke} ${251.2 - taxStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-brand-coral)" stroke-width="12" stroke-dasharray="${taxStroke} ${251.2 - taxStroke}" stroke-dashoffset="-${accumOffset}" fill="transparent"></circle>`;
         accumOffset += taxStroke;
 
         // Profit segment
         const profitStroke = 2 * Math.PI * 40 * (profitPercent / 100);
-        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-success-accent)" stroke-width="12" stroke-dasharray="${profitStroke} ${251.2 - profitStroke}" stroke-dashoffset="${accumOffset}" fill="transparent"></circle>`;
+        svgHtml += `<circle cx="50" cy="50" r="40" stroke="var(--color-success-accent)" stroke-width="12" stroke-dasharray="${profitStroke} ${251.2 - profitStroke}" stroke-dashoffset="-${accumOffset}" fill="transparent"></circle>`;
 
         if (donutSegments) donutSegments.innerHTML = svgHtml;
         if (donutPercent)
@@ -2372,9 +2374,10 @@ const description =
     }
 
     function loadState() {
-      if (typeof localStorage === "undefined") return;
+      if (typeof localStorage === "undefined") return false;
       try {
-        const country = localStorage.getItem("cgt_country") || "USD";
+        const country = localStorage.getItem("cgt_country");
+        if (!country) return false;
         currencySelect.value = country;
 
         const asset = localStorage.getItem("cgt_asset") || "stocks";
@@ -2415,8 +2418,10 @@ const description =
           localStorage.getItem("cgt_custom_currency_code") || "USD";
 
         updateAssetSelection(selectedAsset);
+        return true;
       } catch (e) {
         console.warn("localStorage load failed", e);
+        return false;
       }
     }
 
@@ -2435,8 +2440,6 @@ const description =
 
     // Setup event listeners
     window.addEventListener("DOMContentLoaded", () => {
-      loadState();
-
       // Asset preset selection
       document.querySelectorAll(".asset-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -2538,6 +2541,9 @@ const description =
       // What-if price analysis
       whatifSlider.addEventListener("input", updateWhatif);
 
+      let copyTimeout: any = null;
+      let copyOriginalText = "";
+
       // Copy results
       copyResultsBtn?.addEventListener("click", () => {
         const text =
@@ -2552,10 +2558,16 @@ const description =
         navigator.clipboard.writeText(text);
 
         // Visual feedback
-        const originalText = copyResultsBtn.innerHTML;
+        if (copyTimeout) {
+          clearTimeout(copyTimeout);
+        } else {
+          // NOTE: copyOriginalText only captures the icon's HTML once and won't reflect later changes to the SVG icon string
+          copyOriginalText = copyResultsBtn.innerHTML;
+        }
         copyResultsBtn.innerHTML = `<span>✓ Copied!</span>`;
-        setTimeout(() => {
-          copyResultsBtn.innerHTML = originalText;
+        copyTimeout = setTimeout(() => {
+          copyResultsBtn.innerHTML = copyOriginalText;
+          copyTimeout = null;
         }, 2000);
       });
 
@@ -2599,9 +2611,8 @@ const description =
         customCurrencyCodeInput.value = "USD";
 
         toggleHolding(false);
-        updateAssetSelection("stocks");
         updateLayoutForCountry();
-        calculate();
+        updateAssetSelection("stocks");
       });
 
       // Scroll to results binding
@@ -2654,8 +2665,11 @@ const description =
       }
 
       // Initial execution
-      updateLayoutForCountry();
-      updateAssetSelection("stocks");
+      const restored = loadState();
+      if (!restored) {
+        updateLayoutForCountry();
+        updateAssetSelection("stocks");
+      }
     });
   </script>
 </Layout>
