@@ -68,7 +68,7 @@ const description = "Analyze debt payoff timelines and estimate total interest s
     </div>
 
     <!-- Toolbar: Reset -->
-    <div class="flex items-center justify-end border-b border-hairline pb-3">
+    <div class="flex items-center justify-start border-b border-hairline pb-3">
       <button
         type="button"
         id="reset-btn"
@@ -1207,14 +1207,15 @@ const description = "Analyze debt payoff timelines and estimate total interest s
       if (mobileSummaryValue) mobileSummaryValue.textContent = formatVal(stdMonthly);
 
       // Determine the user's defined Payment (defaults to standard if 0 or too low)
-      let customPayment = Math.max(0, parseFloat(currentPaymentInput.value) || 0);
+      const userEnteredPayment = parseFloat(currentPaymentInput.value) || 0;
+      let customPayment = Math.max(0, userEnteredPayment);
       if (customPayment <= 0) {
         customPayment = stdMonthly;
       }
 
       // Infinite loop protection checks
       let warningMsg = "";
-      if (rMonthly > 0) {
+      if (rMonthly > 0 && userEnteredPayment > 0) {
         const stdInterestAccrued = totalBalanceAtStart * rMonthly;
         if (customPayment <= stdInterestAccrued && customPayment + extraPayment > stdInterestAccrued) {
           warningMsg = "Warning: The custom monthly payment is less than or equal to the monthly interest accrued. The loan balance will only decrease due to your extra payments.";
@@ -1235,9 +1236,13 @@ const description = "Analyze debt payoff timelines and estimate total interest s
       }
 
       // Amortization loops
-      const passPrincipal = currentCurrency === "INR" ? initialPrincipal : totalBalanceAtStart;
-      standardAmortizationData = simulateSchedule(passPrincipal, rMonthly, stdMonthly, 0, gracePeriodMonths, startDateInput.value, capitalizedInterest);
-      amortizationData = simulateSchedule(passPrincipal, rMonthly, customPayment, extraPayment, gracePeriodMonths, startDateInput.value, capitalizedInterest);
+      if (currentCurrency === "INR") {
+        standardAmortizationData = simulateSchedule(initialPrincipal, rMonthly, stdMonthly, 0, gracePeriodMonths, startDateInput.value, capitalizedInterest);
+        amortizationData = simulateSchedule(initialPrincipal, rMonthly, customPayment, extraPayment, gracePeriodMonths, startDateInput.value, capitalizedInterest);
+      } else {
+        standardAmortizationData = simulateSchedule(initialPrincipal, rMonthly, stdMonthly, 0, gracePeriodMonths, startDateInput.value);
+        amortizationData = simulateSchedule(initialPrincipal, rMonthly, customPayment, extraPayment, gracePeriodMonths, startDateInput.value);
+      }
 
       // Extract results from schedules
       const lastAcc = amortizationData[amortizationData.length - 1];
@@ -1290,7 +1295,16 @@ const description = "Analyze debt payoff timelines and estimate total interest s
       return out || "0 Months";
     }
 
-    // Amortization simulator
+    /**
+     * Amortization simulator
+     * @param principal Initial loan principal
+     * @param rMonthly Monthly interest rate
+     * @param payment Scheduled monthly payment
+     * @param extra Extra monthly payment
+     * @param graceMonths Grace / moratorium period in months (applies to all loan types/currencies)
+     * @param startDateStr Repayment start date string
+     * @param capitalizedInterest Interest capitalized during grace (for INR only)
+     */
     function simulateSchedule(
       principal: number,
       rMonthly: number,
@@ -1311,11 +1325,13 @@ const description = "Analyze debt payoff timelines and estimate total interest s
       let index = 1;
 
       // Inject Grace period phase
-      let totalMoratoriumInterest = 0;
+      const isSubsidized = loanTypeSelect.value === "Federal Subsidized";
+      const isCanadaInterestFree = currentCurrency === "CAD" && !loanTypeSelect.value.includes("Private");
+      const isUKorAU = currentCurrency === "GBP" || currentCurrency === "AUD";
+
       if (currentCurrency === "INR") {
         for (let g = 0; g < graceMonths; g++) {
           const interestAccrued = principal * rMonthly;
-          totalMoratoriumInterest += interestAccrued;
 
           schedule.push({
             paymentNo: index++,
@@ -1327,10 +1343,24 @@ const description = "Analyze debt payoff timelines and estimate total interest s
           });
           currentDate.setMonth(currentDate.getMonth() + 1);
         }
-      }
-
-      if (currentCurrency === "INR") {
         balance = principal + capitalizedInterest;
+      } else {
+        // Non-INR grace period compounding simulation
+        if (graceMonths > 0 && !isSubsidized && !isCanadaInterestFree && !isUKorAU) {
+          for (let g = 0; g < graceMonths; g++) {
+            const interestAccrued = balance * rMonthly;
+            balance += interestAccrued;
+            schedule.push({
+              paymentNo: index++,
+              dateStr: getMonthName(currentDate),
+              payment: 0,
+              interest: interestAccrued,
+              principal: 0,
+              balance: balance
+            });
+            currentDate.setMonth(currentDate.getMonth() + 1);
+          }
+        }
       }
 
       // Repayment phase
@@ -1648,12 +1678,16 @@ Calculated at BoardTools.app`;
           }
           
           tooltipEl.innerHTML = content;
-          tooltipEl.classList.remove("hidden");
+          
+          // Temporarily display the tooltip invisibly to get its dimensions
+          tooltipEl.style.visibility = "hidden";
+          tooltipEl.style.display = "block";
+          
+          const tooltipWidth = tooltipEl.offsetWidth;
+          const tooltipHeight = tooltipEl.offsetHeight;
           
           let leftPos = mouseEvent.clientX - rect.left + 15;
           let topPos = mouseEvent.clientY - rect.top + 15;
-          const tooltipWidth = tooltipEl.offsetWidth;
-          const tooltipHeight = tooltipEl.offsetHeight;
           if (leftPos + tooltipWidth > rect.width) {
             leftPos = mouseEvent.clientX - rect.left - tooltipWidth - 15;
           }
@@ -1663,6 +1697,10 @@ Calculated at BoardTools.app`;
           
           tooltipEl.style.left = `${leftPos}px`;
           tooltipEl.style.top = `${topPos}px`;
+
+          tooltipEl.classList.remove("hidden");
+          tooltipEl.style.visibility = "";
+          tooltipEl.style.display = "";
         } else {
           tooltipEl.classList.add("hidden");
         }
