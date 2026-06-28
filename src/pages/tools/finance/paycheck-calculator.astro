@@ -2859,10 +2859,21 @@ const description =
         });
       }
 
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+
       const mobileScrollBtn = document.getElementById("mobile-scroll-results-btn");
       if (mobileScrollBtn && resultsColumn) {
         mobileScrollBtn.addEventListener("click", () => {
-          resultsColumn.scrollIntoView({ behavior: "smooth" });
+          scrollToElementWithOffset("results-column", 80);
         });
       }
 

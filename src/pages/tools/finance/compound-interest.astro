@@ -417,7 +417,7 @@ const description =
       </div>
 
       <!-- Right Column: Quick Core Outputs Hero (5 Cols) -->
-      <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-5 justify-between">
+      <div id="hero-section" class="lg:col-span-5 flex flex-col gap-4 sm:gap-5 justify-between">
         <div class="card-feature-teal p-5 sm:p-6 flex flex-col justify-between h-full relative overflow-hidden rounded-xl">
           <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/20 rounded-full blur-2xl"></div>
 
@@ -593,6 +593,28 @@ const description =
       <div class="card-base flex flex-col gap-4 p-4 sm:p-5 mt-2">
         <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-hairline pb-2">
           <h3 class="font-display font-semibold text-sm sm:text-base text-primary">Annual Compounding Growth Schedule</h3>
+          <div class="flex items-center gap-2 mt-1 sm:mt-0">
+            <button
+              type="button"
+              id="table-csv-export-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              <span>Export CSV</span>
+            </button>
+            <button
+              type="button"
+              id="table-excel-export-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Export Excel</span>
+            </button>
+          </div>
         </div>
 
         <div class="w-full overflow-x-auto">
@@ -770,6 +792,8 @@ const description =
     const toggleScheduleBtn = document.getElementById("toggle-schedule-btn") as HTMLButtonElement;
     const copyResultsBtn = document.getElementById("copy-results-btn");
     const csvExportBtn = document.getElementById("csv-export-btn");
+    const tableCsvExportBtn = document.getElementById("table-csv-export-btn");
+    const tableExcelExportBtn = document.getElementById("table-excel-export-btn");
     const resetBtn = document.getElementById("reset-btn");
     const viewResultsBtn = document.getElementById("view-results-btn");
     const mobileScrollBtn = document.getElementById("mobile-scroll-results-btn");
@@ -1340,7 +1364,44 @@ const description =
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", `compound_interest_schedule_${currentCurrency}.csv`);
+      link.setAttribute("download", `compound_interest_schedule_${currentCurrencyCode}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Export Excel (.xls HTML format)
+    function exportToExcel() {
+      if (yearlyScheduleData.length === 0) return;
+      
+      let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">`;
+      html += `<head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Growth Schedule</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>`;
+      html += `<body><table>`;
+      html += `<thead>`;
+      html += `<tr style="background-color: #f1f5f9; font-weight: bold;">`;
+      html += `<th>Year</th><th>Contributions (Yr)</th><th>Interest Earned (Yr)</th><th>Cumulative Contributed</th><th>Cumulative Interest</th><th>Ending Balance</th>`;
+      html += `</tr>`;
+      html += `</thead><tbody>`;
+      
+      yearlyScheduleData.forEach(row => {
+        html += `<tr>`;
+        html += `<td>Year ${row.year}</td>`;
+        html += `<td>${row.contributionsThisYear.toFixed(2)}</td>`;
+        html += `<td>${row.interestThisYear.toFixed(2)}</td>`;
+        html += `<td>${row.cumulativeContributions.toFixed(2)}</td>`;
+        html += `<td>${row.cumulativeInterest.toFixed(2)}</td>`;
+        html += `<td>${row.endingBalance.toFixed(2)}</td>`;
+        html += `</tr>`;
+      });
+      
+      html += `</tbody></table></body></html>`;
+
+      const blob = new Blob([html], { type: "application/vnd.ms-excel;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `compound_interest_schedule_${currentCurrencyCode}.xls`);
+      link.style.visibility = "hidden";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1476,6 +1537,8 @@ Calculated 100% privately via BoardTools.
     // Copy, CSV & Reset
     copyResultsBtn?.addEventListener("click", copyResults);
     csvExportBtn?.addEventListener("click", exportToCSV);
+    tableCsvExportBtn?.addEventListener("click", exportToCSV);
+    tableExcelExportBtn?.addEventListener("click", exportToExcel);
 
     resetBtn?.addEventListener("click", () => {
       principalInput.value = "10000";
@@ -1503,21 +1566,32 @@ Calculated 100% privately via BoardTools.
       calculate();
     });
 
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+
     // Scroll buttons
     viewResultsBtn?.addEventListener("click", () => {
-      document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
+      scrollToElementWithOffset("results-section", 80);
     });
     mobileScrollBtn?.addEventListener("click", () => {
-      document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
+      scrollToElementWithOffset("hero-section", 80);
     });
 
     // Sticky mobile bar scroll reveal
     window.addEventListener("scroll", () => {
       const stickyBar = document.getElementById("mobile-sticky-bar");
-      const resultsSection = document.getElementById("results-section");
-      if (stickyBar && resultsSection) {
-        const threshold = resultsSection.getBoundingClientRect().top + window.scrollY - 300;
-        if (window.scrollY > 150 && window.scrollY < threshold) {
+      const heroSection = document.getElementById("hero-section");
+      if (stickyBar && heroSection) {
+        const heroRect = heroSection.getBoundingClientRect();
+        if (window.scrollY > 100 && heroRect.top > 90) {
           stickyBar.style.transform = "translateY(0)";
         } else {
           stickyBar.style.transform = "translateY(100%)";

@@ -368,7 +368,7 @@ const description = "Analyze debt payoff timelines and estimate total interest s
       </div>
 
       <!-- Right Column: Sidebar outputs / hero outputs (5 Columns) -->
-      <div class="lg:col-span-5 flex flex-col gap-6">
+      <div id="hero-section" class="lg:col-span-5 flex flex-col gap-6">
         <!-- Core Key Outputs Pane -->
         <div class="card-feature-teal flex flex-col justify-between bg-surface relative overflow-hidden rounded-xl p-6 border border-hairline-soft min-h-[360px]">
           <div class="absolute top-0 right-0 w-32 h-32 bg-teal-light/20 rounded-full blur-3xl"></div>
@@ -914,13 +914,24 @@ const description = "Analyze debt payoff timelines and estimate total interest s
     closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
     modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
 
-    // Scroll to results
-    function scrollToResults() {
-      const el = document.getElementById("results-column");
-      el?.scrollIntoView({ behavior: "smooth" });
+    function scrollToElementWithOffset(elementId: string, offset = 80) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
-    viewResultsBtn?.addEventListener("click", scrollToResults);
-    mobileScrollResultsBtn?.addEventListener("click", scrollToResults);
+
+    // Scroll to results
+    viewResultsBtn?.addEventListener("click", () => {
+      scrollToElementWithOffset("results-column", 80);
+    });
+    mobileScrollResultsBtn?.addEventListener("click", () => {
+      scrollToElementWithOffset("hero-section", 80);
+    });
 
     // Country/Currency state updates
     function applyCountrySelection(currencyKey: string, skipCalculate = false) {
@@ -1716,23 +1727,17 @@ Calculated at BoardTools.app`;
     loadState();
 
     // Toggle mobile sticky bar visibility based on scroll position/results section visibility
-    const resultsColumnEl = document.getElementById("results-column");
+    const heroSection = document.getElementById("hero-section");
     const mobileStickyBar = document.getElementById("mobile-sticky-bar");
-    if (resultsColumnEl && mobileStickyBar) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const shouldHide = entry.isIntersecting || entry.boundingClientRect.top < 100;
-          if (shouldHide) {
-            mobileStickyBar.classList.add("translate-y-full");
-          } else {
-            mobileStickyBar.classList.remove("translate-y-full");
-          }
-        });
-      }, {
-        threshold: 0,
-        rootMargin: "-50px 0px 0px 0px"
+    if (heroSection && mobileStickyBar) {
+      window.addEventListener("scroll", () => {
+        const heroRect = heroSection.getBoundingClientRect();
+        if (window.scrollY > 100 && heroRect.top > 90) {
+          mobileStickyBar.classList.remove("translate-y-full");
+        } else {
+          mobileStickyBar.classList.add("translate-y-full");
+        }
       });
-      observer.observe(resultsColumnEl);
     }
   </script>
 </Layout>
