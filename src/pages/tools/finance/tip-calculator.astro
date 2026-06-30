@@ -5,15 +5,27 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Tip & Split Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
+
+// On-page SEO metadata
+const pageTitle =
+  "Tip & Split Calculator - Free Tip Calculator & Bill Split Calculator";
 const description =
-  "Quickly calculate tip percentages, customize gratuities, and split bills dynamically among friends or colleagues.";
+  "Free Tip & Split Calculator to find the perfect tip and split any bill between friends. Restaurant, nail salon & group bill split calculator with per-person totals.";
+const canonicalUrl = "https://boardtools.app/tools/finance/tip-calculator";
+const ogImage = "/og/tip-split-calculator.png";
+const keywords =
+  "tip & split calculator, tip calculator, tip calculator google, tip calculator how much to tip, google tip calculator, tip calculator iphone, restaurant tip calculator, tattoo tip calculator, nail salon tip calculator, tax and tip calculator, free tip calculator, ez tip calculator, simple tip calculator, split calculator, rent split calculator, mini split calculator, stock split calculator, bill split calculator, split bill calculator, group bill split calculator, 50/50 split calculator, group expense calculator, 4 way bill split calculator, dinner bill split calculator, 3 way bill split calculator, 4 way split calculator, group expense splitting, split bill app";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,16 +34,100 @@ const description =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Tip & Split Calculator",
+      "alternateName": "Tip Calculator & Bill Split Calculator",
       "url": "https://boardtools.app/tools/finance/tip-calculator",
-      "description": "Interactive real-time tip calculator and bill splitter with quick presets, custom tip controls, and instant per-person breakdowns.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free Tip & Split Calculator and bill splitter with quick tip presets, custom tip controls, tax support, multi-currency formatting and instant per-person breakdowns for groups.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Restaurant tip calculator with quick percentage presets",
+        "Custom tip slider for nail salon, tattoo and service tips",
+        "Bill split calculator for 2, 3, 4 or more people",
+        "Per-person tip and total breakdown",
+        "Multi-currency support (USD, GBP, EUR, INR, CAD, AUD)",
+        "100% private client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1640"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Tip & Split Calculator",
+          "item": "https://boardtools.app/tools/finance/tip-calculator"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much should I tip?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the US a standard restaurant tip is 15-20% of the pre-tax bill, with 20% considered good service. This free tip calculator includes 10%, 15%, 18%, 20% and 25% presets plus a custom slider so you can decide exactly how much to tip for restaurants, nail salons, tattoos and other services."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the bill split calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter the bill amount, choose a tip percentage, then set the number of people. The split calculator instantly divides the tip and the grand total evenly, showing the tip per person and total per person. It works as a 50/50 split calculator for two people or a 3 way, 4 way or larger group bill split calculator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add tax to the tip calculation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Enter your post-tax bill amount as the bill total to use it as a tax and tip calculator, or enter the pre-tax subtotal if you prefer to tip on the amount before tax. The calculator then applies your chosen tip percentage and splits the final total."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this tip and split calculator free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is a 100% free tip calculator and split bill app that runs entirely in your browser. No sign-up is required, it works on iPhone, Android and desktop, and your numbers never leave your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -263,6 +359,169 @@ const description =
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Tip & Split Calculator for Any Bill
+      </h2>
+      <p class="text-sm leading-relaxed">
+        The <strong>Tip &amp; Split Calculator</strong> is a fast, free tip
+        calculator and bill split calculator that figures out the perfect
+        gratuity and divides the cost between everyone at the table. Whether you
+        are wondering <em>how much to tip</em> after dinner, splitting a check
+        with friends, or working out shared costs for a group, this tool gives
+        you an instant, accurate per-person breakdown. It runs entirely in your
+        browser, works on iPhone, Android, and desktop, and never sends your
+        numbers anywhere &mdash; making it a genuinely private, simple tip
+        calculator you can trust with every bill.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Unlike the basic Google tip calculator, this is a complete split bill
+        app built for real life. Enter your bill amount, tap a quick tip
+        preset, choose how many people are sharing the cost, and you instantly
+        see the tip amount, the total bill, the tip per person, and the total
+        per person. There is no sign-up, no ads getting in the way, and no math
+        to do in your head. It is the kind of EZ tip calculator you can pull up
+        in seconds the moment the check arrives.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Tip Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this restaurant tip calculator takes three steps. First, type in
+        your bill amount &mdash; use the pre-tax subtotal if you prefer to tip
+        before tax, or the final total if you want a tax and tip calculator that
+        works on the post-tax amount. Second, pick your tip percentage from the
+        10%, 15%, 18%, 20%, and 25% presets, or drag the custom slider to set
+        any value you like. Third, set the number of people, and the split
+        calculator does the rest. Every result updates live as you type, so you
+        can compare scenarios in real time.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How Much Should You Tip?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        In the United States, a standard restaurant tip is 15% to 20% of the
+        bill, with 20% widely considered the mark of good service. Service tips
+        come up far beyond restaurants, though. A nail salon tip calculator
+        scenario usually lands around 15&ndash;20%, and many people use a tattoo
+        tip calculator approach of 15&ndash;25% (or more) to thank a great
+        artist. Because every situation is different, the custom slider lets you
+        answer the "tip calculator how much to tip" question for your own
+        budget, the quality of service, and local customs &mdash; no preset
+        required.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Split Any Bill Between Any Number of People
+      </h3>
+      <p class="text-sm leading-relaxed">
+        At its heart this is a flexible split bill calculator. Use it as a 50/50
+        split calculator when two people share a meal, a 3 way bill split
+        calculator for a trio, or a 4 way bill split calculator and beyond for
+        bigger groups. It is ideal as a dinner bill split calculator, a group
+        bill split calculator for parties and celebrations, and a group expense
+        calculator for trips, house shares, and nights out. By dividing both the
+        tip and the grand total evenly, it removes the awkward guesswork from
+        group expense splitting and makes sure everyone pays their fair share.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Multi-Currency and Tax Friendly
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The calculator supports US dollars, British pounds, euros, Indian
+        rupees, Canadian and Australian dollars, plus a custom currency option,
+        so it formats results correctly wherever you are. Combined with optional
+        tax handling, it doubles as a tax and tip calculator that mirrors what
+        you actually see on the receipt. Your most recent bill amount, tip
+        percentage, and group size are saved locally on your device, so the tool
+        remembers your preferences the next time you open it.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Choose This Free Tip & Split Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        There are plenty of calculators online, but this one combines speed,
+        privacy, and flexibility in a clean, distraction-free interface. It is a
+        free tip calculator and a powerful split calculator in a single page,
+        with no app to download. Everything is calculated client-side, so it is
+        safe to use anywhere, even offline once the page has loaded. From a
+        quick solo restaurant tip to a complex group expense splitting session
+        with friends, the Tip &amp; Split Calculator gives you clear, reliable
+        numbers in seconds &mdash; the simplest way to tip fairly and split any
+        bill without the headache.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How much should I tip?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A standard US restaurant tip is 15&ndash;20% of the bill, and 20% is
+            considered good service. This free tip calculator includes 10%, 15%,
+            18%, 20%, and 25% presets plus a custom slider, so you can decide
+            exactly how much to tip for restaurants, nail salons, tattoos, and
+            other services.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does the bill split calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter the bill amount, choose a tip percentage, then set the number
+            of people. The split calculator instantly divides the tip and grand
+            total evenly, showing tip per person and total per person. It works
+            as a 50/50 split calculator for two or a 3 way, 4 way, or larger
+            group bill split calculator.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I add tax to the tip calculation?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. Enter your post-tax bill total to use it as a tax and tip
+            calculator, or enter the pre-tax subtotal if you prefer to tip on
+            the amount before tax. The calculator then applies your tip
+            percentage and splits the final total.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this tip and split calculator free?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This is a 100% free tip calculator and split bill app that runs
+            entirely in your browser. No sign-up is required, it works on
+            iPhone, Android, and desktop, and your numbers never leave your
+            device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

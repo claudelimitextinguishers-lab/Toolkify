@@ -7,11 +7,22 @@ const category = "finance";
 const tier = "Finance & Tax";
 const description =
   "Project your retirement savings balance and future income based on annual contributions, employer matches, and compound growth across multiple countries.";
+
+// SEO-optimized metadata
+const seoTitle = "401(k) Calculator & Retirement Savings Estimator";
+const seoDescription =
+  "Free 401(k) calculator with employer match. Project your retirement savings, plan to max out 401(k) contributions, model withdrawals, and compare your nest egg to average retirement savings by age.";
+const seoKeywords =
+  "401(k) calculator & retirement savings, 401(k) calculator, 401k calculator, 401k calculator with match, bankrate 401k calculator, solo 401k calculator, simple 401k calculator, 401k calculator simple, retirement 401k calculator, 401k calculator withdrawal, max out 401k calculator, early withdrawal 401k calculator, average retirement savings by age, retirement calculator, retirement calculator 401k";
+const canonicalUrl = "https://boardtools.app/tools/finance/retirement-401k";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
-  description={description}
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  canonical={canonicalUrl}
+  ogType="website"
   toolName={name}
   toolCategory={category}
   hideBanner={true}
@@ -21,17 +32,85 @@ const description =
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "401(k) & Retirement Savings Calculator",
+      "name": "401(k) Calculator & Retirement Savings Estimator",
       "url": "https://boardtools.app/tools/finance/retirement-401k",
-      "description": "Interactive multi-country retirement savings projection calculator, supporting US 401(k), CA RRSP/TFSA, UK Pensions, AU Superannuation, and Indian EPF/NPS systems with SVG charts and growth schedules.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free 401(k) calculator and retirement savings estimator. Project your 401k balance with employer match, plan to max out contributions, model early withdrawals, and benchmark against average retirement savings by age. Supports US 401(k), CA RRSP/TFSA, UK Pensions, AU Superannuation, and Indian EPF/NPS systems with interactive charts and growth schedules.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "keywords": "401(k) calculator & retirement savings, 401k calculator, 401k calculator with match, solo 401k calculator, simple 401k calculator, retirement 401k calculator, 401k calculator withdrawal, max out 401k calculator, early withdrawal 401k calculator, average retirement savings by age, retirement calculator",
+      "featureList": [
+        "401k calculator with employer match",
+        "Max out 401k contribution planning with annual limits and age 50+ catch-up",
+        "401k withdrawal and retirement income estimate using the 4% rule",
+        "Average retirement savings by age benchmarking",
+        "Real vs nominal inflation-adjusted balance projection",
+        "Year-by-year growth schedule with CSV and Excel export",
+        "Multi-country support: 401(k), RRSP/TFSA, Pension, Super, EPF/NPS"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does a 401(k) calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 401(k) calculator projects your retirement savings by combining your current balance, annual contributions, employer match, and an expected rate of return, then compounding that growth each year until your retirement age. This retirement 401k calculator also estimates your monthly retirement income using the standard 4% withdrawal rule and shows the inflation-adjusted value of your savings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate my 401k with an employer match?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your contribution rate, your employer's match rate, and the match limit as a percentage of salary. This 401k calculator with match adds the employer contribution on top of your own, up to the match limit, so you can see exactly how much free money you earn each year and over your full career."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much should I contribute to max out my 401k?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 2024 the IRS limit is $23,000, rising to $30,500 with the age 50+ catch-up contribution. Use the max out 401k calculator by raising your contribution rate until you hit the annual cap; the tool warns you when contributions exceed the localized tax-advantaged limit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens with an early 401k withdrawal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Withdrawing before age 59½ generally triggers a 10% early withdrawal penalty plus income tax on the amount, and it permanently removes future compound growth. Use the 401k calculator withdrawal and early withdrawal 401k calculator views to compare your projected balance with and without taking money out early."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the average retirement savings by age?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typical benchmarks suggest having roughly 1x your salary saved by age 30, 3x by 40, 6x by 50, and 8x to 10x by retirement. Compare your projected balance against these average retirement savings by age targets to see whether you are on track."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this as a solo 401k calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Self-employed savers can use it as a solo 401k calculator by entering total contributions in the contribution and employer match fields, since a solo 401(k) lets you contribute as both employee and employer. The simple 401k calculator interface keeps the projection clear while still supporting advanced inflation and salary-growth settings."
+          }
+        }
+      ]
     }
   </script>
 
@@ -904,6 +983,141 @@ const description =
         </button>
       </div>
     </div>
+
+    <!-- ===================== SEO CONTENT SECTION ===================== -->
+    <section
+      class="prose-tool flex flex-col gap-8 mt-12 border-t border-hairline pt-10 max-w-3xl mx-auto"
+      aria-label="About the 401(k) calculator and retirement savings estimator"
+    >
+      <div class="flex flex-col gap-4">
+        <h2
+          class="font-display font-semibold text-2xl text-primary tracking-tight"
+        >
+          401(k) Calculator & Retirement Savings
+        </h2>
+        <p class="text-sm text-slate leading-relaxed">
+          Our free <strong>401(k) calculator</strong> shows you exactly how your
+          retirement savings can grow over your working life. Enter your age,
+          salary, current balance, and contribution rate, and this
+          <strong>retirement calculator</strong> projects your future 401k
+          balance, the total you and your employer contribute, and an estimated
+          monthly retirement income. Because every calculation runs locally in
+          your browser, your numbers stay completely private. Whether you call it
+          a <strong>401k calculator</strong>, a
+          <strong>retirement 401k calculator</strong>, or a
+          <strong>retirement calculator 401k</strong> tool, the goal is the
+          same: turn today's contributions into a clear picture of tomorrow's
+          nest egg.
+        </p>
+        <p class="text-sm text-slate leading-relaxed">
+          Unlike a <strong>simple 401k calculator</strong> that returns a single
+          number, this tool builds a full year-by-year projection with an
+          interactive chart and an exportable growth schedule. Prefer something
+          lightweight? The clean interface still works as a
+          <strong>401k calculator simple</strong> enough for a quick estimate,
+          while the advanced panel unlocks inflation, salary growth, and
+          tax-account settings when you want more detail than a typical
+          <strong>bankrate 401k calculator</strong> provides.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          401(k) calculator with employer match
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          The employer match is one of the most valuable parts of any workplace
+          retirement plan, so this <strong>401k calculator with match</strong>
+          treats it as a first-class input. Set your employer's match rate and
+          the match limit as a percentage of salary, and the tool adds that
+          "free money" on top of your own contributions every year. You can
+          instantly see how contributing at least enough to capture the full
+          match accelerates your balance. For self-employed savers, the same
+          engine doubles as a <strong>solo 401k calculator</strong>: because a
+          solo 401(k) lets you contribute as both employee and employer, you can
+          enter both portions and watch the combined total compound.
+        </p>
+        <ul
+          class="text-sm text-slate leading-relaxed flex flex-col gap-2 list-disc pl-5"
+        >
+          <li>
+            <strong>Projected balance:</strong> see your full retirement pot at
+            your chosen retirement age.
+          </li>
+          <li>
+            <strong>Employer match earned:</strong> quantify the contributions
+            your employer adds over your career.
+          </li>
+          <li>
+            <strong>Monthly retirement income:</strong> estimated with the
+            standard 4% withdrawal rule.
+          </li>
+          <li>
+            <strong>Real vs nominal value:</strong> understand what your savings
+            are worth after inflation.
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Max out your 401(k) and plan withdrawals
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Trying to hit the annual limit? Use the
+          <strong>max out 401k calculator</strong> by raising your contribution
+          rate until you reach the IRS cap of $23,000 (or $30,500 with the age
+          50+ catch-up contribution). The tool flags when your contributions
+          exceed the tax-advantaged limit so you can fine-tune your strategy.
+          When you need to plan distributions instead, the
+          <strong>401k calculator withdrawal</strong> view helps you see how
+          drawing down your balance affects long-term growth. The
+          <strong>early withdrawal 401k calculator</strong> perspective is
+          especially useful for understanding the true cost of taking money out
+          before age 59½, where a 10% penalty plus income tax and lost compound
+          growth can shrink your nest egg dramatically.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Average retirement savings by age
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          It helps to know where you stand. Common benchmarks for
+          <strong>average retirement savings by age</strong> suggest having
+          roughly one times your salary saved by 30, three times by 40, six
+          times by 50, and eight to ten times by the time you retire. Run your
+          numbers through this <strong>retirement calculator</strong> and
+          compare your projected balance at each age in the year-by-year table to
+          see whether you are ahead of or behind those targets. Adjusting your
+          contribution rate by even one or two percent today can move you well
+          past the average over a multi-decade horizon.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          More than a 401(k): a global retirement calculator
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          While the United States 401(k) is the default, this
+          <strong>retirement calculator 401k</strong> tool adapts to where you
+          live. Switch the currency selector to model a Canadian RRSP or TFSA, a
+          UK workplace pension or SIPP, Australian Superannuation, or Indian EPF
+          and NPS accounts, each with localized contribution limits and tax
+          notes. Whether you want a quick
+          <strong>401k calculator simple</strong> estimate, a detailed
+          <strong>retirement 401k calculator</strong> projection with inflation
+          adjustment, or a transparent alternative to a
+          <strong>bankrate 401k calculator</strong>, this
+          <strong>401(k) calculator &amp; retirement savings</strong> tool gives
+          you the full picture in seconds. Adjust the inputs, review the growth
+          chart, and export your plan to CSV or Excel whenever you are ready.
+        </p>
+      </div>
+    </section>
+    <!-- =================== END SEO CONTENT SECTION =================== -->
 
     <!-- Security & Privacy Guard -->
     <div

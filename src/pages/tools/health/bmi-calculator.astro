@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "BMI Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Calculate Body Mass Index and evaluate healthy weight classifications based on standard WHO/CDC cutoffs.";
+
+// On-page SEO metadata
+const pageTitle =
+  "BMI Calculator - Free Online BMI Calculator for Men & Women";
+const description =
+  "Free online BMI calculator for men and women. Calculate your Body Mass Index in metric (cm/kg) or imperial (inches/pounds) units instantly with WHO weight categories.";
+const canonicalUrl = "https://boardtools.app/tools/health/bmi-calculator";
+const ogImage = "/og/bmi-calculator.png";
+const keywords =
+  "bmi calculator, bmi calculator women, bmi calculator men, bmi calculator female, bmi calculator male, bmi calculator online, bmi calculator imperial, bmi calculator metric, bmi calculator imperial units, bmi calculator metric units, bmi calculator inches pounds, bmi calculator cm kg, bmi calculator pounds inches, bmi calculator kg cm, bmi calculator cm and kg, bmi calculator pounds and inches, bmi calculator inches and pounds, bmi calculator kg and cm, bmi calculator cm and pounds, bmi calculator pounds and cm, bmi calculator cm and inches, bmi calculator inches and kg";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,11 +34,20 @@ const description = "Calculate Body Mass Index and evaluate healthy weight class
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "BMI Calculator",
+      "alternateName": "Body Mass Index Calculator for Men & Women",
       "url": "https://boardtools.app/tools/health/bmi-calculator",
-      "description": "Interactive client-side BMI calculator supporting metric (cm/kg) and imperial (ft-in/lb) units, real-time feedback, WHO category scale visual indicator, and contextual health advice.",
+      "description": "Free online BMI calculator for men and women supporting metric (cm/kg) and imperial (inches/pounds) units, real-time feedback, a WHO category scale visual indicator, and contextual health advice.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "BMI calculator with metric units (cm and kg)",
+        "BMI calculator with imperial units (inches and pounds)",
+        "Instant Body Mass Index calculation for men and women",
+        "WHO/CDC weight category classification with visual gauge",
+        "Optional age and sex context for tailored guidance",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
@@ -33,6 +55,49 @@ const description = "Calculate Body Mass Index and evaluate healthy weight class
       }
     }
   </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I calculate my BMI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BMI is your weight divided by your height squared. In metric units the formula is weight (kg) / height (m)². In imperial units it is weight (lb) / height (in)² × 703. This BMI calculator does the math for you in both cm/kg and inches/pounds instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the BMI calculation different for men and women?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The BMI formula is the same for men and women, so the calculated number is identical. However, at the same BMI women generally carry more body fat than men, which is why our BMI calculator lets you add optional sex and age context for more relevant guidance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a healthy BMI range?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "According to WHO/CDC standards for adults, a BMI below 18.5 is underweight, 18.5 to 24.9 is a healthy weight, 25 to 29.9 is overweight, and 30 or above is obese."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use the BMI calculator in imperial and metric units?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This free online BMI calculator works with both metric units (cm and kg) and imperial units (inches and pounds). Switch between the two with a single tap and the result updates instantly."
+          }
+        }
+      ]
+    }
+  </script>
+
 
   <section class="max-w-[1000px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
     <!-- Breadcrumb & Header -->
@@ -403,6 +468,186 @@ const description = "Calculate Body Mass Index and evaluate healthy weight class
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online BMI Calculator for Men & Women
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>BMI calculator</strong> is a fast, free, and private way to
+        work out your Body Mass Index and see where your weight sits on the
+        standard WHO/CDC scale. Whether you are using a
+        <strong>BMI calculator for women</strong> or a
+        <strong>BMI calculator for men</strong>, the formula is the same and the
+        result appears instantly as you type or drag the sliders. As a fully
+        client-side <strong>BMI calculator online</strong>, every calculation
+        happens in your browser &mdash; your height, weight, age, and sex never
+        leave your device, so it is genuinely private to use on desktop, tablet,
+        or phone.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Body Mass Index is a simple screening number that compares your weight
+        to your height. It is widely used by doctors and health organisations as
+        a quick, low-cost indicator of whether you are in the underweight,
+        healthy, overweight, or obese range. This tool turns that calculation
+        into a clear visual gauge with colour-coded categories, a live
+        classification label, and contextual advice that adapts to your exact
+        BMI value &mdash; so you get more than just a number.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        BMI Calculator with Metric & Imperial Units
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The tool works as both a <strong>BMI calculator metric</strong> and a
+        <strong>BMI calculator imperial</strong>, so you can enter your
+        measurements however you are used to. Choose metric units to use a
+        <strong>BMI calculator cm and kg</strong> (centimetres for height and
+        kilograms for weight), or switch to imperial units to use a
+        <strong>BMI calculator inches and pounds</strong> with feet, inches, and
+        pounds. Whether you think in
+        <strong>BMI calculator kg and cm</strong> or prefer a
+        <strong>BMI calculator pounds and inches</strong>, a single tap toggles
+        between the two systems and converts your figures automatically. That
+        makes it equally useful as a BMI calculator metric units tool for most
+        of the world and a BMI calculator imperial units tool for the US.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the BMI Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this BMI calculator takes seconds. First, pick your measurement
+        system &mdash; metric (cm/kg) or imperial (inches/pounds). Second, set
+        your height and weight using the sliders or by typing exact values into
+        the input boxes. Third, read your result on the dial: the large number
+        is your BMI, the label beneath it shows your category, and the gauge
+        needle points to where you fall on the scale. You can also add your age
+        and sex as optional context to receive guidance tuned to your situation
+        &mdash; for example, notes for older adults or a reminder that a
+        <strong>BMI calculator female</strong> reading may differ in body-fat
+        terms from a <strong>BMI calculator male</strong> reading at the same
+        number.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        The BMI Formula
+      </h3>
+      <p class="text-sm leading-relaxed">
+        BMI is calculated by dividing your weight by the square of your height.
+        In metric units the formula is <strong>weight (kg) ÷ height (m)²</strong>,
+        which is why a BMI calculator cm kg only needs your centimetres and
+        kilograms. In imperial units the formula is
+        <strong>weight (lb) ÷ height (in)² × 703</strong>, so a BMI calculator
+        inches pounds simply converts your feet and inches into total inches
+        first. Both methods give the same result for the same person, which is
+        why you can freely move between a BMI calculator pounds and cm setup and
+        a BMI calculator inches and kg setup without changing the outcome.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Understanding Your BMI Categories
+      </h3>
+      <p class="text-sm leading-relaxed">
+        For adults, the World Health Organization and CDC define four main
+        ranges: <strong>underweight</strong> (below 18.5), a
+        <strong>healthy weight</strong> (18.5&ndash;24.9),
+        <strong>overweight</strong> (25&ndash;29.9), and
+        <strong>obese</strong> (30 and above). This BMI calculator highlights
+        your category live and offers practical, range-specific suggestions,
+        such as roughly how much weight to gain or lose to reach the healthy
+        band for your height. Keep in mind that BMI is a screening tool, not a
+        diagnosis &mdash; it does not directly measure body fat, and athletes
+        with high muscle mass may read as overweight despite being lean.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This BMI Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of calculators exist online, but this one combines speed,
+        accuracy, and privacy in a clean, distraction-free design. It is a
+        complete BMI calculator for men and women, supports both metric and
+        imperial measurements, and remembers your last inputs locally so it is
+        ready the next time you visit. There is no sign-up, no ads in the way,
+        and nothing to install. From a quick check in kilograms and centimetres
+        to a detailed reading in pounds and inches, this free online BMI
+        calculator gives you clear, trustworthy numbers in seconds &mdash; and
+        the context to understand what they mean.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I calculate my BMI?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            BMI is your weight divided by your height squared. In metric units
+            the formula is weight (kg) ÷ height (m)², and in imperial units it is
+            weight (lb) ÷ height (in)² × 703. This BMI calculator does the math
+            for you in both cm/kg and inches/pounds instantly.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is the BMI calculator different for men and women?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            The BMI formula is identical for men and women, so the number is the
+            same. At the same BMI, however, women generally carry more body fat
+            than men, which is why this BMI calculator lets you add optional sex
+            and age context for more relevant guidance.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a healthy BMI range?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            For adults, WHO/CDC standards classify a BMI below 18.5 as
+            underweight, 18.5&ndash;24.9 as a healthy weight, 25&ndash;29.9 as
+            overweight, and 30 or above as obese.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I use the BMI calculator in imperial and metric units?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This free online BMI calculator works with both metric units
+            (cm and kg) and imperial units (inches and pounds). Switch between
+            them with a single tap and the result updates instantly.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this BMI calculator free and private?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. It is a 100% free BMI calculator online that runs entirely in
+            your browser. No sign-up is required, it works on iPhone, Android,
+            and desktop, and your measurements never leave your device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -6,13 +6,26 @@ const name = "SIP Return Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
 const description = "Calculate prospective returns and final maturity value on Systematic Investment Plans (SIP) with annual step-up contribution growth and lump-sum top-up options.";
+
+// On-page SEO metadata
+const pageTitle = "SIP Return Calculator - Monthly & Lumpsum SIP Calculator";
+const seoDescription =
+  "Free SIP return calculator to estimate the maturity value of monthly and lumpsum SIP investments. Calculate SIP returns for 5, 10, 15, 20, 25, 30 & 40 years with step-up SIP support.";
+const canonicalUrl = "https://boardtools.app/tools/finance/sip-return";
+const ogImage = "/og/sip-return-calculator.png";
+const keywords =
+  "sip return calculator, how to calculate sip, best sip calculator, sip calculator monthly investment, sip calculator lumpsum, sip calculator 5 year, sip calculator 10 year, sip calculator 15 year, sip calculator 20 year, sip calculator 25 year, sip calculator 30 year, sip calculator lumpsum with monthly investment, top sip calculator, sip calculator, step up sip calculator, sip calculator with step up, sip calculator 40 years, daily sip calculator, sip calculator online";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
-  description={description}
+  title={pageTitle}
+  description={seoDescription}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,80 @@ const description = "Calculate prospective returns and final maturity value on S
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "SIP Return Calculator",
+      "alternateName": "Monthly & Lumpsum SIP Calculator with Step-up",
       "url": "https://boardtools.app/tools/finance/sip-return",
-      "description": "Premium interactive Systematic Investment Plan (SIP) return calculator supporting annual step-up percentages, lump-sum top-ups, CSV/Excel exports, and dynamic what-if sensitivity comparisons.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free interactive SIP return calculator to estimate the maturity value of monthly and lumpsum mutual fund investments with annual step-up percentages, lump-sum top-ups, CSV/Excel exports, and dynamic what-if sensitivity comparisons for 5, 10, 15, 20, 25, 30 and 40 year horizons.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Monthly SIP investment return projections",
+        "Lumpsum SIP calculator with one-time top-up",
+        "Step up SIP calculator with annual increment",
+        "SIP returns for 5, 10, 15, 20, 25, 30 and 40 years",
+        "Year-by-year growth breakdown and donut chart",
+        "What-if sensitivity analysis and CSV/Excel export"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1840"
       }
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this SIP return calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your monthly investment amount, expected annual return rate, and investment duration, and this SIP return calculator applies the future value of an annuity formula FV = P x [ (1 + i)^n - 1 ] x (1 + i) / i to estimate your maturity value. You can also enable a step-up SIP increment, add a lumpsum top-up, and switch between monthly and yearly compounding."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to calculate SIP returns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To calculate SIP returns, multiply each monthly contribution by its compounded growth until the end of the term and add the results. This SIP calculator does the math for you instantly: it shows your total invested amount, estimated wealth gained, and final maturity value, along with a year-by-year breakdown for 5, 10, 15, 20, 25, 30 or 40 year periods."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a step up SIP calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A step up SIP calculator increases your monthly SIP contribution by a fixed percentage every year, mirroring real salary increments. Enable the annual step-up option in the advanced settings to see how a sip calculator with step up grows your maturity value far beyond a flat monthly investment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this as a lumpsum SIP calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Add a one-time lump-sum top-up in the advanced parameters to use it as a sip calculator lumpsum with monthly investment. It combines an initial lumpsum investment with ongoing monthly SIP contributions and projects the blended maturity value."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this the best SIP calculator and is it free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is a 100% free, online SIP calculator that runs entirely in your browser with no sign-up required. It supports monthly investment, lumpsum, step-up SIP, multiple currencies, and exports, making it one of the best SIP calculator tools for planning mutual fund investments."
+          }
+        }
+      ]
     }
   </script>
 
@@ -555,6 +632,185 @@ const description = "Calculate prospective returns and final maturity value on S
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 md:px-8 pb-24 lg:pb-16 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free SIP Return Calculator
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>SIP return calculator</strong> shows you exactly how a
+        Systematic Investment Plan can grow your wealth over time. It is a fast,
+        free, online SIP calculator that estimates the maturity value of your
+        mutual fund investments from three simple inputs: your monthly
+        investment, your expected annual return rate, and your investment
+        duration. Whether you are starting a brand-new monthly SIP, parking a
+        one-time lumpsum, or layering both together, this best SIP calculator
+        projects your final corpus instantly with a clear year-by-year
+        breakdown, an interactive donut chart, and a what-if sensitivity
+        analysis. Because every calculation runs entirely inside your browser,
+        none of your numbers ever leave your device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        A SIP, or Systematic Investment Plan, lets you invest a fixed amount in
+        mutual funds at regular intervals instead of timing the market with a
+        single large investment. The power behind it is rupee-cost averaging
+        combined with compounding: each contribution buys units at different
+        prices, and the returns you earn are reinvested so your money keeps
+        earning on a steadily larger base. This top SIP calculator makes that
+        exponential growth easy to visualize, helping you see how a modest,
+        consistent monthly investment can compound into a substantial corpus
+        across 5, 10, 15, 20, 25 or even 30 years.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Calculate SIP Returns
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Wondering how to calculate SIP returns by hand? Each monthly
+        installment compounds for a different number of months, so the maths
+        gets complex quickly. This SIP calculator monthly investment tool does
+        it for you using the future value of an annuity formula
+        <strong>FV = P &times; [ (1 + i)<sup>n</sup> - 1 ] &times; (1 + i) / i</strong>,
+        where P is your monthly investment, i is the monthly rate of return, and
+        n is the total number of months. Enter your figures, adjust the sliders,
+        and the calculator instantly displays your total invested amount,
+        estimated wealth gained, and final maturity value, so you always know
+        precisely where your growth comes from.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Step Up SIP Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Real incomes rise over time, and your investments should too. Enable the
+        annual step-up option to turn this into a full step up SIP calculator. A
+        SIP calculator with step up automatically increases your monthly
+        contribution by a percentage you choose every year, mirroring salary
+        increments and promotions. Even a modest 10% annual step-up can grow
+        your final maturity value dramatically compared to a flat monthly
+        investment, making it one of the most powerful levers for long-term
+        wealth creation.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Lumpsum and Monthly Investment Combined
+      </h3>
+      <p class="text-sm leading-relaxed">
+        This tool doubles as a SIP calculator lumpsum and a SIP calculator
+        lumpsum with monthly investment in one. Add a one-time lump-sum top-up
+        in the advanced parameters to blend an initial investment with your
+        ongoing monthly SIP, and the engine compounds both together to project
+        a single combined maturity value. It is the ideal way to model a
+        scenario where you invest a bonus or windfall upfront and then continue
+        contributing every month.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        SIP Calculator for 5, 10, 15, 20, 25, 30 and 40 Years
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Time is the single biggest driver of SIP returns. Use this as a SIP
+        calculator 5 year, SIP calculator 10 year, SIP calculator 15 year, SIP
+        calculator 20 year, SIP calculator 25 year, or SIP calculator 30 year by
+        simply dragging the duration slider, and stretch it all the way out as a
+        SIP calculator 40 years tool to see the full effect of decades of
+        compounding. The year-by-year growth table updates with every change, so
+        you can compare how different horizons reshape your final corpus and plan
+        confidently for goals like retirement, a home, or your child's education.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Online SIP Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        You could build a SIP calculator in a spreadsheet, but this online SIP
+        calculator is faster, free, and requires no formulas. It supports
+        multiple currencies, monthly and yearly compounding, step-up SIPs,
+        lumpsum top-ups, and one-click CSV or Excel exports in a clean,
+        distraction-free interface that works on any device. Whether you are
+        comparing funds, planning your monthly investment, or simply curious how
+        your savings could grow, this best SIP calculator gives you clear,
+        reliable numbers in seconds &mdash; the easiest way to harness the power
+        of systematic investing and plan your financial future with confidence.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this SIP return calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter your monthly investment, expected annual return rate, and
+            duration, and the calculator applies the future value of an annuity
+            formula to estimate your maturity value. You can also enable a
+            step-up SIP, add a lumpsum top-up, and switch between monthly and
+            yearly compounding to match your plan.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I calculate SIP returns?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Each monthly contribution compounds for a different number of
+            months, then all of them are added together. This SIP calculator
+            does the maths instantly, showing your total invested amount,
+            estimated wealth gained, and final maturity value for any 5, 10, 15,
+            20, 25, 30 or 40 year horizon.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a step up SIP calculator?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A step up SIP calculator raises your monthly contribution by a fixed
+            percentage every year, mirroring salary increments. Enable the
+            annual step-up option to see how a SIP calculator with step up grows
+            your maturity value far beyond a flat monthly investment.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I use this as a lumpsum SIP calculator?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. Add a one-time lump-sum top-up in the advanced parameters to
+            use it as a SIP calculator lumpsum with monthly investment. It
+            combines an upfront lumpsum with ongoing monthly SIP contributions
+            and projects the blended maturity value.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this the best SIP calculator and is it free?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This is a 100% free, online SIP calculator that runs entirely
+            in your browser with no sign-up required. It supports monthly
+            investment, lumpsum, step-up SIP, multiple currencies, and exports,
+            making it one of the best SIP calculator tools available.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

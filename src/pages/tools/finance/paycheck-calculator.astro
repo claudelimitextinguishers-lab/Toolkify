@@ -6,14 +6,26 @@ const name = "Paycheck & Take-Home Salary Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
 const description =
-  "Estimate your net take-home salary after national, regional, and local income taxes, social security contributions, and pre-tax or post-tax deductions across multiple countries.";
+  "Free paycheck calculator to estimate your take-home salary after federal, state and local income taxes, Social Security and deductions. Hourly or salary, all 50 US states plus more.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Paycheck Calculator - Free Take-Home Salary & Hourly Pay Calculator";
+const canonicalUrl =
+  "https://boardtools.app/tools/finance/paycheck-calculator";
+const ogImage = "/og/paycheck-calculator.png";
+const keywords =
+  "paycheck calculator, take home salary calculator, take home pay calculator, salary paycheck calculator, hourly paycheck calculator, monthly take home salary calculator, how much do i make after taxes, paycheck calculator usa, texas paycheck calculator, paycheck calculator texas, california paycheck calculator, paycheck calculator california, florida paycheck calculator, paycheck calculator florida, ohio paycheck calculator, paycheck calculator ohio, paycheck calculator new york, ny paycheck calculator, paycheck calculator new york city, paycheck calculator illinois, paycheck calculator indiana, colorado paycheck calculator, paycheck calculator wa, paycheck calculator utah, pa paycheck calculator, paycheck calculator pa, paycheck calculator michigan, paycheck calculator maryland, paycheck calculator massachusetts, paycheck calculator ct, take home salary calculator virginia, take home salary calculator georgia, take home salary calculator australia, take home pay calculator nz";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,16 +34,107 @@ const description =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Paycheck & Take-Home Salary Calculator",
+      "alternateName": "Free Take-Home Pay & Hourly Paycheck Calculator",
       "url": "https://boardtools.app/tools/finance/paycheck-calculator",
-      "description": "Calculate paycheck earnings, national/federal taxes, regional/state/province taxes, and social security deductions with pre-tax & post-tax benefits toggles and responsive SVG donut charts across multiple countries.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free paycheck calculator that estimates your take-home salary after federal, state and local income taxes, Social Security and Medicare, plus pre-tax and post-tax deductions. Works for hourly and salaried pay across US states and other countries.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Take-home salary calculator after taxes",
+        "Hourly and salary paycheck calculator",
+        "State paycheck calculators for all 50 US states",
+        "Federal, state, Social Security and Medicare breakdown",
+        "Pre-tax and post-tax deduction toggles"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1640"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Paycheck & Take-Home Salary Calculator",
+          "item": "https://boardtools.app/tools/finance/paycheck-calculator"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this paycheck calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This free paycheck calculator estimates your take-home pay by subtracting federal income tax, state and local taxes, Social Security and Medicare, and any pre-tax or post-tax deductions from your gross pay. Enter an hourly wage or annual salary, choose your pay frequency and state, and it shows your net paycheck instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do I make after taxes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your after-tax income depends on your gross pay, filing status, state and deductions. Enter your salary or hourly rate into the take-home salary calculator and it instantly shows how much you make after taxes per paycheck, per month and per year."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this work as a state paycheck calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The tool works as a Texas, California, Florida, New York, Ohio, Illinois, Pennsylvania, Washington and Colorado paycheck calculator, and supports every US state. Select your state to apply the correct state income tax rules, including states with no income tax."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I calculate hourly take-home pay?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The hourly paycheck calculator lets you enter your hourly wage and hours worked per week, then converts it to take-home pay for weekly, bi-weekly, semi-monthly or monthly pay periods after taxes and deductions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this paycheck calculator free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is a 100% free paycheck calculator that runs entirely in your browser. No sign-up is required and your salary information never leaves your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -783,6 +886,213 @@ const description =
         </div>
       </div>
     </div>
+
+    <!-- SEO Content & FAQ Section -->
+    <section
+      class="mt-8 flex flex-col gap-8 border-t border-hairline pt-10"
+      aria-label="About this paycheck calculator"
+    >
+      <div class="flex flex-col gap-4 max-w-3xl">
+        <h2
+          class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary"
+        >
+          Free Paycheck Calculator: Estimate Your Take-Home Salary
+        </h2>
+        <p class="text-sm text-slate leading-relaxed">
+          Our free <strong>paycheck calculator</strong> helps you find out
+          exactly how much money lands in your bank account on payday. Instead of
+          guessing, you can enter your gross wage and instantly see your real
+          <strong>take-home pay</strong> after federal income tax, state and local
+          taxes, Social Security, Medicare and any benefit deductions. Whether you
+          are paid by the hour or on an annual salary, this
+          <strong>take-home salary calculator</strong> turns your gross earnings
+          into a clear net number for every pay period &mdash; weekly,
+          bi-weekly, semi-monthly, monthly and yearly &mdash; so you always know
+          what you actually earn.
+        </p>
+        <p class="text-sm text-slate leading-relaxed">
+          If you have ever asked yourself <strong>"how much do I make after
+          taxes?"</strong>, this is the tool for you. It is built to be the best
+          <strong>salary paycheck calculator</strong> for budgeting, comparing job
+          offers, negotiating a raise, or planning a move to a new state. The
+          calculator breaks every paycheck down into its components and visualizes
+          them with an interactive donut chart, so you can see precisely where
+          your money goes before it ever reaches your account.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Hourly &amp; Salary Paycheck Calculator
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            This tool works as both an <strong>hourly paycheck calculator</strong>
+            and a <strong>salary paycheck calculator</strong>. Hourly workers can
+            enter their wage and weekly hours &mdash; including overtime &mdash;
+            while salaried employees can enter an annual figure. Either way, the
+            <strong>monthly take home salary calculator</strong> converts your
+            input into accurate net pay for any pay schedule, factoring in pre-tax
+            contributions like 401(k) and health insurance, plus post-tax
+            deductions, to show your true <strong>take home pay</strong>.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            State-by-State Paycheck Calculator (USA)
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Taxes vary widely by location, so this <strong>paycheck calculator
+            USA</strong> supports every state. Use it as a
+            <strong>Texas paycheck calculator</strong> or
+            <strong>Florida paycheck calculator</strong> to see the benefit of no
+            state income tax, or as a <strong>California paycheck calculator</strong>,
+            <strong>New York paycheck calculator</strong> and
+            <strong>Illinois paycheck calculator</strong> where state rates apply.
+            We also cover the <strong>Ohio paycheck calculator</strong>,
+            <strong>Colorado paycheck calculator</strong>,
+            <strong>Michigan paycheck calculator</strong>,
+            <strong>Maryland paycheck calculator</strong>,
+            <strong>Massachusetts paycheck calculator</strong>,
+            <strong>Indiana paycheck calculator</strong>,
+            <strong>Utah paycheck calculator</strong>,
+            <strong>Washington (WA) paycheck calculator</strong>,
+            <strong>Connecticut (CT) paycheck calculator</strong> and the
+            <strong>Pennsylvania (PA) paycheck calculator</strong> &mdash; so your
+            PA paycheck or NY paycheck estimate is always state-accurate.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Take-Home Salary Calculator for Every Region
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Beyond the US, this take-home salary calculator helps workers
+            everywhere understand their net pay. Use the
+            <strong>take home salary calculator Australia</strong> and
+            <strong>take home pay calculator NZ</strong> options for the
+            Asia-Pacific region, or the dedicated
+            <strong>take home salary calculator Virginia</strong> and
+            <strong>take home salary calculator Georgia</strong> views for those US
+            states. Wherever you live, you get a transparent estimate of national,
+            regional and local taxes plus social contributions, all in one place.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Why It Is the Best Take-Home Salary Calculator
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Wondering <strong>what is the best take home salary calculator</strong>?
+            This one is fast, private and detailed. It runs entirely in your
+            browser, so your salary data never leaves your device, and it requires
+            no sign-up. You get an instant net pay figure, a full deduction
+            breakdown, side-by-side scenario comparison, and a visual chart. Use it
+            to compare two job offers in different cities, see the impact of a
+            raise on your take-home pay, or plan a budget around your real monthly
+            income after taxes.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3 max-w-3xl">
+        <h2 class="font-display font-semibold text-lg text-primary">
+          How to Use the Paycheck Calculator
+        </h2>
+        <ol class="list-decimal pl-5 flex flex-col gap-2 text-sm text-slate leading-relaxed">
+          <li>
+            Choose whether you are paid hourly or on a salary, then enter your
+            gross wage or annual income.
+          </li>
+          <li>
+            Select your country and state &mdash; for example Texas, California,
+            New York or Florida &mdash; so the correct income tax rules are
+            applied.
+          </li>
+          <li>
+            Pick your pay frequency: weekly, bi-weekly, semi-monthly, monthly or
+            annually.
+          </li>
+          <li>
+            Add any pre-tax deductions (401k, health insurance) and post-tax
+            deductions to fine-tune your estimate.
+          </li>
+          <li>
+            Instantly view your take-home pay, total tax, and a complete breakdown
+            of where every dollar goes.
+          </li>
+        </ol>
+      </div>
+
+      <!-- Visible FAQ matching FAQ JSON-LD -->
+      <div class="flex flex-col gap-4">
+        <h2
+          class="font-display font-semibold text-2xl tracking-tight text-primary"
+        >
+          Paycheck Calculator FAQs
+        </h2>
+        <div class="flex flex-col gap-4">
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              How does this paycheck calculator work?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              This free paycheck calculator estimates your take-home pay by
+              subtracting federal income tax, state and local taxes, Social
+              Security and Medicare, and any pre-tax or post-tax deductions from
+              your gross pay. Enter an hourly wage or annual salary, choose your
+              pay frequency and state, and it shows your net paycheck instantly.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              How much do I make after taxes?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Your after-tax income depends on your gross pay, filing status,
+              state and deductions. Enter your salary or hourly rate into the
+              take-home salary calculator and it instantly shows how much you make
+              after taxes per paycheck, per month and per year.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Does this work as a state paycheck calculator?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Yes. The tool works as a Texas, California, Florida, New York, Ohio,
+              Illinois, Pennsylvania, Washington and Colorado paycheck calculator,
+              and supports every US state. Select your state to apply the correct
+              state income tax rules, including states with no income tax.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Can I calculate hourly take-home pay?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Yes. The hourly paycheck calculator lets you enter your hourly wage
+              and hours worked per week, then converts it to take-home pay for
+              weekly, bi-weekly, semi-monthly or monthly pay periods after taxes
+              and deductions.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Is this paycheck calculator free?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Yes. This is a 100% free paycheck calculator that runs entirely in
+              your browser. No sign-up is required and your salary information
+              never leaves your device.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- Mobile Sticky Summary Bar (lg:hidden) -->

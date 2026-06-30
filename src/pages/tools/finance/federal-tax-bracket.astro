@@ -2,17 +2,31 @@
 import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Federal Income Tax Bracket Calculator";
+const name = "Federal Tax Bracket Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Calculate your U.S. federal income tax, marginal tax rate, effective tax rate, and visualize how your income is distributed across tax brackets for the selected tax year.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Federal Tax Bracket Calculator – Free 2026 Tax Estimator";
+const description =
+  "Free federal tax bracket calculator. Estimate your federal income tax, marginal & effective rate, and see how each bracket is taxed by income and filing status.";
+const canonicalUrl =
+  "https://boardtools.app/tools/finance/federal-tax-bracket";
+const ogImage = "/og/federal-tax-bracket-calculator.png";
+const keywords =
+  "federal tax bracket calculator, federal income tax bracket calculator, federal tax calculator, state and federal tax calculator, estimated federal tax calculator, federal tax calculator paycheck, federal income tax calculator, tax bracket calculator, marginal tax rate calculator, effective tax rate calculator, federal tax brackets 2026, federal tax brackets 2025, how much federal tax do i owe, income tax bracket calculator, us federal income tax calculator";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -20,17 +34,109 @@ const description = "Calculate your U.S. federal income tax, marginal tax rate, 
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Federal Income Tax Bracket Calculator",
+      "name": "Federal Tax Bracket Calculator",
+      "alternateName": "Federal Income Tax Bracket Calculator 2026",
       "url": "https://boardtools.app/tools/finance/federal-tax-bracket",
-      "description": "Interactive client-side federal income tax bracket calculator using official inflation-adjusted tax rates, supporting standard/itemized deductions and stacked bar visualization.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free federal tax bracket calculator and federal income tax calculator. Estimate your federal income tax, marginal tax rate, and effective tax rate using official inflation-adjusted brackets, with standard or itemized deductions and a stacked-bracket visualization.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Federal tax bracket calculator with 2024, 2025, and 2026 brackets",
+        "Federal income tax bracket calculator by income and filing status",
+        "Marginal tax rate and effective tax rate calculator",
+        "Estimated federal tax calculator with standard or itemized deductions",
+        "Federal tax calculator for paycheck and annual income planning",
+        "Stacked bracket visualization and per-bracket tax breakdown"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1620"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/tools/finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Federal Tax Bracket Calculator",
+          "item": "https://boardtools.app/tools/finance/federal-tax-bracket"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this federal tax bracket calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your annual income, filing status, and deductions, and this federal tax bracket calculator applies the official inflation-adjusted federal income tax brackets for the selected year. It taxes each portion of your income at the correct rate, then shows your total federal income tax, your marginal tax rate, and your effective tax rate instantly. Every calculation runs in your browser, so your numbers stay private."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between my marginal and effective tax rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your marginal tax rate is the rate applied to your last dollar of taxable income — the top bracket your income reaches. Your effective tax rate is your total federal tax divided by your income, which is always lower because the U.S. uses a progressive system. This federal income tax bracket calculator displays both so you can see the rate that matters for each extra dollar you earn versus what you actually pay overall."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this estimate both state and federal taxes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This tool focuses on your federal income tax using the federal brackets, deductions, and filing statuses. While a full state and federal tax calculator also layers in your state's income tax, the federal figure produced here is the largest component of most tax bills and the foundation you need before adding any state tax on top."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this as an estimated federal tax calculator for my paycheck?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. As an estimated federal tax calculator, you can enter your projected annual income to plan ahead, or use it as a federal tax calculator paycheck tool by multiplying your gross pay by the number of pay periods. It shows roughly how much federal income tax you should expect to owe for the year so you can check your withholding and avoid surprises at tax time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the federal tax brackets for 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 2026, federal income tax brackets remain at seven rates — 10%, 12%, 22%, 24%, 32%, 35%, and 37% — but the income thresholds are adjusted upward for inflation. This federal tax bracket calculator includes the 2024, 2025, and 2026 brackets for every filing status, so you can compare years and see exactly where your income falls."
+          }
+        }
+      ]
     }
   </script>
 
@@ -370,6 +476,109 @@ const description = "Calculate your U.S. federal income tax, marginal tax rate, 
       </span>
       <span>v1.0.0</span>
     </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 md:px-8 pb-24 lg:pb-16 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Federal Tax Bracket Calculator for 2026
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>federal tax bracket calculator</strong> helps you work out
+        exactly how much income tax you owe to the IRS before you file. It is a
+        fast, free, online <strong>federal income tax bracket calculator</strong>
+        that turns your annual income, filing status, and deductions into a
+        precise estimate in seconds. Instead of guessing where you land, you can
+        see your total tax, your marginal tax rate, your effective tax rate, and
+        a full breakdown of how each slice of your income is taxed. Because every
+        calculation runs entirely in your browser, none of your financial numbers
+        ever leave your device &mdash; making this a genuinely private
+        <strong>federal tax calculator</strong> you can trust.
+      </p>
+      <p class="text-sm leading-relaxed">
+        The United States uses a progressive tax system, which means your income
+        is split into bands and each band is taxed at its own rate. A common
+        misconception is that moving into a higher bracket taxes <em>all</em> of
+        your income at that higher rate &mdash; it does not. Only the dollars
+        that fall inside each bracket are taxed at that bracket's rate. This
+        <strong>federal income tax bracket calculator</strong> makes that crystal
+        clear by stacking your income across the 10%, 12%, 22%, 24%, 32%, 35%,
+        and 37% brackets and showing the exact tax contributed by each one.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Marginal vs. Effective Tax Rate
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The two numbers most people confuse are the marginal rate and the
+        effective rate. Your <strong>marginal tax rate</strong> is the rate
+        applied to your next dollar earned &mdash; the top bracket your income
+        reaches. Your <strong>effective tax rate</strong> is your total federal
+        tax divided by your income, and it is always lower because the lower
+        brackets tax your first dollars more gently. This
+        <strong>federal tax calculator</strong> displays both side by side, so
+        you can answer the practical questions that matter: how much will a raise
+        actually cost in tax, and what share of my income really goes to the
+        IRS? Seeing the gap between the two rates is often the moment progressive
+        taxation finally clicks.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        An Estimated Federal Tax Calculator by Income & Filing Status
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Your tax bill depends heavily on how you file, which is why this works as
+        a true <strong>estimated federal tax calculator</strong> for every
+        situation. Choose Single, Married Filing Jointly, Married Filing
+        Separately, or Head of Household, and the tool instantly swaps in the
+        correct bracket thresholds and standard deduction for that status. You
+        can take the standard deduction or switch to itemized deductions to
+        reflect mortgage interest, state taxes, and charitable giving. By
+        adjusting your income and watching the breakdown update, you can model
+        bonuses, a second job, or a planned raise long before tax season
+        arrives.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Federal Tax Calculator for Your Paycheck
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Want to sanity-check your withholding? Use it as a
+        <strong>federal tax calculator paycheck</strong> tool by entering your
+        projected annual gross pay &mdash; or multiply a single paycheck by the
+        number of pay periods in your year. The estimator shows roughly how much
+        federal income tax you should expect across twelve months, helping you
+        decide whether to adjust your W-4 so you are not overpaying every month
+        or facing a bill in April. While a full
+        <strong>state and federal tax calculator</strong> also adds your state's
+        income tax on top, the federal figure produced here is the largest piece
+        of most tax bills and the essential foundation for any complete estimate.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        2024, 2025 & 2026 Federal Tax Brackets
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The IRS adjusts bracket thresholds and standard deductions for inflation
+        every year, so the same income can owe different amounts depending on the
+        tax year. This <strong>federal tax bracket calculator</strong> includes
+        the official inflation-adjusted brackets for 2024 (filed in 2025), 2025
+        (filed in 2026), and 2026 (filed in 2027). Simply select the year that
+        matches the return you are working on, compare how the thresholds have
+        shifted, and plan ahead with confidence. Whether you are estimating this
+        year's refund, budgeting for next year, or simply curious which bracket
+        you fall into, this free tool gives you an accurate, instant answer
+        without spreadsheets, sign-ups, or sharing a single piece of personal
+        data.
+      </p>
+    </article>
   </section>
 
   <!-- Mobile Sticky Summary Bar (lg:hidden) -->

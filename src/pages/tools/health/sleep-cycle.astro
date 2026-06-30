@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Sleep Cycle Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Optimize your bedtime and wake-up times based on 90-minute sleep cycles and personalized circadian rhythm buffers.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Sleep Cycle Calculator - 90 Minute Sleep Calculator by Age";
+const description =
+  "Free 90 minute sleep cycle calculator to find the best time to sleep or wake up. Online sleep calculator by age that times bedtime and wake-up to full sleep cycles.";
+const canonicalUrl = "https://boardtools.app/tools/health/sleep-cycle";
+const ogImage = "/og/sleep-cycle.png";
+const keywords =
+  "sleep cycle calculator, 90 minute sleep cycle calculator, sleep cycle calculator age, 90 minutes sleep cycle calculator, 90-minute sleep cycle calculator, sleep cycle calculator online, sleep cycle calculator app, sleep calculator, sleep calculator by age, hours of sleep calculator, sleep calculator app, 90 minute sleep cycle";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,104 @@ const description = "Optimize your bedtime and wake-up times based on 90-minute 
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Sleep Cycle Calculator",
+      "alternateName": "90 Minute Sleep Cycle Calculator by Age",
       "url": "https://boardtools.app/tools/health/sleep-cycle",
-      "description": "Interactive client-side sleep cycle calculator based on circadian rhythms. Find the best times to fall asleep or wake up, customize sleep cycle lengths, and visualize sleep stages.",
+      "description": "Free online 90 minute sleep cycle calculator that finds the best time to go to sleep or wake up. This sleep calculator by age times your bedtime and wake-up to complete 90-minute sleep cycles, helping you avoid grogginess and wake up refreshed.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "90 minute sleep cycle calculator for bedtime and wake-up times",
+        "Sleep calculator by age for adults, teens, children, and toddlers",
+        "Hours of sleep calculator showing full sleep cycles and total rest",
+        "Customizable sleep cycle length and fall-asleep buffer",
+        "Visual sleep cycle timeline with light, deep, and REM stages",
+        "Works as an online sleep cycle calculator app on mobile and desktop",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Health",
+          "item": "https://boardtools.app/tools/health/sleep-cycle"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Sleep Cycle Calculator",
+          "item": "https://boardtools.app/tools/health/sleep-cycle"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this 90 minute sleep cycle calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This sleep cycle calculator counts backward or forward in 90-minute blocks. Enter the time you need to wake up and it shows the best bedtimes that end on a complete cycle, or enter your bedtime and it shows ideal wake-up times. It also adds a 15-minute fall-asleep buffer by default, so the 90 minute sleep cycle calculator reflects when you actually drift off, not just when you get into bed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a 90 minute sleep cycle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A sleep cycle is one full pass through light sleep, deep sleep, and REM sleep. For most adults a single cycle lasts about 90 minutes, which is why a 90 minute sleep cycle is the standard used in this calculator. Waking at the end of a cycle, rather than in the middle of deep sleep, helps you feel alert instead of groggy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a sleep calculator by age?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This sleep cycle calculator by age lets you select an age group — adult, older adult, teenager, school child, or toddler — and highlights the number of cycles that matches the recommended hours of sleep for that age. Teens and children need more cycles than adults, and the hours of sleep calculator flags which options are optimal, sufficient, or insufficient."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What time should I go to sleep to wake up at a certain time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Set the calculator to wake-up mode and enter your target wake time. The online sleep cycle calculator instantly lists bedtimes that allow 5 to 6 full cycles (about 7.5 to 9 hours) for adults. For example, to wake at 7:00 AM, ideal bedtimes fall around 9:45 PM or 11:15 PM, each landing at the end of a 90-minute sleep cycle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this sleep cycle calculator app free and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It is a 100% free online sleep cycle calculator that runs entirely in your browser. There is no sign-up, it works as a sleep calculator app on iPhone, Android, and desktop, and your inputs never leave your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -381,6 +482,199 @@ const description = "Optimize your bedtime and wake-up times based on 90-minute 
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Sleep Cycle Calculator for Better Rest
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>sleep cycle calculator</strong> is a fast, free, and
+        private way to discover the best time to go to bed or wake up. Instead
+        of guessing, this <strong>90 minute sleep cycle calculator</strong>
+        works out your ideal bedtime and wake-up times around complete
+        90-minute sleep cycles, so you wake up at the natural end of a cycle
+        rather than in the middle of deep sleep. As a fully client-side
+        <strong>sleep cycle calculator online</strong>, every calculation runs
+        in your browser &mdash; nothing you enter ever leaves your device, so it
+        is genuinely private on desktop, tablet, or phone. Many people treat it
+        as their go-to <strong>sleep calculator app</strong> because it pairs
+        science-based timing with a clean, distraction-free design.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Sleep is not one continuous state. Throughout the night your body moves
+        through repeating cycles of light sleep, deep slow-wave sleep, and REM
+        (dreaming) sleep. Each full cycle lasts roughly 90 minutes, which is why
+        the <strong>90 minutes sleep cycle calculator</strong> uses that figure
+        as its baseline. Waking at the end of a cycle leaves you feeling
+        refreshed, while waking mid-cycle &mdash; especially during deep sleep
+        &mdash; triggers grogginess known as sleep inertia. This
+        <strong>sleep calculator</strong> turns that science into clear,
+        practical bedtimes and wake-up times in just a couple of clicks.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        90 Minute Sleep Cycle Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The core of the tool is a true
+        <strong>90-minute sleep cycle calculator</strong>. Tell it the time you
+        need to wake up and it counts backward in 90-minute blocks to suggest
+        bedtimes that finish on a complete cycle. Switch direction and it works
+        the other way: enter your bedtime and the calculator projects forward to
+        the best wake-up times. By default it also adds a 15-minute fall-asleep
+        buffer, because most people do not fall asleep the instant their head
+        hits the pillow. For example, to wake at 7:00 AM, this
+        <strong>90 minute sleep cycle</strong> approach suggests bedtimes around
+        9:45 PM (6 cycles) or 11:15 PM (5 cycles), each delivering a full,
+        uninterrupted set of cycles.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Sleep Cycle Calculator by Age
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Sleep needs change across your life, which is why this works as a
+        <strong>sleep cycle calculator age</strong> tool as well. In the
+        advanced settings you can choose an age group &mdash; adult, older
+        adult, teenager, school child, or toddler &mdash; and the calculator
+        highlights the number of cycles that matches recommended sleep for that
+        stage. As a <strong>sleep calculator by age</strong>, it knows that
+        teenagers typically need 8 to 10 hours and children even more, while
+        adults do well on 7 to 9 hours. Each suggestion is labelled optimal,
+        sufficient, or deprived, so you can quickly see which bedtime truly fits
+        your age rather than relying on a single one-size-fits-all number.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Hours of Sleep Calculator &amp; Cycle Breakdown
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Beyond timing, this doubles as an
+        <strong>hours of sleep calculator</strong>. Every recommended option
+        shows the number of complete cycles alongside the total hours and
+        minutes of sleep, so you always know exactly how much rest each choice
+        provides. A visual timeline breaks each night into its light, deep, and
+        REM stages, and a detailed analysis panel compares 3 to 9 cycles at a
+        glance. This makes it easy to balance an early alarm against enough
+        total sleep, and to understand the trade-off between squeezing in one
+        more cycle or accepting a slightly shorter night.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Sleep Cycle Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this <strong>sleep cycle calculator online</strong> takes
+        seconds. First, choose what you want to do &mdash; wake up at a set time,
+        or go to bed at a chosen time (or right now with the &ldquo;Sleep
+        Now&rdquo; shortcut). Second, enter your target time. The calculator
+        instantly lists the best matching times, each ending on a full cycle.
+        For a more tailored result, open the advanced panel to fine-tune your
+        sleep cycle length, adjust the fall-asleep buffer, and pick your age
+        group. Because it works as a lightweight
+        <strong>sleep cycle calculator app</strong> in the browser, it remembers
+        your last inputs locally and is ready the moment you return.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Sleep Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of options exist, but this one combines speed, accuracy, and
+        privacy in a single place. As a free
+        <strong>sleep calculator app</strong> with no sign-ups and no ads, it
+        gives you science-backed bedtimes and wake-up times instead of a vague
+        rule of thumb. Whether you need a quick
+        <strong>90 minutes sleep cycle calculator</strong> before bed, a
+        detailed <strong>sleep calculator by age</strong> for the whole family,
+        or an <strong>hours of sleep calculator</strong> to plan an early start,
+        this tool gives clear, trustworthy results in seconds &mdash; plus the
+        context to understand them. Remember that sleep cycle lengths vary from
+        person to person (roughly 70 to 110 minutes) and change with age, so
+        treat these times as a helpful guide. Anyone with persistent insomnia or
+        a suspected sleep disorder should consult a physician or sleep
+        specialist.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this 90 minute sleep cycle calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            It counts backward or forward in 90-minute blocks. Enter the time you
+            need to wake up and it shows the best bedtimes that end on a complete
+            cycle, or enter your bedtime and it shows ideal wake-up times. It
+            also adds a 15-minute fall-asleep buffer by default, so the 90 minute
+            sleep cycle calculator reflects when you actually drift off.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a 90 minute sleep cycle?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A sleep cycle is one full pass through light sleep, deep sleep, and
+            REM sleep. For most adults a single cycle lasts about 90 minutes,
+            which is why a 90 minute sleep cycle is the standard used here.
+            Waking at the end of a cycle, rather than in the middle of deep
+            sleep, helps you feel alert instead of groggy.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this a sleep calculator by age?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This sleep cycle calculator by age lets you select an age group
+            &mdash; adult, older adult, teenager, school child, or toddler
+            &mdash; and highlights the number of cycles that matches recommended
+            hours of sleep for that age. The hours of sleep calculator flags
+            which options are optimal, sufficient, or insufficient.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What time should I go to sleep to wake up at a certain time?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Set the calculator to wake-up mode and enter your target wake time.
+            The online sleep cycle calculator instantly lists bedtimes that allow
+            5 to 6 full cycles (about 7.5 to 9 hours) for adults. To wake at 7:00
+            AM, ideal bedtimes fall around 9:45 PM or 11:15 PM, each landing at
+            the end of a 90-minute sleep cycle.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this sleep cycle calculator app free and private?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. It is a 100% free online sleep cycle calculator that runs
+            entirely in your browser. There is no sign-up, it works as a sleep
+            calculator app on iPhone, Android, and desktop, and your inputs never
+            leave your device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

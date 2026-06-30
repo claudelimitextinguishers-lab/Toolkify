@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Water Intake Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Calculate your recommended daily water intake based on body weight, activity level, climate, pregnancy status, and advanced dietary factors.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Water Intake Calculator - Free Daily Water Calculator";
+const description =
+  "Free water intake calculator to find your daily water intake by weight in kg or litres. Best online water calculator for women, muscle gain and bodybuilding.";
+const canonicalUrl = "https://boardtools.app/tools/health/water-intake";
+const ogImage = "/og/water-intake.png";
+const keywords =
+  "water intake calculator, free water intake calculator, best water intake calculator, water intake calculator free, water intake calculator for women, bodybuilding water intake calculator, online water intake calculator, water intake calculator for muscle gain, water intake calculator women, daily water intake calculator, water intake calculator by weight, water intake calculator kg litre, water calculator, water calculator intake, volume of water calculator";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,104 @@ const description = "Calculate your recommended daily water intake based on body
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Water Intake Calculator",
+      "alternateName": "Daily Water Intake Calculator by Weight",
       "url": "https://boardtools.app/tools/health/water-intake",
-      "description": "Interactive client-side water intake calculator with personalized adjustments for exercise, climate, altitude, pregnancy, diet, and diuretic consumption.",
+      "description": "Free online water intake calculator with personalized adjustments for body weight (kg or litres), activity, climate, altitude, pregnancy, diet, and diuretic consumption. Best for women, muscle gain, and bodybuilding hydration planning.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Daily water intake calculator by body weight in kg or pounds",
+        "Free online water calculator with metric (kg/litre) and imperial units",
+        "Water intake calculator for women, pregnancy, and breastfeeding",
+        "Bodybuilding and muscle gain water intake adjustments by activity level",
+        "Climate, altitude, diet, caffeine, and alcohol hydration adjustments",
+        "Hourly hydration schedule and glasses-per-day breakdown",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Health",
+          "item": "https://boardtools.app/tools/health/water-intake"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Water Intake Calculator",
+          "item": "https://boardtools.app/tools/health/water-intake"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this water intake calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This water intake calculator starts from a baseline of about 35 ml of water per kg of body weight, then adjusts your daily water intake for activity level, climate, altitude, diet, caffeine, alcohol, pregnancy, and breastfeeding. Enter your weight in kg or pounds and the free water calculator instantly shows your recommended litres, ounces, and glasses per day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate water intake by weight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A common rule is to drink roughly 30-40 ml of water per kilogram of body weight per day. This water intake calculator by weight uses about 35 ml per kg as the baseline, so a 70 kg adult needs around 2.45 litres before activity and climate adjustments. You can enter weight in kg litre or pounds and the calculator converts automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a water intake calculator for women?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This water intake calculator for women uses your body weight and activity, and adds dedicated pregnancy (+350 ml) and breastfeeding (+800 ml) adjustments. General guidance suggests women aim for around 2 to 2.7 litres of total water per day, which this free water intake calculator personalises to your inputs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much water should I drink for muscle gain and bodybuilding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For muscle gain and bodybuilding, higher training volume increases sweat and protein metabolism, so hydration needs rise. This bodybuilding water intake calculator lets you set very or extra active levels and specific workout duration and intensity, typically pushing daily water intake well above 3 litres for hard-training lifters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this water intake calculator free and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It is a 100% free online water intake calculator that runs entirely in your browser. There is no sign-up, it works on iPhone, Android, and desktop, and your weight and health inputs never leave your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -598,6 +699,203 @@ const description = "Calculate your recommended daily water intake based on body
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Water Intake Calculator for Daily Hydration
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>water intake calculator</strong> is a fast, free, and
+        private way to work out exactly how much water you should drink each
+        day. Instead of relying on the vague &ldquo;eight glasses a day&rdquo;
+        rule, this <strong>free water intake calculator</strong> personalises
+        your target using your body weight, activity level, climate, and several
+        advanced factors. As a fully client-side
+        <strong>online water intake calculator</strong>, every calculation
+        happens in your browser &mdash; your weight and health details never
+        leave your device, so it is genuinely private to use on desktop, tablet,
+        or phone. Many people consider it the
+        <strong>best water intake calculator</strong> precisely because it pairs
+        accurate, science-based math with a clean, distraction-free design.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Water makes up roughly 60% of your body weight and powers nearly every
+        physiological system &mdash; circulation, digestion, temperature
+        regulation, joint lubrication, and cognitive focus. Drinking too little
+        leads to fatigue, headaches, and poor concentration, while the right
+        daily volume keeps you energised and healthy. This
+        <strong>daily water intake calculator</strong> turns the science of
+        hydration into a single, clear number, then breaks it down into litres,
+        fluid ounces, and standard glasses so you always know your goal.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Water Intake Calculator by Weight (kg &amp; litre)
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The most reliable way to estimate hydration is body weight, which is why
+        this <strong>water intake calculator by weight</strong> sits at the core
+        of the tool. It uses a baseline of about 35&nbsp;ml of water per
+        kilogram of body weight, so a 70&nbsp;kg adult needs roughly
+        2.45&nbsp;litres before any adjustments. Because it works as a
+        <strong>water intake calculator kg litre</strong> tool, you can enter
+        your weight in kilograms and instantly read your target in litres, or
+        switch to imperial units to use pounds and fluid ounces. A single tap
+        toggles between metric and imperial, and the
+        <strong>water calculator</strong> converts everything automatically, so
+        whether you think in kg and litres or pounds and ounces, you get the
+        same accurate result.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Water Intake Calculator for Women
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Hydration needs differ during key life stages, so this
+        <strong>water intake calculator for women</strong> includes dedicated
+        adjustments that general tools ignore. Pregnancy adds roughly
+        350&nbsp;ml per day to support increased blood volume and amniotic
+        fluid, while breastfeeding adds around 800&nbsp;ml to sustain healthy
+        milk production without dehydrating maternal tissue. As a
+        <strong>water intake calculator women</strong> can trust, it combines
+        these factors with body weight and activity to give a realistic daily
+        target. General guidance suggests most women aim for about 2 to
+        2.7&nbsp;litres of total water per day, and this calculator refines that
+        range to match your exact situation.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Bodybuilding &amp; Muscle Gain Water Intake Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Athletes and lifters have higher fluid demands, which is why this doubles
+        as a <strong>bodybuilding water intake calculator</strong> and a
+        <strong>water intake calculator for muscle gain</strong>. Intense
+        training increases sweat loss, and a higher-protein diet raises the
+        amount of water your kidneys use to process nitrogen. Set your activity
+        to very or extra active, then use the advanced panel to enter specific
+        workout duration and intensity &mdash; the calculator adds fluid for
+        every training minute. For hard-training lifters this often pushes the
+        daily target well above 3&nbsp;litres, helping protect strength,
+        recovery, and muscle fullness during a bulk or cut.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Water Intake Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this <strong>water calculator intake</strong> tool takes seconds.
+        First, choose your measurement system &mdash; metric (kg) or imperial
+        (lb). Second, set your body weight with the slider or by typing an exact
+        value. Third, pick your daily activity level and climate, then read your
+        recommended daily water intake on the right, shown in litres, ounces,
+        and glasses with a live-filling glass visual. For a more precise result,
+        open the advanced panel to factor in altitude, dietary moisture, and
+        caffeine or alcohol intake, both of which act as mild diuretics. You can
+        also view a detailed breakdown with an hourly hydration schedule that
+        spreads your target across the day.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Water Intake Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of calculators exist online, but this one combines speed,
+        accuracy, and privacy in one place. It is a complete
+        <strong>volume of water calculator</strong> that accounts for the
+        factors that genuinely change your needs &mdash; weight, exercise, heat,
+        altitude, diet, and life stage &mdash; rather than offering a generic
+        number. As a free <strong>water intake calculator free</strong> of
+        sign-ups and ads, it remembers your last inputs locally so it is ready
+        the next time you visit. Whether you want a quick check in kilograms and
+        litres or a detailed plan for training and muscle gain, this online tool
+        gives you clear, trustworthy hydration targets in seconds &mdash; and the
+        context to understand what they mean. Hydration targets are estimates,
+        so anyone with kidney disease, heart failure, or other medical
+        conditions should always follow their physician&rsquo;s guidance.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this water intake calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            It starts from a baseline of about 35&nbsp;ml of water per kg of body
+            weight, then adjusts your daily water intake for activity, climate,
+            altitude, diet, caffeine, alcohol, pregnancy, and breastfeeding.
+            Enter your weight in kg or pounds and the free water calculator
+            instantly shows your recommended litres, ounces, and glasses per day.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I calculate water intake by weight?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A common rule is to drink roughly 30&ndash;40&nbsp;ml of water per
+            kilogram of body weight per day. This water intake calculator by
+            weight uses about 35&nbsp;ml per kg as the baseline, so a 70&nbsp;kg
+            adult needs around 2.45&nbsp;litres before activity and climate
+            adjustments. You can enter weight in kg litre or pounds and it
+            converts automatically.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is there a water intake calculator for women?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This water intake calculator for women uses your body weight and
+            activity, and adds dedicated pregnancy (+350&nbsp;ml) and
+            breastfeeding (+800&nbsp;ml) adjustments. General guidance suggests
+            women aim for around 2 to 2.7&nbsp;litres of total water per day,
+            which this free water intake calculator personalises to your inputs.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How much water should I drink for muscle gain and bodybuilding?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            For muscle gain and bodybuilding, higher training volume increases
+            sweat and protein metabolism, so hydration needs rise. This
+            bodybuilding water intake calculator lets you set very or extra
+            active levels plus specific workout duration and intensity, typically
+            pushing daily water intake well above 3&nbsp;litres for hard-training
+            lifters.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this water intake calculator free and private?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. It is a 100% free online water intake calculator that runs
+            entirely in your browser. There is no sign-up, it works on iPhone,
+            Android, and desktop, and your weight and health inputs never leave
+            your device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Calorie Deficit Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Calculate your maintenance calories (TDEE) and determine a safe, sustainable daily calorie deficit to reach your target weight.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Calorie Deficit Calculator - Free Daily Weight Loss Calorie Calculator";
+const description =
+  "Free calorie deficit calculator that finds your maintenance calories (TDEE) and a safe daily calorie deficit for weight loss. Works as a daily, weight loss, and maintenance calorie calculator in metric and imperial units.";
+const canonicalUrl = "https://boardtools.app/tools/health/calorie-deficit";
+const ogImage = "/og/calorie-deficit.png";
+const keywords =
+  "calorie deficit calculator, calorie deficit, what is a calorie deficit, calorie deficit calc, calorie deficit meals, what is calorie deficit, how to calculate calorie deficit, how to be in a calorie deficit, calorie calculator, maintenance calorie calculator, calorie calculator for weight loss, weight loss calorie calculator, calorie calculator to lose weight, treadmill calorie calculator, daily calorie calculator, walking calorie calculator, calorie calculator to gain weight, running calorie calculator";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,76 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Calorie Deficit Calculator",
+      "alternateName": "Daily Calorie & Weight Loss Calculator",
       "url": "https://boardtools.app/tools/health/calorie-deficit",
-      "description": "Interactive client-side calorie deficit calculator with body fat adjustment, BMR/TDEE tracking, weight loss projection timelines, macro splits, and medical safety floors.",
+      "description": "Free calorie deficit calculator that works out your maintenance calories (TDEE) and a safe daily calorie deficit for weight loss, with body-fat adjustment, BMR/TDEE tracking, weight-loss projection timelines, macro splits, and medical safety floors.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Calorie deficit calculator with safe daily deficit targets",
+        "Maintenance calorie calculator (TDEE) and BMR estimate",
+        "Calorie calculator for weight loss in metric (cm/kg) and imperial (ft-in/lb) units",
+        "Weight-loss projection timeline to your goal weight",
+        "Calorie calculator to gain weight with surplus targets",
+        "Macro split breakdown for protein, carbs, and fat",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a calorie deficit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A calorie deficit means you eat fewer calories than your body burns each day. When you are in a calorie deficit, your body makes up the difference by using stored energy, which is what causes weight loss over time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate my calorie deficit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "First find your maintenance calories (TDEE) by estimating your BMR and multiplying by an activity factor. Then subtract a deficit — typically 250 to 750 calories per day. This calorie deficit calculator does all of that for you and shows a safe daily target instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get into a calorie deficit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can be in a calorie deficit by eating less, moving more, or both. Most people combine slightly smaller portions and higher-protein, lower-calorie meals with extra daily activity such as walking or running to reach their target deficit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are good calorie deficit meals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Good calorie deficit meals are high in protein and fibre but moderate in calories — for example lean meats, fish, eggs, legumes, vegetables, and whole grains. They keep you full on fewer calories, making your daily deficit easier to sustain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a free maintenance calorie calculator too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The tool doubles as a free maintenance calorie calculator and a daily calorie calculator. It shows your maintenance calories (TDEE) on its own, then lets you apply a deficit to lose weight or a surplus to gain weight."
+          }
+        }
+      ]
     }
   </script>
 
@@ -627,6 +700,178 @@ const description = "Calculate your maintenance calories (TDEE) and determine a 
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Calorie Deficit Calculator for Weight Loss
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>calorie deficit calculator</strong> is the fastest way to
+        work out exactly how many calories you should eat each day to lose
+        weight safely. In a few seconds it estimates your maintenance calories
+        and shows the daily target that puts you in a
+        <strong>calorie deficit</strong> &mdash; no spreadsheets, no guesswork,
+        and no sign-up. Every calculation runs entirely in your browser, so your
+        age, height, weight, and goals never leave your device. Use it as a
+        dedicated <strong>calorie deficit calc</strong> on the go, or as a
+        complete <strong>calorie calculator for weight loss</strong> on desktop,
+        tablet, or phone.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What Is a Calorie Deficit?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        If you have ever asked <strong>what is a calorie deficit</strong>, the
+        answer is simple: a calorie deficit means you consume fewer calories
+        than your body burns in a day. When that happens, your body covers the
+        gap by tapping into stored energy &mdash; mostly body fat &mdash; and
+        you lose weight. Understanding <strong>what is calorie deficit</strong>
+        is the single most important idea in fat loss, because no diet works
+        without one. This tool turns that concept into concrete numbers so you
+        always know whether you are eating at, above, or below your maintenance
+        level.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Calculate a Calorie Deficit
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Learning <strong>how to calculate a calorie deficit</strong> comes down
+        to two steps. First, the calculator works out your maintenance calories,
+        also called your Total Daily Energy Expenditure (TDEE), from your Basal
+        Metabolic Rate and activity level &mdash; making it a reliable
+        <strong>maintenance calorie calculator</strong> in its own right.
+        Second, it subtracts a sensible deficit (commonly 250&ndash;750 calories
+        per day) to set your weight-loss target. That makes it a true
+        <strong>weight loss calorie calculator</strong> and a
+        <strong>calorie calculator to lose weight</strong> at a pace that is
+        steady rather than extreme, with built-in safety floors so your intake
+        never drops to unhealthy levels.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Be in a Calorie Deficit Every Day
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Knowing <strong>how to be in a calorie deficit</strong> day after day is
+        what actually drives results. You can create the gap by eating a little
+        less, moving a little more, or combining both. On the food side,
+        focus on filling <strong>calorie deficit meals</strong> &mdash;
+        high-protein, high-fibre dishes such as lean meats, fish, eggs, beans,
+        vegetables, and whole grains that keep you full on fewer calories. On
+        the activity side, every step counts, which is why many people pair this
+        tool with a <strong>walking calorie calculator</strong>, a
+        <strong>running calorie calculator</strong>, or a
+        <strong>treadmill calorie calculator</strong> to see how exercise adds to
+        their daily burn. As a flexible <strong>daily calorie calculator</strong>,
+        it lets you adjust your target whenever your routine changes.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        More Than a Calorie Calculator: Maintenance and Weight Gain
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Although it is best known as a <strong>calorie calculator</strong> for
+        fat loss, this tool works in both directions. Leave the deficit at zero
+        and it behaves as a straightforward maintenance calorie calculator,
+        revealing the intake that keeps your weight stable. Switch to a surplus
+        and it becomes a <strong>calorie calculator to gain weight</strong>,
+        ideal for building muscle or recovering lost weight in a controlled way.
+        It even breaks your target into macro splits for protein, carbohydrates,
+        and fat, so you know not just how much to eat but how to balance it.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Metric and Imperial, Built for Everyone
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Enter your details however you prefer. Choose metric units for
+        centimetres and kilograms, or switch to imperial units for feet, inches,
+        and pounds &mdash; a single tap converts everything automatically. Add an
+        optional body-fat percentage for a more accurate BMR, set a target weight
+        and date, and the calculator projects a realistic timeline to your goal.
+        Combining speed, accuracy, and total privacy in one clean, distraction-free
+        design, it is a complete <strong>calorie deficit calculator</strong> that
+        gives you trustworthy numbers in seconds &mdash; and the context to
+        understand what they mean for your weight-loss journey.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a calorie deficit?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A calorie deficit means you eat fewer calories than your body burns
+            each day. When you are in a calorie deficit, your body uses stored
+            energy to make up the difference, which is what causes weight loss
+            over time.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I calculate my calorie deficit?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            First find your maintenance calories (TDEE) from your BMR and
+            activity level, then subtract a deficit &mdash; usually 250 to 750
+            calories per day. This calorie deficit calculator does the full
+            calculation for you and shows a safe daily target instantly.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I get into a calorie deficit?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            You can be in a calorie deficit by eating less, moving more, or
+            both. Most people combine smaller portions and higher-protein, lower
+            calorie meals with extra daily activity such as walking or running
+            to reach their target deficit.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What are good calorie deficit meals?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Good calorie deficit meals are high in protein and fibre but moderate
+            in calories &mdash; lean meats, fish, eggs, legumes, vegetables, and
+            whole grains. They keep you full on fewer calories, making your daily
+            deficit easier to sustain.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this a free maintenance calorie calculator too?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. The tool doubles as a free maintenance calorie calculator and a
+            daily calorie calculator. It shows your maintenance calories (TDEE)
+            on their own, then lets you apply a deficit to lose weight or a
+            surplus to gain weight.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 

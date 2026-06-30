@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Macro Calculator";
 const category = "health";
 const tier = "Health & Fitness";
-const description = "Calculate your daily macronutrient (protein, carbs, fats) targets based on your TDEE, fitness goals, and preferred diet style.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Macro Calculator - Free Macro Calculator for Weight Loss & Muscle Gain";
+const description =
+  "Free macro calculator for weight loss, muscle gain, and maintenance. Calculate your daily protein, carbs, and fat targets from your TDEE with this best free online macro calculator for women and men.";
+const canonicalUrl = "https://boardtools.app/tools/health/macro-calculator";
+const ogImage = "/og/macro-calculator.png";
+const keywords =
+  "macro calculator, free macro calculator, macro calculator for weight loss, best macro calculator, macro calculator free, macro calculator for women, bodybuilding macro calculator, calorie and macro calculator, food macro calculator, free macro calculator for weight loss, online macro calculator, macro calculator for muscle gain, macro calculator women, macro calculator for weight loss female";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,76 @@ const description = "Calculate your daily macronutrient (protein, carbs, fats) t
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Macro Calculator",
+      "alternateName": "Free Macro Calculator for Weight Loss & Muscle Gain",
       "url": "https://boardtools.app/tools/health/macro-calculator",
-      "description": "Interactive client-side macro calculator supporting Mifflin-St Jeor and Katch-McArdle formulas, custom ratios/grams, dynamic visual macro breakdowns, meal splitting, and medical safety floors.",
+      "description": "Free online macro calculator that computes daily protein, carbohydrate, and fat targets from your TDEE using Mifflin-St Jeor and Katch-McArdle formulas, with custom ratios/grams, dynamic visual macro breakdowns, meal splitting, and medical safety floors.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Free macro calculator for weight loss, muscle gain, and maintenance",
+        "Calorie and macro calculator using Mifflin-St Jeor and Katch-McArdle formulas",
+        "Macro calculator for women and men with biological sex and body fat inputs",
+        "Bodybuilding macro presets: balanced, high-protein, low-carb/keto, and custom",
+        "Per-meal macro distribution and visual protein/carb/fat breakdown",
+        "Metric (cm/kg) and imperial (ft-in/lb) units",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a macro calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A macro calculator works out how many grams of protein, carbohydrates, and fat you should eat each day to hit a calorie goal. This free macro calculator first estimates your TDEE (total daily energy expenditure), adjusts it for your goal, then splits those calories into macronutrient targets based on your chosen diet style."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use a macro calculator for weight loss?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your age, sex, height, weight, and activity level, then select the Fat Loss goal. This macro calculator for weight loss applies a calorie deficit to your TDEE and prioritises higher protein to preserve muscle while you lose fat. It works as a macro calculator for weight loss for both female and male users."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a good macro calculator for muscle gain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Choose the Muscle Gain goal and the calculator adds a lean bulking surplus on top of your TDEE, then sets a high-protein split. It doubles as a bodybuilding macro calculator with custom gram and percentage overrides for advanced programming."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the macro calculator work for women?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This macro calculator for women uses the correct Mifflin-St Jeor constants for female metabolism and applies a medically recognised safety floor so weight-loss targets stay in a healthy range. Simply set sex to female to get tailored macro and calorie numbers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this macro calculator free and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It is a 100% free online macro calculator that runs entirely in your browser. There is no sign-up, and your height, weight, age, and goals never leave your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -708,6 +781,205 @@ const description = "Calculate your daily macronutrient (protein, carbs, fats) t
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Macro Calculator for Weight Loss & Muscle Gain
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>macro calculator</strong> is a fast, accurate, and private
+        way to work out exactly how much protein, carbohydrate, and fat you
+        should eat every day to reach your goal. As a complete
+        <strong>calorie and macro calculator</strong>, it first estimates the
+        energy your body burns, then translates that figure into clear gram
+        targets for each macronutrient. Because it is a fully client-side
+        <strong>online macro calculator</strong>, every calculation happens in
+        your browser &mdash; your age, sex, height, weight, and goals never
+        leave your device, so it is genuinely private to use on desktop, tablet,
+        or phone. There is no sign-up and nothing to install, which is what
+        makes it one of the
+        <strong>best macro calculator</strong> options for everyday tracking.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Macronutrients &mdash; protein, carbs, and fats &mdash; are the parts of
+        your diet that supply calories and shape your body composition. Hitting
+        the right balance helps you retain muscle, sustain energy, and stay
+        within a healthy calorie range. This
+        <strong>free macro calculator</strong> turns that science into a clean
+        dashboard with a live calorie target, a visual donut breakdown,
+        per-meal portions, and contextual advice that updates the moment you
+        change an input.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Macro Calculator for Weight Loss
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Used as a <strong>macro calculator for weight loss</strong>, the tool
+        applies a sensible calorie deficit to your maintenance level and keeps
+        protein high so you burn fat rather than muscle. It works equally well
+        as a <strong>macro calculator for weight loss female</strong> users and
+        for men, because it uses the correct metabolic constants for each sex
+        and enforces a medically recognised safety floor &mdash; if your target
+        drops below a safe threshold, the calculator warns you instead of
+        recommending an unsafe crash diet. If your priority is shedding fat, the
+        Fat Loss goal makes this a dependable
+        <strong>free macro calculator for weight loss</strong> you can rely on
+        week after week.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Macro Calculator for Muscle Gain & Bodybuilding
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Switch to the Muscle Gain goal and the same tool becomes a
+        <strong>macro calculator for muscle gain</strong>, adding a lean bulking
+        surplus and a high-protein split designed to support training and
+        recovery. With custom gram and percentage overrides, it also serves as a
+        precise <strong>bodybuilding macro calculator</strong> for athletes who
+        program their own nutrition. The Body Recomposition goal sits in between,
+        running a small deficit so experienced lifters can build muscle while
+        gradually losing fat.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        A Macro Calculator for Women & Men
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Whether you need a <strong>macro calculator for women</strong> or one
+        tuned for men, this tool adapts automatically. Set your biological sex
+        and the engine applies the appropriate Mifflin-St Jeor constants; add an
+        optional body fat percentage and it upgrades to the Katch-McArdle
+        formula, which estimates your needs from lean body mass for even greater
+        accuracy. Many people search for a
+        <strong>macro calculator women</strong> can trust for fat loss or
+        toning, and the built-in safety floor for female calorie targets is
+        designed with exactly that in mind.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Macro Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this macro calculator takes under a minute. First, choose your
+        units &mdash; metric (cm/kg) or imperial (ft-in/lb). Second, enter your
+        age, sex, height, weight, and activity level so the tool can estimate
+        your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure
+        (TDEE). Third, pick a goal &mdash; maintenance, fat loss, muscle gain, or
+        body recomposition. Finally, select a diet style such as balanced, high
+        protein, or low-carb/keto, or set your own custom split. Your daily
+        calorie target and protein, carb, and fat grams appear instantly, along
+        with a per-meal table that turns the numbers into practical portions for
+        breakfast, lunch, dinner, and snacks.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Calorie and Macro Calculator in One
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Unlike tools that only show calories, this is a true
+        <strong>calorie and macro calculator</strong>: it reports your BMR,
+        TDEE, and adjusted calorie target, then breaks those calories down using
+        the standard conversions of 4 kcal per gram of protein, 4 kcal per gram
+        of carbohydrate, and 9 kcal per gram of fat. Pair it with a
+        <strong>food macro calculator</strong> habit &mdash; reading labels and
+        logging meals &mdash; and you have everything needed to plan a day of
+        eating that matches your physique goal.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Macro Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of calculators exist, but this one combines speed, accuracy, and
+        privacy in a distraction-free design. It is a complete macro calculator
+        for women and men, supports metric and imperial units, remembers your
+        last inputs locally, and includes advanced options like body fat
+        percentage and meal frequency. From a quick check of your protein needs
+        to a full bodybuilding nutrition plan, this
+        <strong>macro calculator free</strong> of charge gives you trustworthy
+        numbers in seconds &mdash; plus the context to understand what they
+        mean. Remember that the results are estimates: track your weight and
+        measurements weekly and refine your macros as your body responds.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a macro calculator?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A macro calculator works out how many grams of protein,
+            carbohydrates, and fat you should eat each day to hit a calorie goal.
+            This free macro calculator first estimates your TDEE, adjusts it for
+            your goal, then splits those calories into macronutrient targets
+            based on your chosen diet style.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How do I use a macro calculator for weight loss?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter your age, sex, height, weight, and activity level, then select
+            the Fat Loss goal. This macro calculator for weight loss applies a
+            calorie deficit to your TDEE and prioritises higher protein to
+            preserve muscle while you lose fat &mdash; and it works as a macro
+            calculator for weight loss for both female and male users.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this a good macro calculator for muscle gain?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. Choose the Muscle Gain goal and the calculator adds a lean
+            bulking surplus on top of your TDEE, then sets a high-protein split.
+            It doubles as a bodybuilding macro calculator with custom gram and
+            percentage overrides for advanced programming.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Does the macro calculator work for women?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This macro calculator for women uses the correct Mifflin-St
+            Jeor constants for female metabolism and applies a medically
+            recognised safety floor so weight-loss targets stay in a healthy
+            range. Simply set sex to female to get tailored macro and calorie
+            numbers.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this macro calculator free and private?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. It is a 100% free online macro calculator that runs entirely in
+            your browser. There is no sign-up, and your height, weight, age, and
+            goals never leave your device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
