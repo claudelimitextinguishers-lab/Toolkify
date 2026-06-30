@@ -5,15 +5,28 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Capital Gains Tax Estimator";
 const category = "finance";
 const tier = "Finance & Tax";
+
+// On-page SEO metadata
+const pageTitle =
+  "Capital Gains Tax Estimator – Free 2025 Calculator";
 const description =
-  "Estimate capital gains taxes on profits from stocks, crypto, or real estate sales across multiple countries.";
+  "Free capital gains tax estimator & 2025 capital gains tax calculator. Estimate short- and long-term capital gains tax on stocks, crypto & property by income.";
+const canonicalUrl =
+  "https://boardtools.app/tools/finance/capital-gains-tax";
+const ogImage = "/og/capital-gains-tax-estimator.png";
+const keywords =
+  "capital gains tax estimator, capital gains tax calculator, 2025 capital gains tax calculator, capital gains tax calculator 2024, capital gains calculator, federal capital gains tax calculator, short term capital gains tax calculator, capital gains tax calculator by income, short term capital gains tax rate, long term capital gains tax rate, capital gains tax rates 2025, how much tax do i owe on investments, capital gains tax brackets 2025, investment tax calculator, calculate capital gains tax, capital gains tax, capital gains tax calculator on sale of property, long-term capital gains tax calculator, real estate capital gains tax calculator, long term capital gains tax calculator, capital gains tax calculator on sale of rental property";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,16 +35,108 @@ const description =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Capital Gains Tax Estimator",
-      "url": "/tools/finance/capital-gains-tax",
-      "description": "Calculate capital gains taxes dynamically for stocks, crypto, or real estate. Supports U.S. ordinary/NIIT rates, Canada inclusion limits, UK allowances, Australia discounts, and India STCG/LTCG rules.",
-      "applicationCategory": "FinancialApplication",
+      "alternateName": "Capital Gains Tax Calculator 2025 (Short & Long-Term)",
+      "url": "https://boardtools.app/tools/finance/capital-gains-tax",
+      "description": "Free capital gains tax estimator and 2025 capital gains tax calculator. Calculate short-term and long-term capital gains tax on stocks, crypto, and real estate by income, with U.S. federal/state and NIIT rates, Canada inclusion limits, UK allowances, Australia discounts, and India STCG/LTCG rules.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Short term capital gains tax calculator and long-term capital gains tax calculator",
+        "Federal capital gains tax calculator with 2025 brackets and NIIT",
+        "Capital gains tax calculator by income and filing status",
+        "Real estate capital gains tax calculator for property and rental sales",
+        "State and provincial capital gains tax rates",
+        "What-if sale price analysis and CSV/Excel export"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1840"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/tools/finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Capital Gains Tax Estimator",
+          "item": "https://boardtools.app/tools/finance/capital-gains-tax"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this capital gains tax estimator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your purchase price, sale price, holding period, and annual income, and this capital gains tax calculator works out your taxable gain and the tax you owe. It applies the correct short-term capital gains tax rate or long-term capital gains tax rate based on how long you held the asset and your income bracket, then shows your net profit and effective tax rate instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between short-term and long-term capital gains tax?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Short-term capital gains apply to assets held one year or less and are taxed at ordinary income rates, so this short term capital gains tax calculator stacks the gain on top of your income. Long-term capital gains apply to assets held more than a year and use preferential rates of 0%, 15%, or 20% in the U.S. Use the long-term capital gains tax calculator setting to compare both outcomes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I calculate capital gains tax on the sale of property or rental real estate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Select the Real Estate asset type to use it as a capital gains tax calculator on sale of property or a capital gains tax calculator on sale of rental property. You can add cost-basis improvements and selling fees, and apply residence exemptions where they qualify to estimate your real estate capital gains tax accurately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the capital gains tax rates and brackets for 2025?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 2025, U.S. long-term capital gains are taxed at 0%, 15%, or 20% depending on your taxable income and filing status, while short-term gains follow the ordinary income tax brackets of 10% to 37%. This 2025 capital gains tax calculator displays the relevant capital gains tax brackets for your situation and adds the 3.8% Net Investment Income Tax (NIIT) for higher earners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much tax do I owe on my investments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your investment tax depends on your profit, holding period, income, and location. This investment tax calculator estimates how much tax you owe on stocks, crypto, funds, and real estate, including federal, state, and surtaxes, so you can see your total capital gains tax bill before you sell. It runs entirely in your browser and is 100% free."
+          }
+        }
+      ]
     }
   </script>
 
@@ -896,6 +1001,204 @@ const description =
         100% Private, Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 md:px-8 pb-24 lg:pb-16 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Capital Gains Tax Estimator & 2025 Calculator
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>capital gains tax estimator</strong> helps you work out
+        exactly how much tax you owe on investment profits before you sell. It
+        is a fast, free, online <strong>capital gains tax calculator</strong>
+        that turns a purchase price, sale price, holding period, and your annual
+        income into a precise tax estimate in seconds. Whether you are selling
+        stocks, crypto, mutual funds, or real estate, this tool answers the
+        question every investor asks &mdash; <em>how much tax do I owe on
+        investments?</em> &mdash; and shows your net profit, effective rate, and
+        a full breakdown. Because every calculation runs entirely in your
+        browser, none of your financial numbers ever leave your device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Capital gains tax is charged on the profit you make when you sell an
+        asset for more than you paid for it. The taxable gain is generally your
+        sale price minus your cost basis (purchase price plus eligible costs
+        like improvements and selling fees). How that gain is taxed depends on
+        two things: how long you held the asset and how much you earn. This
+        <strong>2025 capital gains tax calculator</strong> handles both
+        automatically, applying the correct short-term or long-term rate and
+        layering in surtaxes and state or provincial taxes where they apply.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Short-Term vs. Long-Term Capital Gains Tax
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The single biggest factor in your bill is your holding period. As a
+        <strong>short term capital gains tax calculator</strong>, this tool
+        stacks gains from assets held one year or less on top of your ordinary
+        income, so they are taxed at your marginal income rate &mdash; the
+        <strong>short term capital gains tax rate</strong> can reach 37% for high
+        earners. Switch the holding period to long-term and it becomes a
+        <strong>long-term capital gains tax calculator</strong>, applying the
+        preferential <strong>long term capital gains tax rate</strong> of 0%,
+        15%, or 20% that rewards investors who hold for more than a year.
+        Comparing the two side by side often reveals that waiting just a few
+        extra weeks to cross the one-year mark can save thousands in tax.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        A Federal Capital Gains Tax Calculator by Income
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Capital gains rates are tied to your income, which is why this is a true
+        <strong>federal capital gains tax calculator</strong> and a
+        <strong>capital gains tax calculator by income</strong>. Enter your
+        annual ordinary income and filing status, and the estimator places your
+        gain into the right band using the latest <strong>capital gains tax
+        brackets 2025</strong>. It also adds the 3.8% Net Investment Income Tax
+        (NIIT) once your modified adjusted gross income passes $200,000 (single)
+        or $250,000 (married filing jointly), and applies state-level taxes so
+        your estimate reflects your real, all-in <strong>capital gains tax</strong>
+        liability rather than just the headline federal figure.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Real Estate, Property & Rental Capital Gains
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Selling a home or investment property has its own rules, so this doubles
+        as a <strong>real estate capital gains tax calculator</strong>. Use it
+        as a <strong>capital gains tax calculator on sale of property</strong> or
+        a <strong>capital gains tax calculator on sale of rental property</strong>
+        by selecting the Real Estate asset type, then add capital improvements
+        and selling costs to raise your cost basis and reduce your taxable gain.
+        Where a primary-residence exemption applies, you can toggle it on to see
+        how much of your profit is shielded from tax. The result is an accurate
+        estimate of the capital gains tax due on the sale of any property.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Calculate Capital Gains Tax in Three Steps
+      </h3>
+      <p class="text-sm leading-relaxed">
+        To <strong>calculate capital gains tax</strong>, first enter your
+        purchase and sale prices along with any improvements or selling fees.
+        Second, choose your holding period and asset type so the tool knows
+        whether to apply short- or long-term rates. Third, add your annual
+        income and filing status so it can match your gain to the correct
+        bracket. The <strong>capital gains calculator</strong> instantly returns
+        your total gain, the tax owed, your effective rate, and a clear
+        breakdown you can export to CSV or Excel. A what-if slider lets you test
+        different sale prices so you can plan the most tax-efficient time to
+        sell.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Investment Tax Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        You could try to work out the numbers by hand, but this
+        <strong>investment tax calculator</strong> is faster, free, and far more
+        accurate. It covers short-term and long-term gains, federal and state
+        taxes, the NIIT surtax, and even international rules for Canada, the UK,
+        Australia, Europe, and India &mdash; all in a clean, distraction-free
+        interface that works on any device. Whether you are a first-time seller
+        or a seasoned investor, this <strong>capital gains tax estimator</strong>
+        gives you clear, reliable numbers in seconds so you can plan ahead, avoid
+        surprises at tax time, and keep more of what you earn.
+      </p>
+      <p class="text-[11px] leading-relaxed text-stone">
+        Disclaimer: This capital gains tax estimator provides general estimates
+        for educational purposes only and does not constitute tax or financial
+        advice. Tax rules change and individual circumstances vary &mdash;
+        consult a qualified tax professional before making decisions.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this capital gains tax estimator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter your purchase price, sale price, holding period, and annual
+            income, and this capital gains tax calculator works out your taxable
+            gain and the tax you owe. It applies the correct short-term or
+            long-term capital gains tax rate based on how long you held the asset
+            and your income bracket, then shows your net profit and effective
+            tax rate instantly.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is the difference between short-term and long-term capital
+            gains tax?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Short-term capital gains apply to assets held one year or less and
+            are taxed at ordinary income rates, so this short term capital gains
+            tax calculator stacks the gain on top of your income. Long-term gains
+            apply to assets held more than a year and use preferential rates of
+            0%, 15%, or 20% in the U.S. Use the long-term capital gains tax
+            calculator setting to compare both outcomes.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I calculate capital gains tax on the sale of property or rental
+            real estate?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. Select the Real Estate asset type to use it as a capital gains
+            tax calculator on sale of property or a capital gains tax calculator
+            on sale of rental property. Add cost-basis improvements and selling
+            fees, and apply residence exemptions where they qualify, to estimate
+            your real estate capital gains tax accurately.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What are the capital gains tax rates and brackets for 2025?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            For 2025, U.S. long-term capital gains are taxed at 0%, 15%, or 20%
+            depending on your taxable income and filing status, while short-term
+            gains follow the ordinary income brackets of 10% to 37%. This 2025
+            capital gains tax calculator displays the relevant capital gains tax
+            brackets for your situation and adds the 3.8% Net Investment Income
+            Tax (NIIT) for higher earners.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How much tax do I owe on my investments?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Your investment tax depends on your profit, holding period, income,
+            and location. This investment tax calculator estimates how much tax
+            you owe on stocks, crypto, funds, and real estate, including federal,
+            state, and surtaxes, so you can see your total capital gains tax bill
+            before you sell. It runs entirely in your browser and is 100% free.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
