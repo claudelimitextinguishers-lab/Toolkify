@@ -10,6 +10,10 @@ interface Props {
 	toolName?: string;
 	toolCategory?: string;
 	hideBanner?: boolean;
+	keywords?: string;
+	canonical?: string;
+	ogImage?: string;
+	ogType?: string;
 }
 
 const { 
@@ -17,8 +21,17 @@ const {
 	description = "A gorgeous Miro-inspired suite of client-side web utility tools including whiteboard, JSON formatter, contrast checker, base64 tool, and more. 100% private.",
 	toolName,
 	toolCategory,
-	hideBanner = false
+	hideBanner = false,
+	keywords,
+	canonical,
+	ogImage = "https://boardtools.app/og-default.png",
+	ogType = "website"
 } = Astro.props;
+
+const siteName = "BoardTools";
+// Resolve a canonical URL: explicit prop wins, otherwise derive from the current request URL.
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://boardtools.app").href;
+const ogImageUrl = new URL(ogImage, Astro.site ?? "https://boardtools.app").href;
 ---
 <!doctype html>
 <html lang="en" class="h-full">
@@ -51,12 +64,28 @@ const {
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		{keywords && <meta name="keywords" content={keywords} />}
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Open Graph / Facebook -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={title} />
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:locale" content="en_US" />
+
+		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+		<meta name="twitter:image:alt" content={title} />
 	</head>
 	<body class="flex flex-col min-h-screen antialiased bg-canvas text-ink">
 		<!-- Sticky Navigation Header -->
