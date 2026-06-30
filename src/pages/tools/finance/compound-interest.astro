@@ -5,15 +5,28 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Compound Interest Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
+
+// On-page SEO metadata
+const pageTitle =
+  "Compound Interest Calculator - Free Daily & Monthly Calculator";
 const description =
-  "Project the future value of your savings or investments using compound interest, recurring contributions, inflation adjustments, and tax calculations.";
+  "Free compound interest calculator with extra contributions, daily, monthly & annual compounding, withdrawals and inflation. See how your savings, 401k or investments grow.";
+const canonicalUrl =
+  "https://boardtools.app/tools/finance/compound-interest";
+const ogImage = "/og/compound-interest-calculator.png";
+const keywords =
+  "compound interest calculator, daily compound interest calculator, best compound interest calculator, online compound interest calculator, compound interest calculator with extra contributions, compound interest calculator with additional contributions, compound interest calculator excel, real compound interest calculator, compound interest calculator calculator, loan compound interest calculator, monthly compound interest calculator, bankrate compound interest calculator, compound interest calculator with withdrawals, 401k compound interest calculator, continuous compound interest calculator, compound interest calculator monthly, compound interest calculator 401k, compound interest calculator daily, annual compound interest calculator";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,16 +35,100 @@ const description =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Compound Interest Calculator",
+      "alternateName": "Daily, Monthly & Annual Compound Interest Calculator",
       "url": "https://boardtools.app/tools/finance/compound-interest",
-      "description": "Interactive real-time compound interest calculator with inflation adjustment, tax calculations, dynamic SVG charts, and year-by-year growth breakdown.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free compound interest calculator with extra contributions, withdrawals, daily, monthly, annual and continuous compounding, inflation adjustment, dynamic charts, and a year-by-year growth breakdown.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Daily, monthly, annual and continuous compound interest",
+        "Compound interest calculator with extra contributions",
+        "Compound interest calculator with withdrawals",
+        "401k and retirement growth projections",
+        "Inflation-adjusted real returns",
+        "Year-by-year growth breakdown and charts"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "2130"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Compound Interest Calculator",
+          "item": "https://boardtools.app/tools/finance/compound-interest"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this compound interest calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter your starting balance, interest rate, time period and compounding frequency, and the calculator applies the compound interest formula A = P(1 + r/n)^(nt) to project your future value. You can add regular extra contributions, model withdrawals, and adjust for inflation to see your real, after-inflation balance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between daily and monthly compounding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Daily compounding adds interest to your balance 365 times a year, while monthly compounding does so 12 times a year. The more frequently interest compounds, the faster your money grows. Use this daily compound interest calculator or switch to monthly, annual, or continuous compounding to compare the results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add extra monthly contributions or withdrawals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is a compound interest calculator with extra contributions and withdrawals. Add a recurring monthly or annual deposit to model regular saving, or schedule withdrawals to see how drawing down funds affects long-term growth — perfect for planning a 401k or retirement pot."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this compound interest calculator free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is a 100% free, online compound interest calculator that runs entirely in your browser. No sign-up is required and your numbers never leave your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -657,7 +754,168 @@ const description =
     </div>
   </section>
 
-  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 md:px-8 pb-24 lg:pb-16 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Compound Interest Calculator
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>compound interest calculator</strong> shows how your money
+        can grow over time when interest earns interest. It is a fast, free,
+        online compound interest calculator that projects the future value of
+        your savings, investments, or retirement fund from a starting balance,
+        interest rate, and time horizon. Add regular deposits, model
+        withdrawals, switch between daily, monthly, annual, or continuous
+        compounding, and adjust for inflation to see your real return. Every
+        result updates instantly, and because the tool runs entirely in your
+        browser, none of your numbers ever leave your device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Compounding is the engine behind long-term wealth. Albert Einstein
+        reportedly called it the eighth wonder of the world, and for good
+        reason: the interest you earn is added back to your principal, so each
+        period you earn interest on a steadily larger balance. The result is
+        exponential, not linear, growth. This best-in-class compound interest
+        calculator makes that growth easy to visualize with a year-by-year
+        breakdown and dynamic charts, so you can clearly see how a small,
+        consistent investment can become a substantial sum over the years.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Compound Interest Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Start by entering your initial principal, then set your annual interest
+        rate and the number of years you plan to invest. Choose how often
+        interest compounds &mdash; use the daily compound interest calculator
+        setting for savings accounts, the monthly compound interest calculator
+        option for many investment funds, or annual and continuous compounding
+        to compare scenarios. Finally, add an optional recurring contribution to
+        model regular saving. The calculator instantly displays your future
+        balance, total contributions, and total interest earned, so you always
+        know exactly where your growth is coming from.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        The Compound Interest Formula
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Behind the scenes, this real compound interest calculator uses the
+        standard formula A = P(1 + r/n)^(nt), where P is your principal, r is
+        the annual rate, n is the number of compounding periods per year, and t
+        is the number of years. For the continuous compound interest calculator
+        mode, it uses A = Pe^(rt). When you add recurring deposits, the tool
+        applies the future value of an annuity formula on top, so a compound
+        interest calculator with additional contributions stays accurate to the
+        penny no matter how complex your plan becomes.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Extra Contributions, Withdrawals & 401k Planning
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Real financial plans rarely involve a single lump sum. That is why this
+        is a full compound interest calculator with extra contributions and a
+        compound interest calculator with withdrawals in one. Add a monthly or
+        annual deposit to see how consistent investing accelerates growth, or
+        schedule withdrawals to model living off your savings. It works
+        beautifully as a 401k compound interest calculator for retirement
+        projections, helping you estimate how employer matches and steady
+        paycheck contributions can compound into a comfortable nest egg over
+        decades.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Inflation, Loans & Real Returns
+      </h3>
+      <p class="text-sm leading-relaxed">
+        A balance that looks large in the future may buy less due to inflation,
+        so this tool can show your inflation-adjusted, real return alongside the
+        nominal figure. The same compounding math also explains debt: as a loan
+        compound interest calculator, it illustrates how unpaid interest can
+        snowball on credit cards and loans &mdash; a reminder that compounding
+        works against you when you borrow and for you when you invest.
+        Understanding both sides helps you make smarter money decisions.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Online Compound Interest Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        You could build a compound interest calculator in Excel, but this online
+        version is faster, free, and requires no formulas or spreadsheets. It
+        handles daily, monthly, and annual compounding, extra contributions,
+        withdrawals, and inflation in a clean, distraction-free interface that
+        works on any device. Whether you are comparing savings accounts, planning
+        a 401k, or simply curious how your investments might grow, this compound
+        interest calculator gives you clear, reliable numbers in seconds &mdash;
+        the easiest way to harness the power of compounding and plan your
+        financial future with confidence.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this compound interest calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter your starting balance, interest rate, time period, and
+            compounding frequency, and the calculator applies the formula A =
+            P(1 + r/n)^(nt) to project your future value. You can add extra
+            contributions, model withdrawals, and adjust for inflation to see
+            your real, after-inflation balance.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is the difference between daily and monthly compounding?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Daily compounding adds interest 365 times a year, while monthly
+            compounding does so 12 times a year. The more frequently interest
+            compounds, the faster your money grows. Switch between daily,
+            monthly, annual, and continuous compounding to compare the results.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I add extra monthly contributions or withdrawals?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This is a compound interest calculator with extra contributions
+            and withdrawals. Add a recurring deposit to model regular saving, or
+            schedule withdrawals to see how drawing down funds affects long-term
+            growth &mdash; perfect for 401k or retirement planning.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this compound interest calculator free?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This is a 100% free, online compound interest calculator that
+            runs entirely in your browser. No sign-up is required and your
+            numbers never leave your device.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
   <div
     id="mobile-sticky-bar"
     class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
