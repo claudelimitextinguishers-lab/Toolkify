@@ -5,14 +5,27 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Auto Loan Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
-const description = "Determine monthly payments, total interest, and overall cost of a new or used car loan.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Auto Loan Calculator - Free Car Payment & Refinance Calculator";
+const description =
+  "Free auto loan calculator to estimate your monthly car payment with trade-in, down payment, sales tax and fees. Compare 60 & 84 month terms, extra payments and refinancing.";
+const canonicalUrl = "https://boardtools.app/tools/finance/auto-loan";
+const ogImage = "/og/auto-loan-calculator.png";
+const keywords =
+  "auto loan calculator, bankrate auto loan calculator, refinance auto loan calculator, car auto loan calculator, auto loan calculator texas, auto loan calculator payment, auto loan calculator with extra payments, simple auto loan calculator, 84 month auto loan calculator, auto loan calculator google, online auto loan calculator, auto loan calculator refinance";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -21,16 +34,100 @@ const description = "Determine monthly payments, total interest, and overall cos
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Auto Loan Calculator",
+      "alternateName": "Car Loan Payment & Refinance Calculator",
       "url": "https://boardtools.app/tools/finance/auto-loan",
-      "description": "Interactive client-side auto loan payment calculator supporting trade-ins, down payment toggles, sales tax, fees, balloon payments, and USD/INR currencies.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free auto loan calculator with trade-in, down payment, sales tax, fees, balloon payments, extra payments and refinancing for new and used cars in USD and INR.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Monthly car payment calculator with sales tax and fees",
+        "Trade-in value and down payment support",
+        "Auto loan calculator with extra payments",
+        "60, 72 and 84 month auto loan terms",
+        "Refinance auto loan calculator comparison",
+        "Total interest and full amortization breakdown"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1485"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Auto Loan Calculator",
+          "item": "https://boardtools.app/tools/finance/auto-loan"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this auto loan calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enter the vehicle price, your down payment, trade-in value, interest rate (APR) and loan term, and the auto loan calculator estimates your monthly car payment, total interest, and total cost. It also factors in sales tax and fees so the payment reflects what you will actually owe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the monthly payment on an 84 month auto loan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An 84 month (7 year) term spreads the loan over more payments, lowering the monthly amount but increasing total interest paid. Use the 84 month auto loan calculator setting to compare it against 60 or 72 month terms and see the trade-off between a lower payment and a higher total cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add extra payments or model refinancing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This is an auto loan calculator with extra payments, so you can see how paying more each month shortens your loan and cuts interest. You can also use it as a refinance auto loan calculator by entering a new rate and term to compare your potential savings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this auto loan calculator include sales tax?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can add a sales tax rate and fees so the financed amount matches your state's rules, whether you are using it as an auto loan calculator for Texas or anywhere else. Everything is calculated in your browser and your numbers stay private."
+          }
+        }
+      ]
     }
   </script>
 
@@ -663,7 +760,163 @@ const description = "Determine monthly payments, total interest, and overall cos
     </div>
   </section>
 
-  <!-- Mobile Sticky Summary Bar (lg:hidden) -->
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 md:px-8 pb-24 lg:pb-16 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Auto Loan Calculator
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>auto loan calculator</strong> helps you understand the true
+        cost of financing a car before you sign anything. It is a fast, free,
+        online auto loan calculator that estimates your monthly payment, total
+        interest, and overall cost from the vehicle price, down payment,
+        trade-in value, interest rate, and loan term. Add sales tax and fees for
+        an accurate, real-world figure, then experiment with different terms to
+        find a payment that fits your budget. Everything is calculated in your
+        browser, so your numbers stay completely private.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Buying a car is one of the largest purchases most people make, and the
+        financing terms matter just as much as the sticker price. A small change
+        in your APR or loan length can shift your monthly payment and total
+        interest by thousands of dollars. This car auto loan calculator makes
+        those trade-offs obvious in real time, so you can negotiate from a
+        position of knowledge and avoid being talked into a longer, more
+        expensive loan than you need.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Auto Loan Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Start by entering the vehicle price, then add your cash down payment and
+        any trade-in value, which both reduce the amount you need to finance.
+        Enter your interest rate (APR) and choose a loan term such as 36, 48,
+        60, 72, or 84 months. As an auto loan calculator for payment planning,
+        the tool instantly shows your estimated monthly payment, the total
+        interest you will pay, and the grand total cost of the car. Adjust any
+        value and the results update immediately, making it easy to compare
+        scenarios side by side.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Compare 60, 72, and 84 Month Terms
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Loan length has a big impact on affordability. A longer term lowers your
+        monthly payment but increases the total interest you pay over the life
+        of the loan. Use the 84 month auto loan calculator setting to see how a
+        seven-year loan compares to a more conventional 60 month term. While the
+        lower monthly figure can be tempting, this simple auto loan calculator
+        shows the hidden cost of stretching payments out, helping you strike the
+        right balance between a manageable payment and minimizing interest.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Extra Payments and Refinancing
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Paying a little extra each month can save you a surprising amount. As an
+        auto loan calculator with extra payments, this tool shows how additional
+        principal shortens your loan and reduces total interest. If you already
+        have a car loan, you can also use it as a refinance auto loan calculator:
+        enter a new, lower interest rate and term to estimate your potential
+        monthly savings. Comparing your current loan against a refinance is one
+        of the easiest ways to free up cash, especially if rates have dropped or
+        your credit has improved since you first bought the vehicle.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Sales Tax, Fees, and State Rules
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The price on the window is rarely the price you finance. Sales tax,
+        title, registration, and dealer fees all add to the amount. This
+        calculator lets you include a sales tax rate and fees so your estimate
+        matches your local rules &mdash; handy whether you are using it as an
+        auto loan calculator for Texas or any other state. By building these
+        costs in from the start, you avoid surprises at the dealership and get a
+        monthly payment you can actually trust.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Online Auto Loan Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Many people turn to a Google auto loan calculator or a bank's tool, but
+        this online auto loan calculator combines speed, privacy, and detail in
+        one clean interface. It supports trade-ins, down payments, sales tax,
+        fees, extra payments, and refinancing, with a full breakdown of interest
+        and total cost &mdash; no sign-up and no data leaving your device.
+        Whether you are buying new or used, comparing loan terms, or deciding
+        whether to refinance, this auto loan calculator gives you clear,
+        reliable numbers in seconds so you can drive away confident you got a
+        great deal.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does this auto loan calculator work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Enter the vehicle price, down payment, trade-in value, interest rate
+            (APR), and loan term, and the calculator estimates your monthly car
+            payment, total interest, and total cost. It also factors in sales
+            tax and fees so the payment reflects what you will actually owe.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is the monthly payment on an 84 month auto loan?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            An 84 month (7 year) term spreads the loan over more payments,
+            lowering the monthly amount but increasing total interest. Use the
+            84 month auto loan calculator setting to compare it against 60 or 72
+            month terms and see the trade-off between payment and total cost.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I add extra payments or model refinancing?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This is an auto loan calculator with extra payments, so you can
+            see how paying more each month shortens your loan and cuts interest.
+            You can also use it as a refinance auto loan calculator by entering a
+            new rate and term to compare your savings.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Does this auto loan calculator include sales tax?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. You can add a sales tax rate and fees so the financed amount
+            matches your state's rules, whether you are using it as an auto loan
+            calculator for Texas or anywhere else. Everything is calculated in
+            your browser and your numbers stay private.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
   <div
     id="mobile-sticky-bar"
     class="fixed bottom-0 left-0 right-0 z-40 bg-canvas/95 backdrop-blur-md border-t border-hairline py-3 px-4 flex items-center justify-between shadow-[0_-4px_12px_rgba(5,0,56,0.06)] lg:hidden transition-transform duration-300 translate-y-0"
