@@ -5,12 +5,22 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Spacebar Counter";
 const category = "engagement";
 const tier = "Engagement Tools";
-const description = "Test your spacebar pressing speed. Measure your spacebar clicks per second over various intervals and earn speed tier rankings.";
+
+// SEO metadata
+const seoTitle = "Spacebar Counter - Free Spacebar Speed Test Online";
+const description = "Spacebar Counter is a free online spacebar test to measure your space bar speed over 5, 10, 30 and 60 seconds. Try this spacebar counter game and beat your high score!";
+const keywords = "spacebar counter, space bar counter, spacebar test, space bar speed test, spacebar counter 60 seconds, spacebar counter 10 seconds, space bar counter 1 minute, space bar counter online, space bar counter test, space bar counter 30 seconds, space bar counter 60, spacebar speed test, spacebar counter 30, space bar test, spacebar counter 60 second test, spacebar counter 60 sec, spacebar counter unblocked, spacebar counter game, spacebar counter 5 seconds, spacebar counter timer, spacebar counter 1 seconds, spacebar counter 30 seconds unblocked, space spacebar counter";
+const canonical = "https://boardtools.app/tools/engagement/spacebar-counter";
+const ogImage = "https://boardtools.app/og-spacebar-counter.png";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={seoTitle}
   description={description}
+  keywords={keywords}
+  canonical={canonical}
+  ogImage={ogImage}
+  ogType="website"
   toolName={name}
   toolCategory={category}
   hideBanner={true}
@@ -21,16 +31,73 @@ const description = "Test your spacebar pressing speed. Measure your spacebar cl
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Spacebar Counter",
+      "alternateName": ["Space Bar Counter", "Spacebar Speed Test", "Space Bar Speed Test"],
       "url": "https://boardtools.app/tools/engagement/spacebar-counter",
-      "description": "Interactive client-side spacebar speed test. Measure spacebar hits per second over 5s, 10s, 30s, or 60s windows with precise key event handling and rich audio-visual feedback.",
+      "description": "Free online spacebar counter and spacebar speed test. Measure your space bar speed (presses per second) over 5, 10, 30, or 60 second windows with precise key-event handling and rich audio-visual feedback.",
       "applicationCategory": "GameApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Spacebar counter 5 seconds, 10 seconds, 30 seconds and 60 seconds modes",
+        "Real-time presses-per-second (PPS) tracking",
+        "Speed tier classification and shareable results",
+        "Works unblocked in any modern browser"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a spacebar counter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A spacebar counter is a free online tool that counts how many times you hit the space bar within a set time. This space bar counter measures your spacebar speed in presses per second (PPS) so you can test and improve your tapping speed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the spacebar speed test work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Choose a duration (5, 10, 30, or 60 seconds), then start tapping the spacebar. The spacebar test starts on your first press, counts every valid keypress, and shows your space bar speed and total presses in real time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good spacebar counter 60 seconds score?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the spacebar counter 60 seconds mode, an average user sustains 4-6 presses per second. Reaching 6-8 PPS is pro-gamer level, and above 10 PPS over a full 1 minute is exceptional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the spacebar counter unblocked and free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This spacebar counter is 100% free, runs entirely client-side in your browser, and works unblocked at school or work with no downloads or sign-up required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which spacebar counter durations are available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can run the space bar counter for 1 second, 5 seconds, 10 seconds, 30 seconds, or 60 seconds (1 minute). Short timers test burst speed while the 60 second test measures finger stamina."
+          }
+        }
+      ]
     }
   </script>
 
@@ -310,13 +377,131 @@ const description = "Test your spacebar pressing speed. Measure your spacebar cl
     <!-- Security & Privacy Guard Footer Tag -->
     <div class="flex items-center justify-between text-[10px] text-slate px-1">
       <span class="flex items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
         </svg>
         100% Client-Side Speed Evaluation
       </span>
       <span>v1.0.0</span>
     </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Spacebar Counter – The Free Online Spacebar Speed Test
+      </h2>
+      <p class="text-sm leading-relaxed">
+        The <strong>Spacebar Counter</strong> is a fast, free, and fully online tool built to measure exactly how
+        quickly you can hammer the space bar on your keyboard. Whether you call it a
+        <strong>space bar counter</strong>, a <strong>spacebar test</strong>, or a
+        <strong>space bar speed test</strong>, the goal is the same: count every press and turn it into a clean
+        presses-per-second (PPS) score so you can benchmark and improve your tapping speed.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What Is a Spacebar Counter?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        A spacebar counter is a simple timing game that records how many times you hit the spacebar inside a fixed
+        window. Our <strong>spacebar speed test</strong> runs entirely in your browser, starts the timer on your very
+        first press, and updates your live PPS as you tap. Because everything is client-side, the
+        <strong>space bar counter online</strong> experience is instant, private, and works unblocked at school,
+        home, or the office with no installs, logins, or downloads required. It is equal parts performance tool and
+        <strong>spacebar counter game</strong> — challenge friends, chase a new personal best, and share your score.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Choose Your Test Duration
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Different durations measure different skills, so this <strong>space bar counter test</strong> ships with
+        multiple timers:
+      </p>
+      <ul class="list-disc pl-5 flex flex-col gap-1.5 text-sm font-medium">
+        <li>
+          <strong>Spacebar counter 1 seconds &amp; 5 seconds:</strong> pure burst speed — see how explosive your
+          fingers are in a single moment.
+        </li>
+        <li>
+          <strong>Spacebar counter 10 seconds:</strong> the most popular quick benchmark, balancing speed and control.
+        </li>
+        <li>
+          <strong>Spacebar counter 30 seconds:</strong> a mid-length challenge (also available
+          <strong>30 seconds unblocked</strong>) that starts testing endurance.
+        </li>
+        <li>
+          <strong>Spacebar counter 60 seconds:</strong> the full <strong>1 minute</strong> stamina run, also known as
+          the <strong>spacebar counter 60 second test</strong> or <strong>60 sec</strong> mode, where consistency
+          matters as much as raw speed.
+        </li>
+      </ul>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Space Bar Test
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using the <strong>space bar test</strong> takes seconds. Pick a duration from the selector, click inside the
+        arena (or simply press the spacebar) to focus it, then tap the space bar as fast as you can until the
+        <strong>spacebar counter timer</strong> hits zero. The arena gives you satisfying audio-visual feedback on
+        every hit, while the dashboard shows your total presses, remaining time, and live PPS. Note that holding the
+        key down does not count as multiple presses — only real, individual keystrokes register, keeping every
+        <strong>spacebar test</strong> result honest and comparable.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Understanding Your Spacebar Speed Score
+      </h3>
+      <p class="text-sm leading-relaxed">
+        When the test ends, your <strong>space bar counter</strong> score is classified into a speed tier. Most
+        casual typists land around 4–6 PPS, competitive gamers push 6–8 PPS, and the fastest tappers blast past 10
+        PPS. Running the <strong>spacebar counter 60 seconds</strong> mode is the truest measure of sustained speed,
+        since fatigue quickly separates raw bursts from real stamina. Use the <strong>spacebar counter 30</strong>
+        and 10-second runs to warm up, then attempt the full <strong>space bar counter 1 minute</strong> challenge to
+        see where you really rank.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Tips to Improve Your Spacebar Speed Test Results
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Want a higher number on the <strong>spacebar speed test</strong>? Try the jitter technique (tensing your
+        forearm to vibrate one finger), the two-finger drumming method (alternating index and middle fingers), or the
+        two-handed approach for the longer <strong>spacebar counter 60</strong> runs. Your hardware matters too:
+        switch type, keycap weight, and keyboard polling rate all influence how many presses the
+        <strong>space bar counter test</strong> can capture. Practice in short sessions, stay relaxed, and retest
+        often — small daily gains add up fast.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use Our Spacebar Counter?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        This <strong>spacebar counter</strong> is free, ad-light, privacy-first, and works on desktop and mobile. It
+        is a <strong>spacebar counter unblocked</strong> tool that needs no sign-up, so you can jump straight into a
+        <strong>space bar speed test</strong> any time. From a quick <strong>spacebar counter 5 seconds</strong> burst
+        to a grueling <strong>spacebar counter 60 second test</strong>, it is the simplest way to measure, track, and
+        beat your own space bar speed. Bookmark it, share your score, and turn every session into a new high score.
+      </p>
+    </article>
   </section>
 
   <!-- Client-side Logic Module -->
