@@ -5,15 +5,28 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Chronological Age Calculator";
 const category = "engagement";
 const tier = "Engagement Tools";
+
+// On-page SEO metadata
+const pageTitle =
+  "Chronological Age Calculator – Find Out Your Exact Age";
 const description =
-  "Calculate your precise chronological age in years, months, weeks, days, and hours. Supports clinical 15-day rounding rules and gestational correction.";
+  "Free chronological age calculator to find out your exact age in years, months, weeks, days, hours, minutes, and seconds. Online age calculator for testing, Pearson & Super Duper scoring.";
+const canonicalUrl =
+  "https://boardtools.app/tools/engagement/chronological-age";
+const ogImage = "/og/chronological-age-calculator.png";
+const keywords =
+  "chronological age calculator, chronological age calculator pearson, super duper chronological age calculator, chronological age calculator find out your age, chronological age calculator for testing, free chronological age calculator, chronological age calculator super duper, biological age vs chronological age calculator, chronological age calculator in months, chronological age calculator year and month, online chronological age calculator, chronological age calculator in years, chronological age calculator in weeks, chronological age calculator in days, chronological age calculator in hours, chronological age calculator in minutes, chronological age calculator in seconds";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,16 +35,75 @@ const description =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Chronological Age Calculator",
+      "alternateName": "Chronological Age Calculator (Find Out Your Age)",
       "url": "https://boardtools.app/tools/engagement/chronological-age",
-      "description": "Premium Chronological Age Calculator featuring precise date calculations, 15-day clinical rounding, corrected age for prematurity, and a responsive dark plum aesthetic.",
+      "description": "Free online chronological age calculator that finds your exact age in years, months, weeks, days, hours, minutes, and seconds. Includes clinical 15-day rounding for testing (Pearson and Super Duper style scoring) and corrected age for prematurity.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Chronological age calculator in years, months, and weeks",
+        "Chronological age calculator in days, hours, minutes, and seconds",
+        "Chronological age calculator for testing with 15-day clinical rounding (Pearson / Super Duper style)",
+        "Corrected age for prematurity (gestational adjustment)",
+        "Calculate age as of any test date",
+        "100% private, client-side calculations"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a chronological age calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A chronological age calculator works out the exact amount of time that has passed between a person's date of birth and a chosen reference date. This free online chronological age calculator finds out your age in years, months, weeks, days, hours, minutes, and seconds instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the chronological age calculator for testing work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For testing, the chronological age is calculated as of the test date and expressed in years, months, and days. This tool follows the same conventions used by Pearson and Super Duper style assessments, including the optional 15-day rounding rule that rounds 15 or more remaining days up to the next month."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between biological age and chronological age?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Chronological age is simply how much time has passed since birth, which is what this calculator measures. Biological age estimates how old your body seems based on health markers. A biological age vs chronological age calculator compares the two, but chronological age is the precise, date-based figure used for testing and records."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I calculate chronological age in months, weeks, days, hours, minutes, and seconds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This chronological age calculator shows your age broken down into years and months as well as total weeks, days, hours, minutes, and seconds lived, so you can read your chronological age in months, in days, in hours, in minutes, or in seconds at a glance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this chronological age calculator free and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It is a 100% free chronological age calculator that runs entirely in your browser. No sign-up is required, it works on iPhone, Android, and desktop, and your birth date never leaves your device."
+          }
+        }
+      ]
     }
   </script>
 
@@ -504,6 +576,189 @@ const description =
         100% Secure Client-Side Calculations
       </span>
       <span>v1.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Chronological Age Calculator – Find Out Your Exact Age
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>chronological age calculator</strong> is a fast, free, and
+        private way to find out your exact age between any date of birth and a
+        chosen reference date. Unlike a rough "how old am I" estimate, this
+        <strong>online chronological age calculator</strong> measures the precise
+        time elapsed and presents it as a clear breakdown, so you can read your
+        <strong>chronological age in years and months</strong> or drill all the
+        way down to weeks, days, hours, minutes, and seconds. Every calculation
+        runs entirely in your browser, which means it works as a genuinely
+        private <strong>free chronological age calculator</strong> on desktop,
+        tablet, or phone &mdash; your birth date never leaves your device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Chronological age is simply the amount of time that has passed since a
+        person was born, expressed against a specific "as of" date. It is the
+        figure used on official records, in classrooms, and across clinical and
+        educational assessments. This <strong>chronological age calculator (find
+        out your age)</strong> turns that simple idea into an instant, accurate
+        result, accounting for leap years and the varying length of each month
+        (28, 29, 30, or 31 days) so your age is never rounded incorrectly.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Chronological Age Calculator in Years, Months, and Weeks
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Whether you need a <strong>chronological age calculator in months</strong>,
+        a <strong>chronological age calculator year and month</strong>, or a full
+        <strong>chronological age calculator in years</strong>, the Standard mode
+        gives you everything at once. The result grid displays completed years
+        and months alongside the remaining weeks and days, which is ideal for
+        paediatric notes, school enrolment cut-offs, and developmental
+        milestones. Because the math uses exact calendar lengths, a
+        <strong>chronological age calculator in weeks</strong> reading stays
+        accurate even across leap years and end-of-month birthdays.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Chronological Age in Days, Hours, Minutes, and Seconds
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Want something more granular? The Total Lifespan Stats panel doubles as a
+        <strong>chronological age calculator in days</strong>, a
+        <strong>chronological age calculator in hours</strong>, a
+        <strong>chronological age calculator in minutes</strong>, and a
+        <strong>chronological age calculator in seconds</strong>. Add an optional
+        time of birth and the tool will even account for the hours and minutes of
+        the day, so the totals reflect your true elapsed time down to the second.
+        It is a fun way to mark birthdays and milestones, and a practical way to
+        convert an age into any single unit you need.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Chronological Age Calculator for Testing (Pearson & Super Duper)
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Clinicians, psychologists, and speech-language pathologists rely on a
+        <strong>chronological age calculator for testing</strong> to score
+        standardised assessments correctly. Switch to Clinical mode to get the
+        years;months;days notation used on score sheets. This works as a
+        <strong>chronological age calculator Pearson</strong> users will
+        recognise and as a <strong>Super Duper chronological age calculator</strong>
+        alternative, including the optional 15-day rounding rule: when the
+        remaining days are 15 or more, the age rounds up to the next month, and
+        when they are 14 or fewer, it rounds down. That makes this
+        <strong>chronological age calculator Super Duper</strong> and Pearson
+        style scoring effortless and consistent with published test manuals.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Biological Age vs Chronological Age
+      </h3>
+      <p class="text-sm leading-relaxed">
+        People often search for a
+        <strong>biological age vs chronological age calculator</strong> because
+        the two measure different things. Chronological age is the precise,
+        date-based number this tool calculates &mdash; how long you have actually
+        been alive. Biological age is an estimate of how old your body appears
+        based on health and lifestyle markers. For records, testing, and
+        eligibility, chronological age is the figure that matters, and this
+        calculator delivers it exactly. The tool also supports gestational
+        correction, giving a corrected age for infants born prematurely (under 37
+        weeks) so developmental benchmarks are measured fairly.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use This Chronological Age Calculator
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using this <strong>online chronological age calculator</strong> takes
+        seconds. First, enter the date of birth in DD/MM/YYYY format and, if you
+        like, an optional time of birth. Second, set the "calculate age as of"
+        date &mdash; it defaults to today, but you can enter any test date or
+        future date. Third, press Calculate to reveal your exact age. Switch
+        between Standard and Clinical modes at any time, toggle the 15-day
+        rounding rule for testing, and copy a formatted report with one click.
+        There is no sign-up, no ads in the way, and nothing to install &mdash;
+        just a clean, accurate, free chronological age calculator that finds out
+        your age the moment you need it.
+      </p>
+    </article>
+
+    <!-- FAQ -->
+    <div class="flex flex-col gap-4">
+      <h2
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Frequently Asked Questions
+      </h2>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is a chronological age calculator?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            A chronological age calculator works out the exact time that has
+            passed between a person's date of birth and a chosen reference date.
+            This free online chronological age calculator finds out your age in
+            years, months, weeks, days, hours, minutes, and seconds instantly.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            How does the chronological age calculator for testing work?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            For testing, chronological age is calculated as of the test date and
+            written as years;months;days. This tool follows the same conventions
+            used by Pearson and Super Duper style assessments, including the
+            optional 15-day rounding rule that rounds 15 or more remaining days
+            up to the next month.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            What is the difference between biological age and chronological age?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Chronological age is simply how much time has passed since birth,
+            which is what this calculator measures. Biological age estimates how
+            old your body seems based on health markers. A biological age vs
+            chronological age calculator compares the two, but chronological age
+            is the precise, date-based figure used for testing and records.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Can I calculate chronological age in months, weeks, days, hours,
+            minutes, and seconds?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. This chronological age calculator shows your age in years and
+            months plus total weeks, days, hours, minutes, and seconds lived, so
+            you can read your chronological age in months, in days, in hours, in
+            minutes, or in seconds at a glance.
+          </p>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="text-sm font-semibold text-charcoal">
+            Is this chronological age calculator free and private?
+          </h3>
+          <p class="text-sm leading-relaxed">
+            Yes. It is a 100% free chronological age calculator that runs
+            entirely in your browser. No sign-up is required, it works on iPhone,
+            Android, and desktop, and your birth date never leaves your device.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
