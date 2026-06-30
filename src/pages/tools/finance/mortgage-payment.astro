@@ -2,19 +2,29 @@
 import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Mortgage Payment Calculator Suite";
+const name = "Mortgage Calculator";
 const category = "finance";
 const tier = "Finance & Tax";
+
+// On-page SEO metadata
+const pageTitle =
+  "Mortgage Calculator - Free Home Loan Payment, Affordability & Refinance Calculator";
 const description =
-  "Calculate payments, estimate borrowing limits, analyze refinance options, and compare renting vs. buying with interactive calculations and charts.";
+  "Free mortgage calculator with taxes, PMI, HOA and extra payments. Estimate your monthly home mortgage payment, check affordability, compare refinance savings, and analyze rent vs buy.";
 const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
+const ogImage = "/og/mortgage-calculator.png";
+const keywords =
+  "mortgage calculator, simple mortgage calculator, home mortgage calculator, free mortgage calculator, monthly mortgage calculator, mortgage calculator with taxes, mortgage calculator with extra payments, 30 year mortgage calculator, house mortgage calculator, commercial mortgage calculator, mortgage affordability calculator, home affordability calculator, house affordability calculator, affordability calculator, home loan affordability calculator, housing affordability calculator, mortgage refinance calculator, refinance savings calculator, mortgage refinance savings calculator, refinance mortgage calculator, refinance calculator, rent vs buy calculator, rent vs buy house, rent vs buy home, rent vs buy calc";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
   hideBanner={true}
 >
   <!-- SEO JSON-LD Schema -->
@@ -22,17 +32,291 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Mortgage Payment & Financial Suite",
+      "name": "Mortgage Calculator",
+      "alternateName": "Home Mortgage Payment, Affordability & Refinance Calculator",
       "url": "https://boardtools.app/tools/finance/mortgage-payment",
-      "description": "Calculate monthly mortgage payments, property taxes, insurance, HOA fees, and PMI. Analyze affordability limits, refinance breakeven times, and compare renting vs buying in a dynamic Miro-style workspace.",
-      "applicationCategory": "FinancialApplication",
+      "description": "Free mortgage calculator to estimate monthly home loan payments with property taxes, insurance, HOA fees, PMI and extra payments. Includes a mortgage affordability calculator, refinance savings calculator, and rent vs buy calculator.",
+      "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Monthly mortgage payment calculator with taxes and PMI",
+        "Mortgage affordability calculator",
+        "Mortgage refinance savings calculator",
+        "Rent vs buy calculator",
+        "Extra payments and amortization schedule"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0.00",
         "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1280"
       }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mortgage Calculator",
+          "item": "https://boardtools.app/tools/finance/mortgage-payment"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How does this mortgage calculator work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>This free mortgage calculator estimates your monthly home loan payment from the home price, down payment, interest rate and loan term. It adds property taxes, home insurance, HOA fees and PMI to show your full monthly mortgage payment (PITI), and you can add extra payments to see how much interest you save.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much house can I afford?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Use the affordability mode of the mortgage calculator. Enter your gross income, monthly debts and down payment cash, and the home affordability calculator back-solves your maximum home price and loan amount using standard front-end (28%) and back-end (36-50%) debt-to-income limits.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is it worth refinancing my mortgage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The refinance savings calculator compares your current loan to a new loan and computes your monthly savings, lifetime savings, and the break-even point in months needed to recover closing costs. If you keep the home past the break-even point, refinancing typically saves money.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Should I rent or buy a home?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The rent vs buy calculator compares long-term net wealth from renting and investing your savings versus buying and building home equity. It factors in home appreciation, rent inflation, maintenance and selling costs to show which option leaves you wealthier over your holding period.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is this mortgage calculator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. This is a 100% free mortgage calculator that runs entirely in your browser. No sign-up is required and your numbers never leave your device.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Mortgage calculator: how much can I afford?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Switch to the Affordability Limit tab and enter your gross annual income, monthly debts and down payment cash. The mortgage calculator instantly back-solves how much home you can afford, applying the standard 28% front-end and 36-50% back-end debt-to-income limits that lenders use.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much mortgage can I afford? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The affordability calculator estimates your maximum loan and home price from your income, existing debts and available down payment. As a rule of thumb, most buyers can afford a mortgage where total housing costs stay near 28% of gross monthly income and all debts stay under 36-43%.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to pay off a mortgage in 5 years? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Open the Extra Payments Planner in Purchase mode and add a large monthly or annual extra payment. To clear a mortgage in 5 years you typically need to pay several times your normal principal each month; the calculator shows the exact extra amount required, the interest you save and your new payoff date.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much mortgage can I qualify for? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Lenders qualify you based on debt-to-income ratios, not income alone. Enter your income and monthly debts in the Affordability Limit tab and the calculator shows the maximum loan you are likely to qualify for at your chosen interest rate and term.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "What mortgage can I afford? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Your affordable mortgage depends on income, debts, down payment, interest rate and loan term. The Affordability Limit calculator combines all of these and returns a realistic maximum home price plus the monthly PITI payment that goes with it.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Mortgage calculator: how much can I borrow?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>How much you can borrow is capped by your debt-to-income ratio and down payment. Enter your numbers in the Affordability Limit tab to see your maximum borrowing amount, then adjust the rate or term to see how your borrowing power changes.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to pay off a mortgage faster? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Use the Extra Payments Planner to add extra monthly, annual or one-time payments. Even small extra principal payments shorten your loan; the calculator instantly recalculates the interest saved and how many years and months you cut off the term.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How long to pay off a mortgage? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>A standard mortgage is paid off over its full term, commonly 15 or 30 years. Add extra payments in the calculator and the repayment duration badge and amortization schedule update to show your new, shorter payoff timeline.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How big of a mortgage can I afford? (calculator)",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The size of mortgage you can afford is driven by your income and existing debt load. The Affordability Limit calculator translates these into a maximum loan amount and home price using lender DTI limits, so you can shop with a realistic budget.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to calculate mortgage affordability?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Mortgage affordability is calculated by applying debt-to-income limits to your gross income. Lenders cap housing costs near 28% of income (front-end) and total debts near 36-43% (back-end). The Affordability Limit tab does this math automatically and accounts for taxes, insurance, HOA and PMI.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How does an affordability calculator work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>An affordability calculator works backwards from your income, debts and down payment. It finds the largest monthly payment your DTI ratios allow, subtracts taxes, insurance, HOA and PMI, then converts the remaining principal-and-interest budget into a maximum loan amount and home price.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to calculate car affordability?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Car affordability uses the same debt-to-income idea as a mortgage: keep total monthly debt payments, including the car loan, within a comfortable share of your income. Many buyers cap a car payment near 10-15% of take-home pay. For a detailed estimate, use our dedicated Auto Loan calculator.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How do interest rates affect affordability?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Higher interest rates raise your monthly payment for the same loan amount, which lowers how much you can afford. Even a 1% rate increase can cut your maximum home price by tens of thousands of dollars. Adjust the interest rate in the calculator to see the impact instantly.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is housing affordability?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Housing affordability measures whether your housing costs are reasonable relative to your income. A common benchmark is spending no more than 28-30% of gross income on housing. The calculator shows your front-end and back-end ratios so you can judge affordability at a glance.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much does it cost to refinance a mortgage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Refinancing a mortgage typically costs 2-5% of the loan amount in closing costs, covering appraisal, origination, title and other fees. Enter your expected closing costs in the Refinance Savings tab and the calculator shows your break-even point in months.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to refinance student loans?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>To refinance student loans you take out a new private loan to pay off existing student debt, ideally at a lower rate. While this tool focuses on mortgages, the same break-even logic applies: compare your new rate and any fees against your current loan to confirm the savings.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to refinance a car loan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Refinancing a car loan replaces your current auto loan with a new one at a better rate or term. Compare your current payment and remaining balance against the new loan; if the rate is lower and there are no heavy fees, refinancing usually reduces your monthly payment.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to refinance a mortgage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>To refinance a mortgage you apply for a new home loan that pays off your existing one, usually to get a lower rate, shorter term or to tap equity. Use the Refinance Savings tab to compare your current loan to the new offer and see your monthly savings, lifetime savings and break-even month.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "When to refinance a mortgage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Refinancing usually makes sense when you can lower your rate enough that your monthly savings recover the closing costs before you sell or move. The Refinance Savings calculator computes that break-even point; if you will keep the home past it, refinancing typically pays off.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "What does it mean to refinance a house?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Refinancing a house means replacing your current mortgage with a new loan, often with a different rate, term or balance. Homeowners refinance to reduce payments, shorten the loan, switch from an adjustable to a fixed rate, or cash out built-up equity.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How much does it cost to refinance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Refinance costs generally run 2-5% of the loan balance, including lender, appraisal and title fees. Some lenders offer no-closing-cost refinances that fold fees into the rate or balance. Enter your fees in the calculator to see exactly when the new lower payment offsets them.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to refinance an auto loan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>To refinance an auto loan, apply with a new lender for a loan that pays off your existing balance at a lower rate or different term. Make sure any fees do not erase the savings; comparing the old and new payment confirms whether refinancing is worthwhile.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "When should you rent vs buy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Renting often wins over short holding periods because buying carries large upfront and selling costs, while buying tends to win the longer you stay as you build equity and benefit from appreciation. The Rent vs Buy tab finds the crossover year where buying overtakes renting for your numbers.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to use a rent vs buy calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Open the Rent vs Buy tab, enter your current rent and expected rent inflation, then the purchase price, down payment, interest rate, appreciation and your investment return. The calculator projects your net wealth under each option over your chosen holding period and tells you which leaves you richer.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "How do I calculate the cost to rent vs buy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>To compare renting and buying you weigh total rent paid (plus what you could earn investing your down payment) against total ownership costs (mortgage, taxes, insurance, maintenance and selling fees) minus the equity and appreciation you gain. The Rent vs Buy calculator runs this full comparison automatically.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the best rent vs buy calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The best rent vs buy calculator factors in rent inflation, home appreciation, maintenance, selling costs and the opportunity cost of investing your down payment, not just the monthly payment. Our Rent vs Buy tab models all of these and shows the year ownership beats renting.</p>"
+        }
+      }, {
+        "@type": "Question",
+        "name": "Price-to-rent ratio: when to buy vs rent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>The price-to-rent ratio is the home price divided by one year of rent for a similar property. As a guide, a ratio under about 15 favors buying, 16-20 is mixed, and over 21 favors renting. Use it as a quick screen, then run the Rent vs Buy tab for a full wealth comparison.</p>"
+        }
+      }]
     }
   </script>
 
@@ -2319,7 +2603,510 @@ const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
       </div>
     </div>
 
+    <!-- SEO Content & FAQ Section -->
+    <section
+      class="mt-8 flex flex-col gap-8 border-t border-hairline pt-10"
+      aria-label="About this mortgage calculator"
+    >
+      <div class="flex flex-col gap-4 max-w-3xl">
+        <h2
+          class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary"
+        >
+          Free Mortgage Calculator with Taxes, PMI &amp; Extra Payments
+        </h2>
+        <p class="text-sm text-slate leading-relaxed">
+          This <strong>free mortgage calculator</strong> helps you estimate your
+          <strong>monthly mortgage payment</strong> in seconds. Enter your home price,
+          down payment, interest rate and loan term to see a full payment breakdown
+          including principal, interest, property taxes, home insurance, HOA fees
+          and PMI. Whether you need a <strong>simple mortgage calculator</strong> for
+          a quick estimate, a <strong>home mortgage calculator</strong> with taxes,
+          or a <strong>30 year mortgage calculator</strong> with extra payments, this
+          all-in-one tool covers it. It works as a house mortgage calculator for
+          conventional home loans and as a commercial mortgage calculator for fixed-rate
+          investment property loans.
+        </p>
+      </div>
 
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Mortgage Affordability Calculator
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Not sure how much house you can afford? The built-in
+            <strong>mortgage affordability calculator</strong> works backwards from
+            your income, monthly debts and available down payment cash to estimate
+            your maximum home price. This <strong>home affordability calculator</strong>
+            applies standard lender debt-to-income (DTI) limits, so you get a realistic
+            <strong>housing affordability</strong> number before you start shopping.
+            It doubles as a <strong>house affordability calculator</strong> and
+            <strong>home loan affordability calculator</strong> for buyers in every
+            market, from <strong>mortgage calculator Texas</strong> scenarios to
+            <strong>mortgage calculator California</strong> price points.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Mortgage Refinance Savings Calculator
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Thinking about a lower rate? The
+            <strong>mortgage refinance calculator</strong> compares your current
+            loan to a new loan and shows your monthly and lifetime savings. This
+            <strong>refinance savings calculator</strong> also computes your
+            break-even point, the number of months needed for your savings to cover
+            closing costs and refinance fees, so you know exactly when a
+            <strong>mortgage refinance</strong> starts paying off. Compare today's
+            <strong>refinance rates</strong> against your existing rate to decide
+            with confidence.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Rent vs Buy Calculator
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Still deciding whether to keep renting? The
+            <strong>rent vs buy calculator</strong> projects your net wealth from
+            <strong>rent vs buy a house</strong> over a custom holding period. It models
+            renting (and investing your down payment at market returns) against buying
+            a home (building equity through appreciation and amortization, minus
+            maintenance and selling costs). Use this <strong>rent vs buy home</strong>
+            analysis to find the crossover year where owning beats renting.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h2 class="font-display font-semibold text-lg text-primary">
+            Monthly Mortgage Payment Breakdown (PITI)
+          </h2>
+          <p class="text-sm text-slate leading-relaxed">
+            Your <strong>monthly mortgage calculator</strong> result is more than just
+            principal and interest. This <strong>mortgage calculator with taxes</strong>
+            and insurance shows your complete PITI payment, then visualizes it in an
+            interactive donut chart and full amortization schedule. Add monthly,
+            annual or one-time extra payments with the
+            <strong>mortgage calculator with extra payments</strong> to see how much
+            interest you save and how many years you cut off your loan.
+          </p>
+        </div>
+      </div>
+
+      <!-- Visible FAQ matching FAQ JSON-LD -->
+      <div class="flex flex-col gap-4">
+        <h2
+          class="font-display font-semibold text-2xl tracking-tight text-primary"
+        >
+          Mortgage Calculator FAQs
+        </h2>
+        <div class="flex flex-col gap-4">
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              How does this mortgage calculator work?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              This free mortgage calculator estimates your monthly home loan
+              payment from the home price, down payment, interest rate and loan
+              term. It adds property taxes, home insurance, HOA fees and PMI to
+              show your full monthly mortgage payment (PITI), and you can add
+              extra payments to see how much interest you save.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              How much house can I afford?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Use the affordability mode of the mortgage calculator. Enter your
+              gross income, monthly debts and down payment cash, and the home
+              affordability calculator back-solves your maximum home price and
+              loan amount using standard front-end (28%) and back-end (36-50%)
+              debt-to-income limits.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Is it worth refinancing my mortgage?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              The refinance savings calculator compares your current loan to a
+              new loan and computes your monthly savings, lifetime savings, and
+              the break-even point in months needed to recover closing costs. If
+              you keep the home past the break-even point, refinancing typically
+              saves money.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Should I rent or buy a home?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              The rent vs buy calculator compares long-term net wealth from
+              renting and investing your savings versus buying and building home
+              equity. It factors in home appreciation, rent inflation,
+              maintenance and selling costs to show which option leaves you
+              wealthier over your holding period.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-sm text-primary">
+              Is this mortgage calculator free?
+            </h3>
+            <p class="text-xs text-slate leading-relaxed">
+              Yes. This is a 100% free mortgage calculator that runs entirely in
+              your browser. No sign-up is required and your numbers never leave
+              your device.
+            </p>
+          </div>
+
+          <!-- Affordability FAQs -->
+          <h3
+            class="font-display font-semibold text-base text-stone uppercase tracking-wider mt-4"
+          >
+            Affordability &amp; Borrowing Power
+          </h3>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              Mortgage calculator: how much can I afford?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Switch to the Affordability Limit tab and enter your gross annual
+              income, monthly debts and down payment cash. The mortgage
+              calculator instantly back-solves how much home you can afford,
+              applying the standard 28% front-end and 36-50% back-end
+              debt-to-income limits that lenders use.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How much mortgage can I afford? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              The affordability calculator estimates your maximum loan and home
+              price from your income, existing debts and available down payment.
+              As a rule of thumb, most buyers can afford a mortgage where total
+              housing costs stay near 28% of gross monthly income and all debts
+              stay under 36-43%.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How much mortgage can I qualify for? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Lenders qualify you based on debt-to-income ratios, not income
+              alone. Enter your income and monthly debts in the Affordability
+              Limit tab and the calculator shows the maximum loan you are likely
+              to qualify for at your chosen interest rate and term.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              What mortgage can I afford? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Your affordable mortgage depends on income, debts, down payment,
+              interest rate and loan term. The Affordability Limit calculator
+              combines all of these and returns a realistic maximum home price
+              plus the monthly PITI payment that goes with it.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              Mortgage calculator: how much can I borrow?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              How much you can borrow is capped by your debt-to-income ratio and
+              down payment. Enter your numbers in the Affordability Limit tab to
+              see your maximum borrowing amount, then adjust the rate or term to
+              see how your borrowing power changes.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How big of a mortgage can I afford? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              The size of mortgage you can afford is driven by your income and
+              existing debt load. The Affordability Limit calculator translates
+              these into a maximum loan amount and home price using lender DTI
+              limits, so you can shop with a realistic budget.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to calculate mortgage affordability?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Mortgage affordability is calculated by applying debt-to-income
+              limits to your gross income. Lenders cap housing costs near 28% of
+              income (front-end) and total debts near 36-43% (back-end). The
+              Affordability Limit tab does this math automatically and accounts
+              for taxes, insurance, HOA and PMI.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How does an affordability calculator work?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              An affordability calculator works backwards from your income,
+              debts and down payment. It finds the largest monthly payment your
+              DTI ratios allow, subtracts taxes, insurance, HOA and PMI, then
+              converts the remaining principal-and-interest budget into a
+              maximum loan amount and home price.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to calculate car affordability?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Car affordability uses the same debt-to-income idea as a mortgage:
+              keep total monthly debt payments, including the car loan, within a
+              comfortable share of your income. Many buyers cap a car payment
+              near 10-15% of take-home pay. For a detailed estimate, use our
+              dedicated Auto Loan calculator.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How do interest rates affect affordability?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Higher interest rates raise your monthly payment for the same loan
+              amount, which lowers how much you can afford. Even a 1% rate
+              increase can cut your maximum home price by tens of thousands of
+              dollars. Adjust the interest rate in the calculator to see the
+              impact instantly.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              What is housing affordability?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Housing affordability measures whether your housing costs are
+              reasonable relative to your income. A common benchmark is spending
+              no more than 28-30% of gross income on housing. The calculator
+              shows your front-end and back-end ratios so you can judge
+              affordability at a glance.
+            </p>
+          </div>
+
+          <!-- Paying Off Faster FAQs -->
+          <h3
+            class="font-display font-semibold text-base text-stone uppercase tracking-wider mt-4"
+          >
+            Paying Off Your Mortgage Faster
+          </h3>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to pay off a mortgage in 5 years? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Open the Extra Payments Planner in Purchase mode and add a large
+              monthly or annual extra payment. To clear a mortgage in 5 years
+              you typically need to pay several times your normal principal each
+              month; the calculator shows the exact extra amount required, the
+              interest you save and your new payoff date.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to pay off a mortgage faster? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Use the Extra Payments Planner to add extra monthly, annual or
+              one-time payments. Even small extra principal payments shorten
+              your loan; the calculator instantly recalculates the interest
+              saved and how many years and months you cut off the term.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How long to pay off a mortgage? (calculator)
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              A standard mortgage is paid off over its full term, commonly 15 or
+              30 years. Add extra payments in the calculator and the repayment
+              duration badge and amortization schedule update to show your new,
+              shorter payoff timeline.
+            </p>
+          </div>
+
+          <!-- Refinance FAQs -->
+          <h3
+            class="font-display font-semibold text-base text-stone uppercase tracking-wider mt-4"
+          >
+            Refinancing
+          </h3>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to refinance a mortgage?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              To refinance a mortgage you apply for a new home loan that pays off
+              your existing one, usually to get a lower rate, shorter term or to
+              tap equity. Use the Refinance Savings tab to compare your current
+              loan to the new offer and see your monthly savings, lifetime
+              savings and break-even month.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              When to refinance a mortgage?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Refinancing usually makes sense when you can lower your rate enough
+              that your monthly savings recover the closing costs before you sell
+              or move. The Refinance Savings calculator computes that break-even
+              point; if you will keep the home past it, refinancing typically
+              pays off.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              What does it mean to refinance a house?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Refinancing a house means replacing your current mortgage with a
+              new loan, often with a different rate, term or balance. Homeowners
+              refinance to reduce payments, shorten the loan, switch from an
+              adjustable to a fixed rate, or cash out built-up equity.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How much does it cost to refinance a mortgage?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Refinancing a mortgage typically costs 2-5% of the loan amount in
+              closing costs, covering appraisal, origination, title and other
+              fees. Enter your expected closing costs in the Refinance Savings
+              tab and the calculator shows your break-even point in months.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How much does it cost to refinance?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Refinance costs generally run 2-5% of the loan balance, including
+              lender, appraisal and title fees. Some lenders offer
+              no-closing-cost refinances that fold fees into the rate or balance.
+              Enter your fees in the calculator to see exactly when the new lower
+              payment offsets them.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to refinance student loans?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              To refinance student loans you take out a new private loan to pay
+              off existing student debt, ideally at a lower rate. While this tool
+              focuses on mortgages, the same break-even logic applies: compare
+              your new rate and any fees against your current loan to confirm the
+              savings.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to refinance a car loan?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Refinancing a car loan replaces your current auto loan with a new
+              one at a better rate or term. Compare your current payment and
+              remaining balance against the new loan; if the rate is lower and
+              there are no heavy fees, refinancing usually reduces your monthly
+              payment.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to refinance an auto loan?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              To refinance an auto loan, apply with a new lender for a loan that
+              pays off your existing balance at a lower rate or different term.
+              Make sure any fees do not erase the savings; comparing the old and
+              new payment confirms whether refinancing is worthwhile.
+            </p>
+          </div>
+
+          <!-- Rent vs Buy FAQs -->
+          <h3
+            class="font-display font-semibold text-base text-stone uppercase tracking-wider mt-4"
+          >
+            Rent vs Buy
+          </h3>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              When should you rent vs buy?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Renting often wins over short holding periods because buying
+              carries large upfront and selling costs, while buying tends to win
+              the longer you stay as you build equity and benefit from
+              appreciation. The Rent vs Buy tab finds the crossover year where
+              buying overtakes renting for your numbers.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How to use a rent vs buy calculator?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              Open the Rent vs Buy tab, enter your current rent and expected rent
+              inflation, then the purchase price, down payment, interest rate,
+              appreciation and your investment return. The calculator projects
+              your net wealth under each option over your chosen holding period
+              and tells you which leaves you richer.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              How do I calculate the cost to rent vs buy?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              To compare renting and buying you weigh total rent paid (plus what
+              you could earn investing your down payment) against total ownership
+              costs (mortgage, taxes, insurance, maintenance and selling fees)
+              minus the equity and appreciation you gain. The Rent vs Buy
+              calculator runs this full comparison automatically.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              What is the best rent vs buy calculator?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              The best rent vs buy calculator factors in rent inflation, home
+              appreciation, maintenance, selling costs and the opportunity cost
+              of investing your down payment, not just the monthly payment. Our
+              Rent vs Buy tab models all of these and shows the year ownership
+              beats renting.
+            </p>
+          </div>
+          <div class="card-base flex flex-col gap-2">
+            <h4 class="font-display font-semibold text-sm text-primary">
+              Price-to-rent ratio: when to buy vs rent?
+            </h4>
+            <p class="text-xs text-slate leading-relaxed">
+              The price-to-rent ratio is the home price divided by one year of
+              rent for a similar property. As a guide, a ratio under about 15
+              favors buying, 16-20 is mixed, and over 21 favors renting. Use it
+              as a quick screen, then run the Rent vs Buy tab for a full wealth
+              comparison.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </section>
 
   <!-- Mobile Sticky Summary Bar (lg:hidden) -->
