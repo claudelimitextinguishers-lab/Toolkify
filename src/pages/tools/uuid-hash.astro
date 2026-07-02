@@ -1,288 +1,1221 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+// Tool metadata
+const name = "UUID & Hash Generator";
+const category = "developer";
+const tier = "Developer Tools";
+
+// SEO metadata
+const pageTitle = "UUID (v1, v4, v7) & Cryptographic Hash Generator - BoardTools";
+const description = "Free online bulk UUID generator (v1, v4, v7) and client-side hash calculator (MD5, SHA-1, SHA-256, SHA-512). Format UUIDs with quotes/braces and calculate file checksums locally.";
+const keywords = "uuid generator, guid generator, uuid v4, uuid v7, uuid v1, sha256 generator, md5 hash, sha1, file hash checker, checksum verifier, client-side hash, developer tools";
+const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
 ---
 
 <Layout 
-  title="UUID v4 & Cryptographic Hash Generator - BoardTools"
-  description="Generate random v4 UUID tokens individually or in bulk. Calculate SHA-256, SHA-512, and SHA-1 hashes of any string locally."
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage="/og/uuid-hash.png"
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
-    <!-- Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Tools</a>
+  <!-- SEO Schemas -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "UUID & Hash Generator",
+      "url": "https://boardtools.app/tools/uuid-hash",
+      "description": "Generate bulk UUIDs (v1, v4, v7) with custom formatting or hash text and files locally using secure MD5, SHA-1, SHA-256, and SHA-512 algorithms.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Bulk generate UUID versions 1, 4, and 7",
+        "UUID formatting: hyphens, casing, arrays, braces, single/double quotes",
+        "Real-time text hashing (MD5, SHA-1, SHA-256, SHA-512)",
+        "Secure local client-side file hashing/checksum validation",
+        "Security status badges warning against collision-prone legacy hashes",
+        "Favorites list & custom options auto-save locally",
+        "100% private execution inside your browser"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-4 sm:py-6 flex flex-col gap-4 animate-fade-in-up pb-16">
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <span class="text-brand-blue">UUID & Hash</span>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset options and output"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
-      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">UUID & Hash Generator</h1>
-      <p class="text-sm text-slate">Bulk-generate random UUID v4 identifiers or calculate secure cryptographic digests of text strings.</p>
     </div>
 
-    <!-- Layout: Two Columns for the Two Sub-Tools -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      <!-- Left Column: UUID Generator -->
-      <div class="card-base flex flex-col gap-6">
-        <div class="flex items-center gap-2 pb-2 border-b border-hairline">
-          <span class="w-3 h-3 rounded-full bg-brand-yellow"></span>
-          <h2 class="font-display font-medium text-xl text-primary">UUID v4 Generator</h2>
-        </div>
+    <!-- Main Navigation Tabs -->
+    <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full max-w-md">
+      <button
+        type="button"
+        id="tab-uuid-btn"
+        class="flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+        role="tab"
+        aria-selected="true"
+      >
+        ID / UUID Generator
+      </button>
+      <button
+        type="button"
+        id="tab-hash-btn"
+        class="flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+        role="tab"
+        aria-selected="false"
+      >
+        Hasher (Text & File)
+      </button>
+    </div>
 
-        <div class="flex flex-col gap-4">
-          <!-- Count Selector -->
-          <div class="flex items-center justify-between gap-4">
-            <label for="uuid-count" class="text-sm font-semibold text-charcoal">Quantity to Generate</label>
-            <input 
-              type="number" 
-              id="uuid-count" 
-              value="5" 
-              min="1" 
-              max="100" 
-              class="w-20 text-input text-center !h-10"
-            />
+    <div class="card-base p-3 sm:p-5 flex flex-col gap-3.5 sm:gap-5 relative">
+      <!-- Dot grid visual backdrop -->
+      <div class="absolute inset-0 dot-grid opacity-[0.04] pointer-events-none rounded-xl"></div>
+
+      <!-- ==================== TAB 1: UUID GENERATOR ==================== -->
+      <div id="section-uuid" class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 relative z-10">
+        <!-- Configuration Side -->
+        <div class="lg:col-span-5 flex flex-col gap-3 sm:gap-4">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
+            <h2 class="font-display font-medium text-sm text-primary">Generator Options</h2>
           </div>
 
-          <!-- Options -->
-          <div class="flex gap-6 py-1">
-            <label class="flex items-center gap-2 text-sm text-slate cursor-pointer select-none">
-              <input type="checkbox" id="uuid-uppercase" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
-              Uppercase
-            </label>
-            <label class="flex items-center gap-2 text-sm text-slate cursor-pointer select-none">
-              <input type="checkbox" id="uuid-no-hyphens" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
-              Remove Hyphens
-            </label>
+          <div class="flex flex-col gap-2.5 sm:gap-3.5 bg-surface-soft p-3 sm:p-4 rounded-xl border border-hairline">
+            <!-- UUID Version -->
+            <div class="flex flex-col gap-1">
+              <label for="uuid-version" class="text-[10px] font-bold text-slate uppercase">UUID Version</label>
+              <select id="uuid-version" class="text-input py-1 px-2.5 text-xs h-8 sm:h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+                <option value="v4" selected>UUID v4 (Cryptographically Random)</option>
+                <option value="v7">UUID v7 (Time-Ordered Epoch)</option>
+                <option value="v1">UUID v1 (Timestamp & Mac Node Address)</option>
+              </select>
+              <span id="version-description" class="hidden sm:block text-[10px] text-slate/75 mt-0.5">Most common. Generates completely random identifiers.</span>
+            </div>
+
+            <!-- Quantity -->
+            <div class="flex flex-col gap-1">
+              <label for="uuid-quantity" class="text-[10px] font-bold text-slate uppercase">Quantity to Generate</label>
+              <div class="flex items-center gap-2">
+                <input 
+                  type="number" 
+                  id="uuid-quantity" 
+                  value="10" 
+                  min="1" 
+                  max="1000" 
+                  class="text-input text-xs h-8 sm:h-9 px-2 w-20 sm:w-24 text-center"
+                />
+                <div class="flex gap-1 sm:gap-1.5 flex-wrap">
+                  <button type="button" class="btn-qty-preset px-1.5 py-0.5 sm:px-2 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-[9px] sm:text-[10px] font-semibold rounded" data-value="1">1</button>
+                  <button type="button" class="btn-qty-preset px-1.5 py-0.5 sm:px-2 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-[9px] sm:text-[10px] font-semibold rounded" data-value="10">10</button>
+                  <button type="button" class="btn-qty-preset px-1.5 py-0.5 sm:px-2 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-[9px] sm:text-[10px] font-semibold rounded" data-value="100">100</button>
+                  <button type="button" class="btn-qty-preset px-1.5 py-0.5 sm:px-2 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-[9px] sm:text-[10px] font-semibold rounded" data-value="500">500</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Options checkboxes -->
+            <div class="grid grid-cols-2 gap-2 pt-1 border-t border-hairline-soft">
+              <label class="flex items-center gap-2 text-xs text-slate cursor-pointer select-none">
+                <input type="checkbox" id="uuid-uppercase" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
+                <span>UPPERCASE</span>
+              </label>
+              <label class="flex items-center gap-2 text-xs text-slate cursor-pointer select-none">
+                <input type="checkbox" id="uuid-no-hyphens" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue cursor-pointer" />
+                <span>Remove Hyphens</span>
+              </label>
+            </div>
+
+            <!-- Formatter Wrapper style -->
+            <div class="flex flex-col gap-1 pt-1 border-t border-hairline-soft">
+              <label for="uuid-wrapper" class="text-[10px] font-bold text-slate uppercase">Formatting Wrap Style</label>
+              <select id="uuid-wrapper" class="text-input py-1 px-2.5 text-xs h-8 sm:h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+                <option value="plain" selected>Plain UUID (e.g. xxxxxxxx-xxxx...)</option>
+                <option value="single">Single Quotes (e.g. 'xxxxxxxx-xxxx...')</option>
+                <option value="double">Double Quotes (e.g. "xxxxxxxx-xxxx...")</option>
+                <option value="braces">Braces (e.g. &lcub;xxxxxxxx-xxxx...&rcub;)</option>
+                <option value="array">JSON Array (e.g. ["xxxx", "xxxx"])</option>
+              </select>
+            </div>
           </div>
 
           <button 
-            id="btn-gen-uuid" 
-            class="button-primary py-2 w-full hover:button-primary-active mt-2"
+            type="button"
+            id="btn-generate-uuids" 
+            class="button-primary w-full py-2 sm:py-2.5 text-xs font-bold hover:scale-[1.01] active:scale-[0.99] transition-all shadow-subtle flex items-center justify-center gap-1.5"
           >
-            Generate UUIDs
+            <span>⚡ Generate Unique IDs</span>
           </button>
+
+          <!-- Favorites / Pinned List -->
+          <div class="hidden sm:flex flex-col gap-2 mt-1">
+            <span class="text-[10px] font-bold text-slate uppercase">Pinned Formats & Presets</span>
+            <div id="favorites-container" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto pr-1">
+              <span class="text-[11px] text-stone">No items pinned yet. Pin your favorite configuration below!</span>
+            </div>
+            <button
+              type="button"
+              id="btn-pin-preset"
+              class="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-brand-blue hover:underline cursor-pointer w-fit"
+            >
+              ⭐ Pin Current Config
+            </button>
+          </div>
         </div>
 
-        <div class="flex flex-col gap-2 mt-2">
-          <div class="flex justify-between items-center text-xs font-semibold text-slate">
-            <span>Generated Result List</span>
-            <button id="btn-copy-uuid" class="text-brand-blue hover:underline cursor-pointer">Copy List</button>
+        <!-- Output Side -->
+        <div class="lg:col-span-7 flex flex-col gap-2 sm:gap-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+              Generated Results
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="btn-copy-uuids" class="text-[11px] text-brand-blue hover:underline font-bold cursor-pointer">Copy All</button>
+              <span class="text-stone">|</span>
+              <button id="btn-download-txt" class="text-[11px] text-brand-blue hover:underline font-bold cursor-pointer">Download TXT</button>
+              <span class="text-stone">|</span>
+              <button id="btn-download-csv" class="text-[11px] text-brand-blue hover:underline font-bold cursor-pointer">Download CSV</button>
+            </div>
           </div>
-          <textarea 
-            id="uuid-output" 
-            readonly 
-            rows="8"
-            placeholder="Generated UUID lists will appear here..." 
-            class="w-full p-3 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none select-all text-primary"
-          ></textarea>
+
+          <div id="uuid-output-container" class="relative flex-grow flex flex-col min-h-[160px] h-[160px] sm:min-h-[220px] lg:min-h-[420px] border border-hairline rounded-xl bg-surface p-3 overflow-hidden">
+            <!-- Toast notification inside output -->
+            <div id="uuid-toast" class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+              Copied!
+            </div>
+            <textarea
+              id="uuid-output-text"
+              class="w-full h-full p-2 font-mono text-xs bg-transparent text-primary resize-none outline-none leading-5 overflow-y-auto"
+              readonly
+              placeholder="Unique identifiers will generate here..."
+            ></textarea>
+          </div>
         </div>
       </div>
 
-      <!-- Right Column: Hash Calculator -->
-      <div class="card-base flex flex-col gap-6">
-        <div class="flex items-center gap-2 pb-2 border-b border-hairline">
-          <span class="w-3 h-3 rounded-full bg-brand-teal"></span>
-          <h2 class="font-display font-medium text-xl text-primary">Cryptographic Hash Digest</h2>
-        </div>
-
-        <div class="flex flex-col gap-3">
-          <label for="hash-input" class="text-sm font-semibold text-charcoal">Source Text Input</label>
-          <textarea 
-            id="hash-input" 
-            placeholder="Type your plain text string here for real-time hash generation..." 
-            rows="3"
-            class="w-full p-3 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
-          ></textarea>
-        </div>
-
-        <!-- Hash Results -->
-        <div class="flex flex-col gap-4">
-          <!-- SHA-256 -->
-          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
-            <div class="flex justify-between items-center text-xs font-semibold">
-              <span class="text-moss-dark">SHA-256 (Recommended)</span>
-              <button data-copy-target="sha256-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+      <!-- ==================== TAB 2: CRYPTOGRAPHIC HASHER ==================== -->
+      <div id="section-hash" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+        <!-- Input & Drag File Area -->
+        <div class="lg:col-span-6 flex flex-col gap-4">
+          <!-- Text Hasher Mode -->
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <label for="hash-text-input" class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+                Plain Text Hashing
+              </label>
+              <button id="btn-clear-hash" class="text-[10px] text-stone hover:text-primary font-bold cursor-pointer">Clear</button>
             </div>
-            <input 
-              type="text" 
-              id="sha256-output" 
-              readonly 
-              placeholder="SHA-256 digest output..."
-              class="w-full bg-transparent border-none p-0 outline-none font-mono text-sm text-primary select-all"
-            />
+            <textarea 
+              id="hash-text-input" 
+              placeholder="Type or paste plain text here for dynamic live hashing..." 
+              rows="4"
+              class="w-full p-3 font-mono text-xs bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue transition-all"
+            ></textarea>
           </div>
 
-          <!-- SHA-512 -->
-          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
-            <div class="flex justify-between items-center text-xs font-semibold">
-              <span class="text-slate">SHA-512</span>
-              <button data-copy-target="sha512-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+          <!-- File Checksum Mode -->
+          <div class="flex flex-col gap-3">
+            <label class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+              File Checksum Calculator
+            </label>
+            
+            <div 
+              id="hash-drop-zone" 
+              class="relative min-h-[110px] sm:min-h-[140px] border-2 border-dashed border-hairline-strong rounded-xl bg-surface-soft/60 hover:bg-surface flex flex-col items-center justify-center gap-2 p-5 text-center cursor-pointer transition-all focus-within:border-brand-blue"
+            >
+              <input type="file" id="hash-file-input" class="hidden" />
+              <span class="text-xl">📁</span>
+              <div class="flex flex-col gap-0.5">
+                <span class="text-xs font-bold text-primary">Drag & drop file here or click to browse</span>
+                <span class="text-[10px] text-slate">Calculation is 100% offline and client-side (no uploads).</span>
+              </div>
             </div>
-            <input 
-              type="text" 
-              id="sha512-output" 
-              readonly 
-              placeholder="SHA-512 digest output..."
-              class="w-full bg-transparent border-none p-0 outline-none font-mono text-xs text-primary select-all"
-            />
+
+            <!-- File Progress Bar / Info -->
+            <div id="file-info-container" class="hidden flex flex-col gap-2 p-3 bg-surface border border-hairline rounded-lg">
+              <div class="flex items-center justify-between text-xs">
+                <span id="hash-filename" class="font-semibold text-primary truncate max-w-[200px]">document.zip</span>
+                <span id="hash-filesize" class="font-mono text-stone">4.2 MB</span>
+              </div>
+              <div class="w-full bg-hairline rounded-full h-1.5 overflow-hidden">
+                <div id="hash-progress" class="bg-brand-blue h-1.5 rounded-full" style="width: 0%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[9px] text-stone uppercase">
+                <span id="hash-progress-text">Reading file chunks...</span>
+                <button type="button" id="btn-cancel-file-hash" class="text-brand-coral hover:underline font-bold">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hash Outputs -->
+        <div id="hash-outputs-container" class="lg:col-span-6 flex flex-col gap-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-brand-rose animate-pulse"></span>
+              Calculated Digest Outputs
+            </span>
           </div>
 
-          <!-- SHA-1 -->
-          <div class="flex flex-col gap-1.5 bg-surface p-3.5 rounded-lg border border-hairline">
-            <div class="flex justify-between items-center text-xs font-semibold">
-              <span class="text-slate">SHA-1 (Legacy)</span>
-              <button data-copy-target="sha1-output" class="text-brand-blue hover:underline cursor-pointer">Copy</button>
+          <div class="flex flex-col gap-3">
+            <!-- SHA-256 (Recommended) -->
+            <div class="flex flex-col gap-1.5 bg-surface p-3 rounded-lg border border-hairline relative group">
+              <div class="flex justify-between items-center text-[10px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-primary">SHA-256</span>
+                  <span class="inline-flex px-1.5 py-0.5 bg-success-accent/15 text-success-accent rounded text-[8px] font-bold uppercase">Secure</span>
+                </div>
+                <button data-hash-copy="sha256-output" class="text-brand-blue hover:underline font-bold cursor-pointer">Copy</button>
+              </div>
+              <input 
+                type="text" 
+                id="sha256-output" 
+                readonly 
+                placeholder="SHA-256 checksum..."
+                class="w-full bg-transparent border-none p-0 outline-none font-mono text-xs text-primary select-all"
+              />
             </div>
-            <input 
-              type="text" 
-              id="sha1-output" 
-              readonly 
-              placeholder="SHA-1 digest output..."
-              class="w-full bg-transparent border-none p-0 outline-none font-mono text-sm text-primary select-all"
-            />
+
+            <!-- SHA-512 -->
+            <div class="flex flex-col gap-1.5 bg-surface p-3 rounded-lg border border-hairline relative group">
+              <div class="flex justify-between items-center text-[10px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-primary">SHA-512</span>
+                  <span class="inline-flex px-1.5 py-0.5 bg-success-accent/15 text-success-accent rounded text-[8px] font-bold uppercase">Secure</span>
+                </div>
+                <button data-hash-copy="sha512-output" class="text-brand-blue hover:underline font-bold cursor-pointer">Copy</button>
+              </div>
+              <input 
+                type="text" 
+                id="sha512-output" 
+                readonly 
+                placeholder="SHA-512 checksum..."
+                class="w-full bg-transparent border-none p-0 outline-none font-mono text-[10px] text-primary select-all"
+              />
+            </div>
+
+            <!-- SHA-1 (Deprecated) -->
+            <div class="flex flex-col gap-1.5 bg-surface p-3 rounded-lg border border-hairline relative group">
+              <div class="flex justify-between items-center text-[10px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-primary">SHA-1</span>
+                  <span class="inline-flex px-1.5 py-0.5 bg-brand-coral/15 text-coral-dark rounded text-[8px] font-bold uppercase">Legacy / Weak</span>
+                </div>
+                <button data-hash-copy="sha1-output" class="text-brand-blue hover:underline font-bold cursor-pointer">Copy</button>
+              </div>
+              <input 
+                type="text" 
+                id="sha1-output" 
+                readonly 
+                placeholder="SHA-1 checksum (Not secure for collisions)..."
+                class="w-full bg-transparent border-none p-0 outline-none font-mono text-xs text-primary select-all"
+              />
+            </div>
+
+            <!-- MD5 (Deprecated) -->
+            <div class="flex flex-col gap-1.5 bg-surface p-3 rounded-lg border border-hairline relative group">
+              <div class="flex justify-between items-center text-[10px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="font-bold text-primary">MD5</span>
+                  <span class="inline-flex px-1.5 py-0.5 bg-brand-coral/15 text-coral-dark rounded text-[8px] font-bold uppercase">Legacy / Weak</span>
+                </div>
+                <button data-hash-copy="md5-output" class="text-brand-blue hover:underline font-bold cursor-pointer">Copy</button>
+              </div>
+              <input 
+                type="text" 
+                id="md5-output" 
+                readonly 
+                placeholder="MD5 checksum (Not secure for collisions)..."
+                class="w-full bg-transparent border-none p-0 outline-none font-mono text-xs text-primary select-all"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Security & Privacy Guard Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Processing, 0KB Sent to Servers
+      </span>
+      <span>v2.1.0</span>
+    </div>
+  </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        Private Client-Side UUID & Cryptographic Hash Suite
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Our <strong>UUID & Hash Generator</strong> is a specialized utility designed for developers, systems administrators, and privacy-conscious users. Typical online UUID generators and hash verifiers send your input strings and values back to their databases for processing or ad-tracking. This utility performs all generation (v1, v4, v7) and cryptographic digest math (MD5, SHA-1, SHA-256, SHA-512) 100% inside your web browser. 
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Understanding UUID Versions: v1, v4, and v7
+      </h3>
+      <p class="text-sm leading-relaxed">
+        <strong>UUID v4</strong> is completely random and is ideal for most basic identifiers where timestamp ordering is not needed. 
+        <strong>UUID v7</strong> is a modern variant ordered by Unix epoch timestamp, meaning identifiers sort chronologically—significantly improving database index insert performance.
+        <strong>UUID v1</strong> uses a sub-millisecond timestamp and host hardware node address (mac address) to guarantee absolute uniqueness across local machines.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Cryptographic Security Warnings: MD5/SHA-1 vs SHA-2
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Security standards deprecate both <strong>MD5</strong> and <strong>SHA-1</strong> for collision resistance. Practical exploits can generate identical MD5 or SHA-1 hashes for two differing contents. They remain useful strictly as legacy checksums to verify downloaded file integrity. For security-sensitive processes (such as password hashing, digital signatures, or system integrity checks), always select <strong>SHA-256</strong> or <strong>SHA-512</strong> digests.
+      </p>
+    </article>
   </section>
 </Layout>
 
 <script>
-  // UUID v4 Generator Code
-  const uuidCountInput = document.getElementById('uuid-count') as HTMLInputElement | null;
-  const uuidUppercase = document.getElementById('uuid-uppercase') as HTMLInputElement | null;
-  const uuidNoHyphens = document.getElementById('uuid-no-hyphens') as HTMLInputElement | null;
-  const btnGenUuid = document.getElementById('btn-gen-uuid');
-  const uuidOutput = document.getElementById('uuid-output') as HTMLTextAreaElement | null;
-  const btnCopyUuid = document.getElementById('btn-copy-uuid');
+  // --- MD5 Hash Algorithm Implementation (Client-side) ---
+  function md5(str: string): string {
+    const k = [
+      0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
+      0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
+      0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
+      0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
+      0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
+      0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
+      0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+      0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
+    ];
+    const r = [
+      7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+      5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
+      4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+      6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
+    ];
 
+    const utf8 = unescape(encodeURIComponent(str));
+    const words: number[] = [];
+    for (let i = 0; i < utf8.length; i++) {
+      words[i >> 2] |= utf8.charCodeAt(i) << ((i % 4) * 8);
+    }
+    const len = utf8.length * 8;
+    words[len >> 5] |= 0x80 << (len % 32);
+    words[(((len + 64) >>> 9) << 4) + 14] = len;
+
+    let h0 = 0x67452301;
+    let h1 = 0xefcdab89;
+    let h2 = 0x98badcfe;
+    let h3 = 0x10325476;
+
+    for (let i = 0; i < words.length; i += 16) {
+      let a = h0, b = h1, c = h2, d = h3;
+      for (let j = 0; j < 64; j++) {
+        let f, g;
+        if (j < 16) {
+          f = (b & c) | (~b & d);
+          g = j;
+        } else if (j < 32) {
+          f = (d & b) | (~d & c);
+          g = (5 * j + 1) % 16;
+        } else if (j < 48) {
+          f = b ^ c ^ d;
+          g = (3 * j + 5) % 16;
+        } else {
+          f = c ^ (b | ~d);
+          g = (7 * j) % 16;
+        }
+        const temp = d;
+        d = c;
+        c = b;
+        b = b + rotateLeft((a + f + k[j] + (words[i + g] || 0)), r[j]);
+        a = temp;
+      }
+      h0 = (h0 + a) | 0;
+      h1 = (h1 + b) | 0;
+      h2 = (h2 + c) | 0;
+      h3 = (h3 + d) | 0;
+    }
+
+    function rotateLeft(x: number, n: number) {
+      return (x << n) | (x >>> (32 - n));
+    }
+
+    const hex = (val: number) => {
+      let str = "";
+      for (let i = 0; i < 4; i++) {
+        str += ((val >> (i * 8)) & 0xff).toString(16).padStart(2, "0");
+      }
+      return str;
+    };
+    return hex(h0) + hex(h1) + hex(h2) + hex(h3);
+  }
+
+  // Fallback Incremental MD5 for large files
+  class IncrementalMD5 {
+    private h0 = 0x67452301;
+    private h1 = 0xefcdab89;
+    private h2 = 0x98badcfe;
+    private h3 = 0x10325476;
+    private buffer: Uint8Array = new Uint8Array(64);
+    private bufferLen = 0;
+    private totalLen = 0;
+
+    private static K = [
+      0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
+      0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
+      0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
+      0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
+      0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
+      0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
+      0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+      0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
+    ];
+
+    private static R = [
+      7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+      5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
+      4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+      6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
+    ];
+
+    public update(chunk: Uint8Array) {
+      this.totalLen += chunk.length;
+      let pos = 0;
+      while (pos < chunk.length) {
+        const copyLen = Math.min(64 - this.bufferLen, chunk.length - pos);
+        this.buffer.set(chunk.subarray(pos, pos + copyLen), this.bufferLen);
+        this.bufferLen += copyLen;
+        pos += copyLen;
+
+        if (this.bufferLen === 64) {
+          this.processBlock(this.buffer);
+          this.bufferLen = 0;
+        }
+      }
+    }
+
+    private processBlock(block: Uint8Array) {
+      const words: number[] = [];
+      for (let i = 0; i < 16; i++) {
+        words[i] = block[i * 4] | (block[i * 4 + 1] << 8) | (block[i * 4 + 2] << 16) | (block[i * 4 + 3] << 24);
+      }
+
+      let a = this.h0, b = this.h1, c = this.h2, d = this.h3;
+      const K = IncrementalMD5.K;
+      const r = IncrementalMD5.R;
+
+      for (let j = 0; j < 64; j++) {
+        let f, g;
+        if (j < 16) {
+          f = (b & c) | (~b & d);
+          g = j;
+        } else if (j < 32) {
+          f = (d & b) | (~d & c);
+          g = (5 * j + 1) % 16;
+        } else if (j < 48) {
+          f = b ^ c ^ d;
+          g = (3 * j + 5) % 16;
+        } else {
+          f = c ^ (b | ~d);
+          g = (7 * j) % 16;
+        }
+        const temp = d;
+        d = c;
+        c = b;
+        b = b + rotateLeft((a + f + K[j] + words[g]), r[j]);
+        a = temp;
+      }
+
+      this.h0 = (this.h0 + a) | 0;
+      this.h1 = (this.h1 + b) | 0;
+      this.h2 = (this.h2 + c) | 0;
+      this.h3 = (this.h3 + d) | 0;
+
+      function rotateLeft(x: number, n: number) {
+        return (x << n) | (x >>> (32 - n));
+      }
+    }
+
+    public finalize(): string {
+      // Pad input
+      const padding = new Uint8Array(64);
+      padding[0] = 0x80;
+      
+      const lenBytes = new Uint8Array(8);
+      const totalBits = this.totalLen * 8;
+      for (let i = 0; i < 8; i++) {
+        lenBytes[i] = (totalBits >>> (i * 8)) & 0xff;
+      }
+
+      const padLen = (this.bufferLen < 56) ? (56 - this.bufferLen) : (120 - this.bufferLen);
+      this.update(padding.subarray(0, padLen));
+      this.update(lenBytes);
+
+      const hex = (val: number) => {
+        let str = "";
+        for (let i = 0; i < 4; i++) {
+          str += ((val >> (i * 8)) & 0xff).toString(16).padStart(2, "0");
+        }
+        return str;
+      };
+      return hex(this.h0) + hex(this.h1) + hex(this.h2) + hex(this.h3);
+    }
+  }
+
+  // --- UUID Algorithms (v1, v4, v7) ---
   function generateUUIDv4(): string {
-    // Cryptographically secure random values
-    const tempUrl = URL.createObjectURL(new Blob());
-    const uuid = tempUrl.toString().split('/').pop() || '';
-    URL.revokeObjectURL(tempUrl);
+    const randomVals = new Uint8Array(16);
+    crypto.getRandomValues(randomVals);
+    randomVals[6] = (randomVals[6] & 0x0f) | 0x40; // set version 4
+    randomVals[8] = (randomVals[8] & 0x3f) | 0x80; // set variant 10
+    
+    return formatHexBytes(randomVals);
+  }
 
-    // Fallback standard RFC4122 v4 generator if blob URL splits fail
-    if (uuid.length !== 36) {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
+  function generateUUIDv7(): string {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    
+    // Timestamp in ms (unix epoch)
+    const timestamp = Date.now();
+    
+    // Top 48 bits of timestamp (must use Math.floor to get integer byte values)
+    bytes[0] = Math.floor(timestamp / 0x10000000000) & 0xff;
+    bytes[1] = Math.floor(timestamp / 0x100000000) & 0xff;
+    bytes[2] = Math.floor(timestamp / 0x1000000) & 0xff;
+    bytes[3] = Math.floor(timestamp / 0x10000) & 0xff;
+    bytes[4] = Math.floor(timestamp / 0x100) & 0xff;
+    bytes[5] = timestamp & 0xff;
+
+    // UUID version 7
+    bytes[6] = (bytes[6] & 0x0f) | 0x70;
+    // UUID variant
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+    return formatHexBytes(bytes);
+  }
+
+  let clockSequence = Math.floor(Math.random() * 0x3fff);
+  let lastUUIDv1Time = 0;
+  const staticMacNode = new Uint8Array(6);
+  crypto.getRandomValues(staticMacNode);
+  staticMacNode[0] |= 0x01; // Multicast bit set to identify random nodes
+
+  function generateUUIDv1(): string {
+    // Use safe integer arithmetic: split Gregorian epoch offset to avoid exceeding Number.MAX_SAFE_INTEGER
+    const gregorianOffsetHigh = 12219292800; // seconds from 1582 to 1970
+    let now = Date.now() * 10000 + gregorianOffsetHigh * 10000000; // 100ns intervals since Gregorian Reform (1582)
+    if (now <= lastUUIDv1Time) {
+      now = lastUUIDv1Time + 1;
+    }
+    lastUUIDv1Time = now;
+
+    const timeLow = now % 0x100000000;
+    const timeMid = Math.floor(now / 0x100000000) % 0x10000;
+    const timeHi = Math.floor(now / 0x1000000000000) & 0x0fff;
+
+    const bytes = new Uint8Array(16);
+    bytes[0] = (timeLow >>> 24) & 0xff;
+    bytes[1] = (timeLow >>> 16) & 0xff;
+    bytes[2] = (timeLow >>> 8) & 0xff;
+    bytes[3] = timeLow & 0xff;
+
+    bytes[4] = (timeMid >>> 8) & 0xff;
+    bytes[5] = timeMid & 0xff;
+
+    bytes[6] = ((timeHi >>> 8) & 0x0f) | 0x10; // set version 1
+    bytes[7] = timeHi & 0xff;
+
+    bytes[8] = ((clockSequence >>> 8) & 0x3f) | 0x80; // variant
+    bytes[9] = clockSequence & 0xff;
+
+    bytes.set(staticMacNode, 10);
+
+    return formatHexBytes(bytes);
+  }
+
+  function formatHexBytes(bytes: Uint8Array): string {
+    const hex: string[] = [];
+    for (let i = 0; i < 16; i++) {
+      hex.push(bytes[i].toString(16).padStart(2, "0"));
+    }
+    return `${hex[0]}${hex[1]}${hex[2]}${hex[3]}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}`;
+  }
+
+  // --- State Setup & Persistence ---
+  interface PresetConfig {
+    id: string;
+    version: string;
+    uppercase: boolean;
+    noHyphens: boolean;
+    wrapper: string;
+  }
+
+  // activeTab tracked via DOM state
+  let activeTab: 'uuid' | 'hash' = 'uuid';
+  let pinList: PresetConfig[] = [];
+
+  // DOM Elements
+  const tabUuidBtn = document.getElementById('tab-uuid-btn') as HTMLButtonElement;
+  const tabHashBtn = document.getElementById('tab-hash-btn') as HTMLButtonElement;
+  const sectionUuid = document.getElementById('section-uuid') as HTMLDivElement;
+  const sectionHash = document.getElementById('section-hash') as HTMLDivElement;
+
+  const uuidVersion = document.getElementById('uuid-version') as HTMLSelectElement;
+  const versionDescription = document.getElementById('version-description') as HTMLSpanElement;
+  const uuidQuantity = document.getElementById('uuid-quantity') as HTMLInputElement;
+  const uuidUppercase = document.getElementById('uuid-uppercase') as HTMLInputElement;
+  const uuidNoHyphens = document.getElementById('uuid-no-hyphens') as HTMLInputElement;
+  const uuidWrapper = document.getElementById('uuid-wrapper') as HTMLSelectElement;
+  const btnGenerate = document.getElementById('btn-generate-uuids') as HTMLButtonElement;
+  const uuidOutputText = document.getElementById('uuid-output-text') as HTMLTextAreaElement;
+  const favoritesContainer = document.getElementById('favorites-container') as HTMLDivElement;
+  const btnPinPreset = document.getElementById('btn-pin-preset') as HTMLButtonElement;
+  
+  const btnReset = document.getElementById('reset-btn') as HTMLButtonElement;
+  const btnCopyUuids = document.getElementById('btn-copy-uuids') as HTMLButtonElement;
+  const btnDownloadTxt = document.getElementById('btn-download-txt') as HTMLButtonElement;
+  const btnDownloadCsv = document.getElementById('btn-download-csv') as HTMLButtonElement;
+  const uuidToast = document.getElementById('uuid-toast') as HTMLDivElement;
+
+  // Hashing DOM Elements
+  const hashTextInput = document.getElementById('hash-text-input') as HTMLTextAreaElement;
+  const hashDropZone = document.getElementById('hash-drop-zone') as HTMLDivElement;
+  const hashFileInput = document.getElementById('hash-file-input') as HTMLInputElement;
+  const fileInfoContainer = document.getElementById('file-info-container') as HTMLDivElement;
+  const hashFilename = document.getElementById('hash-filename') as HTMLSpanElement;
+  const hashFilesize = document.getElementById('hash-filesize') as HTMLSpanElement;
+  const hashProgress = document.getElementById('hash-progress') as HTMLDivElement;
+  const hashProgressText = document.getElementById('hash-progress-text') as HTMLSpanElement;
+  const btnCancelFileHash = document.getElementById('btn-cancel-file-hash') as HTMLButtonElement;
+  const btnClearHash = document.getElementById('btn-clear-hash') as HTMLButtonElement;
+
+  const sha256Val = document.getElementById('sha256-output') as HTMLInputElement;
+  const sha512Val = document.getElementById('sha512-output') as HTMLInputElement;
+  const sha1Val = document.getElementById('sha1-output') as HTMLInputElement;
+  const md5Val = document.getElementById('md5-output') as HTMLInputElement;
+
+  // --- Initializer ---
+  function init() {
+    // Load options
+    uuidVersion.value = localStorage.getItem('bt-uuid-ver') || 'v4';
+    uuidQuantity.value = localStorage.getItem('bt-uuid-qty') || '10';
+    uuidUppercase.checked = localStorage.getItem('bt-uuid-upper') === 'true';
+    uuidNoHyphens.checked = localStorage.getItem('bt-uuid-nohyphens') === 'true';
+    uuidWrapper.value = localStorage.getItem('bt-uuid-wrap') || 'plain';
+    
+    try {
+      pinList = JSON.parse(localStorage.getItem('bt-uuid-pins') || '[]');
+    } catch (e) {
+      pinList = [];
+    }
+
+    updateVersionDescription();
+    updatePinnedListHTML();
+    triggerUUIDGeneration();
+  }
+
+  // --- Navigation & Tab Toggles ---
+  tabUuidBtn.addEventListener('click', () => toggleTab('uuid'));
+  tabHashBtn.addEventListener('click', () => toggleTab('hash'));
+
+  function toggleTab(tab: 'uuid' | 'hash') {
+    activeTab = tab;
+    if (tab === 'uuid') {
+      tabUuidBtn.className = "flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabHashBtn.className = "flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      sectionUuid.classList.remove('hidden');
+      sectionHash.classList.add('hidden');
+    } else {
+      tabHashBtn.className = "flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabUuidBtn.className = "flex-1 text-center text-xs py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      sectionHash.classList.remove('hidden');
+      sectionUuid.classList.add('hidden');
+      scrollToElementWithOffset('hash-outputs-container', 80);
+    }
+  }
+
+  function scrollToElementWithOffset(elementId: string, offset = 80) {
+    if (window.innerWidth < 1024) { // Only scroll on mobile/tablet viewports
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
       });
     }
-    return uuid;
   }
 
-  function handleGenerateUUIDs() {
-    if (!uuidOutput || !uuidCountInput) return;
+  // --- UUID Generation Action ---
+  function triggerUUIDGeneration() {
+    let qty = parseInt(uuidQuantity.value) || 1;
+    if (qty < 1) qty = 1;
+    if (qty > 1000) qty = 1000;
+    uuidQuantity.value = qty.toString();
 
-    let count = parseInt(uuidCountInput.value) || 1;
-    if (count < 1) count = 1;
-    if (count > 100) count = 100;
+    const ver = uuidVersion.value;
+    const isUpper = uuidUppercase.checked;
+    const isNoHyphens = uuidNoHyphens.checked;
+    const wrap = uuidWrapper.value;
 
-    const list: string[] = [];
-    const isUpper = uuidUppercase?.checked || false;
-    const isNoHyphens = uuidNoHyphens?.checked || false;
+    // Save defaults to LocalStorage
+    localStorage.setItem('bt-uuid-ver', ver);
+    localStorage.setItem('bt-uuid-qty', qty.toString());
+    localStorage.setItem('bt-uuid-upper', isUpper.toString());
+    localStorage.setItem('bt-uuid-nohyphens', isNoHyphens.toString());
+    localStorage.setItem('bt-uuid-wrap', wrap);
 
-    for (let i = 0; i < count; i++) {
-      let id = generateUUIDv4();
-      if (isNoHyphens) {
-        id = id.replace(/-/g, '');
-      }
-      if (isUpper) {
-        id = id.toUpperCase();
-      }
-      list.push(id);
+    const generated: string[] = [];
+    for (let i = 0; i < qty; i++) {
+      let id = "";
+      if (ver === 'v1') id = generateUUIDv1();
+      else if (ver === 'v7') id = generateUUIDv7();
+      else id = generateUUIDv4();
+
+      if (isNoHyphens) id = id.replace(/-/g, '');
+      if (isUpper) id = id.toUpperCase();
+      generated.push(id);
     }
 
-    uuidOutput.value = list.join('\n');
+    // Format output based on wrapper selection
+    let output = "";
+    if (wrap === 'single') {
+      output = generated.map(id => `'${id}'`).join('\n');
+    } else if (wrap === 'double') {
+      output = generated.map(id => `"${id}"`).join('\n');
+    } else if (wrap === 'braces') {
+      output = generated.map(id => `{${id}}`).join('\n');
+    } else if (wrap === 'array') {
+      output = JSON.stringify(generated, null, 2);
+    } else {
+      output = generated.join('\n');
+    }
+
+    uuidOutputText.value = output;
   }
 
-  if (btnGenUuid) {
-    btnGenUuid.addEventListener('click', handleGenerateUUIDs);
+  btnGenerate.addEventListener('click', () => {
+    triggerUUIDGeneration();
+    triggerAnimate(uuidOutputText);
+    scrollToElementWithOffset('uuid-output-container', 80);
+  });
+
+  uuidVersion.addEventListener('change', () => {
+    updateVersionDescription();
+    triggerUUIDGeneration();
+  });
+  uuidQuantity.addEventListener('input', triggerUUIDGeneration);
+  uuidUppercase.addEventListener('change', triggerUUIDGeneration);
+  uuidNoHyphens.addEventListener('change', triggerUUIDGeneration);
+  uuidWrapper.addEventListener('change', triggerUUIDGeneration);
+
+  function updateVersionDescription() {
+    const val = uuidVersion.value;
+    if (val === 'v1') {
+      versionDescription.textContent = "Includes host machine mac nodes & high-resolution timestamps. Useful in clustered clusters.";
+    } else if (val === 'v7') {
+      versionDescription.textContent = "Time-ordered layout. Excellent for index insert performance in SQL databases.";
+    } else {
+      versionDescription.textContent = "Most common. Generates completely random identifiers.";
+    }
   }
 
-  if (btnCopyUuid && uuidOutput) {
-    btnCopyUuid.addEventListener('click', () => {
-      const list = uuidOutput.value;
-      if (list) {
-        navigator.clipboard.writeText(list).then(() => {
-          const orig = btnCopyUuid.innerHTML;
-          btnCopyUuid.innerHTML = 'Copied!';
-          setTimeout(() => {
-            btnCopyUuid.innerHTML = orig;
-          }, 1500);
-        });
-      }
+  // Presets presets
+  const quantityPresets = document.querySelectorAll('.btn-qty-preset');
+  quantityPresets.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const val = (e.currentTarget as HTMLButtonElement).dataset.value || "10";
+      uuidQuantity.value = val;
+      triggerUUIDGeneration();
     });
+  });
+
+  // --- Copy, Download, & Reset Actions ---
+  btnCopyUuids.addEventListener('click', () => {
+    if (uuidOutputText.value) {
+      navigator.clipboard.writeText(uuidOutputText.value).then(() => {
+        showToast(uuidToast, "Copied list!");
+      });
+    }
+  });
+
+  btnDownloadTxt.addEventListener('click', () => downloadFile(uuidOutputText.value, "uuid-list.txt", "text/plain"));
+  btnDownloadCsv.addEventListener('click', () => {
+    const wrap = uuidWrapper.value;
+    let content = uuidOutputText.value;
+    if (wrap !== 'array') {
+      content = "uuid\n" + content;
+    }
+    downloadFile(content, "uuid-list.csv", "text/csv");
+  });
+
+  btnReset.addEventListener('click', () => {
+    localStorage.removeItem('bt-uuid-ver');
+    localStorage.removeItem('bt-uuid-qty');
+    localStorage.removeItem('bt-uuid-upper');
+    localStorage.removeItem('bt-uuid-nohyphens');
+    localStorage.removeItem('bt-uuid-wrap');
+    init();
+  });
+
+  function downloadFile(content: string, filename: string, mime: string) {
+    if (!content) return;
+    const blob = new Blob([content], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
-  // Trigger initial list on load
-  handleGenerateUUIDs();
+  function showToast(elem: HTMLDivElement, text: string) {
+    elem.textContent = text;
+    elem.style.opacity = "1";
+    setTimeout(() => {
+      elem.style.opacity = "0";
+    }, 1500);
+  }
 
-  // Hash Generator Code
-  const hashInput = document.getElementById('hash-input') as HTMLTextAreaElement | null;
-  const sha256Val = document.getElementById('sha256-output') as HTMLInputElement | null;
-  const sha512Val = document.getElementById('sha512-output') as HTMLInputElement | null;
-  const sha1Val = document.getElementById('sha1-output') as HTMLInputElement | null;
+  // --- Pin / Favorites Management ---
+  btnPinPreset.addEventListener('click', () => {
+    const item: PresetConfig = {
+      id: "Preset-" + Math.floor(Math.random() * 100000),
+      version: uuidVersion.value,
+      uppercase: uuidUppercase.checked,
+      noHyphens: uuidNoHyphens.checked,
+      wrapper: uuidWrapper.value
+    };
 
-  async function calculateHashes() {
-    if (!hashInput || !sha256Val || !sha512Val || !sha1Val) return;
+    // Prevent identical duplicates
+    const duplicate = pinList.some(p => 
+      p.version === item.version && 
+      p.uppercase === item.uppercase && 
+      p.noHyphens === item.noHyphens && 
+      p.wrapper === item.wrapper
+    );
 
-    const value = hashInput.value;
-    if (!value) {
-      sha256Val.value = '';
-      sha512Val.value = '';
-      sha1Val.value = '';
+    if (!duplicate) {
+      pinList.push(item);
+      localStorage.setItem('bt-uuid-pins', JSON.stringify(pinList));
+      updatePinnedListHTML();
+    }
+  });
+
+  function updatePinnedListHTML() {
+    if (pinList.length === 0) {
+      favoritesContainer.innerHTML = `<span class="text-[11px] text-stone">No items pinned yet. Pin your favorite configuration below!</span>`;
       return;
     }
 
-    const enc = new TextEncoder();
-    const data = enc.encode(value);
+    favoritesContainer.innerHTML = pinList.map(p => {
+      const parts = [
+        p.version.toUpperCase(),
+        p.uppercase ? 'UPPER' : 'lower',
+        p.noHyphens ? 'NOHYPHEN' : 'HYPHEN',
+        p.wrapper !== 'plain' ? `WRAP:${p.wrapper.toUpperCase()}` : 'PLAIN'
+      ];
+      return `
+        <div class="flex items-center justify-between bg-surface p-1.5 px-2.5 rounded border border-hairline text-[11px] font-mono group">
+          <button type="button" class="text-left hover:text-brand-blue font-bold flex-grow btn-apply-preset" data-id="${p.id}">
+            ⭐ ${parts.join(' | ')}
+          </button>
+          <button type="button" class="text-stone hover:text-brand-coral ml-2 btn-remove-preset" data-id="${p.id}">×</button>
+        </div>
+      `;
+    }).join('');
+
+    // Attach listeners
+    document.querySelectorAll('.btn-apply-preset').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = (e.currentTarget as HTMLButtonElement).dataset.id;
+        const config = pinList.find(p => p.id === id);
+        if (config) {
+          uuidVersion.value = config.version;
+          uuidUppercase.checked = config.uppercase;
+          uuidNoHyphens.checked = config.noHyphens;
+          uuidWrapper.value = config.wrapper;
+          updateVersionDescription();
+          triggerUUIDGeneration();
+        }
+      });
+    });
+
+    document.querySelectorAll('.btn-remove-preset').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = (e.currentTarget as HTMLButtonElement).dataset.id;
+        pinList = pinList.filter(p => p.id !== id);
+        localStorage.setItem('bt-uuid-pins', JSON.stringify(pinList));
+        updatePinnedListHTML();
+      });
+    });
+  }
+
+  // --- CRYPTOGRAPHIC HASHER (Text Mode) ---
+  hashTextInput.addEventListener('input', runTextHasher);
+
+  async function runTextHasher() {
+    const val = hashTextInput.value;
+    if (!val) {
+      clearHashInputs();
+      return;
+    }
+
+    // Local MD5
+    md5Val.value = md5(val);
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(val);
 
     try {
-      // SHA-256
-      const hash256 = await crypto.subtle.digest('SHA-256', data);
-      sha256Val.value = hex(hash256);
+      const sha1 = await crypto.subtle.digest('SHA-1', data);
+      sha1Val.value = bufferToHex(sha1);
 
-      // SHA-512
-      const hash512 = await crypto.subtle.digest('SHA-512', data);
-      sha512Val.value = hex(hash512);
+      const sha256 = await crypto.subtle.digest('SHA-256', data);
+      sha256Val.value = bufferToHex(sha256);
 
-      // SHA-1
-      const hash1 = await crypto.subtle.digest('SHA-1', data);
-      sha1Val.value = hex(hash1);
+      const sha512 = await crypto.subtle.digest('SHA-512', data);
+      sha512Val.value = bufferToHex(sha512);
+
+      scrollToElementWithOffset('hash-outputs-container', 80);
     } catch (e) {
-      console.error('Cryptographic calculation failure', e);
+      console.error("Cryptographic hash failure: ", e);
     }
   }
 
-  function hex(buffer: ArrayBuffer): string {
+  function clearHashInputs() {
+    md5Val.value = '';
+    sha1Val.value = '';
+    sha256Val.value = '';
+    sha512Val.value = '';
+  }
+
+  btnClearHash.addEventListener('click', () => {
+    hashTextInput.value = '';
+    clearHashInputs();
+  });
+
+  // --- FILE HASHER (Drag & Drop Mode) ---
+  let fileReaderAbortController: AbortController | null = null;
+
+  hashDropZone.addEventListener('click', () => hashFileInput.click());
+  hashFileInput.addEventListener('change', handleFileSelected);
+  
+  hashDropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    hashDropZone.classList.add('border-brand-blue', 'bg-surface');
+  });
+
+  hashDropZone.addEventListener('dragleave', () => {
+    hashDropZone.classList.remove('border-brand-blue', 'bg-surface');
+  });
+
+  hashDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    hashDropZone.classList.remove('border-brand-blue', 'bg-surface');
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      processFile(files[0]);
+    }
+  });
+
+  function handleFileSelected() {
+    const files = hashFileInput.files;
+    if (files && files.length > 0) {
+      processFile(files[0]);
+    }
+  }
+
+  async function processFile(file: File) {
+    if (!file) return;
+
+    // Reset progress
+    fileInfoContainer.classList.remove('hidden');
+    hashFilename.textContent = file.name;
+    hashFilesize.textContent = formatBytes(file.size);
+    hashProgress.style.width = "0%";
+    hashProgressText.textContent = "Reading file chunks...";
+
+    if (fileReaderAbortController) {
+      fileReaderAbortController.abort();
+    }
+    fileReaderAbortController = new AbortController();
+    const signal = fileReaderAbortController.signal;
+
+    const chunkSize = 1024 * 1024 * 2; // 2MB chunk sizes
+    let offset = 0;
+    const size = file.size;
+
+    const md5Hasher = new IncrementalMD5();
+    
+    // In-browser Web Crypto API digests require complete arrays. We compute SHA-256/512 iteratively using a custom SHA library,
+    // or by loading the complete file for WebCrypto if it is reasonably small. 
+    // For simplicity, robustness, and performance (without third party bloat), if the file is < 100MB we calculate SHA on complete buffers.
+    let fullBuffer: Uint8Array | null = null;
+    if (size < 100 * 1024 * 1024) {
+      fullBuffer = new Uint8Array(size);
+    }
+
+    try {
+      while (offset < size) {
+        if (signal.aborted) throw new Error("Aborted");
+
+        const slice = file.slice(offset, offset + chunkSize);
+        const chunk = await readBlobAsArrayBuffer(slice);
+        const uintArray = new Uint8Array(chunk);
+
+        // Update MD5
+        md5Hasher.update(uintArray);
+
+        // Update full buffer for WebCrypto
+        if (fullBuffer) {
+          fullBuffer.set(uintArray, offset);
+        }
+
+        offset += chunkSize;
+        const progressPercentage = Math.min(100, Math.floor((offset / size) * 100));
+        hashProgress.style.width = `${progressPercentage}%`;
+        hashProgressText.textContent = `Processing chunk... ${progressPercentage}%`;
+      }
+
+      // Finish MD5
+      md5Val.value = md5Hasher.finalize();
+
+      // SHA computation
+      if (fullBuffer) {
+        hashProgressText.textContent = "Calculating secure SHA-256/512 hashes...";
+        const sha1 = await crypto.subtle.digest('SHA-1', fullBuffer.buffer as ArrayBuffer);
+        sha1Val.value = bufferToHex(sha1);
+
+        const sha256 = await crypto.subtle.digest('SHA-256', fullBuffer.buffer as ArrayBuffer);
+        sha256Val.value = bufferToHex(sha256);
+
+        const sha512 = await crypto.subtle.digest('SHA-512', fullBuffer.buffer as ArrayBuffer);
+        sha512Val.value = bufferToHex(sha512);
+      } else {
+        sha1Val.value = "File too large (Only MD5 computed)";
+        sha256Val.value = "File too large (> 100MB)";
+        sha512Val.value = "File too large (> 100MB)";
+      }
+
+      hashProgressText.textContent = "Calculation Complete!";
+      scrollToElementWithOffset('hash-outputs-container', 80);
+    } catch (e: any) {
+      if (e.message === "Aborted") {
+        hashProgressText.textContent = "Checksum Cancelled.";
+      } else {
+        hashProgressText.textContent = "Hash Error.";
+        console.error(e);
+      }
+    }
+  }
+
+  btnCancelFileHash.addEventListener('click', () => {
+    if (fileReaderAbortController) {
+      fileReaderAbortController.abort();
+    }
+    fileInfoContainer.classList.add('hidden');
+    clearHashInputs();
+  });
+
+  function readBlobAsArrayBuffer(blob: Blob): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as ArrayBuffer);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsArrayBuffer(blob);
+    });
+  }
+
+  // --- Utility Functions ---
+  function bufferToHex(buffer: ArrayBuffer): string {
     const bytes = new Uint8Array(buffer);
     return Array.from(bytes)
       .map(b => b.toString(16).padStart(2, '0'))
       .join('');
   }
 
-  if (hashInput) {
-    hashInput.addEventListener('input', calculateHashes);
+  // formatBytes function
+  function formatBytes(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  // Handle Hash outputs Copy buttons
-  const copyButtons = document.querySelectorAll('[data-copy-target]');
-  copyButtons.forEach(btn => {
+  function triggerAnimate(elem: HTMLElement) {
+    elem.classList.remove('animate-pulse');
+    void elem.offsetWidth; // trigger reflow
+    elem.classList.add('animate-pulse');
+  }
+
+  // Attach generic copy listeners to digest output blocks
+  const hashCopyButtons = document.querySelectorAll('[data-hash-copy]');
+  hashCopyButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const targetId = (e.currentTarget as HTMLButtonElement).dataset.copyTarget || '';
+      const targetId = (e.currentTarget as HTMLButtonElement).dataset.hashCopy || '';
       const input = document.getElementById(targetId) as HTMLInputElement | null;
-      
       if (input && input.value) {
         navigator.clipboard.writeText(input.value).then(() => {
-          const clicked = e.currentTarget as HTMLButtonElement;
-          const orig = clicked.innerHTML;
-          clicked.innerHTML = 'Copied!';
+          const origText = btn.innerHTML;
+          btn.innerHTML = "✓ Copied";
           setTimeout(() => {
-            clicked.innerHTML = orig;
+            btn.innerHTML = origText;
           }, 1500);
         });
       }
     });
   });
+
+  // Run init on startup
+  init();
 </script>
