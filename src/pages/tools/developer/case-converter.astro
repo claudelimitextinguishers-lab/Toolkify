@@ -2,89 +2,600 @@
 import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
-const name = "Case Converter";
+const name = "Text Case Converter";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Transform text blocks to UPPERCASE, lowercase, Title Case, camelCase, or sentence formats.";
+
+// SEO metadata
+const pageTitle = "Text Case Converter - Convert Case Online & Batch Format Developer Identifiers";
+const description = "Free client-side case converter. Transform text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, and dot.case. Supports bulk batch mode.";
+const keywords = "case converter, convert case, title case converter, camelcase converter, snake case converter, text converter, batch case converter, uppercase, lowercase, sentence case, constant case, kebab case, dot case, developer tools";
+const canonicalUrl = "https://boardtools.app/tools/developer/case-converter";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage="/og/case-converter.png"
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Text Case Converter",
+      "url": "https://boardtools.app/tools/developer/case-converter",
+      "description": "Convert text block casing instantly. Supports common cases (UPPERCASE, lowercase, Title Case, Sentence case) and developer-oriented formats (camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case) in single or bulk batch modes.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Support for 10 case styles including developer formats",
+        "Smart Title Case handling small grammatical words properly",
+        "Bulk/Batch processing mode converting line-by-line",
+        "Live character, word, and sentence counts",
+        "Favorites pinning system to sort preferred cases first",
+        "100% secure client-side browser execution"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-4 sm:py-6 flex flex-col gap-4 animate-fade-in-up pb-16">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="btn-reset"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset text input and favorites"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" />
+            </svg>
+            <span>Reset</span>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Case Converter works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Panel -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-5 relative overflow-hidden">
+      <!-- Dot grid visual backdrop -->
+      <div class="absolute inset-0 dot-grid opacity-[0.04] pointer-events-none rounded-xl"></div>
+
+      <div class="relative z-10 flex flex-col gap-4">
+        <!-- Input Textarea Header (Mode & Counters) -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-1 border-b border-hairline-soft">
+          <!-- Live metrics -->
+          <div class="flex items-center gap-3.5 text-[11px] text-slate font-medium">
+            <span class="flex items-center gap-1">
+              Characters: <strong id="metric-chars" class="text-primary font-bold">0</strong>
+            </span>
+            <span class="text-hairline-strong">|</span>
+            <span class="flex items-center gap-1">
+              Words: <strong id="metric-words" class="text-primary font-bold">0</strong>
+            </span>
+            <span class="text-hairline-strong">|</span>
+            <span class="flex items-center gap-1">
+              Sentences: <strong id="metric-sentences" class="text-primary font-bold">0</strong>
+            </span>
+          </div>
+
+          <!-- Mode Toggle -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[10px] font-bold text-slate uppercase">Mode:</span>
+            <div class="flex rounded-full bg-surface p-0.5 border border-hairline">
+              <button
+                type="button"
+                id="mode-single-btn"
+                class="text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+              >
+                Single Text
+              </button>
+              <button
+                type="button"
+                id="mode-batch-btn"
+                class="text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+              >
+                Batch (Line-by-Line)
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Input Editor Box -->
+        <div class="relative flex flex-col border border-hairline-strong rounded-xl bg-surface-soft focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/10 transition-all">
+          <textarea
+            id="converter-input"
+            class="w-full min-h-[140px] p-4 font-mono text-sm bg-transparent text-primary resize-y outline-none leading-relaxed"
+            placeholder="Type or paste your text here (updates live below)..."
+            spellcheck="false"
+            autofocus
+          ></textarea>
+          <div id="toast-notify" class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+            Copied!
+          </div>
+        </div>
+
+        <!-- Section Title: Output Grid -->
+        <div class="flex items-center justify-between mt-2">
+          <h2 class="font-display font-medium text-sm text-primary flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+            Converted Output Cases
+          </h2>
+          <span class="text-[10px] text-stone">Click star to pin favorites to top</span>
+        </div>
+
+        <!-- Dynamic Grid of Case Cards -->
+        <div id="case-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 transition-all duration-300">
+          <!-- Cards will be dynamically rendered and ordered here -->
         </div>
       </div>
     </div>
+
+    <!-- Security & Privacy Guard Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Processing, 0KB Sent to Servers
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- How it Works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">Text Case Converter Guide</h3>
+        <button
+          type="button"
+          id="close-how-it-works-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >✕</button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Instant Case Conversion</h4>
+        <p>
+          Type or paste text into the input field. The converter instantly generates 10 different formats, including writer-friendly casing (Title Case, Sentence case) and developer-friendly formats (camelCase, snake_case, etc.).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Favorites Pinning</h4>
+        <p>
+          Click the star icon (★) in the top-right of any case card to pin it to the top. Your favorite formats will stay at the top of the grid and are saved to your browser's local storage.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Batch Mode (Line-by-Line)</h4>
+        <p>
+          Toggle between <strong>Single Text</strong> mode (converts the entire input block as a whole) and <strong>Batch (Line-by-Line)</strong> mode (converts each line independently, perfect for bulk list formatting).
+        </p>
+
+        <h4 class="font-semibold text-primary">4. 100% Client-Side</h4>
+        <p>
+          All formatting happens inside your browser. No text is ever uploaded or processed by a server, keeping your data entirely secure and private.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        id="how-it-works-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // Case converter helpers
+  const smallWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'in', 'at', 'to', 'by', 'from', 'of', 'with', 'in', 'out', 'up', 'down', 'over', 'under']);
+
+  function toSentenceCase(str: string): string {
+    if (!str) return '';
+    let res = str.toLowerCase();
+    // Capitalize first character that is a letter
+    res = res.replace(/^([^\p{L}]*)(\p{L})/u, (_, p1, p2) => p1 + p2.toUpperCase());
+    // Capitalize letters following a sentence punctuation (. ! ?) followed by whitespace
+    res = res.replace(/([.!?]\s+)(\p{L})/gu, (_, p1, p2) => p1 + p2.toUpperCase());
+    return res;
+  }
+
+  function toTitleCase(str: string): string {
+    if (!str) return '';
+    const tokens = str.split(/([^\p{L}\p{N}]+)/u);
+    
+    let firstWordIdx = -1;
+    let lastWordIdx = -1;
+    for (let i = 0; i < tokens.length; i++) {
+      if (/[\p{L}\p{N}]/u.test(tokens[i])) {
+        if (firstWordIdx === -1) firstWordIdx = i;
+        lastWordIdx = i;
+      }
+    }
+    
+    return tokens.map((token, idx) => {
+      if (!/[\p{L}\p{N}]/u.test(token)) return token;
+      const lower = token.toLowerCase();
+      
+      let followsColon = false;
+      if (idx > 0) {
+        const prevToken = tokens[idx - 1];
+        if (/:/g.test(prevToken)) {
+          followsColon = true;
+        }
+      }
+      
+      if (idx === firstWordIdx || idx === lastWordIdx || followsColon || !smallWords.has(lower)) {
+        return token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
+      }
+      return lower;
+    }).join('');
+  }
+
+  function toWords(str: string): string[] {
+    if (!str) return [];
+    let s = str.replace(/([\p{Ll}\p{N}])([\p{Lu}])/gu, '$1 $2');
+    s = s.replace(/([\p{Lu}]+)([\p{Lu}][\p{Ll}])/gu, '$1 $2');
+    return Array.from(s.matchAll(/[\p{L}\p{N}]+/gu), m => m[0]);
+  }
+
+  function toCamelCase(str: string): string {
+    const words = toWords(str);
+    if (words.length === 0) return '';
+    return words.map((w, idx) => {
+      const lower = w.toLowerCase();
+      if (idx === 0) return lower;
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    }).join('');
+  }
+
+  function toPascalCase(str: string): string {
+    const words = toWords(str);
+    return words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+  }
+
+  function toSnakeCase(str: string): string {
+    const words = toWords(str);
+    return words.map(w => w.toLowerCase()).join('_');
+  }
+
+  function toKebabCase(str: string): string {
+    const words = toWords(str);
+    return words.map(w => w.toLowerCase()).join('-');
+  }
+
+  function toConstantCase(str: string): string {
+    const words = toWords(str);
+    return words.map(w => w.toUpperCase()).join('_');
+  }
+
+  function toDotCase(str: string): string {
+    const words = toWords(str);
+    return words.map(w => w.toLowerCase()).join('.');
+  }
+
+  // Case definitions
+  interface CaseDef {
+    id: string;
+    name: string;
+    description: string;
+    convert: (str: string) => string;
+  }
+
+  const casesList: CaseDef[] = [
+    { id: 'upper', name: 'UPPERCASE', description: 'All uppercase letters', convert: (s) => s.toUpperCase() },
+    { id: 'lower', name: 'lowercase', description: 'All lowercase letters', convert: (s) => s.toLowerCase() },
+    { id: 'title', name: 'Title Case', description: 'Smart capital major words', convert: toTitleCase },
+    { id: 'sentence', name: 'Sentence case', description: 'First letter capitalized', convert: toSentenceCase },
+    { id: 'camel', name: 'camelCase', description: 'Developer camel case format', convert: toCamelCase },
+    { id: 'pascal', name: 'PascalCase', description: 'Developer Pascal case format', convert: toPascalCase },
+    { id: 'snake', name: 'snake_case', description: 'Developer snake case format', convert: toSnakeCase },
+    { id: 'kebab', name: 'kebab-case', description: 'Developer kebab case format', convert: toKebabCase },
+    { id: 'constant', name: 'CONSTANT_CASE', description: 'Developer constant format', convert: toConstantCase },
+    { id: 'dot', name: 'dot.case', description: 'Developer dot case format', convert: toDotCase }
+  ];
+
+  // State Management
+  let isBatchMode = false;
+  let pinnedCases: string[] = ['title', 'camel', 'snake']; // Default favorites
+
+  // DOM Elements
+  const converterInput = document.getElementById('converter-input') as HTMLTextAreaElement;
+  const singleBtn = document.getElementById('mode-single-btn') as HTMLButtonElement;
+  const batchBtn = document.getElementById('mode-batch-btn') as HTMLButtonElement;
+  const resetBtn = document.getElementById('btn-reset') as HTMLButtonElement;
+  const caseGrid = document.getElementById('case-grid') as HTMLDivElement;
+  const toastNotify = document.getElementById('toast-notify') as HTMLDivElement;
+
+  // Counter Elements
+  const metricChars = document.getElementById('metric-chars') as HTMLElement;
+  const metricWords = document.getElementById('metric-words') as HTMLElement;
+  const metricSentences = document.getElementById('metric-sentences') as HTMLElement;
+
+  // Load from local storage
+  function loadState() {
+    const savedPins = localStorage.getItem('bt-case-pins');
+    if (savedPins) {
+      try {
+        pinnedCases = JSON.parse(savedPins);
+      } catch (e) {
+        // use default
+      }
+    }
+    const savedMode = localStorage.getItem('bt-case-mode');
+    if (savedMode) {
+      isBatchMode = savedMode === 'batch';
+      updateModeUI();
+    }
+  }
+
+  function savePins() {
+    localStorage.setItem('bt-case-pins', JSON.stringify(pinnedCases));
+  }
+
+  function saveMode() {
+    localStorage.setItem('bt-case-mode', isBatchMode ? 'batch' : 'single');
+  }
+
+  // UI update for modes
+  function updateModeUI() {
+    if (isBatchMode) {
+      batchBtn.className = "text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      singleBtn.className = "text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      converterInput.placeholder = "Paste multiple lines of text here (each line processed independently)...";
+    } else {
+      singleBtn.className = "text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      batchBtn.className = "text-[10px] px-3 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      converterInput.placeholder = "Type or paste your text here (updates live below)...";
+    }
+    triggerConversion();
+  }
+
+  // Toggle Favorite
+  function togglePin(id: string) {
+    const index = pinnedCases.indexOf(id);
+    if (index > -1) {
+      pinnedCases.splice(index, 1);
+    } else {
+      pinnedCases.push(id);
+    }
+    savePins();
+    renderGrid();
+  }
+
+  // Convert Text logic
+  function processText(text: string, convertFn: (s: string) => string): string {
+    if (!text) return '';
+    if (isBatchMode) {
+      return text.split(/\r?\n/).map(line => convertFn(line)).join('\n');
+    }
+    return convertFn(text);
+  }
+
+  // Render Case Converter Cards
+  function renderGrid() {
+    const text = converterInput.value;
+    
+    // Sort cases: pinned first, then others in default list order
+    const sortedCases = [...casesList].sort((a, b) => {
+      const aPinned = pinnedCases.includes(a.id);
+      const bPinned = pinnedCases.includes(b.id);
+      if (aPinned && !bPinned) return -1;
+      if (!aPinned && bPinned) return 1;
+      return casesList.indexOf(a) - casesList.indexOf(b);
+    });
+
+    caseGrid.innerHTML = '';
+    
+    sortedCases.forEach(c => {
+      const isPinned = pinnedCases.includes(c.id);
+      const result = processText(text, c.convert);
+
+      const card = document.createElement('div');
+      card.className = "card-base p-4 flex flex-col gap-3 relative hover:shadow-subtle transition-all duration-200 animate-fade-in";
+      card.innerHTML = `
+        <div class="flex items-center justify-between border-b border-hairline-soft pb-1.5">
+          <div class="flex flex-col">
+            <span class="text-xs font-bold text-primary">${c.name}</span>
+            <span class="text-[9px] text-stone">${c.description}</span>
+          </div>
+          <button 
+            type="button" 
+            class="pin-btn text-xs cursor-pointer focus:outline-none hover:scale-110 transition-transform ${isPinned ? 'text-brand-yellow font-bold' : 'text-stone opacity-60'}" 
+            data-id="${c.id}"
+            title="${isPinned ? 'Unpin case' : 'Pin case to top'}"
+          >
+            ★
+          </button>
+        </div>
+        <textarea 
+          readonly 
+          class="w-full h-20 p-2 font-mono text-[11px] bg-surface border border-hairline rounded-md resize-none outline-none leading-relaxed text-charcoal select-all"
+          placeholder="Result will appear here..."
+        >${result}</textarea>
+        <div class="flex items-center justify-end">
+          <button 
+            type="button" 
+            class="copy-card-btn inline-flex items-center gap-1 text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
+            data-id="${c.id}"
+          >
+            Copy
+          </button>
+        </div>
+      `;
+
+      // Copy click handler
+      const copyBtn = card.querySelector('.copy-card-btn') as HTMLButtonElement;
+      const textarea = card.querySelector('textarea') as HTMLTextAreaElement;
+      copyBtn.addEventListener('click', () => {
+        if (!textarea.value) return;
+        navigator.clipboard.writeText(textarea.value).then(() => {
+          copyBtn.textContent = '✓ Copied!';
+          copyBtn.className = "copy-card-btn inline-flex items-center gap-1 text-[10px] font-bold text-success-accent";
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.className = "copy-card-btn inline-flex items-center gap-1 text-[10px] font-bold text-brand-blue hover:underline";
+          }, 1500);
+        });
+      });
+
+      // Pin click handler
+      const pinBtn = card.querySelector('.pin-btn') as HTMLButtonElement;
+      pinBtn.addEventListener('click', () => {
+        togglePin(c.id);
+      });
+
+      caseGrid.appendChild(card);
+    });
+  }
+
+  // Core update cycle
+  function triggerConversion() {
+    const text = converterInput.value;
+    
+    // Update metrics
+    metricChars.textContent = text.length.toString();
+    
+    // Words count (ignoring formatting tokens)
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    metricWords.textContent = words.toString();
+
+    // Sentences count
+    const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+    metricSentences.textContent = sentences.toString();
+
+    // Update results on cards
+    const cards = caseGrid.querySelectorAll('.card-base');
+    cards.forEach(card => {
+      const pinBtn = card.querySelector('.pin-btn') as HTMLButtonElement;
+      const id = pinBtn.getAttribute('data-id');
+      const textarea = card.querySelector('textarea') as HTMLTextAreaElement;
+      if (!id) return;
+      
+      const c = casesList.find(item => item.id === id);
+      if (c && textarea) {
+        textarea.value = processText(text, c.convert);
+      }
+    });
+  }
+
+  // Event Listeners
+  converterInput.addEventListener('input', triggerConversion);
+
+  singleBtn.addEventListener('click', () => {
+    if (isBatchMode) {
+      isBatchMode = false;
+      saveMode();
+      updateModeUI();
+    }
+  });
+
+  batchBtn.addEventListener('click', () => {
+    if (!isBatchMode) {
+      isBatchMode = true;
+      saveMode();
+      updateModeUI();
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    converterInput.value = '';
+    pinnedCases = ['title', 'camel', 'snake'];
+    isBatchMode = false;
+    savePins();
+    saveMode();
+    updateModeUI();
+    renderGrid();
+  });
+
+  // How it works modal
+  const howItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeHowItWorksBtn = document.getElementById('close-how-it-works-btn');
+  const howItWorksOkBtn = document.getElementById('how-it-works-ok-btn');
+
+  howItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeHowItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
+    }
+  });
+
+  function showToast(msg: string) {
+    toastNotify.textContent = msg;
+    toastNotify.className = "absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-100 transition-opacity duration-300 pointer-events-none z-20";
+    setTimeout(() => {
+      toastNotify.className = "absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20";
+    }, 2000);
+  }
+
+  // Initialize URL Query parameters
+  function handleUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const text = params.get('text') || params.get('q');
+    if (text) {
+      converterInput.value = text;
+    }
+  }
+
+  // Bootstrap
+  loadState();
+  handleUrlParams();
+  renderGrid();
+  triggerConversion();
+</script>
