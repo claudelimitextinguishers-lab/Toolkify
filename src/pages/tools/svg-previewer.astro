@@ -1,330 +1,1668 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout 
-  title="SVG Code Previewer & Optimizer - BoardTools"
-  description="Paste or upload vector SVG codes to preview them in real-time on canvas grids. Beautify XML elements and sanitize dimensions instantly."
+<Layout
+  title="SVG Optimizer - Vector Compression Tool"
+  description="Optimize, minify, and compress vector SVG assets in real-time. Features side-by-side interactive previews, batch processing, and visual diff detection."
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
-    <!-- Header -->
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6"
+  >
+    <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Tools</a>
+      <div
+        class="flex items-center gap-2 text-xs font-semibold text-slate uppercase"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
-        <span class="text-brand-blue">SVG Previewer</span>
+        <span class="text-brand-blue">SVG Optimizer</span>
       </div>
-      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">SVG Previewer & Optimizer</h1>
-      <p class="text-sm text-slate">Inspect SVG graphics, prettify XML nodes, sanitize dimensions to viewBox, and compress vector markup.</p>
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-4"
+      >
+        <div class="flex flex-wrap items-center gap-3">
+          <h1
+            class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary"
+          >
+            SVG Optimizer
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >Design & Assets</span
+          >
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="reset-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+              aria-label="Reset optimizer inputs"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+                ></path>
+              </svg>
+              <span>Reset</span>
+            </button>
+            <button
+              type="button"
+              id="how-it-works-btn"
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+              aria-label="How SVG optimizer works"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+              <span>How it works</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Interface Panel -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-      <!-- Input Panel -->
-      <div class="card-base flex flex-col gap-4 min-h-[450px]">
-        <div class="flex items-center justify-between">
-          <label for="svg-input" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
-            SVG XML Markup
-          </label>
-          <div class="flex gap-2.5">
-            <button id="btn-load-sample" class="text-xs text-brand-blue hover:underline cursor-pointer">Load Sample</button>
-            <button id="btn-clear" class="text-xs text-stone hover:text-primary cursor-pointer">Clear</button>
-          </div>
-        </div>
-
-        <textarea 
-          id="svg-input" 
-          placeholder='Paste SVG code here... e.g. <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="red" /></svg>' 
-          class="flex-grow w-full h-[350px] p-4 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
-        ></textarea>
-      </div>
-
-      <!-- Preview Panel -->
-      <div class="card-base flex flex-col gap-4 min-h-[450px]">
-        <div class="flex items-center justify-between">
-          <span class="font-display font-semibold text-sm text-primary flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
-            Live Grid Preview
-          </span>
-          <div class="flex gap-2">
-            <button id="btn-copy" class="button-secondary py-1 px-3 text-xs !rounded-md hover:bg-surface cursor-pointer">Copy Code</button>
-            <button id="btn-download" class="button-primary py-1 px-3 text-xs !rounded-md hover:button-primary-active cursor-pointer">Download File</button>
-          </div>
-        </div>
-
-        <!-- Render Target Frame (Checkered Grid) -->
-        <div 
-          id="svg-preview-frame" 
-          class="flex-grow w-full h-[350px] checkered-grid border border-hairline rounded-lg flex items-center justify-center p-8 bg-canvas overflow-hidden"
+    <!-- Mode Selector Tab -->
+    <div
+      class="flex flex-wrap items-center justify-between gap-y-3 border-b border-hairline pb-2"
+    >
+      <div class="flex gap-2">
+        <button
+          id="tab-single"
+          class="pill-tab-active px-5 py-2 text-sm font-medium rounded-full cursor-pointer transition-all duration-200"
         >
-          <div id="svg-render-container" class="w-full h-full flex items-center justify-center">
-            <span class="text-stone text-xs select-none">SVG output will render here...</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Actions Panel -->
-    <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface rounded-xl border border-hairline">
-      <div class="flex flex-wrap gap-2.5">
-        <button id="btn-format" class="button-secondary py-2 px-5 text-sm hover:bg-canvas cursor-pointer">Prettify Markup</button>
-        <button id="btn-minify" class="button-secondary py-2 px-5 text-sm hover:bg-canvas cursor-pointer">Minify XML</button>
-        <button id="btn-sanitize" class="button-primary py-2 px-5 text-sm hover:button-primary-active cursor-pointer" title="Make SVG responsive by swapping width/height with viewBox">
-          Make Responsive
+          Single File Optimizer
+        </button>
+        <button
+          id="tab-batch"
+          class="pill-tab px-5 py-2 text-sm font-medium rounded-full cursor-pointer hover:bg-surface transition-all duration-200"
+        >
+          Batch Optimize
         </button>
       </div>
 
-      <!-- Status Indicator -->
-      <div id="xml-status" class="flex items-center gap-2 text-xs font-semibold">
-        <span class="bg-surface-yellow border border-yellow-light text-yellow-dark px-3 py-1 rounded-full">Waiting for input...</span>
+      <!-- General Preset Selector (Remembered locally) -->
+      <div id="preset-container" class="flex items-center gap-2">
+        <span class="text-xs text-stone font-medium">Optimization Preset:</span>
+        <select
+          id="preset-select"
+          class="bg-canvas border border-hairline-strong rounded-full text-xs px-3 py-1.5 outline-none focus:border-brand-blue font-medium cursor-pointer"
+        >
+          <option value="safe">Safe (No visual loss)</option>
+          <option value="aggressive">Aggressive (High compression)</option>
+          <option value="custom">Custom Configuration</option>
+        </select>
       </div>
     </div>
 
-    <!-- XML Warning Panel -->
-    <div id="error-panel" class="hidden card-base bg-brand-red/35 border-brand-red-dark flex flex-col gap-2">
-      <h3 class="font-display font-semibold text-brand-red-dark text-sm">XML Parsing Failure</h3>
-      <p id="error-message" class="text-sm font-mono text-primary leading-relaxed"></p>
+    <!-- MAIN INTERFACE: SINGLE OPTIMIZER MODE -->
+    <div
+      id="section-single"
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+    >
+      <!-- Controls & Input Sidebar (Left) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <!-- Input & Upload Area -->
+        <div class="card-base flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <span
+              class="font-display font-semibold text-sm text-primary flex items-center gap-2"
+            >
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+              Input SVG Markup
+            </span>
+            <div class="flex gap-3">
+              <button
+                id="btn-load-sample"
+                class="text-xs text-brand-blue hover:underline cursor-pointer"
+                >Sample Icon</button
+              >
+              <button
+                id="btn-clear"
+                class="text-xs text-stone hover:text-primary cursor-pointer"
+                >Clear</button
+              >
+            </div>
+          </div>
+
+          <!-- Drag and Drop Overlay Container -->
+          <div
+            id="drop-zone"
+            class="relative border-2 border-dashed border-hairline-strong rounded-lg p-6 bg-surface-soft hover:bg-surface-yellow/20 hover:border-brand-yellow-deep transition-all flex flex-col items-center justify-center gap-2 cursor-pointer"
+          >
+            <input type="file" id="file-upload" accept=".svg" class="hidden" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-8 h-8 text-stone"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              ></path>
+            </svg>
+            <p class="text-xs text-ink font-medium">
+              Drag & Drop SVG or click to upload
+            </p>
+            <p class="text-[10px] text-stone">Standard SVG files up to 5MB</p>
+          </div>
+
+          <textarea
+            id="svg-input"
+            placeholder="Paste your raw <svg> markup here..."
+            class="w-full h-44 p-3 font-mono text-xs bg-canvas border border-hairline-strong rounded-lg outline-none focus:border-brand-blue resize-y transition-all"
+          ></textarea>
+        </div>
+
+        <!-- Fine-tuned Optimization Options -->
+        <div class="card-base flex flex-col gap-4">
+          <h3
+            class="font-display font-semibold text-sm text-primary border-b border-hairline pb-2 flex items-center justify-between"
+          >
+            <span>Optimization Rules</span>
+            <span
+              class="text-[10px] text-stone bg-surface px-2 py-0.5 rounded font-normal"
+              >Toggles trigger live updates</span
+            >
+          </h3>
+
+          <div class="flex flex-col gap-3">
+            <label class="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                id="opt-comments"
+                checked
+                class="mt-0.5 accent-brand-blue rounded"
+              />
+              <div>
+                <span
+                  class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors"
+                  >Strip Comments & Metadata</span
+                >
+                <p class="text-[11px] text-stone">
+                  Remove XML comments, doc types, metadata structures, titles,
+                  and descriptions
+                </p>
+              </div>
+            </label>
+
+            <label class="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                id="opt-hidden"
+                checked
+                class="mt-0.5 accent-brand-blue rounded"
+              />
+              <div>
+                <span
+                  class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors"
+                  >Remove Hidden & Empty Elements</span
+                >
+                <p class="text-[11px] text-stone">
+                  Prune empty tags, unused container groups, and elements styled
+                  display="none"
+                </p>
+              </div>
+            </label>
+
+            <div
+              class="flex flex-col gap-1.5 pl-6 border-l-2 border-hairline-soft mt-1"
+            >
+              <label class="flex items-center justify-between cursor-pointer">
+                <span class="text-[11px] text-slate font-medium"
+                  >Path Float Precision</span
+                >
+                <select
+                  id="opt-precision"
+                  class="bg-surface border border-hairline text-xs rounded px-2 py-1 outline-none"
+                >
+                  <option value="0">0 (Integers only)</option>
+                  <option value="1" selected>1 (e.g. 1.2)</option>
+                  <option value="2">2 (e.g. 1.23)</option>
+                  <option value="3">3 (e.g. 1.234)</option>
+                  <option value="keep">Keep Original</option>
+                </select>
+              </label>
+              <p class="text-[10px] text-stone">
+                Reduces coordinate numbers decimal length
+              </p>
+            </div>
+
+            <label class="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                id="opt-styles"
+                checked
+                class="mt-0.5 accent-brand-blue rounded"
+              />
+              <div>
+                <span
+                  class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors"
+                  >Clean Inline CSS Styles</span
+                >
+                <p class="text-[11px] text-stone">
+                  Convert inline style attributes into SVG representation
+                  properties (fill, stroke)
+                </p>
+              </div>
+            </label>
+
+            <label class="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                id="opt-viewbox"
+                checked
+                class="mt-0.5 accent-brand-blue rounded"
+              />
+              <div>
+                <span
+                  class="text-xs font-semibold text-primary group-hover:text-brand-blue transition-colors"
+                  >Optimize viewBox & Dimensions</span
+                >
+                <p class="text-[11px] text-stone">
+                  Auto-generate viewBox if missing, remove redundancy
+                  width/height tags
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview & Code Panels (Right) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <!-- Live Saving Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div
+            class="card-base p-4 flex flex-col justify-center items-center text-center bg-surface-soft"
+          >
+            <span
+              class="text-[10px] uppercase font-semibold text-slate tracking-wider"
+              >Before</span
+            >
+            <span
+              id="stat-before-size"
+              class="font-display font-medium text-lg text-primary">0 B</span
+            >
+          </div>
+          <div
+            class="card-base p-4 flex flex-col justify-center items-center text-center bg-surface-soft border-brand-teal/20"
+          >
+            <span
+              class="text-[10px] uppercase font-semibold text-slate tracking-wider"
+              >After</span
+            >
+            <span
+              id="stat-after-size"
+              class="font-display font-medium text-lg text-brand-teal">0 B</span
+            >
+          </div>
+          <div
+            class="card-base p-4 flex flex-col justify-center items-center text-center bg-brand-yellow-deep/5 border-brand-yellow"
+          >
+            <span class="text-[10px] uppercase font-yellow-dark tracking-wider"
+              >Reduction</span
+            >
+            <span
+              id="stat-percent-badge"
+              class="font-display font-bold text-xl text-primary transition-all duration-300"
+              >0%</span
+            >
+          </div>
+        </div>
+
+        <!-- Render Target & Visual Diff Warnings -->
+        <div class="card-base flex flex-col gap-4">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-3"
+          >
+            <span
+              class="font-display font-semibold text-sm text-primary flex items-center gap-2"
+            >
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+              Visual Preview & Compare
+            </span>
+            <div
+              class="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto"
+            >
+              <!-- Visual Toggle Views -->
+              <span class="text-xs text-stone font-medium">Comparison:</span>
+              <div
+                class="toggle-monthly-yearly flex p-0.5 bg-surface rounded-full border border-hairline"
+              >
+                <button
+                  id="view-side"
+                  class="text-xs font-semibold px-2.5 py-1.5 sm:py-1 rounded-full cursor-pointer bg-canvas text-primary transition-all active:scale-95 ring-1 ring-brand-blue/30"
+                  >Side-by-Side</button
+                >
+                <button
+                  id="view-wipe"
+                  class="text-xs font-semibold px-2.5 py-1.5 sm:py-1 rounded-full cursor-pointer text-stone transition-all active:scale-95 ring-1 ring-transparent"
+                  >Wipe Slider</button
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Alert banner if visual changes occur (Diff Detection) -->
+          <div
+            id="diff-warning"
+            class="hidden flex items-start gap-3 bg-brand-red/35 border border-brand-red-dark p-3.5 rounded-lg text-xs"
+          >
+            <span class="text-base">⚠️</span>
+            <div class="flex-grow">
+              <h4 class="font-bold text-coral-dark">Visual Shift Detected</h4>
+              <p class="text-primary mt-0.5">
+                The optimized SVG shows a layout or styling variance compared to
+                the original vector image. Consider relaxing the precision rule
+                or presets.
+              </p>
+            </div>
+          </div>
+
+          <!-- Interactive Compare Frame (Side-by-side or Wipe) -->
+          <div
+            class="relative w-full min-h-[400px] md:h-[360px] bg-canvas border border-hairline rounded-lg overflow-hidden flex items-center justify-center"
+          >
+            <!-- Side-by-Side Container -->
+            <div
+              id="compare-side-container"
+              class="w-full h-full grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-hairline"
+            >
+              <div
+                class="relative flex flex-col items-center justify-center p-6 checkered-grid overflow-hidden min-h-[200px] md:min-h-0"
+              >
+                <span
+                  class="absolute top-2 left-2 px-2 py-0.5 bg-primary/70 text-on-dark rounded text-[10px] font-semibold tracking-wide z-10"
+                  >BEFORE (ORIGINAL)</span
+                >
+                <div
+                  id="render-before"
+                  class="w-full h-full flex items-center justify-center transition-all duration-300"
+                >
+                  <span class="text-stone text-xs select-none"
+                    >No input loaded</span
+                  >
+                </div>
+              </div>
+              <div
+                class="relative flex flex-col items-center justify-center p-6 checkered-grid overflow-hidden min-h-[200px] md:min-h-0"
+              >
+                <span
+                  class="absolute top-2 left-2 px-2 py-0.5 bg-brand-teal/80 text-on-dark rounded text-[10px] font-semibold tracking-wide z-10"
+                  >AFTER (OPTIMIZED)</span
+                >
+                <div
+                  id="render-after"
+                  class="w-full h-full flex items-center justify-center transition-all duration-300"
+                >
+                  <span class="text-stone text-xs select-none">Waiting...</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wipe Slider Container -->
+            <div
+              id="compare-wipe-container"
+              class="hidden relative w-full h-full checkered-grid select-none overflow-hidden"
+            >
+              <!-- Original Layer (Left side slider) -->
+              <div
+                id="wipe-before-layer"
+                class="absolute inset-0 flex items-center justify-center p-4 overflow-hidden pointer-events-none"
+              >
+                <div
+                  id="wipe-before-content"
+                  class="w-full h-full flex items-center justify-center"
+                >
+                </div>
+              </div>
+              <!-- Optimized Layer (Right side clips) -->
+              <div
+                id="wipe-after-layer"
+                class="absolute inset-0 bg-transparent flex items-center justify-center p-4 overflow-hidden pointer-events-none"
+                style="clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);"
+              >
+                <div
+                  id="wipe-after-content"
+                  class="w-full h-full flex items-center justify-center"
+                >
+                </div>
+              </div>
+
+              <!-- Badges -->
+              <span
+                class="absolute top-2 left-2 px-2 py-0.5 bg-primary/70 text-on-dark rounded text-[10px] font-semibold tracking-wide z-10 pointer-events-none"
+                >BEFORE (LEFT)</span
+              >
+              <span
+                class="absolute top-2 right-2 px-2 py-0.5 bg-brand-teal/80 text-on-dark rounded text-[10px] font-semibold tracking-wide z-10 pointer-events-none"
+                >AFTER (RIGHT)</span
+              >
+
+              <!-- Wipe Control bar -->
+              <div
+                id="wipe-handle"
+                class="absolute top-0 bottom-0 w-1 bg-brand-blue cursor-ew-resize flex items-center justify-center z-20"
+                style="left: 50%;"
+              >
+                <div
+                  class="w-6 h-6 rounded-full bg-brand-blue shadow-card border border-canvas text-canvas flex items-center justify-center text-xs font-bold pointer-events-none select-none"
+                >
+                  ↔
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Inspection Output -->
+        <div class="card-base flex flex-col gap-4">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-2"
+          >
+            <span
+              class="font-display font-semibold text-sm text-primary flex items-center gap-2"
+            >
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
+              Optimized Output Markup
+            </span>
+            <div class="flex gap-2 w-full sm:w-auto justify-end">
+              <button
+                id="btn-copy"
+                class="button-secondary flex-1 sm:flex-initial py-2 sm:py-1.5 px-3.5 text-xs hover:bg-surface cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              >
+                <span class="icon-copy">📋</span> Copy Code
+              </button>
+              <button
+                id="btn-download"
+                class="button-primary flex-1 sm:flex-initial py-2 sm:py-1.5 px-3.5 text-xs cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              >
+                <span class="icon-download">📥</span> Download
+              </button>
+            </div>
+          </div>
+
+          <!-- Highlighted SVG code box -->
+          <div
+            class="relative bg-surface rounded-lg border border-hairline overflow-hidden max-h-60 overflow-y-auto"
+          >
+            <pre
+              class="p-4 font-mono text-xs text-primary leading-relaxed whitespace-pre-wrap break-all select-all"><code id="code-output-render" class="language-xml">Select or paste an SVG file to optimize.</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATCH MODE INTERFACE -->
+    <div id="section-batch" class="hidden flex flex-col gap-6">
+      <!-- Combined Savings Summary Card -->
+      <div
+        class="card-feature-yellow p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-subtle"
+      >
+        <div class="flex flex-col gap-1">
+          <h3
+            class="font-display font-semibold text-lg md:text-xl text-primary"
+          >
+            Batch Vector Optimization
+          </h3>
+          <p class="text-xs text-primary/70">
+            Drag many SVGs at once, automatically apply current rule presets,
+            and view overall size reduction stats.
+          </p>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="text-right">
+            <span
+              class="text-[10px] uppercase font-bold text-primary/50 tracking-wider"
+              >Overall Savings</span
+            >
+            <h2
+              id="batch-total-reduction"
+              class="font-display font-extrabold text-3xl md:text-4xl text-primary"
+            >
+              0%
+            </h2>
+            <p
+              id="batch-total-size-diff"
+              class="text-xs font-semibold text-primary/75"
+            >
+              0 B saved
+            </p>
+          </div>
+          <button
+            id="btn-batch-download"
+            class="button-primary font-bold px-6 py-3 cursor-pointer shadow-card disabled:opacity-50"
+            disabled
+          >
+            Download All Optimized
+          </button>
+        </div>
+      </div>
+
+      <!-- Batch Drop Area -->
+      <div
+        id="batch-drop-zone"
+        class="border-2 border-dashed border-hairline-strong rounded-xl p-10 bg-canvas hover:bg-surface-yellow/20 hover:border-brand-yellow-deep transition-all flex flex-col items-center justify-center gap-3 cursor-pointer text-center"
+      >
+        <input
+          type="file"
+          id="batch-file-upload"
+          accept=".svg"
+          multiple
+          class="hidden"
+        />
+        <div
+          class="w-12 h-12 rounded-full bg-surface-yellow border border-yellow-light text-yellow-dark flex items-center justify-center text-xl font-bold"
+        >
+          📁
+        </div>
+        <p class="text-sm text-ink font-semibold">
+          Upload multiple SVG vector icons
+        </p>
+        <p class="text-xs text-stone max-w-sm">
+          Drag multiple files directly or browse your computer. Optimized files
+          will list below.
+        </p>
+      </div>
+
+      <!-- Batch Files Table / Progress list -->
+      <div class="card-base flex flex-col gap-4">
+        <div
+          class="flex items-center justify-between border-b border-hairline pb-2"
+        >
+          <h4 class="font-display font-semibold text-sm text-primary">
+            Files Queue (<span id="batch-queue-count">0</span> files)
+          </h4>
+          <button
+            id="btn-batch-clear"
+            class="text-xs text-stone hover:text-primary transition-colors cursor-pointer"
+            >Clear Queue</button
+          >
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-hairline font-semibold text-stone">
+                <th class="py-2.5">File Name</th>
+                <th class="py-2.5 text-center">Original Size</th>
+                <th class="py-2.5 text-center">Optimized</th>
+                <th class="py-2.5 text-center">Reduction</th>
+                <th class="py-2.5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="batch-table-body" class="divide-y divide-hairline-soft">
+              <tr>
+                <td colspan="5" class="py-6 text-center text-stone font-medium"
+                  >No files uploaded yet. Drag & drop SVGs to begin.</td
+                >
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- Floating mobile download button -->
+  <div
+    id="mobile-download-bar"
+    class="fixed bottom-0 left-0 right-0 p-4 bg-canvas/90 backdrop-blur-md border-t border-hairline z-40 flex justify-center transition-all duration-300 translate-y-full md:hidden"
+  >
+    <button
+      id="btn-mobile-download"
+      class="button-primary w-full py-3 px-6 text-sm font-bold flex items-center justify-center gap-2 shadow-modal active:scale-95 transition-all"
+    >
+      <span class="icon-download">📥</span> Download Optimized SVG
+    </button>
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          SVG Optimization Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. How SVG Optimization Works
+        </h4>
+        <p>
+          SVG (Scalable Vector Graphics) is an XML-based image format. Since it
+          is written in text, it contains a lot of metadata, comments,
+          editor-specific tags, and overly precise coordinate numbers that do
+          not affect the visual output but increase file size.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          2. Key Optimization Techniques
+        </h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Metadata Striping</strong>: Safely removes editor
+              comments, creator tools info, and empty elements.
+            </li>
+            <li>
+              <strong>Coordinate Rounding</strong>: Simplifies path numbers.
+              Reducing decimal float precision (e.g., from 4 decimal places to
+              1) saves major bytes.
+            </li>
+            <li>
+              <strong>Presentation attributes</strong>: Converts styling from
+              inline CSS rules to direct attributes which are parsed faster by
+              browsers.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. Safe vs. Aggressive Optimization
+        </h4>
+        <p>
+          Use <strong>Safe Mode</strong> to avoid any visual distortions. Switch to
+          <strong>Aggressive Mode</strong> for heavy compression. The built-in <strong
+            >Visual Diff Checker</strong
+          > will automatically run a pixel-by-pixel canvas test and warn you if any
+          shifts or visual errors are detected.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
 
 <script>
-  const svgInput = document.getElementById('svg-input') as HTMLTextAreaElement | null;
-  const renderContainer = document.getElementById('svg-render-container');
-  const errorPanel = document.getElementById('error-panel');
-  const errorMessage = document.getElementById('error-message');
-  const statusContainer = document.getElementById('xml-status');
+  // UI Element Selectors
+  const tabSingle = document.getElementById("tab-single");
+  const tabBatch = document.getElementById("tab-batch");
+  const sectionSingle = document.getElementById("section-single");
+  const sectionBatch = document.getElementById("section-batch");
 
-  const btnClear = document.getElementById('btn-clear');
-  const btnSample = document.getElementById('btn-load-sample');
-  const btnCopy = document.getElementById('btn-copy');
-  const btnDownload = document.getElementById('btn-download');
+  const presetSelect = document.getElementById(
+    "preset-select",
+  ) as HTMLSelectElement | null;
+  const svgInput = document.getElementById(
+    "svg-input",
+  ) as HTMLTextAreaElement | null;
+  const codeOutput = document.getElementById("code-output-render");
 
-  const btnFormat = document.getElementById('btn-format');
-  const btnMinify = document.getElementById('btn-minify');
-  const btnSanitize = document.getElementById('btn-sanitize');
+  // Rules toggles
+  const optComments = document.getElementById(
+    "opt-comments",
+  ) as HTMLInputElement | null;
+  const optHidden = document.getElementById(
+    "opt-hidden",
+  ) as HTMLInputElement | null;
+  const optPrecision = document.getElementById(
+    "opt-precision",
+  ) as HTMLSelectElement | null;
+  const optStyles = document.getElementById(
+    "opt-styles",
+  ) as HTMLInputElement | null;
+  const optViewbox = document.getElementById(
+    "opt-viewbox",
+  ) as HTMLInputElement | null;
 
-  const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <!-- Interactive Design Accent Circle -->
-  <circle cx="50" cy="50" r="40" fill="#ffd02f" stroke="#1c1c1e" stroke-width="4" />
-  <!-- Accent Inner Square -->
-  <rect x="35" y="35" width="30" height="30" fill="#4262ff" rx="4" />
-  <path d="M 42 50 L 58 50 M 50 42 L 50 58" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+  // Render & Stats elements
+  const renderBefore = document.getElementById("render-before");
+  const renderAfter = document.getElementById("render-after");
+  const statBeforeSize = document.getElementById("stat-before-size");
+  const statAfterSize = document.getElementById("stat-after-size");
+  const statPercentBadge = document.getElementById("stat-percent-badge");
+  const diffWarning = document.getElementById("diff-warning");
+
+  // Single Action Buttons
+  const btnClear = document.getElementById("btn-clear");
+  const btnSample = document.getElementById("btn-load-sample");
+  const btnCopy = document.getElementById("btn-copy");
+  const btnDownload = document.getElementById("btn-download");
+
+  // Header Buttons & Modals
+  const resetBtn = document.getElementById("reset-btn");
+  const howItWorksBtn = document.getElementById("how-it-works-btn");
+  const howItWorksModal = document.getElementById("how-it-works-modal");
+  const closeModalBtn = document.getElementById("close-modal-btn");
+  const modalOkBtn = document.getElementById("modal-ok-btn");
+
+  // Mobile Download Elements
+  const mobileDownloadBar = document.getElementById("mobile-download-bar");
+  const btnMobileDownload = document.getElementById("btn-mobile-download");
+
+  // Wipe Views Elements
+  const viewSide = document.getElementById("view-side");
+  const viewWipe = document.getElementById("view-wipe");
+  const compareSide = document.getElementById("compare-side-container");
+  const compareWipe = document.getElementById("compare-wipe-container");
+  const wipeBeforeContent = document.getElementById("wipe-before-content");
+  const wipeAfterContent = document.getElementById("wipe-after-content");
+  const wipeAfterLayer = document.getElementById("wipe-after-layer");
+  const wipeHandle = document.getElementById("wipe-handle");
+
+  // Drag and Drop Upload Targets
+  const dropZone = document.getElementById("drop-zone");
+  const fileUpload = document.getElementById(
+    "file-upload",
+  ) as HTMLInputElement | null;
+
+  // Batch Mode Elements
+  const batchDropZone = document.getElementById("batch-drop-zone");
+  const batchFileUpload = document.getElementById(
+    "batch-file-upload",
+  ) as HTMLInputElement | null;
+  const btnBatchDownload = document.getElementById(
+    "btn-batch-download",
+  ) as HTMLButtonElement | null;
+  const btnBatchClear = document.getElementById("btn-batch-clear");
+  const batchQueueCount = document.getElementById("batch-queue-count");
+  const batchTableBody = document.getElementById("batch-table-body");
+  const batchTotalReduction = document.getElementById("batch-total-reduction");
+  const batchTotalSizeDiff = document.getElementById("batch-total-size-diff");
+
+  // Interactive sample SVG icon (Feather style)
+  const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4262ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity">
+  <!-- Sample Header Comment -->
+  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+  <circle cx="12" cy="12" r="9" stroke="#ffd02f" stroke-width="1.5" style="display: block; opacity: 0.8;" />
+  <g id="empty-wrapper-g"></g>
+  <path d="M12 8v8M8 12h8" stroke-width="1.2005" style="stroke: #ff9999; fill: none;" />
 </svg>`;
 
-  function updateStatus(type: 'idle' | 'success' | 'error', msg: string) {
-    if (!statusContainer) return;
-    if (type === 'idle') {
-      statusContainer.innerHTML = `<span class="bg-surface-yellow border border-yellow-light text-yellow-dark px-3 py-1 rounded-full">${msg}</span>`;
-      errorPanel?.classList.add('hidden');
-    } else if (type === 'success') {
-      statusContainer.innerHTML = `<span class="bg-success-accent/25 border border-success-accent text-moss-dark px-3 py-1 rounded-full">${msg}</span>`;
-      errorPanel?.classList.add('hidden');
-    } else if (type === 'error') {
-      statusContainer.innerHTML = `<span class="bg-brand-red border border-brand-red-dark text-coral-dark px-3 py-1 rounded-full">${msg}</span>`;
-      errorPanel?.classList.remove('hidden');
+  // State Management
+  let originalCode = "";
+  let optimizedCode = "";
+  let batchQueue: Array<{
+    id: string;
+    name: string;
+    originalSize: number;
+    optimizedSize: number;
+    originalContent: string;
+    optimizedContent: string;
+  }> = [];
+
+  // Initialize and load saved preset
+  document.addEventListener("DOMContentLoaded", () => {
+    loadPresetPreferences();
+    loadDefaultSVG();
+  });
+
+  // Switch between tabs
+  tabSingle?.addEventListener("click", () => {
+    tabSingle.className =
+      "pill-tab-active px-5 py-2 text-sm font-medium rounded-full cursor-pointer transition-all duration-200";
+    tabBatch?.classList.replace("pill-tab-active", "pill-tab");
+    sectionSingle?.classList.remove("hidden");
+    sectionBatch?.classList.add("hidden");
+  });
+
+  tabBatch?.addEventListener("click", () => {
+    tabBatch.className =
+      "pill-tab-active px-5 py-2 text-sm font-medium rounded-full cursor-pointer transition-all duration-200";
+    tabSingle?.classList.replace("pill-tab-active", "pill-tab");
+    sectionBatch?.classList.remove("hidden");
+    sectionSingle?.classList.add("hidden");
+  });
+
+  // Switch between side-by-side & wipe view
+  const setComparisonView = (mode: "side" | "wipe") => {
+    if (!viewSide || !viewWipe || !compareSide || !compareWipe) return;
+
+    if (mode === "side") {
+      viewSide.className =
+        "text-xs font-semibold px-2.5 py-1 rounded-full cursor-pointer bg-canvas text-primary transition-all ring-1 ring-brand-blue/30";
+      viewWipe.className =
+        "text-xs font-semibold px-2.5 py-1 rounded-full cursor-pointer text-stone transition-all";
+      compareSide.classList.remove("hidden");
+      compareWipe.classList.add("hidden");
+    } else {
+      viewWipe.className =
+        "text-xs font-semibold px-2.5 py-1 rounded-full cursor-pointer bg-canvas text-primary transition-all ring-1 ring-brand-blue/30";
+      viewSide.className =
+        "text-xs font-semibold px-2.5 py-1 rounded-full cursor-pointer text-stone transition-all";
+      compareWipe.classList.remove("hidden");
+      compareSide.classList.add("hidden");
+      syncWipeContent();
     }
-  }
+  };
 
-  // Parse and render SVG code safely
-  function parseAndRender() {
-    if (!svgInput || !renderContainer) return;
+  viewSide?.addEventListener("click", () => setComparisonView("side"));
+  viewWipe?.addEventListener("click", () => setComparisonView("wipe"));
 
-    const value = svgInput.value.trim();
-    if (!value) {
-      renderContainer.innerHTML = `<span class="text-stone text-xs select-none">SVG output will render here...</span>`;
-      updateStatus('idle', 'Waiting for input...');
+  // Load Preset Settings
+  presetSelect?.addEventListener("change", () => {
+    const val = presetSelect.value;
+    if (val === "safe") {
+      if (optComments) optComments.checked = true;
+      if (optHidden) optHidden.checked = false;
+      if (optPrecision) optPrecision.value = "keep";
+      if (optStyles) optStyles.checked = false;
+      if (optViewbox) optViewbox.checked = true;
+    } else if (val === "aggressive") {
+      if (optComments) optComments.checked = true;
+      if (optHidden) optHidden.checked = true;
+      if (optPrecision) optPrecision.value = "1";
+      if (optStyles) optStyles.checked = true;
+      if (optViewbox) optViewbox.checked = true;
+    }
+    // Save to localStorage
+    localStorage.setItem("svg_optimizer_preset", val);
+    triggerOptimization();
+  });
+
+  // Checkbox Event Listeners
+  [optComments, optHidden, optPrecision, optStyles, optViewbox].forEach(
+    (el) => {
+      el?.addEventListener("change", () => {
+        if (presetSelect) presetSelect.value = "custom";
+        triggerOptimization();
+      });
+    },
+  );
+
+  // Textarea input listners
+  svgInput?.addEventListener("input", () => {
+    const isNew = !originalCode && svgInput.value;
+    originalCode = svgInput.value;
+    triggerOptimization();
+    if (isNew || svgInput.value.trim()) {
+      scrollToOutput();
+    }
+  });
+
+  // Load sample SVG
+  btnSample?.addEventListener("click", () => {
+    loadDefaultSVG();
+  });
+
+  // Clear inputs
+  btnClear?.addEventListener("click", () => {
+    if (svgInput) svgInput.value = "";
+    originalCode = "";
+    optimizedCode = "";
+    updateStats(0, 0);
+    renderSVGs();
+    mobileDownloadBar?.classList.add("translate-y-full");
+  });
+
+  // Reset all settings and inputs
+  resetBtn?.addEventListener("click", () => {
+    if (presetSelect) {
+      presetSelect.value = "safe";
+      presetSelect.dispatchEvent(new Event("change"));
+    }
+    if (svgInput) svgInput.value = "";
+    originalCode = "";
+    optimizedCode = "";
+    updateStats(0, 0);
+    renderSVGs();
+    batchQueue = [];
+    updateBatchQueueUI();
+    mobileDownloadBar?.classList.add("translate-y-full");
+  });
+
+  // How it works guide modal actions
+  howItWorksBtn?.addEventListener("click", () => {
+    howItWorksModal?.classList.remove("hidden");
+  });
+
+  const closeGuideModal = () => {
+    howItWorksModal?.classList.add("hidden");
+  };
+
+  closeModalBtn?.addEventListener("click", closeGuideModal);
+  modalOkBtn?.addEventListener("click", closeGuideModal);
+  howItWorksModal?.addEventListener("click", (e) => {
+    if (e.target === howItWorksModal) {
+      closeGuideModal();
+    }
+  });
+
+  // Mobile floating download trigger
+  btnMobileDownload?.addEventListener("click", () => {
+    btnDownload?.click();
+  });
+
+  // Watch scroll to show/hide the sticky mobile download button
+  window.addEventListener("scroll", () => {
+    if (!optimizedCode || !mobileDownloadBar || !btnDownload) {
+      mobileDownloadBar?.classList.add("translate-y-full");
       return;
     }
-
-    // Try parsing as XML
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(value, 'image/svg+xml');
-    const parserError = doc.querySelector('parsererror');
-
-    if (parserError) {
-      renderContainer.innerHTML = `<span class="text-brand-red-dark text-xs font-medium">XML Error</span>`;
-      updateStatus('error', '✗ Invalid XML syntax');
-      if (errorMessage) {
-        errorMessage.textContent = parserError.textContent || 'Unknown XML parsing error.';
-      }
+    const rect = btnDownload.getBoundingClientRect();
+    if (rect.top <= window.innerHeight) {
+      mobileDownloadBar.classList.add("translate-y-full");
     } else {
-      // Valid SVG
-      // Check if root element is svg
-      const rootNode = doc.documentElement;
-      if (rootNode.tagName.toLowerCase() !== 'svg') {
-        renderContainer.innerHTML = `<span class="text-brand-red-dark text-xs font-medium">Missing Root &lt;svg&gt; Tag</span>`;
-        updateStatus('error', '✗ Missing root <svg> wrapper');
-        if (errorMessage) {
-          errorMessage.textContent = 'The pasted XML document does not have a top-level <svg> tag wrapper.';
-        }
-        return;
-      }
-
-      // Add full width and height styles for preview inside the box
-      rootNode.setAttribute('style', 'max-width: 100%; max-height: 100%; object-fit: contain;');
-      
-      // Inject nodes
-      renderContainer.innerHTML = '';
-      renderContainer.appendChild(rootNode.cloneNode(true));
-      updateStatus('success', '✓ Valid Vector SVG');
+      mobileDownloadBar.classList.remove("translate-y-full");
     }
-  }
+  });
 
-  // Load sample
-  if (btnSample && svgInput) {
-    btnSample.addEventListener('click', () => {
-      svgInput.value = sampleSVG;
-      parseAndRender();
+  // Copy code utility with success pulse animation
+  btnCopy?.addEventListener("click", () => {
+    if (!optimizedCode) return;
+    navigator.clipboard.writeText(optimizedCode).then(() => {
+      const origText = btnCopy.innerHTML;
+      btnCopy.innerHTML = "✓ Copied!";
+      btnCopy.classList.add("animate-ping", "bg-success-accent", "text-white");
+      setTimeout(() => {
+        btnCopy.innerHTML = origText;
+        btnCopy.classList.remove(
+          "animate-ping",
+          "bg-success-accent",
+          "text-white",
+        );
+      }, 1000);
     });
-  }
+  });
 
-  // Clear Text
-  if (btnClear && svgInput) {
-    btnClear.addEventListener('click', () => {
-      svgInput.value = '';
-      parseAndRender();
-    });
-  }
+  // Download code utility with animation pulse
+  btnDownload?.addEventListener("click", () => {
+    if (!optimizedCode) return;
+    const blob = new Blob([optimizedCode], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = "optimized_vector.svg";
+    link.href = url;
+    link.click();
+    URL.revokeObjectURL(url);
 
-  // Code formats
-  if (btnFormat && svgInput) {
-    btnFormat.addEventListener('click', () => {
-      const code = svgInput.value.trim();
-      if (!code) return;
+    btnDownload.classList.add("scale-105", "bg-success-accent");
+    setTimeout(() => {
+      btnDownload.classList.remove("scale-105", "bg-success-accent");
+    }, 800);
+  });
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(code, 'image/svg+xml');
-      if (doc.querySelector('parsererror')) return;
+  // Drag-and-drop actions for Single mode
+  dropZone?.addEventListener("click", () => fileUpload?.click());
 
-      // Simple XML beautifier
-      const serializer = new XMLSerializer();
-      let raw = serializer.serializeToString(doc);
+  dropZone?.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("border-brand-yellow-deep", "bg-surface-yellow/20");
+  });
 
-      // Add basic node spacing indentation
-      let formatted = '';
-      let indent = 0;
-      const reg = /(>)(<)(\/*)/g;
-      raw = raw.replace(reg, '$1\r\n$2$3');
-      const lines = raw.split('\r\n');
-      
-      lines.forEach(line => {
-        let padding = 0;
-        if (line.match(/.+<\/\w[^>]*>$/)) {
-          padding = 0;
-        } else if (line.match(/^<\/\w/)) {
-          if (indent !== 0) indent -= 2;
-        } else if (line.match(/^<\w[^>]*[^\/]>$/)) {
-          padding = 2;
-        }
-        
-        formatted += ' '.repeat(indent) + line + '\n';
-        indent += padding;
-      });
+  dropZone?.addEventListener("dragleave", () => {
+    dropZone.classList.remove(
+      "border-brand-yellow-deep",
+      "bg-surface-yellow/20",
+    );
+  });
 
-      svgInput.value = formatted.trim();
-      parseAndRender();
-    });
-  }
+  dropZone?.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove(
+      "border-brand-yellow-deep",
+      "bg-surface-yellow/20",
+    );
+    if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
+      handleSingleFileUpload(e.dataTransfer.files[0]);
+    }
+  });
 
-  // Minify SVG
-  if (btnMinify && svgInput) {
-    btnMinify.addEventListener('click', () => {
-      const code = svgInput.value.trim();
-      if (!code) return;
+  fileUpload?.addEventListener("change", () => {
+    if (fileUpload.files && fileUpload.files.length > 0) {
+      handleSingleFileUpload(fileUpload.files[0]);
+    }
+  });
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(code, 'image/svg+xml');
-      if (doc.querySelector('parsererror')) return;
+  // Drag-and-drop actions for Batch mode
+  batchDropZone?.addEventListener("click", () => batchFileUpload?.click());
 
-      // Strip comments
-      const iterator = doc.createNodeIterator(doc.documentElement, NodeFilter.SHOW_COMMENT);
-      let commentNode = iterator.nextNode();
-      while (commentNode) {
-        commentNode.parentNode?.removeChild(commentNode);
-        commentNode = iterator.nextNode();
-      }
+  batchDropZone?.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    batchDropZone.classList.add(
+      "border-brand-yellow-deep",
+      "bg-surface-yellow/20",
+    );
+  });
 
-      // Serialize minified version without tabs/newlines
-      const serializer = new XMLSerializer();
-      const raw = serializer.serializeToString(doc);
-      const minified = raw.replace(/>\s+</g, '><').trim();
+  batchDropZone?.addEventListener("dragleave", () => {
+    batchDropZone.classList.remove(
+      "border-brand-yellow-deep",
+      "bg-surface-yellow/20",
+    );
+  });
 
-      svgInput.value = minified;
-      parseAndRender();
-    });
-  }
+  batchDropZone?.addEventListener("drop", (e) => {
+    e.preventDefault();
+    batchDropZone.classList.remove(
+      "border-brand-yellow-deep",
+      "bg-surface-yellow/20",
+    );
+    if (e.dataTransfer?.files && e.dataTransfer.files.length > 0) {
+      handleBatchFiles(Array.from(e.dataTransfer.files));
+    }
+  });
 
-  // Make Responsive (Sanitize dimensions)
-  if (btnSanitize && svgInput) {
-    btnSanitize.addEventListener('click', () => {
-      const code = svgInput.value.trim();
-      if (!code) return;
+  batchFileUpload?.addEventListener("change", () => {
+    if (batchFileUpload.files && batchFileUpload.files.length > 0) {
+      handleBatchFiles(Array.from(batchFileUpload.files));
+    }
+  });
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(code, 'image/svg+xml');
-      if (doc.querySelector('parsererror')) return;
+  btnBatchClear?.addEventListener("click", () => {
+    batchQueue = [];
+    updateBatchQueueUI();
+  });
 
-      const svgNode = doc.documentElement;
-      const w = svgNode.getAttribute('width');
-      const h = svgNode.getAttribute('height');
-      const viewbox = svgNode.getAttribute('viewBox');
-
-      // Create viewBox if missing but width and height exist
-      if (!viewbox && w && h) {
-        // Clean px units
-        const cleanW = w.replace(/px/g, '').trim();
-        const cleanH = h.replace(/px/g, '').trim();
-        svgNode.setAttribute('viewBox', `0 0 ${cleanW} ${cleanH}`);
-      }
-
-      // Strip fixed sizing
-      svgNode.removeAttribute('width');
-      svgNode.removeAttribute('height');
-
-      const serializer = new XMLSerializer();
-      const sanitized = serializer.serializeToString(doc);
-      
-      svgInput.value = sanitized;
-      parseAndRender();
-    });
-  }
-
-  // Copy code
-  if (btnCopy && svgInput) {
-    btnCopy.addEventListener('click', () => {
-      const val = svgInput.value;
-      if (val) {
-        navigator.clipboard.writeText(val).then(() => {
-          const orig = btnCopy.innerHTML;
-          btnCopy.innerHTML = '✓ Copied!';
-          setTimeout(() => {
-            btnCopy.innerHTML = orig;
-          }, 1500);
+  btnBatchDownload?.addEventListener("click", () => {
+    if (batchQueue.length === 0) return;
+    batchQueue.forEach((file, index) => {
+      setTimeout(() => {
+        const blob = new Blob([file.optimizedContent], {
+          type: "image/svg+xml",
         });
-      }
-    });
-  }
-
-  // Download SVG
-  if (btnDownload && svgInput) {
-    btnDownload.addEventListener('click', () => {
-      const code = svgInput.value;
-      if (code) {
-        const blob = new Blob([code], { type: 'image/svg+xml' });
         const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = 'vector_boardtools.svg';
+        const link = document.createElement("a");
+        link.download = `optimized_${file.name}`;
         link.href = url;
         link.click();
         URL.revokeObjectURL(url);
-      }
+      }, index * 200); // Stagger downloads slightly to prevent browser blockages
+    });
+  });
+
+  // Core functions
+  function loadPresetPreferences() {
+    const saved = localStorage.getItem("svg_optimizer_preset");
+    if (saved && presetSelect) {
+      presetSelect.value = saved;
+      presetSelect.dispatchEvent(new Event("change"));
+    }
+  }
+
+  function loadDefaultSVG() {
+    originalCode = sampleSVG;
+    if (svgInput) svgInput.value = sampleSVG;
+    triggerOptimization();
+  }
+
+  function handleSingleFileUpload(file: File) {
+    if (!file.name.endsWith(".svg")) {
+      alert("Please upload a valid .svg vector file.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      originalCode = text;
+      if (svgInput) svgInput.value = text;
+      triggerOptimization();
+      scrollToOutput();
+    };
+    reader.readAsText(file);
+  }
+
+  function handleBatchFiles(files: File[]) {
+    const svgFiles = files.filter((f) => f.name.endsWith(".svg"));
+    if (svgFiles.length === 0) return;
+
+    let processedCount = 0;
+    svgFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const rawText = e.target?.result as string;
+        const optimizedText = optimizeSVG(rawText);
+
+        batchQueue.push({
+          id: Math.random().toString(36).substring(2, 9),
+          name: file.name,
+          originalSize: rawText.length,
+          optimizedSize: optimizedText.length,
+          originalContent: rawText,
+          optimizedContent: optimizedText,
+        });
+
+        processedCount++;
+        if (processedCount === svgFiles.length) {
+          updateBatchQueueUI();
+        }
+      };
+      reader.readAsText(file);
     });
   }
 
-  // Input listeners
-  if (svgInput) {
-    svgInput.addEventListener('input', parseAndRender);
+  function triggerOptimization() {
+    if (!originalCode.trim()) {
+      updateStats(0, 0);
+      renderSVGs();
+      mobileDownloadBar?.classList.add("translate-y-full");
+      return;
+    }
+    optimizedCode = optimizeSVG(originalCode);
+    updateStats(originalCode.length, optimizedCode.length);
+    renderSVGs();
+    detectVisualDiff();
+
+    if (mobileDownloadBar && btnDownload) {
+      const rect = btnDownload.getBoundingClientRect();
+      if (rect.top > window.innerHeight) {
+        mobileDownloadBar.classList.remove("translate-y-full");
+      } else {
+        mobileDownloadBar.classList.add("translate-y-full");
+      }
+    }
+  }
+
+  function scrollToOutput() {
+    const target = document.getElementById("stat-before-size");
+    if (target) {
+      const yOffset = -80;
+      const y =
+        target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }
+
+  // Pure SVG Optimizer Engine (Regular expression & DOM Parsing style)
+  function optimizeSVG(svgText: string): string {
+    let result = svgText;
+
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgText, "image/svg+xml");
+      const parserError = doc.querySelector("parsererror");
+      if (parserError) return svgText; // Return unoptimized on error
+
+      const svgNode = doc.documentElement;
+
+      // 1. Comments & Metadata Cleaning
+      if (optComments?.checked) {
+        // XML Serializer strips doctypes/xml tags. Recursively strip comment nodes inside doc tree:
+        const removeComments = (node: Node) => {
+          let child = node.firstChild;
+          while (child) {
+            const next = child.nextSibling;
+            if (child.nodeType === Node.COMMENT_NODE) {
+              node.removeChild(child);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+              removeComments(child);
+            }
+            child = next;
+          }
+        };
+        removeComments(svgNode);
+
+        // Remove typical metadata wrapper tags
+        const metaTags = ["metadata", "desc", "title", "creator"];
+        metaTags.forEach((tag) => {
+          const els = svgNode.getElementsByTagName(tag);
+          while (els.length > 0) {
+            els[0].parentNode?.removeChild(els[0]);
+          }
+        });
+      }
+
+      // 2. Remove Hidden and Empty Elements
+      if (optHidden?.checked) {
+        const pruneTree = (element: Element) => {
+          let child = element.firstElementChild;
+          while (child) {
+            const next = child.nextElementSibling;
+
+            // Remove display="none"
+            const display = child.getAttribute("display");
+            const visibility = child.getAttribute("visibility");
+            if (display === "none" || visibility === "hidden") {
+              element.removeChild(child);
+            } else {
+              pruneTree(child);
+
+              // Remove empty container groups (e.g. <g></g>)
+              if (
+                child.tagName.toLowerCase() === "g" &&
+                child.children.length === 0 &&
+                !child.hasAttribute("d")
+              ) {
+                element.removeChild(child);
+              }
+            }
+            child = next;
+          }
+        };
+        pruneTree(svgNode);
+      }
+
+      // 3. Clean Inline CSS Styles (Styles attribute conversion)
+      if (optStyles?.checked) {
+        const convertStyles = (element: Element) => {
+          const style = element.getAttribute("style");
+          if (style) {
+            const rules = style
+              .split(";")
+              .map((r) => r.trim())
+              .filter(Boolean);
+            rules.forEach((rule) => {
+              const [prop, val] = rule.split(":").map((s) => s.trim());
+              // Keep complex properties, but convert basic presentation attributes (fill, stroke, opacity)
+              const allowedAttrs = [
+                "fill",
+                "stroke",
+                "stroke-width",
+                "stroke-linecap",
+                "stroke-linejoin",
+                "opacity",
+                "display",
+              ];
+              if (prop && val && allowedAttrs.includes(prop)) {
+                element.setAttribute(prop, val);
+              }
+            });
+            element.removeAttribute("style");
+          }
+          // Recursively apply to kids
+          for (let i = 0; i < element.children.length; i++) {
+            convertStyles(element.children[i]);
+          }
+        };
+        convertStyles(svgNode);
+      }
+
+      // 4. viewBox Adjustments
+      if (optViewbox?.checked) {
+        const w = svgNode.getAttribute("width");
+        const h = svgNode.getAttribute("height");
+        const viewbox = svgNode.getAttribute("viewBox");
+
+        if (!viewbox && w && h) {
+          const cleanW = parseFloat(w.replace(/[a-zA-Z]/g, ""));
+          const cleanH = parseFloat(h.replace(/[a-zA-Z]/g, ""));
+          if (!isNaN(cleanW) && !isNaN(cleanH)) {
+            svgNode.setAttribute("viewBox", `0 0 ${cleanW} ${cleanH}`);
+          }
+        }
+        // Remove redundant fixed size if viewBox exists
+        if (svgNode.hasAttribute("viewBox")) {
+          svgNode.removeAttribute("width");
+          svgNode.removeAttribute("height");
+        }
+      }
+
+      // Serialize back to raw XML
+      const serializer = new XMLSerializer();
+      result = serializer.serializeToString(doc);
+
+      // 5. Precision optimization & path Minification via Regex
+      const precisionVal = optPrecision?.value;
+      if (precisionVal !== "keep") {
+        const decimalPlaces = parseInt(precisionVal || "1", 10);
+        // Match numbers, floating points, and coordinates inside 'd="..."', points="..."
+        // Replace coordinates and floats to fixed decimal length
+        const floatRegex = /(-?\d+\.\d+)/g;
+        result = result.replace(floatRegex, (match) => {
+          const val = parseFloat(match);
+          return val.toFixed(decimalPlaces).replace(/\.0+$/, ""); // Remove trailing zero fractional components
+        });
+      }
+
+      // Minify structural whitespace
+      result = result.replace(/>\s+</g, "><").trim();
+    } catch (e) {
+      console.warn("Optimizer engine parser error: ", e);
+    }
+
+    return result;
+  }
+
+  // Update Size reduction metrics with a quick numbers ticking animations
+  function updateStats(beforeSize: number, afterSize: number) {
+    if (!statBeforeSize || !statAfterSize || !statPercentBadge) return;
+
+    statBeforeSize.textContent = formatBytes(beforeSize);
+    statAfterSize.textContent = formatBytes(afterSize);
+
+    if (beforeSize === 0) {
+      statPercentBadge.textContent = "0%";
+      return;
+    }
+
+    const pct = Math.max(
+      0,
+      Math.round(((beforeSize - afterSize) / beforeSize) * 100),
+    );
+
+    // Ticking animation
+    let current = 0;
+    const interval = setInterval(() => {
+      if (current >= pct) {
+        statPercentBadge.textContent = `${pct}%`;
+        clearInterval(interval);
+      } else {
+        current += Math.ceil((pct - current) / 4);
+        statPercentBadge.textContent = `${current}%`;
+      }
+    }, 30);
+  }
+
+  function formatBytes(bytes: number): string {
+    if (bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+  }
+
+  // Render original & optimized SVGs
+  function renderSVGs() {
+    if (!renderBefore || !renderAfter || !codeOutput) return;
+
+    if (!originalCode) {
+      renderBefore.innerHTML = `<span class="text-stone text-xs select-none">No input loaded</span>`;
+      renderAfter.innerHTML = `<span class="text-stone text-xs select-none">Waiting...</span>`;
+      codeOutput.textContent = "Select or paste an SVG file to optimize.";
+      return;
+    }
+
+    // Single view rendering
+    renderBefore.innerHTML = originalCode;
+    renderAfter.innerHTML = optimizedCode;
+
+    // Code preview rendering
+    codeOutput.textContent = optimizedCode;
+
+    // Add styles to scale preview svgs properly within the grid containers
+    const beforeSVG = renderBefore.querySelector("svg");
+    const afterSVG = renderAfter.querySelector("svg");
+
+    if (beforeSVG)
+      beforeSVG.setAttribute(
+        "style",
+        "max-width: 100%; max-height: 100%; object-fit: contain; width: 120px; height: 120px;",
+      );
+    if (afterSVG)
+      afterSVG.setAttribute(
+        "style",
+        "max-width: 100%; max-height: 100%; object-fit: contain; width: 120px; height: 120px;",
+      );
+
+    syncWipeContent();
+  }
+
+  // Sync content into Wipe Layer slider
+  function syncWipeContent() {
+    if (!wipeBeforeContent || !wipeAfterContent) return;
+
+    wipeBeforeContent.innerHTML = originalCode;
+    wipeAfterContent.innerHTML = optimizedCode;
+
+    const wBeforeSVG = wipeBeforeContent.querySelector("svg");
+    const wAfterSVG = wipeAfterContent.querySelector("svg");
+
+    if (wBeforeSVG)
+      wBeforeSVG.setAttribute(
+        "style",
+        "max-width: 100%; max-height: 100%; object-fit: contain; width: 120px; height: 120px;",
+      );
+    if (wAfterSVG)
+      wAfterSVG.setAttribute(
+        "style",
+        "max-width: 100%; max-height: 100%; object-fit: contain; width: 120px; height: 120px;",
+      );
+  }
+
+  // Wipe slider logic drag/mouse interaction
+  if (compareWipe) {
+    let activeWipe = false;
+
+    const moveSlider = (clientX: number) => {
+      const rect = compareWipe.getBoundingClientRect();
+      const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      const percentage = (x / rect.width) * 100;
+
+      if (wipeHandle) wipeHandle.style.left = `${percentage}%`;
+      if (wipeAfterLayer)
+        wipeAfterLayer.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+    };
+
+    compareWipe.addEventListener("mousedown", (e) => {
+      activeWipe = true;
+      moveSlider(e.clientX);
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      if (!activeWipe) return;
+      moveSlider(e.clientX);
+    });
+
+    window.addEventListener("mouseup", () => {
+      activeWipe = false;
+    });
+
+    // Touch events for mobile
+    compareWipe.addEventListener("touchstart", (e) => {
+      activeWipe = true;
+      if (e.touches[0]) moveSlider(e.touches[0].clientX);
+    });
+
+    window.addEventListener("touchmove", (e) => {
+      if (!activeWipe) return;
+      if (e.touches[0]) moveSlider(e.touches[0].clientX);
+    });
+
+    window.addEventListener("touchend", () => {
+      activeWipe = false;
+    });
+  }
+
+  // Pixel Buffers Comparison for Diff warnings
+  function detectVisualDiff() {
+    if (!originalCode || !optimizedCode || !diffWarning) return;
+
+    const imgOriginal = new Image();
+    const imgOptimized = new Image();
+
+    // Prepare SVG source blobs
+    const blobOrig = new Blob([originalCode], { type: "image/svg+xml" });
+    const blobOpt = new Blob([optimizedCode], { type: "image/svg+xml" });
+    const urlOrig = URL.createObjectURL(blobOrig);
+    const urlOpt = URL.createObjectURL(blobOpt);
+
+    let loadedCount = 0;
+    const compareCanvas = () => {
+      loadedCount++;
+      if (loadedCount < 2) return;
+
+      const canvasWidth = 64;
+      const canvasHeight = 64;
+
+      const canvas1 = document.createElement("canvas");
+      const canvas2 = document.createElement("canvas");
+      canvas1.width = canvasWidth;
+      canvas1.height = canvasHeight;
+      canvas2.width = canvasWidth;
+      canvas2.height = canvasHeight;
+
+      const ctx1 = canvas1.getContext("2d");
+      const ctx2 = canvas2.getContext("2d");
+
+      if (ctx1 && ctx2) {
+        ctx1.drawImage(imgOriginal, 0, 0, canvasWidth, canvasHeight);
+        ctx2.drawImage(imgOptimized, 0, 0, canvasWidth, canvasHeight);
+
+        const data1 = ctx1.getImageData(0, 0, canvasWidth, canvasHeight).data;
+        const data2 = ctx2.getImageData(0, 0, canvasWidth, canvasHeight).data;
+
+        let diffPixels = 0;
+        // Compare every 4th element (RGBA) or pixel
+        for (let i = 0; i < data1.length; i += 4) {
+          const rDiff = Math.abs(data1[i] - data2[i]);
+          const gDiff = Math.abs(data1[i + 1] - data2[i + 1]);
+          const bDiff = Math.abs(data1[i + 2] - data2[i + 2]);
+          const aDiff = Math.abs(data1[i + 3] - data2[i + 3]);
+
+          if (rDiff > 20 || gDiff > 20 || bDiff > 20 || aDiff > 20) {
+            diffPixels++;
+          }
+        }
+
+        // Trigger warning if more than 2% of the pixels differ visual layout
+        const tolerance = canvasWidth * canvasHeight * 0.02;
+        if (diffPixels > tolerance) {
+          diffWarning.classList.remove("hidden");
+        } else {
+          diffWarning.classList.add("hidden");
+        }
+      }
+
+      // Cleanup
+      URL.revokeObjectURL(urlOrig);
+      URL.revokeObjectURL(urlOpt);
+    };
+
+    imgOriginal.onload = compareCanvas;
+    imgOptimized.onload = compareCanvas;
+
+    imgOriginal.src = urlOrig;
+    imgOptimized.src = urlOpt;
+  }
+
+  // Update Batch UI queue
+  function updateBatchQueueUI() {
+    if (
+      !batchQueueCount ||
+      !batchTableBody ||
+      !btnBatchDownload ||
+      !batchTotalReduction ||
+      !batchTotalSizeDiff
+    )
+      return;
+
+    batchQueueCount.textContent = batchQueue.length.toString();
+
+    if (batchQueue.length === 0) {
+      batchTableBody.innerHTML = `
+        <tr>
+          <td colspan="5" class="py-6 text-center text-stone font-medium">No files uploaded yet. Drag & drop SVGs to begin.</td>
+        </tr>
+      `;
+      btnBatchDownload.disabled = true;
+      batchTotalReduction.textContent = "0%";
+      batchTotalSizeDiff.textContent = "0 B saved";
+      return;
+    }
+
+    btnBatchDownload.disabled = false;
+    let totalBefore = 0;
+    let totalAfter = 0;
+
+    batchTableBody.innerHTML = "";
+    batchQueue.forEach((file) => {
+      totalBefore += file.originalSize;
+      totalAfter += file.optimizedSize;
+
+      const pct = Math.max(
+        0,
+        Math.round(
+          ((file.originalSize - file.optimizedSize) / file.originalSize) * 100,
+        ),
+      );
+
+      const tr = document.createElement("tr");
+      tr.className = "border-b border-hairline-soft";
+      tr.innerHTML = `
+        <td class="py-3 font-medium text-primary max-w-xs truncate">${file.name}</td>
+        <td class="py-3 text-center text-slate">${formatBytes(file.originalSize)}</td>
+        <td class="py-3 text-center text-brand-teal font-semibold">${formatBytes(file.optimizedSize)}</td>
+        <td class="py-3 text-center">
+          <span class="bg-success-accent/15 text-moss-dark font-bold px-2 py-0.5 rounded-full text-[10px]">
+            -${pct}%
+          </span>
+        </td>
+        <td class="py-3 text-right">
+          <button class="text-brand-blue font-semibold hover:underline cursor-pointer btn-single-batch-dl" data-id="${file.id}">
+            Download
+          </button>
+        </td>
+      `;
+      batchTableBody.appendChild(tr);
+    });
+
+    // Setup action listener on dynamic table download button
+    document.querySelectorAll(".btn-single-batch-dl").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = (e.target as HTMLElement).getAttribute("data-id");
+        const file = batchQueue.find((f) => f.id === id);
+        if (file) {
+          const blob = new Blob([file.optimizedContent], {
+            type: "image/svg+xml",
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.download = `optimized_${file.name}`;
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+        }
+      });
+    });
+
+    const totalPct = Math.max(
+      0,
+      Math.round(((totalBefore - totalAfter) / totalBefore) * 100),
+    );
+    batchTotalReduction.textContent = `${totalPct}%`;
+    batchTotalSizeDiff.textContent = `${formatBytes(totalBefore - totalAfter)} saved total`;
   }
 </script>
+
+<style>
+  /* SVG custom Checkerboard Grid pattern for transparency renders */
+  .checkered-grid {
+    background-size: 16px 16px;
+    background-image:
+      linear-gradient(45deg, var(--color-surface) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--color-surface) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--color-surface) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--color-surface) 75%);
+    background-position:
+      0 0,
+      0 8px,
+      8px -8px,
+      -8px 0px;
+  }
+</style>
