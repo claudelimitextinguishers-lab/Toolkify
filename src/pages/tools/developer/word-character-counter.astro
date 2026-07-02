@@ -5,86 +5,1097 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Word / Character Counter";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Count words, characters, sentences, paragraphs, and reading times for any input text.";
+
+// SEO metadata
+const pageTitle = "Word / Character Counter - Free Real-time Count & Keyword Density Analysis";
+const description = "Analyze your text in real-time. Count words, characters, sentences, paragraphs, reading/speaking times, check platform-specific limits (Twitter/X, SMS, SEO meta tags), and view keyword density.";
+const keywords = "word counter, character counter, character count, word count online, keyword density tool, reading time calculator, text analyzer, letter counter, writing tool, SEO meta description counter";
+const canonicalUrl = "https://boardtools.app/tools/developer/word-character-counter";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage="/og/word-character-counter.png"
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Word & Character Counter",
+      "url": "https://boardtools.app/tools/developer/word-character-counter",
+      "description": "Analyze text in real-time. Get detailed statistics, speaking/reading times, keyword density, and platform limit indicators completely in your local browser sandbox.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Real-time word, character, sentence, and paragraph counting",
+        "CJK character-aware counting conventions",
+        "Emoji and unicode-safe character counts",
+        "Adjustable reading and speaking time estimations",
+        "Keyword density analysis with customizable stopword filter",
+        "Interactive platform character limit meters (Twitter/X, SMS, SEO meta tag)",
+        "Local auto-save draft recovery",
+        "Text and markdown file upload support"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1240px] w-full mx-auto px-3 sm:px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Word and Character Counter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-5 items-start">
+      
+      <!-- Left Column: Input Field & Core Controls -->
+      <div class="lg:col-span-8 flex flex-col gap-3 sm:gap-4">
+        
+        <div class="card-base p-3 sm:p-5 flex flex-col gap-4 relative overflow-hidden">
+          <div class="absolute inset-0 dot-grid opacity-[0.04] pointer-events-none rounded-xl"></div>
+          
+          <div class="relative z-10 flex flex-col gap-4">
+            <!-- Toolbar: Upload / Copy Summary -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-hairline-soft">
+              
+              <!-- File Operations -->
+              <div class="flex items-center gap-2">
+                <label 
+                  for="file-upload" 
+                  class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 bg-surface hover:bg-hairline-soft border border-hairline rounded-full cursor-pointer transition-all text-charcoal"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  <span>Upload Document</span>
+                </label>
+                <input 
+                  type="file" 
+                  id="file-upload" 
+                  accept=".txt,.md" 
+                  class="hidden" 
+                />
+                <span class="text-[10px] text-stone hidden sm:inline">Supports .txt, .md (or drag & drop below)</span>
+              </div>
+
+              <!-- Action Utilities -->
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  id="btn-copy-summary"
+                  class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline rounded-full cursor-pointer transition-all text-brand-blue"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                  </svg>
+                  <span>Copy Report</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Text Input Container -->
+            <div 
+              id="drop-zone"
+              class="relative flex flex-col border border-hairline-strong rounded-xl bg-surface-soft focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/10 transition-all duration-200"
+            >
+              <textarea
+                id="counter-input"
+                class="w-full min-h-[160px] sm:min-h-[320px] p-3 sm:p-4 font-mono text-sm bg-transparent text-primary resize-y outline-none leading-relaxed"
+                placeholder="Type, paste, or drop your document here..."
+                spellcheck="true"
+                autofocus
+              ></textarea>
+              
+              <!-- Drag overlay message -->
+              <div id="drag-overlay" class="absolute inset-0 bg-brand-yellow/90 flex flex-col items-center justify-center gap-2 rounded-xl opacity-0 pointer-events-none transition-all duration-200 z-30">
+                <span class="text-3xl">📥</span>
+                <span class="font-display font-bold text-sm text-primary">Drop to load text file</span>
+              </div>
+              
+              <div id="toast-notify" class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+                Summary copied!
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Speaking & Reading Speed Customization Card -->
+        <div class="card-base p-3 sm:p-5 flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+            Speed Calibration
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between text-xs font-semibold text-slate">
+                <span>Reading Speed:</span>
+                <span class="text-primary"><strong id="read-wpm-label">200</strong> WPM</span>
+              </div>
+              <input 
+                type="range" 
+                id="slider-read-wpm" 
+                min="100" 
+                max="400" 
+                value="200" 
+                step="10" 
+                class="w-full h-1.5 bg-surface-soft border border-hairline rounded-full appearance-none cursor-pointer accent-brand-blue" 
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-between text-xs font-semibold text-slate">
+                <span>Speaking Speed:</span>
+                <span class="text-primary"><strong id="speak-wpm-label">130</strong> WPM</span>
+              </div>
+              <input 
+                type="range" 
+                id="slider-speak-wpm" 
+                min="80" 
+                max="250" 
+                value="130" 
+                step="5" 
+                class="w-full h-1.5 bg-surface-soft border border-hairline rounded-full appearance-none cursor-pointer accent-brand-rose" 
+              />
+            </div>
+          </div>
         </div>
+
       </div>
+
+      <!-- Right Column: Live Statistics, Platform Limits & Keyword Density -->
+      <div class="lg:col-span-4 flex flex-col gap-3.5 sm:gap-5">
+        
+        <!-- Live Statistics Panel -->
+        <div id="analysis-panel" class="card-base p-3 sm:p-5 flex flex-col gap-3.5 relative overflow-hidden bg-surface-soft">
+          <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+            Real-Time Analysis
+          </h3>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 sm:gap-2.5">
+            <!-- Words Stat -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 flex flex-col gap-0.5">
+              <span class="text-[10px] text-stone uppercase font-bold tracking-wider">Words</span>
+              <strong id="stat-words" class="text-xl sm:text-2xl font-display font-semibold text-primary transition-all duration-200">0</strong>
+            </div>
+
+            <!-- Characters (with space) Stat -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 flex flex-col gap-0.5">
+              <span class="text-[10px] text-stone uppercase font-bold tracking-wider">Chars (All)</span>
+              <strong id="stat-chars-all" class="text-xl sm:text-2xl font-display font-semibold text-primary transition-all duration-200">0</strong>
+            </div>
+
+            <!-- Characters (no space) Stat -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 flex flex-col gap-0.5">
+              <span class="text-[10px] text-stone uppercase font-bold tracking-wider">Chars (No Spaces)</span>
+              <strong id="stat-chars-no-space" class="text-xl sm:text-2xl font-display font-semibold text-primary transition-all duration-200">0</strong>
+            </div>
+
+            <!-- Sentences Stat -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 flex flex-col gap-0.5">
+              <span class="text-[10px] text-stone uppercase font-bold tracking-wider">Sentences</span>
+              <strong id="stat-sentences" class="text-xl sm:text-2xl font-display font-semibold text-primary transition-all duration-200">0</strong>
+            </div>
+
+            <!-- Paragraphs Stat -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 flex flex-col gap-0.5">
+              <span class="text-[10px] text-stone uppercase font-bold tracking-wider">Paragraphs</span>
+              <strong id="stat-paragraphs" class="text-xl sm:text-2xl font-display font-semibold text-primary transition-all duration-200">0</strong>
+            </div>
+            
+            <!-- Time estimations -->
+            <div class="bg-canvas border border-hairline-soft rounded-lg p-2 sm:p-2.5 col-span-2 sm:col-span-1 lg:col-span-1 flex flex-col justify-around gap-1.5">
+              <div class="flex items-center justify-between text-[11px] text-slate">
+                <span>Reading Time:</span>
+                <span class="font-bold text-primary" id="time-reading">0s</span>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate">
+                <span>Speaking Time:</span>
+                <span class="font-bold text-primary" id="time-speaking">0s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Platform-Aware Limits Panel -->
+        <div class="card-base p-3 sm:p-5 flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
+              Platform Limits
+            </h3>
+            <span class="text-[9px] text-stone">Star pins preferred</span>
+          </div>
+
+          <!-- Platform list container -->
+          <div id="limits-container" class="flex flex-col gap-2 sm:gap-3.5">
+            <!-- Templates will be rendered dynamically -->
+          </div>
+
+          <!-- Add custom limit -->
+          <div class="border-t border-hairline-soft pt-3 flex flex-col gap-2">
+            <span class="text-[10px] font-bold text-slate uppercase">Add Custom Character Limit</span>
+            <div class="flex gap-2">
+              <input 
+                type="text" 
+                id="custom-limit-name" 
+                placeholder="e.g., Pinterest Bio" 
+                class="flex-1 text-xs border border-hairline rounded-md px-2 py-1 outline-none text-input focus:border-brand-blue"
+              />
+              <input 
+                type="number" 
+                id="custom-limit-val" 
+                placeholder="160" 
+                class="w-16 text-xs border border-hairline rounded-md px-2 py-1 outline-none text-input focus:border-brand-blue"
+              />
+              <button 
+                type="button" 
+                id="btn-add-custom-limit" 
+                class="button-primary text-[10px] py-1 px-3 !rounded-md"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keyword Density Panel -->
+        <div class="card-base p-3 sm:p-5 flex flex-col gap-3.5">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-orange-light border border-brand-coral"></span>
+              Keyword Density
+            </h3>
+            
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-exclude-stopwords" checked class="rounded border-hairline text-brand-blue focus:ring-brand-blue w-3 h-3 cursor-pointer" />
+              <span class="text-[10px] font-semibold text-slate">Filter Common Words</span>
+            </label>
+          </div>
+
+          <div id="keyword-list" class="flex flex-col gap-2 sm:gap-2.5 min-h-[80px] transition-all duration-300">
+            <!-- Dynamic words go here -->
+            <p class="text-xs text-stone italic text-center py-6">Start typing to view word frequency...</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Security & Privacy Guard Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Secure Client-Side Execution, No Server Transmission
+      </span>
+      <span>v1.0.0</span>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        Professional Real-time Text Analysis & Analytics
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>Word and Character Counter</strong> offers highly optimized text processing designed to meet the rigorous demands of SEO specialists, writers, copywriters, and developers. Running entirely client-side, your document is processed securely within your browser sandbox.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Multilingual CJK Word Count Support
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Traditional counters evaluate words based purely on spacing boundaries. This fails for logographic languages like Chinese, Japanese, and Korean (CJK) where letters/characters represent whole words and are written without spacing. Our counting engine isolates CJK glyphs and counts them as distinct words while applying standard Western spacing rules to the remainder of the text.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Platform Limits & SEO Meta Tags
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Staying within character bounds prevents search engine truncation or platform-specific messaging errors. Keep track of Twitter (280 characters), SMS messages (160 characters), or Google search listing meta descriptions (capped around 155–160 characters) live as you edit.
+      </p>
+    </article>
+  </section>
+
+  <!-- Sticky Stats Bar for Mobile Viewport -->
+  <div id="sticky-bar" class="lg:hidden fixed bottom-0 left-0 right-0 bg-canvas/90 backdrop-blur-md border-t border-hairline shadow-subtle p-3 flex justify-around items-center z-40 transition-all duration-200 transform translate-y-full">
+    <div class="flex flex-col items-center">
+      <span class="text-[9px] text-stone uppercase font-bold">Words</span>
+      <span id="sticky-words" class="text-sm font-bold text-primary">0</span>
+    </div>
+    <div class="h-6 w-[1px] bg-hairline"></div>
+    <div class="flex flex-col items-center">
+      <span class="text-[9px] text-stone uppercase font-bold">Chars</span>
+      <span id="sticky-chars" class="text-sm font-bold text-primary">0</span>
+    </div>
+    <div class="h-6 w-[1px] bg-hairline"></div>
+    <div class="flex flex-col items-center">
+      <span class="text-[9px] text-stone uppercase font-bold">Read Time</span>
+      <span id="sticky-read" class="text-sm font-bold text-primary">0s</span>
+    </div>
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Word Counter Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is Word & Character Counter?
+        </h4>
+        <p>
+          It is a real-time text analysis tool that counts words, characters (with and without spaces), sentences, and paragraphs as you type. It also estimates reading/speaking times and analyzes keyword density.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Multilingual Support</strong>: Detects and counts logographic CJK (Chinese, Japanese, Korean) characters accurately alongside standard spacing rules.
+            </li>
+            <li>
+              <strong>Platform Character Limits</strong>: Pre-configured limit meters for Twitter/X posts, standard SMS, SEO page titles, meta descriptions, and custom platforms you specify.
+            </li>
+            <li>
+              <strong>Keyword Density</strong>: Identifies the most frequent words in your text with an optional common English stopword filter.
+            </li>
+            <li>
+              <strong>Speed Calibration</strong>: Adjust reading/speaking speed sliders to estimate speech or reading durations.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. 100% Secure & Client-Side
+        </h4>
+        <p>
+          Your text is processed locally in your browser sandbox. No content or document data is transmitted to external servers, ensuring absolute privacy for sensitive documents.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  /* Platform limit progress animation styling */
+  .limit-pulse {
+    animation: pulseGlow 1.2s infinite ease-in-out;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0px rgba(251, 212, 212, 0); border-color: rgb(239, 68, 68); }
+    50% { box-shadow: 0 0 8px 3px rgba(239, 68, 68, 0.4); border-color: rgb(220, 38, 38); }
+  }
+</style>
+
+<script>
+  // Common english stopwords to exclude in density calculations
+  const STOPWORDS = new Set([
+    'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'arent', 'as', 'at',
+    'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both', 'but', 'by',
+    'can', 'cannot', 'could', 'couldnt', 'did', 'didnt', 'do', 'does', 'doesnt', 'doing', 'dont', 'down', 'during',
+    'each', 'few', 'for', 'from', 'further', 'had', 'hadnt', 'has', 'hasnt', 'have', 'havent', 'having', 'he', 'hed',
+    'hell', 'hes', 'her', 'here', 'heres', 'hers', 'herself', 'him', 'himself', 'his', 'how', 'hows', 'i', 'id', 'ill',
+    'im', 'ive', 'if', 'in', 'into', 'is', 'isnt', 'it', 'its', 'itself', 'lets', 'me', 'more', 'most', 'mustnt', 'my',
+    'myself', 'no', 'nor', 'not', 'of', 'off', 'on', 'once', 'only', 'or', 'other', 'ought', 'our', 'ours', 'ourselves',
+    'out', 'over', 'own', 'same', 'shant', 'she', 'shed', 'shell', 'shes', 'should', 'shouldnt', 'so', 'some', 'such',
+    'than', 'that', 'thats', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there', 'theres', 'these', 'they',
+    'theyd', 'theyll', 'theyre', 'theyve', 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up', 'very',
+    'was', 'wasnt', 'we', 'wed', 'well', 'were', 'weve', 'werent', 'what', 'whats', 'when', 'whens', 'where', 'wheres',
+    'which', 'while', 'who', 'whos', 'whom', 'why', 'whys', 'with', 'wont', 'would', 'wouldnt', 'you', 'youd', 'youll',
+    'youre', 'youve', 'your', 'yours', 'yourself', 'yourselves'
+  ]);
+
+  // CJK detection pattern (Chinese, Japanese, Korean characters)
+  const cjkRegex = /[\u4e00-\u9faf\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af\u2f00-\u2fdf\u3005\u3007\u3011\u3012\u3013\u301c\u30fc]/g;
+
+  // Default platform limit presets
+  interface PlatformLimit {
+    id: string;
+    name: string;
+    maxChars: number;
+    pinned: boolean;
+    custom?: boolean;
+  }
+
+  let platformLimits: PlatformLimit[] = [
+    { id: 'twitter', name: 'Twitter/X Post', maxChars: 280, pinned: true },
+    { id: 'sms', name: 'Standard SMS', maxChars: 160, pinned: true },
+    { id: 'seo_meta', name: 'Meta Description', maxChars: 155, pinned: true },
+    { id: 'seo_title', name: 'SEO Page Title', maxChars: 60, pinned: false },
+    { id: 'reddit_title', name: 'Reddit Title', maxChars: 300, pinned: false },
+    { id: 'linkedin_post', name: 'LinkedIn Post', maxChars: 3000, pinned: false }
+  ];
+
+  // WPM Configurations
+  let wpmRead = 200;
+  let wpmSpeak = 130;
+
+  // State
+  let lastText = "";
+
+  // DOM elements
+  const counterInput = document.getElementById('counter-input') as HTMLTextAreaElement;
+  const resetBtn = document.getElementById('reset-btn') as HTMLButtonElement;
+  const fileUpload = document.getElementById('file-upload') as HTMLInputElement;
+  const btnCopySummary = document.getElementById('btn-copy-summary') as HTMLButtonElement;
+  const toastNotify = document.getElementById('toast-notify') as HTMLDivElement;
+  const dropZone = document.getElementById('drop-zone') as HTMLDivElement;
+  const dragOverlay = document.getElementById('drag-overlay') as HTMLDivElement;
+
+  // How it works modal
+  const howItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const modalOkBtn = document.getElementById('modal-ok-btn');
+
+  // Sliders
+  const sliderReadWpm = document.getElementById('slider-read-wpm') as HTMLInputElement;
+  const sliderSpeakWpm = document.getElementById('slider-speak-wpm') as HTMLInputElement;
+  const readWpmLabel = document.getElementById('read-wpm-label') as HTMLElement;
+  const speakWpmLabel = document.getElementById('speak-wpm-label') as HTMLElement;
+
+  // Counters / Stats
+  const statWords = document.getElementById('stat-words') as HTMLElement;
+  const statCharsAll = document.getElementById('stat-chars-all') as HTMLElement;
+  const statCharsNoSpace = document.getElementById('stat-chars-no-space') as HTMLElement;
+  const statSentences = document.getElementById('stat-sentences') as HTMLElement;
+  const statParagraphs = document.getElementById('stat-paragraphs') as HTMLElement;
+  const timeReading = document.getElementById('time-reading') as HTMLElement;
+  const timeSpeaking = document.getElementById('time-speaking') as HTMLElement;
+
+  // Sticky Bar Elements
+  const stickyBar = document.getElementById('sticky-bar') as HTMLDivElement;
+  const stickyWords = document.getElementById('sticky-words') as HTMLElement;
+  const stickyChars = document.getElementById('sticky-chars') as HTMLElement;
+  const stickyRead = document.getElementById('sticky-read') as HTMLElement;
+
+  // Limits Container
+  const limitsContainer = document.getElementById('limits-container') as HTMLDivElement;
+  const customLimitName = document.getElementById('custom-limit-name') as HTMLInputElement;
+  const customLimitVal = document.getElementById('custom-limit-val') as HTMLInputElement;
+  const btnAddCustomLimit = document.getElementById('btn-add-custom-limit') as HTMLButtonElement;
+
+  // Keyword Density
+  const chkExcludeStopwords = document.getElementById('chk-exclude-stopwords') as HTMLInputElement;
+  const keywordList = document.getElementById('keyword-list') as HTMLDivElement;
+
+  // Animation values map for smooth tick tracking
+  const currentTickerValues = {
+    words: 0,
+    charsAll: 0,
+    charsNoSpace: 0,
+    sentences: 0,
+    paragraphs: 0
+  };
+
+  let limitsRendered = false;
+
+  // Safe character count ignoring emoji representation bugs
+  function getSafeCharCount(str: string): number {
+    return Array.from(str).length;
+  }
+
+  // Count words with CJK convention
+  function calculateWordCount(str: string): number {
+    const trimmed = str.trim();
+    if (!trimmed) return 0;
+    
+    // CJK character count
+    const cjkMatches = trimmed.match(cjkRegex);
+    const cjkCount = cjkMatches ? cjkMatches.length : 0;
+    
+    // Strip CJK to count non-CJK words
+    const stripped = trimmed.replace(cjkRegex, ' ');
+    const nonCjkWords = stripped.split(/\s+/).filter(w => w.length > 0).length;
+    
+    return cjkCount + nonCjkWords;
+  }
+
+  // Paragraph counting
+  function calculateParagraphCount(str: string): number {
+    if (!str.trim()) return 0;
+    return str.split(/\n+/).filter(p => p.trim().length > 0).length;
+  }
+
+  // Sentence counting (supports English/CJK punctuation)
+  function calculateSentenceCount(str: string): number {
+    if (!str.trim()) return 0;
+    const matches = str.match(/[^.!?。！？\s][^.!? downtime]?.[^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
+    // Standard English/CJK sentence regex fallback
+    const standardMatches = str.match(/[^.!?。！？\s][^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
+    return standardMatches ? standardMatches.length : 0;
+  }
+
+  // Load from Local Storage
+  function loadState() {
+    const savedText = localStorage.getItem('bt-wc-text');
+    if (savedText) {
+      counterInput.value = savedText;
+      lastText = savedText;
+    }
+
+    const savedWpms = localStorage.getItem('bt-wc-wpms');
+    if (savedWpms) {
+      try {
+        const { read, speak } = JSON.parse(savedWpms);
+        wpmRead = read || 200;
+        wpmSpeak = speak || 130;
+        
+        sliderReadWpm.value = wpmRead.toString();
+        sliderSpeakWpm.value = wpmSpeak.toString();
+        readWpmLabel.textContent = wpmRead.toString();
+        speakWpmLabel.textContent = wpmSpeak.toString();
+      } catch (e) {}
+    }
+
+    const savedLimits = localStorage.getItem('bt-wc-limits');
+    if (savedLimits) {
+      try {
+        platformLimits = JSON.parse(savedLimits);
+      } catch (e) {}
+    }
+  }
+
+  function saveState() {
+    localStorage.setItem('bt-wc-text', counterInput.value);
+    localStorage.setItem('bt-wc-wpms', JSON.stringify({ read: wpmRead, speak: wpmSpeak }));
+    localStorage.setItem('bt-wc-limits', JSON.stringify(platformLimits));
+  }
+
+  // Formatting utility for time duration
+  function formatTime(seconds: number): string {
+    if (seconds < 60) {
+      return `${Math.ceil(seconds)}s`;
+    }
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.ceil(seconds % 60);
+    return `${mins}m ${secs}s`;
+  }
+
+  // Linear interpolation tick animation for counter numbers
+  function animateValue(targetId: string, endVal: number, key: keyof typeof currentTickerValues) {
+    const startVal = currentTickerValues[key];
+    if (startVal === endVal) return;
+    
+    const duration = 200; // ms
+    const startTime = performance.now();
+
+    function update(timestamp: number) {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quad
+      const ease = progress * (2 - progress);
+      const current = Math.round(startVal + (endVal - startVal) * ease);
+      
+      const el = document.getElementById(targetId);
+      if (el) el.textContent = current.toString();
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        currentTickerValues[key] = endVal;
+        if (el) el.textContent = endVal.toString();
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Render static structure for platform limits only when structure changes
+  function renderPlatformLimitsStructure() {
+    // Sort limits: pinned first, then by id/creation
+    const sorted = [...platformLimits].sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return 0;
+    });
+
+    limitsContainer.innerHTML = '';
+    sorted.forEach(l => {
+      const item = document.createElement('div');
+      item.id = `limit-item-${l.id}`;
+      item.className = 'p-2.5 sm:p-3 bg-canvas border border-hairline-soft rounded-lg flex flex-col gap-2 transition-all duration-300';
+      item.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="text-[11px] font-bold text-primary">${l.name}</span>
+            <span class="text-[9px] text-stone">Limit: ${l.maxChars} chars</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="limit-counter-val text-[10px] font-bold text-slate">
+              0 / ${l.maxChars}
+            </span>
+            <button 
+              type="button" 
+              class="pin-limit-btn text-xs focus:outline-none hover:scale-115 transition-transform ${l.pinned ? 'text-brand-yellow font-bold' : 'text-stone opacity-40'}" 
+              data-id="${l.id}"
+              title="${l.pinned ? 'Unpin' : 'Pin'}"
+            >
+              ★
+            </button>
+            ${l.custom ? `
+              <button 
+                type="button" 
+                class="delete-limit-btn text-[10px] text-stone hover:text-brand-coral cursor-pointer"
+                data-id="${l.id}"
+                title="Delete"
+              >
+                ✕
+              </button>
+            ` : ''}
+          </div>
+        </div>
+        <div class="w-full bg-surface-soft border border-hairline rounded-full h-2 overflow-hidden">
+          <div class="limit-progress-bar bg-brand-blue h-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+      `;
+
+      // Event handlers
+      const pinBtn = item.querySelector('.pin-limit-btn') as HTMLButtonElement;
+      pinBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        l.pinned = !l.pinned;
+        saveState();
+        renderPlatformLimitsStructure();
+        updatePlatformLimitsValues();
+      });
+
+      if (l.custom) {
+        const delBtn = item.querySelector('.delete-limit-btn') as HTMLButtonElement;
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          platformLimits = platformLimits.filter(p => p.id !== l.id);
+          saveState();
+          renderPlatformLimitsStructure();
+          updatePlatformLimitsValues();
+        });
+      }
+
+      limitsContainer.appendChild(item);
+    });
+
+    limitsRendered = true;
+  }
+
+  // Update existing platform limits in place to avoid lag
+  function updatePlatformLimitsValues() {
+    if (!limitsRendered) {
+      renderPlatformLimitsStructure();
+    }
+
+    const currentCharCount = getSafeCharCount(counterInput.value);
+
+    platformLimits.forEach(l => {
+      const item = document.getElementById(`limit-item-${l.id}`);
+      if (!item) return;
+
+      const percentage = Math.min((currentCharCount / l.maxChars) * 100, 100);
+      const nearLimit = currentCharCount >= l.maxChars * 0.85;
+      const overLimit = currentCharCount > l.maxChars;
+
+      // Update text
+      const valSpan = item.querySelector('.limit-counter-val') as HTMLSpanElement;
+      if (valSpan) {
+        valSpan.textContent = `${currentCharCount} / ${l.maxChars}`;
+        valSpan.className = `limit-counter-val text-[10px] font-bold ${overLimit ? 'text-brand-coral' : 'text-slate'}`;
+      }
+
+      // Update progress bar
+      const progBar = item.querySelector('.limit-progress-bar') as HTMLDivElement;
+      if (progBar) {
+        progBar.style.width = `${percentage}%`;
+        progBar.className = 'limit-progress-bar h-full transition-all duration-300';
+        if (overLimit) {
+          progBar.classList.add('bg-brand-coral');
+        } else if (nearLimit) {
+          progBar.classList.add('bg-brand-yellow-deep');
+        } else {
+          progBar.classList.add('bg-brand-blue');
+        }
+      }
+
+      // Update item border class
+      item.className = `p-2.5 sm:p-3 bg-canvas border rounded-lg flex flex-col gap-2 transition-all duration-300 ${overLimit ? 'border-brand-coral limit-pulse' : 'border-hairline-soft'}`;
+    });
+  }
+
+  // Calculate Keyword Density
+  function updateKeywordDensity() {
+    const text = counterInput.value.toLowerCase();
+    
+    // Split on non-word characters while handling Unicode
+    const words = text.match(/[\p{L}\p{N}]+/gu) || [];
+    const counts: Record<string, number> = {};
+    const excludeStopwords = chkExcludeStopwords.checked;
+
+    let totalValids = 0;
+    words.forEach(w => {
+      if (w.length < 2) return;
+      if (excludeStopwords && STOPWORDS.has(w)) return;
+      
+      counts[w] = (counts[w] || 0) + 1;
+      totalValids++;
+    });
+
+    // Sort desc
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+
+    keywordList.innerHTML = '';
+    
+    if (sorted.length === 0) {
+      keywordList.innerHTML = `<p class="text-xs text-stone italic text-center py-6">Start typing to view word frequency...</p>`;
+      return;
+    }
+
+    const maxFreq = sorted[0][1];
+
+    sorted.forEach(([word, count]) => {
+      const percentOfMax = (count / maxFreq) * 100;
+      const densityPercent = ((count / (totalValids || 1)) * 100).toFixed(1);
+
+      const bar = document.createElement('div');
+      bar.className = "flex flex-col gap-1 text-[11px] animate-fade-in";
+      bar.innerHTML = `
+        <div class="flex items-center justify-between text-slate">
+          <span class="font-mono text-primary font-semibold">${word}</span>
+          <span>${count} times (${densityPercent}%)</span>
+        </div>
+        <div class="w-full bg-surface border border-hairline rounded-full h-1.5 overflow-hidden">
+          <div class="bg-brand-teal h-full rounded-full transition-all duration-500" style="width: ${percentOfMax}%"></div>
+        </div>
+      `;
+      keywordList.appendChild(bar);
+    });
+  }
+
+  // Debounced Keyword Density to optimize typing speed
+  let densityTimeout: any = null;
+  function debouncedUpdateKeywordDensity() {
+    clearTimeout(densityTimeout);
+    densityTimeout = setTimeout(updateKeywordDensity, 150);
+  }
+
+  // Live Count cycle
+  function runCalculation() {
+    const text = counterInput.value;
+    
+    // 1. Basic Stats
+    const countWords = calculateWordCount(text);
+    const countCharsAll = getSafeCharCount(text);
+    const countCharsNoSpace = getSafeCharCount(text.replace(/\s/g, ''));
+    const countSentences = calculateSentenceCount(text);
+    const countParagraphs = calculateParagraphCount(text);
+
+    // 2. Animate counter values
+    animateValue('stat-words', countWords, 'words');
+    animateValue('stat-chars-all', countCharsAll, 'charsAll');
+    animateValue('stat-chars-no-space', countCharsNoSpace, 'charsNoSpace');
+    animateValue('stat-sentences', countSentences, 'sentences');
+    animateValue('stat-paragraphs', countParagraphs, 'paragraphs');
+
+    // 3. Time Estimations
+    const readSecs = countWords > 0 ? (countWords / wpmRead) * 60 : 0;
+    const speakSecs = countWords > 0 ? (countWords / wpmSpeak) * 60 : 0;
+    timeReading.textContent = formatTime(readSecs);
+    timeSpeaking.textContent = formatTime(speakSecs);
+
+    // 4. Update Mobile Sticky bar
+    stickyWords.textContent = countWords.toString();
+    stickyChars.textContent = countCharsAll.toString();
+    stickyRead.textContent = formatTime(readSecs);
+
+    // Show/hide sticky bar based on input presence and screen size
+    if (text.length > 0) {
+      stickyBar.classList.remove('translate-y-full');
+    } else {
+      stickyBar.classList.add('translate-y-full');
+    }
+
+    // 5. Update Limits and Keywords
+    updatePlatformLimitsValues();
+    debouncedUpdateKeywordDensity();
+    
+    // Save draft
+    saveState();
+  }
+
+  // Event listener hook for input
+  counterInput.addEventListener('input', runCalculation);
+
+  // WPM Slider events
+  sliderReadWpm.addEventListener('input', () => {
+    wpmRead = parseInt(sliderReadWpm.value);
+    readWpmLabel.textContent = wpmRead.toString();
+    runCalculation();
+  });
+
+  sliderSpeakWpm.addEventListener('input', () => {
+    wpmSpeak = parseInt(sliderSpeakWpm.value);
+    speakWpmLabel.textContent = wpmSpeak.toString();
+    runCalculation();
+  });
+
+  // Reset inputs and state
+  resetBtn.addEventListener('click', () => {
+    counterInput.value = '';
+    
+    // Reset Speed Sliders
+    wpmRead = 200;
+    wpmSpeak = 130;
+    sliderReadWpm.value = '200';
+    sliderSpeakWpm.value = '130';
+    readWpmLabel.textContent = '200';
+    speakWpmLabel.textContent = '130';
+
+    runCalculation();
+    counterInput.focus();
+  });
+
+  // How it works modal interactions
+  howItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeModalBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  modalOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
+    }
+  });
+
+  // Mobile Auto-Scroll on paste
+  counterInput.addEventListener('paste', () => {
+    if (window.innerWidth < 1024) {
+      setTimeout(() => {
+        const analysisPanel = document.getElementById('analysis-panel');
+        if (analysisPanel) {
+          analysisPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  });
+
+  // Usability key bindings for custom limits
+  customLimitName.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      customLimitVal.focus();
+    }
+  });
+  customLimitVal.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      btnAddCustomLimit.click();
+    }
+  });
+
+  // Copy Summary utility
+  btnCopySummary.addEventListener('click', () => {
+    const text = counterInput.value;
+    const words = calculateWordCount(text);
+    const charsAll = getSafeCharCount(text);
+    const charsNoSpace = getSafeCharCount(text.replace(/\s/g, ''));
+    const sentences = calculateSentenceCount(text);
+    const paragraphs = calculateParagraphCount(text);
+    const readSecs = words > 0 ? (words / wpmRead) * 60 : 0;
+    const speakSecs = words > 0 ? (words / wpmSpeak) * 60 : 0;
+
+    const summary = `--- Word & Character Analysis Report ---
+Words: ${words}
+Characters (with spaces): ${charsAll}
+Characters (no spaces): ${charsNoSpace}
+Sentences: ${sentences}
+Paragraphs: ${paragraphs}
+Estimated Reading Time: ${formatTime(readSecs)} (at ${wpmRead} WPM)
+Estimated Speaking Time: ${formatTime(speakSecs)} (at ${wpmSpeak} WPM)
+----------------------------------------`;
+
+    navigator.clipboard.writeText(summary).then(() => {
+      showToast('Summary report copied!');
+    });
+  });
+
+  function showToast(msg: string) {
+    toastNotify.textContent = msg;
+    toastNotify.classList.add('opacity-100');
+    setTimeout(() => {
+      toastNotify.classList.remove('opacity-100');
+    }, 2000);
+  }
+
+  // Exclude Stopwords Toggle event
+  chkExcludeStopwords.addEventListener('change', debouncedUpdateKeywordDensity);
+
+  // Add Custom limit handler
+  btnAddCustomLimit.addEventListener('click', () => {
+    const nameVal = customLimitName.value.trim();
+    const maxVal = parseInt(customLimitVal.value);
+
+    if (!nameVal || isNaN(maxVal) || maxVal <= 0) return;
+
+    const newLimit: PlatformLimit = {
+      id: 'custom_' + Date.now(),
+      name: nameVal,
+      maxChars: maxVal,
+      pinned: true,
+      custom: true
+    };
+
+    platformLimits.push(newLimit);
+    customLimitName.value = '';
+    customLimitVal.value = '';
+    saveState();
+    renderPlatformLimitsStructure();
+    updatePlatformLimitsValues();
+  });
+
+  // File loading helper
+  function handleUploadedFile(file: File) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target && typeof e.target.result === 'string') {
+        counterInput.value = e.target.result;
+        runCalculation();
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  fileUpload.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      handleUploadedFile(target.files[0]);
+    }
+  });
+
+  // Drag and Drop
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dragOverlay.classList.remove('opacity-0');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dragOverlay.classList.add('opacity-0');
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dragOverlay.classList.add('opacity-0');
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleUploadedFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  // Bootstrap
+  loadState();
+  renderPlatformLimitsStructure();
+  runCalculation();
+</script>
