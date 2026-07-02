@@ -146,7 +146,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
           >
             <span>⌨ Keyboard Shortcuts</span>
           </button>
-          
+
           <button
             type="button"
             id="reset-btn"
@@ -157,6 +157,18 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
             </svg>
             <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How JSON formatter works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
@@ -412,6 +424,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       </div>
     </div>
 
+
     <!-- Security & Privacy Guard Footer Tag -->
     <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
       <span class="flex items-center gap-1">
@@ -449,6 +462,54 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       </p>
     </article>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">JSON Formatter Guide</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. What is JSON formatting & validation?</h4>
+        <p>
+          JSON (JavaScript Object Notation) is a lightweight data-interchange format. A formatter parses a raw, minified, or disorganized JSON string and structures it with consistent spacing and indentation to make it human-readable. A validator checks if the JSON follows standard syntax rules (like double-quoted keys and correct brackets).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li><strong>Beautify JSON</strong>: Convert minified data into readable text using 2 spaces, 4 spaces, or tabs.</li>
+            <li><strong>Minify JSON</strong>: Remove all optional whitespace and line breaks to compress the JSON payload for network transport.</li>
+            <li><strong>Precise Error Finder</strong>: If parsing fails, the validator locates the exact line and column of the syntax error, rendering a visual cursor context so you can fix it immediately.</li>
+            <li><strong>Interactive Tree view</strong>: Explore large nested objects and arrays using a collapsible directory structure with hover-path tracking.</li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">3. 100% Client-Side and Private</h4>
+        <p>
+          This formatter executes entirely in your browser using standard client-side JavaScript. No data is sent to external servers, making it completely secure for editing sensitive credentials, private API payloads, and config files.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 
   <!-- Client-side Logic Script -->
   <script>
@@ -512,6 +573,12 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     const shortcutsModal = document.getElementById('shortcuts-modal') as HTMLDivElement;
     const closeShortcutsBtn = document.getElementById('close-shortcuts-btn') as HTMLButtonElement;
     const toastMessage = document.getElementById('toast-message') as HTMLDivElement;
+
+    // How it works modal elements
+    const howItWorksBtn = document.getElementById('how-it-works-btn');
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalOkBtn = document.getElementById('modal-ok-btn');
 
     // Default samples
     const baseSample = {
@@ -1162,6 +1229,22 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     shortcutsModal.addEventListener('click', (e) => {
       if (e.target === shortcutsModal) {
         shortcutsModal.classList.add('hidden');
+      }
+    });
+
+    // How it works modal interactions
+    howItWorksBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.remove('hidden');
+    });
+    closeModalBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.add('hidden');
+    });
+    modalOkBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.add('hidden');
+    });
+    howItWorksModal?.addEventListener('click', (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add('hidden');
       }
     });
 

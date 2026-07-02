@@ -117,6 +117,18 @@ const keywords = "base64 encoder, base64 decoder, url encoder, url decoder, base
             </svg>
             <span>Reset</span>
           </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Base64 & URL Converter works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>How it works</span>
+          </button>
         </div>
       </div>
     </div>
@@ -393,7 +405,51 @@ const keywords = "base64 encoder, base64 decoder, url encoder, url decoder, base
         </div>
       </div>
     </div>
+
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">Base64 & URL Encoding Guide</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. What is Base64 Encoding?</h4>
+        <p>
+          Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It translates data using a radix-64 representation. This is widely used when binary data (like images) needs to be transferred over media that are designed to deal with textual data, ensuring data integrity without corruption during transit.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. What is URL Encoding?</h4>
+        <p>
+          URL encoding (percent-encoding) converts characters into a format that can be safely transmitted over the Internet. It replaces unsafe ASCII characters with a "%" followed by two hexadecimal digits. Standard URI encoding preserves URL structure (like slashes and question marks), whereas URI Component encoding encodes all punctuation characters.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Bidirectional and Chained Support</h4>
+        <p>
+          This tool converts inputs bidirectional in real-time. Editing the source panel triggers encode/decode to the output panel immediately. Chained Mode sequentially executes both algorithms (e.g. converting text to Base64, and then percent-encoding the result).
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
 
 <script>
@@ -405,6 +461,12 @@ const keywords = "base64 encoder, base64 decoder, url encoder, url decoder, base
   const selUrlScope = document.getElementById('sel-url-scope') as HTMLSelectElement;
   const selChainedOrder = document.getElementById('sel-chained-order') as HTMLSelectElement;
   const chkBatchMode = document.getElementById('chk-batch-mode') as HTMLInputElement;
+
+  // How it works modal elements
+  const howItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const modalOkBtn = document.getElementById('modal-ok-btn');
 
   const cfgB64Variant = document.getElementById('cfg-b64-variant');
   const cfgUrlScope = document.getElementById('cfg-url-scope');
@@ -1340,6 +1402,22 @@ const keywords = "base64 encoder, base64 decoder, url encoder, url decoder, base
       });
     } catch (e) {
       console.error(e);
+    }
+  });
+
+  // How it works modal interactions
+  howItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeModalBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  modalOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
     }
   });
 
