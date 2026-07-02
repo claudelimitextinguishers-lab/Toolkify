@@ -152,7 +152,7 @@ import Layout from '../layouts/Layout.astro';
 
   let selectedRating = 0;
 
-  const labels = {
+  const labels: Record<number, string> = {
     1: 'Needs Improvement 😠',
     2: 'Below Average 😐',
     3: 'Average 🙂',
