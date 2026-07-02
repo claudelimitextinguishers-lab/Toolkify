@@ -2,89 +2,1327 @@
 import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
-const name = "Diff Checker";
+const name = "Text Diff Checker";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Highlight text insertions, deletions, and differences between two text strings side-by-side.";
+const description = "Compare two texts or files side-by-side or inline. Highlight character, word, or line-level changes instantly with 100% private client-side diffing.";
+
+// SEO Metadata
+const pageTitle = "Text Diff Checker - Side-by-Side File & Text Comparison";
+const keywords = "diff checker, text compare, compare files, side by side diff, online diff, word diff, line diff, character diff, text comparator, file diff, web diff tool";
+const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Text Diff Checker",
+      "alternateName": "Client-Side Diff & File Comparator",
+      "url": "https://boardtools.app/tools/developer/diff-checker",
+      "description": "Free online client-side text diff checker. Compare two text files or strings side-by-side or inline with character, word, and line level highlights.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript.",
+      "featureList": [
+        "Side-by-side and inline comparison views",
+        "Granular diffing: character, word, and line level highlights",
+        "Drag & drop upload of text, JSON, Markdown, CSV files",
+        "Ignore whitespace and letter-case toggles",
+        "Instant swap inputs button",
+        "Generates standard .diff/.patch files and shareable links",
+        "100% secure client-side processing using Web Workers"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1400px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="btn-reset"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and clear diff"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" />
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Diff Checker works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Main Diff Workspace -->
+    <div class="card-base p-4 sm:p-6 flex flex-col gap-6 bg-canvas border border-hairline-soft shadow-sm rounded-xl">
+      <!-- Toolbar / Settings Controls -->
+      <div class="flex flex-col gap-3 pb-4 border-b border-hairline-soft">
+        <!-- Row 1: Granularity + Diff Modifiers -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Granularity Tabs -->
+          <div class="flex rounded-full bg-surface p-1 border border-hairline shrink-0">
+            <button
+              type="button"
+              data-granularity="line"
+              class="granularity-tab px-3 py-1 text-xs rounded-full font-medium transition-all cursor-pointer bg-primary text-canvas shadow-sm"
+            >
+              Line
+            </button>
+            <button
+              type="button"
+              data-granularity="word"
+              class="granularity-tab px-3 py-1 text-xs rounded-full font-medium transition-all cursor-pointer text-slate hover:text-primary"
+            >
+              Word
+            </button>
+            <button
+              type="button"
+              data-granularity="char"
+              class="granularity-tab px-3 py-1 text-xs rounded-full font-medium transition-all cursor-pointer text-slate hover:text-primary"
+            >
+              Char
+            </button>
+          </div>
+
+          <!-- Diff Modifiers -->
+          <div class="flex flex-wrap items-center gap-3 text-xs font-medium text-slate">
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-whitespace" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue w-3.5 h-3.5" checked />
+              <span>Ignore Whitespace</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="chk-case" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue w-3.5 h-3.5" />
+              <span>Ignore Case</span>
+            </label>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Row 2: View Toggle + Export (full-width on mobile, right-aligned on desktop) -->
+        <div class="flex flex-wrap items-center gap-2 sm:justify-end">
+          <!-- View Tabs -->
+          <div class="flex rounded-full bg-surface p-1 border border-hairline shrink-0">
+            <button
+              type="button"
+              id="btn-view-split"
+              class="view-tab px-3 py-1 text-xs rounded-full font-medium transition-all cursor-pointer bg-primary text-canvas shadow-sm"
+            >
+              Side-by-Side
+            </button>
+            <button
+              type="button"
+              id="btn-view-inline"
+              class="view-tab px-3 py-1 text-xs rounded-full font-medium transition-all cursor-pointer text-slate hover:text-primary"
+            >
+              Inline
+            </button>
+          </div>
+
+          <!-- Export & Share dropdown -->
+          <div class="relative shrink-0" id="export-container">
+            <button
+              type="button"
+              id="btn-export-dropdown"
+              class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-sm whitespace-nowrap"
+            >
+              <span>Export & Share ▼</span>
+            </button>
+            <div id="export-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-canvas border border-hairline ring-1 ring-black/5 z-10">
+              <div class="py-1" role="menu">
+                <button id="btn-export-share" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">🔗 Copy Shareable Link</button>
+                <button id="btn-export-patch" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">💾 Download .diff Patch</button>
+                <button id="btn-export-md" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">📝 Copy as Markdown</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Input Panels -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="input-panels-container">
+        <!-- Original Side -->
+        <div class="flex flex-col gap-2 relative">
+          <div class="flex items-center justify-between text-xs font-semibold text-charcoal">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-brand-coral"></span>
+              Original Text (Left)
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="btn-sample-1" class="text-[10px] text-brand-blue hover:underline cursor-pointer">Load Sample</button>
+              <label class="text-[10px] text-brand-blue hover:underline cursor-pointer">
+                Upload File
+                <input type="file" id="file-original" class="hidden" accept=".txt,.md,.json,.csv,.xml,.js,.ts,.html,.css" />
+              </label>
+            </div>
+          </div>
+          <div class="relative drop-zone group" id="drop-zone-original">
+            <textarea
+              id="txt-original"
+              class="w-full min-h-[180px] md:min-h-[260px] p-3 text-xs bg-canvas text-ink border border-hairline-strong rounded-lg font-mono focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue leading-relaxed resize-y"
+              placeholder="Paste original content or drag file here..."
+            ></textarea>
+            <div class="pointer-events-none absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-lg flex items-center justify-center opacity-0 group-[.dragover]:opacity-100 transition-opacity">
+              <span class="text-xs font-bold text-brand-blue">Drop file here!</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Changed Side -->
+        <div class="flex flex-col gap-2 relative">
+          <div class="flex items-center justify-between text-xs font-semibold text-charcoal">
+            <span class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-success-accent"></span>
+              Modified Text (Right)
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="btn-sample-2" class="text-[10px] text-brand-blue hover:underline cursor-pointer">Load Sample</button>
+              <label class="text-[10px] text-brand-blue hover:underline cursor-pointer">
+                Upload File
+                <input type="file" id="file-changed" class="hidden" accept=".txt,.md,.json,.csv,.xml,.js,.ts,.html,.css" />
+              </label>
+            </div>
+          </div>
+          <div class="relative drop-zone group" id="drop-zone-changed">
+            <textarea
+              id="txt-changed"
+              class="w-full min-h-[180px] md:min-h-[260px] p-3 text-xs bg-canvas text-ink border border-hairline-strong rounded-lg font-mono focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue leading-relaxed resize-y"
+              placeholder="Paste changed content or drag file here..."
+            ></textarea>
+            <div class="pointer-events-none absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-lg flex items-center justify-center opacity-0 group-[.dragover]:opacity-100 transition-opacity">
+              <span class="text-xs font-bold text-brand-blue">Drop file here!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Summary -->
+      <div id="stats-panel" class="grid grid-cols-3 gap-3 p-3 bg-surface rounded-lg border border-hairline transition-all">
+        <div class="flex flex-col items-center justify-center py-2 text-center">
+          <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Deletions</span>
+          <span id="stat-removed" class="text-lg font-display font-semibold text-coral-dark mt-0.5">0</span>
+        </div>
+        <div class="flex flex-col items-center justify-center py-2 text-center border-x border-hairline">
+          <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Insertions</span>
+          <span id="stat-added" class="text-lg font-display font-semibold text-moss-dark mt-0.5">0</span>
+        </div>
+        <div class="flex flex-col items-center justify-center py-2 text-center">
+          <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Unchanged</span>
+          <span id="stat-unchanged" class="text-lg font-display font-semibold text-slate mt-0.5">0</span>
+        </div>
+      </div>
+
+      <!-- Diff Output Result View -->
+      <div class="flex flex-col gap-2" id="diff-output-section">
+        <div class="flex items-center justify-between text-xs font-semibold text-charcoal">
+          <span>Diff Output</span>
+          <span id="status-text" class="text-[10px] text-slate font-medium">Ready</span>
+        </div>
+        <div class="relative rounded-lg overflow-hidden border border-hairline-strong bg-surface-soft min-h-[160px] flex flex-col">
+          <!-- Loading Sweep Overlay -->
+          <div id="loading-overlay" class="hidden absolute inset-0 bg-canvas/60 z-10 flex items-center justify-center">
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-6 h-6 border-2 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+              <span class="text-[10px] font-semibold text-slate">Calculating diffs...</span>
+            </div>
+          </div>
+          
+          <!-- Code view wrapper -->
+          <div class="overflow-x-auto w-full flex-grow font-mono text-xs leading-relaxed select-text" id="diff-output-container">
+            <!-- Populated via script -->
+            <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
+              <span class="text-2xl">⚡</span>
+              <p class="font-medium text-charcoal">Waiting for changes...</p>
+              <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   </section>
+  <!-- How it Works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">Text Diff Checker Guide</h3>
+        <button
+          type="button"
+          id="close-how-it-works-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >✕</button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. How does it work?</h4>
+        <p>
+          This tool runs <strong>entirely inside your browser</strong> using a Web Worker sandbox. Your text is never sent to any server — all diffing is computed locally, making it safe for private code, configs, and sensitive documents.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Diff Granularity</h4>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+          <li><strong>Line</strong>: Highlights entire lines that were added, removed, or changed. Shows intra-line word highlights for modified lines.</li>
+          <li><strong>Word</strong>: Streams all tokens and highlights individual word-level insertions and deletions inline.</li>
+          <li><strong>Character</strong>: Highlights every individual character change for maximum precision.</li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">3. View Modes</h4>
+        <p>
+          Use <strong>Side-by-Side</strong> on desktop for a classic visual layout comparison. Switch to <strong>Inline</strong> mode on mobile or when you want a single unified diff stream with +/- markers.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Export & Share</h4>
+        <p>
+          Use the <strong>Export & Share</strong> menu to copy a shareable URL (encodes both texts into the browser hash), download a standard <code>.diff</code> patch file, or copy the diff as Markdown.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        id="how-it-works-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
 </Layout>
+
+<style is:global>
+  /* Custom Highlighting Styles */
+  .diff-line {
+    display: flex;
+    width: 100%;
+    min-width: max-content;
+  }
+  .diff-num {
+    width: 3.5rem;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 0.75rem;
+    color: var(--color-stone, #8e91a0);
+    user-select: none;
+    border-right: 1px solid var(--color-hairline, #e0e2e8);
+    font-size: 11px;
+    background-color: var(--color-surface, #f7f8fa);
+  }
+  .diff-content {
+    flex-grow: 1;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  
+  /* Added Lines */
+  .diff-line-added {
+    background-color: rgba(0, 180, 115, 0.08);
+  }
+  .diff-line-added .diff-num {
+    background-color: rgba(0, 180, 115, 0.12);
+    color: #137333;
+    border-right-color: rgba(0, 180, 115, 0.2);
+  }
+  .diff-word-added {
+    background-color: rgba(0, 180, 115, 0.22);
+    border-bottom: 1px dashed rgba(0, 180, 115, 0.5);
+    color: #0b5f2a;
+    font-weight: 500;
+  }
+
+  /* Removed Lines */
+  .diff-line-removed {
+    background-color: rgba(255, 153, 153, 0.08);
+  }
+  .diff-line-removed .diff-num {
+    background-color: rgba(255, 153, 153, 0.12);
+    color: #a82020;
+    border-right-color: rgba(255, 153, 153, 0.2);
+  }
+  .diff-word-removed {
+    background-color: rgba(255, 153, 153, 0.22);
+    text-decoration: line-through;
+    color: #7a1515;
+    font-weight: 500;
+  }
+
+  /* Empty placeholder lines to balance side-by-side */
+  .diff-line-empty {
+    background-color: var(--color-hairline-soft, #eef0f3);
+    opacity: 0.5;
+  }
+  .diff-line-empty .diff-num {
+    background-color: var(--color-hairline-soft, #eef0f3);
+    border-right-color: var(--color-hairline, #e0e2e8);
+  }
+
+  /* Sweep calculation effect */
+  @keyframes sweep {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  .animate-sweep::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, transparent, rgba(66, 98, 255, 0.1) 50%, transparent);
+    animation: sweep 1.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* Pulse for stats */
+  @keyframes stats-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); background-color: var(--color-surface-yellow, #fff8e0); }
+  }
+  .pulse-active {
+    animation: stats-pulse 0.4s ease-out;
+  }
+
+  /* Ensure auto-scroll target clears the sticky navbar */
+  #diff-output-section {
+    scroll-margin-top: 4.5rem;
+  }
+</style>
+
+<script is:inline>
+  // ----------------------------------------------------
+  // INLINE WEB WORKER DEFINITION (Myers' algorithm & tokenizer)
+  // ----------------------------------------------------
+  const workerBlobCode = `
+    self.onmessage = function(e) {
+      const { original, changed, granularity, ignoreWhitespace, ignoreCase } = e.data;
+
+      // Normalize comparison string based on settings
+      function normalize(str) {
+        let s = str || '';
+        if (ignoreWhitespace) {
+          s = s.trim().replace(/\\s+/g, ' ');
+        }
+        if (ignoreCase) {
+          s = s.toLowerCase();
+        }
+        return s;
+      }
+
+      function compare(a, b) {
+        return normalize(a) === normalize(b);
+      }
+
+      // Tokenizer
+      function tokenize(text, mode) {
+        if (mode === 'char') {
+          return Array.from(text);
+        } else if (mode === 'word') {
+          // Tokenize words, punctuation, spaces
+          return text.match(/[\\w\\d\\u00C0-\\u00FF]+|[^\\w\\d\\s\\u00C0-\\u00FF]+|\\s+/g) || [];
+        } else {
+          // Split by line (keeping newlines inside tokens is not needed since we work line-by-line)
+          return text.split(/\\r?\\n/);
+        }
+      }
+
+      // Fast Myers' Diff Algorithm with common prefix/suffix optimization
+      function getDiff(A, B) {
+        // Strip common prefix
+        let start = 0;
+        while (start < A.length && start < B.length && compare(A[start], B[start])) {
+          start++;
+        }
+
+        // Strip common suffix
+        let endA = A.length - 1;
+        let endB = B.length - 1;
+        while (endA >= start && endB >= start && compare(A[endA], B[endB])) {
+          endA--;
+          endB--;
+        }
+
+        const prefix = A.slice(0, start).map(val => ({ value: val, type: 'unchanged' }));
+        const suffix = A.slice(endA + 1).map(val => ({ value: val, type: 'unchanged' }));
+
+        const subA = A.slice(start, endA + 1);
+        const subB = B.slice(start, endB + 1);
+
+        const core = myersDiffSub(subA, subB);
+
+        return [...prefix, ...core, ...suffix];
+      }
+
+      function myersDiffSub(A, B) {
+        const N = A.length;
+        const M = B.length;
+
+        if (N === 0) return B.map(val => ({ value: val, type: 'added' }));
+        if (M === 0) return A.map(val => ({ value: val, type: 'removed' }));
+
+        const MAX = N + M;
+        // Cap MAX distance to prevent hangs on extremely divergent large inputs
+        const limitD = Math.min(MAX, 1200);
+
+        const V = new Int32Array(2 * limitD + 1);
+        const offset = limitD;
+        V[offset + 1] = 0;
+
+        const paths = [];
+        let found = false;
+        let x = 0;
+        let y = 0;
+
+        outer: for (let d = 0; d <= limitD; d++) {
+          paths.push(new Int32Array(V));
+
+          for (let k = -d; k <= d; k += 2) {
+            const idx = offset + k;
+            if (k === -d || (k !== d && V[idx - 1] < V[idx + 1])) {
+              x = V[idx + 1];
+            } else {
+              x = V[idx - 1] + 1;
+            }
+            y = x - k;
+
+            while (x < N && y < M && compare(A[x], B[y])) {
+              x++;
+              y++;
+            }
+
+            V[idx] = x;
+
+            if (x >= N && y >= M) {
+              found = true;
+              break outer;
+            }
+          }
+        }
+
+        if (!found) {
+          // Fallback if limit was reached: mark all A as deleted, all B as added
+          return [
+            ...A.map(val => ({ value: val, type: 'removed' })),
+            ...B.map(val => ({ value: val, type: 'added' }))
+          ];
+        }
+
+        // Reconstruct path
+        const result = [];
+        let currX = N;
+        let currY = M;
+
+        for (let d = paths.length - 1; d >= 0; d--) {
+          const V_d = paths[d];
+          const k = currX - currY;
+          const idx = offset + k;
+
+          let prevK;
+          if (k === -d || (k !== d && V_d[idx - 1] < V_d[idx + 1])) {
+            prevK = k + 1;
+          } else {
+            prevK = k - 1;
+          }
+
+          const prevX = V_d[offset + prevK];
+          const prevY = prevX - prevK;
+
+          while (currX > prevX && currY > prevY) {
+            result.push({ value: A[currX - 1], type: 'unchanged' });
+            currX--;
+            currY--;
+          }
+
+          if (currX > prevX) {
+            result.push({ value: A[currX - 1], type: 'removed' });
+            currX--;
+          } else if (currY > prevY) {
+            result.push({ value: B[currY - 1], type: 'added' });
+            currY--;
+          }
+        }
+
+        return result.reverse();
+      }
+
+      // Perform computation
+      const tokensA = tokenize(original, granularity);
+      const tokensB = tokenize(changed, granularity);
+      const rawDiff = getDiff(tokensA, tokensB);
+
+      // Perform intra-line character/word highlight alignment if granularity is 'line'
+      let finalDiff = rawDiff;
+      if (granularity === 'line') {
+        finalDiff = [];
+        let i = 0;
+        while (i < rawDiff.length) {
+          // Look for adjacent pairs of (removed, added) lines to show internal word diffs
+          if (i < rawDiff.length - 1 && rawDiff[i].type === 'removed' && rawDiff[i+1].type === 'added') {
+            const lineDel = rawDiff[i].value;
+            const lineAdd = rawDiff[i+1].value;
+
+            // Compute sub-diff inside this pair at the word level
+            const subTokensDel = tokenize(lineDel, 'word');
+            const subTokensAdd = tokenize(lineAdd, 'word');
+
+            // Strip prefix/suffix for speed
+            let sStart = 0;
+            while (sStart < subTokensDel.length && sStart < subTokensAdd.length && subTokensDel[sStart] === subTokensAdd[sStart]) {
+              sStart++;
+            }
+            let sEndDel = subTokensDel.length - 1;
+            let sEndAdd = subTokensAdd.length - 1;
+            while (sEndDel >= sStart && sEndAdd >= sStart && subTokensDel[sEndDel] === subTokensAdd[sEndAdd]) {
+              sEndDel--;
+              sEndAdd--;
+            }
+
+            const prefix = subTokensDel.slice(0, sStart).map(v => ({ value: v, type: 'unchanged' }));
+            const suffix = subTokensDel.slice(sEndDel + 1).map(v => ({ value: v, type: 'unchanged' }));
+            const delWords = subTokensDel.slice(sStart, sEndDel + 1);
+            const addWords = subTokensAdd.slice(sStart, sEndAdd + 1);
+            
+            const centerWords = myersDiffSub(delWords, addWords);
+            const wordDiff = [...prefix, ...centerWords, ...suffix];
+
+            finalDiff.push({
+              type: 'removed_with_sub',
+              value: lineDel,
+              subDiff: wordDiff
+            });
+            finalDiff.push({
+              type: 'added_with_sub',
+              value: lineAdd,
+              subDiff: wordDiff
+            });
+
+            i += 2;
+          } else {
+            finalDiff.push(rawDiff[i]);
+            i++;
+          }
+        }
+      }
+
+      self.postMessage({ finalDiff });
+    };
+  `;
+
+  // Instantiate worker
+  let worker = null;
+  function initWorker() {
+    try {
+      const blob = new Blob([workerBlobCode], { type: 'application/javascript' });
+      worker = new Worker(URL.createObjectURL(blob));
+    } catch (err) {
+      console.error('Failed to initialize Web Worker:', err);
+    }
+  }
+  initWorker();
+
+  // ----------------------------------------------------
+  // SAMPLES & INITIAL STATE
+  // ----------------------------------------------------
+  const SAMPLES = {
+    original: `function computeMetrics(data) {
+  // Compute sum
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += data[i];
+  }
+
+  const average = sum / data.length;
+  console.log("Calculated avg: " + average);
+  return { sum, average };
+}`,
+    changed: `function computeMetrics(data) {
+  if (!data || data.length === 0) {
+    return { sum: 0, average: 0 };
+  }
+
+  // Calculate sum using reduce
+  const sum = data.reduce((acc, val) => acc + val, 0);
+
+  const average = sum / data.length;
+  console.warn("Calculated average: " + average);
+  return { sum, average, count: data.length };
+}`
+  };
+
+  // State elements
+  const originalTextarea = document.getElementById('txt-original');
+  const changedTextarea = document.getElementById('txt-changed');
+  const ignoreWhitespaceCheckbox = document.getElementById('chk-whitespace');
+  const ignoreCaseCheckbox = document.getElementById('chk-case');
+  const diffOutput = document.getElementById('diff-output-container');
+  const statusText = document.getElementById('status-text');
+  const loadingOverlay = document.getElementById('loading-overlay');
+  
+  // Stats elements
+  const statRemoved = document.getElementById('stat-removed');
+  const statAdded = document.getElementById('stat-added');
+  const statUnchanged = document.getElementById('stat-unchanged');
+  const statsPanel = document.getElementById('stats-panel');
+
+  // Control tabs & buttons
+  const granularityTabs = document.querySelectorAll('.granularity-tab');
+  const viewSplitBtn = document.getElementById('btn-view-split');
+  const viewInlineBtn = document.getElementById('btn-view-inline');
+  const resetBtn = document.getElementById('btn-reset');
+
+  // Files
+  const fileOriginal = document.getElementById('file-original');
+  const fileChanged = document.getElementById('file-changed');
+
+  // Export
+  const btnExportDropdown = document.getElementById('btn-export-dropdown');
+  const exportDropdown = document.getElementById('export-dropdown');
+  const btnExportShare = document.getElementById('btn-export-share');
+  const btnExportPatch = document.getElementById('btn-export-patch');
+  const btnExportMd = document.getElementById('btn-export-md');
+
+  // Current UI Settings State
+  let currentGranularity = 'line'; // 'line' | 'word' | 'char'
+  let currentView = 'split'; // 'split' | 'inline'
+  let isMobile = window.innerWidth < 768;
+
+  // Auto-switch view to inline on mobile initially
+  if (isMobile) {
+    currentView = 'inline';
+    updateViewTabStyles();
+  }
+
+  // ----------------------------------------------------
+  // EVENT LISTENERS
+  // ----------------------------------------------------
+
+  // Real-time calculation on input change
+  originalTextarea.addEventListener('input', triggerDiff);
+  changedTextarea.addEventListener('input', triggerDiff);
+  ignoreWhitespaceCheckbox.addEventListener('change', triggerDiff);
+  ignoreCaseCheckbox.addEventListener('change', triggerDiff);
+
+  // Granularity change
+  granularityTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      granularityTabs.forEach(t => {
+        t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+        t.classList.add('text-slate', 'hover:text-primary');
+      });
+      tab.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+      tab.classList.remove('text-slate', 'hover:text-primary');
+      currentGranularity = tab.getAttribute('data-granularity');
+      triggerDiff();
+    });
+  });
+
+  // View split / inline toggle
+  viewSplitBtn.addEventListener('click', () => {
+    currentView = 'split';
+    updateViewTabStyles();
+    triggerDiff();
+  });
+
+  viewInlineBtn.addEventListener('click', () => {
+    currentView = 'inline';
+    updateViewTabStyles();
+    triggerDiff();
+  });
+
+  function updateViewTabStyles() {
+    if (currentView === 'split') {
+      viewSplitBtn.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+      viewSplitBtn.classList.remove('text-slate', 'hover:text-primary');
+      viewInlineBtn.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+      viewInlineBtn.classList.add('text-slate', 'hover:text-primary');
+    } else {
+      viewInlineBtn.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+      viewInlineBtn.classList.remove('text-slate', 'hover:text-primary');
+      viewSplitBtn.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+      viewSplitBtn.classList.add('text-slate', 'hover:text-primary');
+    }
+  }
+
+  // Clear workspace
+  resetBtn.addEventListener('click', () => {
+    originalTextarea.value = '';
+    changedTextarea.value = '';
+    triggerDiff();
+  });
+
+  // Load sample texts
+  document.getElementById('btn-sample-1').addEventListener('click', () => {
+    originalTextarea.value = SAMPLES.original;
+    triggerDiff();
+  });
+  document.getElementById('btn-sample-2').addEventListener('click', () => {
+    changedTextarea.value = SAMPLES.changed;
+    triggerDiff();
+  });
+
+  // File uploading readers
+  fileOriginal.addEventListener('change', (e) => handleFileUpload(e, originalTextarea));
+  fileChanged.addEventListener('change', (e) => handleFileUpload(e, changedTextarea));
+
+  function handleFileUpload(e, textarea) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      textarea.value = evt.target.result;
+      triggerDiff();
+    };
+    reader.readAsText(file);
+  }
+
+  // Drag and drop events
+  setupDragAndDrop('drop-zone-original', originalTextarea);
+  setupDragAndDrop('drop-zone-changed', changedTextarea);
+
+  function setupDragAndDrop(zoneId, textarea) {
+    const zone = document.getElementById(zoneId);
+    zone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      zone.classList.add('dragover');
+    });
+    zone.addEventListener('dragleave', () => {
+      zone.classList.remove('dragover');
+    });
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      zone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          textarea.value = evt.target.result;
+          triggerDiff();
+        };
+        reader.readAsText(file);
+      }
+    });
+  }
+
+  // Export dropdown toggling
+  btnExportDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    exportDropdown.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', () => {
+    exportDropdown.classList.add('hidden');
+  });
+
+  // Share URL logic
+  btnExportShare.addEventListener('click', () => {
+    const orig = encodeURIComponent(originalTextarea.value);
+    const chg = encodeURIComponent(changedTextarea.value);
+    const hash = `diff-${currentGranularity}-${currentView}-${orig}-${chg}`;
+    
+    // Set url hash
+    window.location.hash = hash;
+    navigator.clipboard.writeText(window.location.href);
+    
+    // Feedback
+    statusText.textContent = "Share link copied to clipboard!";
+    setTimeout(() => statusText.textContent = "Calculated", 2000);
+  });
+
+  // .diff patch file creation
+  btnExportPatch.addEventListener('click', () => {
+    const orig = originalTextarea.value;
+    const chg = changedTextarea.value;
+    const patch = createDiffPatch("Original", "Changed", orig, chg);
+
+    const blob = new Blob([patch], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'compare.diff';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // Copy Markdown format
+  btnExportMd.addEventListener('click', () => {
+    const orig = originalTextarea.value;
+    const chg = changedTextarea.value;
+    const md = `### Text Diff Comparison\n\n**Deletions**\n\`\`\`diff\n- ${orig.split('\n').join('\n- ')}\n\`\`\`\n\n**Insertions**\n\`\`\`diff\n+ ${chg.split('\n').join('\n+ ')}\n\`\`\``;
+    navigator.clipboard.writeText(md);
+    
+    statusText.textContent = "Markdown copied to clipboard!";
+    setTimeout(() => statusText.textContent = "Calculated", 2000);
+  });
+
+  // Helper: Generates a standard unified diff header and diff structure
+  function createDiffPatch(fileNameA, fileNameB, contentA, contentB) {
+    const linesA = contentA.split(/\r?\n/);
+    const linesB = contentB.split(/\r?\n/);
+    let patch = `--- ${fileNameA}\n+++ ${fileNameB}\n@@ -1,${linesA.length} +1,${linesB.length} @@\n`;
+
+    // Simple line differences for patch export
+    let i = 0, j = 0;
+    while (i < linesA.length || j < linesB.length) {
+      if (i < linesA.length && j < linesB.length && linesA[i] === linesB[j]) {
+        patch += `  ${linesA[i]}\n`;
+        i++;
+        j++;
+      } else if (i < linesA.length && (j >= linesB.length || !linesB.includes(linesA[i]))) {
+        patch += `-${linesA[i]}\n`;
+        i++;
+      } else if (j < linesB.length) {
+        patch += `+${linesB[j]}\n`;
+        j++;
+      }
+    }
+    return patch;
+  }
+
+  // ----------------------------------------------------
+  // COMPUTING & RENDERING DIFF
+  // ----------------------------------------------------
+  let debounceTimeout = null;
+
+  function triggerDiff() {
+    if (debounceTimeout) clearTimeout(debounceTimeout);
+    
+    // Show visual calculation indicator
+    loadingOverlay.classList.remove('hidden');
+    diffOutput.classList.add('animate-sweep');
+    statusText.textContent = "Typing...";
+
+    debounceTimeout = setTimeout(() => {
+      const originalVal = originalTextarea.value;
+      const changedVal = changedTextarea.value;
+
+      // Save input texts & settings locally
+      localStorage.setItem('diff-checker-original', originalVal);
+      localStorage.setItem('diff-checker-changed', changedVal);
+      localStorage.setItem('diff-checker-granularity', currentGranularity);
+      localStorage.setItem('diff-checker-ignore-whitespace', ignoreWhitespaceCheckbox.checked);
+      localStorage.setItem('diff-checker-ignore-case', ignoreCaseCheckbox.checked);
+
+      if (!originalVal && !changedVal) {
+        renderPlaceholder();
+        loadingOverlay.classList.add('hidden');
+        diffOutput.classList.remove('animate-sweep');
+        updateStats(0, 0, 0);
+        statusText.textContent = "Empty";
+        return;
+      }
+
+      if (!worker) {
+        initWorker();
+      }
+
+      // Post params to Web Worker
+      worker.postMessage({
+        original: originalVal,
+        changed: changedVal,
+        granularity: currentGranularity,
+        ignoreWhitespace: ignoreWhitespaceCheckbox.checked,
+        ignoreCase: ignoreCaseCheckbox.checked
+      });
+
+      worker.onmessage = function(e) {
+        const { finalDiff } = e.data;
+        renderDiff(finalDiff);
+        loadingOverlay.classList.add('hidden');
+        diffOutput.classList.remove('animate-sweep');
+        statusText.textContent = "Calculated";
+      };
+    }, 150); // Small debounce for smooth typing experience
+  }
+
+  // Render placeholder message
+  function renderPlaceholder() {
+    diffOutput.innerHTML = `
+      <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
+        <span class="text-2xl">⚡</span>
+        <p class="font-medium text-charcoal">Waiting for changes...</p>
+        <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
+      </div>
+    `;
+  }
+
+  // Statistics updating
+  function updateStats(addedCount, removedCount, unchangedCount) {
+    statRemoved.textContent = removedCount;
+    statAdded.textContent = addedCount;
+    statUnchanged.textContent = unchangedCount;
+
+    // Trigger update pulse animation
+    statsPanel.classList.remove('pulse-active');
+    void statsPanel.offsetWidth; // Trigger reflow
+    statsPanel.classList.add('pulse-active');
+  }
+
+  // Render calculated diffs
+  function renderDiff(diffList) {
+    diffOutput.innerHTML = '';
+    
+    let addedCount = 0;
+    let removedCount = 0;
+    let unchangedCount = 0;
+
+    // Collect stats depending on format
+    diffList.forEach(item => {
+      if (item.type === 'added' || item.type === 'added_with_sub') addedCount++;
+      else if (item.type === 'removed' || item.type === 'removed_with_sub') removedCount++;
+      else if (item.type === 'unchanged') unchangedCount++;
+    });
+
+    updateStats(addedCount, removedCount, unchangedCount);
+
+    if (currentView === 'inline' || currentGranularity !== 'line') {
+      // Inline Flow or Non-Line-Level Flow (Render single stream)
+      const listContainer = document.createElement('div');
+      listContainer.className = 'py-2 flex flex-col w-full';
+
+      let lineNum = 1;
+      
+      if (currentGranularity === 'line') {
+        diffList.forEach(item => {
+          const row = document.createElement('div');
+          
+          if (item.type === 'removed_with_sub') {
+            row.className = 'diff-line diff-line-removed';
+            row.innerHTML = `<span class="diff-num">-</span><span class="diff-content">${renderIntraLineDiff(item.subDiff, 'removed')}</span>`;
+          } else if (item.type === 'added_with_sub') {
+            row.className = 'diff-line diff-line-added';
+            row.innerHTML = `<span class="diff-num">+</span><span class="diff-content">${renderIntraLineDiff(item.subDiff, 'added')}</span>`;
+          } else if (item.type === 'removed') {
+            row.className = 'diff-line diff-line-removed';
+            row.innerHTML = `<span class="diff-num">-</span><span class="diff-content">${escapeHTML(item.value)}</span>`;
+          } else if (item.type === 'added') {
+            row.className = 'diff-line diff-line-added';
+            row.innerHTML = `<span class="diff-num">+</span><span class="diff-content">${escapeHTML(item.value)}</span>`;
+          } else {
+            row.className = 'diff-line';
+            row.innerHTML = `<span class="diff-num">${lineNum++}</span><span class="diff-content">${escapeHTML(item.value)}</span>`;
+          }
+          listContainer.appendChild(row);
+        });
+      } else {
+        // Word or Character inline stream rendering
+        const contentArea = document.createElement('div');
+        contentArea.className = 'p-4 whitespace-pre-wrap word-break';
+        
+        diffList.forEach(item => {
+          const span = document.createElement('span');
+          if (item.type === 'added') {
+            span.className = 'diff-word-added px-0.5 rounded-sm';
+            span.textContent = item.value;
+          } else if (item.type === 'removed') {
+            span.className = 'diff-word-removed px-0.5 rounded-sm';
+            span.textContent = item.value;
+          } else {
+            span.className = 'text-slate';
+            span.textContent = item.value;
+          }
+          contentArea.appendChild(span);
+        });
+        listContainer.appendChild(contentArea);
+      }
+
+      diffOutput.appendChild(listContainer);
+    } else {
+      // Side-by-Side (Split) Line Comparison layout
+      const grid = document.createElement('div');
+      grid.className = 'grid grid-cols-2 divide-x divide-hairline-strong w-full min-w-[700px]';
+
+      const leftSide = document.createElement('div');
+      leftSide.className = 'flex flex-col';
+      const rightSide = document.createElement('div');
+      rightSide.className = 'flex flex-col';
+
+      let leftLineNum = 1;
+      let rightLineNum = 1;
+
+      // Myers aligned display
+      let i = 0;
+      while (i < diffList.length) {
+        const item = diffList[i];
+
+        if (item.type === 'removed_with_sub') {
+          // Look ahead to check if the next is an added line
+          const nextItem = diffList[i + 1];
+          if (nextItem && nextItem.type === 'added_with_sub') {
+            const leftRow = createDiffRow('-', renderIntraLineDiff(item.subDiff, 'removed'), 'diff-line-removed');
+            const rightRow = createDiffRow('+', renderIntraLineDiff(nextItem.subDiff, 'added'), 'diff-line-added');
+            leftSide.appendChild(leftRow);
+            rightSide.appendChild(rightRow);
+            i += 2;
+          } else {
+            const leftRow = createDiffRow('-', escapeHTML(item.value), 'diff-line-removed');
+            const rightRow = createEmptyRow();
+            leftSide.appendChild(leftRow);
+            rightSide.appendChild(rightRow);
+            i++;
+          }
+        } else if (item.type === 'removed') {
+          const leftRow = createDiffRow('-', escapeHTML(item.value), 'diff-line-removed');
+          const rightRow = createEmptyRow();
+          leftSide.appendChild(leftRow);
+          rightSide.appendChild(rightRow);
+          i++;
+        } else if (item.type === 'added_with_sub') {
+          const leftRow = createEmptyRow();
+          const rightRow = createDiffRow('+', renderIntraLineDiff(item.subDiff, 'added'), 'diff-line-added');
+          leftSide.appendChild(leftRow);
+          rightSide.appendChild(rightRow);
+          i++;
+        } else if (item.type === 'added') {
+          const leftRow = createEmptyRow();
+          const rightRow = createDiffRow('+', escapeHTML(item.value), 'diff-line-added');
+          leftSide.appendChild(leftRow);
+          rightSide.appendChild(rightRow);
+          i++;
+        } else {
+          // Unchanged
+          const leftRow = createDiffRow(leftLineNum++, escapeHTML(item.value));
+          const rightRow = createDiffRow(rightLineNum++, escapeHTML(item.value));
+          leftSide.appendChild(leftRow);
+          rightSide.appendChild(rightRow);
+          i++;
+        }
+      }
+
+      grid.appendChild(leftSide);
+      grid.appendChild(rightSide);
+      diffOutput.appendChild(grid);
+    }
+  }
+
+  // Create an aligned side-by-side cell row
+  function createDiffRow(lineLabel, innerHtml, className = '') {
+    const row = document.createElement('div');
+    row.className = `diff-line ${className}`;
+    row.innerHTML = `<span class="diff-num">${lineLabel}</span><span class="diff-content">${innerHtml}</span>`;
+    return row;
+  }
+
+  // Create empty balance block
+  function createEmptyRow() {
+    const row = document.createElement('div');
+    row.className = 'diff-line diff-line-empty';
+    row.innerHTML = `<span class="diff-num">&nbsp;</span><span class="diff-content">&nbsp;</span>`;
+    return row;
+  }
+
+  // Highlight word modifications within a line
+  function renderIntraLineDiff(wordDiffList, type) {
+    let result = '';
+    wordDiffList.forEach(w => {
+      if (w.type === 'unchanged') {
+        result += escapeHTML(w.value);
+      } else if (w.type === type) {
+        const spanClass = type === 'added' ? 'diff-word-added' : 'diff-word-removed';
+        result += `<span class="${spanClass}">${escapeHTML(w.value)}</span>`;
+      }
+    });
+    return result;
+  }
+
+  // Escape HTML tags to prevent custom injected markup issues
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // ----------------------------------------------------
+  // RESTORE SAVED STATE (LOCAL STORAGE / HASH PARSER)
+  // ----------------------------------------------------
+  function restoreState() {
+    // Check URL Hash first (shareable links)
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#diff-')) {
+      try {
+        const parts = hash.split('-');
+        if (parts.length >= 5) {
+          const granularity = parts[1];
+          const view = parts[2];
+          
+          // Reconstruct the rest as encoded values
+          // Hash schema: #diff-[granularity]-[view]-[orig]-[chg]
+          const origIdx = hash.indexOf(`-${view}-`) + view.length + 2;
+          const remaining = hash.substring(origIdx);
+          const splitPoint = remaining.indexOf('-%25'); // search separator
+          
+          let origEncoded = remaining;
+          let chgEncoded = '';
+          
+          // We can parse splitting by URL decoding
+          const decodedRemaining = decodeURIComponent(remaining);
+          
+          // Safer fallback split
+          const partsDecoded = decodedRemaining.split('-');
+          if (partsDecoded.length >= 2) {
+            const halfLength = Math.floor(partsDecoded.length / 2);
+            originalTextarea.value = partsDecoded.slice(0, halfLength).join('-');
+            changedTextarea.value = partsDecoded.slice(halfLength).join('-');
+          } else {
+            originalTextarea.value = decodeURIComponent(parts[3] || '');
+            changedTextarea.value = decodeURIComponent(parts[4] || '');
+          }
+
+          currentGranularity = granularity;
+          currentView = view;
+          
+          // Style active tab
+          granularityTabs.forEach(t => {
+            if (t.getAttribute('data-granularity') === currentGranularity) {
+              t.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+              t.classList.remove('text-slate', 'hover:text-primary');
+            } else {
+              t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+              t.classList.add('text-slate', 'hover:text-primary');
+            }
+          });
+          updateViewTabStyles();
+          triggerDiff();
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to parse shareable link URL hash parameters", err);
+      }
+    }
+
+    // Fallback: Restore from Local Storage
+    const savedOriginal = localStorage.getItem('diff-checker-original');
+    const savedChanged = localStorage.getItem('diff-checker-changed');
+    const savedGranularity = localStorage.getItem('diff-checker-granularity');
+    const savedIgnoreWhitespace = localStorage.getItem('diff-checker-ignore-whitespace');
+    const savedIgnoreCase = localStorage.getItem('diff-checker-ignore-case');
+
+    if (savedOriginal !== null) originalTextarea.value = savedOriginal;
+    if (savedChanged !== null) changedTextarea.value = savedChanged;
+    if (savedGranularity !== null) {
+      currentGranularity = savedGranularity;
+      granularityTabs.forEach(t => {
+        if (t.getAttribute('data-granularity') === currentGranularity) {
+          t.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+          t.classList.remove('text-slate', 'hover:text-primary');
+        } else {
+          t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+          t.classList.add('text-slate', 'hover:text-primary');
+        }
+      });
+    }
+    if (savedIgnoreWhitespace !== null) ignoreWhitespaceCheckbox.checked = (savedIgnoreWhitespace === 'true');
+    if (savedIgnoreCase !== null) ignoreCaseCheckbox.checked = (savedIgnoreCase === 'true');
+
+    // Default sample texts if completely empty
+    if (!originalTextarea.value && !changedTextarea.value) {
+      originalTextarea.value = SAMPLES.original;
+      changedTextarea.value = SAMPLES.changed;
+    }
+
+    triggerDiff();
+  }
+
+  // ----------------------------------------------------
+  // HOW IT WORKS MODAL
+  // ----------------------------------------------------
+  const howItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeHowItWorksBtn = document.getElementById('close-how-it-works-btn');
+  const howItWorksOkBtn = document.getElementById('how-it-works-ok-btn');
+
+  howItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeHowItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
+    }
+  });
+
+  // ----------------------------------------------------
+  // AUTO-SCROLL TO DIFF OUTPUT
+  // Scrolls to the diff output section once both inputs have content,
+  // with scroll-margin-top offset to prevent content hiding behind navbar.
+  // ----------------------------------------------------
+  let hasAutoScrolled = false;
+
+  function maybeAutoScroll() {
+    const hasOriginal = originalTextarea.value.trim().length > 0;
+    const hasChanged = changedTextarea.value.trim().length > 0;
+
+    if (hasOriginal && hasChanged && !hasAutoScrolled) {
+      hasAutoScrolled = true;
+      // Use a small delay so the diff output has rendered first
+      setTimeout(() => {
+        const target = document.getElementById('diff-output-section');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 200);
+    }
+
+    // Reset the flag if both inputs are cleared so it can scroll again next time
+    if (!hasOriginal && !hasChanged) {
+      hasAutoScrolled = false;
+    }
+  }
+
+  originalTextarea.addEventListener('input', maybeAutoScroll);
+  changedTextarea.addEventListener('input', maybeAutoScroll);
+
+  // Start state restoration on page load
+  restoreState();
+</script>
