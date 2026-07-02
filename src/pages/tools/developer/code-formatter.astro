@@ -4,87 +4,1303 @@ import Layout from '../../../layouts/Layout.astro';
 // Tool metadata
 const name = "Code Formatter";
 const category = "developer";
-const tier = "Developer & Text Utilities";
-const description = "Beautify, format, and structure code inputs for JSON, HTML, CSS, or Javascript syntax.";
+const tier = "Developer Tools";
+
+// SEO metadata
+const pageTitle = "Code Formatter - Prettify & Beautify JS, HTML, CSS, JSON";
+const description = "Free online multi-language code formatter. Beautify and format JavaScript, JSON, HTML, and CSS client-side using Prettier standalone parses with line-by-line syntax error tracing.";
+const canonicalUrl = "https://boardtools.app/tools/developer/code-formatter";
+const keywords = "code formatter, js beautifier, html formatter, css prettifier, json formatter, format javascript, format html, format css, client side formatter, prettier online";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Code Formatter & Beautifier",
+      "alternateName": "Client-Side Code Beautifier",
+      "url": "https://boardtools.app/tools/developer/code-formatter",
+      "description": "Format and beautify JS, HTML, CSS, and JSON inside your browser. Safe, private execution using Prettier in a background Web Worker.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Beautify JavaScript, HTML, CSS, and JSON",
+        "Configurable indentation sizes and quotes styles",
+        "Web Worker execution to prevent UI freezing",
+        "Syntax highlighting preview using Prism.js",
+        "Detailed parsing error contexts with line highlight",
+        "Snippet history log and shareable parameters URLs",
+        "100% offline-ready local execution"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Prism.js & Theme CDN assets -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" is:inline></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" is:inline></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js" is:inline></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" is:inline></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js" is:inline></script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <!-- Keyboard shortcuts reference -->
+          <button
+            type="button"
+            id="shortcuts-btn"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="View keyboard shortcuts"
+          >
+            <span>⌨ Keyboard Shortcuts</span>
+          </button>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="How code formatter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Mobile Toggles (Shown on mobile/tablet only) -->
+    <div class="flex lg:hidden rounded-full bg-surface p-0.5 border border-hairline w-full print:hidden">
+      <button
+        type="button"
+        id="tab-input-btn"
+        class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+      >
+        Input Editor
+      </button>
+      <button
+        type="button"
+        id="tab-output-btn"
+        class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+      >
+        Formatted Output
+      </button>
+    </div>
+
+    <!-- Workspace Board (Miro Rounded Board style) -->
+    <div class="card-base p-3 sm:p-5 flex flex-col gap-3 sm:gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      
+      <!-- Top Settings & Language Config Panel -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-hairline-soft items-end">
+        
+        <!-- Language Select & Auto-detect indication -->
+        <div class="md:col-span-4 flex flex-col gap-1.5">
+          <label for="language-select" class="text-[10px] font-bold text-slate uppercase tracking-wider">Format Syntax</label>
+          <div class="flex gap-2">
+            <select id="language-select" class="text-input py-0.5 px-3 text-xs h-9 flex-grow cursor-pointer border border-hairline-strong bg-canvas rounded-md focus:outline-none focus:border-brand-blue">
+              <option value="auto">⚡ Auto-detect Syntax</option>
+              <option value="javascript">JavaScript (JS)</option>
+              <option value="json">JSON</option>
+              <option value="html">HTML Markup</option>
+              <option value="css">CSS stylesheet</option>
+            </select>
+            <span id="detected-badge" class="hidden items-center justify-center bg-surface-yellow border border-yellow-light/80 text-yellow-dark text-[10px] font-bold px-2 rounded-md uppercase shrink-0">
+              Auto: JSON
+            </span>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Format Rules Config Box -->
+        <div class="md:col-span-8 flex flex-wrap items-center gap-4 justify-start md:justify-end">
+          
+          <div class="flex flex-col gap-1">
+            <label for="indent-select" class="text-[10px] font-bold text-slate uppercase">Spacing</label>
+            <select id="indent-select" class="text-input py-0.5 px-2 text-xs h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+              <option value="2" selected>2 Spaces</option>
+              <option value="4">4 Spaces</option>
+              <option value="tabs">Tabs</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="quote-select" class="text-[10px] font-bold text-slate uppercase">Quotes</label>
+            <select id="quote-select" class="text-input py-0.5 px-2 text-xs h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+              <option value="double" selected>Double ("")</option>
+              <option value="single">Single ('')</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="semi-select" class="text-[10px] font-bold text-slate uppercase">Semicolons</label>
+            <select id="semi-select" class="text-input py-0.5 px-2 text-xs h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+              <option value="true" selected>Always</option>
+              <option value="false">Never</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label class="text-[10px] font-bold text-slate uppercase">Auto Format</label>
+            <label class="relative inline-flex items-center h-9 cursor-pointer select-none">
+              <input type="checkbox" id="auto-format-check" class="sr-only peer" checked />
+              <div class="w-10 h-5 bg-hairline peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blue"></div>
+              <span class="ml-2 text-xs text-slate font-medium peer-checked:text-primary">Live</span>
+            </label>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Main Editor Panes -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch relative">
+        
+        <!-- Left Pane: Input Editor -->
+        <div id="pane-input" class="flex flex-col gap-2.5 print:hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-charcoal flex items-center gap-1.5 uppercase tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+              Source Code Input
+            </span>
+            <div class="flex gap-2">
+              <button id="btn-load-js" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">JS Sample</button>
+              <span class="text-stone">|</span>
+              <button id="btn-load-html" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">HTML Sample</button>
+              <span class="text-stone">|</span>
+              <button id="btn-load-css" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">CSS Sample</button>
+            </div>
+          </div>
+
+          <!-- Editor Wrapper -->
+          <div 
+            id="drop-zone" 
+            class="relative flex-grow flex flex-col min-h-[250px] sm:min-h-[350px] lg:min-h-[460px] border border-hairline-strong rounded-xl bg-surface-soft transition-all focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/10 overflow-hidden"
+          >
+            <!-- Drop message overlay -->
+            <div id="drop-overlay" class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200 z-10">
+              <span class="text-2xl">📥</span>
+              <span class="text-xs font-bold text-brand-blue">Drop code file here</span>
+            </div>
+
+            <!-- Line Number Counter & Input Area -->
+            <div class="flex flex-grow overflow-auto h-full max-h-[500px]">
+              <div id="input-line-numbers" class="w-10 select-none text-right pr-2 py-3 text-[11px] font-mono text-stone border-r border-hairline-soft bg-surface/50 leading-5">
+                1
+              </div>
+              <textarea
+                id="code-input"
+                class="flex-grow p-3 font-mono text-[12px] bg-transparent text-primary resize-none outline-none leading-5 min-h-[300px] overflow-y-hidden"
+                placeholder="Paste code snippet here, or drag & drop a file (HTML, CSS, JS, JSON)..."
+                aria-label="Source Code Input"
+                spellcheck="false"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] font-semibold text-slate">
+            <label class="inline-flex items-center gap-1.5 hover:text-primary cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12"></path>
+              </svg>
+              <span>Upload Local File</span>
+              <input type="file" id="file-uploader" class="hidden" accept=".js,.jsx,.ts,.tsx,.json,.html,.css" />
+            </label>
+            <span id="char-counter" class="font-mono text-stone">0 chars | 0 lines</span>
+          </div>
+        </div>
+
+        <!-- Right Pane: Formatted Output -->
+        <div id="pane-output" class="hidden lg:flex flex-col gap-2.5 min-h-[250px] sm:min-h-[350px] lg:min-h-[460px]">
+          
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-[11px] font-bold text-charcoal uppercase tracking-wider">Beautified Result</span>
+            
+            <!-- Actions panel -->
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                id="btn-copy"
+                class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+                title="Copy code to clipboard"
+              >
+                Copy
+              </button>
+              <button
+                type="button"
+                id="btn-download"
+                class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+                title="Download formatted code file"
+              >
+                Download
+              </button>
+              <button
+                type="button"
+                id="btn-share"
+                class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+                title="Share link encoding parameters"
+              >
+                Share Snippet
+              </button>
+            </div>
+          </div>
+
+          <!-- Highlight Output View -->
+          <div class="relative flex-grow flex flex-col border border-hairline rounded-xl bg-surface overflow-hidden min-h-[200px] sm:min-h-[300px] lg:min-h-[460px]">
+            <!-- Toast notification inside codebox -->
+            <div id="toast-message" class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1.5 px-3 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+              Copied!
+            </div>
+
+            <!-- Prettier Loading Indicator overlay -->
+            <div id="loading-overlay" class="hidden absolute inset-0 bg-surface/80 backdrop-blur-xs flex-col items-center justify-center gap-2 z-10 transition-opacity duration-300">
+              <div class="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+              <span class="text-xs font-bold text-slate">Initializing formatting engine...</span>
+            </div>
+
+            <!-- Formatted code rendering pre-container -->
+            <pre class="m-0 p-4 overflow-auto h-full max-h-[500px] leading-5 w-full select-all outline-none bg-transparent"><code id="output-code" class="font-mono text-[12px] block"></code></pre>
+          </div>
+
+          <!-- Action status bar -->
+          <div class="flex items-center justify-end">
+            <button
+              type="button"
+              id="btn-format"
+              class="lg:flex button-primary text-xs py-2 px-6 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold gap-2 items-center"
+            >
+              <span>Format Code</span>
+              <kbd class="hidden sm:inline px-1 py-0.2 bg-canvas/20 rounded font-mono text-[9px]">Ctrl+Enter</kbd>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Real-Time status panel -->
+      <div class="border-t border-hairline-soft pt-4 mt-2 flex flex-col gap-3">
+        <!-- Execution summary info banner -->
+        <div id="status-banner" class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface-yellow border-yellow-light/80 text-yellow-dark">
+          <span id="status-msg" class="font-bold flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span>
+            Ready. Waiting for syntax payload...
+          </span>
+          <span id="status-perf" class="font-mono text-[10px] font-semibold"></span>
+        </div>
+
+        <!-- Precise syntax failure trace overlay -->
+        <div id="error-trace-panel" class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake">
+          <div class="font-bold flex items-center gap-1.5">
+            <span>⚠️ Format Parse Exception:</span>
+            <span id="error-brief" class="font-semibold text-primary"></span>
+          </div>
+          <pre id="error-context" class="font-mono text-[11px] p-2 bg-canvas/60 rounded border border-brand-red-dark/30 whitespace-pre overflow-x-auto text-primary"></pre>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- History Panel -->
+    <div class="card-base flex flex-col gap-3 p-4 sm:p-5 mt-2">
+      <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        Recent Snippets History
+      </h3>
+      <div id="history-container" class="flex flex-wrap gap-2">
+        <span class="text-[11px] text-stone">Snippets formatted on this device will be stored in your browser.</span>
+      </div>
+    </div>
+
+    <!-- Security statement footer -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Sandbox, zero server tracking.
+      </span>
+      <span>v2.1.0</span>
+    </div>
+  </section>
+
+  <!-- Keyboard Shortcuts Modal Dialog (Hidden by default) -->
+  <div
+    id="shortcuts-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm transition-opacity duration-300"
+  >
+    <div
+      class="card-base max-w-md w-full p-5 flex flex-col gap-4 relative animate-fade-in-up"
+    >
+      <div
+        class="flex items-center justify-between border-b border-hairline pb-2"
+      >
+        <h3
+          class="font-display font-semibold text-sm sm:text-base text-primary"
+        >
+          Keyboard Shortcuts Guide
+        </h3>
+        <button
+          id="close-shortcuts-btn"
+          class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
+          >×</button
+        >
+      </div>
+      <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Format / Prettify</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >Ctrl + Enter</kbd
+          >
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Clear Workspace</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >Ctrl + Esc</kbd
+          >
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Code Formatter Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is Code Formatting?
+        </h4>
+        <p>
+          A code formatter structures messy or minified source code with consistent indentation, line breaks, and styling rules (e.g. quotes, semicolons) to improve readability and enforce style standards.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Multi-Language Support</strong>: Formats JavaScript, HTML, CSS, and JSON in your browser.
+            </li>
+            <li>
+              <strong>Syntax Customization</strong>: Choose indent sizes (2, 4 spaces, tabs), quote preferences, and semicolon inclusion.
+            </li>
+            <li>
+              <strong>Live Formatting</strong>: Optionally formats in real-time as you type.
+            </li>
+            <li>
+              <strong>AST Error Finder</strong>: Pinpoints syntax issues on the exact line and column to make fixes easy.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. 100% Client-Side and Secure
+        </h4>
+        <p>
+          Your code is processed completely in your browser's background web worker thread. No data is sent to external servers, making this tool safe for commercial use and sensitive data.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // State management
+    interface SnippetHistoryItem {
+      id: string;
+      lang: string;
+      label: string;
+      content: string;
+      timestamp: number;
+    }
+
+    let worker: Worker | null = null;
+    let autoFormat = true;
+    let selectedLanguage = 'auto';
+    let detectedLanguage = 'javascript';
+    let formatOptions = {
+      printWidth: 80,
+      tabWidth: 2,
+      useTabs: false,
+      semi: true,
+      singleQuote: false,
+      trailingComma: 'none'
+    };
+
+    // DOM References
+    const codeInput = document.getElementById('code-input') as HTMLTextAreaElement;
+    const inputLineNumbers = document.getElementById('input-line-numbers') as HTMLDivElement;
+    const outputCode = document.getElementById('output-code') as HTMLElement;
+    const charCounter = document.getElementById('char-counter') as HTMLSpanElement;
+    
+    // Config panel
+    const languageSelect = document.getElementById('language-select') as HTMLSelectElement;
+    const detectedBadge = document.getElementById('detected-badge') as HTMLSpanElement;
+    const indentSelect = document.getElementById('indent-select') as HTMLSelectElement;
+    const quoteSelect = document.getElementById('quote-select') as HTMLSelectElement;
+    const semiSelect = document.getElementById('semi-select') as HTMLSelectElement;
+    const autoFormatCheck = document.getElementById('auto-format-check') as HTMLInputElement;
+    
+    // Status boards
+    const statusBanner = document.getElementById('status-banner') as HTMLDivElement;
+    const statusMsg = document.getElementById('status-msg') as HTMLSpanElement;
+    const statusPerf = document.getElementById('status-perf') as HTMLSpanElement;
+    const errorTracePanel = document.getElementById('error-trace-panel') as HTMLDivElement;
+    const errorBrief = document.getElementById('error-brief') as HTMLSpanElement;
+    const errorContext = document.getElementById('error-context') as HTMLPreElement;
+    const loadingOverlay = document.getElementById('loading-overlay') as HTMLDivElement;
+    const toastMessage = document.getElementById('toast-message') as HTMLDivElement;
+
+    // Actions
+    const btnFormat = document.getElementById('btn-format') as HTMLButtonElement;
+    const btnClear = document.getElementById('reset-btn') as HTMLButtonElement;
+    const btnCopy = document.getElementById('btn-copy') as HTMLButtonElement;
+    const btnDownload = document.getElementById('btn-download') as HTMLButtonElement;
+    const btnShare = document.getElementById('btn-share') as HTMLButtonElement;
+    const dropZone = document.getElementById('drop-zone') as HTMLDivElement;
+    const dropOverlay = document.getElementById('drop-overlay') as HTMLDivElement;
+    const fileUploader = document.getElementById('file-uploader') as HTMLInputElement;
+    const historyContainer = document.getElementById('history-container') as HTMLDivElement;
+
+    // Modals & triggers
+    const shortcutsBtn = document.getElementById('shortcuts-btn') as HTMLButtonElement;
+    const shortcutsModal = document.getElementById('shortcuts-modal') as HTMLDivElement;
+    const closeShortcutsBtn = document.getElementById('close-shortcuts-btn') as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById('how-it-works-btn');
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalOkBtn = document.getElementById('modal-ok-btn');
+
+    // Tab items (Mobile toggles)
+    const tabInputBtn = document.getElementById('tab-input-btn') as HTMLButtonElement;
+    const tabOutputBtn = document.getElementById('tab-output-btn') as HTMLButtonElement;
+    const paneInput = document.getElementById('pane-input') as HTMLDivElement;
+    const paneOutput = document.getElementById('pane-output') as HTMLDivElement;
+
+    // Sample Snippets
+    const SAMPLES = {
+      javascript: `// JavaScript / ES6 Sample\nconst calculateStats = (data=[]) => {\n  let sum = 0;\n  for(let i=0;i<data.length;i++){\n    sum += data[i];\n  }\n  const avg = sum / data.length;\n  console.log("Calculated metrics:", { total: sum, average: avg });\n  return {\n    sum,\n    avg\n  }\n};\ncalculateStats([10, 20, 30, 45, 90]);`,
+      html: `<!DOCTYPE html>\n<html>\n<head>\n<title>BoardTools Demo Page</title>\n</head>\n<body>\n<main class="container">\n<h1 id="title">Sample Heading</h1>\n<p class="description">Lorem ipsum dolor sit amet,   consectetur adipiscing elit. </p>\n<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul>\n</main>\n</body>\n</html>`,
+      css: `/* Layout Stylesheet */\nbody{\nmargin:0;padding:0;font-family:sans-serif;\n}\n.container{\nmax-width:1200px;\nwidth:100%;\nmargin:0 auto;\npadding:20px;\nbackground-color:#f9f9f9;\nborder-radius:8px;\n}`
+    };
+
+    // Worker code string
+    const workerScript = `
+      importScripts(
+        'https://unpkg.com/prettier@3.3.3/standalone.js',
+        'https://unpkg.com/prettier@3.3.3/plugins/estree.js',
+        'https://unpkg.com/prettier@3.3.3/plugins/babel.js',
+        'https://unpkg.com/prettier@3.3.3/plugins/html.js',
+        'https://unpkg.com/prettier@3.3.3/plugins/postcss.js'
+      );
+
+      self.onmessage = async function(e) {
+        const { code, language, options } = e.data;
+        let parser = 'babel'; // fallback
+
+        if (language === 'json') parser = 'json';
+        else if (language === 'javascript' || language === 'js') parser = 'babel';
+        else if (language === 'html') parser = 'html';
+        else if (language === 'css') parser = 'css';
+
+        try {
+          const formatted = await prettier.format(code, {
+            parser: parser,
+            plugins: prettierPlugins,
+            printWidth: options.printWidth,
+            tabWidth: options.tabWidth,
+            useTabs: options.useTabs,
+            semi: options.semi,
+            singleQuote: options.singleQuote,
+            trailingComma: options.trailingComma
+          });
+          self.postMessage({ success: true, formatted });
+        } catch (error) {
+          self.postMessage({ success: false, error: error.message });
+        }
+      };
+    `;
+
+    // Initialize formatting worker
+    function initWorker() {
+      try {
+        loadingOverlay.classList.remove('hidden');
+        const blob = new Blob([workerScript], { type: 'application/javascript' });
+        worker = new Worker(URL.createObjectURL(blob));
+        
+        worker.onmessage = function(e) {
+          loadingOverlay.classList.add('hidden');
+          const { success, formatted, error } = e.data;
+          
+          if (success) {
+            handleFormatSuccess(formatted);
+          } else {
+            handleFormatError(error);
+          }
+        };
+      } catch (err) {
+        console.error("Could not spawn background formatter worker:", err);
+        updateBannerStatus('error', 'Formatting Engine failed initialization. Local fallback active.');
+        loadingOverlay.classList.add('hidden');
+      }
+    }
+
+    // Initialize application properties and settings
+    function init() {
+      // Setup Web Worker
+      initWorker();
+
+      // Read local storage settings
+      const savedLang = localStorage.getItem('bt-cf-lang');
+      if (savedLang) {
+        languageSelect.value = savedLang;
+        selectedLanguage = savedLang;
+      }
+      const savedIndent = localStorage.getItem('bt-cf-indent');
+      if (savedIndent) {
+        indentSelect.value = savedIndent;
+        formatOptions.tabWidth = savedIndent === 'tabs' ? 2 : Number(savedIndent);
+        formatOptions.useTabs = savedIndent === 'tabs';
+      }
+      const savedQuote = localStorage.getItem('bt-cf-quote');
+      if (savedQuote) {
+        quoteSelect.value = savedQuote;
+        formatOptions.singleQuote = savedQuote === 'single';
+      }
+      const savedSemi = localStorage.getItem('bt-cf-semi');
+      if (savedSemi) {
+        semiSelect.value = savedSemi;
+        formatOptions.semi = savedSemi === 'true';
+      }
+
+      // Check Share URL params
+      const urlParams = new URLSearchParams(window.location.search);
+      const encodedCode = urlParams.get('code');
+      const paramLang = urlParams.get('lang');
+      if (encodedCode) {
+        try {
+          const decoded = atob(encodedCode);
+          codeInput.value = decoded;
+          if (paramLang) {
+            languageSelect.value = paramLang;
+            selectedLanguage = paramLang;
+          }
+          setTimeout(() => triggerFormatting(), 300);
+        } catch (err) {
+          console.warn("Could not decode share snippet parameter:", err);
+        }
+      } else {
+        // Load default JS sample if workspace is clean
+        codeInput.value = SAMPLES.javascript;
+      }
+
+      updateLineNumbers();
+      updateCounters();
+      updateHistoryList();
+    }
+
+    // Line counter helper
+    function updateLineNumbers() {
+      const lines = codeInput.value.split('\n');
+      const count = Math.max(lines.length, 1);
+      let numberString = '';
+      for (let i = 1; i <= count; i++) {
+        numberString += i + '<br/>';
+      }
+      inputLineNumbers.innerHTML = numberString;
+    }
+
+    function updateCounters() {
+      const len = codeInput.value.length;
+      const lines = codeInput.value.split('\n').length;
+      charCounter.textContent = `${len} chars | ${lines} lines`;
+    }
+
+    // Auto-detect language lexer
+    function autoDetectLanguage(code: string): string {
+      const trimmed = code.trim();
+      if (!trimmed) return 'javascript';
+      
+      // JSON syntax matches
+      if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+        try {
+          JSON.parse(trimmed);
+          return 'json';
+        } catch (e) {}
+      }
+
+      // HTML syntax matches
+      if (trimmed.startsWith('<') && (trimmed.includes('</html>') || trimmed.includes('<!DOCTYPE') || trimmed.includes('<div') || trimmed.includes('<body'))) {
+        return 'html';
+      }
+
+      // CSS syntax matches
+      if (trimmed.includes('{') && trimmed.includes('}') && !trimmed.includes('const ') && !trimmed.includes('let ') && !trimmed.includes('function')) {
+        const properties = ['margin', 'padding', 'color', 'background', 'border', 'display', 'font'];
+        if (properties.some(prop => trimmed.includes(`${prop}:`))) {
+          return 'css';
+        }
+      }
+
+      return 'javascript';
+    }
+
+    // Fire formatting request to background Worker
+    let debounceTimer: number | null = null;
+    function triggerFormatting(isRealtime = false) {
+      if (isRealtime && !autoFormat) return;
+
+      const code = codeInput.value;
+      if (!code.trim()) {
+        updateBannerStatus('idle', 'Ready. Waiting for syntax payload...');
+        outputCode.textContent = '';
+        errorTracePanel.classList.add('hidden');
+        return;
+      }
+
+      // Resolve Language choice
+      let targetLang = selectedLanguage;
+      if (targetLang === 'auto') {
+        targetLang = autoDetectLanguage(code);
+        detectedLanguage = targetLang;
+        detectedBadge.textContent = `Auto: ${targetLang.toUpperCase()}`;
+        detectedBadge.classList.remove('hidden');
+        detectedBadge.classList.add('inline-flex');
+      } else {
+        detectedBadge.classList.add('hidden');
+        detectedBadge.classList.remove('inline-flex');
+      }
+
+      updateBannerStatus('idle', 'Beautifying...');
+
+      if (worker) {
+        worker.postMessage({
+          code,
+          language: targetLang,
+          options: formatOptions
+        });
+      } else {
+        // Simple client side JSON format fallback if worker isn't loaded
+        if (targetLang === 'json') {
+          try {
+            const parsed = JSON.parse(code);
+            const spaces = formatOptions.useTabs ? '\t' : formatOptions.tabWidth;
+            const res = JSON.stringify(parsed, null, spaces);
+            handleFormatSuccess(res);
+          } catch (e: any) {
+            handleFormatError(e.message);
+          }
+        } else {
+          updateBannerStatus('error', 'Browser Worker sandbox inactive. Manual formatting trigger needed.');
+        }
+      }
+    }
+
+    function handleFormatSuccess(formattedCode: string) {
+      outputCode.className = `language-${selectedLanguage === 'auto' ? detectedLanguage : selectedLanguage}`;
+      outputCode.textContent = formattedCode;
+      
+      // Perform code syntax coloring via Prism
+      if ((window as any).Prism) {
+        (window as any).Prism.highlightElement(outputCode);
+      }
+
+      updateBannerStatus('success', '✓ Format Successful');
+      errorTracePanel.classList.add('hidden');
+      
+      // Save valid snippet to local history
+      saveSnippetToHistory(codeInput.value);
+      
+      // Trigger settle fade animation on result block
+      const resultContainer = outputCode.parentElement?.parentElement;
+      if (resultContainer) {
+        resultContainer.classList.add('animate-settle');
+        setTimeout(() => resultContainer.classList.remove('animate-settle'), 600);
+      }
+    }
+
+    function handleFormatError(error: string) {
+      updateBannerStatus('error', '✗ Syntax/Validation Error');
+      errorBrief.textContent = error;
+      errorTracePanel.classList.remove('hidden');
+      
+      // Shake animation trigger
+      errorTracePanel.classList.add('animate-shake');
+      setTimeout(() => errorTracePanel.classList.remove('animate-shake'), 500);
+
+      // Attempt context tracing
+      const rawText = codeInput.value;
+      const lines = rawText.split('\n');
+      let targetLine = -1;
+      let targetCol = -1;
+
+      // Extract error position numbers: e.g. "at line 3, column 5" or "Unexpected token (4:12)"
+      const parseMatches = error.match(/\((\d+):(\d+)\)/);
+      const positionMatches = error.match(/line (\d+) column (\d+)/i);
+      
+      if (parseMatches) {
+        targetLine = Number(parseMatches[1]);
+        targetCol = Number(parseMatches[2]);
+      } else if (positionMatches) {
+        targetLine = Number(positionMatches[1]);
+        targetCol = Number(positionMatches[2]);
+      }
+
+      if (targetLine > 0 && targetLine <= lines.length) {
+        const start = Math.max(1, targetLine - 2);
+        const end = Math.min(lines.length, targetLine + 2);
+        let contextStr = '';
+        for (let i = start; i <= end; i++) {
+          const lineText = lines[i - 1];
+          const isErrorLine = i === targetLine;
+          const prefix = isErrorLine ? ' > ' : '   ';
+          contextStr += `${prefix}${String(i).padStart(4)} | ${lineText}\n`;
+          if (isErrorLine && targetCol > 0) {
+            contextStr += `${' '.repeat(targetCol + 9)}^\n`;
+          }
+        }
+        errorContext.textContent = contextStr;
+      } else {
+        errorContext.textContent = "Could not map exact location context. Verify line structures.";
+      }
+    }
+
+    function updateBannerStatus(type: 'idle' | 'success' | 'error', msg: string) {
+      statusBanner.className = `p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300`;
+      
+      if (type === 'idle') {
+        statusBanner.classList.add('bg-surface-yellow', 'border-yellow-light/80', 'text-yellow-dark');
+        statusMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span> ${msg}`;
+        statusPerf.textContent = '';
+      } else if (type === 'success') {
+        statusBanner.classList.add('bg-success-accent/15', 'border-success-accent/40', 'text-moss-dark');
+        statusMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span> ${msg}`;
+        statusPerf.textContent = `${formatBytes(codeInput.value.length)}`;
+      } else if (type === 'error') {
+        statusBanner.classList.add('bg-brand-red', 'border-brand-red-dark/30', 'text-coral-dark');
+        statusMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-red-dark"></span> ${msg}`;
+        statusPerf.textContent = '';
+      }
+    }
+
+    function formatBytes(bytes: number): string {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Input Text Event listeners
+    codeInput.addEventListener('input', () => {
+      updateLineNumbers();
+      updateCounters();
+      
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        triggerFormatting(true);
+      }, 400);
+    });
+
+    codeInput.addEventListener('scroll', () => {
+      inputLineNumbers.scrollTop = codeInput.scrollTop;
+    });
+
+    // Control options events
+    languageSelect.addEventListener('change', () => {
+      selectedLanguage = languageSelect.value;
+      localStorage.setItem('bt-cf-lang', selectedLanguage);
+      triggerFormatting();
+    });
+
+    indentSelect.addEventListener('change', () => {
+      const val = indentSelect.value;
+      formatOptions.tabWidth = val === 'tabs' ? 2 : Number(val);
+      formatOptions.useTabs = val === 'tabs';
+      localStorage.setItem('bt-cf-indent', val);
+      triggerFormatting();
+    });
+
+    quoteSelect.addEventListener('change', () => {
+      const val = quoteSelect.value;
+      formatOptions.singleQuote = val === 'single';
+      localStorage.setItem('bt-cf-quote', val);
+      triggerFormatting();
+    });
+
+    semiSelect.addEventListener('change', () => {
+      const val = semiSelect.value;
+      formatOptions.semi = val === 'true';
+      localStorage.setItem('bt-cf-semi', val);
+      triggerFormatting();
+    });
+
+    autoFormatCheck.addEventListener('change', () => {
+      autoFormat = autoFormatCheck.checked;
+      if (autoFormat) triggerFormatting();
+    });
+
+    // Load static samples
+    document.getElementById('btn-load-js')?.addEventListener('click', () => {
+      codeInput.value = SAMPLES.javascript;
+      languageSelect.value = 'javascript';
+      selectedLanguage = 'javascript';
+      updateLineNumbers();
+      updateCounters();
+      triggerFormatting();
+    });
+
+    document.getElementById('btn-load-html')?.addEventListener('click', () => {
+      codeInput.value = SAMPLES.html;
+      languageSelect.value = 'html';
+      selectedLanguage = 'html';
+      updateLineNumbers();
+      updateCounters();
+      triggerFormatting();
+    });
+
+    document.getElementById('btn-load-css')?.addEventListener('click', () => {
+      codeInput.value = SAMPLES.css;
+      languageSelect.value = 'css';
+      selectedLanguage = 'css';
+      updateLineNumbers();
+      updateCounters();
+      triggerFormatting();
+    });
+
+    // Trigger buttons
+    btnFormat.addEventListener('click', () => {
+      triggerFormatting();
+      btnFormat.classList.add('scale-95');
+      setTimeout(() => btnFormat.classList.remove('scale-95'), 150);
+    });
+
+    btnClear.addEventListener('click', () => {
+      codeInput.value = '';
+      outputCode.textContent = '';
+      updateLineNumbers();
+      updateCounters();
+      updateBannerStatus('idle', 'Ready. Waiting for syntax payload...');
+      errorTracePanel.classList.add('hidden');
+    });
+
+    // Clipboard and Actions copy
+    btnCopy.addEventListener('click', () => {
+      const text = outputCode.textContent || codeInput.value;
+      if (!text.trim()) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Copied Code');
+        // Pulse animation effect
+        btnCopy.classList.add('bg-success-accent/15', 'text-moss-dark', 'scale-105');
+        setTimeout(() => {
+          btnCopy.classList.remove('bg-success-accent/15', 'text-moss-dark', 'scale-105');
+        }, 1000);
+      });
+    });
+
+    // File downloader
+    btnDownload.addEventListener('click', () => {
+      const text = outputCode.textContent || codeInput.value;
+      if (!text.trim()) return;
+
+      let ext = 'js';
+      const lang = selectedLanguage === 'auto' ? detectedLanguage : selectedLanguage;
+      if (lang === 'html') ext = 'html';
+      else if (lang === 'css') ext = 'css';
+      else if (lang === 'json') ext = 'json';
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `formatted_code.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('✓ Downloading Code File');
+    });
+
+    // Share state link URL helper
+    btnShare.addEventListener('click', () => {
+      const code = codeInput.value.trim();
+      if (!code) return;
+
+      try {
+        const base = btoa(code);
+        const lang = selectedLanguage === 'auto' ? detectedLanguage : selectedLanguage;
+        const shareUrl = `${window.location.origin}${window.location.pathname}?code=${base}&lang=${lang}`;
+        
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('✓ Share URL copied to Clipboard');
+        });
+      } catch (err) {
+        showToast('⚠️ Could not generate share URL');
+      }
+    });
+
+    function showToast(msg: string) {
+      toastMessage.textContent = msg;
+      toastMessage.classList.remove('opacity-0');
+      toastMessage.classList.add('opacity-100');
+      setTimeout(() => {
+        toastMessage.classList.remove('opacity-100');
+        toastMessage.classList.add('opacity-0');
+      }, 2000);
+    }
+
+    // Drag and Drop Upload file logic
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropOverlay.classList.remove('opacity-0');
+      dropOverlay.classList.add('opacity-100');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropOverlay.classList.remove('opacity-100');
+      dropOverlay.classList.add('opacity-0');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropOverlay.classList.remove('opacity-100');
+      dropOverlay.classList.add('opacity-0');
+      
+      const files = e.dataTransfer?.files;
+      if (files && files.length > 0) {
+        handleUploadedFile(files[0]);
+      }
+    });
+
+    fileUploader.addEventListener('change', () => {
+      const files = fileUploader.files;
+      if (files && files.length > 0) {
+        handleUploadedFile(files[0]);
+      }
+    });
+
+    function handleUploadedFile(file: File) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target?.result as string;
+        codeInput.value = text;
+        
+        // Auto-detect upload language mapping
+        const nameLower = file.name.toLowerCase();
+        if (nameLower.endsWith('.js') || nameLower.endsWith('.jsx')) {
+          languageSelect.value = 'javascript';
+        } else if (nameLower.endsWith('.html') || nameLower.endsWith('.htm')) {
+          languageSelect.value = 'html';
+        } else if (nameLower.endsWith('.css')) {
+          languageSelect.value = 'css';
+        } else if (nameLower.endsWith('.json')) {
+          languageSelect.value = 'json';
+        } else {
+          languageSelect.value = 'auto';
+        }
+        
+        selectedLanguage = languageSelect.value;
+        updateLineNumbers();
+        updateCounters();
+        triggerFormatting();
+      };
+      reader.readAsText(file);
+    }
+
+    // Local Storage History Manager
+    function saveSnippetToHistory(content: string) {
+      try {
+        const key = 'bt-cf-history';
+        const rawHistory = localStorage.getItem(key);
+        let history: SnippetHistoryItem[] = rawHistory ? JSON.parse(rawHistory) : [];
+
+        // Avoid duplications
+        if (history.length > 0 && history[0].content === content) return;
+
+        const summary = content.substring(0, 30).replace(/\s+/g, ' ') + (content.length > 30 ? '...' : '');
+        const item: SnippetHistoryItem = {
+          id: Math.random().toString(36).substring(2, 9),
+          lang: selectedLanguage === 'auto' ? detectedLanguage : selectedLanguage,
+          label: summary,
+          content,
+          timestamp: Date.now()
+        };
+
+        history.unshift(item);
+        if (history.length > 5) {
+          history = history.slice(0, 5);
+        }
+
+        localStorage.setItem(key, JSON.stringify(history));
+        updateHistoryList();
+      } catch (err) {}
+    }
+
+    // Populate history panel list
+    function updateHistoryList() {
+      try {
+        const key = 'bt-cf-history';
+        const rawHistory = localStorage.getItem(key);
+        if (!rawHistory) return;
+        
+        const history: SnippetHistoryItem[] = JSON.parse(rawHistory);
+        if (history.length === 0) return;
+
+        historyContainer.innerHTML = '';
+        history.forEach((item) => {
+          const btn = document.createElement('button');
+          btn.className = 'inline-flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline hover:border-brand-blue rounded-full transition-all cursor-pointer truncate max-w-[200px] text-slate hover:text-primary';
+          btn.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-teal"></span> ${item.label}`;
+          btn.title = `Format cached ${item.lang.toUpperCase()} snippet`;
+          
+          btn.addEventListener('click', () => {
+            codeInput.value = item.content;
+            languageSelect.value = item.lang;
+            selectedLanguage = item.lang;
+            updateLineNumbers();
+            updateCounters();
+            triggerFormatting();
+          });
+          historyContainer.appendChild(btn);
+        });
+      } catch (err) {}
+    }
+
+    // Mobile navigation switcher tabs
+    tabInputBtn.addEventListener('click', () => {
+      paneInput.classList.remove('hidden');
+      paneOutput.classList.add('hidden');
+      tabInputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabOutputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+    });
+
+    tabOutputBtn.addEventListener('click', () => {
+      paneInput.classList.add('hidden');
+      paneOutput.classList.remove('hidden');
+      paneOutput.classList.add('flex');
+      tabOutputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabInputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+    });
+
+    // Keyboard Shortcuts Dialog
+    shortcutsBtn?.addEventListener('click', () => {
+      shortcutsModal?.classList.remove('hidden');
+    });
+
+    closeShortcutsBtn?.addEventListener('click', () => {
+      shortcutsModal?.classList.add('hidden');
+    });
+
+    shortcutsModal?.addEventListener('click', (e) => {
+      if (e.target === shortcutsModal) {
+        shortcutsModal?.classList.add('hidden');
+      }
+    });
+
+    // How it works modal interactions
+    howItWorksBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.remove('hidden');
+    });
+    closeModalBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.add('hidden');
+    });
+    modalOkBtn?.addEventListener('click', () => {
+      howItWorksModal?.classList.add('hidden');
+    });
+    howItWorksModal?.addEventListener('click', (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal?.classList.add('hidden');
+      }
+    });
+
+    // Keyboard Hotkey handler
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        e.preventDefault();
+        triggerFormatting();
+      } else if (e.ctrlKey && e.key === 'Escape') {
+        e.preventDefault();
+        btnClear.click();
+      }
+    });
+
+    // Execute page scripts
+    init();
+  </script>
+
+  <!-- Prism styling overrides and Custom Animations -->
+  <style is:global>
+    /* Settle animation */
+    @keyframes settleIn {
+      0% { opacity: 0.6; transform: scale(0.995); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-settle {
+      animation: settleIn 0.4s ease-out forwards;
+    }
+
+    /* Error Shake animation */
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shakeError 0.4s ease-in-out;
+    }
+
+    /* Prism.js Miro aesthetic theme overrides */
+    pre code[class*="language-"] {
+      color: #1c1c1e !important;
+      text-shadow: none !important;
+    }
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #8e91a0 !important;
+      font-style: italic;
+    }
+    .token.punctuation {
+      color: #2c2c34 !important;
+    }
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+      color: #ff9999 !important; /* Coral tag style */
+      font-weight: 600;
+    }
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+      color: #0fbcb0 !important; /* Teal accent styles */
+    }
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+      color: #5b76fe !important;
+    }
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+      color: #4262ff !important; /* Action Blue */
+      font-weight: 500;
+    }
+    .token.function,
+    .token.class-name {
+      color: #1c1c1e !important;
+      font-weight: 600;
+    }
+    .token.regex,
+    .token.important,
+    .token.variable {
+      color: #e3c5c5 !important;
+    }
+  </style>
 </Layout>
