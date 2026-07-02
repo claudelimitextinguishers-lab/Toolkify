@@ -955,7 +955,7 @@ const keywords =
     }
 
     // Generate dynamic feedback based on results & inputs
-    function updateAdvice(classification) {
+    function updateAdvice(classification: string) {
       if (!mainContextText || !limitationsBadgeList) return;
 
       const ageVal = ageInput instanceof HTMLInputElement ? ageInput.value : "";
