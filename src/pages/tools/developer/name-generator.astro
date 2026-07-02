@@ -1,90 +1,2698 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Name Generator";
+const name = "Name & Username Generator";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Generate fictional character names, business brands, or user profile names randomly.";
+const description =
+  "Generate creative character names, brand/business names, and custom usernames with rich category filters, locks, and persistent favorites.";
+const keywords =
+  "name generator, username generator, business name generator, fantasy name generator, brand name generator, gamertag generator, character name generator, writer tools";
+const canonicalUrl = "https://boardtools.app/tools/developer/name-generator";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO Structured Data Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Name & Username Generator",
+      "url": "https://boardtools.app/tools/developer/name-generator",
+      "description": "Procedurally generate creative, distinct names for fictional characters, brands/businesses, and social/gaming profiles. Lock favorite slots, shuffle options, and save persistent favorites list locally.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Multiple categories: Fictional Characters, Business/Brand Names, Usernames",
+        "Deep filters: Gender, cultural origins, fantasy genres, brand styles, length, custom prefixes/suffixes",
+        "Bulk generation: 10 or 20 names rendered instantly in scannable grids",
+        "Individual locking: lock a slot to preserve names between global regenerations",
+        "Individual slot shuffling: shuffle a single unlocked name",
+        "Persistent favorites list saved to localStorage",
+        "Export favorites as clean .txt or .csv files",
+        "100% private client-side logic running entirely in the browser"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom animations for the Name Generator */
+    @keyframes fadeInUpStaggered {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes spinShuffle {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes lockPop {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.25);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .animate-shuffle-spin {
+      animation: spinShuffle 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .animate-lock-pop {
+      animation: lockPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Staggered load animation delays */
+    .stagger-item-0 {
+      animation: fadeInUpStaggered 0.25s ease-out forwards;
+    }
+    .stagger-item-1 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.03s forwards;
+      opacity: 0;
+    }
+    .stagger-item-2 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.06s forwards;
+      opacity: 0;
+    }
+    .stagger-item-3 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.09s forwards;
+      opacity: 0;
+    }
+    .stagger-item-4 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.12s forwards;
+      opacity: 0;
+    }
+    .stagger-item-5 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.15s forwards;
+      opacity: 0;
+    }
+    .stagger-item-6 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.18s forwards;
+      opacity: 0;
+    }
+    .stagger-item-7 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.21s forwards;
+      opacity: 0;
+    }
+    .stagger-item-8 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.24s forwards;
+      opacity: 0;
+    }
+    .stagger-item-9 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.27s forwards;
+      opacity: 0;
+    }
+    .stagger-item-10 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.3s forwards;
+      opacity: 0;
+    }
+    .stagger-item-11 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.33s forwards;
+      opacity: 0;
+    }
+    .stagger-item-12 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.36s forwards;
+      opacity: 0;
+    }
+    .stagger-item-13 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.39s forwards;
+      opacity: 0;
+    }
+    .stagger-item-14 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.42s forwards;
+      opacity: 0;
+    }
+    .stagger-item-15 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.45s forwards;
+      opacity: 0;
+    }
+    .stagger-item-16 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.48s forwards;
+      opacity: 0;
+    }
+    .stagger-item-17 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.51s forwards;
+      opacity: 0;
+    }
+    .stagger-item-18 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.54s forwards;
+      opacity: 0;
+    }
+    .stagger-item-19 {
+      animation: fadeInUpStaggered 0.25s ease-out 0.57s forwards;
+      opacity: 0;
+    }
+  </style>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col gap-6 animate-fade-in-up"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1.5">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-1"
+      >
+        <div class="flex items-center gap-3 flex-wrap">
+          <h1
+            class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-[10px] py-1 px-3.5 rounded-full font-semibold uppercase whitespace-nowrap"
+            >{tier}</span
+          >
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+          <button
+            type="button"
+            id="generate-top-btn"
+            class="button-primary inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 !rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="Generate names"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+              ></path>
+            </svg>
+            <span>Generate</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-all-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Clear all options and locks"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How name generator works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
+      <p class="text-sm text-slate max-w-xl leading-relaxed">
         {description}
       </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+    <!-- Category Selector Tabs -->
+    <div class="flex rounded-full bg-surface p-0.5 sm:p-1 border border-hairline w-full max-w-lg shadow-subtle">
+      <button
+        type="button"
+        id="tab-char-btn"
+        class="flex-1 text-center text-[10px] sm:text-xs py-1.5 sm:py-2 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+        role="tab"
+        aria-selected="true"
+      >
+        <span class="hidden sm:inline">Character Names</span>
+        <span class="inline sm:hidden">Characters</span>
+      </button>
+      <button
+        type="button"
+        id="tab-brand-btn"
+        class="flex-1 text-center text-[10px] sm:text-xs py-1.5 sm:py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-ink"
+        role="tab"
+        aria-selected="false"
+      >
+        <span class="hidden sm:inline">Brands & Businesses</span>
+        <span class="inline sm:hidden">Brands</span>
+      </button>
+      <button
+        type="button"
+        id="tab-user-btn"
+        class="flex-1 text-center text-[10px] sm:text-xs py-1.5 sm:py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-ink"
+        role="tab"
+        aria-selected="false"
+      >
+        <span class="hidden sm:inline">Usernames & Profiles</span>
+        <span class="inline sm:hidden">Usernames</span>
+      </button>
+    </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Main Workspace Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      <!-- LEFT COLUMN: Filters / Configuration Sidebar -->
+      <div class="lg:col-span-4 flex flex-col gap-6 order-2 lg:order-1">
+        <div
+          class="card-base bg-surface-soft border border-hairline-strong flex flex-col gap-5 relative overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 dot-grid opacity-[0.03] pointer-events-none"
+          >
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
-          </button>
+
+          <div class="flex items-center gap-2 relative z-10">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
+            <h2 class="font-display font-medium text-sm text-primary">
+              Generator Options
+            </h2>
+          </div>
+
+          <!-- Configuration Panel Form -->
+          <form
+            id="generator-options-form"
+            class="flex flex-col gap-4 relative z-10"
+            onsubmit="event.preventDefault();"
+          >
+            <!-- Dynamic Category Filter Blocks -->
+            <!-- 1. Character Filter Group -->
+            <div id="filter-group-char" class="flex flex-col gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label
+                  for="char-genre"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Character Genre / Race</label
+                >
+                <select
+                  id="char-genre"
+                  class="text-input py-1.5 px-3 text-xs h-10 cursor-pointer border border-hairline-strong bg-canvas rounded-md w-full"
+                >
+                  <optgroup label="Fantasy Races">
+                    <option value="elf" selected>Elf (Ethereal & Poetic)</option
+                    >
+                    <option value="dwarf">Dwarf (Rugged & Runed)</option>
+                    <option value="orc">Orc (Harsh & Powerful)</option>
+                    <option value="noble">Noble / Medieval Human</option>
+                  </optgroup>
+                  <optgroup label="Sci-Fi / Cyberpunk">
+                    <option value="space-alien"
+                      >Alien (Futuristic Syllables)</option
+                    >
+                    <option value="cyber-space"
+                      >Space/Cyber (Tech & Neo-Noir)</option
+                    >
+                    <option value="cyborg">Cyborg (Numerical Code-Names)</option
+                    >
+                  </optgroup>
+                  <optgroup label="Real-World Cultures">
+                    <option value="culture-english">English / Anglo</option>
+                    <option value="culture-norse">Norse / Scandinavian</option>
+                    <option value="culture-celtic">Celtic / Gaelic</option>
+                    <option value="culture-japanese">Japanese</option>
+                    <option value="culture-hispanic">Hispanic / Spanish</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-bold text-slate uppercase"
+                  >Name Style / Gender</label
+                >
+                <div class="flex gap-2">
+                  <label
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-hairline-strong bg-canvas rounded-lg text-xs font-semibold cursor-pointer text-slate hover:text-primary"
+                  >
+                    <input
+                      type="radio"
+                      name="char-gender"
+                      value="male"
+                      class="sr-only"
+                    />
+                    <span>Male</span>
+                  </label>
+                  <label
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-hairline-strong bg-canvas rounded-lg text-xs font-semibold cursor-pointer text-slate hover:text-primary"
+                  >
+                    <input
+                      type="radio"
+                      name="char-gender"
+                      value="female"
+                      class="sr-only"
+                    />
+                    <span>Female</span>
+                  </label>
+                  <label
+                    class="flex-1 flex items-center justify-center gap-1.5 py-2 border border-primary bg-primary text-canvas rounded-lg text-xs font-semibold cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="char-gender"
+                      value="neutral"
+                      class="sr-only"
+                      checked
+                    />
+                    <span>Neutral</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Business/Brand Filter Group (Hidden initially) -->
+            <div id="filter-group-brand" class="hidden flex flex-col gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label
+                  for="brand-industry"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Industry Theme</label
+                >
+                <select
+                  id="brand-industry"
+                  class="text-input py-1.5 px-3 text-xs h-10 cursor-pointer border border-hairline-strong bg-canvas rounded-md w-full"
+                >
+                  <option value="tech" selected
+                    >Technology / Software / AI</option
+                  >
+                  <option value="creative">Creative Studio / Agency</option>
+                  <option value="finance">Finance / Consulting / Trust</option>
+                  <option value="health"
+                    >Health / Wellness / Life Science</option
+                  >
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label
+                  for="brand-style"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Brand Name Style</label
+                >
+                <select
+                  id="brand-style"
+                  class="text-input py-1.5 px-3 text-xs h-10 cursor-pointer border border-hairline-strong bg-canvas rounded-md w-full"
+                >
+                  <option value="modern" selected
+                    >Modern & Coined (e.g., Apexify)</option
+                  >
+                  <option value="playful"
+                    >Playful Compounds (e.g., BytePanda)</option
+                  >
+                  <option value="professional"
+                    >Corporate Classic (e.g., Prime Group)</option
+                  >
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label
+                  for="brand-keyword"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Custom Keyword Seed (Optional)</label
+                >
+                <input
+                  type="text"
+                  id="brand-keyword"
+                  placeholder="e.g. cloud, smart, wave"
+                  maxlength="15"
+                  class="text-input text-xs h-10 px-3 border border-hairline-strong bg-canvas rounded-md w-full outline-none"
+                />
+              </div>
+            </div>
+
+            <!-- 3. Username/Profile Filter Group (Hidden initially) -->
+            <div id="filter-group-user" class="hidden flex flex-col gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label
+                  for="user-theme"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Profile Theme</label
+                >
+                <select
+                  id="user-theme"
+                  class="text-input py-1.5 px-3 text-xs h-10 cursor-pointer border border-hairline-strong bg-canvas rounded-md w-full"
+                >
+                  <option value="gaming" selected>Gaming / Clan Tags</option>
+                  <option value="tech">Tech / Developer</option>
+                  <option value="fantasy">Fantasy / Magic</option>
+                  <option value="aesthetic">Minimal / Aesthetic</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-bold text-slate uppercase"
+                  >Addons & Structure</label
+                >
+                <div class="flex flex-col gap-2.5 mt-1">
+                  <label
+                    class="flex items-center gap-2 text-xs text-slate cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      id="user-nums"
+                      class="w-4 h-4 rounded border-hairline-strong text-brand-blue"
+                      checked
+                    />
+                    <span>Include Numbers (e.g., _99, 404)</span>
+                  </label>
+                  <label
+                    class="flex items-center gap-2 text-xs text-slate cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      id="user-chars"
+                      class="w-4 h-4 rounded border-hairline-strong text-brand-blue"
+                    />
+                    <span>Include Special Symbols (., _, xX)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Global Quantity Selector -->
+            <div class="flex flex-col gap-1.5 pt-2 border-t border-hairline">
+              <label
+                for="names-qty"
+                class="text-[10px] font-bold text-slate uppercase"
+                >Names to Generate</label
+              >
+              <div class="flex gap-2">
+                <button
+                  type="button"
+                  data-qty="10"
+                  class="btn-qty flex-1 py-1.5 border border-primary bg-primary text-canvas text-xs font-semibold rounded-full cursor-pointer transition-all"
+                >
+                  10 Names
+                </button>
+                <button
+                  type="button"
+                  data-qty="20"
+                  class="btn-qty flex-1 py-1.5 border border-hairline-strong bg-canvas text-slate text-xs font-semibold rounded-full cursor-pointer hover:text-primary hover:border-primary transition-all"
+                >
+                  20 Names
+                </button>
+              </div>
+            </div>
+
+            <!-- MAIN CTA Button -->
+            <button
+              type="button"
+              id="generate-btn"
+              class="button-primary w-full h-11 text-sm font-semibold tracking-wide shadow-card cursor-pointer hover:button-primary-active mt-2"
+            >
+              Generate Names
+            </button>
+          </form>
+        </div>
+
+        <!-- Privacy & Local Execution Notice -->
+        <div
+          class="card-feature-teal hidden lg:flex flex-col gap-2 relative overflow-hidden"
+        >
+          <span
+            class="badge-tag-yellow bg-teal-light text-moss-dark self-start text-[10px]"
+            >LOCAL SANDBOX</span
+          >
+          <h3 class="font-display font-semibold text-sm text-primary">
+            Private Generation
+          </h3>
+          <p class="text-xs text-moss-dark/85 leading-relaxed">
+            All name-generation combinatorial math is computed locally in your
+            browser. None of your keywords, filters, or saved names are sent to
+            any external server.
+          </p>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <!-- RIGHT COLUMN: Output Workspace / Result Grid & Favorites Drawer -->
+      <div class="lg:col-span-8 flex flex-col gap-6 order-1 lg:order-2">
+        <!-- Results Container Card -->
+        <div
+          class="card-base flex flex-col gap-4 relative overflow-hidden min-h-[400px]"
+        >
+          <div
+            class="absolute inset-0 dot-grid opacity-[0.02] pointer-events-none"
+          >
+          </div>
+
+          <!-- Result Header Controls -->
+          <div
+            class="flex justify-between items-center border-b border-hairline pb-3 relative z-10 flex-wrap gap-2"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+              <h3 class="font-display font-medium text-sm text-primary">
+                Generated Options
+              </h3>
+              <span
+                id="results-count"
+                class="text-[10px] bg-surface font-bold text-slate px-2 py-0.5 rounded-full"
+                >10 total</span
+              >
+            </div>
+
+            <div class="flex gap-2">
+              <button
+                type="button"
+                id="lock-all-btn"
+                class="text-[10px] font-bold text-slate hover:text-primary flex items-center gap-1 px-2.5 py-1 bg-surface rounded-full border border-hairline cursor-pointer transition-all"
+                title="Lock all current names"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3 h-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  ></path>
+                </svg>
+                Lock All
+              </button>
+              <button
+                type="button"
+                id="unlock-all-btn"
+                class="text-[10px] font-bold text-slate hover:text-primary flex items-center gap-1 px-2.5 py-1 bg-surface rounded-full border border-hairline cursor-pointer transition-all"
+                title="Unlock all slots"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3 h-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                Unlock All
+              </button>
+            </div>
+          </div>
+
+          <!-- Name List Grid -->
+          <div
+            id="names-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10"
+          >
+            <!-- Dynamically populated name cards -->
+          </div>
+
+          <!-- Empty State (Fallback) -->
+          <div
+            id="names-empty-state"
+            class="hidden flex-col items-center justify-center text-center gap-3 py-16"
+          >
+            <span class="text-3xl">✨</span>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-display font-semibold text-sm text-primary">
+                No Names Generated
+              </h4>
+              <p class="text-xs text-slate max-w-xs">
+                Select your filters and hit "Generate Names" to start
+                discovering ideas.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Persistent Favorites Section -->
+        <div
+          class="card-base border border-hairline flex flex-col gap-4 relative overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 dot-grid opacity-[0.02] pointer-events-none"
+          >
+          </div>
+
+          <div
+            class="flex justify-between items-center border-b border-hairline pb-3 relative z-10 flex-wrap gap-2"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
+              <h3 class="font-display font-medium text-sm text-primary">
+                Saved Favorites
+              </h3>
+              <span
+                id="favs-count"
+                class="text-[10px] bg-surface-pricing-featured text-brand-blue font-bold px-2 py-0.5 rounded-full"
+                >0</span
+              >
+            </div>
+
+            <!-- Export Favorites Dropdown / Options -->
+            <div id="favs-actions" class="hidden flex items-center gap-2">
+              <button
+                type="button"
+                id="export-txt-btn"
+                class="text-[10px] font-bold text-slate hover:text-primary px-2.5 py-1 bg-surface rounded-md border border-hairline cursor-pointer transition-colors"
+              >
+                Export TXT
+              </button>
+              <button
+                type="button"
+                id="export-csv-btn"
+                class="text-[10px] font-bold text-slate hover:text-primary px-2.5 py-1 bg-surface rounded-md border border-hairline cursor-pointer transition-colors"
+              >
+                Export CSV
+              </button>
+              <button
+                type="button"
+                id="clear-favs-btn"
+                class="text-[10px] font-bold text-coral-dark hover:bg-coral-light/20 px-2.5 py-1 rounded-md cursor-pointer transition-colors"
+              >
+                Clear All
+              </button>
+            </div>
+          </div>
+
+          <!-- Favorites Grid / Pill Container -->
+          <div id="favs-container" class="flex flex-wrap gap-2 relative z-10">
+            <!-- Dynamically populated favorite pills -->
+          </div>
+
+          <!-- Empty state for favorites -->
+          <div
+            id="favs-empty-state"
+            class="flex flex-col items-center justify-center text-center gap-2 py-8 relative z-10"
+          >
+            <p class="text-xs text-slate">
+              Pin names you love to save them across sessions. They will appear
+              here.
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Name Generator Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is the Name & Username Generator?
+        </h4>
+        <p>
+          This tool allows you to procedurally generate distinct and creative
+          names for fantasy/sci-fi characters, brands, businesses, and
+          social/gaming profiles.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Multiple Categories</strong>: Switch tabs to generate
+              character names, business brands, or user profiles.
+            </li>
+            <li>
+              <strong>Rich Filters & Options</strong>: Customize by genre,
+              gender, industry, keyword seed, theme, or structure.
+            </li>
+            <li>
+              <strong>Lock & Shuffle</strong>: Lock favorite names to keep them
+              across shuffles, or shuffle individual names.
+            </li>
+            <li>
+              <strong>Persistent Favorites</strong>: Save your favorite names
+              locally and export them as TXT or CSV files.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. 100% Client-Side and Private
+        </h4>
+        <p>
+          All operations run directly in your browser. None of your keywords,
+          filters, or generated names are sent to any external server.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // ==================== DATASETS & PROCEDURAL DICTIONARIES ====================
+
+  const DATASET = {
+    // 1. Character Name Pools
+    elf: {
+      prefixes: [
+        "Ael",
+        "Aer",
+        "Aeth",
+        "Ala",
+        "Am",
+        "An",
+        "Ara",
+        "Aran",
+        "Ared",
+        "Cae",
+        "Cal",
+        "Car",
+        "Cel",
+        "El",
+        "Ela",
+        "Eld",
+        "Ely",
+        "Ere",
+        "Fae",
+        "Faer",
+        "Gael",
+        "Gal",
+        "Gala",
+        "Hal",
+        "Ili",
+        "Lae",
+        "Lara",
+        "Leg",
+        "Lia",
+        "Mela",
+        "Mith",
+        "Nae",
+        "Olo",
+        "Rae",
+        "Rian",
+        "Sael",
+        "Sil",
+        "Thal",
+        "Taur",
+        "Vael",
+        "Yel",
+      ],
+      infixes: [
+        "an",
+        "ar",
+        "as",
+        "ath",
+        "el",
+        "en",
+        "er",
+        "es",
+        "eth",
+        "ia",
+        "il",
+        "in",
+        "ir",
+        "is",
+        "ith",
+        "la",
+        "li",
+        "lo",
+        "on",
+        "or",
+        "os",
+        "oth",
+        "ra",
+        "ri",
+        "ro",
+        "th",
+        "ur",
+        "va",
+        "vi",
+      ],
+      suffixesMale: [
+        "as",
+        "on",
+        "or",
+        "ur",
+        "il",
+        "in",
+        "ath",
+        "iel",
+        "ior",
+        "is",
+        "el",
+        "ar",
+        "ad",
+        "on",
+      ],
+      suffixesFemale: [
+        "ia",
+        "ra",
+        "la",
+        "na",
+        "ne",
+        "wen",
+        "riel",
+        "wyn",
+        "is",
+        "a",
+        "ara",
+        "elle",
+        "eth",
+      ],
+      surnamePrefix: [
+        "Oak",
+        "Moon",
+        "Star",
+        "Sun",
+        "Green",
+        "Leaf",
+        "Wood",
+        "Sky",
+        "Wind",
+        "Storm",
+        "Shadow",
+        "Night",
+        "Silver",
+        "Gold",
+        "Dawn",
+        "Dusk",
+        "Frost",
+        "Winter",
+        "Spring",
+        "Autumn",
+        "Summer",
+        "Dew",
+        "Mist",
+        "Cloud",
+        "Rain",
+        "River",
+        "Lake",
+        "Sea",
+        "Ocean",
+        "Wave",
+        "Stone",
+        "Rock",
+        "Mountain",
+        "Hill",
+        "Valley",
+        "Glen",
+        "Grove",
+        "Forest",
+        "Tree",
+        "Bark",
+        "Branch",
+        "Root",
+        "Seed",
+        "Flower",
+        "Bloom",
+        "Petal",
+        "Rose",
+        "Lily",
+        "Thorn",
+        "Brier",
+        "Fern",
+        "Moss",
+        "Ivy",
+        "Willow",
+        "Birch",
+        "Oak",
+        "Pine",
+        "Elm",
+      ],
+      surnameSuffix: [
+        "whisper",
+        "runner",
+        "weaver",
+        "spinner",
+        "dancer",
+        "singer",
+        "watcher",
+        "keeper",
+        "seeker",
+        "finder",
+        "shaper",
+        "maker",
+        "builder",
+        "carver",
+        "cutter",
+        "healer",
+        "bender",
+        "breaker",
+        "mender",
+        "breeze",
+        "gale",
+        "gust",
+        "breath",
+        "sigh",
+        "tear",
+        "drop",
+        "gleam",
+        "glint",
+        "glow",
+        "shine",
+        "spark",
+        "beam",
+        "ray",
+        "light",
+        "fire",
+        "flame",
+        "ember",
+        "ash",
+        "dust",
+        "spirit",
+        "soul",
+        "heart",
+        "mind",
+        "sight",
+        "vision",
+        "dream",
+        "hope",
+        "wish",
+        "fate",
+        "destiny",
+        "doom",
+        "bane",
+        "scourge",
+        "wrath",
+        "fury",
+        "rage",
+        "strength",
+        "power",
+        "might",
+        "force",
+        "shield",
+        "sword",
+        "bow",
+        "arrow",
+        "spear",
+        "blade",
+        "dagger",
+        "axe",
+        "hammer",
+      ],
+    },
+    dwarf: {
+      prefixes: [
+        "Balg",
+        "Bara",
+        "Boro",
+        "Brak",
+        "Brok",
+        "Dain",
+        "Dar",
+        "Dol",
+        "Dor",
+        "Duf",
+        "Dur",
+        "Dwal",
+        "Far",
+        "Fili",
+        "Fund",
+        "Gim",
+        "Gloin",
+        "Gor",
+        "Gorm",
+        "Gran",
+        "Grim",
+        "Har",
+        "Kili",
+        "Loni",
+        "Mor",
+        "Mori",
+        "Nori",
+        "Oin",
+        "Orin",
+        "Raud",
+        "Ror",
+        "Thor",
+        "Thrain",
+        "Thror",
+        "Urin",
+        "Val",
+        "Vili",
+      ],
+      suffixesMale: [
+        "ur",
+        "in",
+        "li",
+        "grim",
+        "garm",
+        "or",
+        "ar",
+        "i",
+        "ek",
+        "ok",
+        "ir",
+        "dur",
+        "born",
+      ],
+      suffixesFemale: [
+        "a",
+        "da",
+        "is",
+        "na",
+        "ra",
+        "lin",
+        "run",
+        "dys",
+        "gret",
+        "hild",
+        "ga",
+        "ma",
+      ],
+      surnamePrefix: [
+        "Iron",
+        "Stone",
+        "Bronze",
+        "Copper",
+        "Gold",
+        "Silver",
+        "Steel",
+        "Rock",
+        "Mountain",
+        "Earth",
+        "Deep",
+        "Dark",
+        "Grim",
+        "Rough",
+        "Hard",
+        "Strong",
+        "Bold",
+        "Shield",
+        "Axe",
+        "Hammer",
+        "Anvil",
+        "Forge",
+        "Mine",
+        "Coal",
+        "Ore",
+        "Vein",
+        "Ruby",
+        "Gem",
+        "Flint",
+        "Granite",
+        "Marble",
+      ],
+      surnameSuffix: [
+        "shield",
+        "breaker",
+        "forge",
+        "hammer",
+        "fist",
+        "back",
+        "beard",
+        "chin",
+        "shoulder",
+        "foot",
+        "hand",
+        "arm",
+        "miner",
+        "delver",
+        "carver",
+        "shaper",
+        "smith",
+        "brewer",
+        "drinker",
+        "grog",
+        "ale",
+        "barrel",
+        "cask",
+        "keg",
+        "vault",
+        "gate",
+        "wall",
+        "fort",
+        "keep",
+        "tower",
+        "bridge",
+        "road",
+      ],
+    },
+    orc: {
+      prefixes: [
+        "Grom",
+        "Gar",
+        "Mug",
+        "Throm",
+        "Karg",
+        "Duro",
+        "Drak",
+        "Orgrim",
+        "Maim",
+        "Black",
+        "Gul",
+        "Ner",
+        "Rend",
+        "Kil",
+        "Naz",
+        "Goz",
+        "Ugr",
+        "Bog",
+        "Mog",
+        "Grog",
+        "Zog",
+        "Ruk",
+        "Brox",
+        "Varok",
+        "Saur",
+        "Korth",
+        "Durn",
+        "Thok",
+        "Malk",
+      ],
+      suffixes: [
+        "ash",
+        "ok",
+        "ar",
+        "gath",
+        "oth",
+        "mar",
+        "rog",
+        "nak",
+        "gok",
+        "rak",
+        "zor",
+        "kar",
+        "grom",
+        "koth",
+        "dur",
+        "gar",
+        "mog",
+        "gor",
+        "goth",
+        "grim",
+        "karg",
+        "thok",
+        "khor",
+      ],
+    },
+    noble: {
+      male: [
+        "Alden",
+        "Garrick",
+        "Rowan",
+        "Alistair",
+        "Cedric",
+        "Gareth",
+        "Julian",
+        "Percival",
+        "Tristan",
+        "Valentin",
+        "Arthur",
+        "Galahad",
+        "Lancelot",
+        "Bastian",
+        "Dorian",
+        "Evander",
+        "Lucian",
+        "Caspian",
+        "Aurelius",
+        "Davenport",
+        "Galloway",
+      ],
+      female: [
+        "Genevieve",
+        "Isolde",
+        "Lyra",
+        "Seraphina",
+        "Guinevere",
+        "Rosamund",
+        "Adelaide",
+        "Beatrix",
+        "Emmeline",
+        "Helena",
+        "Octavia",
+        "Vivienne",
+        "Aurelia",
+        "Cordelia",
+        "Evangeline",
+        "Ophelia",
+        "Rowena",
+        "Gwendolyn",
+        "Valerie",
+      ],
+      surnames: [
+        "Blackwood",
+        "Kingscote",
+        "Crestwell",
+        "Harrow",
+        "Valerius",
+        "Pendleton",
+        "Sterling",
+        "Redmond",
+        "Ashwood",
+        "Brighton",
+        "Hawthorne",
+        "Ravenwood",
+        "Kingsley",
+        "Davenport",
+        "Galloway",
+        "Fitzgerald",
+        "Montague",
+        "Capulet",
+        "Windsor",
+        "Lancaster",
+      ],
+    },
+    scifiAlien: [
+      "Xor",
+      "Zal",
+      "Qor",
+      "Vek",
+      "Kry",
+      "Tox",
+      "Zor",
+      "Phox",
+      "Gryx",
+      "Nix",
+      "Kla",
+      "Vla",
+      "Trel",
+      "Xyl",
+      "Pyr",
+      "Zyr",
+      "Gyl",
+      "Nyl",
+      "Kyl",
+      "Vyl",
+      "Zel",
+      "Vel",
+      "Xel",
+      "Pel",
+      "Mel",
+    ],
+    scifiCyber: [
+      "Neo",
+      "Zero",
+      "Vector",
+      "Apex",
+      "Nova",
+      "Cyber",
+      "Echo",
+      "Rift",
+      "Void",
+      "Helix",
+      "Pixel",
+      "Byte",
+      "Link",
+      "Sync",
+      "Flux",
+      "Glitch",
+      "Protocol",
+      "Quantum",
+      "Nexus",
+      "Cortex",
+      "Proxy",
+    ],
+    cultures: {
+      english: {
+        male: [
+          "Jack",
+          "Arthur",
+          "Edward",
+          "William",
+          "Oliver",
+          "Harry",
+          "Thomas",
+          "George",
+          "James",
+          "Charles",
+        ],
+        female: [
+          "Eleanor",
+          "Charlotte",
+          "Amelia",
+          "Olivia",
+          "Emily",
+          "Grace",
+          "Isabella",
+          "Sophia",
+          "Lily",
+          "Rose",
+        ],
+        surnames: [
+          "Smith",
+          "Jones",
+          "Taylor",
+          "Brown",
+          "Wilson",
+          "Miller",
+          "Davis",
+          "Anderson",
+          "Thomas",
+          "White",
+        ],
+      },
+      norse: {
+        male: [
+          "Soren",
+          "Thor",
+          "Odin",
+          "Bjorn",
+          "Loki",
+          "Magnus",
+          "Erik",
+          "Leif",
+          "Harald",
+          "Sigurd",
+        ],
+        female: [
+          "Freya",
+          "Astrid",
+          "Ingrid",
+          "Sigrid",
+          "Helga",
+          "Solveig",
+          "Gerd",
+          "Elin",
+          "Dagny",
+          "Runa",
+        ],
+        surnames: [
+          "Hansen",
+          "Johansen",
+          "Olsen",
+          "Larsen",
+          "Nielsen",
+          "Erickson",
+          "Torgersen",
+          "Gundersen",
+        ],
+      },
+      celtic: {
+        male: [
+          "Cillian",
+          "Declan",
+          "Rowan",
+          "Liam",
+          "Connor",
+          "Ronan",
+          "Finn",
+          "Sean",
+          "Oran",
+          "Rory",
+        ],
+        female: [
+          "Maeve",
+          "Fiona",
+          "Siobhan",
+          "Saoirse",
+          "Niamh",
+          "Aisling",
+          "Brigid",
+          "Sinead",
+          "Clara",
+          "Kiera",
+        ],
+        surnames: [
+          "O'Brien",
+          "O'Connor",
+          "O'Neill",
+          "Murphy",
+          "Kelly",
+          "Sullivan",
+          "Gallagher",
+          "Kennedy",
+        ],
+      },
+      japanese: {
+        male: [
+          "Hiro",
+          "Kenji",
+          "Yuki",
+          "Takashi",
+          "Daiki",
+          "Sora",
+          "Ren",
+          "Haruto",
+          "Kaito",
+          "Yuto",
+        ],
+        female: [
+          "Sakura",
+          "Yui",
+          "Hana",
+          "Mei",
+          "Aoi",
+          "Rin",
+          "Himari",
+          "Nanami",
+          "Mio",
+          "Kokoa",
+        ],
+        surnames: [
+          "Sato",
+          "Suzuki",
+          "Takahashi",
+          "Tanaka",
+          "Watanabe",
+          "Ito",
+          "Yamamoto",
+          "Nakamura",
+        ],
+      },
+      hispanic: {
+        male: [
+          "Mateo",
+          "Diego",
+          "Santiago",
+          "Sebastian",
+          "Alejandro",
+          "Carlos",
+          "Luis",
+          "Javier",
+          "Andres",
+          "Miguel",
+        ],
+        female: [
+          "Camila",
+          "Sofia",
+          "Isabella",
+          "Valentina",
+          "Lucia",
+          "Elena",
+          "Maria",
+          "Gabriela",
+          "Mariana",
+          "Juana",
+        ],
+        surnames: [
+          "Garcia",
+          "Rodriguez",
+          "Martinez",
+          "Hernandez",
+          "Lopez",
+          "Gonzalez",
+          "Perez",
+          "Sanchez",
+        ],
+      },
+    },
+    // 2. Business Name Pools
+    business: {
+      techRoots: [
+        "Apex",
+        "Nova",
+        "Vertex",
+        "Core",
+        "Vibe",
+        "Zing",
+        "Zoom",
+        "Sync",
+        "Zen",
+        "Pulse",
+        "Flux",
+        "Quirk",
+        "Volta",
+        "Velo",
+        "Loom",
+        "Kindle",
+        "Spark",
+        "Prism",
+        "Orb",
+        "Echo",
+      ],
+      techSuffixes: [
+        "ify",
+        "ly",
+        "ex",
+        "io",
+        "ia",
+        "ora",
+        "on",
+        "ent",
+        "ix",
+        "eq",
+        "is",
+        "a",
+        "o",
+        "us",
+        "um",
+      ],
+      creativeRoots: [
+        "Canvas",
+        "Craft",
+        "Bloom",
+        "Studio",
+        "Slate",
+        "Prism",
+        "Vivid",
+        "Muse",
+        "Mod",
+        "Pixel",
+        "Line",
+        "Brush",
+        "Vibe",
+        "Aura",
+        "Ink",
+        "Forge",
+        "Spectrum",
+        "Helix",
+        "Scribble",
+      ],
+      creativeSuffixes: [
+        "labs",
+        "studio",
+        "creative",
+        "craft",
+        "design",
+        "collective",
+        "house",
+        "art",
+        "bloom",
+        "space",
+      ],
+      financeRoots: [
+        "Capital",
+        "Vault",
+        "Prime",
+        "Apex",
+        "Meridian",
+        "Horizon",
+        "Crest",
+        "Alliance",
+        "Genesis",
+        "Vanguard",
+        "Keystone",
+        "Beacon",
+        "Pinnacle",
+        "Ledger",
+        "Fortress",
+        "Asset",
+        "Secure",
+      ],
+      financeSuffixes: [
+        "group",
+        "capital",
+        "partners",
+        "consulting",
+        "ventures",
+        "holdings",
+        "advisors",
+        "wealth",
+        "trust",
+      ],
+      healthRoots: [
+        "Zen",
+        "Pulse",
+        "Cure",
+        "Life",
+        "Aura",
+        "Bio",
+        "Heal",
+        "Nourish",
+        "Sage",
+        "Thrive",
+        "Vital",
+        "Well",
+        "Bloom",
+        "Vibe",
+        "Pure",
+        "Organix",
+        "Nature",
+        "Oasis",
+        "Spring",
+      ],
+      healthSuffixes: [
+        "wellness",
+        "health",
+        "life",
+        "care",
+        "labs",
+        "science",
+        "nature",
+        "rx",
+        "vitality",
+        "spring",
+      ],
+      playfulNouns: [
+        "Panda",
+        "Fox",
+        "Koala",
+        "Badger",
+        "Owl",
+        "Penguin",
+        "Monkey",
+        "Ninja",
+        "Wizard",
+        "Gnome",
+        "Pixel",
+        "Byte",
+        "SaaS",
+        "Hub",
+        "Lab",
+        "Wave",
+        "Flow",
+        "Sprout",
+        "Nest",
+        "Rocket",
+        "Launch",
+        "Loop",
+        "Unicorn",
+        "Octopus",
+        "Beaver",
+      ],
+      playfulModifiers: [
+        "Smart",
+        "Red",
+        "Blue",
+        "Green",
+        "Golden",
+        "Wild",
+        "Lazy",
+        "Happy",
+        "Jolly",
+        "Crazy",
+        "Super",
+        "Micro",
+        "Macro",
+        "Nano",
+        "Meta",
+        "Hyper",
+        "Cyber",
+        "Eco",
+        "Vibe",
+        "Cloud",
+      ],
+    },
+    // 3. Username Pools
+    username: {
+      prefixes: {
+        gaming: [
+          "xX_",
+          "l33t_",
+          "Pro_",
+          "Alpha_",
+          "Shadow_",
+          "Ghost_",
+          "Sniper_",
+          "Slayer_",
+          "Dark_",
+          "Elite_",
+          "Psycho_",
+          "Retro_",
+          "Cyber_",
+        ],
+        tech: [
+          "Code_",
+          "Bit_",
+          "Pixel_",
+          "Dev_",
+          "Hex_",
+          "Stack_",
+          "Hack_",
+          "Alg_",
+        ],
+        fantasy: [
+          "Mage_",
+          "Elf_",
+          "Dragon_",
+          "Rune_",
+          "Frost_",
+          "Fire_",
+          "Storm_",
+          "Myth_",
+        ],
+        aesthetic: [
+          "soft.",
+          "dreamy_",
+          "ethereal.",
+          "cozy_",
+          "silent_",
+          "pale_",
+          "golden_",
+          "velvet_",
+        ],
+      },
+      nouns: {
+        gaming: [
+          "Viper",
+          "Phantom",
+          "Rogue",
+          "Titan",
+          "Wraith",
+          "Spectre",
+          "Glitch",
+          "Kombat",
+          "Frag",
+          "Beast",
+          "Reaper",
+        ],
+        tech: [
+          "Byte",
+          "Compiler",
+          "SaaS",
+          "Syntax",
+          "Logic",
+          "Vector",
+          "Node",
+          "Kernel",
+          "Script",
+          "Cyber",
+          "Daemon",
+        ],
+        fantasy: [
+          "Knight",
+          "Sorcerer",
+          "Grier",
+          "Gnome",
+          "Pixie",
+          "Fae",
+          "Brier",
+          "Phoenix",
+          "Centaur",
+          "Wyvern",
+          "Golem",
+        ],
+        aesthetic: [
+          "moss",
+          "rain",
+          "veil",
+          "dusk",
+          "dawn",
+          "cloud",
+          "bloom",
+          "haze",
+          "mist",
+          "dew",
+          "fern",
+        ],
+      },
+    },
+  };
+
+  // Helper function to pick a random array item
+  const randomPick = (arr: string[]) =>
+    arr[Math.floor(Math.random() * arr.length)];
+
+  // State Management
+  let activeTab = "char"; // "char", "brand", "user"
+  let quantity = 10;
+  let generatedNames: { name: string; locked: boolean }[] = [];
+  let favorites: string[] = [];
+
+  // ==================== PROCEDURAL GENERATOR LOGIC ====================
+
+  function generateName(category: string, filters: any): string {
+    switch (category) {
+      case "char": {
+        const genre = filters.genre;
+        const gender = filters.gender;
+
+        if (genre === "elf") {
+          const pref = randomPick(DATASET.elf.prefixes);
+          const inf = randomPick(DATASET.elf.infixes);
+          const suff =
+            gender === "male"
+              ? randomPick(DATASET.elf.suffixesMale)
+              : gender === "female"
+                ? randomPick(DATASET.elf.suffixesFemale)
+                : randomPick([
+                    ...DATASET.elf.suffixesMale,
+                    ...DATASET.elf.suffixesFemale,
+                  ]);
+
+          const firstName = pref + inf + suff;
+          const surPref = randomPick(DATASET.elf.surnamePrefix);
+          const surSuff = randomPick(DATASET.elf.surnameSuffix);
+          return `${firstName} ${surPref}${surSuff}`;
+        }
+
+        if (genre === "dwarf") {
+          const pref = randomPick(DATASET.dwarf.prefixes);
+          const suff =
+            gender === "male"
+              ? randomPick(DATASET.dwarf.suffixesMale)
+              : gender === "female"
+                ? randomPick(DATASET.dwarf.suffixesFemale)
+                : randomPick([
+                    ...DATASET.dwarf.suffixesMale,
+                    ...DATASET.dwarf.suffixesFemale,
+                  ]);
+
+          const firstName = pref + suff;
+          const surPref = randomPick(DATASET.dwarf.surnamePrefix);
+          const surSuff = randomPick(DATASET.dwarf.surnameSuffix);
+          return `${firstName} ${surPref}${surSuff}`;
+        }
+
+        if (genre === "orc") {
+          const pref = randomPick(DATASET.orc.prefixes);
+          const suff = randomPick(DATASET.orc.suffixes);
+          return pref + suff;
+        }
+
+        if (genre === "noble") {
+          const firstNameList =
+            gender === "male"
+              ? DATASET.noble.male
+              : gender === "female"
+                ? DATASET.noble.female
+                : [...DATASET.noble.male, ...DATASET.noble.female];
+          const firstName = randomPick(firstNameList);
+          const lastName = randomPick(DATASET.noble.surnames);
+          return `${firstName} ${lastName}`;
+        }
+
+        if (genre === "space-alien") {
+          const s1 = randomPick(DATASET.scifiAlien);
+          const s2 = randomPick(DATASET.scifiAlien);
+          const separator = randomPick(["'", "-", " "]);
+          return `${s1}${separator}${s2.toLowerCase()}`;
+        }
+
+        if (genre === "cyber-space") {
+          const term = randomPick(DATASET.scifiCyber);
+          const second = randomPick([
+            "Runner",
+            "Grid",
+            "Apex",
+            "Nova",
+            "Cipher",
+            "Agent",
+            "Net",
+            "Ghost",
+            "Flux",
+          ]);
+          return `${term} ${second}`;
+        }
+
+        if (genre === "cyborg") {
+          const human = randomPick([
+            "Jax",
+            "Echo",
+            "Kira",
+            "Cy",
+            "Steel",
+            "Val",
+            "Nova",
+            "Nyx",
+            "Lex",
+            "Borg",
+          ]);
+          const num = Math.floor(10 + Math.random() * 900);
+          const code = randomPick(["X", "Z", "Alpha", "Omega", "V", "R", "D"]);
+          return `${human}-${num}${code}`;
+        }
+
+        if (genre.startsWith("culture-")) {
+          const cult = genre.replace("culture-", "");
+          // @ts-ignore
+          const pool = DATASET.cultures[cult];
+          if (pool) {
+            const firstNameList =
+              gender === "male"
+                ? pool.male
+                : gender === "female"
+                  ? pool.female
+                  : [...pool.male, ...pool.female];
+            const firstName = randomPick(firstNameList);
+            const lastName = randomPick(pool.surnames);
+            return `${firstName} ${lastName}`;
+          }
+        }
+        return "Jane Doe";
+      }
+
+      case "brand": {
+        const industry = filters.industry;
+        const style = filters.style;
+        const keyword = (filters.keyword || "").trim();
+
+        if (style === "modern") {
+          // Coined/Blended word
+          let root = "";
+          if (keyword.length > 2) {
+            root =
+              keyword.charAt(0).toUpperCase() + keyword.slice(1).toLowerCase();
+          } else {
+            // Pick based on industry
+            const roots =
+              industry === "tech"
+                ? DATASET.business.techRoots
+                : industry === "creative"
+                  ? DATASET.business.creativeRoots
+                  : industry === "finance"
+                    ? DATASET.business.financeRoots
+                    : DATASET.business.healthRoots;
+            root = randomPick(roots);
+          }
+          const suffixes =
+            industry === "tech"
+              ? DATASET.business.techSuffixes
+              : industry === "creative"
+                ? DATASET.business.creativeSuffixes
+                : industry === "finance"
+                  ? DATASET.business.financeSuffixes
+                  : DATASET.business.healthSuffixes;
+          return `${root}${randomPick(suffixes)}`;
+        }
+
+        if (style === "playful") {
+          let modifier = "";
+          let noun = "";
+          if (keyword.length > 2) {
+            modifier =
+              keyword.charAt(0).toUpperCase() + keyword.slice(1).toLowerCase();
+            noun = randomPick(DATASET.business.playfulNouns);
+          } else {
+            modifier = randomPick(DATASET.business.playfulModifiers);
+            noun = randomPick(DATASET.business.playfulNouns);
+          }
+          return `${modifier}${noun}`;
+        }
+
+        if (style === "professional") {
+          let root = "";
+          if (keyword.length > 2) {
+            root =
+              keyword.charAt(0).toUpperCase() + keyword.slice(1).toLowerCase();
+          } else {
+            const roots =
+              industry === "tech"
+                ? DATASET.business.techRoots
+                : industry === "creative"
+                  ? DATASET.business.creativeRoots
+                  : industry === "finance"
+                    ? DATASET.business.financeRoots
+                    : DATASET.business.healthRoots;
+            root = randomPick(roots);
+          }
+          const suffixes =
+            industry === "tech"
+              ? ["Systems", "Technologies", "Labs", "Digital"]
+              : industry === "creative"
+                ? ["Studios", "Design", "Agency", "Creative"]
+                : industry === "finance"
+                  ? ["Capital", "Holdings", "Group", "Partners"]
+                  : ["Wellness", "Health", "Spring", "Life"];
+          return `${root} ${randomPick(suffixes)}`;
+        }
+        return "Apex Corp";
+      }
+
+      case "user": {
+        const theme = filters.theme;
+        const includeNums = filters.includeNums;
+        const includeSymbols = filters.includeSymbols;
+
+        // @ts-ignore
+        const pref = randomPick(DATASET.username.prefixes[theme]);
+        // @ts-ignore
+        const noun = randomPick(DATASET.username.nouns[theme]);
+
+        let username = `${pref}${noun}`;
+
+        if (includeNums) {
+          const num = Math.floor(Math.random() * 999);
+          username += num;
+        }
+
+        if (includeSymbols) {
+          const sym = randomPick([".", "_", "xX"]);
+          if (sym === "xX") {
+            username = `xX_${username}_Xx`;
+          } else {
+            username = username.replaceAll("_", sym).replaceAll(".", sym);
+          }
+        }
+        return username;
+      }
+
+      default:
+        return "Unknown Option";
+    }
+  }
+
+  // ==================== RENDERING & EVENT BINDINGS ====================
+
+  const namesGrid = document.getElementById("names-grid") as HTMLDivElement;
+  const namesEmptyState = document.getElementById(
+    "names-empty-state",
+  ) as HTMLDivElement;
+  const generateBtn = document.getElementById(
+    "generate-btn",
+  ) as HTMLButtonElement;
+  const resultsCount = document.getElementById(
+    "results-count",
+  ) as HTMLSpanElement;
+
+  const favsContainer = document.getElementById(
+    "favs-container",
+  ) as HTMLDivElement;
+  const favsEmptyState = document.getElementById(
+    "favs-empty-state",
+  ) as HTMLDivElement;
+  const favsCount = document.getElementById("favs-count") as HTMLSpanElement;
+  const favsActions = document.getElementById("favs-actions") as HTMLDivElement;
+
+  // Read UI Form State
+  function getFilters() {
+    let gender = "neutral";
+    const genderInput = document.querySelector(
+      'input[name="char-gender"]:checked',
+    ) as HTMLInputElement;
+    if (genderInput) gender = genderInput.value;
+
+    return {
+      genre: (document.getElementById("char-genre") as HTMLSelectElement).value,
+      gender: gender,
+      industry: (document.getElementById("brand-industry") as HTMLSelectElement)
+        .value,
+      style: (document.getElementById("brand-style") as HTMLSelectElement)
+        .value,
+      keyword: (document.getElementById("brand-keyword") as HTMLInputElement)
+        .value,
+      theme: (document.getElementById("user-theme") as HTMLSelectElement).value,
+      includeNums: (document.getElementById("user-nums") as HTMLInputElement)
+        .checked,
+      includeSymbols: (
+        document.getElementById("user-chars") as HTMLInputElement
+      ).checked,
+    };
+  }
+
+  // Generate / Regenerate Action
+  function performGeneration(isInitial = false) {
+    const filters = getFilters();
+
+    // Build or update generatedNames list preserving locks
+    const newNames: { name: string; locked: boolean }[] = [];
+
+    for (let i = 0; i < quantity; i++) {
+      if (generatedNames[i] && generatedNames[i].locked) {
+        newNames.push(generatedNames[i]);
+      } else {
+        newNames.push({
+          name: generateName(activeTab, filters),
+          locked: false,
+        });
+      }
+    }
+
+    generatedNames = newNames;
+    renderResults();
+  }
+
+  // Single Slot Shuffle
+  function shuffleSlot(index: number) {
+    const filters = getFilters();
+    generatedNames[index].name = generateName(activeTab, filters);
+
+    // Render only the specific card to preserve visual states
+    renderResults(index);
+  }
+
+  // Toggle Lock
+  function toggleLock(index: number) {
+    generatedNames[index].locked = !generatedNames[index].locked;
+    renderResults(index);
+  }
+
+  // Render Results Grid
+  function renderResults(singleIndexUpdate: number | null = null) {
+    if (generatedNames.length === 0) {
+      namesGrid.classList.add("hidden");
+      namesEmptyState.classList.remove("hidden");
+      return;
+    }
+
+    namesGrid.classList.remove("hidden");
+    namesEmptyState.classList.add("hidden");
+    resultsCount.textContent = `${generatedNames.length} total`;
+
+    // Full render or partial updates
+    if (singleIndexUpdate !== null) {
+      const card = document.querySelector(
+        `[data-index="${singleIndexUpdate}"]`,
+      );
+      if (card) {
+        const item = generatedNames[singleIndexUpdate];
+
+        // Update locked styles
+        const lockBtn = card.querySelector(".lock-btn") as HTMLButtonElement;
+        const nameText = card.querySelector(".name-text") as HTMLDivElement;
+
+        nameText.textContent = item.name;
+
+        if (item.locked) {
+          card.classList.remove("bg-canvas", "border-hairline-soft");
+          card.classList.add("bg-surface-yellow", "border-brand-yellow-deep");
+          lockBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-yellow-deep animate-lock-pop" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+            </svg>
+          `;
+          lockBtn.title = "Unlock Name";
+        } else {
+          card.classList.remove(
+            "bg-surface-yellow",
+            "border-brand-yellow-deep",
+          );
+          card.classList.add("bg-canvas", "border-hairline-soft");
+          lockBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+            </svg>
+          `;
+          lockBtn.title = "Lock Name";
+        }
+      }
+      return;
+    }
+
+    // Build entire list
+    namesGrid.innerHTML = "";
+    generatedNames.forEach((item, index) => {
+      const isFav = favorites.includes(item.name);
+      const card = document.createElement("div");
+      card.dataset.index = index.toString();
+      card.className = `flex items-center justify-between p-3.5 border rounded-xl shadow-subtle transition-all duration-300 relative group overflow-hidden ${
+        item.locked
+          ? "bg-surface-yellow border-brand-yellow-deep"
+          : "bg-canvas border-hairline-soft hover:shadow-card hover:border-hairline-strong"
+      } stagger-item-${index}`;
+
+      card.innerHTML = `
+        <div class="flex flex-col gap-0.5 max-w-[70%]">
+          <div class="name-text font-display font-medium text-base text-primary select-all break-all tracking-tight leading-snug">
+            ${item.name}
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <!-- Copy Button -->
+          <button
+            type="button"
+            class="copy-btn w-8 h-8 rounded-full flex items-center justify-center bg-surface border border-hairline hover:bg-canvas text-slate hover:text-primary transition-all cursor-pointer"
+            title="Copy to clipboard"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+          </button>
+
+          <!-- Shuffle Button -->
+          <button
+            type="button"
+            class="shuffle-btn w-8 h-8 rounded-full flex items-center justify-center bg-surface border border-hairline hover:bg-canvas text-slate hover:text-primary transition-all cursor-pointer ${item.locked ? "opacity-40 pointer-events-none" : ""}"
+            title="Shuffle this name"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </button>
+
+          <!-- Lock Button -->
+          <button
+            type="button"
+            class="lock-btn w-8 h-8 rounded-full flex items-center justify-center bg-surface border border-hairline hover:bg-canvas cursor-pointer"
+            title="${item.locked ? "Unlock Name" : "Lock Name"}"
+          >
+            ${
+              item.locked
+                ? `
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-yellow-deep" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clip-rule="evenodd" />
+                </svg>
+              `
+                : `
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate hover:text-primary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                </svg>
+              `
+            }
+          </button>
+
+          <!-- Favorite/Pin Button -->
+          <button
+            type="button"
+            class="fav-btn w-8 h-8 rounded-full flex items-center justify-center bg-surface border border-hairline hover:bg-canvas cursor-pointer"
+            title="${isFav ? "Remove from Favorites" : "Add to Favorites"}"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-all ${isFav ? "text-brand-coral fill-current" : "text-slate hover:text-brand-coral"}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </button>
+        </div>
+      `;
+
+      // Bind button events inside the card
+      card.querySelector(".copy-btn")?.addEventListener("click", () => {
+        navigator.clipboard.writeText(item.name);
+        const iconBtn = card.querySelector(".copy-btn") as HTMLButtonElement;
+        iconBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        `;
+        setTimeout(() => {
+          iconBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+          `;
+        }, 1200);
+      });
+
+      card.querySelector(".shuffle-btn")?.addEventListener("click", (e) => {
+        const iconSvg = (e.currentTarget as HTMLButtonElement).querySelector(
+          "svg",
+        );
+        iconSvg?.classList.add("animate-shuffle-spin");
+        setTimeout(() => {
+          shuffleSlot(index);
+        }, 200);
+      });
+
+      card.querySelector(".lock-btn")?.addEventListener("click", () => {
+        toggleLock(index);
+      });
+
+      card.querySelector(".fav-btn")?.addEventListener("click", () => {
+        toggleFavorite(item.name);
+      });
+
+      namesGrid.appendChild(card);
+    });
+  }
+
+  // ==================== FAVORITES LOGIC ====================
+
+  function loadFavorites() {
+    const stored = localStorage.getItem("board_name_favs");
+    if (stored) {
+      favorites = JSON.parse(stored);
+    }
+    renderFavorites();
+  }
+
+  function saveFavorites() {
+    localStorage.setItem("board_name_favs", JSON.stringify(favorites));
+    renderFavorites();
+    // Refresh items to toggle active heart icon status
+    renderResults();
+  }
+
+  function toggleFavorite(name: string) {
+    if (favorites.includes(name)) {
+      favorites = favorites.filter((n) => n !== name);
+    } else {
+      favorites.push(name);
+    }
+    saveFavorites();
+  }
+
+  function renderFavorites() {
+    favsCount.textContent = favorites.length.toString();
+
+    if (favorites.length === 0) {
+      favsContainer.innerHTML = "";
+      favsEmptyState.classList.remove("hidden");
+      favsActions.classList.add("hidden");
+      return;
+    }
+
+    favsEmptyState.classList.add("hidden");
+    favsActions.classList.remove("hidden");
+    favsContainer.innerHTML = "";
+
+    favorites.forEach((name) => {
+      const pill = document.createElement("div");
+      pill.className =
+        "flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-hairline rounded-full text-xs font-semibold text-primary transition-all hover:border-brand-coral";
+      pill.innerHTML = `
+        <span class="cursor-pointer select-all">${name}</span>
+        <button type="button" class="remove-fav-btn text-slate hover:text-brand-coral focus:outline-none cursor-pointer" title="Remove">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      `;
+
+      pill.querySelector("span")?.addEventListener("click", () => {
+        navigator.clipboard.writeText(name);
+        // Show temporary visual feedback
+        const originalText = name;
+        const textSpan = pill.querySelector("span") as HTMLSpanElement;
+        textSpan.textContent = "Copied!";
+        setTimeout(() => {
+          textSpan.textContent = originalText;
+        }, 1000);
+      });
+
+      pill.querySelector(".remove-fav-btn")?.addEventListener("click", () => {
+        toggleFavorite(name);
+      });
+
+      favsContainer.appendChild(pill);
+    });
+  }
+
+  // ==================== TABS & OPTIONS CONTROLLERS ====================
+
+  function switchTab(tab: string) {
+    activeTab = tab;
+
+    // Tabs DOM highlight updates
+    const tabs = [
+      { id: "tab-char-btn", name: "char" },
+      { id: "tab-brand-btn", name: "brand" },
+      { id: "tab-user-btn", name: "user" },
+    ];
+
+    tabs.forEach((t) => {
+      const btn = document.getElementById(t.id) as HTMLButtonElement;
+      if (t.name === tab) {
+        btn.classList.add("bg-primary", "text-canvas");
+        btn.classList.remove("text-slate", "hover:text-ink");
+        btn.setAttribute("aria-selected", "true");
+      } else {
+        btn.classList.remove("bg-primary", "text-canvas");
+        btn.classList.add("text-slate", "hover:text-ink");
+        btn.setAttribute("aria-selected", "false");
+      }
+    });
+
+    // Form Filter Group visibility updates
+    const filterChar = document.getElementById(
+      "filter-group-char",
+    ) as HTMLDivElement;
+    const filterBrand = document.getElementById(
+      "filter-group-brand",
+    ) as HTMLDivElement;
+    const filterUser = document.getElementById(
+      "filter-group-user",
+    ) as HTMLDivElement;
+
+    filterChar.classList.add("hidden");
+    filterBrand.classList.add("hidden");
+    filterUser.classList.add("hidden");
+
+    if (tab === "char") filterChar.classList.remove("hidden");
+    if (tab === "brand") filterBrand.classList.remove("hidden");
+    if (tab === "user") filterUser.classList.remove("hidden");
+
+    // Perform default generation for new tab
+    performGeneration();
+  }
+
+  // Set quantity selection styling
+  function setQuantity(qty: number) {
+    quantity = qty;
+    const qtyButtons = document.querySelectorAll(".btn-qty");
+    qtyButtons.forEach((btn) => {
+      const btnQty = parseInt(btn.getAttribute("data-qty") || "10");
+      if (btnQty === qty) {
+        btn.classList.add("bg-primary", "text-canvas");
+        btn.classList.remove(
+          "text-slate",
+          "border-hairline-strong",
+          "bg-canvas",
+        );
+      } else {
+        btn.classList.remove("bg-primary", "text-canvas");
+        btn.classList.add("text-slate", "border-hairline-strong", "bg-canvas");
+      }
+    });
+
+    performGeneration();
+  }
+
+  // ==================== EXPORTS ====================
+
+  function exportFavorites(format: "txt" | "csv") {
+    if (favorites.length === 0) return;
+
+    let content = "";
+    let mimeType = "text/plain";
+    let filename = `boardtools_names_export_${Date.now()}`;
+
+    if (format === "txt") {
+      content = favorites.join("\r\n");
+      filename += ".txt";
+    } else {
+      content =
+        "Name\r\n" +
+        favorites.map((n) => `"${n.replace(/"/g, '""')}"`).join("\r\n");
+      mimeType = "text/csv";
+      filename += ".csv";
+    }
+
+    const blob = new Blob([content], { type: mimeType });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  // ==================== INITIALIZATION & BINDING ====================
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Bind Tab Switching
+    document
+      .getElementById("tab-char-btn")
+      ?.addEventListener("click", () => switchTab("char"));
+    document
+      .getElementById("tab-brand-btn")
+      ?.addEventListener("click", () => switchTab("brand"));
+    document
+      .getElementById("tab-user-btn")
+      ?.addEventListener("click", () => switchTab("user"));
+
+    // Bind Quantity Selecting
+    document.querySelectorAll(".btn-qty").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const qty = parseInt(
+          (e.currentTarget as HTMLButtonElement).getAttribute("data-qty") ||
+            "10",
+        );
+        setQuantity(qty);
+      });
+    });
+
+    // Bind Gender selection styling helper
+    const genderLabels = document.querySelectorAll('input[name="char-gender"]');
+    genderLabels.forEach((rad) => {
+      rad.addEventListener("change", (e) => {
+        const target = e.target as HTMLInputElement;
+        const parentLabels = document.querySelectorAll(
+          'input[name="char-gender"]',
+        );
+        parentLabels.forEach((p) => {
+          const lbl = p.closest("label") as HTMLLabelElement;
+          lbl.classList.remove("bg-primary", "text-canvas", "border-primary");
+          lbl.classList.add(
+            "text-slate",
+            "bg-canvas",
+            "border-hairline-strong",
+          );
+        });
+        const activeLbl = target.closest("label") as HTMLLabelElement;
+        activeLbl.classList.remove(
+          "text-slate",
+          "bg-canvas",
+          "border-hairline-strong",
+        );
+        activeLbl.classList.add("bg-primary", "text-canvas", "border-primary");
+        performGeneration();
+      });
+    });
+
+    // Option triggers for instant changes
+    document
+      .getElementById("char-genre")
+      ?.addEventListener("change", () => performGeneration());
+    document
+      .getElementById("brand-industry")
+      ?.addEventListener("change", () => performGeneration());
+    document
+      .getElementById("brand-style")
+      ?.addEventListener("change", () => performGeneration());
+    document
+      .getElementById("brand-keyword")
+      ?.addEventListener("input", () => performGeneration());
+    document
+      .getElementById("user-theme")
+      ?.addEventListener("change", () => performGeneration());
+    document
+      .getElementById("user-nums")
+      ?.addEventListener("change", () => performGeneration());
+    document
+      .getElementById("user-chars")
+      ?.addEventListener("change", () => performGeneration());
+
+    // Generate CTA button
+    generateBtn.addEventListener("click", () => performGeneration());
+    document
+      .getElementById("generate-top-btn")
+      ?.addEventListener("click", () => performGeneration());
+
+    // Global Lock / Unlock
+    document.getElementById("lock-all-btn")?.addEventListener("click", () => {
+      generatedNames.forEach((item) => (item.locked = true));
+      renderResults();
+    });
+    document.getElementById("unlock-all-btn")?.addEventListener("click", () => {
+      generatedNames.forEach((item) => (item.locked = false));
+      renderResults();
+    });
+
+    // Reset Defaults
+    document.getElementById("reset-all-btn")?.addEventListener("click", () => {
+      // Character Defaults
+      (document.getElementById("char-genre") as HTMLSelectElement).value =
+        "elf";
+      const neutralRadio = document.querySelector(
+        'input[name="char-gender"][value="neutral"]',
+      ) as HTMLInputElement;
+      if (neutralRadio) {
+        neutralRadio.checked = true;
+        // Trigger event
+        neutralRadio.dispatchEvent(new Event("change"));
+      }
+
+      // Brand Defaults
+      (document.getElementById("brand-industry") as HTMLSelectElement).value =
+        "tech";
+      (document.getElementById("brand-style") as HTMLSelectElement).value =
+        "modern";
+      (document.getElementById("brand-keyword") as HTMLInputElement).value = "";
+
+      // Username Defaults
+      (document.getElementById("user-theme") as HTMLSelectElement).value =
+        "gaming";
+      (document.getElementById("user-nums") as HTMLInputElement).checked = true;
+      (document.getElementById("user-chars") as HTMLInputElement).checked =
+        false;
+
+      // Lock resets
+      generatedNames.forEach((item) => (item.locked = false));
+
+      setQuantity(10);
+    });
+
+    // Favorites Export
+    document
+      .getElementById("export-txt-btn")
+      ?.addEventListener("click", () => exportFavorites("txt"));
+    document
+      .getElementById("export-csv-btn")
+      ?.addEventListener("click", () => exportFavorites("csv"));
+    document.getElementById("clear-favs-btn")?.addEventListener("click", () => {
+      if (confirm("Are you sure you want to clear your saved favorites?")) {
+        favorites = [];
+        saveFavorites();
+      }
+    });
+
+    // How it works modal
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    if (howItWorksBtn && howItWorksModal) {
+      howItWorksBtn.addEventListener("click", () => {
+        howItWorksModal.classList.remove("hidden");
+      });
+    }
+    const hideModal = () => {
+      howItWorksModal?.classList.add("hidden");
+    };
+    closeModalBtn?.addEventListener("click", hideModal);
+    modalOkBtn?.addEventListener("click", hideModal);
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) hideModal();
+    });
+
+    // Load Favorites & Run Initial Generation
+    loadFavorites();
+    performGeneration(true);
+  });
+</script>
