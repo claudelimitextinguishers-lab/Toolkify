@@ -1,219 +1,1348 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+// Tool metadata
+const name = "Base64 & URL Encoder/Decoder";
+const category = "developer";
+const tier = "Developer Tools";
+
+// SEO metadata
+const pageTitle = "Base64 & URL Encoder/Decoder - Live Bidirectional Converter";
+const description = "Convert text and files to Base64, encode or decode URLs, or chain both. Symmetrical live editing, image preview, drag-and-drop file upload, auto-detect, and conversion history.";
+const canonicalUrl = "https://boardtools.app/tools/base64-url";
+const ogImage = "/og/base64-url.png";
+const keywords = "base64 encoder, base64 decoder, url encoder, url decoder, base64 image preview, binary to base64, live url encoder, bidirectional converter, url safe base64, batch encoder";
 ---
 
 <Layout 
-  title="Base64 & URL Encoder/Decoder Converter - BoardTools"
-  description="Convert raw text input to Base64 hashes, decode Base64 strings, or encode/decode URLs dynamically. Fully client-side conversions."
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6">
-    <!-- Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Tools</a>
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Base64 & URL Encoder/Decoder",
+      "alternateName": "Live Bidirectional Base64 & URL Converter",
+      "url": "https://boardtools.app/tools/base64-url",
+      "description": "Free client-side tool to encode and decode Base64, URL strings, or chained variants. Features drag-and-drop file encoding, inline image previews, smart auto-detection, and local history.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Bidirectional live conversion (editing either panel updates the other)",
+        "Base64 standard and URL-safe variants",
+        "URL standard (encodeURI) and component (encodeURIComponent) scopes",
+        "Chained Mode (Base64 + URL Encode/Decode sequence)",
+        "Drag-and-drop file upload to Base64",
+        "Inline image preview for decoded data URLs",
+        "Smart auto-detection of pasted Base64 or URL formats",
+        "Batch mode for line-by-line processing",
+        "Shareable URL links with state encoded",
+        "Local history log of last 10 conversions"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Developer",
+          "item": "https://boardtools.app/tools/developer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Base64 & URL Converter",
+          "item": "https://boardtools.app/tools/base64-url"
+        }
+      ]
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 py-2 sm:py-4 flex flex-col gap-3 sm:gap-4 animate-fade-in pb-16">
+    <!-- Breadcrumbs & Header -->
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <span class="text-brand-blue">Base64 & URL</span>
-      </div>
-      <h1 class="font-display font-medium text-3xl tracking-tight text-primary">Base64 & URL Converter</h1>
-      <p class="text-sm text-slate">Safely encode or decode values to/from Base64 hashes and standard URL formatting blocks.</p>
-    </div>
-
-    <!-- Controls Selector Grid -->
-    <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface rounded-xl border border-hairline">
-      <!-- Mode selectors -->
-      <div class="flex flex-wrap gap-2.5" id="mode-tabs-container">
-        <button class="pill-tab pill-tab-active" data-mode="b64-encode">Base64 Encode</button>
-        <button class="pill-tab" data-mode="b64-decode">Base64 Decode</button>
-        <button class="pill-tab" data-mode="url-encode">URL Encode</button>
-        <button class="pill-tab" data-mode="url-decode">URL Decode</button>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <!-- Live toggle state -->
-        <span class="text-xs text-stone font-semibold uppercase">Convert Real-Time:</span>
-        <span class="inline-flex items-center px-2 py-0.5 bg-success-accent/20 text-success-accent rounded text-[10px] font-bold">Enabled</span>
-      </div>
-    </div>
-
-    <!-- Editor panels -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- Source Panel -->
-      <div class="card-base flex flex-col gap-4">
-        <div class="flex items-center justify-between">
-          <label for="converter-input" id="lbl-input-title" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>
-            Raw Source Text
-          </label>
-          <div class="flex gap-2">
-            <button id="btn-sample-txt" class="text-xs text-brand-blue hover:underline cursor-pointer">Load Sample</button>
-            <button id="btn-clear" class="text-xs text-stone hover:text-primary cursor-pointer">Clear</button>
-          </div>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-0.5">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <h1 class="font-display font-medium text-2xl sm:text-3xl tracking-tight text-primary">
+            Base64 & URL Converter
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2.5 rounded-full font-semibold uppercase tracking-wider shrink-0">{tier}</span>
         </div>
-
-        <textarea 
-          id="converter-input" 
-          placeholder="Type or paste text string to convert..." 
-          class="w-full h-[300px] p-4 font-mono text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue"
-        ></textarea>
-      </div>
-
-      <!-- Result Panel -->
-      <div class="card-base flex flex-col gap-4">
-        <div class="flex items-center justify-between">
-          <span id="lbl-output-title" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
-            Base64 Result Output
-          </span>
-          <button 
-            id="btn-copy" 
-            class="button-secondary py-1 px-3 text-xs !rounded-md hover:bg-surface flex items-center gap-1.5 cursor-pointer"
+        
+        <div class="flex items-center gap-2">
+          <!-- Reset button -->
+          <button
+            type="button"
+            id="btn-global-reset"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+            aria-label="Reset tool"
           >
-            Copy Result
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" />
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Controller Grid -->
+    <div class="flex flex-col gap-4 p-5 bg-surface border border-hairline rounded-2xl shadow-subtle">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <!-- Main Mode Tabs -->
+        <div class="flex bg-canvas border border-hairline p-1 rounded-xl shadow-subtle shrink-0" id="main-mode-tabs">
+          <button class="px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer bg-primary text-canvas shadow-sm" data-tab="b64">Base64</button>
+          <button class="px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary" data-tab="url">URL</button>
+          <button class="px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary" data-tab="chained">
+            <span class="sm:hidden">Chained</span>
+            <span class="hidden sm:inline">Chained (B64 + URL)</span>
           </button>
         </div>
 
-        <textarea 
-          id="converter-output" 
-          readonly 
-          placeholder="Output will generate here..." 
-          class="w-full h-[300px] p-4 font-mono text-sm bg-surface border border-hairline rounded-lg outline-none select-all text-primary"
-        ></textarea>
+        <!-- Direction Toggle Switch -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold text-stone uppercase">Direction:</span>
+          <div class="flex bg-canvas border border-hairline p-0.5 rounded-lg shadow-subtle" id="direction-toggle">
+            <button class="px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas" data-dir="encode">Encode</button>
+            <button class="px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary" data-dir="decode">Decode</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings / Configuration bar -->
+      <div class="flex flex-wrap items-center gap-y-3 gap-x-6 pt-3 border-t border-hairline text-xs text-slate">
+        <!-- Base64 Specific Variant Config -->
+        <div class="flex items-center gap-2" id="cfg-b64-variant">
+          <span class="font-semibold text-stone uppercase text-[10px]">Base64 Variant:</span>
+          <select id="sel-b64-variant" class="bg-canvas border border-hairline rounded px-2 py-1 outline-none text-primary cursor-pointer hover:border-brand-blue">
+            <option value="standard">Standard (+ / , padded)</option>
+            <option value="urlsafe">URL-Safe (- _ , no padding)</option>
+          </select>
+        </div>
+
+        <!-- URL Specific Scope Config -->
+        <div class="flex items-center gap-2 hidden" id="cfg-url-scope">
+          <span class="font-semibold text-stone uppercase text-[10px]">URL Scope:</span>
+          <select id="sel-url-scope" class="bg-canvas border border-hairline rounded px-2 py-1 outline-none text-primary cursor-pointer hover:border-brand-blue">
+            <option value="component">Component (encodeURIComponent)</option>
+            <option value="standard">Standard URI (encodeURI)</option>
+          </select>
+        </div>
+
+        <!-- Chained Config (Order) -->
+        <div class="flex items-center gap-2 hidden" id="cfg-chained-order">
+          <span class="font-semibold text-stone uppercase text-[10px]">Chaining Sequence:</span>
+          <select id="sel-chained-order" class="bg-canvas border border-hairline rounded px-2 py-1 outline-none text-primary cursor-pointer hover:border-brand-blue">
+            <option value="b64-url">Base64 -> URL Encode (Encode Mode)</option>
+            <option value="url-b64">URL -> Base64 Encode (Encode Mode)</option>
+          </select>
+        </div>
+
+        <!-- Batch Mode Option -->
+        <label class="flex items-center gap-2 cursor-pointer select-none">
+          <input type="checkbox" id="chk-batch-mode" class="rounded border-hairline-strong text-brand-blue focus:ring-brand-blue" />
+          <span class="font-semibold text-stone uppercase text-[10px]">Line-by-Line Batch Mode</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Alert / Detection Recommendation Toast -->
+    <div id="detection-toast" class="hidden flex flex-wrap items-center justify-between gap-2 p-3.5 bg-surface-yellow border border-brand-yellow/50 rounded-xl animate-fade-in text-xs text-yellow-dark">
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-2.5 w-2.5 rounded-full bg-brand-yellow-deep"></span>
+        <span id="detection-text">Pasted text looks like Base64! Switch to Decode mode?</span>
+      </div>
+      <div class="flex gap-2">
+        <button id="btn-apply-detection" class="px-2.5 py-1 bg-brand-yellow hover:bg-brand-yellow-deep text-primary font-bold rounded transition-colors cursor-pointer">Yes, switch</button>
+        <button id="btn-dismiss-detection" class="px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate font-semibold rounded transition-colors cursor-pointer">Dismiss</button>
+      </div>
+    </div>
+
+    <!-- Double Panel Workspace -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative">
+      <!-- Input Panel A (Left/Top) -->
+      <div id="panel-container-a" class="lg:col-span-5 flex flex-col card-base shadow-subtle p-5 border border-hairline transition-all duration-300">
+        <div class="flex items-center justify-between mb-3.5">
+          <label for="editor-a" id="lbl-panel-a" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-coral animate-pulse"></span>
+            Source Text
+          </label>
+          <div class="flex items-center gap-2 text-xs text-stone">
+            <button id="btn-load-sample" class="text-brand-blue font-semibold hover:underline cursor-pointer">Load Sample</button>
+            <span>•</span>
+            <button id="btn-clear-a" class="hover:text-brand-coral cursor-pointer">Clear</button>
+          </div>
+        </div>
+
+        <!-- File Upload Area for Panel A (only shown in Base64 Encode) -->
+        <div id="file-dropzone" class="mb-3 border-2 border-dashed border-hairline-strong hover:border-brand-blue rounded-xl p-4 transition-colors flex flex-col items-center justify-center text-center gap-2 bg-surface cursor-pointer">
+          <input type="file" id="file-input" class="hidden" accept="image/*,text/*,application/json,application/pdf" />
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-8m0 8l-4-4m4 4l4-4M4 4h16" />
+          </svg>
+          <div class="flex flex-col gap-0.5">
+            <span class="text-xs font-bold text-slate">Drop file here or click to upload</span>
+            <span class="text-[10px] text-muted">Supports images and text files up to 5MB</span>
+          </div>
+        </div>
+
+        <!-- Selected File Status Badge -->
+        <div id="file-status-badge" class="hidden flex items-center justify-between p-2 mb-3 bg-brand-orange-light/35 border border-brand-orange-light text-primary rounded-lg text-xs">
+          <div class="flex items-center gap-2 overflow-hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-yellow-deep shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span id="file-info-text" class="truncate font-semibold text-charcoal">image.png (45 KB)</span>
+          </div>
+          <button id="btn-remove-file" class="text-brand-coral hover:text-coral-dark font-bold text-xs p-1 cursor-pointer">✕</button>
+        </div>
+
+        <!-- Textarea A -->
+        <div class="relative flex-grow flex flex-col">
+          <textarea
+            id="editor-a"
+            placeholder="Type or paste contents to transform..."
+            class="w-full min-h-[250px] lg:h-[350px] flex-grow p-4 font-mono text-sm bg-surface-soft border border-hairline rounded-xl outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue resize-y"
+          ></textarea>
+          <!-- Live sync pointer -->
+          <div id="sync-indicator-a" class="absolute bottom-2 right-3 flex items-center gap-1.5 px-2 py-0.5 bg-success-accent text-canvas text-[9px] font-bold rounded uppercase tracking-wider transition-opacity duration-300">
+            <span>Live Sync</span>
+          </div>
+        </div>
+
+        <!-- Panel A Meta Stats -->
+        <div class="flex justify-between items-center mt-2.5 text-[10px] text-muted font-mono">
+          <span id="stat-length-a">0 characters</span>
+          <button id="btn-copy-a" class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 bg-surface hover:bg-hairline text-slate hover:text-primary rounded border border-hairline cursor-pointer transition-all active:scale-95">
+            Copy Input
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Swap / Transition Controls -->
+      <div class="lg:col-span-2 flex lg:flex-col items-center justify-center gap-2 self-center py-2 lg:py-0">
+        <button
+          id="btn-swap-panels"
+          class="p-3 bg-canvas border border-hairline-strong text-slate hover:text-brand-blue hover:border-brand-blue hover:shadow-card rounded-full cursor-pointer transition-all duration-300 transform active:scale-90 active:rotate-180 flex items-center justify-center shrink-0 z-10 shadow-subtle"
+          title="Swap inputs/outputs and invert operation"
+          aria-label="Swap panels"
+        >
+          <!-- Symmetrical Swap SVG -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 lg:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden lg:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Output Panel B (Right/Bottom) -->
+      <div id="panel-container-b" class="lg:col-span-5 flex flex-col card-base shadow-subtle p-5 border border-hairline transition-all duration-300">
+        <div class="flex items-center justify-between mb-3.5">
+          <label for="editor-b" id="lbl-panel-b" class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>
+            Converted Output
+          </label>
+          <div class="flex items-center gap-2 text-xs text-stone">
+            <button
+              id="btn-copy-b"
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-blue hover:border-brand-blue rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+              <span>Copy</span>
+            </button>
+            <span>•</span>
+            <button id="btn-clear-b" class="hover:text-brand-coral cursor-pointer">Clear</button>
+          </div>
+        </div>
+
+        <!-- Inline Image Preview Panel (shown when decoding valid images) -->
+        <div id="image-preview-container" class="hidden mb-3 border border-hairline rounded-xl p-3 bg-surface flex flex-col gap-2.5 animate-fade-in-up">
+          <div class="flex items-center justify-between border-b border-hairline pb-2">
+            <span class="text-[11px] font-bold text-slate uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-success-accent"></span>
+              Image Output Detected
+            </span>
+            <div class="flex gap-2">
+              <button id="btn-preview-zoom" class="text-[10px] text-brand-blue hover:underline font-semibold cursor-pointer">Open Fullscreen</button>
+              <button id="btn-preview-download" class="text-[10px] text-brand-blue hover:underline font-semibold cursor-pointer">Download Image</button>
+            </div>
+          </div>
+          <div class="w-full flex items-center justify-center p-2 bg-canvas rounded-lg overflow-hidden border border-hairline shadow-subtle min-h-[140px] max-h-[220px]">
+            <img id="img-preview" src="" alt="Decoded representation preview" class="max-w-full max-h-full object-contain rounded transition-transform duration-300 hover:scale-105" />
+          </div>
+        </div>
+
+        <!-- Textarea B -->
+        <div class="relative flex-grow flex flex-col">
+          <textarea
+            id="editor-b"
+            placeholder="Result will automatically render here..."
+            class="w-full min-h-[250px] lg:h-[350px] flex-grow p-4 font-mono text-sm bg-surface border border-hairline rounded-xl outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue resize-y text-primary"
+          ></textarea>
+          <!-- Live sync pointer -->
+          <div id="sync-indicator-b" class="absolute bottom-2 right-3 flex items-center gap-1.5 px-2 py-0.5 bg-success-accent text-canvas text-[9px] font-bold rounded uppercase tracking-wider transition-opacity duration-300 opacity-50">
+            <span>Live Sync</span>
+          </div>
+        </div>
+
+        <!-- Panel B Meta Stats -->
+        <div class="flex justify-between items-center mt-2.5 text-[10px] text-muted font-mono">
+          <span id="stat-length-b">0 characters</span>
+        </div>
       </div>
     </div>
 
     <!-- Error Banner -->
-    <div id="error-banner" class="hidden card-base bg-brand-red/35 border-brand-red-dark flex flex-col gap-2">
-      <h3 class="font-display font-semibold text-brand-red-dark text-sm">Decoding Failure</h3>
-      <p id="error-msg" class="text-sm font-mono text-primary"></p>
+    <div id="error-banner" class="hidden flex flex-col gap-1.5 p-4 bg-brand-red-dark/15 border border-brand-red-dark/40 text-coral-dark dark:text-brand-coral rounded-xl font-mono text-xs">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-red-dark shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <span class="font-bold font-display">Conversion Failure</span>
+      </div>
+      <p id="error-msg" class="pl-6">Decoding failed. Please inspect your characters, padding, or format.</p>
+    </div>
+
+    <!-- Shareable State Links Section -->
+    <div class="card-base p-5 border border-hairline flex flex-col gap-3 shadow-subtle">
+      <h3 class="font-display font-semibold text-sm text-primary">Generate Shareable Conversion Link</h3>
+      <p class="text-xs text-slate">Generate a shareable link that embeds the current input text and configuration options directly into the URL query parameters.</p>
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="share-link-input" 
+          readonly 
+          placeholder="Click 'Generate Link' to compute..." 
+          class="flex-grow bg-surface border border-hairline rounded-lg px-3 py-2 text-xs font-mono select-all text-slate focus:text-primary outline-none" 
+        />
+        <button id="btn-generate-share" class="px-4 py-2 bg-canvas hover:bg-surface border border-hairline-strong text-primary hover:text-brand-blue hover:border-brand-blue rounded-lg text-xs font-semibold cursor-pointer transition-colors active:scale-95">
+          Generate & Copy Link
+        </button>
+      </div>
+    </div>
+
+    <!-- History Log Section -->
+    <div class="card-base p-5 border border-hairline flex flex-col gap-4 shadow-subtle">
+      <div class="flex items-center justify-between border-b border-hairline pb-3">
+        <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Recent Conversion History
+        </h3>
+        <button id="btn-clear-history" class="text-xs text-slate hover:text-brand-coral cursor-pointer">Clear History</button>
+      </div>
+      <div id="history-list" class="flex flex-col gap-2">
+        <!-- Dynically filled list of history blocks -->
+        <div class="text-xs text-stone py-2 text-center" id="history-empty-msg">No recent conversions. History updates automatically as you convert.</div>
+      </div>
+    </div>
+
+    <!-- Interactive Zoom Overlay/Modal -->
+    <div id="preview-modal" class="hidden fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-canvas border border-hairline max-w-[800px] w-full rounded-2xl overflow-hidden flex flex-col shadow-modal max-h-[85vh] animate-scale-up">
+        <div class="flex justify-between items-center p-4 border-b border-hairline bg-surface">
+          <span class="font-display font-semibold text-sm text-primary">Fullscreen Image Decoded View</span>
+          <button id="btn-close-modal" class="text-slate hover:text-primary font-bold text-base px-2 py-1 cursor-pointer">✕</button>
+        </div>
+        <div class="flex-grow p-6 flex items-center justify-center bg-surface-soft overflow-auto">
+          <img id="img-modal" src="" alt="Decoded preview zoom" class="max-w-full max-h-[50vh] object-contain rounded shadow-card" />
+        </div>
+        <div class="p-4 border-t border-hairline bg-surface flex justify-end gap-3">
+          <button id="btn-modal-download" class="px-4 py-2 bg-brand-blue hover:bg-blue-pressed text-canvas rounded-lg text-xs font-semibold cursor-pointer">Download Image File</button>
+          <button id="btn-modal-close" class="px-4 py-2 bg-canvas hover:bg-surface border border-hairline text-primary rounded-lg text-xs font-semibold cursor-pointer">Close</button>
+        </div>
+      </div>
     </div>
   </section>
 </Layout>
 
 <script>
-  let activeMode = 'b64-encode'; // 'b64-encode', 'b64-decode', 'url-encode', 'url-decode'
+  // Elements Selection
+  const btnReset = document.getElementById('btn-global-reset');
+  const mainTabs = document.querySelectorAll('#main-mode-tabs button');
+  const dirButtons = document.querySelectorAll('#direction-toggle button');
+  const selB64Variant = document.getElementById('sel-b64-variant') as HTMLSelectElement;
+  const selUrlScope = document.getElementById('sel-url-scope') as HTMLSelectElement;
+  const selChainedOrder = document.getElementById('sel-chained-order') as HTMLSelectElement;
+  const chkBatchMode = document.getElementById('chk-batch-mode') as HTMLInputElement;
 
-  const txtInput = document.getElementById('converter-input') as HTMLTextAreaElement | null;
-  const txtOutput = document.getElementById('converter-output') as HTMLTextAreaElement | null;
+  const cfgB64Variant = document.getElementById('cfg-b64-variant');
+  const cfgUrlScope = document.getElementById('cfg-url-scope');
+  const cfgChainedOrder = document.getElementById('cfg-chained-order');
+
+  const editorA = document.getElementById('editor-a') as HTMLTextAreaElement;
+  const editorB = document.getElementById('editor-b') as HTMLTextAreaElement;
+  const lblPanelA = document.getElementById('lbl-panel-a');
+  const lblPanelB = document.getElementById('lbl-panel-b');
+
+  const syncIndicatorA = document.getElementById('sync-indicator-a');
+  const syncIndicatorB = document.getElementById('sync-indicator-b');
+
+  const fileDropzone = document.getElementById('file-dropzone');
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const fileStatusBadge = document.getElementById('file-status-badge');
+  const fileInfoText = document.getElementById('file-info-text');
+  const btnRemoveFile = document.getElementById('btn-remove-file');
+
+  const imagePreviewContainer = document.getElementById('image-preview-container');
+  const imgPreview = document.getElementById('img-preview') as HTMLImageElement;
+  const btnPreviewZoom = document.getElementById('btn-preview-zoom');
+  const btnPreviewDownload = document.getElementById('btn-preview-download');
+
   const errorBanner = document.getElementById('error-banner');
   const errorMsg = document.getElementById('error-msg');
-  const tabs = document.querySelectorAll('#mode-tabs-container button');
 
-  const btnClear = document.getElementById('btn-clear');
-  const btnSample = document.getElementById('btn-sample-txt');
-  const btnCopy = document.getElementById('btn-copy');
+  const shareLinkInput = document.getElementById('share-link-input') as HTMLInputElement;
+  const btnGenerateShare = document.getElementById('btn-generate-share');
+  const btnSwapPanels = document.getElementById('btn-swap-panels');
 
-  const lblInput = document.getElementById('lbl-input-title');
-  const lblOutput = document.getElementById('lbl-output-title');
+  const btnLoadSample = document.getElementById('btn-load-sample');
+  const btnClearA = document.getElementById('btn-clear-a');
+  const btnClearB = document.getElementById('btn-clear-b');
+  const btnCopyA = document.getElementById('btn-copy-a');
+  const btnCopyB = document.getElementById('btn-copy-b');
 
-  // Trigger translations
-  function convert() {
-    if (!txtInput || !txtOutput) return;
+  const statLengthA = document.getElementById('stat-length-a');
+  const statLengthB = document.getElementById('stat-length-b');
 
-    const value = txtInput.value;
-    if (!value) {
-      txtOutput.value = '';
-      errorBanner?.classList.add('hidden');
+  const detectionToast = document.getElementById('detection-toast');
+  const detectionText = document.getElementById('detection-text');
+  const btnApplyDetection = document.getElementById('btn-apply-detection');
+  const btnDismissDetection = document.getElementById('btn-dismiss-detection');
+
+  const historyList = document.getElementById('history-list');
+  const btnClearHistory = document.getElementById('btn-clear-history');
+  const historyEmptyMsg = document.getElementById('history-empty-msg');
+
+  // Fullscreen Preview Modal
+  const previewModal = document.getElementById('preview-modal');
+  const imgModal = document.getElementById('img-modal') as HTMLImageElement;
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  const btnModalDownload = document.getElementById('btn-modal-download');
+  const btnModalClose = document.getElementById('btn-modal-close');
+
+  // Application States
+  let mode = 'b64'; // 'b64' | 'url' | 'chained'
+  let direction = 'encode'; // 'encode' | 'decode'
+  let blockSync = false; // Prevent circular triggers
+  let activeSyncTarget = 'b';
+  let loadedFile: { name: string; size: number; type: string; base64: string } | null = null;
+  let detectedSuggestion: { targetMode: string; targetDir: string; message: string } | null = null;
+
+  // Initial State Setup from URL parameters
+  function initFromUrl() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlInput = urlParams.get('input');
+      const urlMode = urlParams.get('mode');
+      const urlDir = urlParams.get('dir');
+      const urlBatch = urlParams.get('batch');
+      const urlVariant = urlParams.get('variant');
+      const urlScope = urlParams.get('scope');
+
+      if (urlMode) {
+        mode = urlMode;
+        mainTabs.forEach(btn => {
+          const isMatch = btn.getAttribute('data-tab') === mode;
+          btn.className = isMatch
+            ? "px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer bg-primary text-canvas shadow-sm"
+            : "px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+        });
+      }
+
+      if (urlDir) {
+        direction = urlDir;
+        dirButtons.forEach(btn => {
+          const isMatch = btn.getAttribute('data-dir') === direction;
+          btn.className = isMatch
+            ? "px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas"
+            : "px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+        });
+      }
+
+      if (urlBatch === 'true' && chkBatchMode) {
+        chkBatchMode.checked = true;
+      }
+      if (urlVariant && selB64Variant) {
+        selB64Variant.value = urlVariant;
+      }
+      if (urlScope && selUrlScope) {
+        selUrlScope.value = urlScope;
+      }
+
+      updateConfigVisibility();
+      updatePanelLabels();
+
+      if (urlInput && editorA) {
+        editorA.value = decodeURIComponent(urlInput);
+        runConversion('b'); // Convert inputs to outputs
+      }
+    } catch (e) {
+      console.error('Failed to parse URL config', e);
+    }
+  }
+
+  // Update visual configuration section visibility
+  function updateConfigVisibility() {
+    cfgB64Variant?.classList.toggle('hidden', mode !== 'b64');
+    cfgUrlScope?.classList.toggle('hidden', mode !== 'url');
+    cfgChainedOrder?.classList.toggle('hidden', mode !== 'chained');
+
+    // File dropzone is only relevant for Base64 Encoding
+    const isBase64Encode = (mode === 'b64' && direction === 'encode');
+    fileDropzone?.classList.toggle('hidden', !isBase64Encode);
+    if (!isBase64Encode && loadedFile) {
+      removeFileState();
+    }
+  }
+
+  // Update Symmetrical Panel Labels
+  function updatePanelLabels() {
+    if (!lblPanelA || !lblPanelB) return;
+
+    if (direction === 'encode') {
+      lblPanelA.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Raw Unconverted Source`;
+      lblPanelB.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Encoded Result Output`;
+    } else {
+      lblPanelA.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Encoded Hash or Parameter`;
+      lblPanelB.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Decoded Raw Representation`;
+    }
+  }
+
+  // Auto-Detect Text Types
+  function autoDetectPastedText(text: string) {
+    if (!text || text.trim().length < 8) return;
+
+    // Check if URL encoded
+    const percentCount = (text.match(/%/g) || []).length;
+    if (percentCount > 2 && /%[0-9a-fA-F]{2}/.test(text)) {
+      if (mode !== 'url' || direction !== 'decode') {
+        detectedSuggestion = {
+          targetMode: 'url',
+          targetDir: 'decode',
+          message: 'Pasted text looks like URL Encoded content. Switch to URL Decode mode?'
+        };
+        showDetectionToast();
+        return;
+      }
+    }
+
+    // Check if Base64 (Standard or URL Safe)
+    const cleaned = text.trim();
+    const isBase64Regex = /^[A-Za-z0-9+/=]+$/;
+    const isUrlSafeB64Regex = /^[A-Za-z0-9_-]+$/;
+
+    // Detect data URI
+    if (cleaned.startsWith('data:')) {
+      if (mode !== 'b64' || direction !== 'decode') {
+        detectedSuggestion = {
+          targetMode: 'b64',
+          targetDir: 'decode',
+          message: 'Pasted text is a Data URL. Switch to Base64 Decode mode?'
+        };
+        showDetectionToast();
+        return;
+      }
+    }
+
+    // If it looks like base64
+    if ((isBase64Regex.test(cleaned) && (cleaned.length % 4 === 0 || cleaned.includes('='))) || 
+        (isUrlSafeB64Regex.test(cleaned) && cleaned.length > 20 && (cleaned.includes('-') || cleaned.includes('_')))) {
+      if (mode !== 'b64' || direction !== 'decode') {
+        detectedSuggestion = {
+          targetMode: 'b64',
+          targetDir: 'decode',
+          message: 'Pasted text looks like Base64 encoded code. Switch to Base64 Decode mode?'
+        };
+        showDetectionToast();
+        return;
+      }
+    }
+
+    hideDetectionToast();
+  }
+
+  function showDetectionToast() {
+    if (!detectionToast || !detectionText || !detectedSuggestion) return;
+    detectionText.textContent = detectedSuggestion.message;
+    detectionToast.classList.remove('hidden');
+  }
+
+  function hideDetectionToast() {
+    detectionToast?.classList.add('hidden');
+    detectedSuggestion = null;
+  }
+
+  // Handle detection switch confirmation
+  btnApplyDetection?.addEventListener('click', () => {
+    if (!detectedSuggestion) return;
+    const target = detectedSuggestion;
+
+    // Switch mode
+    mode = target.targetMode;
+    mainTabs.forEach(btn => {
+      const isMatch = btn.getAttribute('data-tab') === mode;
+      btn.className = isMatch
+        ? "px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer bg-primary text-canvas shadow-sm"
+        : "px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+    });
+
+    // Switch direction
+    direction = target.targetDir;
+    dirButtons.forEach(btn => {
+      const isMatch = btn.getAttribute('data-dir') === direction;
+      btn.className = isMatch
+        ? "px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas"
+        : "px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+    });
+
+    updateConfigVisibility();
+    updatePanelLabels();
+    hideDetectionToast();
+
+    // Trigger conversion
+    runConversion('b');
+  });
+
+  btnDismissDetection?.addEventListener('click', hideDetectionToast);
+
+  // Unicode safe Base64 Encoder / Decoder helpers
+  function unicodeBtoa(str: string): string {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    let binString = "";
+    for (let i = 0; i < data.length; i++) {
+      binString += String.fromCharCode(data[i]);
+    }
+    return btoa(binString);
+  }
+
+  // Safe decoding of base64
+  function unicodeAtob(b64: string): string {
+    const binString = atob(b64);
+    const len = binString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binString.charCodeAt(i);
+    }
+    const decoder = new TextDecoder();
+    return decoder.decode(bytes);
+  }
+
+  // Variant adjustments for Base64 (Standard vs URL-Safe)
+  function toUrlSafeB64(str: string): string {
+    return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function fromUrlSafeB64(str: string): string {
+    let standard = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (standard.length % 4) {
+      standard += '=';
+    }
+    return standard;
+  }
+
+  // Image Detection & Decoded Preview Handling
+  function checkAndRenderImagePreview(text: string) {
+    if (!imagePreviewContainer || !imgPreview) return;
+
+    const trimmed = text.trim();
+    // Case 1: Decoded value is a data url representing an image
+    if (trimmed.startsWith('data:image/')) {
+      imgPreview.src = trimmed;
+      imagePreviewContainer.classList.remove('hidden');
+      return;
+    }
+
+    // Case 2: Decoded value is raw SVG markup
+    if (trimmed.startsWith('<svg') && trimmed.endsWith('</svg>')) {
+      try {
+        const svgBase64 = btoa(unescape(encodeURIComponent(trimmed)));
+        imgPreview.src = `data:image/svg+xml;base64,${svgBase64}`;
+        imagePreviewContainer.classList.remove('hidden');
+        return;
+      } catch (e) {}
+    }
+
+    // Case 3: Decoded output is not a direct image data URL, let's look at the source (input) string if we are in decode mode
+    if (direction === 'decode' && mode === 'b64') {
+      const sourceVal = editorA.value.trim();
+      if (/^(iVBOR|R0lG|\/9j\/|UklGR)/.test(sourceVal)) {
+        let mime = 'image/png';
+        if (sourceVal.startsWith('/9j/')) mime = 'image/jpeg';
+        else if (sourceVal.startsWith('R0lG')) mime = 'image/gif';
+        else if (sourceVal.startsWith('UklGR')) mime = 'image/webp';
+        
+        imgPreview.src = `data:${mime};base64,${sourceVal.replace(/[\s\r\n]+/g, '')}`;
+        imagePreviewContainer.classList.remove('hidden');
+        return;
+      }
+    }
+
+    // Hide preview if no matching image layout found
+    imagePreviewContainer.classList.add('hidden');
+    imgPreview.src = "";
+  }
+
+  // Main Conversion Dispatcher
+  function runConversion(targetPanel: string = 'b') {
+    if (blockSync) return;
+    blockSync = true;
+
+    const inputArea = targetPanel === 'b' ? editorA : editorB;
+    const val = inputArea.value;
+
+    // Reset banners/previews
+    errorBanner?.classList.add('hidden');
+    
+    if (targetPanel === 'b') {
+      imagePreviewContainer?.classList.add('hidden');
+    }
+
+    // Dynamic Live Symmetrical Highlights
+    if (targetPanel === 'b') {
+      syncIndicatorA?.classList.remove('opacity-50');
+      syncIndicatorB?.classList.add('opacity-50');
+    } else {
+      syncIndicatorA?.classList.add('opacity-50');
+      syncIndicatorB?.classList.remove('opacity-50');
+    }
+
+    if (!val && !loadedFile) {
+      if (targetPanel === 'b') editorB.value = '';
+      else editorA.value = '';
+      updateStats();
+      blockSync = false;
       return;
     }
 
     try {
-      errorBanner?.classList.add('hidden');
-      if (activeMode === 'b64-encode') {
-        // Handle Unicode characters correctly with btoa/encodeURIComponent
-        const b64 = btoa(encodeURIComponent(value).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-            return String.fromCharCode(parseInt(p1, 16));
-        }));
-        txtOutput.value = b64;
-      } else if (activeMode === 'b64-decode') {
-        const decoded = decodeURIComponent(atob(value).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        txtOutput.value = decoded;
-      } else if (activeMode === 'url-encode') {
-        txtOutput.value = encodeURIComponent(value);
-      } else if (activeMode === 'url-decode') {
-        txtOutput.value = decodeURIComponent(value);
-      }
-    } catch (e: any) {
-      txtOutput.value = '';
-      errorBanner?.classList.remove('hidden');
-      if (errorMsg) {
-        errorMsg.textContent = e.message || 'The input string could not be decoded. Ensure the string is correctly formatted.';
-      }
-    }
-  }
+      let finalResult = '';
 
-  // Handle Tab Switch
-  tabs.forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      tabs.forEach(t => t.classList.remove('pill-tab-active'));
-      const clicked = e.currentTarget as HTMLButtonElement;
-      clicked.classList.add('pill-tab-active');
+      // Set up transformation values
+      const isEncode = targetPanel === 'b' ? (direction === 'encode') : (direction === 'decode');
+      const isBatch = chkBatchMode?.checked;
 
-      activeMode = clicked.dataset.mode || 'b64-encode';
-      
-      // Update labels dynamically
-      if (lblInput && lblOutput) {
-        if (activeMode === 'b64-encode') {
-          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Raw Source Text`;
-          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Base64 Encoded Output`;
-        } else if (activeMode === 'b64-decode') {
-          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-rose"></span>Base64 Hashed String`;
-          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-coral"></span>Decoded Plain Text`;
-        } else if (activeMode === 'url-encode') {
-          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>Clean URL Address`;
-          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>Encoded URL Parameter`;
-        } else if (activeMode === 'url-decode') {
-          lblInput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>Encoded URL parameter`;
-          lblOutput.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>Clean URL Address`;
+      // Processing line by line (Batch Mode) or single block
+      const processString = (str: string): string => {
+        if (isEncode) {
+          // ================== ENCODING ==================
+          if (mode === 'b64') {
+            const b64Var = selB64Variant?.value || 'standard';
+            let res = unicodeBtoa(str);
+            if (b64Var === 'urlsafe') {
+              res = toUrlSafeB64(res);
+            }
+            return res;
+          } else if (mode === 'url') {
+            const urlScope = selUrlScope?.value || 'component';
+            return urlScope === 'component' ? encodeURIComponent(str) : encodeURI(str);
+          } else {
+            // Chained: Base64 -> URL or URL -> Base64
+            const order = selChainedOrder?.value || 'b64-url';
+            if (order === 'b64-url') {
+              // B64 then URL
+              let b64 = unicodeBtoa(str);
+              const b64Var = selB64Variant?.value || 'standard';
+              if (b64Var === 'urlsafe') b64 = toUrlSafeB64(b64);
+              return encodeURIComponent(b64);
+            } else {
+              // URL then B64
+              const urlScope = selUrlScope?.value || 'component';
+              const urled = urlScope === 'component' ? encodeURIComponent(str) : encodeURI(str);
+              let b64 = unicodeBtoa(urled);
+              const b64Var = selB64Variant?.value || 'standard';
+              if (b64Var === 'urlsafe') b64 = toUrlSafeB64(b64);
+              return b64;
+            }
+          }
+        } else {
+          // ================== DECODING ==================
+          if (mode === 'b64') {
+            const b64Var = selB64Variant?.value || 'standard';
+            let cleaned = str.trim();
+            if (b64Var === 'urlsafe' || /[-_]/.test(cleaned)) {
+              cleaned = fromUrlSafeB64(cleaned);
+            }
+            // Strict check
+            if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
+              throw new Error("Invalid character detected. Ensure string contains only letters, numbers, and valid Base64 symbols.");
+            }
+            if (cleaned.length % 4 !== 0) {
+              throw new Error(`Invalid padding: String length of ${cleaned.length} is not a multiple of 4.`);
+            }
+            return unicodeAtob(cleaned);
+          } else if (mode === 'url') {
+            if (/%[^0-9a-fA-F]/g.test(str) || /%[0-9a-fA-F](?![0-9a-fA-F])/g.test(str)) {
+              throw new Error("Malformed URI sequence: Percent (%) sign must be followed by exactly two hexadecimal digits.");
+            }
+            return decodeURIComponent(str);
+          } else {
+            // Chained Decode
+            const order = selChainedOrder?.value || 'b64-url';
+            if (order === 'b64-url') {
+              // URL Decode then B64 Decode
+              if (/%[^0-9a-fA-F]/g.test(str) || /%[0-9a-fA-F](?![0-9a-fA-F])/g.test(str)) {
+                throw new Error("Malformed URL-encoded sequence in chained decode.");
+              }
+              const urlDecoded = decodeURIComponent(str);
+              let b64 = urlDecoded.trim();
+              const b64Var = selB64Variant?.value || 'standard';
+              if (b64Var === 'urlsafe' || /[-_]/.test(b64)) b64 = fromUrlSafeB64(b64);
+              return unicodeAtob(b64);
+            } else {
+              // B64 Decode then URL Decode
+              let b64 = str.trim();
+              const b64Var = selB64Variant?.value || 'standard';
+              if (b64Var === 'urlsafe' || /[-_]/.test(b64)) b64 = fromUrlSafeB64(b64);
+              const b64Decoded = unicodeAtob(b64);
+              if (/%[^0-9a-fA-F]/g.test(b64Decoded) || /%[0-9a-fA-F](?![0-9a-fA-F])/g.test(b64Decoded)) {
+                throw new Error("Malformed URI sequence parsed from decoded Base64.");
+              }
+              return decodeURIComponent(b64Decoded);
+            }
+          }
+        }
+      };
+
+      // File encoding priority
+      if (targetPanel === 'b' && loadedFile && mode === 'b64' && direction === 'encode') {
+        const b64Var = selB64Variant?.value || 'standard';
+        let res = loadedFile.base64;
+        if (b64Var === 'urlsafe') {
+          res = toUrlSafeB64(res);
+        }
+        finalResult = res;
+      } else {
+        if (isBatch) {
+          const lines = val.split('\n');
+          const processed = lines.map(line => {
+            if (!line) return '';
+            try {
+              return processString(line);
+            } catch (e: any) {
+              return `[Error: ${e.message}]`;
+            }
+          });
+          finalResult = processed.join('\n');
+        } else {
+          finalResult = processString(val);
         }
       }
 
-      convert();
+      // Populate results
+      if (targetPanel === 'b') {
+        editorB.value = finalResult;
+        
+        // Add subtle pulse on complete
+        editorB.classList.add('ring-2', 'ring-success-accent/40');
+        setTimeout(() => editorB.classList.remove('ring-2', 'ring-success-accent/40'), 400);
+
+        // Check image preview if we decoded
+        if (direction === 'decode') {
+          checkAndRenderImagePreview(finalResult);
+        } else if (mode === 'b64' && direction === 'encode' && loadedFile && loadedFile.type.startsWith('image/')) {
+          if (imagePreviewContainer && imgPreview) {
+            imgPreview.src = `data:${loadedFile.type};base64,${loadedFile.base64}`;
+            imagePreviewContainer.classList.remove('hidden');
+          }
+        }
+        
+        // Save to History (Debounced or on complete conversion)
+        saveToHistory(val || (loadedFile ? `[File: ${loadedFile.name}]` : ''), finalResult);
+      } else {
+        editorA.value = finalResult;
+        
+        editorA.classList.add('ring-2', 'ring-success-accent/40');
+        setTimeout(() => editorA.classList.remove('ring-2', 'ring-success-accent/40'), 400);
+      }
+
+    } catch (e: any) {
+      if (errorBanner && errorMsg) {
+        errorMsg.textContent = e.message || 'Operation failed. Verify format structure and attributes.';
+        errorBanner.classList.remove('hidden');
+      }
+    }
+
+    updateStats();
+    blockSync = false;
+  }
+
+  // Update Character / Word counts
+  function updateStats() {
+    if (statLengthA) {
+      const len = editorA.value.length;
+      statLengthA.textContent = `${len.toLocaleString()} character${len !== 1 ? 's' : ''}`;
+    }
+    if (statLengthB) {
+      const len = editorB.value.length;
+      statLengthB.textContent = `${len.toLocaleString()} character${len !== 1 ? 's' : ''}`;
+    }
+  }
+
+  // History Management
+  interface HistoryItem {
+    id: string;
+    mode: string;
+    direction: string;
+    input: string;
+    output: string;
+    timestamp: number;
+  }
+
+  function saveToHistory(input: string, output: string) {
+    if (!input || !output || input.length > 5000 || output.length > 5000) return;
+    try {
+      const raw = localStorage.getItem('bt_converter_history');
+      let items: HistoryItem[] = raw ? JSON.parse(raw) : [];
+
+      // Avoid duplicates
+      items = items.filter(item => item.input !== input || item.mode !== mode || item.direction !== direction);
+
+      const newItem: HistoryItem = {
+        id: Math.random().toString(36).substring(2, 9),
+        mode,
+        direction,
+        input,
+        output,
+        timestamp: Date.now()
+      };
+
+      items.unshift(newItem);
+      if (items.length > 10) items.pop();
+
+      localStorage.setItem('bt_converter_history', JSON.stringify(items));
+      renderHistory();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function renderHistory() {
+    if (!historyList) return;
+    try {
+      const raw = localStorage.getItem('bt_converter_history');
+      const items: HistoryItem[] = raw ? JSON.parse(raw) : [];
+
+      if (items.length === 0) {
+        historyEmptyMsg?.classList.remove('hidden');
+        const childs = historyList.querySelectorAll('.history-card-item');
+        childs.forEach(c => c.remove());
+        return;
+      }
+
+      historyEmptyMsg?.classList.add('hidden');
+
+      const childs = historyList.querySelectorAll('.history-card-item');
+      childs.forEach(c => c.remove());
+
+      items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'history-card-item flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-surface hover:bg-hairline-soft border border-hairline rounded-lg text-xs gap-2 cursor-pointer transition-colors';
+        row.setAttribute('data-id', item.id);
+
+        const modeLabels: Record<string, string> = {
+          'b64': 'Base64',
+          'url': 'URL',
+          'chained': 'Chained'
+        };
+
+        const dateStr = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const summaryText = item.input.length > 60 ? item.input.substring(0, 60) + '...' : item.input;
+
+        row.innerHTML = `
+          <div class="flex items-center gap-2 overflow-hidden w-full sm:w-auto">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${item.direction === 'encode' ? 'bg-brand-coral/20 text-coral-dark' : 'bg-brand-teal/20 text-moss-dark'}">
+              ${modeLabels[item.mode] || item.mode} ${item.direction}
+            </span>
+            <span class="truncate font-mono text-slate max-w-[280px] sm:max-w-[400px]">${escapeHTML(summaryText)}</span>
+          </div>
+          <div class="flex items-center gap-2 text-stone ml-auto sm:ml-0">
+            <span>${dateStr}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        `;
+
+        row.addEventListener('click', () => {
+          editorA.value = item.input;
+          mode = item.mode;
+          direction = item.direction;
+
+          mainTabs.forEach(btn => {
+            const isMatch = btn.getAttribute('data-tab') === mode;
+            btn.className = isMatch
+              ? "px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer bg-primary text-canvas shadow-sm"
+              : "px-4 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+          });
+
+          dirButtons.forEach(btn => {
+            const isMatch = btn.getAttribute('data-dir') === direction;
+            btn.className = isMatch
+              ? "px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas"
+              : "px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+          });
+
+          updateConfigVisibility();
+          updatePanelLabels();
+          runConversion('b');
+        });
+
+        historyList.appendChild(row);
+      });
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function escapeHTML(str: string): string {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  }
+
+  // Clear History
+  btnClearHistory?.addEventListener('click', () => {
+    localStorage.removeItem('bt_converter_history');
+    renderHistory();
+  });
+
+  // Event Listeners
+  mainTabs.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      mainTabs.forEach(b => {
+        b.className = "px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+      });
+      const el = e.currentTarget as HTMLButtonElement;
+      el.className = "px-2.5 sm:px-4 py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer bg-primary text-canvas shadow-sm";
+      mode = el.getAttribute('data-tab') || 'b64';
+
+      updateConfigVisibility();
+      runConversion('b');
     });
   });
 
-  // Handle Text inputs
-  if (txtInput) {
-    txtInput.addEventListener('input', convert);
-  }
+  dirButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      dirButtons.forEach(b => {
+        b.className = "px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+      });
+      const el = e.currentTarget as HTMLButtonElement;
+      el.className = "px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas";
+      direction = el.getAttribute('data-dir') || 'encode';
 
-  // Clear action
-  if (btnClear && txtInput && txtOutput) {
-    btnClear.addEventListener('click', () => {
-      txtInput.value = '';
-      txtOutput.value = '';
-      errorBanner?.classList.add('hidden');
+      updateConfigVisibility();
+      updatePanelLabels();
+      runConversion('b');
+    });
+  });
+
+  selB64Variant?.addEventListener('change', () => runConversion('b'));
+  selUrlScope?.addEventListener('change', () => runConversion('b'));
+  selChainedOrder?.addEventListener('change', () => runConversion('b'));
+  chkBatchMode?.addEventListener('change', () => runConversion('b'));
+
+  editorA?.addEventListener('input', () => {
+    activeSyncTarget = 'b';
+    runConversion('b');
+    
+    if (editorA.value) {
+      autoDetectPastedText(editorA.value);
+    } else {
+      hideDetectionToast();
+    }
+  });
+
+  editorB?.addEventListener('input', () => {
+    activeSyncTarget = 'a';
+    runConversion('a');
+  });
+
+  btnSwapPanels?.addEventListener('click', () => {
+    const temp = editorA.value;
+    editorA.value = editorB.value;
+    editorB.value = temp;
+
+    direction = direction === 'encode' ? 'decode' : 'encode';
+    dirButtons.forEach(btn => {
+      const isMatch = btn.getAttribute('data-dir') === direction;
+      btn.className = isMatch
+        ? "px-3 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer bg-brand-blue text-canvas"
+        : "px-3 py-1 rounded-md text-[11px] font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+    });
+
+    updatePanelLabels();
+    updateConfigVisibility();
+
+    const containerA = document.getElementById('panel-container-a');
+    const containerB = document.getElementById('panel-container-b');
+    containerA?.classList.add('scale-95', 'opacity-80');
+    containerB?.classList.add('scale-95', 'opacity-80');
+    setTimeout(() => {
+      containerA?.classList.remove('scale-95', 'opacity-80');
+      containerB?.classList.remove('scale-95', 'opacity-80');
+    }, 200);
+
+    runConversion('b');
+  });
+
+  btnReset?.addEventListener('click', () => {
+    editorA.value = '';
+    editorB.value = '';
+    removeFileState();
+    errorBanner?.classList.add('hidden');
+    imagePreviewContainer?.classList.add('hidden');
+    shareLinkInput.value = '';
+    hideDetectionToast();
+    updateStats();
+  });
+
+  btnClearA?.addEventListener('click', () => {
+    editorA.value = '';
+    removeFileState();
+    hideDetectionToast();
+    runConversion('b');
+  });
+
+  btnCopyA?.addEventListener('click', () => {
+    navigator.clipboard.writeText(editorA.value).then(() => {
+      const orig = btnCopyA.innerHTML;
+      btnCopyA.innerHTML = '✓ Copied!';
+      setTimeout(() => btnCopyA.innerHTML = orig, 1200);
+    });
+  });
+
+  btnClearB?.addEventListener('click', () => {
+    editorB.value = '';
+    imagePreviewContainer?.classList.add('hidden');
+    runConversion('a');
+  });
+
+  btnCopyB?.addEventListener('click', () => {
+    navigator.clipboard.writeText(editorB.value).then(() => {
+      const orig = btnCopyB.innerHTML;
+      btnCopyB.innerHTML = '✓ Copied!';
+      setTimeout(() => btnCopyB.innerHTML = orig, 1200);
+    });
+  });
+
+  // Scroll helper
+  function scrollToOutput() {
+    const outputPanel = document.getElementById('panel-container-b');
+    if (!outputPanel) return;
+    const elementPosition = outputPanel.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = elementPosition - 80;
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
     });
   }
 
-  // Sample Loader
-  if (btnSample && txtInput) {
-    btnSample.addEventListener('click', () => {
-      if (activeMode === 'b64-encode' || activeMode === 'url-encode') {
-        txtInput.value = 'Miro-inspired BoardTools suite! Fully Client-Side & Secure.';
-      } else if (activeMode === 'b64-decode') {
-        txtInput.value = 'TWlyby1pbnNwaXJlZCBCb2FyZFRvb2xzIHN1aXRlISBGdWxseSBDbGllbnQtU2lkZSAmIFNlY3VyZS4=';
-      } else if (activeMode === 'url-decode') {
-        txtInput.value = 'Miro-inspired%20BoardTools%20suite!%20Fully%20Client-Side%20%26%20Secure.';
+  editorA?.addEventListener('paste', () => {
+    setTimeout(scrollToOutput, 100);
+  });
+
+  btnLoadSample?.addEventListener('click', () => {
+    if (mode === 'b64') {
+      editorA.value = direction === 'encode' 
+        ? "BoardTools: The ultimate workspace utility! 🚀 ✨ Let's explore Base64."
+        : "Qm9hcmRUb29sczogVGhlIHVsdGltYXRlIHdvcmtzcGFjZSB1dGlsaXR5ISAgICA=";
+    } else if (mode === 'url') {
+      editorA.value = direction === 'encode'
+        ? "https://boardtools.app/search?query=miro templates & tools"
+        : "https%3A%2F%2Fboardtools.app%2Fsearch%3Fquery%3Dmiro%20templates%20%26%20tools";
+    } else {
+      editorA.value = direction === 'encode'
+        ? "Nested chained format: emoji 🌟 string"
+        : "TmVzdGVkJTIwY2hhaW5lZCUyMGZvcm1hdCUzQSUyMGVtb2ppJTIwJUZGJTlGJTlCJTk1JTIwc3RyaW5n";
+    }
+    runConversion('b');
+    setTimeout(scrollToOutput, 100);
+  });
+
+  // File Upload Logic
+  fileDropzone?.addEventListener('click', () => fileInput?.click());
+
+  fileDropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileDropzone.classList.add('border-brand-blue', 'bg-brand-blue/5');
+  });
+
+  fileDropzone?.addEventListener('dragleave', () => {
+    fileDropzone.classList.remove('border-brand-blue', 'bg-brand-blue/5');
+  });
+
+  fileDropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileDropzone.classList.remove('border-brand-blue', 'bg-brand-blue/5');
+    if (e.dataTransfer?.files && e.dataTransfer.files[0]) {
+      processLoadedFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileInput?.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      processLoadedFile(target.files[0]);
+    }
+  });
+
+  function processLoadedFile(file: File) {
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File is too large. Please select a file smaller than 5MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const dataUrl = event.target?.result as string;
+      if (!dataUrl) return;
+
+      const base64Index = dataUrl.indexOf(';base64,');
+      let rawBase64 = '';
+      if (base64Index !== -1) {
+        rawBase64 = dataUrl.substring(base64Index + 8);
+      } else {
+        rawBase64 = btoa(dataUrl);
       }
-      convert();
-    });
+
+      loadedFile = {
+        name: file.name,
+        size: file.size,
+        type: file.type || 'application/octet-stream',
+        base64: rawBase64
+      };
+
+      editorA.value = `[File Binary Content: ${file.name}]`;
+      editorA.readOnly = true;
+
+      if (fileStatusBadge && fileInfoText) {
+        const sizeKb = (file.size / 1024).toFixed(1);
+        fileInfoText.textContent = `${file.name} (${sizeKb} KB) - ${file.type || 'Unknown Type'}`;
+        fileStatusBadge.classList.remove('hidden');
+      }
+
+      runConversion('b');
+    };
+
+    if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsText(file);
+    }
   }
 
-  // Copy Action
-  if (btnCopy && txtOutput) {
-    btnCopy.addEventListener('click', () => {
-      const text = txtOutput.value;
-      if (text) {
-        navigator.clipboard.writeText(text).then(() => {
-          const origHTML = btnCopy.innerHTML;
-          btnCopy.innerHTML = '✓ Copied!';
-          setTimeout(() => {
-            btnCopy.innerHTML = origHTML;
-          }, 1500);
-        });
-      }
-    });
+  function removeFileState() {
+    loadedFile = null;
+    editorA.readOnly = false;
+    if (editorA.value.startsWith('[File Binary Content:')) {
+      editorA.value = '';
+    }
+    fileStatusBadge?.classList.add('hidden');
+    if (fileInput) fileInput.value = '';
   }
+
+  btnRemoveFile?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    removeFileState();
+    runConversion('b');
+  });
+
+  btnPreviewZoom?.addEventListener('click', () => {
+    if (!previewModal || !imgPreview || !imgModal) return;
+    imgModal.src = imgPreview.src;
+    previewModal.classList.remove('hidden');
+  });
+
+  function downloadBase64Image(dataUrl: string, filename: string) {
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  btnPreviewDownload?.addEventListener('click', () => {
+    if (!imgPreview.src) return;
+    const nameStr = loadedFile ? `decoded_${loadedFile.name}` : `decoded_image_${Date.now()}.png`;
+    downloadBase64Image(imgPreview.src, nameStr);
+  });
+
+  btnCloseModal?.addEventListener('click', () => previewModal?.classList.add('hidden'));
+  btnModalClose?.addEventListener('click', () => previewModal?.classList.add('hidden'));
+  btnModalDownload?.addEventListener('click', () => {
+    if (!imgModal.src) return;
+    downloadBase64Image(imgModal.src, 'decoded_image.png');
+  });
+
+  btnGenerateShare?.addEventListener('click', () => {
+    if (!shareLinkInput) return;
+    try {
+      const inputEncoded = encodeURIComponent(editorA.value);
+      const params = new URLSearchParams();
+      if (editorA.value) params.set('input', inputEncoded);
+      params.set('mode', mode);
+      params.set('dir', direction);
+      if (chkBatchMode?.checked) params.set('batch', 'true');
+      if (selB64Variant?.value !== 'standard') params.set('variant', selB64Variant.value);
+      if (selUrlScope?.value !== 'component') params.set('scope', selUrlScope.value);
+
+      const finalUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+      shareLinkInput.value = finalUrl;
+
+      navigator.clipboard.writeText(finalUrl).then(() => {
+        const orig = btnGenerateShare.innerHTML;
+        btnGenerateShare.innerHTML = '✓ Copied Share URL!';
+        setTimeout(() => btnGenerateShare.innerHTML = orig, 1500);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  initFromUrl();
+  renderHistory();
 </script>
