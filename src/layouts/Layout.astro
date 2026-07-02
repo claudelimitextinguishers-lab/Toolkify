@@ -115,7 +115,8 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? "https://boardtools.app").href
 						'/tools/base64-url': 'Base64 & URL Tool',
 						'/tools/uuid-hash': 'UUID & Hash Gen',
 						'/tools/contrast-checker': 'Contrast Checker',
-						'/tools/svg-previewer': 'SVG Optimizer'
+						'/tools/svg-previewer': 'SVG Optimizer',
+						'/tools/developer/name-generator': 'Name Generator'
 					};
 					const toolCategoryMap = {
 						'/tools/whiteboard': 'collaboration',
@@ -123,7 +124,8 @@ const ogImageUrl = new URL(ogImage, Astro.site ?? "https://boardtools.app").href
 						'/tools/base64-url': 'developer',
 						'/tools/uuid-hash': 'developer',
 						'/tools/contrast-checker': 'design',
-						'/tools/svg-previewer': 'design'
+						'/tools/svg-previewer': 'design',
+						'/tools/developer/name-generator': 'developer'
 					};
 					const name = toolName || toolNameMap[normalizedPath];
 					const category = toolCategory || toolCategoryMap[normalizedPath];
