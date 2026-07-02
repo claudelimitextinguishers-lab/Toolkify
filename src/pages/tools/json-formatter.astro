@@ -1,5 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from "../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "JSON Formatter & Validator";
@@ -7,14 +7,17 @@ const category = "developer";
 const tier = "Developer Tools";
 
 // On-page SEO metadata
-const pageTitle = "JSON Formatter & Validator - Prettify, Validate, and Minify JSON";
-const description = "Free online client-side JSON formatter, validator, and minifier. Fix invalid JSON with precise line-by-line syntax error highlights and navigate structures with a collapsible tree view.";
+const pageTitle =
+  "JSON Formatter & Validator - Prettify, Validate, and Minify JSON";
+const description =
+  "Free online client-side JSON formatter, validator, and minifier. Fix invalid JSON with precise line-by-line syntax error highlights and navigate structures with a collapsible tree view.";
 const canonicalUrl = "https://boardtools.app/tools/json-formatter";
 const ogImage = "/og/json-formatter.png";
-const keywords = "json formatter, json validator, json minifier, format json, prettify json, validate json, minify json, json viewer, tree view json, share json, online json tool, parse json, client side json formatter";
+const keywords =
+  "json formatter, json validator, json minifier, format json, prettify json, validate json, minify json, json viewer, tree view json, share json, online json tool, parse json, client side json formatter";
 ---
 
-<Layout 
+<Layout
   title={pageTitle}
   description={description}
   toolName={name}
@@ -116,26 +119,37 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     }
   </script>
 
-  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
-    
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-1 print:hidden">
-      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
         <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
         <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
-      
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
         <div class="flex items-center gap-2 flex-wrap">
-          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
             {name}
           </h1>
-          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
         </div>
-        
+
         <div class="flex items-center gap-2">
           <!-- Keyboard shortcuts reference -->
           <button
@@ -153,8 +167,19 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
             class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="Reset inputs and output"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
             </svg>
             <span>Reset</span>
           </button>
@@ -165,8 +190,19 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
             class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="How JSON formatter works"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
             </svg>
             <span>How it works</span>
           </button>
@@ -175,7 +211,9 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     </div>
 
     <!-- Mobile Navigation Tabs (Shown on mobile only) -->
-    <div class="flex sm:hidden rounded-full bg-surface p-0.5 border border-hairline w-full print:hidden">
+    <div
+      class="flex sm:hidden rounded-full bg-surface p-0.5 border border-hairline w-full print:hidden"
+    >
       <button
         type="button"
         id="tab-input-btn"
@@ -193,17 +231,25 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     </div>
 
     <!-- Workspace Container (Zero-Scroll Compact Layout) -->
-    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
-      
+    <div
+      class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0"
+    >
       <!-- Settings & Controls Dashboard Panel -->
-      <div class="border-b border-hairline-soft pb-4 mb-2 flex flex-col gap-3.5">
+      <div
+        class="border-b border-hairline-soft pb-4 mb-2 flex flex-col gap-3.5"
+      >
         <div class="flex flex-wrap items-center justify-between gap-4">
-          
           <!-- Formatting Options -->
           <div class="flex flex-wrap items-center gap-3">
             <div class="flex flex-col gap-1">
-              <label for="indent-select" class="text-[10px] font-semibold text-slate">Indent Size</label>
-              <select id="indent-select" class="text-input py-0.5 px-2 text-[11px] h-7 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+              <label
+                for="indent-select"
+                class="text-[10px] font-semibold text-slate">Indent Size</label
+              >
+              <select
+                id="indent-select"
+                class="text-input py-0.5 px-2 text-[11px] h-7 cursor-pointer border border-hairline-strong bg-canvas rounded-md"
+              >
                 <option value="2" selected>2 Spaces</option>
                 <option value="4">4 Spaces</option>
                 <option value="tabs">Tabs</option>
@@ -228,90 +274,142 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
               Minify JSON
             </button>
           </div>
-
         </div>
 
         <!-- Real-Time Verification Status Banner -->
-        <div id="validation-banner" class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface-yellow border-yellow-light/80 text-yellow-dark">
+        <div
+          id="validation-banner"
+          class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface-yellow border-yellow-light/80 text-yellow-dark"
+        >
           <span id="validation-msg" class="font-bold flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"
+            ></span>
             Waiting for input JSON...
           </span>
-          <span id="validation-perf" class="font-mono text-[10px] font-semibold"></span>
+          <span id="validation-perf" class="font-mono text-[10px] font-semibold"
+          ></span>
         </div>
 
         <!-- Precise Error Trace Panel (Shown only on errors) -->
-        <div id="error-trace-panel" class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake">
+        <div
+          id="error-trace-panel"
+          class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake"
+        >
           <div class="font-bold flex items-center gap-1.5">
             <span>⚠️ Precise Parse Error:</span>
             <span id="error-brief" class="font-semibold text-primary"></span>
           </div>
-          <pre id="error-context" class="font-mono text-[11px] p-2 bg-canvas/60 rounded border border-brand-red-dark/30 whitespace-pre overflow-x-auto text-primary"></pre>
+          <pre
+            id="error-context"
+            class="font-mono text-[11px] p-2 bg-canvas/60 rounded border border-brand-red-dark/30 whitespace-pre overflow-x-auto text-primary">
+          </pre>
         </div>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch relative">
-        
         <!-- Left Pane: Input/Editor -->
         <div id="pane-input" class="flex flex-col gap-3 print:hidden">
           <div class="flex items-center justify-between">
-            <span class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            <span
+              class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5"
+            >
+              <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"
+              ></span>
               Paste or Load JSON
             </span>
             <div class="flex gap-2">
-              <button id="btn-load-sample" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">Load Sample</button>
+              <button
+                id="btn-load-sample"
+                class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
+                >Load Sample</button
+              >
               <span class="text-stone">|</span>
-              <button id="btn-load-complex" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">Load Complex Sample</button>
+              <button
+                id="btn-load-complex"
+                class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
+                >Load Complex Sample</button
+              >
             </div>
           </div>
 
           <!-- Drag and Drop Box & Input Area -->
-          <div 
-            id="drop-zone" 
+          <div
+            id="drop-zone"
             class="relative flex-grow flex flex-col min-h-[300px] lg:min-h-[460px] border border-hairline-strong rounded-xl bg-surface-soft transition-all focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/10"
           >
             <!-- Drop message overlay -->
-            <div id="drop-overlay" class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200">
+            <div
+              id="drop-overlay"
+              class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200"
+            >
               <span class="text-2xl">📥</span>
-              <span class="text-xs font-bold text-brand-blue">Drop .json file here</span>
+              <span class="text-xs font-bold text-brand-blue"
+                >Drop .json file here</span
+              >
             </div>
 
             <!-- Line Number Counter -->
             <div class="flex flex-grow overflow-auto h-full max-h-[500px]">
-              <div id="input-line-numbers" class="w-10 select-none text-right pr-2 py-3 text-[11px] font-mono text-stone border-r border-hairline-soft bg-surface/50 leading-5">
+              <div
+                id="input-line-numbers"
+                class="w-10 select-none text-right pr-2 py-3 text-[11px] font-mono text-stone border-r border-hairline-soft bg-surface/50 leading-5"
+              >
                 1
               </div>
               <textarea
                 id="json-input"
                 class="flex-grow p-3 font-mono text-[12px] bg-transparent text-primary resize-none outline-none leading-5 min-h-[300px]"
-                placeholder='Paste raw JSON here, or drag & drop a .json file...'
+                placeholder="Paste raw JSON here, or drag & drop a .json file..."
                 aria-label="Raw JSON Input"
-                spellcheck="false"
-              ></textarea>
+                spellcheck="false"></textarea>
             </div>
           </div>
 
           <!-- Import Options -->
           <div class="flex items-center justify-between gap-4">
-            <label class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate hover:text-primary cursor-pointer">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12"></path>
+            <label
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate hover:text-primary cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5 text-brand-blue"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12"
+                ></path>
               </svg>
               <span>Upload JSON File</span>
-              <input type="file" id="file-uploader" class="hidden" accept=".json" />
+              <input
+                type="file"
+                id="file-uploader"
+                class="hidden"
+                accept=".json"
+              />
             </label>
 
             <!-- File Size indicator -->
-            <span id="file-size-info" class="text-[10px] font-semibold font-mono text-stone"></span>
+            <span
+              id="file-size-info"
+              class="text-[10px] font-semibold font-mono text-stone"></span>
           </div>
         </div>
 
         <!-- Right Pane: Formatted Output / Interactive Tree -->
-        <div id="pane-output" class="hidden sm:flex flex-col gap-3 min-h-[350px] lg:min-h-[460px]">
+        <div
+          id="pane-output"
+          class="hidden sm:flex flex-col gap-3 min-h-[350px] lg:min-h-[460px]"
+        >
           <div class="flex flex-wrap items-center justify-between gap-2">
             <!-- View toggles: Formatted Text vs Collapsible Tree -->
-            <div class="flex rounded-full bg-surface p-0.5 border border-hairline">
+            <div
+              class="flex rounded-full bg-surface p-0.5 border border-hairline"
+            >
               <button
                 type="button"
                 id="view-pretty-btn"
@@ -329,7 +427,11 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
             </div>
 
             <!-- Path Breadcrumbs for Tree Navigation -->
-            <div id="breadcrumb-container" class="hidden flex-1 mx-2 text-[10px] font-mono text-stone truncate max-w-[200px] sm:max-w-xs" title="Cursor Path">
+            <div
+              id="breadcrumb-container"
+              class="hidden flex-1 mx-2 text-[10px] font-mono text-stone truncate max-w-[200px] sm:max-w-xs"
+              title="Cursor Path"
+            >
               root
             </div>
 
@@ -363,73 +465,136 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
           </div>
 
           <!-- Dynamic Display Box -->
-          <div class="relative flex-grow flex flex-col border border-hairline rounded-xl bg-surface p-3 overflow-auto min-h-[300px] lg:min-h-[460px]">
+          <div
+            class="relative flex-grow flex flex-col border border-hairline rounded-xl bg-surface p-3 overflow-auto min-h-[300px] lg:min-h-[460px]"
+          >
             <!-- Copy success / Share success popups -->
-            <div id="toast-message" class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20">
+            <div
+              id="toast-message"
+              class="absolute top-3 right-3 bg-success-accent text-canvas text-[10px] font-bold py-1 px-2.5 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-20"
+            >
               Copied!
             </div>
 
             <!-- Formatted Text Viewer -->
-            <pre id="output-pretty" class="font-mono text-[12px] text-primary whitespace-pre overflow-auto h-full leading-5 select-all outline-none" tabindex="0"></pre>
+            <pre
+              id="output-pretty"
+              class="font-mono text-[12px] text-primary whitespace-pre overflow-auto h-full leading-5 select-all outline-none"
+              tabindex="0">
+            </pre>
 
             <!-- Collapsible Tree Viewer -->
-            <div id="output-tree" class="hidden font-mono text-[12px] text-primary overflow-auto h-full select-none leading-5">
+            <div
+              id="output-tree"
+              class="hidden font-mono text-[12px] text-primary overflow-auto h-full select-none leading-5"
+            >
               <div id="tree-root-wrapper" class="pl-1"></div>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
 
     <!-- Recent History Log -->
     <div class="card-base flex flex-col gap-3 p-4 sm:p-5 mt-2">
-      <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      <h3
+        class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 text-brand-blue"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
         Recent Formatted Snippets History (Local Only)
       </h3>
       <div id="history-container" class="flex flex-wrap gap-2">
-        <span class="text-[11px] text-stone">No history recorded yet. Valid snippets you format will appear here.</span>
+        <span class="text-[11px] text-stone"
+          >No history recorded yet. Valid snippets you format will appear here.</span
+        >
       </div>
     </div>
 
     <!-- Keyboard Shortcuts Modal Dialog (Hidden by default) -->
-    <div id="shortcuts-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm transition-opacity duration-300">
-      <div class="card-base max-w-md w-full p-5 flex flex-col gap-4 relative animate-fade-in-up">
-        <div class="flex items-center justify-between border-b border-hairline pb-2">
-          <h3 class="font-display font-semibold text-sm sm:text-base text-primary">Keyboard Shortcuts Guide</h3>
-          <button id="close-shortcuts-btn" class="text-stone hover:text-primary font-bold text-lg cursor-pointer">×</button>
+    <div
+      id="shortcuts-modal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm transition-opacity duration-300"
+    >
+      <div
+        class="card-base max-w-md w-full p-5 flex flex-col gap-4 relative animate-fade-in-up"
+      >
+        <div
+          class="flex items-center justify-between border-b border-hairline pb-2"
+        >
+          <h3
+            class="font-display font-semibold text-sm sm:text-base text-primary"
+          >
+            Keyboard Shortcuts Guide
+          </h3>
+          <button
+            id="close-shortcuts-btn"
+            class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
+            >×</button
+          >
         </div>
         <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
           <div class="flex justify-between py-1 border-b border-hairline-soft">
             <span class="font-bold">Format / Prettify</span>
-            <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Ctrl + Enter</kbd>
+            <kbd
+              class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+              >Ctrl + Enter</kbd
+            >
           </div>
           <div class="flex justify-between py-1 border-b border-hairline-soft">
             <span class="font-bold">Minify JSON</span>
-            <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Ctrl + Shift + M</kbd>
+            <kbd
+              class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+              >Ctrl + Shift + M</kbd
+            >
           </div>
           <div class="flex justify-between py-1 border-b border-hairline-soft">
             <span class="font-bold">Load Sample JSON</span>
-            <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Ctrl + L</kbd>
+            <kbd
+              class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+              >Ctrl + L</kbd
+            >
           </div>
           <div class="flex justify-between py-1 border-b border-hairline-soft">
             <span class="font-bold">Clear All</span>
-            <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Ctrl + Esc</kbd>
+            <kbd
+              class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+              >Ctrl + Esc</kbd
+            >
           </div>
         </div>
       </div>
     </div>
 
-
     <!-- Security & Privacy Guard Footer Tag -->
-    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+    <div
+      class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden"
+    >
       <span class="flex items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
         </svg>
         100% Client-Side Processing, 0KB Sent to Servers
       </span>
@@ -438,27 +603,53 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
   </section>
 
   <!-- Educational Article -->
-  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
     <article class="flex flex-col gap-4">
-      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
         Free Developer JSON Formatter, Validator & Minifier
       </h2>
       <p class="text-sm leading-relaxed">
-        Our <strong>JSON Formatter</strong> is a powerful, client-side utility designed for software engineers, API developers, and data analysts. Unlike standard online formatters that send data back to their servers, this <strong>free JSON formatter</strong> processes files and inputs entirely locally inside your browser. No cookies, no server tracking, and no compliance worries. You can paste nested objects, payload arrays, or dump huge log dumps, validate their structure instantly, and download a beautified file.
+        Our <strong>JSON Formatter</strong> is a powerful, client-side utility designed
+        for software engineers, API developers, and data analysts. Unlike standard
+        online formatters that send data back to their servers, this <strong
+          >free JSON formatter</strong
+        > processes files and inputs entirely locally inside your browser. No cookies,
+        no server tracking, and no compliance worries. You can paste nested objects,
+        payload arrays, or dump huge log dumps, validate their structure instantly,
+        and download a beautified file.
       </p>
-      
+
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
         Why use an Interactive Tree View?
       </h3>
       <p class="text-sm leading-relaxed">
-        Reading large, deeply nested JSON blocks inside raw text output is tedious. That's why we built an on-demand <strong>collapsible JSON tree viewer</strong>. Toggling the interactive mode allows you to expand and contract objects, hide nested arrays, and follow paths as you hover. As you hover over elements, a path breadcrumb updates at the top of the pane (e.g. <code>root.users[2].profile.address.zipcode</code>), allowing you to write precise access paths for JavaScript or Python scripts instantly.
+        Reading large, deeply nested JSON blocks inside raw text output is
+        tedious. That's why we built an on-demand <strong
+          >collapsible JSON tree viewer</strong
+        >. Toggling the interactive mode allows you to expand and contract
+        objects, hide nested arrays, and follow paths as you hover. As you hover
+        over elements, a path breadcrumb updates at the top of the pane (e.g. <code
+          >root.users[2].profile.address.zipcode</code
+        >), allowing you to write precise access paths for JavaScript or Python
+        scripts instantly.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
         Precise Line and Column Error Highlighting
       </h3>
       <p class="text-sm leading-relaxed">
-        Common formatters simply throw a vague &ldquo;Invalid JSON&rdquo; exception when parsing fails. Our built-in validation system isolates the syntax error location down to the exact line and column, extracts the error context window, and points specifically to the mismatch (e.g., missing double quotes on property keys, trailing commas, or open braces). Fixing formatting errors becomes a trivial task.
+        Common formatters simply throw a vague &ldquo;Invalid JSON&rdquo;
+        exception when parsing fails. Our built-in validation system isolates
+        the syntax error location down to the exact line and column, extracts
+        the error context window, and points specifically to the mismatch (e.g.,
+        missing double quotes on property keys, trailing commas, or open
+        braces). Fixing formatting errors becomes a trivial task.
       </p>
     </article>
   </section>
@@ -468,9 +659,15 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     id="how-it-works-modal"
     class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
   >
-    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
-      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
-        <h3 class="font-display font-semibold text-lg text-primary">JSON Formatter Guide</h3>
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          JSON Formatter Guide
+        </h3>
         <button
           type="button"
           id="close-modal-btn"
@@ -481,24 +678,49 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
-        <h4 class="font-semibold text-primary">1. What is JSON formatting & validation?</h4>
+        <h4 class="font-semibold text-primary">
+          1. What is JSON formatting & validation?
+        </h4>
         <p>
-          JSON (JavaScript Object Notation) is a lightweight data-interchange format. A formatter parses a raw, minified, or disorganized JSON string and structures it with consistent spacing and indentation to make it human-readable. A validator checks if the JSON follows standard syntax rules (like double-quoted keys and correct brackets).
+          JSON (JavaScript Object Notation) is a lightweight data-interchange
+          format. A formatter parses a raw, minified, or disorganized JSON
+          string and structures it with consistent spacing and indentation to
+          make it human-readable. A validator checks if the JSON follows
+          standard syntax rules (like double-quoted keys and correct brackets).
         </p>
 
         <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
         <p>
           <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
-            <li><strong>Beautify JSON</strong>: Convert minified data into readable text using 2 spaces, 4 spaces, or tabs.</li>
-            <li><strong>Minify JSON</strong>: Remove all optional whitespace and line breaks to compress the JSON payload for network transport.</li>
-            <li><strong>Precise Error Finder</strong>: If parsing fails, the validator locates the exact line and column of the syntax error, rendering a visual cursor context so you can fix it immediately.</li>
-            <li><strong>Interactive Tree view</strong>: Explore large nested objects and arrays using a collapsible directory structure with hover-path tracking.</li>
+            <li>
+              <strong>Beautify JSON</strong>: Convert minified data into
+              readable text using 2 spaces, 4 spaces, or tabs.
+            </li>
+            <li>
+              <strong>Minify JSON</strong>: Remove all optional whitespace and
+              line breaks to compress the JSON payload for network transport.
+            </li>
+            <li>
+              <strong>Precise Error Finder</strong>: If parsing fails, the
+              validator locates the exact line and column of the syntax error,
+              rendering a visual cursor context so you can fix it immediately.
+            </li>
+            <li>
+              <strong>Interactive Tree view</strong>: Explore large nested
+              objects and arrays using a collapsible directory structure with
+              hover-path tracking.
+            </li>
           </ul>
         </p>
 
-        <h4 class="font-semibold text-primary">3. 100% Client-Side and Private</h4>
+        <h4 class="font-semibold text-primary">
+          3. 100% Client-Side and Private
+        </h4>
         <p>
-          This formatter executes entirely in your browser using standard client-side JavaScript. No data is sent to external servers, making it completely secure for editing sensitive credentials, private API payloads, and config files.
+          This formatter executes entirely in your browser using standard
+          client-side JavaScript. No data is sent to external servers, making it
+          completely secure for editing sensitive credentials, private API
+          payloads, and config files.
         </p>
       </div>
       <button
@@ -524,61 +746,119 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     let currentJSONData: any = null;
     let fileProcessTime = 0;
     let indentStyle: string | number = 2;
-    let currentView = 'pretty';
+    let currentView = "pretty";
 
     // DOM selectors
-    const jsonInput = document.getElementById('json-input') as HTMLTextAreaElement;
-    const inputLineNumbers = document.getElementById('input-line-numbers') as HTMLDivElement;
-    const outputPretty = document.getElementById('output-pretty') as HTMLPreElement;
-    const outputTree = document.getElementById('output-tree') as HTMLDivElement;
-    const treeRootWrapper = document.getElementById('tree-root-wrapper') as HTMLDivElement;
-    const validationBanner = document.getElementById('validation-banner') as HTMLDivElement;
-    const validationMsg = document.getElementById('validation-msg') as HTMLSpanElement;
-    const validationPerf = document.getElementById('validation-perf') as HTMLSpanElement;
-    
+    const jsonInput = document.getElementById(
+      "json-input",
+    ) as HTMLTextAreaElement;
+    const inputLineNumbers = document.getElementById(
+      "input-line-numbers",
+    ) as HTMLDivElement;
+    const outputPretty = document.getElementById(
+      "output-pretty",
+    ) as HTMLPreElement;
+    const outputTree = document.getElementById("output-tree") as HTMLDivElement;
+    const treeRootWrapper = document.getElementById(
+      "tree-root-wrapper",
+    ) as HTMLDivElement;
+    const validationBanner = document.getElementById(
+      "validation-banner",
+    ) as HTMLDivElement;
+    const validationMsg = document.getElementById(
+      "validation-msg",
+    ) as HTMLSpanElement;
+    const validationPerf = document.getElementById(
+      "validation-perf",
+    ) as HTMLSpanElement;
+
     // Actions
-    const btnFormat = document.getElementById('btn-format') as HTMLButtonElement;
-    const btnMinify = document.getElementById('btn-minify') as HTMLButtonElement;
-    const btnCopy = document.getElementById('btn-copy') as HTMLButtonElement;
-    const btnDownload = document.getElementById('btn-download') as HTMLButtonElement;
-    const btnShare = document.getElementById('btn-share') as HTMLButtonElement;
-    const btnClear = document.getElementById('reset-btn') as HTMLButtonElement;
-    const btnSample = document.getElementById('btn-load-sample') as HTMLButtonElement;
-    const btnComplex = document.getElementById('btn-load-complex') as HTMLButtonElement;
-    
+    const btnFormat = document.getElementById(
+      "btn-format",
+    ) as HTMLButtonElement;
+    const btnMinify = document.getElementById(
+      "btn-minify",
+    ) as HTMLButtonElement;
+    const btnCopy = document.getElementById("btn-copy") as HTMLButtonElement;
+    const btnDownload = document.getElementById(
+      "btn-download",
+    ) as HTMLButtonElement;
+    const btnShare = document.getElementById("btn-share") as HTMLButtonElement;
+    const btnClear = document.getElementById("reset-btn") as HTMLButtonElement;
+    const btnSample = document.getElementById(
+      "btn-load-sample",
+    ) as HTMLButtonElement;
+    const btnComplex = document.getElementById(
+      "btn-load-complex",
+    ) as HTMLButtonElement;
+
     // Panels & Tabs
-    const paneInput = document.getElementById('pane-input') as HTMLDivElement;
-    const paneOutput = document.getElementById('pane-output') as HTMLDivElement;
-    const tabInputBtn = document.getElementById('tab-input-btn') as HTMLButtonElement;
-    const tabOutputBtn = document.getElementById('tab-output-btn') as HTMLButtonElement;
-    
+    const paneInput = document.getElementById("pane-input") as HTMLDivElement;
+    const paneOutput = document.getElementById("pane-output") as HTMLDivElement;
+    const tabInputBtn = document.getElementById(
+      "tab-input-btn",
+    ) as HTMLButtonElement;
+    const tabOutputBtn = document.getElementById(
+      "tab-output-btn",
+    ) as HTMLButtonElement;
+
     // Toggles
-    const viewPrettyBtn = document.getElementById('view-pretty-btn') as HTMLButtonElement;
-    const viewTreeBtn = document.getElementById('view-tree-btn') as HTMLButtonElement;
-    const breadcrumbContainer = document.getElementById('breadcrumb-container') as HTMLDivElement;
-    const indentSelect = document.getElementById('indent-select') as HTMLSelectElement;
-    const dropZone = document.getElementById('drop-zone') as HTMLDivElement;
-    const dropOverlay = document.getElementById('drop-overlay') as HTMLDivElement;
-    const fileUploader = document.getElementById('file-uploader') as HTMLInputElement;
-    const fileSizeInfo = document.getElementById('file-size-info') as HTMLSpanElement;
-    
+    const viewPrettyBtn = document.getElementById(
+      "view-pretty-btn",
+    ) as HTMLButtonElement;
+    const viewTreeBtn = document.getElementById(
+      "view-tree-btn",
+    ) as HTMLButtonElement;
+    const breadcrumbContainer = document.getElementById(
+      "breadcrumb-container",
+    ) as HTMLDivElement;
+    const indentSelect = document.getElementById(
+      "indent-select",
+    ) as HTMLSelectElement;
+    const dropZone = document.getElementById("drop-zone") as HTMLDivElement;
+    const dropOverlay = document.getElementById(
+      "drop-overlay",
+    ) as HTMLDivElement;
+    const fileUploader = document.getElementById(
+      "file-uploader",
+    ) as HTMLInputElement;
+    const fileSizeInfo = document.getElementById(
+      "file-size-info",
+    ) as HTMLSpanElement;
+
     // Trace errors
-    const errorTracePanel = document.getElementById('error-trace-panel') as HTMLDivElement;
-    const errorBrief = document.getElementById('error-brief') as HTMLSpanElement;
-    const errorContext = document.getElementById('error-context') as HTMLPreElement;
-    
+    const errorTracePanel = document.getElementById(
+      "error-trace-panel",
+    ) as HTMLDivElement;
+    const errorBrief = document.getElementById(
+      "error-brief",
+    ) as HTMLSpanElement;
+    const errorContext = document.getElementById(
+      "error-context",
+    ) as HTMLPreElement;
+
     // History & Modals
-    const historyContainer = document.getElementById('history-container') as HTMLDivElement;
-    const shortcutsBtn = document.getElementById('shortcuts-btn') as HTMLButtonElement;
-    const shortcutsModal = document.getElementById('shortcuts-modal') as HTMLDivElement;
-    const closeShortcutsBtn = document.getElementById('close-shortcuts-btn') as HTMLButtonElement;
-    const toastMessage = document.getElementById('toast-message') as HTMLDivElement;
+    const historyContainer = document.getElementById(
+      "history-container",
+    ) as HTMLDivElement;
+    const shortcutsBtn = document.getElementById(
+      "shortcuts-btn",
+    ) as HTMLButtonElement;
+    const shortcutsModal = document.getElementById(
+      "shortcuts-modal",
+    ) as HTMLDivElement;
+    const closeShortcutsBtn = document.getElementById(
+      "close-shortcuts-btn",
+    ) as HTMLButtonElement;
+    const toastMessage = document.getElementById(
+      "toast-message",
+    ) as HTMLDivElement;
 
     // How it works modal elements
-    const howItWorksBtn = document.getElementById('how-it-works-btn');
-    const howItWorksModal = document.getElementById('how-it-works-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const modalOkBtn = document.getElementById('modal-ok-btn');
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
 
     // Default samples
     const baseSample = {
@@ -588,8 +868,8 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       active: true,
       stats: {
         latency: "0ms",
-        offline: true
-      }
+        offline: true,
+      },
     };
 
     const complexSample = {
@@ -597,33 +877,31 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       metadata: {
         creator: "Antigravity",
         environment: "Production",
-        tags: ["astro", "css", "miro"]
+        tags: ["astro", "css", "miro"],
       },
       clients: [
         { id: 101, alias: "Core Alpha", connections: [34, 12, 8] },
-        { id: 102, alias: "Teal Gamma", connections: [] }
+        { id: 102, alias: "Teal Gamma", connections: [] },
       ],
       settings: {
         "depth-limit": 5,
         "logging-enabled": false,
-        "backup": null
-      }
+        backup: null,
+      },
     };
 
     // Initialize Page
     function init() {
       // Restore settings
-      const savedIndent = localStorage.getItem('bt-json-indent');
+      const savedIndent = localStorage.getItem("bt-json-indent");
       if (savedIndent) {
         indentSelect.value = savedIndent;
-        indentStyle = savedIndent === 'tabs' ? '\t' : Number(savedIndent);
+        indentStyle = savedIndent === "tabs" ? "\t" : Number(savedIndent);
       }
-      
-
 
       // Check Share URL params
       const urlParams = new URLSearchParams(window.location.search);
-      const encodedJSON = urlParams.get('json');
+      const encodedJSON = urlParams.get("json");
       if (encodedJSON) {
         try {
           const decoded = LZStringDecompress(encodedJSON) || atob(encodedJSON);
@@ -646,108 +924,125 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
         return null;
       }
     }
-    
+
     function LZStringCompress(val: string): string {
       return btoa(unescape(encodeURIComponent(val)));
     }
 
-
-
     // Line numbers helper
     function updateLineNumbers() {
-      const lines = jsonInput.value.split('\n');
+      const lines = jsonInput.value.split("\n");
       const count = Math.max(lines.length, 1);
-      let numberString = '';
+      let numberString = "";
       for (let i = 1; i <= count; i++) {
-        numberString += i + '<br/>';
+        numberString += i + "<br/>";
       }
       inputLineNumbers.innerHTML = numberString;
     }
 
-    jsonInput.addEventListener('input', () => {
+    jsonInput.addEventListener("input", () => {
       updateLineNumbers();
       validateLive();
     });
 
-    jsonInput.addEventListener('scroll', () => {
+    jsonInput.addEventListener("scroll", () => {
       inputLineNumbers.scrollTop = jsonInput.scrollTop;
     });
 
     // Mobile Navigation Controls
-    tabInputBtn.addEventListener('click', () => {
-      paneInput.classList.remove('hidden');
-      paneOutput.classList.add('hidden');
-      tabInputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
-      tabOutputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+    tabInputBtn.addEventListener("click", () => {
+      paneInput.classList.remove("hidden");
+      paneOutput.classList.add("hidden");
+      tabInputBtn.className =
+        "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabOutputBtn.className =
+        "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
     });
 
-    tabOutputBtn.addEventListener('click', () => {
-      paneInput.classList.add('hidden');
-      paneOutput.classList.remove('hidden');
-      paneOutput.classList.add('flex');
-      tabOutputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
-      tabInputBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+    tabOutputBtn.addEventListener("click", () => {
+      paneInput.classList.add("hidden");
+      paneOutput.classList.remove("hidden");
+      paneOutput.classList.add("flex");
+      tabOutputBtn.className =
+        "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabInputBtn.className =
+        "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
     });
 
     // Sync settings
-    indentSelect.addEventListener('change', () => {
+    indentSelect.addEventListener("change", () => {
       const val = indentSelect.value;
-      indentStyle = val === 'tabs' ? '\t' : Number(val);
-      localStorage.setItem('bt-json-indent', val);
+      indentStyle = val === "tabs" ? "\t" : Number(val);
+      localStorage.setItem("bt-json-indent", val);
       validateAndFormat();
     });
 
-
-
     // Load Samples
-    btnSample.addEventListener('click', () => {
+    btnSample.addEventListener("click", () => {
       jsonInput.value = JSON.stringify(baseSample, null, 2);
       updateLineNumbers();
       validateAndFormat();
     });
 
-    btnComplex.addEventListener('click', () => {
+    btnComplex.addEventListener("click", () => {
       jsonInput.value = JSON.stringify(complexSample, null, 2);
       updateLineNumbers();
       validateAndFormat();
     });
 
     // Formatting triggers
-    btnFormat.addEventListener('click', () => {
+    btnFormat.addEventListener("click", () => {
       validateAndFormat();
       triggerMicroAnimation(btnFormat);
     });
 
-    btnMinify.addEventListener('click', () => {
+    btnMinify.addEventListener("click", () => {
       validateAndMinify();
       triggerMicroAnimation(btnMinify);
     });
 
-    btnClear.addEventListener('click', () => {
-      jsonInput.value = '';
-      outputPretty.textContent = '';
-      treeRootWrapper.innerHTML = '';
-      fileSizeInfo.textContent = '';
+    btnClear.addEventListener("click", () => {
+      jsonInput.value = "";
+      outputPretty.textContent = "";
+      treeRootWrapper.innerHTML = "";
+      fileSizeInfo.textContent = "";
       currentJSONData = null;
       updateLineNumbers();
-      updateStatus('idle', 'Cleared.');
-      errorTracePanel.classList.add('hidden');
+      updateStatus("idle", "Cleared.");
+      errorTracePanel.classList.add("hidden");
+      
+      // Reset button styling to default (Beautify is active)
+      btnFormat.className = "button-primary text-xs py-2 px-5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold";
+      btnMinify.className = "button-secondary text-xs py-2 px-5 !rounded-full transition-all cursor-pointer font-bold hover:bg-surface";
     });
 
     // Live validation (lightweight checking)
     function validateLive() {
       const text = jsonInput.value.trim();
       if (!text) {
-        updateStatus('idle', 'Waiting for input JSON...');
-        errorTracePanel.classList.add('hidden');
+        updateStatus("idle", "Waiting for input JSON...");
+        errorTracePanel.classList.add("hidden");
         return;
       }
       try {
         JSON.parse(text);
-        updateStatus('success', '✓ Structure Valid');
-        errorTracePanel.classList.add('hidden');
+        updateStatus("success", "✓ Structure Valid");
+        errorTracePanel.classList.add("hidden");
       } catch (err: any) {
-        updateStatus('error', '✗ Invalid JSON');
+        updateStatus("error", "✗ Invalid JSON");
+      }
+    }
+
+    // Switch to output tab on mobile
+    function switchToOutputTab() {
+      if (window.innerWidth < 640) {
+        paneInput.classList.add("hidden");
+        paneOutput.classList.remove("hidden");
+        paneOutput.classList.add("flex");
+        tabOutputBtn.className =
+          "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+        tabInputBtn.className =
+          "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
       }
     }
 
@@ -755,36 +1050,43 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     function validateAndFormat() {
       const text = jsonInput.value.trim();
       if (!text) {
-        updateStatus('idle', 'Input is empty.');
+        updateStatus("idle", "Input is empty.");
         return;
       }
+
+      // Update button styling to show Beautify is active
+      btnFormat.className = "button-primary text-xs py-2 px-5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold";
+      btnMinify.className = "button-secondary text-xs py-2 px-5 !rounded-full transition-all cursor-pointer font-bold hover:bg-surface";
 
       const start = performance.now();
       try {
         const parsed = JSON.parse(text);
         currentJSONData = parsed;
-        
+
         let spaces = indentStyle;
-        if (spaces === 'tabs') spaces = '\t';
-        
+        if (spaces === "tabs") spaces = "\t";
+
         const formatted = JSON.stringify(parsed, null, spaces);
         outputPretty.textContent = formatted;
-        
+
         // Render tree on-demand
         renderOnDemandTree(parsed);
 
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus('success', `✓ Valid JSON string formatted.`);
+        updateStatus("success", `✓ Valid JSON string formatted.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
-        
+
         // Save to history
         saveSnippetToHistory(text);
 
         // Flash green
         flashBanner(true);
-        errorTracePanel.classList.add('hidden');
+        errorTracePanel.classList.add("hidden");
+
+        // Auto-switch to output tab on mobile
+        switchToOutputTab();
       } catch (err: any) {
         handleParseError(text, err);
         flashBanner(false);
@@ -796,23 +1098,38 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       const text = jsonInput.value.trim();
       if (!text) return;
 
+      // Update button styling to show Minify is active
+      btnMinify.className = "button-primary text-xs py-2 px-5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold";
+      btnFormat.className = "button-secondary text-xs py-2 px-5 !rounded-full transition-all cursor-pointer font-bold hover:bg-surface";
+
       const start = performance.now();
       try {
         const parsed = JSON.parse(text);
         currentJSONData = parsed;
-        
+
         const minified = JSON.stringify(parsed);
         outputPretty.textContent = minified;
-        
+
         renderOnDemandTree(parsed);
 
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus('success', `✓ Minified successfully.`);
+        updateStatus("success", `✓ Minified successfully.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
-        
-        errorTracePanel.classList.add('hidden');
+
+        errorTracePanel.classList.add("hidden");
+
+        // Auto-switch view to Pretty Print to show minified JSON
+        currentView = "pretty";
+        viewPrettyBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+        viewTreeBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+        outputPretty.classList.remove("hidden");
+        outputTree.classList.add("hidden");
+        breadcrumbContainer.classList.add("hidden");
+
+        // Auto-switch to output tab on mobile
+        switchToOutputTab();
       } catch (err: any) {
         handleParseError(text, err);
       }
@@ -820,13 +1137,13 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
 
     // Precise syntax error highlighting and parsing
     function handleParseError(rawText: string, err: Error) {
-      updateStatus('error', '✗ Invalid JSON structure');
-      outputPretty.textContent = '';
-      treeRootWrapper.innerHTML = '';
-      
+      updateStatus("error", "✗ Invalid JSON structure");
+      outputPretty.textContent = "";
+      treeRootWrapper.innerHTML = "";
+
       const errMsg = err.message;
       errorBrief.textContent = errMsg;
-      errorTracePanel.classList.remove('hidden');
+      errorTracePanel.classList.remove("hidden");
 
       // Try to parse error position (e.g. "at position 124" or "line 3 column 5")
       let line = 1;
@@ -842,51 +1159,63 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
         col = Number(lineColMatch[2]);
       } else if (positionMatch) {
         pos = Number(positionMatch[1]);
-        const linesUpTo = rawText.substring(0, pos).split('\n');
+        const linesUpTo = rawText.substring(0, pos).split("\n");
         line = linesUpTo.length;
         col = linesUpTo[linesUpTo.length - 1].length + 1;
       }
 
       // Generate error context view
-      const lines = rawText.split('\n');
+      const lines = rawText.split("\n");
       const startLine = Math.max(1, line - 2);
       const endLine = Math.min(lines.length, line + 2);
-      
-      let contextStr = '';
+
+      let contextStr = "";
       for (let i = startLine; i <= endLine; i++) {
         const lineContent = lines[i - 1];
-        const prefix = i === line ? ' > ' : '   ';
+        const prefix = i === line ? " > " : "   ";
         contextStr += `${prefix}${String(i).padStart(4)} | ${lineContent}\n`;
         if (i === line) {
           // Add visual arrow indicator pointing to the exact column
-          const indent = ' '.repeat(col + 9);
+          const indent = " ".repeat(col + 9);
           contextStr += `${indent}^\n`;
         }
       }
-      
+
       errorContext.textContent = contextStr;
     }
 
     // Status Banner Updates
-    function updateStatus(type: 'idle' | 'success' | 'error', msg: string) {
+    function updateStatus(type: "idle" | "success" | "error", msg: string) {
       validationBanner.className = `p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300`;
-      
-      if (type === 'idle') {
-        validationBanner.classList.add('bg-surface-yellow', 'border-yellow-light/80', 'text-yellow-dark');
+
+      if (type === "idle") {
+        validationBanner.classList.add(
+          "bg-surface-yellow",
+          "border-yellow-light/80",
+          "text-yellow-dark",
+        );
         validationMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span> ${msg}`;
-        validationPerf.textContent = '';
-      } else if (type === 'success') {
-        validationBanner.classList.add('bg-success-accent/15', 'border-success-accent/40', 'text-moss-dark');
+        validationPerf.textContent = "";
+      } else if (type === "success") {
+        validationBanner.classList.add(
+          "bg-success-accent/15",
+          "border-success-accent/40",
+          "text-moss-dark",
+        );
         validationMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span> ${msg}`;
-      } else if (type === 'error') {
-        validationBanner.classList.add('bg-brand-red', 'border-brand-red-dark/30', 'text-coral-dark');
+      } else if (type === "error") {
+        validationBanner.classList.add(
+          "bg-brand-red",
+          "border-brand-red-dark/30",
+          "text-coral-dark",
+        );
         validationMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-red-dark"></span> ${msg}`;
-        validationPerf.textContent = '';
+        validationPerf.textContent = "";
       }
     }
 
     function flashBanner(isSuccess: boolean) {
-      const cls = isSuccess ? 'bg-success-accent/40' : 'bg-brand-red-dark/40';
+      const cls = isSuccess ? "bg-success-accent/40" : "bg-brand-red-dark/40";
       validationBanner.classList.add(cls);
       setTimeout(() => {
         validationBanner.classList.remove(cls);
@@ -895,36 +1224,36 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
 
     // Micro-animation triggers
     function triggerMicroAnimation(btn: HTMLButtonElement) {
-      btn.classList.add('scale-95');
+      btn.classList.add("scale-95");
       setTimeout(() => {
-        btn.classList.remove('scale-95');
+        btn.classList.remove("scale-95");
       }, 150);
     }
 
     // File Drag & Drop
-    dropZone.addEventListener('dragover', (e) => {
+    dropZone.addEventListener("dragover", (e) => {
       e.preventDefault();
-      dropOverlay.classList.remove('opacity-0');
-      dropOverlay.classList.add('opacity-100');
+      dropOverlay.classList.remove("opacity-0");
+      dropOverlay.classList.add("opacity-100");
     });
 
-    dropZone.addEventListener('dragleave', () => {
-      dropOverlay.classList.remove('opacity-100');
-      dropOverlay.classList.add('opacity-0');
+    dropZone.addEventListener("dragleave", () => {
+      dropOverlay.classList.remove("opacity-100");
+      dropOverlay.classList.add("opacity-0");
     });
 
-    dropZone.addEventListener('drop', (e) => {
+    dropZone.addEventListener("drop", (e) => {
       e.preventDefault();
-      dropOverlay.classList.remove('opacity-100');
-      dropOverlay.classList.add('opacity-0');
-      
+      dropOverlay.classList.remove("opacity-100");
+      dropOverlay.classList.add("opacity-0");
+
       const files = e.dataTransfer?.files;
       if (files && files.length > 0) {
         handleFile(files[0]);
       }
     });
 
-    fileUploader.addEventListener('change', () => {
+    fileUploader.addEventListener("change", () => {
       const files = fileUploader.files;
       if (files && files.length > 0) {
         handleFile(files[0]);
@@ -933,7 +1262,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
 
     function handleFile(file: File) {
       fileSizeInfo.textContent = `File: ${file.name} (${formatBytes(file.size)})`;
-      
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const text = e.target?.result as string;
@@ -945,83 +1274,89 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     }
 
     function formatBytes(bytes: number): string {
-      if (bytes === 0) return '0 Bytes';
+      if (bytes === 0) return "0 Bytes";
       const k = 1024;
-      const sizes = ['Bytes', 'KB', 'MB'];
+      const sizes = ["Bytes", "KB", "MB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
     }
 
     // Toggle view Mode (Pretty Text vs Interactive Tree)
-    viewPrettyBtn.addEventListener('click', () => {
-      currentView = 'pretty';
-      viewPrettyBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
-      viewTreeBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
-      outputPretty.classList.remove('hidden');
-      outputTree.classList.add('hidden');
-      breadcrumbContainer.classList.add('hidden');
+    viewPrettyBtn.addEventListener("click", () => {
+      currentView = "pretty";
+      viewPrettyBtn.className =
+        "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      viewTreeBtn.className =
+        "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      outputPretty.classList.remove("hidden");
+      outputTree.classList.add("hidden");
+      breadcrumbContainer.classList.add("hidden");
     });
 
-    viewTreeBtn.addEventListener('click', () => {
-      currentView = 'tree';
-      viewTreeBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
-      viewPrettyBtn.className = "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
-      outputPretty.classList.add('hidden');
-      outputTree.classList.remove('hidden');
-      breadcrumbContainer.classList.remove('hidden');
+    viewTreeBtn.addEventListener("click", () => {
+      currentView = "tree";
+      viewTreeBtn.className =
+        "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      viewPrettyBtn.className =
+        "text-[10px] px-3.5 py-0.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      outputPretty.classList.add("hidden");
+      outputTree.classList.remove("hidden");
+      breadcrumbContainer.classList.remove("hidden");
     });
 
     // Copy to clipboard
-    btnCopy.addEventListener('click', () => {
-      const textStr = outputPretty.textContent || JSON.stringify(currentJSONData);
+    btnCopy.addEventListener("click", () => {
+      const textStr =
+        outputPretty.textContent || JSON.stringify(currentJSONData);
       if (!textStr) return;
-      
+
       navigator.clipboard.writeText(textStr).then(() => {
-        showToast('✓ Copied formatted JSON');
+        showToast("✓ Copied formatted JSON");
       });
     });
 
     // Download formatted file
-    btnDownload.addEventListener('click', () => {
-      const textStr = outputPretty.textContent || JSON.stringify(currentJSONData);
+    btnDownload.addEventListener("click", () => {
+      const textStr =
+        outputPretty.textContent || JSON.stringify(currentJSONData);
       if (!textStr) return;
 
-      const blob = new Blob([textStr], { type: 'application/json' });
+      const blob = new Blob([textStr], { type: "application/json" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `formatted_${Date.now()}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('✓ Downloading JSON File');
+      showToast("✓ Downloading JSON File");
     });
 
     // Share link as URL query param
-    btnShare.addEventListener('click', () => {
+    btnShare.addEventListener("click", () => {
       const textStr = jsonInput.value.trim();
       if (!textStr) return;
 
       try {
         const compressed = LZStringCompress(textStr);
         const shareUrl = `${window.location.origin}${window.location.pathname}?json=${compressed}`;
-        
+
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast('✓ Shareable URL copied!');
+          showToast("✓ Shareable URL copied!");
         });
       } catch (err) {
-        showToast('⚠️ Could not generate link');
+        showToast("⚠️ Could not generate link");
       }
     });
 
     function showToast(msg: string) {
       toastMessage.textContent = msg;
-      toastMessage.classList.remove('opacity-0');
-      toastMessage.classList.add('opacity-100');
+      toastMessage.classList.remove("opacity-0");
+      toastMessage.classList.add("opacity-100");
       setTimeout(() => {
-        toastMessage.classList.remove('opacity-100');
-        toastMessage.classList.add('opacity-0');
+        toastMessage.classList.remove("opacity-100");
+        toastMessage.classList.add("opacity-0");
       }, 2000);
     }
 
@@ -1029,72 +1364,79 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     // Instead of rendering a huge nested object immediately, we render top level nodes
     // and store sub-objects in DOM element references, appending sub-nodes on demand.
     function renderOnDemandTree(data: any) {
-      treeRootWrapper.innerHTML = '';
-      const rootNode = createTreeNode('root', data, 'root');
+      treeRootWrapper.innerHTML = "";
+      const rootNode = createTreeNode("root", data, "root");
       treeRootWrapper.appendChild(rootNode);
     }
 
-    function createTreeNode(key: string, value: any, path: string): HTMLDivElement {
-      const node = document.createElement('div');
-      node.className = 'tree-node pl-4 py-0.5 relative';
-      
+    function createTreeNode(
+      key: string,
+      value: any,
+      path: string,
+    ): HTMLDivElement {
+      const node = document.createElement("div");
+      node.className = "tree-node pl-4 py-0.5 relative";
+
       const type = typeof value;
-      const isCollapsible = value !== null && (type === 'object');
-      
-      const headerLine = document.createElement('div');
-      headerLine.className = 'flex items-center gap-1.5 hover:bg-canvas/30 rounded px-1 transition-colors';
-      
+      const isCollapsible = value !== null && type === "object";
+
+      const headerLine = document.createElement("div");
+      headerLine.className =
+        "flex items-center gap-1.5 hover:bg-canvas/30 rounded px-1 transition-colors";
+
       // Store reference path on header to display breadcrumbs
-      headerLine.setAttribute('data-path', path);
-      headerLine.addEventListener('mouseenter', (e) => {
+      headerLine.setAttribute("data-path", path);
+      headerLine.addEventListener("mouseenter", (e) => {
         e.stopPropagation();
         breadcrumbContainer.textContent = path;
       });
 
       if (isCollapsible) {
         const isArray = Array.isArray(value);
-        const opener = isArray ? '[' : '{';
-        
-        const toggle = document.createElement('button');
-        toggle.className = 'w-4 h-4 flex items-center justify-center border border-hairline-strong/60 rounded text-[9px] font-bold bg-canvas hover:bg-surface text-stone cursor-pointer transition-transform';
-        toggle.textContent = '+';
-        
-        const keySpan = document.createElement('span');
-        keySpan.className = 'font-bold text-slate';
-        keySpan.textContent = key === 'root' ? '' : `"${key}": `;
-        
-        const bracketSpan = document.createElement('span');
-        bracketSpan.className = 'font-semibold text-stone';
-        bracketSpan.textContent = `${opener} ... ${isArray ? ']' : '}'}`;
-        
+        const opener = isArray ? "[" : "{";
+
+        const toggle = document.createElement("button");
+        toggle.className =
+          "w-4 h-4 flex items-center justify-center border border-hairline-strong/60 rounded text-[9px] font-bold bg-canvas hover:bg-surface text-stone cursor-pointer transition-transform";
+        toggle.textContent = "+";
+
+        const keySpan = document.createElement("span");
+        keySpan.className = "font-bold text-slate";
+        keySpan.textContent = key === "root" ? "" : `"${key}": `;
+
+        const bracketSpan = document.createElement("span");
+        bracketSpan.className = "font-semibold text-stone";
+        bracketSpan.textContent = `${opener} ... ${isArray ? "]" : "}"}`;
+
         headerLine.appendChild(toggle);
         headerLine.appendChild(keySpan);
         headerLine.appendChild(bracketSpan);
-        
+
         // Hidden children container
-        const childrenContainer = document.createElement('div');
-        childrenContainer.className = 'hidden flex flex-col border-l border-hairline-strong/30 ml-2 mt-1 transition-all';
-        
+        const childrenContainer = document.createElement("div");
+        childrenContainer.className =
+          "hidden flex flex-col border-l border-hairline-strong/30 ml-2 mt-1 transition-all";
+
         // Attach reference values to toggle & node
         (node as any)._jsonValue = value;
         (node as any)._path = path;
         (node as any)._isRendered = false;
         (node as any)._isArray = isArray;
 
-        toggle.addEventListener('click', (e) => {
+        toggle.addEventListener("click", (e) => {
           e.stopPropagation();
-          const isExpanded = !childrenContainer.classList.contains('hidden');
-          
+          const isExpanded = !childrenContainer.classList.contains("hidden");
+
           if (isExpanded) {
-            childrenContainer.classList.add('hidden');
-            toggle.textContent = '+';
-            bracketSpan.textContent = `${opener} ... ${isArray ? ']' : '}'}`;
+            childrenContainer.classList.add("hidden");
+            toggle.textContent = "+";
+            bracketSpan.textContent = `${opener} ... ${isArray ? "]" : "}"}`;
           } else {
             // Lazy render children
             if (!(node as any)._isRendered) {
               const subObj = (node as any)._jsonValue;
               const subPath = (node as any)._path;
-              
+
               if (Array.isArray(subObj)) {
                 subObj.forEach((val, idx) => {
                   const childPath = `${subPath}[${idx}]`;
@@ -1103,81 +1445,87 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
                 });
               } else {
                 Object.keys(subObj).forEach((childKey) => {
-                  const childPath = subPath === 'root' ? childKey : `${subPath}.${childKey}`;
-                  const childNode = createTreeNode(childKey, subObj[childKey], childPath);
+                  const childPath =
+                    subPath === "root" ? childKey : `${subPath}.${childKey}`;
+                  const childNode = createTreeNode(
+                    childKey,
+                    subObj[childKey],
+                    childPath,
+                  );
                   childrenContainer.appendChild(childNode);
                 });
               }
               (node as any)._isRendered = true;
             }
-            
-            childrenContainer.classList.remove('hidden');
-            toggle.textContent = '-';
+
+            childrenContainer.classList.remove("hidden");
+            toggle.textContent = "-";
             bracketSpan.textContent = opener;
           }
         });
-        
+
         node.appendChild(headerLine);
         node.appendChild(childrenContainer);
 
         // Add matching closing bracket if expanded
-        const closerLine = document.createElement('div');
-        closerLine.className = 'hidden font-semibold text-stone pl-6 mt-0.5';
-        closerLine.textContent = isArray ? ']' : '}';
+        const closerLine = document.createElement("div");
+        closerLine.className = "hidden font-semibold text-stone pl-6 mt-0.5";
+        closerLine.textContent = isArray ? "]" : "}";
         node.appendChild(closerLine);
 
         // Sync closing bracket state visibility
-        toggle.addEventListener('click', () => {
-          const isExpanded = !childrenContainer.classList.contains('hidden');
-          closerLine.style.display = isExpanded ? 'block' : 'none';
+        toggle.addEventListener("click", () => {
+          const isExpanded = !childrenContainer.classList.contains("hidden");
+          closerLine.style.display = isExpanded ? "block" : "none";
         });
-
       } else {
         // Primitive layout
-        const keySpan = document.createElement('span');
-        keySpan.className = 'font-bold text-slate';
-        keySpan.textContent = key === 'root' ? '' : `"${key}": `;
-        
-        const valueSpan = document.createElement('span');
-        if (type === 'string') {
-          valueSpan.className = 'text-success-accent font-medium';
+        const keySpan = document.createElement("span");
+        keySpan.className = "font-bold text-slate";
+        keySpan.textContent = key === "root" ? "" : `"${key}": `;
+
+        const valueSpan = document.createElement("span");
+        if (type === "string") {
+          valueSpan.className = "text-success-accent font-medium";
           valueSpan.textContent = `"${value}"`;
-        } else if (type === 'number') {
-          valueSpan.className = 'text-brand-blue font-semibold';
+        } else if (type === "number") {
+          valueSpan.className = "text-brand-blue font-semibold";
           valueSpan.textContent = String(value);
-        } else if (type === 'boolean') {
-          valueSpan.className = 'text-brand-coral font-bold';
+        } else if (type === "boolean") {
+          valueSpan.className = "text-brand-coral font-bold";
           valueSpan.textContent = String(value);
         } else if (value === null) {
-          valueSpan.className = 'text-stone font-bold italic';
-          valueSpan.textContent = 'null';
+          valueSpan.className = "text-stone font-bold italic";
+          valueSpan.textContent = "null";
         } else {
           valueSpan.textContent = String(value);
         }
-        
+
         headerLine.appendChild(keySpan);
         headerLine.appendChild(valueSpan);
         node.appendChild(headerLine);
       }
-      
+
       return node;
     }
 
     // Local History Manager (Max 5 items)
     function saveSnippetToHistory(content: string) {
       try {
-        const rawHistory = localStorage.getItem('bt-json-history');
+        const rawHistory = localStorage.getItem("bt-json-history");
         let history: HistoryItem[] = rawHistory ? JSON.parse(rawHistory) : [];
-        
+
         // Avoid duplicate saves of identical content
         if (history.length > 0 && history[0].content === content) return;
 
-        const snippetLabel = content.substring(0, 30).replace(/\s+/g, ' ') + (content.length > 30 ? '...' : '');
+        const snippetLabel =
+          content.substring(0, 30).replace(/\s+/g, " ") +
+          (content.length > 30 ? "..." : "");
         const newItem: HistoryItem = {
           id: Math.random().toString(36).substring(2, 9),
           timestamp: Date.now(),
           label: snippetLabel,
-          content: content
+          content: content,
         };
 
         history.unshift(newItem);
@@ -1185,7 +1533,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
           history = history.slice(0, 5);
         }
 
-        localStorage.setItem('bt-json-history', JSON.stringify(history));
+        localStorage.setItem("bt-json-history", JSON.stringify(history));
         updateHistoryList();
       } catch (err) {
         console.warn("Could not save to history", err);
@@ -1194,19 +1542,20 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
 
     function updateHistoryList() {
       try {
-        const rawHistory = localStorage.getItem('bt-json-history');
+        const rawHistory = localStorage.getItem("bt-json-history");
         if (!rawHistory) return;
-        
+
         const history: HistoryItem[] = JSON.parse(rawHistory);
         if (history.length === 0) return;
 
-        historyContainer.innerHTML = '';
+        historyContainer.innerHTML = "";
         history.forEach((item) => {
-          const btn = document.createElement('button');
-          btn.className = 'inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline hover:border-brand-blue rounded-full transition-all cursor-pointer truncate max-w-[200px]';
+          const btn = document.createElement("button");
+          btn.className =
+            "inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline hover:border-brand-blue rounded-full transition-all cursor-pointer truncate max-w-[200px]";
           btn.textContent = item.label;
           btn.title = "Click to load this snippet";
-          btn.addEventListener('click', () => {
+          btn.addEventListener("click", () => {
             jsonInput.value = item.content;
             updateLineNumbers();
             validateAndFormat();
@@ -1217,53 +1566,53 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
     }
 
     // Keyboard Shortcuts Dialog
-    shortcutsBtn.addEventListener('click', () => {
-      shortcutsModal.classList.remove('hidden');
+    shortcutsBtn.addEventListener("click", () => {
+      shortcutsModal.classList.remove("hidden");
     });
 
-    closeShortcutsBtn.addEventListener('click', () => {
-      shortcutsModal.classList.add('hidden');
+    closeShortcutsBtn.addEventListener("click", () => {
+      shortcutsModal.classList.add("hidden");
     });
 
     // Close on click outside modal
-    shortcutsModal.addEventListener('click', (e) => {
+    shortcutsModal.addEventListener("click", (e) => {
       if (e.target === shortcutsModal) {
-        shortcutsModal.classList.add('hidden');
+        shortcutsModal.classList.add("hidden");
       }
     });
 
     // How it works modal interactions
-    howItWorksBtn?.addEventListener('click', () => {
-      howItWorksModal?.classList.remove('hidden');
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
     });
-    closeModalBtn?.addEventListener('click', () => {
-      howItWorksModal?.classList.add('hidden');
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
     });
-    modalOkBtn?.addEventListener('click', () => {
-      howItWorksModal?.classList.add('hidden');
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
     });
-    howItWorksModal?.addEventListener('click', (e) => {
+    howItWorksModal?.addEventListener("click", (e) => {
       if (e.target === howItWorksModal) {
-        howItWorksModal.classList.add('hidden');
+        howItWorksModal.classList.add("hidden");
       }
     });
 
     // Keyboard Hotkeys
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener("keydown", (e) => {
       // Ctrl + Enter to format
-      if (e.ctrlKey && e.key === 'Enter') {
+      if (e.ctrlKey && e.key === "Enter") {
         e.preventDefault();
         validateAndFormat();
       }
-      
+
       // Ctrl + Shift + M to minify
-      if (e.ctrlKey && e.shiftKey && (e.key === 'M' || e.key === 'm')) {
+      if (e.ctrlKey && e.shiftKey && (e.key === "M" || e.key === "m")) {
         e.preventDefault();
         validateAndMinify();
       }
-      
+
       // Ctrl + L to load sample
-      if (e.ctrlKey && (e.key === 'L' || e.key === 'l')) {
+      if (e.ctrlKey && (e.key === "L" || e.key === "l")) {
         e.preventDefault();
         jsonInput.value = JSON.stringify(baseSample, null, 2);
         updateLineNumbers();
@@ -1271,7 +1620,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
       }
 
       // Ctrl + Esc to clear
-      if (e.ctrlKey && e.key === 'Escape') {
+      if (e.ctrlKey && e.key === "Escape") {
         e.preventDefault();
         btnClear.click();
       }
@@ -1285,7 +1634,7 @@ const keywords = "json formatter, json validator, json minifier, format json, pr
   <style is:global>
     /* Tree structures alignments */
     .tree-node::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 6px;
       top: 0;
