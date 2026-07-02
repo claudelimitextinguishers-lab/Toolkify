@@ -1,90 +1,1594 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Randomizer Wheel";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Input choice sets, spin the interactive decision wheel, and select random choices.";
+
+// SEO
+const pageTitle = "Randomizer Wheel - Interactive Physics Decision Spinner";
+const description = "Spin the interactive decision wheel with realistic drag-and-flick physics, custom weights, presets, sound effects, and secure randomness.";
+const canonicalUrl = "https://boardtools.app/tools/developer/randomizer-wheel";
+const keywords = "randomizer wheel, decision wheel, spin the wheel, random picker, name selector, random choice generator, choice spinner, secure random picker";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Randomizer Wheel",
+      "url": "https://boardtools.app/tools/developer/randomizer-wheel",
+      "description": "An interactive, client-side decision wheel featuring realistic physics, drag-to-spin, per-item weights, custom color palettes, and session logs.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🔧</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button (Pattern 1) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset wheel settings and list"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button (Pattern 2) -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How randomizer wheel works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
+    <!-- Workspace Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative">
+      
+      <!-- Left Column: Canvas Wheel view (Col 7) -->
+      <div class="lg:col-span-7 card-base p-4 sm:p-6 flex flex-col items-center justify-between gap-4 relative min-h-[450px]">
+        <!-- Sound indicator and Reduced motion settings badge -->
+        <div class="w-full flex items-center justify-between text-[11px] text-slate px-1">
+          <span class="flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-success-accent animate-pulse"></span>
+            100% Browser-Based Secure Spin
+          </span>
+          <div class="flex items-center gap-2">
+            <span id="motion-badge" class="hidden bg-surface-yellow text-yellow-dark px-1.5 py-0.5 rounded font-mono text-[9px]">Reduced Motion Active</span>
+            <span id="choices-count-badge" class="font-mono bg-surface border border-hairline px-1.5 py-0.5 rounded text-[10px]">0 choices</span>
+          </div>
+        </div>
+
+        <!-- Wheel Container -->
+        <div class="relative w-full max-w-[420px] aspect-square flex items-center justify-center select-none" id="wheel-interactive-area">
+          <canvas id="wheel-canvas" class="w-full h-full cursor-grab active:cursor-grabbing transition-transform duration-100"></canvas>
+          
+          <!-- Outer Selector Peg / Indicator Arrow -->
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 filter drop-shadow-md">
+            <svg width="24" height="28" viewBox="0 0 24 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 28L0 4C0 4 6 0 12 0C18 0 24 4 24 4L12 28Z" fill="#1c1c1e" />
+              <path d="M12 22L4 5C4 5 8 2 12 2C16 2 20 5 20 5L12 22Z" fill="#ffd02f" />
+            </svg>
+          </div>
+
+          <!-- Absolute Center Spin button with Glow/Pulse (pauses when spinning) -->
+          <button
+            type="button"
+            id="center-spin-btn"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary text-canvas border-4 border-canvas shadow-lg flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-brand-blue/30 z-20"
+            aria-label="Spin the wheel"
+          >
+            <!-- Pulse Glow Rings (CSS Animation) -->
+            <span class="absolute inset-0 rounded-full bg-primary/20 scale-110 animate-ping group-hover:duration-700" id="pulse-ring"></span>
+            
+            <span class="font-display font-bold text-xs sm:text-sm tracking-widest uppercase">Spin</span>
+          </button>
+        </div>
+
+        <!-- Winner Announcement Modal / Panel Overlay (Springy entry) -->
+        <div
+          id="winner-panel"
+          class="hidden absolute inset-0 z-30 bg-primary/10 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center"
+        >
+          <div class="bg-canvas rounded-2xl max-w-md w-full p-6 border-2 border-primary shadow-modal flex flex-col gap-4 transform transition-all duration-300 scale-90 translate-y-4" id="winner-box">
+            <span class="text-3xl">🎉 WINNER! 🎉</span>
+            <div class="h-[1px] bg-hairline"></div>
+            <h2 id="winner-name" class="font-display font-medium text-2xl sm:text-3xl text-primary break-words px-2 py-4 bg-surface rounded-xl border border-hairline-soft font-bold">
+              Name
+            </h2>
+            <div class="flex gap-2.5 mt-2 justify-center">
+              <button
+                type="button"
+                id="winner-close-btn"
+                class="button-secondary text-xs py-2.5 px-4 !rounded-full font-bold cursor-pointer hover:bg-surface"
+              >
+                Keep Choice
+              </button>
+              <button
+                type="button"
+                id="winner-remove-btn"
+                class="button-primary text-xs py-2.5 px-4 !rounded-full font-bold cursor-pointer"
+              >
+                Remove & Re-Spin
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canvas for Confetti Overlay -->
+        <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-45 w-full h-full"></canvas>
+      </div>
+
+      <!-- Right Column: Settings / Options Panel (Col 5) -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        
+        <!-- Tab Bar Selector -->
+        <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full print:hidden">
+          <button
+            type="button"
+            id="tab-edit-btn"
+            class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+          >
+            Edit Choices
+          </button>
+          <button
+            type="button"
+            id="tab-presets-btn"
+            class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+          >
+            Presets
+          </button>
+          <button
+            type="button"
+            id="tab-settings-btn"
+            class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+          >
+            Settings
+          </button>
+        </div>
+
+        <!-- Pane 1: Edit Choices (Active by default) -->
+        <div id="pane-edit" class="card-base p-4 sm:p-5 flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
+              Enter Choices (One per line)
+            </h3>
+            <span class="text-[10px] font-bold text-brand-blue" id="duplicate-warning"></span>
+          </div>
+
+          <textarea
+            id="choices-input"
+            class="w-full min-h-[140px] p-3 font-mono text-[12px] bg-surface-soft border border-hairline-strong rounded-xl text-primary resize-none outline-none leading-5 focus-within:border-brand-blue focus-within:ring-2 focus-within:ring-brand-blue/10"
+            placeholder="Enter your options here&#10;Choice 1&#10;Choice 2&#10;Choice 3"
+            spellcheck="false"
+          ></textarea>
+
+          <!-- Quick Templates Chips -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-[10px] font-semibold text-slate uppercase">Quick Templates</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" class="template-chip text-[10px] font-bold bg-surface hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors" data-template="yesno">Yes / No</button>
+              <button type="button" class="template-chip text-[10px] font-bold bg-surface hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors" data-template="numbers">1 - 10</button>
+              <button type="button" class="template-chip text-[10px] font-bold bg-surface hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors" data-template="weekdays">Days of the Week</button>
+              <button type="button" class="template-chip text-[10px] font-bold bg-surface hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors" data-template="team">Team Members</button>
+            </div>
+          </div>
+
+          <!-- Weighting Mode Toggle & Input List -->
+          <div class="flex flex-col gap-2.5 border-t border-hairline pt-3 mt-1">
+            <div class="flex items-center justify-between">
+              <label for="weighted-toggle" class="text-xs font-semibold text-slate cursor-pointer">Enable Weighting Mode</label>
+              <input
+                type="checkbox"
+                id="weighted-toggle"
+                class="w-4 h-4 cursor-pointer accent-brand-blue"
+              />
+            </div>
+            
+            <!-- Dynamic Weighted List (Scrollable) -->
+            <div id="weights-container" class="hidden flex-col gap-1.5 max-h-[160px] overflow-y-auto pr-1">
+              <!-- Rendered programmatically -->
+            </div>
+          </div>
+
+          <!-- Share Link Button -->
+          <button
+            type="button"
+            id="share-wheel-btn"
+            class="button-secondary text-xs py-2 w-full !rounded-full transition-all cursor-pointer font-bold hover:bg-surface flex items-center justify-center gap-1.5"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l4.636-2.318M8.684 13.258l4.636 2.318M18 10a3 3 0 11-6 0 3 3 0 016 0zm-8 6a3 3 0 11-6 0 3 3 0 016 0zm8-12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Copy Shareable URL</span>
+          </button>
+        </div>
+
+        <!-- Pane 2: Presets (Hidden initially) -->
+        <div id="pane-presets" class="hidden card-base p-4 sm:p-5 flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-xs sm:text-sm text-primary">
+            Save Current Wheel Configuration
+          </h3>
+          <div class="flex gap-2">
+            <input
+              type="text"
+              id="preset-name-input"
+              class="text-input flex-grow text-xs h-9 bg-surface-soft"
+              placeholder="e.g. Lunch Decider"
+            />
+            <button
+              type="button"
+              id="preset-save-btn"
+              class="button-primary text-xs h-9 py-0 px-4 !rounded-full font-bold cursor-pointer"
+            >
+              Save
+            </button>
+          </div>
           <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+          <h4 class="text-[10px] font-semibold text-slate uppercase">Your Saved Wheels</h4>
+          <div id="presets-list-container" class="flex flex-col gap-2 max-h-[220px] overflow-y-auto">
+            <!-- Programmatically rendered list -->
+            <span class="text-xs text-stone italic">No saved wheels yet.</span>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Pane 3: Settings & History (Hidden initially) -->
+        <div id="pane-settings" class="hidden card-base p-4 sm:p-5 flex flex-col gap-4">
+          <!-- Audio Controls -->
+          <div class="flex items-center justify-between pb-3 border-b border-hairline-soft">
+            <span class="text-xs font-semibold text-slate">Enable Ticking & Fanfare Sound</span>
+            <button
+              type="button"
+              id="sound-toggle-btn"
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+            >
+              <span id="sound-icon">🔊</span>
+              <span id="sound-status-text">On</span>
+            </button>
+          </div>
+
+          <!-- Color Palette Picker -->
+          <div class="flex flex-col gap-2 pb-3 border-b border-hairline-soft">
+            <span class="text-xs font-semibold text-slate">Color Palette Theme</span>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" class="palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-primary bg-surface" data-palette="pastel">
+                <div class="flex gap-1 mb-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffd02f]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#0fbcb0]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ff9999]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffd8f4]"></span>
+                </div>
+                Pastel Board
+              </button>
+              <button type="button" class="palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline" data-palette="vibrant">
+                <div class="flex gap-1 mb-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#4262ff]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#0fbcb0]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ff9999]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffd02f]"></span>
+                </div>
+                Miro Signature
+              </button>
+              <button type="button" class="palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline" data-palette="retro">
+                <div class="flex gap-1 mb-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffd02f]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffe6cd]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#ffc6c6]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#fde0f0]"></span>
+                </div>
+                Warm Retro
+              </button>
+              <button type="button" class="palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline" data-palette="forest">
+                <div class="flex gap-1 mb-1">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#187574]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#c3faf5]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#fafbfc]"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#1c1c1e]"></span>
+                </div>
+                Dark Forest
+              </button>
+            </div>
+          </div>
+
+          <!-- Spin History Log -->
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate">Spin Session History</span>
+              <button type="button" id="clear-history-btn" class="text-[10px] font-bold text-brand-coral hover:underline cursor-pointer">Clear Log</button>
+            </div>
+            <div id="history-log-container" class="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1">
+              <span class="text-xs text-stone italic">No history yet. Spin the wheel to record.</span>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
+
+  <!-- Toast Notification Wrapper (For Copy Actions & Undo Actions) -->
+  <div id="toast-wrapper" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- How It Works Modal (Pattern 2 Close Match) -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Randomizer Wheel Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Interactive Physics & Spinning</h4>
+        <p>
+          You can click the center <strong>SPIN</strong> button to spin with controlled deceleration, or grab the wheel anywhere and flick it with your mouse or finger to watch it rotate naturally based on release velocity and friction.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Secure Cryptographic Randomness</h4>
+        <p>
+          All spins utilize browser-native <code>window.crypto.getRandomValues</code> to ensure complete visual fairness. The visual deceleration is mathematically reconciled to align exactly with the cryptographically selected winner.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Custom Choice Weighting</h4>
+        <p>
+          Need some choices to have higher probability? Toggle <strong>Weighting Mode</strong> to assign custom numeric multipliers to individual choices, adjusting their segments dynamically.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Presets and Sharing</h4>
+        <p>
+          Save customized wheels locally so they load instantly on your next visit, or generate a shareable URL to share your custom list, weights, and color palette with friends.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    // Palettes matching DESIGN.md tokens
+    const PALETTES = {
+      pastel: ['#ffd02f', '#0fbcb0', '#ff9999', '#ffd8f4', '#ffe6cd', '#4262ff'],
+      vibrant: ['#4262ff', '#0fbcb0', '#ff9999', '#ffd02f', '#5b76fe', '#ffd8f4'],
+      retro: ['#ffd02f', '#ffe6cd', '#ffc6c6', '#fde0f0', '#c3faf5', '#ff9999'],
+      forest: ['#187574', '#c3faf5', '#fafbfc', '#1c1c1e', '#e0e2e8', '#ffd02f']
+    };
+
+    interface ChoiceItem {
+      text: string;
+      weight: number;
+    }
+
+    interface WheelPreset {
+      name: string;
+      choices: ChoiceItem[];
+      palette: keyof typeof PALETTES;
+      weighted: boolean;
+    }
+
+    // State Variables
+    let choices: ChoiceItem[] = [];
+    let isWeightedMode = false;
+    let selectedPalette: keyof typeof PALETTES = 'pastel';
+    let isSoundEnabled = true;
+    let spinHistory: { winner: string; timestamp: number }[] = [];
+    let savedPresets: WheelPreset[] = [];
+
+    // Physics Engine State
+    let rotation = 0; // Current angle in radians
+    let angularVelocity = 0; // Current rotation speed in rad/frame
+    let isDragging = false;
+    let lastDragAngle = 0;
+    let dragTimes: number[] = [];
+    let dragAngles: number[] = [];
+    let animationFrameId: number | null = null;
+    let isSpinningToTarget = false;
+    let spinTargetAngle = 0;
+    let spinDuration = 0;
+    let spinTimeElapsed = 0;
+    let targetSegmentWinnerIndex = -1;
+
+    // Undo toast state
+    let lastClearedChoices: ChoiceItem[] = [];
+
+    // DOM Elements
+    const canvas = document.getElementById('wheel-canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d')!;
+    const choicesInput = document.getElementById('choices-input') as HTMLTextAreaElement;
+    const duplicateWarning = document.getElementById('duplicate-warning') as HTMLSpanElement;
+    const weightedToggle = document.getElementById('weighted-toggle') as HTMLInputElement;
+    const weightsContainer = document.getElementById('weights-container') as HTMLDivElement;
+    const choicesCountBadge = document.getElementById('choices-count-badge') as HTMLSpanElement;
+    
+    const centerSpinBtn = document.getElementById('center-spin-btn') as HTMLButtonElement;
+    const pulseRing = document.getElementById('pulse-ring') as HTMLSpanElement;
+    const resetBtn = document.getElementById('reset-btn') as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById('how-it-works-btn') as HTMLButtonElement;
+    const howItWorksModal = document.getElementById('how-it-works-modal') as HTMLDivElement;
+    const closeModalBtn = document.getElementById('close-modal-btn') as HTMLButtonElement;
+    const modalOkBtn = document.getElementById('modal-ok-btn') as HTMLButtonElement;
+
+    // Tab buttons
+    const tabEditBtn = document.getElementById('tab-edit-btn') as HTMLButtonElement;
+    const tabPresetsBtn = document.getElementById('tab-presets-btn') as HTMLButtonElement;
+    const tabSettingsBtn = document.getElementById('tab-settings-btn') as HTMLButtonElement;
+    
+    // Panes
+    const paneEdit = document.getElementById('pane-edit') as HTMLDivElement;
+    const panePresets = document.getElementById('pane-presets') as HTMLDivElement;
+    const paneSettings = document.getElementById('pane-settings') as HTMLDivElement;
+
+    // Presets elements
+    const presetNameInput = document.getElementById('preset-name-input') as HTMLInputElement;
+    const presetSaveBtn = document.getElementById('preset-save-btn') as HTMLButtonElement;
+    const presetsListContainer = document.getElementById('presets-list-container') as HTMLDivElement;
+
+    // Settings elements
+    const soundToggleBtn = document.getElementById('sound-toggle-btn') as HTMLButtonElement;
+    const soundStatusText = document.getElementById('sound-status-text') as HTMLSpanElement;
+    const soundIcon = document.getElementById('sound-icon') as HTMLSpanElement;
+    const clearHistoryBtn = document.getElementById('clear-history-btn') as HTMLButtonElement;
+    const historyLogContainer = document.getElementById('history-log-container') as HTMLDivElement;
+    const shareWheelBtn = document.getElementById('share-wheel-btn') as HTMLButtonElement;
+
+    // Winner panel
+    const winnerPanel = document.getElementById('winner-panel') as HTMLDivElement;
+    const winnerBox = document.getElementById('winner-box') as HTMLDivElement;
+    const winnerName = document.getElementById('winner-name') as HTMLHeadingElement;
+    const winnerCloseBtn = document.getElementById('winner-close-btn') as HTMLButtonElement;
+    const winnerRemoveBtn = document.getElementById('winner-remove-btn') as HTMLButtonElement;
+    
+    // Audio Context Setup (Lazy Loaded)
+    let audioCtx: AudioContext | null = null;
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    // Audio Tick synthesis
+    function playTickSound() {
+      if (!isSoundEnabled) return;
+      try {
+        const actx = getAudioContext();
+        const osc = actx.createOscillator();
+        const gain = actx.createGain();
+        osc.connect(gain);
+        gain.connect(actx.destination);
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(800, actx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, actx.currentTime + 0.015);
+
+        gain.gain.setValueAtTime(0.08, actx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.015);
+
+        osc.start();
+        osc.stop(actx.currentTime + 0.015);
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    // Fanfare Winner sound synthesis
+    function playFanfareSound() {
+      if (!isSoundEnabled) return;
+      try {
+        const actx = getAudioContext();
+        const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5 arpeggio
+        notes.forEach((freq, i) => {
+          const osc = actx.createOscillator();
+          const gain = actx.createGain();
+          osc.connect(gain);
+          gain.connect(actx.destination);
+
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+
+          gain.gain.setValueAtTime(0, actx.currentTime + i * 0.1);
+          gain.gain.linearRampToValueAtTime(0.12, actx.currentTime + i * 0.1 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + i * 0.1 + 0.4);
+
+          osc.start(actx.currentTime + i * 0.1);
+          osc.stop(actx.currentTime + i * 0.1 + 0.4);
+        });
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+
+    // Setup Canvas Resolution
+    function resizeCanvas() {
+      const parent = canvas.parentElement!;
+      const dpr = window.devicePixelRatio || 1;
+      const size = Math.min(parent.clientWidth, 420);
+      canvas.width = size * dpr;
+      canvas.height = size * dpr;
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+      drawWheel();
+    }
+
+    // Draw Randomizer Wheel
+    function drawWheel() {
+      if (!canvas.width || !canvas.height) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const dpr = window.devicePixelRatio || 1;
+      const width = canvas.width;
+      const height = canvas.height;
+      const cx = width / 2;
+      const cy = height / 2;
+      const radius = (Math.min(width, height) / 2) - (8 * dpr);
+
+      if (choices.length === 0) {
+        // Draw Placeholder center
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = '#f7f8fa';
+        ctx.fill();
+        ctx.strokeStyle = '#e0e2e8';
+        ctx.lineWidth = 2 * dpr;
+        ctx.stroke();
+
+        ctx.font = `${Math.round(14 * dpr)}px Roobert PRO, sans-serif`;
+        ctx.fillStyle = '#8e91a0';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Enter choices to begin', cx, cy);
+        return;
+      }
+
+      const totalWeight = choices.reduce((acc, c) => acc + (isWeightedMode ? c.weight : 1), 0);
+      const palette = PALETTES[selectedPalette] || PALETTES.pastel;
+
+      let startAngle = rotation;
+
+      for (let i = 0; i < choices.length; i++) {
+        const item = choices[i];
+        const weight = isWeightedMode ? item.weight : 1;
+        const sliceAngle = (weight / totalWeight) * 2 * Math.PI;
+
+        // Draw Wedge Slice
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, radius, startAngle, startAngle + sliceAngle);
+        ctx.closePath();
+        ctx.fillStyle = palette[i % palette.length];
+        ctx.fill();
+        
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1.5 * dpr;
+        ctx.stroke();
+
+        // Draw Label Text
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(startAngle + sliceAngle / 2);
+
+        // Auto-shrink text behavior
+        let fontSize = 14;
+        if (choices.length > 30) fontSize = 8;
+        else if (choices.length > 15) fontSize = 10;
+        else if (choices.length > 8) fontSize = 12;
+
+        ctx.font = `600 ${Math.round(fontSize * dpr)}px Roobert PRO, sans-serif`;
+        ctx.fillStyle = '#1c1c1e';
+        
+        // Determine contrasting text color for dark slices
+        const isDarkColor = ['#1c1c1e', '#187574'].includes(palette[i % palette.length]);
+        if (isDarkColor) {
+          ctx.fillStyle = '#ffffff';
+        }
+
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        
+        const truncatedText = item.text.length > 15 ? item.text.substring(0, 13) + '..' : item.text;
+        ctx.fillText(truncatedText, radius - 20 * dpr, 0);
+        ctx.restore();
+
+        startAngle += sliceAngle;
+      }
+
+      // Draw Center Pin Outer Ring
+      ctx.beginPath();
+      ctx.arc(cx, cy, 26 * dpr, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.strokeStyle = '#e0e2e8';
+      ctx.lineWidth = 1 * dpr;
+      ctx.stroke();
+    }
+
+    // Get segment index pointing under the top peg
+    function getWinnerIndex(currentRot: number): number {
+      if (choices.length === 0) return -1;
+      const totalWeight = choices.reduce((acc, c) => acc + (isWeightedMode ? c.weight : 1), 0);
+      
+      // The top peg is at angle -Math.PI / 2
+      let normalizedAngle = (-currentRot - Math.PI / 2) % (2 * Math.PI);
+      if (normalizedAngle < 0) {
+        normalizedAngle += 2 * Math.PI;
+      }
+
+      let angleAccumulator = 0;
+      for (let i = 0; i < choices.length; i++) {
+        const item = choices[i];
+        const weight = isWeightedMode ? item.weight : 1;
+        const sliceAngle = (weight / totalWeight) * 2 * Math.PI;
+        
+        if (normalizedAngle >= angleAccumulator && normalizedAngle < angleAccumulator + sliceAngle) {
+          return i;
+        }
+        angleAccumulator += sliceAngle;
+      }
+      return choices.length - 1;
+    }
+
+    // Custom Confetti Particle System
+    const confCanvas = document.getElementById('confetti-canvas') as HTMLCanvasElement;
+    const cctx = confCanvas.getContext('2d')!;
+    let confettiParticles: any[] = [];
+    let isConfettiRunning = false;
+
+    function resizeConfettiCanvas() {
+      confCanvas.width = confCanvas.parentElement!.clientWidth;
+      confCanvas.height = confCanvas.parentElement!.clientHeight;
+    }
+
+    function spawnConfetti() {
+      resizeConfettiCanvas();
+      confettiParticles = [];
+      const colors = ['#ffd02f', '#0fbcb0', '#ff9999', '#ffd8f4', '#4262ff'];
+      for (let i = 0; i < 70; i++) {
+        confettiParticles.push({
+          x: confCanvas.width / 2,
+          y: confCanvas.height / 2 - 20,
+          vx: (Math.random() - 0.5) * 8,
+          vy: (Math.random() - 0.8) * 8 - 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 6 + 4,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10,
+          alpha: 1
+        });
+      }
+      isConfettiRunning = true;
+      animateConfetti();
+    }
+
+    function animateConfetti() {
+      if (!isConfettiRunning) return;
+      cctx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+      let active = false;
+
+      confettiParticles.forEach((p) => {
+        if (p.alpha <= 0) return;
+        active = true;
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.2; // Gravity
+        p.vx *= 0.98; // Friction
+        p.rotation += p.rotationSpeed;
+        p.alpha -= 0.015;
+
+        cctx.save();
+        cctx.translate(p.x, p.y);
+        cctx.rotate((p.rotation * Math.PI) / 180);
+        cctx.fillStyle = p.color;
+        cctx.globalAlpha = p.alpha;
+        cctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        cctx.restore();
+      });
+
+      if (active) {
+        requestAnimationFrame(animateConfetti);
+      } else {
+        isConfettiRunning = false;
+        cctx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+      }
+    }
+
+    // Check if user prefers reduced motion
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motionBadge = document.getElementById('motion-badge')!;
+    function updateMotionPreference() {
+      if (motionQuery.matches) {
+        motionBadge.classList.remove('hidden');
+      } else {
+        motionBadge.classList.add('hidden');
+      }
+    }
+    updateMotionPreference();
+    motionQuery.addEventListener('change', updateMotionPreference);
+
+    // Secure winner selection using window.crypto
+    function selectSecureWinner(): number {
+      const totalWeight = choices.reduce((acc, c) => acc + (isWeightedMode ? c.weight : 1), 0);
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      const randomValue = array[0] / (0xffffffff + 1); // 0 to 1 uniform float
+
+      let threshold = randomValue * totalWeight;
+      let cumulativeWeight = 0;
+      for (let i = 0; i < choices.length; i++) {
+        const item = choices[i];
+        const weight = isWeightedMode ? item.weight : 1;
+        cumulativeWeight += weight;
+        if (threshold <= cumulativeWeight) {
+          return i;
+        }
+      }
+      return choices.length - 1;
+    }
+
+    // Perform spin using math-reconciliation
+    function startSpin() {
+      if (choices.length === 0 || angularVelocity !== 0 || isSpinningToTarget) return;
+
+      // Pulse Glow stops
+      pulseRing.classList.remove('animate-ping');
+      
+      const winnerIdx = selectSecureWinner();
+      targetSegmentWinnerIndex = winnerIdx;
+
+      // Compute total weights and exact angle segment center for the winner
+      const totalWeight = choices.reduce((acc, c) => acc + (isWeightedMode ? c.weight : 1), 0);
+      let angleStart = 0;
+      for (let i = 0; i < winnerIdx; i++) {
+        const weight = isWeightedMode ? choices[i].weight : 1;
+        angleStart += (weight / totalWeight) * 2 * Math.PI;
+      }
+      const itemWeight = isWeightedMode ? choices[winnerIdx].weight : 1;
+      const sliceAngle = (itemWeight / totalWeight) * 2 * Math.PI;
+      const targetCenterAngle = angleStart + sliceAngle / 2;
+
+      // Desired rotation value to position winner exactly under the top indicator peg (at -Math.PI / 2)
+      let targetRot = (-targetCenterAngle - Math.PI / 2);
+      
+      // Keep rotation positive and add 4-6 full spins
+      const currentNorm = rotation % (2 * Math.PI);
+      const fullSpins = (4 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
+      
+      let targetAngleOffset = targetRot - currentNorm;
+      if (targetAngleOffset < 0) targetAngleOffset += 2 * Math.PI;
+
+      spinTargetAngle = rotation + targetAngleOffset + fullSpins;
+      
+      // Duration & physics fallback if reduced motion enabled
+      if (motionQuery.matches) {
+        // Fast snap
+        rotation = spinTargetAngle;
+        drawWheel();
+        handleWinnerSelected(winnerIdx);
+        return;
+      }
+
+      isSpinningToTarget = true;
+      spinDuration = 180 + Math.floor(Math.random() * 60); // 3-4 seconds of rendering
+      spinTimeElapsed = 0;
+      
+      animateWheelSpin();
+    }
+
+    // Animation Loop
+    let lastPlayedIdx = -1;
+    function animateWheelSpin() {
+      if (!isSpinningToTarget) return;
+
+      spinTimeElapsed++;
+      const progress = spinTimeElapsed / spinDuration;
+
+      // Eased Deceleration Curve (cubic out style)
+      const easeOut = 1 - Math.pow(1 - progress, 3.5);
+      
+      // Calculate delta to synthesize sound on segment crossover
+      const prevRot = rotation;
+      rotation = prevRot + (spinTargetAngle - prevRot) * (easeOut - (1 - Math.pow(1 - (progress - 1/spinDuration), 3.5)));
+
+      const currentWinnerIdx = getWinnerIndex(rotation);
+      if (currentWinnerIdx !== lastPlayedIdx) {
+        playTickSound();
+        lastPlayedIdx = currentWinnerIdx;
+      }
+
+      drawWheel();
+
+      if (spinTimeElapsed >= spinDuration) {
+        isSpinningToTarget = false;
+        rotation = spinTargetAngle;
+        drawWheel();
+        handleWinnerSelected(targetSegmentWinnerIndex);
+      } else {
+        animationFrameId = requestAnimationFrame(animateWheelSpin);
+      }
+    }
+
+    // Process Drag & Flick input physics
+    function initPhysicsDrag() {
+      let isPointerDown = false;
+
+      function getAngle(x: number, y: number): number {
+        const rect = canvas.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        return Math.atan2(y - cy, x - cx);
+      }
+
+      canvas.addEventListener('pointerdown', (e) => {
+        if (choices.length === 0 || isSpinningToTarget) return;
+        isPointerDown = true;
+        isDragging = true;
+        canvas.setPointerCapture(e.pointerId);
+
+        // Cancel previous velocity calculation
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+        angularVelocity = 0;
+
+        const angle = getAngle(e.clientX, e.clientY);
+        lastDragAngle = angle;
+        
+        dragTimes = [Date.now()];
+        dragAngles = [rotation];
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isPointerDown) return;
+        const angle = getAngle(e.clientX, e.clientY);
+        const delta = angle - lastDragAngle;
+        
+        // Handle wrap-around
+        let actualDelta = Math.atan2(Math.sin(delta), Math.cos(delta));
+        rotation += actualDelta;
+        
+        lastDragAngle = angle;
+        drawWheel();
+
+        // Track velocity points
+        const now = Date.now();
+        dragTimes.push(now);
+        dragAngles.push(rotation);
+        if (dragTimes.length > 5) {
+          dragTimes.shift();
+          dragAngles.shift();
+        }
+      });
+
+      canvas.addEventListener('pointerup', (e) => {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        isDragging = false;
+        canvas.releasePointerCapture(e.pointerId);
+
+        // Compute Flick velocity on release
+        if (dragTimes.length >= 2) {
+          const dt = dragTimes[dragTimes.length - 1] - dragTimes[0];
+          const da = dragAngles[dragAngles.length - 1] - dragAngles[0];
+          if (dt > 0) {
+            angularVelocity = da / (dt / 16.666); // scale velocity to frame interval
+          }
+        }
+
+        // Limit velocity to prevent extreme spins
+        const maxVel = 0.8;
+        if (angularVelocity > maxVel) angularVelocity = maxVel;
+        if (angularVelocity < -maxVel) angularVelocity = -maxVel;
+
+        if (Math.abs(angularVelocity) > 0.01) {
+          pulseRing.classList.remove('animate-ping');
+          animateFlickFriction();
+        }
+      });
+
+      canvas.addEventListener('pointercancel', () => {
+        isPointerDown = false;
+        isDragging = false;
+      });
+    }
+
+    function animateFlickFriction() {
+      if (isDragging || isSpinningToTarget) return;
+
+      rotation += angularVelocity;
+      angularVelocity *= 0.985; // friction factor
+
+      // play ticking audio
+      const currentWinnerIdx = getWinnerIndex(rotation);
+      if (currentWinnerIdx !== lastPlayedIdx) {
+        playTickSound();
+        lastPlayedIdx = currentWinnerIdx;
+      }
+
+      drawWheel();
+
+      if (Math.abs(angularVelocity) < 0.001) {
+        angularVelocity = 0;
+        const winnerIdx = getWinnerIndex(rotation);
+        handleWinnerSelected(winnerIdx);
+      } else {
+        animationFrameId = requestAnimationFrame(animateFlickFriction);
+      }
+    }
+
+    // Trigger Winner announcement
+    function handleWinnerSelected(winnerIdx: number) {
+      if (winnerIdx < 0 || winnerIdx >= choices.length) return;
+      const winner = choices[winnerIdx].text;
+      
+      // Update session history
+      spinHistory.unshift({ winner, timestamp: Date.now() });
+      updateHistoryUI();
+      saveState();
+
+      // Show Winner Panel & trigger audio fanfare / confetti
+      winnerName.textContent = winner;
+      winnerPanel.classList.remove('hidden');
+      setTimeout(() => {
+        winnerBox.classList.remove('scale-90', 'translate-y-4');
+      }, 50);
+
+      playFanfareSound();
+      spawnConfetti();
+    }
+
+    // Reset button handler (Must fully reset choices, presets, inputs, state, and localStorage keys)
+    function fullReset() {
+      choices = [
+        { text: 'Choice 1', weight: 1 },
+        { text: 'Choice 2', weight: 1 },
+        { text: 'Choice 3', weight: 1 }
+      ];
+      isWeightedMode = false;
+      selectedPalette = 'pastel';
+      isSoundEnabled = true;
+      spinHistory = [];
+      savedPresets = [];
+      rotation = 0;
+      angularVelocity = 0;
+      
+      // Clear localStorage keys in namespace
+      localStorage.removeItem('boardtools:randomizer-wheel:choices');
+      localStorage.removeItem('boardtools:randomizer-wheel:presets');
+      localStorage.removeItem('boardtools:randomizer-wheel:sound-enabled');
+      localStorage.removeItem('boardtools:randomizer-wheel:palette-id');
+      localStorage.removeItem('boardtools:randomizer-wheel:weighted-mode');
+
+      // Clear input views
+      choicesInput.value = 'Choice 1\nChoice 2\nChoice 3';
+      weightedToggle.checked = false;
+      presetNameInput.value = '';
+
+      updateSoundButtonUI();
+      syncStateFromChoices();
+      updatePresetsUI();
+      updateHistoryUI();
+      resizeCanvas();
+      
+      // Pulse ring reset
+      pulseRing.classList.add('animate-ping');
+      
+      showToast('✓ Configuration and history reset successfully.');
+    }
+
+    // State Sync helpers
+    function syncStateFromChoices() {
+      // Build weights editor list
+      weightsContainer.innerHTML = '';
+      choices.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between gap-3 text-xs bg-surface p-1.5 rounded-lg border border-hairline-soft';
+        row.innerHTML = `
+          <span class="font-medium text-primary truncate max-w-[180px]">${item.text}</span>
+          <div class="flex items-center gap-1">
+            <span class="text-[10px] text-slate">Weight:</span>
+            <input
+              type="number"
+              class="weight-input w-14 h-7 text-center rounded border border-hairline bg-canvas text-xs focus:border-brand-blue outline-none"
+              data-index="${index}"
+              min="1"
+              max="100"
+              value="${item.weight}"
+            />
+          </div>
+        `;
+        weightsContainer.appendChild(row);
+      });
+
+      // Update count badge
+      choicesCountBadge.textContent = `${choices.length} choices`;
+
+      // Warning rules
+      if (choices.length > 50) {
+        duplicateWarning.textContent = '⚠️ Long list makes labels hard to read';
+        duplicateWarning.className = 'text-[9px] font-semibold text-yellow-dark';
+      } else {
+        // Duplicate detection
+        const texts = choices.map(c => c.text.toLowerCase().trim());
+        const hasDuplicates = texts.some((val, i) => texts.indexOf(val) !== i);
+        if (hasDuplicates) {
+          duplicateWarning.textContent = '⚠️ Duplicate item detected';
+          duplicateWarning.className = 'text-[9px] font-semibold text-brand-coral';
+        } else {
+          duplicateWarning.textContent = '';
+        }
+      }
+
+      drawWheel();
+      saveState();
+    }
+
+    // Setup choice changes
+    choicesInput.addEventListener('input', () => {
+      const lines = choicesInput.value.split('\n')
+        .map(l => l.trim())
+        .filter(l => l !== '');
+
+      const currentMap = new Map(choices.map(c => [c.text, c.weight]));
+      choices = lines.map(line => ({
+        text: line,
+        weight: currentMap.get(line) || 1
+      }));
+
+      syncStateFromChoices();
+    });
+
+    // Handle single-item weight updates
+    weightsContainer.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.classList.contains('weight-input')) {
+        const idx = parseInt(target.getAttribute('data-index')!);
+        const weight = Math.max(1, parseInt(target.value) || 1);
+        choices[idx].weight = weight;
+        drawWheel();
+        saveState();
+      }
+    });
+
+    // Weighted mode toggle
+    weightedToggle.addEventListener('change', () => {
+      isWeightedMode = weightedToggle.checked;
+      if (isWeightedMode) {
+        weightsContainer.classList.remove('hidden');
+        weightsContainer.classList.add('flex');
+      } else {
+        weightsContainer.classList.remove('flex');
+        weightsContainer.classList.add('hidden');
+      }
+      drawWheel();
+      saveState();
+    });
+
+    // Save and load presets
+    function savePreset() {
+      const name = presetNameInput.value.trim();
+      if (!name) {
+        showToast('⚠️ Please enter a preset name');
+        return;
+      }
+      if (choices.length === 0) return;
+
+      const preset: WheelPreset = {
+        name,
+        choices: JSON.parse(JSON.stringify(choices)),
+        palette: selectedPalette,
+        weighted: isWeightedMode
+      };
+
+      savedPresets.unshift(preset);
+      presetNameInput.value = '';
+      updatePresetsUI();
+      saveState();
+      showToast(`✓ Preset "${name}" saved!`);
+    }
+
+    function updatePresetsUI() {
+      presetsListContainer.innerHTML = '';
+      if (savedPresets.length === 0) {
+        presetsListContainer.innerHTML = '<span class="text-xs text-stone italic">No saved wheels yet.</span>';
+        return;
+      }
+
+      savedPresets.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between p-2 rounded-xl bg-surface border border-hairline-soft text-xs transition-all hover:border-hairline';
+        row.innerHTML = `
+          <div class="flex flex-col gap-0.5 truncate max-w-[200px]">
+            <span class="font-bold text-primary truncate">${p.name}</span>
+            <span class="text-[10px] text-slate">${p.choices.length} choices · ${p.weighted ? 'Weighted' : 'Equal'}</span>
+          </div>
+          <div class="flex gap-1">
+            <button type="button" class="preset-load-btn bg-canvas hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors text-[10px] font-bold" data-index="${idx}">Load</button>
+            <button type="button" class="preset-del-btn bg-canvas hover:bg-brand-red text-slate hover:text-coral-dark px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors text-[10px] font-bold" data-index="${idx}">Delete</button>
+          </div>
+        `;
+        presetsListContainer.appendChild(row);
+      });
+    }
+
+    presetsListContainer.addEventListener('click', (e) => {
+      const target = e.target as HTMLButtonElement;
+      if (target.classList.contains('preset-load-btn')) {
+        const idx = parseInt(target.getAttribute('data-index')!);
+        const preset = savedPresets[idx];
+        
+        choices = JSON.parse(JSON.stringify(preset.choices));
+        isWeightedMode = preset.weighted;
+        selectedPalette = preset.palette;
+        
+        weightedToggle.checked = isWeightedMode;
+        if (isWeightedMode) {
+          weightsContainer.classList.remove('hidden');
+          weightsContainer.classList.add('flex');
+        } else {
+          weightsContainer.classList.remove('flex');
+          weightsContainer.classList.add('hidden');
+        }
+
+        // Palette UI selector highlight
+        document.querySelectorAll('.palette-picker-btn').forEach(btn => {
+          if (btn.getAttribute('data-palette') === selectedPalette) {
+            btn.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-primary bg-surface';
+          } else {
+            btn.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline';
+          }
+        });
+
+        // Set textarea content
+        choicesInput.value = choices.map(c => c.text).join('\n');
+        
+        syncStateFromChoices();
+        showToast(`✓ Loaded preset: ${preset.name}`);
+        
+        // Go back to edit tab
+        tabEditBtn.click();
+      } else if (target.classList.contains('preset-del-btn')) {
+        const idx = parseInt(target.getAttribute('data-index')!);
+        const name = savedPresets[idx].name;
+        savedPresets.splice(idx, 1);
+        updatePresetsUI();
+        saveState();
+        showToast(`Cleared preset: ${name}`);
+      }
+    });
+
+    // State Serialization for shareable URL
+    function generateShareUrl() {
+      const config = {
+        choices: choices.map(c => [c.text, c.weight]),
+        palette: selectedPalette,
+        weighted: isWeightedMode
+      };
+
+      try {
+        const json = JSON.stringify(config);
+        const encoded = btoa(unescape(encodeURIComponent(json)));
+        const url = `${window.location.origin}${window.location.pathname}?wheel=${encoded}`;
+        
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('✓ Shareable URL copied to clipboard!');
+        });
+      } catch (err) {
+        showToast('⚠️ Could not generate URL.');
+      }
+    }
+
+    // Load from URL if present
+    function loadFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get('wheel');
+      if (!data) return false;
+
+      try {
+        const decoded = decodeURIComponent(escape(atob(data)));
+        const config = JSON.parse(decoded);
+        
+        choices = config.choices.map((c: any) => ({ text: c[0], weight: c[1] }));
+        selectedPalette = config.palette || 'pastel';
+        isWeightedMode = !!config.weighted;
+
+        weightedToggle.checked = isWeightedMode;
+        if (isWeightedMode) {
+          weightsContainer.classList.remove('hidden');
+          weightsContainer.classList.add('flex');
+        }
+
+        choicesInput.value = choices.map(c => c.text).join('\n');
+        
+        // Highlight active palette button
+        document.querySelectorAll('.palette-picker-btn').forEach(btn => {
+          if (btn.getAttribute('data-palette') === selectedPalette) {
+            btn.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-primary bg-surface';
+          } else {
+            btn.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline';
+          }
+        });
+
+        syncStateFromChoices();
+        return true;
+      } catch (err) {
+        console.warn('URL parse failure', err);
+        return false;
+      }
+    }
+
+    // Local Storage Helpers
+    function saveState() {
+      localStorage.setItem('boardtools:randomizer-wheel:choices', JSON.stringify(choices));
+      localStorage.setItem('boardtools:randomizer-wheel:weighted-mode', JSON.stringify(isWeightedMode));
+      localStorage.setItem('boardtools:randomizer-wheel:palette-id', selectedPalette);
+      localStorage.setItem('boardtools:randomizer-wheel:sound-enabled', JSON.stringify(isSoundEnabled));
+      localStorage.setItem('boardtools:randomizer-wheel:presets', JSON.stringify(savedPresets));
+    }
+
+    function loadState() {
+      if (loadFromUrl()) return;
+
+      const savedChoices = localStorage.getItem('boardtools:randomizer-wheel:choices');
+      if (savedChoices) {
+        try {
+          choices = JSON.parse(savedChoices);
+        } catch (e) {
+          choices = [];
+        }
+      } else {
+        choices = [
+          { text: 'Yes', weight: 1 },
+          { text: 'No', weight: 1 }
+        ];
+      }
+
+      const savedWeighted = localStorage.getItem('boardtools:randomizer-wheel:weighted-mode');
+      if (savedWeighted) {
+        isWeightedMode = JSON.parse(savedWeighted);
+        weightedToggle.checked = isWeightedMode;
+        if (isWeightedMode) {
+          weightsContainer.classList.remove('hidden');
+          weightsContainer.classList.add('flex');
+        }
+      }
+
+      const savedPalette = localStorage.getItem('boardtools:randomizer-wheel:palette-id');
+      if (savedPalette) {
+        selectedPalette = savedPalette as keyof typeof PALETTES;
+      }
+
+      const savedSound = localStorage.getItem('boardtools:randomizer-wheel:sound-enabled');
+      if (savedSound) {
+        isSoundEnabled = JSON.parse(savedSound);
+      }
+
+      const savedPresetsStr = localStorage.getItem('boardtools:randomizer-wheel:presets');
+      if (savedPresetsStr) {
+        try {
+          savedPresets = JSON.parse(savedPresetsStr);
+        } catch (e) {}
+      }
+
+      // Restore textarea value
+      choicesInput.value = choices.map(c => c.text).join('\n');
+      
+      updateSoundButtonUI();
+      syncStateFromChoices();
+      updatePresetsUI();
+    }
+
+    // UI Toast messaging
+    function showToast(message: string, isUndo = false) {
+      const toastWrapper = document.getElementById('toast-wrapper')!;
+      const toast = document.createElement('div');
+      toast.className = 'bg-primary text-canvas text-xs font-semibold py-2 px-4 rounded-full shadow-lg flex items-center gap-3 transition-all duration-300 pointer-events-auto transform translate-y-2 opacity-0';
+      
+      let innerHTML = `<span>${message}</span>`;
+      if (isUndo) {
+        innerHTML += `<button type="button" id="undo-btn" class="text-brand-yellow font-bold uppercase hover:underline cursor-pointer">Undo</button>`;
+      }
+      toast.innerHTML = innerHTML;
+      toastWrapper.appendChild(toast);
+
+      // Trigger transition-in
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 50);
+
+      // Auto dismiss
+      const dismissTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 3500);
+
+      // Bind Undo action if applicable
+      if (isUndo) {
+        const undoBtn = toast.querySelector('#undo-btn') as HTMLButtonElement;
+        undoBtn.addEventListener('click', () => {
+          if (lastClearedChoices.length > 0) {
+            choices = JSON.parse(JSON.stringify(lastClearedChoices));
+            choicesInput.value = choices.map(c => c.text).join('\n');
+            syncStateFromChoices();
+            showToast('✓ Cleared choices restored.');
+          }
+          clearTimeout(dismissTimeout);
+          toast.remove();
+        });
+      }
+    }
+
+    // Settings Log & Toggles
+    function updateSoundButtonUI() {
+      if (isSoundEnabled) {
+        soundStatusText.textContent = 'On';
+        soundIcon.textContent = '🔊';
+      } else {
+        soundStatusText.textContent = 'Off';
+        soundIcon.textContent = '🔇';
+      }
+    }
+
+    soundToggleBtn.addEventListener('click', () => {
+      isSoundEnabled = !isSoundEnabled;
+      updateSoundButtonUI();
+      saveState();
+      showToast(isSoundEnabled ? '🔊 Sound effects enabled' : '🔇 Sound effects muted');
+    });
+
+    // History list UI
+    function updateHistoryUI() {
+      historyLogContainer.innerHTML = '';
+      if (spinHistory.length === 0) {
+        historyLogContainer.innerHTML = '<span class="text-xs text-stone italic">No history yet. Spin the wheel to record.</span>';
+        return;
+      }
+
+      spinHistory.forEach((h) => {
+        const timeStr = new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const row = document.createElement('div');
+        row.className = 'flex items-center justify-between text-xs py-1 px-2 bg-surface rounded border border-hairline-soft';
+        row.innerHTML = `
+          <span class="font-bold text-primary truncate max-w-[200px]">${h.winner}</span>
+          <span class="text-[9px] text-stone font-mono">${timeStr}</span>
+        `;
+        historyLogContainer.appendChild(row);
+      });
+    }
+
+    clearHistoryBtn.addEventListener('click', () => {
+      spinHistory = [];
+      updateHistoryUI();
+      showToast('✓ Spin history log cleared.');
+    });
+
+    // Quick templates setup
+    const TEMPLATES = {
+      yesno: [{ text: 'Yes', weight: 1 }, { text: 'No', weight: 1 }],
+      numbers: Array.from({ length: 10 }, (_, i) => ({ text: String(i + 1), weight: 1 })),
+      weekdays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d => ({ text: d, weight: 1 })),
+      team: ['Alice', 'Bob', 'Charlie', 'Dana', 'Eli'].map(t => ({ text: t, weight: 1 }))
+    };
+
+    document.querySelectorAll('.template-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const type = target.getAttribute('data-template') as keyof typeof TEMPLATES;
+        if (TEMPLATES[type]) {
+          choices = JSON.parse(JSON.stringify(TEMPLATES[type]));
+          choicesInput.value = choices.map(c => c.text).join('\n');
+          syncStateFromChoices();
+          showToast(`✓ Template loaded.`);
+        }
+      });
+    });
+
+    // Palette theme selectors
+    document.querySelectorAll('.palette-picker-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const palette = target.getAttribute('data-palette')!;
+        selectedPalette = palette as keyof typeof PALETTES;
+        
+        document.querySelectorAll('.palette-picker-btn').forEach(b => {
+          b.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-hairline';
+        });
+        target.className = 'palette-picker-btn text-left p-2 rounded-lg border text-[10px] font-bold cursor-pointer transition-all border-primary bg-surface';
+        
+        drawWheel();
+        saveState();
+        showToast(`✓ Palette changed to ${palette}`);
+      });
+    });
+
+    // Tabs navigation logic
+    function setTabActive(activeTab: HTMLButtonElement, inactiveTabs: HTMLButtonElement[], paneToShow: HTMLDivElement, panesToHide: HTMLDivElement[]) {
+      activeTab.className = 'flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas';
+      inactiveTabs.forEach(tab => {
+        tab.className = 'flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate';
+      });
+      paneToShow.classList.remove('hidden');
+      panesToHide.forEach(pane => {
+        pane.classList.add('hidden');
+      });
+    }
+
+    tabEditBtn.addEventListener('click', () => {
+      setTabActive(tabEditBtn, [tabPresetsBtn, tabSettingsBtn], paneEdit, [panePresets, paneSettings]);
+    });
+    tabPresetsBtn.addEventListener('click', () => {
+      setTabActive(tabPresetsBtn, [tabEditBtn, tabSettingsBtn], panePresets, [paneEdit, paneSettings]);
+    });
+    tabSettingsBtn.addEventListener('click', () => {
+      setTabActive(tabSettingsBtn, [tabEditBtn, tabPresetsBtn], paneSettings, [paneEdit, panePresets]);
+    });
+
+    // Handle winner closing
+    winnerCloseBtn.addEventListener('click', () => {
+      winnerPanel.classList.add('hidden');
+      winnerBox.classList.add('scale-90', 'translate-y-4');
+      pulseRing.classList.add('animate-ping');
+    });
+
+    // Remove item and re-spin
+    winnerRemoveBtn.addEventListener('click', () => {
+      winnerPanel.classList.add('hidden');
+      winnerBox.classList.add('scale-90', 'translate-y-4');
+      pulseRing.classList.add('animate-ping');
+
+      const nameToRemove = winnerName.textContent?.trim();
+      const removeIndex = choices.findIndex(c => c.text === nameToRemove);
+      if (removeIndex !== -1) {
+        choices.splice(removeIndex, 1);
+        choicesInput.value = choices.map(c => c.text).join('\n');
+        syncStateFromChoices();
+        showToast(`Removed choice: ${nameToRemove}`);
+      }
+    });
+
+    // Clear all action with Undo Toast capability
+    resetBtn.addEventListener('click', () => {
+      if (choices.length > 0) {
+        lastClearedChoices = JSON.parse(JSON.stringify(choices));
+        fullReset();
+        showToast('Wheel choices cleared.', true);
+      } else {
+        fullReset();
+      }
+    });
+
+    // Preset save click
+    presetSaveBtn.addEventListener('click', savePreset);
+
+    // Copy share link button click
+    shareWheelBtn.addEventListener('click', generateShareUrl);
+
+    // Setup spin triggers
+    centerSpinBtn.addEventListener('click', () => {
+      startSpin();
+    });
+
+    // Modal Events
+    howItWorksBtn.addEventListener('click', () => {
+      howItWorksModal.classList.remove('hidden');
+    });
+
+    const hideHowItWorks = () => {
+      howItWorksModal.classList.add('hidden');
+    };
+
+    closeModalBtn.addEventListener('click', hideHowItWorks);
+    modalOkBtn.addEventListener('click', hideHowItWorks);
+    howItWorksModal.addEventListener('click', (e) => {
+      if (e.target === howItWorksModal) hideHowItWorks();
+    });
+
+    // Keyboard accessibility: spacebar/enter triggers spin when focus is on wheel/spin button
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.code === 'Enter') {
+        const active = document.activeElement;
+        const isEditing = active && (active.tagName === 'TEXTAREA' || active.tagName === 'INPUT');
+        if (!isEditing && !isSpinningToTarget && !isDragging) {
+          e.preventDefault();
+          startSpin();
+        }
+      }
+    });
+
+    // Lifecycle Init
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Page load init
+    loadState();
+    resizeCanvas();
+    initPhysicsDrag();
+  </script>
 </Layout>
