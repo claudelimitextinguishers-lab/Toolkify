@@ -5,7 +5,10 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Speaker Phase Tool";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Play matched in-phase and out-of-phase frequency sounds to check speaker polarity.";
+const description = "Diagnose speaker wiring and polarity issues with matched in-phase and out-of-phase signals.";
+const canonicalUrl = "https://boardtools.app/tools/audio/speaker-phase";
+const ogImage = "/og/speaker-phase.png";
+const keywords = "speaker phase, polarity test, audio phase check, invert phase web audio, subwoofer polarity check, speaker wiring test, stereo phase test, online audio frequency generator";
 ---
 
 <Layout 
@@ -13,78 +16,1167 @@ const description = "Play matched in-phase and out-of-phase frequency sounds to 
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Speaker Phase Tool",
+      "alternateName": "Speaker Polarity & Phase Tester",
+      "url": "https://boardtools.app/tools/audio/speaker-phase",
+      "description": "Free online audio diagnostic tool to check stereo speaker and subwoofer wiring polarity using low frequency tones and pink noise.",
+      "applicationCategory": "AudioApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Audio.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-lg sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[9px] sm:text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🎵</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset Button (Verbatim Contract) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-2.5 h-2.5 sm:w-3 sm:h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works Button (Verbatim Contract) -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Speaker Phase Tool works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
+    <!-- Mobile Stereo Warning -->
+    <div class="sm:hidden p-3 rounded-lg border border-brand-yellow-deep/30 bg-surface-yellow text-[11px] text-yellow-dark leading-normal flex items-start gap-2">
+      <span class="text-base select-none">🔊</span>
+      <div>
+        <span class="font-bold">Important Mobile Notice:</span> This phase cancellation test requires external stereo speakers or a subwoofer. Internal mono phone speakers will not produce valid results.
+      </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+      
+      <!-- Left Panel: Interactive Dashboard / Controls (8 Columns) -->
+      <div class="lg:col-span-8 card-base p-3.5 sm:p-5 flex flex-col gap-4 sm:gap-6">
+        
+        <!-- Section Header -->
+        <div class="flex items-center justify-between border-b border-hairline-soft pb-2 sm:pb-3">
+          <h2 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-2">
+            <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-blue"></span>
+            Signal Control Deck
+          </h2>
+          <!-- Share link indicator -->
+          <button id="btn-share" class="text-[10px] font-semibold px-2 py-0.5 bg-surface hover:bg-hairline border border-hairline rounded transition-colors text-slate hover:text-primary">
+            Share Configuration
+          </button>
+        </div>
+
+        <!-- Big A/B Toggle for In-Phase vs Out-of-Phase -->
+        <div class="flex flex-col gap-2">
+          <span class="text-[11px] font-bold text-slate uppercase tracking-wider">Polarity Target</span>
+          <div class="grid grid-cols-2 gap-3">
+            
+            <!-- In-Phase Toggle Card -->
+            <button
+              type="button"
+              id="toggle-in-phase"
+              class="relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-blue bg-surface-pricing-featured text-brand-blue"
+            >
+              <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-blue"></div>
+              <div class="text-2xl" id="in-phase-icon">🟢</div>
+              <span class="font-display font-bold text-sm sm:text-base">In-Phase (Normal)</span>
+              <span class="text-[10px] text-slate text-center opacity-85">Waveforms align, creating reinforced, full bass.</span>
+            </button>
+
+            <!-- Out-of-Phase Toggle Card -->
+            <button
+              type="button"
+              id="toggle-out-phase"
+              class="relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate"
+            >
+              <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-transparent"></div>
+              <div class="text-2xl" id="out-phase-icon">🔴</div>
+              <span class="font-display font-bold text-sm sm:text-base text-primary">Out-of-Phase</span>
+              <span class="text-[10px] text-slate text-center opacity-85">Right channel inverted. Waves cancel out (thin sound).</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Live Waveform Monitor Graphic -->
+        <div class="bg-surface rounded-xl border border-hairline p-4 flex flex-col gap-2">
+          <div class="flex justify-between items-center text-[10px] font-mono text-stone">
+            <span>LEFT CHANNEL (0°)</span>
+            <span id="phase-diff-indicator" class="font-bold text-brand-blue">ALIGNED (0° DELTA)</span>
+            <span>RIGHT CHANNEL (<span id="right-phase-val">0°</span>)</span>
+          </div>
+          
+          <div class="h-28 relative overflow-hidden bg-canvas rounded-lg border border-hairline-soft">
+            <svg id="waveform-svg" class="w-full h-full" viewBox="0 0 600 112" preserveAspectRatio="none">
+              <!-- Left Channel Wave (Blue) -->
+              <path id="left-wave-path" d="" fill="none" stroke="#4262ff" stroke-width="2.5" opacity="0.8"></path>
+              <!-- Right Channel Wave (Coral/Yellow depending on phase) -->
+              <path id="right-wave-path" d="" fill="none" stroke="#ff9999" stroke-width="2.5" stroke-dasharray="4,4" opacity="0.8"></path>
+              <!-- Center Reference Line -->
+              <line x1="0" y1="56" x2="600" y2="56" stroke="rgba(142, 145, 160, 0.15)" stroke-width="1"></line>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Frequency & Signal Type Options -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Signal Source Select & Presets -->
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="signal-select" class="text-[11px] font-bold text-slate uppercase tracking-wider">Test Signal</label>
+              <select
+                id="signal-select"
+                class="text-input w-full cursor-pointer border border-hairline-strong bg-canvas rounded-md text-xs h-10"
+              >
+                <option value="sine" selected>Pure Sine Wave Tone</option>
+                <option value="pink-noise">Correlated Pink Noise (Bursts)</option>
+              </select>
+            </div>
+
+            <!-- Quick Frequency Chips (Tone only) -->
+            <div id="frequency-chips-container" class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-semibold text-slate">Common Test Frequencies</span>
+              <div class="flex flex-wrap gap-1.5">
+                <button type="button" data-freq="40" class="freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-hairline hover:border-brand-blue rounded-full transition-colors font-mono font-semibold">40 Hz</button>
+                <button type="button" data-freq="60" class="freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-brand-blue text-brand-blue rounded-full transition-colors font-mono font-semibold">60 Hz</button>
+                <button type="button" data-freq="80" class="freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-hairline hover:border-brand-blue rounded-full transition-colors font-mono font-semibold">80 Hz</button>
+                <button type="button" data-freq="100" class="freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-hairline hover:border-brand-blue rounded-full transition-colors font-mono font-semibold">100 Hz</button>
+                <button type="button" data-freq="120" class="freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-hairline hover:border-brand-blue rounded-full transition-colors font-mono font-semibold">120 Hz</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slider Controls & Extra Features -->
+          <div class="flex flex-col gap-4">
+            
+            <!-- Frequency Slider (Disabled when Pink Noise active) -->
+            <div id="freq-slider-group" class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-[11px] font-bold text-slate uppercase tracking-wider">
+                <span>Frequency</span>
+                <span class="flex items-center gap-1.5">
+                  <span id="freq-display" class="font-mono text-xs text-primary font-bold">60 Hz</span>
+                  <button id="btn-save-freq" class="text-[9px] px-1.5 py-0.5 border border-hairline hover:border-brand-blue rounded bg-canvas text-stone hover:text-brand-blue font-sans cursor-pointer">Save Favorite</button>
+                </span>
+              </div>
+              <input
+                type="range"
+                id="frequency-slider"
+                min="30"
+                max="120"
+                step="1"
+                value="60"
+                class="w-full h-2 bg-surface border border-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+            </div>
+
+            <!-- Phase Angle Slider -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-[11px] font-bold text-slate uppercase tracking-wider">
+                <span>Phase Angle Adjustment</span>
+                <span id="phase-angle-display" class="font-mono text-xs text-primary font-bold">0° (In-Phase)</span>
+              </div>
+              <input
+                type="range"
+                id="phase-angle-slider"
+                min="0"
+                max="360"
+                step="15"
+                value="0"
+                class="w-full h-2 bg-surface border border-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+            </div>
+
+            <!-- Channel Isolation Selection -->
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[11px] font-bold text-slate uppercase tracking-wider">Channel Isolation</span>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full">
+                <button type="button" id="isolate-both" class="flex-1 text-center text-xs py-1 rounded-full font-semibold transition-all cursor-pointer bg-primary text-canvas">Both Channels</button>
+                <button type="button" id="isolate-left" class="flex-1 text-center text-xs py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary">Left Only</button>
+                <button type="button" id="isolate-right" class="flex-1 text-center text-xs py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary">Right Only</button>
+              </div>
+            </div>
+
+            <!-- Volume Control -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-[11px] font-bold text-slate uppercase tracking-wider">
+                <span>Volume</span>
+                <span id="volume-display" class="font-mono text-xs text-primary font-bold">50%</span>
+              </div>
+              <input
+                type="range"
+                id="volume-slider"
+                min="0"
+                max="100"
+                step="1"
+                value="50"
+                class="w-full h-2 bg-surface border border-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Master Transport Controller -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border border-hairline rounded-xl bg-surface-soft mt-2">
+          <div class="flex flex-col gap-0.5 text-center sm:text-left">
+            <span class="text-xs font-bold text-primary">Master Audio Engine Status</span>
+            <p class="text-[10px] text-slate">Pop-free envelope triggers on play toggle and frequency modifications.</p>
+          </div>
+          
+          <button
+            type="button"
+            id="btn-play-toggle"
+            class="w-full sm:w-auto button-primary text-sm py-3 px-8 !rounded-full flex items-center justify-center gap-2 cursor-pointer font-bold shadow-subtle hover:scale-[1.02] active:scale-[0.98] transition-all bg-primary text-canvas"
+          >
+            <span id="play-btn-icon">▶</span>
+            <span id="play-btn-text">Start Test Signal</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Right Panel: Guided Diagnostic Steps & Card Details (4 Columns) -->
+      <div class="lg:col-span-4 flex flex-col gap-5">
+        
+        <!-- Guided Phase Test Card -->
+        <div class="card-base flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+            <span class="text-base select-none">🗺️</span> Step-by-Step Diagnostic
+          </h3>
+          
+          <div class="flex flex-col gap-4" id="diagnostic-guide">
+            <!-- Step 1 -->
+            <div id="step-1" class="flex gap-2.5 text-[11px] leading-relaxed relative pb-4 border-l border-hairline-strong pl-3 ml-1.5">
+              <span class="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-brand-blue text-canvas flex items-center justify-center font-bold text-[9px]">1</span>
+              <div>
+                <span class="font-bold text-primary block">Select "In-Phase" & Play</span>
+                Toggle to <strong class="text-brand-blue">In-Phase</strong> mode and turn up your volume to a moderate level. Listen closely.
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="step-2" class="flex gap-2.5 text-[11px] leading-relaxed relative pb-4 border-l border-hairline-strong pl-3 ml-1.5">
+              <span class="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-surface border border-hairline-strong text-slate flex items-center justify-center font-bold text-[9px]">2</span>
+              <div>
+                <span class="font-bold text-slate block">Toggle to "Out-of-Phase"</span>
+                Change polarity to <strong class="text-brand-coral">Out-of-Phase</strong>. Observe the immediate changes in acoustic texture.
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="step-3" class="flex gap-2.5 text-[11px] leading-relaxed relative pl-3 ml-1.5">
+              <span class="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-surface border border-hairline-strong text-slate flex items-center justify-center font-bold text-[9px]">3</span>
+              <div>
+                <span class="font-bold text-slate block">Compare Bass Response</span>
+                If In-Phase mode sounds <span class="font-semibold text-primary">thinner</span> and less punchy than Out-of-Phase, one of your speakers is wired backwards.
+              </div>
+            </div>
+          </div>
+
           <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+
+          <!-- Audio Reference tips -->
+          <div class="text-[10px] text-slate leading-relaxed flex flex-col gap-1.5">
+            <span class="font-bold uppercase tracking-wide text-primary">What am I listening for?</span>
+            <ul class="list-disc pl-3.5 flex flex-col gap-1">
+              <li><strong>In-Phase (Correct):</strong> Bass registers strongly. Sound is centered between speakers.</li>
+              <li><strong>Out-of-Phase (Inverted):</strong> Bass cancels out (hollow sound). Sound feels like it is pushing away from the center.</li>
+            </ul>
+          </div>
         </div>
 
         <!-- Privacy Guard (Pastel Accent) -->
         <div class="card-feature-coral flex flex-col gap-3">
-          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SANDBOX SECURITY</span>
+          <h3 class="font-display font-semibold text-base text-primary">No Transmission</h3>
+          <p class="text-xs text-coral-dark leading-relaxed">
+            All audio generators run locally inside your browser container. Zero bytes of signal generation data are sent to external servers.
           </p>
         </div>
+
       </div>
     </div>
+
+    <!-- Security & Status Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden mt-2">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Web Audio API execution
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        Acoustic Phase Cancellation & Speaker Polarity
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Speaker phase testing is one of the most critical steps in audio calibration. When two stereo speakers are wired properly in-phase, they move in perfect synchronicity: both diaphragms push outward and pull inward together. This constructive interference reinforces acoustic waves, especially low-frequency bass notes.
+      </p>
+      <p class="text-sm leading-relaxed">
+        However, if one speaker is wired backwards (positive wire connected to the negative terminal), it will be 180 degrees out-of-phase with the other. While one speaker pushes air, the other pulls it. This causes destructive interference, resulting in acoustic <strong>phase cancellation</strong>. The bass frequencies will sound weak or vanish completely, and the soundstage will feel hollow or disorienting.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal (Verbatim Structure) -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Speaker Phase Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-4">
+        
+        <!-- Live Speaker Physics Animation -->
+        <div class="border border-hairline rounded-xl p-3 bg-surface flex flex-col gap-2">
+          <span class="font-bold text-[10px] text-stone uppercase tracking-wide">Cone Physics Illustration</span>
+          <div class="grid grid-cols-2 gap-4 h-24 items-center">
+            
+            <!-- In-Phase animation demo -->
+            <div class="flex flex-col items-center justify-center gap-1.5 border border-hairline-soft bg-canvas rounded-lg p-2 h-full">
+              <span class="font-bold text-[10px] text-brand-blue">In-Phase (Co-Moving)</span>
+              <div class="flex gap-4 items-center mt-1">
+                <!-- Left cone -->
+                <div class="speaker-cone-anim in-phase w-5 h-8 flex flex-col items-end">
+                  <div class="w-1.5 h-3 bg-slate rounded-l"></div>
+                  <div class="w-3.5 h-8 bg-primary rounded-r-xl border border-hairline-strong"></div>
+                </div>
+                <!-- Right cone -->
+                <div class="speaker-cone-anim in-phase w-5 h-8 flex flex-col items-end">
+                  <div class="w-1.5 h-3 bg-slate rounded-l"></div>
+                  <div class="w-3.5 h-8 bg-primary rounded-r-xl border border-hairline-strong"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Out-of-Phase animation demo -->
+            <div class="flex flex-col items-center justify-center gap-1.5 border border-hairline-soft bg-canvas rounded-lg p-2 h-full">
+              <span class="font-bold text-[10px] text-brand-coral">Out-of-Phase (Opposing)</span>
+              <div class="flex gap-4 items-center mt-1">
+                <!-- Left cone (Normal) -->
+                <div class="speaker-cone-anim in-phase w-5 h-8 flex flex-col items-end">
+                  <div class="w-1.5 h-3 bg-slate rounded-l"></div>
+                  <div class="w-3.5 h-8 bg-primary rounded-r-xl border border-hairline-strong"></div>
+                </div>
+                <!-- Right cone (Opposed phase) -->
+                <div class="speaker-cone-anim out-phase w-5 h-8 flex flex-col items-end">
+                  <div class="w-1.5 h-3 bg-slate rounded-l"></div>
+                  <div class="w-3.5 h-8 bg-primary rounded-r-xl border border-hairline-strong"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <h4 class="font-semibold text-primary">
+          1. Understanding Phase & Polarity
+        </h4>
+        <p>
+          Each audio wave is a cycle of pressure increases (peaks) and decreases (troughs). If two speakers receive the same electrical signal, their cones move forwards and backwards in harmony (In-Phase). If one speaker wire terminal is reversed, one speaker cone pushes while the other pulls.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. The Test Procedure</h4>
+        <ul class="list-disc pl-4 flex flex-col gap-1 mt-1">
+          <li><strong>Step A:</strong> Play a low frequency (e.g. 60Hz) in In-Phase mode. Listen to the bass intensity.</li>
+          <li><strong>Step B:</strong> Switch to Out-of-Phase mode. If the bass drops significantly, your speakers are wired correctly!</li>
+          <li><strong>Step C:</strong> If the bass gets <i>louder</i> in Out-of-Phase, one speaker polarity is reversed. Swap the positive (+) and negative (-) speaker wires on one speaker.</li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">3. Pure Tone vs. Pink Noise</h4>
+        <p>
+          Sine waves are great for subwoofers and low bass drivers since cancellation is distinct. Pink noise is also useful because it contains all audible frequencies, making phase mismatches audible across mid-range and high frequency tweeter drivers too.
+        </p>
+      </div>
+      
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-Side JavaScript Logic -->
+  <script>
+    // State definitions
+    let audioCtx: AudioContext | null = null;
+    let masterGain: GainNode | null = null;
+    let sourceNode: OscillatorNode | AudioBufferSourceNode | null = null;
+    let leftGain: GainNode | null = null;
+    let rightGain: GainNode | null = null;
+    let splitter: ChannelSplitterNode | null = null;
+    let merger: ChannelMergerNode | null = null;
+    
+    let isPlaying = false;
+    let currentSignal = "sine"; // "sine" or "pink-noise"
+    let currentFrequency = 60; // range 30-120
+    let currentVolume = 50; // range 0-100
+    let isOutofPhase = false; // false = In-phase (1), true = Out-of-phase (-1)
+    let currentPhaseAngle = 0; // range 0-360
+    let currentIsolation = "both"; // "both", "left", "right"
+    
+    // Waveform Animation State
+    let animId: number | null = null;
+    let animTime = 0;
+
+    // DOM Elements
+    const toggleInPhase = document.getElementById("toggle-in-phase") as HTMLButtonElement;
+    const toggleOutPhase = document.getElementById("toggle-out-phase") as HTMLButtonElement;
+    const playToggleBtn = document.getElementById("btn-play-toggle") as HTMLButtonElement;
+    const playBtnIcon = document.getElementById("play-btn-icon") as HTMLSpanElement;
+    const playBtnText = document.getElementById("play-btn-text") as HTMLSpanElement;
+    const freqSlider = document.getElementById("frequency-slider") as HTMLInputElement;
+    const freqDisplay = document.getElementById("freq-display") as HTMLSpanElement;
+    const volumeSlider = document.getElementById("volume-slider") as HTMLInputElement;
+    const volumeDisplay = document.getElementById("volume-display") as HTMLSpanElement;
+    const signalSelect = document.getElementById("signal-select") as HTMLSelectElement;
+    const saveFreqBtn = document.getElementById("btn-save-freq") as HTMLButtonElement;
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const shareBtn = document.getElementById("btn-share") as HTMLButtonElement;
+    const freqChips = document.querySelectorAll(".freq-chip");
+    const rightPhaseVal = document.getElementById("right-phase-val") as HTMLSpanElement;
+    const phaseDiffIndicator = document.getElementById("phase-diff-indicator") as HTMLSpanElement;
+    const freqSliderGroup = document.getElementById("freq-slider-group") as HTMLDivElement;
+    const frequencyChipsContainer = document.getElementById("frequency-chips-container") as HTMLDivElement;
+    const leftWavePath = document.getElementById("left-wave-path") as unknown as SVGPathElement;
+    const rightWavePath = document.getElementById("right-wave-path") as unknown as SVGPathElement;
+
+    // Phase Angle & Isolation Selectors
+    const phaseAngleSlider = document.getElementById("phase-angle-slider") as HTMLInputElement;
+    const phaseAngleDisplay = document.getElementById("phase-angle-display") as HTMLSpanElement;
+    const isolateBoth = document.getElementById("isolate-both") as HTMLButtonElement;
+    const isolateLeft = document.getElementById("isolate-left") as HTMLButtonElement;
+    const isolateRight = document.getElementById("isolate-right") as HTMLButtonElement;
+
+    // How it works modal
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // Guided diagnostic steps DOM elements
+    const step1El = document.getElementById("step-1");
+    const step2El = document.getElementById("step-2");
+    const step3El = document.getElementById("step-3");
+
+    // Initialize Page Settings
+    function init() {
+      // 1. Restore from localStorage if present
+      const savedFreq = localStorage.getItem("boardtools:speaker-phase:frequency");
+      if (savedFreq) {
+        currentFrequency = parseInt(savedFreq, 10);
+        freqSlider.value = savedFreq;
+        freqDisplay.textContent = `${savedFreq} Hz`;
+        updateSelectedChip(currentFrequency);
+      }
+
+      const savedVol = localStorage.getItem("boardtools:speaker-phase:volume");
+      if (savedVol) {
+        currentVolume = parseInt(savedVol, 10);
+        volumeSlider.value = savedVol;
+        volumeDisplay.textContent = `${savedVol}%`;
+      }
+
+      const savedSignal = localStorage.getItem("boardtools:speaker-phase:signal-type");
+      if (savedSignal) {
+        currentSignal = savedSignal;
+        signalSelect.value = savedSignal;
+        toggleSignalLayout(savedSignal);
+      }
+
+      const savedPhase = localStorage.getItem("boardtools:speaker-phase:phase");
+      if (savedPhase === "out-of-phase") {
+        setPhaseMode(true);
+      } else {
+        setPhaseMode(false);
+      }
+
+      // 2. Parse URL parameters for direct config share
+      const params = new URLSearchParams(window.location.search);
+      const urlFreq = params.get("freq");
+      if (urlFreq) {
+        const parsedF = parseInt(urlFreq, 10);
+        if (parsedF >= 30 && parsedF <= 120) {
+          currentFrequency = parsedF;
+          freqSlider.value = urlFreq;
+          freqDisplay.textContent = `${urlFreq} Hz`;
+          updateSelectedChip(currentFrequency);
+        }
+      }
+
+      const urlPhase = params.get("phase");
+      if (urlPhase === "out") {
+        setPhaseMode(true);
+      } else if (urlPhase === "in") {
+        setPhaseMode(false);
+      }
+
+      const urlAngle = params.get("angle");
+      if (urlAngle) {
+        const parsedA = parseInt(urlAngle, 10);
+        if (parsedA >= 0 && parsedA <= 360) {
+          setPhaseAngle(parsedA);
+        }
+      }
+
+      const urlIsolate = params.get("isolate");
+      if (urlIsolate === "left" || urlIsolate === "right" || urlIsolate === "both") {
+        setIsolation(urlIsolate as "left" | "right" | "both");
+      }
+
+      const urlSignal = params.get("signal");
+      if (urlSignal === "noise") {
+        currentSignal = "pink-noise";
+        signalSelect.value = "pink-noise";
+        toggleSignalLayout("pink-noise");
+      } else if (urlSignal === "sine") {
+        currentSignal = "sine";
+        signalSelect.value = "sine";
+        toggleSignalLayout("sine");
+      }
+
+      // Start the SVG Waveform loop
+      startWaveformAnimation();
+    }
+
+    // Toggle slider panel depending on Sine Wave vs Pink Noise
+    function toggleSignalLayout(signal: string) {
+      if (signal === "pink-noise") {
+        freqSliderGroup.style.opacity = "0.4";
+        freqSlider.disabled = true;
+        frequencyChipsContainer.style.opacity = "0.4";
+        freqChips.forEach(chip => (chip as HTMLButtonElement).disabled = true);
+      } else {
+        freqSliderGroup.style.opacity = "1";
+        freqSlider.disabled = false;
+        frequencyChipsContainer.style.opacity = "1";
+        freqChips.forEach(chip => (chip as HTMLButtonElement).disabled = false);
+      }
+    }
+
+    // Generate Pink Noise Buffer (Correlated Mono Copied to Left & Right)
+    function createPinkNoiseBuffer(ctx: AudioContext): AudioBuffer {
+      const bufferSize = 2 * ctx.sampleRate;
+      const noiseBuffer = ctx.createBuffer(2, bufferSize, ctx.sampleRate);
+      const leftOut = noiseBuffer.getChannelData(0);
+      const rightOut = noiseBuffer.getChannelData(1);
+
+      let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+      
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        b0 = 0.99886 * b0 + white * 0.0555179;
+        b1 = 0.99332 * b1 + white * 0.0750759;
+        b2 = 0.96900 * b2 + white * 0.1538520;
+        b3 = 0.86650 * b3 + white * 0.3104856;
+        b4 = 0.55000 * b4 + white * 0.5329522;
+        b5 = -0.7616 * b5 - white * 0.0168980;
+        const pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+        b6 = white * 0.115926;
+        
+        const signalVal = pink * 0.12; // Level adjustment
+        // We write the identical signal to both channels so it cancels perfectly in anti-phase
+        leftOut[i] = signalVal;
+        rightOut[i] = signalVal;
+      }
+
+      return noiseBuffer;
+    }
+
+    // Start Audio Engine
+    let delayNode: DelayNode | null = null;
+
+    function startAudioEngine() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+
+      // Resume context if suspended (browser security blocks auto-start)
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      // Re-create nodes
+      masterGain = audioCtx.createGain();
+      leftGain = audioCtx.createGain();
+      rightGain = audioCtx.createGain();
+      delayNode = audioCtx.createDelay(1.0);
+      splitter = audioCtx.createChannelSplitter(2);
+      merger = audioCtx.createChannelMerger(2);
+
+      // Volume scaling
+      const targetGain = currentVolume / 100;
+      masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+
+      // Configure Left & Right paths
+      const leftGainVal = (currentIsolation === "both" || currentIsolation === "left") ? 1.0 : 0.0;
+      const rightGainVal = (currentIsolation === "both" || currentIsolation === "right") ? 1.0 : 0.0;
+
+      leftGain.gain.setValueAtTime(leftGainVal, audioCtx.currentTime);
+      
+      // Basic 180 polarity toggle
+      const polarityMultiplier = isOutofPhase ? -1.0 : 1.0;
+      rightGain.gain.setValueAtTime(rightGainVal * polarityMultiplier, audioCtx.currentTime);
+
+      // Fine tuning phase shift (in seconds)
+      const delaySeconds = currentPhaseAngle / (360.0 * currentFrequency);
+      delayNode.delayTime.setValueAtTime(delaySeconds, audioCtx.currentTime);
+
+      // Connect Signal Source
+      if (currentSignal === "sine") {
+        const osc = audioCtx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(currentFrequency, audioCtx.currentTime);
+        sourceNode = osc;
+        
+        // Connect osc directly to splitter
+        sourceNode.connect(splitter!);
+      } else {
+        const noiseSource = audioCtx.createBufferSource();
+        noiseSource.buffer = createPinkNoiseBuffer(audioCtx);
+        noiseSource.loop = true;
+        sourceNode = noiseSource;
+        
+        // Connect noiseSource to splitter
+        sourceNode.connect(splitter!);
+      }
+
+      // Connect Splitter -> Individual channel Gain nodes & Delay -> Merger -> Master
+      splitter!.connect(leftGain!, 0);   // Left channel splits to Left Gain
+      splitter!.connect(delayNode!, 1);  // Right channel splits to Delay Node
+      delayNode!.connect(rightGain!, 0); // Delay splits to Right Gain
+
+      leftGain!.connect(merger!, 0, 0);  // Left Gain to Left Input of Merger
+      rightGain!.connect(merger!, 0, 1); // Right Gain to Right Input of Merger
+
+      merger!.connect(masterGain!);
+      masterGain!.connect(audioCtx.destination);
+
+      // Start source
+      if (sourceNode instanceof OscillatorNode) {
+        sourceNode.start();
+      } else if (sourceNode instanceof AudioBufferSourceNode) {
+        sourceNode.start();
+      }
+
+      // Fade-in envelope (pop-free start)
+      masterGain.gain.linearRampToValueAtTime(targetGain, audioCtx.currentTime + 0.05);
+      isPlaying = true;
+    }
+
+    // Stop Audio Engine
+    function stopAudioEngine() {
+      if (!audioCtx || !masterGain || !sourceNode) return;
+
+      const currentTime = audioCtx.currentTime;
+      // Fade-out envelope (pop-free stop)
+      masterGain.gain.cancelScheduledValues(currentTime);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, currentTime);
+      masterGain.gain.linearRampToValueAtTime(0.0001, currentTime + 0.05);
+
+      const oldSource = sourceNode;
+      const oldCtx = audioCtx;
+      
+      setTimeout(() => {
+        try {
+          if (!isPlaying) {
+            oldSource.disconnect();
+            if (oldSource instanceof OscillatorNode) {
+              oldSource.stop();
+            } else if (oldSource instanceof AudioBufferSourceNode) {
+              oldSource.stop();
+            }
+          }
+        } catch (e) {}
+      }, 70);
+
+      isPlaying = false;
+    }
+
+    // Toggle Play/Stop
+    function togglePlayback() {
+      if (isPlaying) {
+        stopAudioEngine();
+        playBtnIcon.textContent = "▶";
+        playBtnText.textContent = "Start Test Signal";
+        playToggleBtn.classList.remove("bg-brand-coral", "text-primary");
+        playToggleBtn.classList.add("bg-primary", "text-canvas");
+      } else {
+        startAudioEngine();
+        playBtnIcon.textContent = "■";
+        playBtnText.textContent = "Stop Test Signal";
+        playToggleBtn.classList.remove("bg-primary", "text-canvas");
+        // Style feedback depending on phase mode
+        playToggleBtn.classList.add("bg-brand-coral", "text-primary");
+      }
+      triggerMicroAnimation(playToggleBtn);
+    }
+
+    // Polarity Phase Toggle Handler
+    function setPhaseMode(outPhase: boolean) {
+      isOutofPhase = outPhase;
+      localStorage.setItem("boardtools:speaker-phase:phase", outPhase ? "out-of-phase" : "in-phase");
+      setPhaseAngle(outPhase ? 180 : 0);
+    }
+
+    // Fine-Tuning Phase Angle Handler
+    function setPhaseAngle(angle: number) {
+      currentPhaseAngle = angle;
+      phaseAngleSlider.value = String(angle);
+      
+      let label = `${angle}°`;
+      if (angle === 0) {
+        label += " (In-Phase)";
+        isOutofPhase = false;
+        toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-blue bg-surface-pricing-featured text-brand-blue";
+        toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
+        phaseDiffIndicator.textContent = "ALIGNED (0° DELTA)";
+        phaseDiffIndicator.className = "font-bold text-brand-blue";
+        
+        // Return step 2 styles
+        step2El?.classList.remove("border-brand-blue");
+        step2El?.querySelector("span")?.classList.remove("bg-brand-blue", "text-canvas");
+        step2El?.querySelector("span")?.classList.add("bg-surface", "text-slate");
+      } else if (angle === 180) {
+        label += " (Out-of-Phase)";
+        isOutofPhase = true;
+        toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-coral bg-brand-red text-coral-dark";
+        toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
+        phaseDiffIndicator.textContent = "MUTUALLY INVERTED (180° DELTA)";
+        phaseDiffIndicator.className = "font-bold text-brand-coral";
+
+        // Highlight Step 2 in diagnostic
+        step2El?.classList.add("border-brand-blue");
+        step2El?.querySelector("span")?.classList.add("bg-brand-blue", "text-canvas");
+        step2El?.querySelector("span")?.classList.remove("bg-surface", "text-slate");
+      } else {
+        isOutofPhase = false;
+        toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
+        toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
+        phaseDiffIndicator.textContent = `PHASE SHIFTED (${angle}° DELTA)`;
+        phaseDiffIndicator.className = "font-bold text-primary";
+        
+        step2El?.classList.remove("border-brand-blue");
+        step2El?.querySelector("span")?.classList.remove("bg-brand-blue", "text-canvas");
+        step2El?.querySelector("span")?.classList.add("bg-surface", "text-slate");
+      }
+      phaseAngleDisplay.textContent = label;
+      rightPhaseVal.textContent = `${angle}°`;
+
+      // Update DSP live if running
+      if (audioCtx && rightGain && delayNode) {
+        const rightGainVal = (currentIsolation === "both" || currentIsolation === "right") ? 1.0 : 0.0;
+        const polarityMultiplier = isOutofPhase ? -1.0 : 1.0;
+        rightGain.gain.setValueAtTime(rightGainVal * polarityMultiplier, audioCtx.currentTime);
+
+        const delaySeconds = angle / (360.0 * currentFrequency);
+        delayNode.delayTime.setValueAtTime(delaySeconds, audioCtx.currentTime);
+      }
+    }
+
+    // Channel Isolation Handler
+    function setIsolation(mode: "both" | "left" | "right") {
+      currentIsolation = mode;
+      
+      const activeClass = "flex-1 text-center text-xs py-1 rounded-full font-semibold transition-all cursor-pointer bg-primary text-canvas";
+      const inactiveClass = "flex-1 text-center text-xs py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+      
+      isolateBoth.className = (mode === "both") ? activeClass : inactiveClass;
+      isolateLeft.className = (mode === "left") ? activeClass : inactiveClass;
+      isolateRight.className = (mode === "right") ? activeClass : inactiveClass;
+
+      // Update DSP live if running
+      if (audioCtx && leftGain && rightGain) {
+        const leftGainVal = (mode === "both" || mode === "left") ? 1.0 : 0.0;
+        const rightGainVal = (mode === "both" || mode === "right") ? 1.0 : 0.0;
+        const polarityMultiplier = isOutofPhase ? -1.0 : 1.0;
+        
+        leftGain.gain.linearRampToValueAtTime(leftGainVal, audioCtx.currentTime + 0.02);
+        rightGain.gain.linearRampToValueAtTime(rightGainVal * polarityMultiplier, audioCtx.currentTime + 0.02);
+      }
+    }
+
+    // Set Frequency Value
+    function setFrequency(freq: number) {
+      currentFrequency = freq;
+      freqSlider.value = String(freq);
+      freqDisplay.textContent = `${freq} Hz`;
+
+      // Update oscillator if active
+      if (audioCtx && sourceNode && sourceNode instanceof OscillatorNode) {
+        sourceNode.frequency.linearRampToValueAtTime(freq, audioCtx.currentTime + 0.05);
+      }
+
+      updateSelectedChip(freq);
+    }
+
+    // Highlight active chip
+    function updateSelectedChip(freq: number) {
+      freqChips.forEach(chip => {
+        const fVal = parseInt(chip.getAttribute("data-freq") || "0", 10);
+        if (fVal === freq) {
+          chip.className = "freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-brand-blue text-brand-blue rounded-full transition-colors font-mono font-semibold";
+        } else {
+          chip.className = "freq-chip px-2.5 py-1 text-[11px] bg-canvas border border-hairline hover:border-brand-blue rounded-full transition-colors font-mono font-semibold";
+        }
+      });
+    }
+
+    // Set Volume Value
+    function setVolume(vol: number) {
+      currentVolume = vol;
+      volumeSlider.value = String(vol);
+      volumeDisplay.textContent = `${vol}%`;
+
+      // Update master gain if active
+      if (audioCtx && masterGain) {
+        masterGain.gain.linearRampToValueAtTime(vol / 100, audioCtx.currentTime + 0.02);
+      }
+    }
+
+    // Animated SVG Waveform Visualizer
+    function startWaveformAnimation() {
+      function draw() {
+        animTime += (currentFrequency / 60) * 0.08;
+        
+        let pathL = "";
+        let pathR = "";
+
+        const width = 600;
+        const height = 112;
+        const midY = height / 2;
+        const amplitude = isPlaying ? 35 : 10; // Pulsing when audio active
+
+        const showLeft = (currentIsolation === "both" || currentIsolation === "left");
+        const showRight = (currentIsolation === "both" || currentIsolation === "right");
+
+        for (let x = 0; x <= width; x += 3) {
+          const angle = (x / width) * Math.PI * 8 + animTime;
+          const leftY = midY + (showLeft ? Math.sin(angle) * amplitude : 0);
+          
+          // Right channel wave - shift by actual phase angle
+          const phaseRadians = (currentPhaseAngle * Math.PI) / 180;
+          const rightY = midY + (showRight ? Math.sin(angle + phaseRadians) * amplitude : 0);
+
+          if (x === 0) {
+            pathL += `M ${x} ${leftY}`;
+            pathR += `M ${x} ${rightY}`;
+          } else {
+            pathL += ` L ${x} ${leftY}`;
+            pathR += ` L ${x} ${rightY}`;
+          }
+        }
+
+        leftWavePath.setAttribute("d", pathL);
+        rightWavePath.setAttribute("d", pathR);
+
+        animId = requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // Save Favorite Frequency
+    saveFreqBtn.addEventListener("click", () => {
+      localStorage.setItem("boardtools:speaker-phase:frequency", String(currentFrequency));
+      showToastNotification("✓ Saved frequency to local storage");
+    });
+
+    // Reset settings to defaults (Verbatim Contract)
+    resetBtn.addEventListener("click", () => {
+      // 1. Stop Tone
+      if (isPlaying) {
+        togglePlayback();
+      }
+
+      // 2. Clear localStorage keys
+      localStorage.removeItem("boardtools:speaker-phase:frequency");
+      localStorage.removeItem("boardtools:speaker-phase:phase");
+      localStorage.removeItem("boardtools:speaker-phase:volume");
+      localStorage.removeItem("boardtools:speaker-phase:signal-type");
+
+      // 3. Reset defaults
+      setPhaseMode(false);
+      setIsolation("both");
+      setFrequency(60);
+      setVolume(50);
+      currentSignal = "sine";
+      signalSelect.value = "sine";
+      toggleSignalLayout("sine");
+
+      showToastNotification("✓ Phase settings reset");
+    });
+
+    // Share link generator
+    shareBtn.addEventListener("click", () => {
+      const isNoise = currentSignal === "pink-noise" ? "noise" : "sine";
+      const ph = isOutofPhase ? "out" : "in";
+      const shareUrl = `${window.location.origin}${window.location.pathname}?freq=${currentFrequency}&phase=${ph}&signal=${isNoise}&angle=${currentPhaseAngle}&isolate=${currentIsolation}`;
+      
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToastNotification("✓ Shareable configuration URL copied!");
+      });
+    });
+
+    // Frequency Slider listener
+    freqSlider.addEventListener("input", (e) => {
+      const val = parseInt((e.target as HTMLInputElement).value, 10);
+      setFrequency(val);
+    });
+
+    // Phase Angle Slider listener
+    phaseAngleSlider.addEventListener("input", (e) => {
+      const val = parseInt((e.target as HTMLInputElement).value, 10);
+      setPhaseAngle(val);
+    });
+
+    // Channel Isolation listeners
+    isolateBoth.addEventListener("click", () => setIsolation("both"));
+    isolateLeft.addEventListener("click", () => setIsolation("left"));
+    isolateRight.addEventListener("click", () => setIsolation("right"));
+
+    // Volume Slider listener
+    volumeSlider.addEventListener("input", (e) => {
+      const val = parseInt((e.target as HTMLInputElement).value, 10);
+      setVolume(val);
+      localStorage.setItem("boardtools:speaker-phase:volume", String(val));
+    });
+
+    // Signal Select listener
+    signalSelect.addEventListener("change", (e) => {
+      const val = (e.target as HTMLSelectElement).value;
+      currentSignal = val;
+      localStorage.setItem("boardtools:speaker-phase:signal-type", val);
+      toggleSignalLayout(val);
+
+      // Re-initialize engine if running
+      if (isPlaying) {
+        stopAudioEngine();
+        setTimeout(() => startAudioEngine(), 60);
+      }
+    });
+
+    // Frequency Chips listener
+    freqChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        const val = parseInt(chip.getAttribute("data-freq") || "60", 10);
+        setFrequency(val);
+        triggerMicroAnimation(chip as HTMLButtonElement);
+      });
+    });
+
+    // Mode toggles
+    toggleInPhase.addEventListener("click", () => {
+      setPhaseMode(false);
+    });
+    toggleOutPhase.addEventListener("click", () => {
+      setPhaseMode(true);
+    });
+
+    playToggleBtn.addEventListener("click", () => {
+      togglePlayback();
+    });
+
+    // Modal Events (Verbatim Contract)
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Keyboard Shortcuts (Space and P)
+    document.addEventListener("keydown", (e) => {
+      // Toggle play with Spacebar
+      if (e.code === "Space") {
+        const activeEl = document.activeElement;
+        // Avoid interrupting text inputs or selections
+        if (activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "SELECT" || activeEl.tagName === "TEXTAREA")) {
+          return;
+        }
+        e.preventDefault();
+        togglePlayback();
+      }
+      
+      // Toggle phase mode with 'P' or 'p' key
+      if (e.key === "P" || e.key === "p") {
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "SELECT" || activeEl.tagName === "TEXTAREA")) {
+          return;
+        }
+        e.preventDefault();
+        setPhaseMode(!isOutofPhase);
+      }
+    });
+
+    // Toast notifications helper
+    function showToastNotification(msg: string) {
+      const toast = document.createElement("div");
+      toast.className = "fixed bottom-5 right-5 bg-success-accent text-canvas text-xs font-bold py-2.5 px-4 rounded-md shadow-lg z-50 transition-opacity duration-300 opacity-0";
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      
+      // trigger reflow then fade-in
+      setTimeout(() => toast.classList.remove("opacity-0"), 10);
+      
+      setTimeout(() => {
+        toast.classList.add("opacity-0");
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    function triggerMicroAnimation(btn: HTMLButtonElement) {
+      btn.classList.add("scale-95");
+      setTimeout(() => {
+        btn.classList.remove("scale-95");
+      }, 100);
+    }
+
+    // Start everything
+    init();
+  </script>
+
+  <!-- Physics animations stylesheets -->
+  <style>
+    /* Cone speaker animations */
+    .speaker-cone-anim {
+      transition: transform 0.1s ease-in-out;
+    }
+
+    @keyframes pulse-normal {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(1.15) translateX(2px); }
+    }
+
+    @keyframes pulse-inverted {
+      0%, 100% { transform: scaleX(1); }
+      50% { transform: scaleX(0.85) translateX(-2px); }
+    }
+
+    .speaker-cone-anim.in-phase {
+      animation: pulse-normal 1.2s infinite ease-in-out;
+    }
+    
+    .speaker-cone-anim.out-phase {
+      animation: pulse-inverted 1.2s infinite ease-in-out;
+    }
+
+    /* Support prefers-reduced-motion standard fallback */
+    @media (prefers-reduced-motion: reduce) {
+      .speaker-cone-anim.in-phase,
+      .speaker-cone-anim.out-phase {
+        animation: none !important;
+        transform: none !important;
+      }
+      #left-wave-path, #right-wave-path {
+        animation: none !important;
+      }
+    }
+  </style>
 </Layout>
