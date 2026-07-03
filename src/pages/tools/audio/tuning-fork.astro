@@ -5,86 +5,1713 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Tuning Fork";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Emit stable audio tuning pitches at standard standard frequencies like A440.";
+const description = "Emit stable audio tuning pitches at standard frequencies, calibrate reference pitches, and compare musical intervals.";
+
+// SEO
+const pageTitle = "Online Tuning Fork - Calibrate and Generate Reference Pitches";
+const seoDescription = "Free client-side online tuning fork. Generate precise sine wave reference tones (A440, A432, C256), customize frequencies, adjust reference calibration, and compare intervals.";
+const canonicalUrl = "https://boardtools.app/tools/audio/tuning-fork";
+const ogImage = "/og/tuning-fork.png";
+const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, frequency generator, tone generator, audio calibrator, equal temperament, musical pitch, client-side synth";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
-  description={description}
+  title={pageTitle}
+  description={seoDescription}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Tuning Fork & Tone Generator",
+      "alternateName": "Client-Side Reference Pitch Generator",
+      "url": "https://boardtools.app/tools/audio/tuning-fork",
+      "description": "Emit stable, mathematically exact audio pitches using Web Audio. Supports custom calibration from 415Hz to 466Hz, standard presets, and secondary comparison tones.",
+      "applicationCategory": "AudioApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires Web Audio API.",
+      "featureList": [
+        "Mathematically precise tone generation via Web Audio API",
+        "Click-free audio envelope start and stop",
+        "Standard presets including A440, A432, and C256",
+        "Reference pitch calibration between 415Hz and 466Hz",
+        "Keyboard shortcuts for play/stop and frequency nudging",
+        "Interval comparison mode with secondary tone",
+        "Tuning needle gauge and envelope amplitude level visualization"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Audio Tools",
+          "item": "https://boardtools.app/tools/audio"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Tuning Fork",
+          "item": "https://boardtools.app/tools/audio/tuning-fork"
+        }
+      ]
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🎵</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Keyboard shortcuts reference -->
+          <button
+            type="button"
+            id="shortcuts-btn"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="View keyboard shortcuts"
+          >
+            <span>⌨ Keyboard Shortcuts</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Tuning Fork works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Toast Notification -->
+    <div
+      id="toast-message"
+      class="fixed top-4 right-4 bg-success-accent text-canvas text-xs font-bold py-2 px-4 rounded-xl shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-50"
+    >
+      Copied!
+    </div>
+
+    <!-- Workspace Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <!-- Main Controller Panel -->
+      <div class="lg:col-span-8 flex flex-col gap-4">
+        <!-- Interactive Player Workspace -->
+        <div class="card-base flex flex-col gap-4 sm:gap-5 relative overflow-hidden">
+          <!-- Tuning Fork decorative ring ripple overlay -->
+          <div id="ripple-overlay" class="absolute inset-0 bg-brand-blue/0 pointer-events-none transition-all duration-300"></div>
+
+          <!-- Header status info -->
+          <div class="flex justify-between items-center z-10 gap-2 flex-wrap">
+            <span class="text-xs font-semibold text-charcoal flex items-center gap-1.5">
+              <span id="status-light" class="w-2.5 h-2.5 rounded-full bg-slate"></span>
+              <span id="status-text" class="truncate max-w-[150px] sm:max-w-none">Audio Context Suspended</span>
+            </span>
+            <div class="flex items-center gap-1 bg-surface py-0.5 px-2 rounded-full border border-hairline text-[10px] font-mono text-slate">
+              <span>A4 Calibrated:</span>
+              <span id="ref-pitch-display" class="font-bold text-primary">440.0 Hz</span>
+            </div>
+          </div>
+
+          <!-- The Display Needle & Visualization Panel -->
+          <div class="grid grid-cols-2 md:flex md:flex-row items-center justify-around gap-2.5 sm:gap-4 bg-surface-soft p-2.5 sm:p-4 rounded-2xl border border-hairline-soft relative z-10">
+            
+            <!-- Analog Needle Gauge -->
+            <div class="col-span-1 flex flex-col items-center gap-1">
+              <div class="relative w-28 h-14 sm:w-44 sm:h-22 overflow-hidden flex items-end justify-center">
+                <!-- Outer Arc -->
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 50">
+                  <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e0e2e8" stroke-width="6" stroke-linecap="round"></path>
+                  <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#4262ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="126" stroke-dashoffset="126" id="gauge-progress-arc" class="transition-all duration-500 ease-out"></path>
+                  <!-- Dial Ticks -->
+                  <line x1="10" y1="50" x2="16" y2="50" stroke="#8e91a0" stroke-width="1"></line>
+                  <line x1="50" y1="10" x2="50" y2="16" stroke="#8e91a0" stroke-width="1"></line>
+                  <line x1="90" y1="50" x2="84" y2="50" stroke="#8e91a0" stroke-width="1"></line>
+                </svg>
+                <!-- Needle Element -->
+                <div id="gauge-needle" class="absolute bottom-0 w-1 sm:w-1.5 h-9 sm:h-15 bg-primary origin-bottom rounded-t-full transition-transform duration-500 ease-out translate-y-1" style="transform: rotate(0deg);"></div>
+                <div class="w-3.5 h-3.5 sm:w-5 sm:h-5 bg-charcoal rounded-full border border-canvas z-10 -mb-2"></div>
+              </div>
+              <div class="flex justify-between w-26 sm:w-40 text-[8px] sm:text-[9px] font-semibold text-stone uppercase">
+                <span>Lower</span>
+                <span id="needle-centered-note" class="text-primary font-bold text-[9px] sm:text-[10px]">A4</span>
+                <span>Higher</span>
+              </div>
+            </div>
+
+            <!-- Animated Tuning Fork Component -->
+            <div class="col-span-1 flex flex-col items-center gap-1">
+              <div class="relative w-16 h-14 sm:w-24 sm:h-22 flex items-center justify-center overflow-hidden">
+                <!-- SVG Tuning Fork -->
+                <svg id="tuning-fork-svg" class="w-11 h-13 sm:w-16 sm:h-20 text-stone transition-all duration-300 relative z-10" viewBox="0 0 100 150" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round">
+                  <!-- Left Prong Group -->
+                  <g id="left-prong-group">
+                    <path id="left-prong" d="M 30 15 L 30 80" />
+                  </g>
+                  <!-- Right Prong Group -->
+                  <g id="right-prong-group">
+                    <path id="right-prong" d="M 70 15 L 70 80" />
+                  </g>
+                  <!-- U-bend -->
+                  <path id="u-bend" d="M 30 80 A 20 20 0 0 0 70 80" />
+                  <!-- Base / Stem -->
+                  <path d="M 50 100 L 50 135" />
+                  <!-- Bottom handle bulb -->
+                  <circle cx="50" cy="138" r="8" fill="currentColor" stroke="none" />
+                </svg>
+                <!-- Sound waves ripples when playing -->
+                <div class="fork-ripple absolute left-[15%] top-[10%] w-6 h-6 rounded-full border border-brand-blue/40 opacity-0 pointer-events-none"></div>
+                <div class="fork-ripple absolute right-[15%] top-[10%] w-6 h-6 rounded-full border border-brand-blue/40 opacity-0 pointer-events-none"></div>
+                <div class="fork-ripple absolute left-[15%] top-[10%] w-10 h-10 rounded-full border border-brand-blue/20 opacity-0 pointer-events-none"></div>
+                <div class="fork-ripple absolute right-[15%] top-[10%] w-10 h-10 rounded-full border border-brand-blue/20 opacity-0 pointer-events-none"></div>
+              </div>
+              <span class="text-[8px] sm:text-[9px] font-bold text-stone uppercase tracking-wider">Resonance</span>
+            </div>
+
+            <!-- Digital Readout & Amplitude Level Meter -->
+            <div class="col-span-2 md:col-span-1 flex flex-row md:flex-col items-center md:items-start justify-between w-full gap-2 mt-1 md:mt-0 pt-2 md:pt-0 border-t border-hairline-soft md:border-t-0">
+              <div class="text-left">
+                <span class="text-[8px] sm:text-[10px] font-semibold text-stone uppercase tracking-wider block">Current Frequency</span>
+                <div class="flex items-baseline gap-0.5 justify-start">
+                  <span id="freq-readout" class="font-display font-medium text-2xl sm:text-5xl text-primary tracking-tight">440.00</span>
+                  <span class="text-slate font-medium text-xs">Hz</span>
+                </div>
+                <span id="note-name-readout" class="text-[10px] sm:text-xs font-semibold text-brand-blue block">Note: A4</span>
+              </div>
+
+              <!-- Volume & Envelope Visualizer -->
+              <div class="w-32 sm:w-48 flex flex-col gap-0.5">
+                <div class="flex justify-between text-[8px] sm:text-[9px] font-semibold text-stone">
+                  <span>LEVEL METER</span>
+                  <span id="level-percentage">0%</span>
+                </div>
+                <div class="h-1.5 w-full bg-surface border border-hairline rounded-full overflow-hidden flex items-stretch">
+                  <div id="level-bar" class="bg-brand-blue w-0 transition-all duration-75"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Player Actions -->
+          <div class="flex flex-col sm:flex-row gap-2.5 items-center justify-between bg-surface p-2 sm:p-3 rounded-xl border border-hairline z-10">
+            <!-- Play and Strike actions -->
+            <div class="flex flex-row gap-2 w-full sm:w-auto">
+              <!-- Big Toggle Play/Stop -->
+              <button
+                type="button"
+                id="play-stop-btn"
+                class="w-1/2 sm:w-auto sm:min-w-[150px] h-9 sm:h-11 bg-primary hover:bg-charcoal text-canvas rounded-full font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-95 shadow-md text-xs sm:text-sm select-none"
+              >
+                <!-- Play icon -->
+                <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <!-- Stop icon (hidden by default) -->
+                <svg id="stop-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 fill-current hidden" viewBox="0 0 24 24">
+                  <path d="M6 6h12v12H6z"></path>
+                </svg>
+                <span id="play-btn-text">Start Tone</span>
+              </button>
+
+              <!-- Strike Fork Button -->
+              <button
+                type="button"
+                id="strike-fork-btn"
+                class="w-1/2 sm:w-auto sm:min-w-[150px] h-9 sm:h-11 bg-brand-blue hover:bg-blue-700 text-canvas rounded-full font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all active:scale-95 shadow-md text-xs sm:text-sm select-none"
+                title="Strike the tuning fork to play a naturally decaying tone"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 fill-none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>Strike Fork</span>
+              </button>
+            </div>
+
+            <!-- Sound Calibration quick controls -->
+            <div class="flex flex-wrap gap-2 items-center w-full sm:w-auto justify-end">
+              <div class="flex items-center gap-1.5">
+                <label for="waveform-select" class="text-[10px] font-semibold text-slate whitespace-nowrap">Waveform</label>
+                <select
+                  id="waveform-select"
+                  class="text-input py-0.5 px-2 text-[11px] h-8 cursor-pointer border border-hairline-strong bg-canvas rounded-full font-medium"
+                >
+                  <option value="sine" selected>Sine (True Tuning Fork)</option>
+                  <option value="triangle">Triangle (Flute tone)</option>
+                  <option value="square">Square (Clarinet comparison)</option>
+                </select>
+              </div>
+
+              <!-- Share Pitch link -->
+              <button
+                type="button"
+                id="share-btn"
+                class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-hairline hover:bg-canvas text-slate hover:text-primary transition-all cursor-pointer"
+                title="Copy shareable link for this frequency"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l4.636-2.318m0 7.152l-4.636-2.318M21 12a3 3 0 11-6 0 3 3 0 016 0zm-6-8a3 3 0 11-6 0 3 3 0 016 0zm0 16a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Controls Section Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2 z-10">
+            
+            <!-- Left Sub-column: Manual Frequency & Presets -->
+            <div class="flex flex-col gap-4">
+              <h3 class="font-display font-semibold text-xs uppercase text-slate tracking-wider border-b border-hairline-soft pb-1">Hz Controls</h3>
+              
+              <!-- Manual inputs -->
+              <div class="flex items-center gap-3">
+                <div class="flex-grow flex flex-col gap-1">
+                  <label for="freq-input" class="text-[10px] font-semibold text-slate">Manual Frequency (Hz)</label>
+                  <input
+                    type="number"
+                    id="freq-input"
+                    class="text-input w-full text-sm font-semibold font-mono"
+                    value="440.00"
+                    step="0.01"
+                    min="20.00"
+                    max="5000.00"
+                  />
+                </div>
+
+                <!-- Increment / Decrement precise buttons -->
+                <div class="flex flex-col gap-1">
+                  <span class="text-[10px] font-semibold text-slate text-center block">Fine Tune</span>
+                  <div class="flex rounded-lg border border-hairline overflow-hidden">
+                    <button type="button" id="freq-dec-btn" class="px-2.5 h-[44px] bg-canvas hover:bg-surface text-slate border-r border-hairline font-bold text-sm cursor-pointer select-none">-</button>
+                    <button type="button" id="freq-inc-btn" class="px-2.5 h-[44px] bg-canvas hover:bg-surface text-slate font-bold text-sm cursor-pointer select-none">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coarse slider container -->
+              <div class="flex flex-col gap-1.5 mt-1">
+                <div class="flex justify-between text-[10px] font-semibold text-slate">
+                  <span>Slider Range (20Hz - 2000Hz)</span>
+                  <button type="button" id="toggle-fine-drag" class="text-brand-blue hover:underline text-[9px]">Switch to Fine Slider Mode</button>
+                </div>
+                <input
+                  type="range"
+                  id="freq-slider"
+                  class="w-full cursor-pointer accent-brand-blue"
+                  min="20"
+                  max="2000"
+                  value="440"
+                  step="1"
+                />
+              </div>
+
+              <!-- Reference Calibrator -->
+              <div class="bg-surface-soft p-3.5 rounded-xl border border-hairline flex flex-col gap-2 mt-1">
+                <div class="flex justify-between items-center">
+                  <label for="ref-pitch-slider" class="text-[10px] font-bold text-slate uppercase">A4 Calibrate Reference</label>
+                  <button type="button" id="reset-ref-btn" class="text-[9px] text-brand-blue font-semibold hover:underline">Reset to 440Hz</button>
+                </div>
+                <div class="flex items-center gap-3">
+                  <input
+                    type="range"
+                    id="ref-pitch-slider"
+                    class="flex-grow cursor-pointer accent-brand-blue"
+                    min="415"
+                    max="466"
+                    value="440"
+                    step="1"
+                  />
+                  <span id="ref-pitch-val" class="font-mono text-xs font-bold text-charcoal w-12 text-right">440 Hz</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Sub-column: Tuning Presets & Instrument Settings -->
+            <div class="flex flex-col gap-4">
+              <h3 class="font-display font-semibold text-xs uppercase text-slate tracking-wider border-b border-hairline-soft pb-1">Tuning Presets</h3>
+              
+              <!-- Quick standard frequency chips -->
+              <div class="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  data-freq="440.0"
+                  class="preset-chip bg-primary text-canvas text-[11px] font-bold py-1.5 px-3 rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-all shadow-subtle border border-primary shrink-0"
+                >
+                  Concert A (A440)
+                </button>
+                <button
+                  type="button"
+                  data-freq="432.0"
+                  class="preset-chip bg-canvas hover:bg-surface text-slate text-[11px] font-bold py-1.5 px-3 rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-all border border-hairline shrink-0"
+                >
+                  Verdi A (A432)
+                </button>
+                <button
+                  type="button"
+                  data-freq="256.0"
+                  class="preset-chip bg-canvas hover:bg-surface text-slate text-[11px] font-bold py-1.5 px-3 rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-all border border-hairline shrink-0"
+                >
+                  Scientific C (C256)
+                </button>
+              </div>
+
+              <!-- Musical Note Picker (Octave & Note grid) -->
+              <div class="flex flex-col gap-2 mt-1">
+                <div class="flex justify-between items-center">
+                  <span class="text-[10px] font-semibold text-slate">Musical Note Picker</span>
+                  <!-- Octave selector -->
+                  <div class="flex items-center gap-1">
+                    <label for="octave-select" class="text-[9px] font-semibold text-stone uppercase">Octave</label>
+                    <select id="octave-select" class="text-[10px] font-bold py-0.5 px-1 bg-canvas border border-hairline rounded cursor-pointer text-slate">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4" selected>4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Scrollable / swipeable note row for mobile -->
+                <div class="overflow-x-auto pb-1 -mx-2 px-2 print:overflow-visible">
+                  <div id="note-selector-container" class="flex gap-1.5 min-w-max">
+                    <!-- Note buttons loaded dynamically via JS to adapt to equal temperament math -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interval / Beat comparison mode (Optional Two-tone) -->
+              <div class="bg-surface-pricing-featured/50 border border-brand-blue/20 p-3.5 rounded-xl flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold text-brand-blue flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+                    Two-Tone Comparison Mode
+                  </span>
+                  <label class="relative inline-flex items-center cursor-pointer select-none">
+                    <input type="checkbox" id="compare-tone-enable" class="sr-only peer" />
+                    <div class="w-9 h-5 bg-hairline peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-canvas after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-canvas after:border-hairline after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-blue"></div>
+                  </label>
+                </div>
+
+                <!-- Secondary tone parameters (collapsible height transition) -->
+                <div id="compare-tone-panel" class="hidden flex-col gap-2 transition-all duration-300">
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="flex flex-col gap-1">
+                      <label for="compare-freq-input" class="text-[9px] font-semibold text-slate">Tone 2 Freq (Hz)</label>
+                      <input
+                        type="number"
+                        id="compare-freq-input"
+                        class="text-input h-8 text-[11px] font-semibold font-mono"
+                        value="445.00"
+                        step="0.01"
+                      />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label for="compare-interval-select" class="text-[9px] font-semibold text-slate">Interval Preset</label>
+                      <select id="compare-interval-select" class="text-input h-8 text-[11px] py-0 px-2 cursor-pointer border border-hairline-strong bg-canvas rounded-md">
+                        <option value="custom" selected>Custom (+5Hz beat)</option>
+                        <option value="unison">Perfect Unison (1:1)</option>
+                        <option value="minor-second">Minor Second (16:15)</option>
+                        <option value="major-second">Major Second (9:8)</option>
+                        <option value="major-third">Major Third (5:4)</option>
+                        <option value="perfect-fourth">Perfect Fourth (4:3)</option>
+                        <option value="tritone">Tritone (45:32)</option>
+                        <option value="perfect-fifth">Perfect Fifth (3:2)</option>
+                        <option value="octave">Perfect Octave (2:1)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Alternating or simultaneous selection -->
+                  <div class="flex gap-2 items-center">
+                    <label class="flex items-center gap-1.5 text-[10px] font-semibold text-slate cursor-pointer">
+                      <input type="radio" name="compare-mode" value="simultaneous" checked class="cursor-pointer accent-brand-blue" />
+                      Play Together (Beats)
+                    </label>
+                    <label class="flex items-center gap-1.5 text-[10px] font-semibold text-slate cursor-pointer">
+                      <input type="radio" name="compare-mode" value="alternate" class="cursor-pointer accent-brand-blue" />
+                      Alternate (A/B Test)
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Favorites & Calibration Settings sidebar -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+        
+        <!-- Saved / Favorite Frequencies -->
+        <div class="card-base flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-xs uppercase text-slate tracking-wider border-b border-hairline-soft pb-1">Saved Frequencies</h3>
+          
+          <div class="flex gap-2">
+            <input
+              type="text"
+              id="favorite-label"
+              placeholder="e.g. Tenor Tuning pitch"
+              class="text-input flex-grow text-xs h-9 rounded-full px-4"
+              maxlength="25"
+            />
+            <button
+              type="button"
+              id="save-favorite-btn"
+              class="button-primary text-[10px] py-1 px-4 h-9 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold whitespace-nowrap"
+            >
+              Save Pitch
+            </button>
+          </div>
+
+          <div id="favorites-container" class="flex flex-col gap-2 max-h-[180px] overflow-y-auto pr-1">
+            <p class="text-[11px] text-stone italic">No saved frequencies yet.</p>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
+        <!-- Touch / Mobile Helper Guidance -->
+        <div class="card-base bg-surface-soft flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider">Mobile Settings</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            Need fine-tuning control on touchscreens? Tap the <strong class="text-brand-blue">"Switch to Fine Slider Mode"</strong> link. This collapses the slider width to cover only a ±5Hz range around your current note, so you can drag with exact sub-Hz precision.
+          </p>
+          <div class="h-[1px] bg-hairline my-0.5"></div>
+          <span class="flex items-center gap-1 text-[10px] text-success-accent font-semibold">
+            <span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span>
+            Private client-side Audio Engine.
+          </span>
+        </div>
+
+        <!-- Audio Pitch Privacy Guard -->
         <div class="card-feature-coral flex flex-col gap-3">
-          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">LOCAL OPERATIONS</span>
+          <h3 class="font-display font-semibold text-sm text-primary">No Server Connection</h3>
+          <p class="text-[11px] text-primary leading-relaxed">
+            Tuning Fork handles your audio synthesis and configurations entirely inside your browser's Web Audio sandboxed environment. No telemetry, session caching, or sound data ever leaves your device.
           </p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        Reference Tuning Pitch & Acoustic Tuning Fork Engine
+      </h2>
+      <p class="text-sm leading-relaxed">
+        An acoustic <strong>tuning fork</strong> is an acoustic resonator in the form of a two-pronged fork with the prongs formed from a U-shaped U-bar of elastic metal (usually steel). When struck against a surface, it vibrates at a specific constant frequency, emitting a pure musical tone. Tuning forks are widely used to tune musical instruments, calibrate scientific sound equipment, and test hearing capacity.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Equal Temperament Math & Audio Synthesizer
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Modern Western music relies on <strong>twelve-tone equal temperament (12-TET)</strong>. In this tuning system, the octave is divided into twelve log-linear intervals called semitones. The frequency $f$ of any note is calculated relative to a reference note (typically A4, calibrated at 440 Hz) using the mathematical formula:
+      </p>
+      <div class="bg-surface border border-hairline rounded-xl p-4 my-2 text-center">
+        <code class="font-mono text-xs text-primary font-semibold">
+          Frequency (Hz) = A4_Ref_Hz * 2^(semitones_from_A4 / 12)
+        </code>
+      </div>
+      <p class="text-sm leading-relaxed">
+        Our digital Tuning Fork engine applies standard AudioContext synthesis to generate this pure sine wave, ensuring 100% mathematical pitch accuracy. By altering the calibrated A4 reference frequency (e.g. down to 432 Hz or baroque 415 Hz), the relative frequencies of all note choices dynamically adjust in real time.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Tuning Fork Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is a digital Tuning Fork?
+        </h4>
+        <p>
+          A digital tuning fork generates high-precision, mathematically correct audio sine wave tones. Unlike physical tuning forks that can warp, digital oscillators emit standard reference frequencies perfectly.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Pops/Clicks Prevention</strong>: Tones use a short audio attack/release ramp to ensure click-free starts and stops.
+            </li>
+            <li>
+              <strong>A4 Reference Calibration</strong>: Adjust A4 from 415Hz (Baroque standard) to 466Hz to adapt to historical tuning needs.
+            </li>
+            <li>
+              <strong>Two-Tone Comparison</strong>: Generate beats by adding a secondary tone. Play them together to calibrate intervals or A/B test alternating pitches.
+            </li>
+            <li>
+              <strong>Fine-Adjustment Mode</strong>: Drag the pitch slider in a narrow ±5Hz range to achieve precise sub-Hz frequency control.
+            </li>
+          </ul>
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. How to Use the Keyboard Shortcuts
+        </h4>
+        <p>
+          Use <kbd class="px-1 py-0.5 bg-surface border border-hairline-strong rounded text-[10px]">Spacebar</kbd> to quickly Start or Stop the tone. Use <kbd class="px-1 py-0.5 bg-surface border border-hairline-strong rounded text-[10px]">Arrow Up/Down</kbd> to adjust the frequency by 1Hz increments. Use <kbd class="px-1 py-0.5 bg-surface border border-hairline-strong rounded text-[10px]">Arrow Left/Right</kbd> to fine-tune in 0.1Hz increments.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal Dialog (Hidden by default) -->
+  <div
+    id="shortcuts-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm transition-opacity duration-300"
+  >
+    <div
+      class="card-base max-w-md w-full p-5 flex flex-col gap-4 relative animate-fade-in-up"
+    >
+      <div
+        class="flex items-center justify-between border-b border-hairline pb-2"
+      >
+        <h3
+          class="font-display font-semibold text-sm sm:text-base text-primary"
+        >
+          Keyboard Shortcuts Guide
+        </h3>
+        <button
+          id="close-shortcuts-btn"
+          class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
+        >×</button
+        >
+      </div>
+      <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Play / Stop Audio</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >Spacebar</kbd
+          >
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Nudge frequency Up/Down (1.0 Hz)</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >↑ / ↓ Arrows</kbd
+          >
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Nudge frequency Left/Right (0.1 Hz)</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >← / → Arrows</kbd
+          >
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Reset Pitch Calibration</span>
+          <kbd
+            class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]"
+            >Esc</kbd
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State definitions
+    interface FavoriteItem {
+      id: string;
+      label: string;
+      freq: number;
+      ref: number;
+      wave: string;
+    }
+
+    let audioCtx: AudioContext | null = null;
+    let oscNode: OscillatorNode | null = null;
+    let gainNode: GainNode | null = null;
+    let filterNode: BiquadFilterNode | null = null; // optional bandpass/lowpass
+
+    // Two-tone comparison state
+    let oscNode2: OscillatorNode | null = null;
+    let gainNode2: GainNode | null = null;
+    let altTimer: any = null;
+
+    // Config parameters
+    let targetFreq = 440.00;
+    let currentFreq = 440.00; // for smooth interpolation
+    let targetRefPitch = 440.00;
+    let currentWaveform = "sine";
+    let isPlaying = false;
+    
+    let isFineDragMode = false;
+    let currentOctave = 4;
+    let currentNoteIndex = 9; // A4 default
+
+    // Strike decay parameters
+    let strikeStartTime: number | null = null;
+    let strikeAnimationId: number | null = null;
+    const DECAY_DURATION = 5.0; // 5 seconds decay
+
+    // Local Storage Naming Contract
+    const LS_PREFIX = "boardtools:tuning-fork:";
+    const KEY_FAVORITES = `${LS_PREFIX}favorites`;
+    const KEY_FREQ = `${LS_PREFIX}freq`;
+    const KEY_REF = `${LS_PREFIX}ref`;
+    const KEY_WAVE = `${LS_PREFIX}wave`;
+
+    const NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+
+    // DOM selectors
+    const playStopBtn = document.getElementById("play-stop-btn") as HTMLButtonElement;
+    const strikeForkBtn = document.getElementById("strike-fork-btn") as HTMLButtonElement;
+    const playIcon = document.getElementById("play-icon") as unknown as SVGElement;
+    const stopIcon = document.getElementById("stop-icon") as unknown as SVGElement;
+    const playBtnText = document.getElementById("play-btn-text") as HTMLSpanElement;
+
+    const waveformSelect = document.getElementById("waveform-select") as HTMLSelectElement;
+    const freqInput = document.getElementById("freq-input") as HTMLInputElement;
+    const freqSlider = document.getElementById("freq-slider") as HTMLInputElement;
+    const freqDecBtn = document.getElementById("freq-dec-btn") as HTMLButtonElement;
+    const freqIncBtn = document.getElementById("freq-inc-btn") as HTMLButtonElement;
+    const toggleFineDrag = document.getElementById("toggle-fine-drag") as HTMLButtonElement;
+
+    const refPitchSlider = document.getElementById("ref-pitch-slider") as HTMLInputElement;
+    const refPitchVal = document.getElementById("ref-pitch-val") as HTMLSpanElement;
+    const refPitchDisplay = document.getElementById("ref-pitch-display") as HTMLSpanElement;
+    const resetRefBtn = document.getElementById("reset-ref-btn") as HTMLButtonElement;
+
+    const octaveSelect = document.getElementById("octave-select") as HTMLSelectElement;
+    const noteSelectorContainer = document.getElementById("note-selector-container") as HTMLDivElement;
+
+    // Visualization elements
+    const gaugeNeedle = document.getElementById("gauge-needle") as HTMLDivElement;
+    const gaugeProgressArc = document.getElementById("gauge-progress-arc") as unknown as SVGPathElement;
+    const freqReadout = document.getElementById("freq-readout") as HTMLSpanElement;
+    const noteNameReadout = document.getElementById("note-name-readout") as HTMLSpanElement;
+    const needleCenteredNote = document.getElementById("needle-centered-note") as HTMLSpanElement;
+    const levelBar = document.getElementById("level-bar") as HTMLDivElement;
+    const levelPercentage = document.getElementById("level-percentage") as HTMLSpanElement;
+    const statusLight = document.getElementById("status-light") as HTMLSpanElement;
+    const statusText = document.getElementById("status-text") as HTMLSpanElement;
+    const rippleOverlay = document.getElementById("ripple-overlay") as HTMLDivElement;
+    const tuningForkSvg = document.getElementById("tuning-fork-svg") as unknown as HTMLDivElement;
+    const forkRipples = document.querySelectorAll(".fork-ripple");
+
+    // Modals
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const shortcutsBtn = document.getElementById("shortcuts-btn");
+    const shortcutsModal = document.getElementById("shortcuts-modal") as HTMLDivElement;
+    const closeShortcutsBtn = document.getElementById("close-shortcuts-btn");
+    const toastMessage = document.getElementById("toast-message") as HTMLDivElement;
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+
+    // Favorites
+    const favoriteLabel = document.getElementById("favorite-label") as HTMLInputElement;
+    const saveFavoriteBtn = document.getElementById("save-favorite-btn") as HTMLButtonElement;
+    const favoritesContainer = document.getElementById("favorites-container") as HTMLDivElement;
+
+    // Two-Tone DOM selectors
+    const compareToneEnable = document.getElementById("compare-tone-enable") as HTMLInputElement;
+    const compareTonePanel = document.getElementById("compare-tone-panel") as HTMLDivElement;
+    const compareFreqInput = document.getElementById("compare-freq-input") as HTMLInputElement;
+    const compareIntervalSelect = document.getElementById("compare-interval-select") as HTMLSelectElement;
+    const compareModeRadios = document.getElementsByName("compare-mode") as NodeListOf<HTMLInputElement>;
+
+    // Initial load
+    function init() {
+      // 1. Recover values from localStorage
+      const savedFreq = localStorage.getItem(KEY_FREQ);
+      const savedRef = localStorage.getItem(KEY_REF);
+      const savedWave = localStorage.getItem(KEY_WAVE);
+
+      if (savedFreq) {
+        targetFreq = parseFloat(savedFreq);
+        currentFreq = targetFreq;
+        freqInput.value = targetFreq.toFixed(2);
+      }
+      if (savedRef) {
+        targetRefPitch = parseFloat(savedRef);
+        refPitchSlider.value = String(targetRefPitch);
+        refPitchVal.textContent = `${targetRefPitch} Hz`;
+        refPitchDisplay.textContent = `${targetRefRefined(targetRefPitch)} Hz`;
+      }
+      if (savedWave) {
+        currentWaveform = savedWave;
+        waveformSelect.value = savedWave;
+      }
+
+      // 2. Load from URL search parameters if available
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlFreq = urlParams.get("freq");
+      const urlRef = urlParams.get("ref");
+      const urlWave = urlParams.get("wave");
+
+      if (urlFreq) {
+        targetFreq = parseFloat(urlFreq);
+        currentFreq = targetFreq;
+        freqInput.value = targetFreq.toFixed(2);
+      }
+      if (urlRef) {
+        targetRefPitch = parseFloat(urlRef);
+        refPitchSlider.value = String(targetRefPitch);
+        refPitchVal.textContent = `${targetRefPitch} Hz`;
+        refPitchDisplay.textContent = `${targetRefRefined(targetRefPitch)} Hz`;
+      }
+      if (urlWave) {
+        currentWaveform = urlWave;
+        waveformSelect.value = urlWave;
+      }
+
+      updateSliderBoundaries();
+      renderNoteButtons();
+      updateGauge(true);
+      updateFavoritesList();
+    }
+
+    function targetRefRefined(v: number): string {
+      return v % 1 === 0 ? String(v) : v.toFixed(1);
+    }
+
+    // Mathematical calculations
+    function calculateFreqFromNote(noteIndex: number, octave: number, refA4: number): number {
+      // Index of A is 9. A4 is standard octave 4
+      const d = (octave - 4) * 12 + (noteIndex - 9);
+      return refA4 * Math.pow(2, d / 12);
+    }
+
+    // A440 Reference note to Hz
+    function getNoteFromFrequency(freq: number, refA4: number): { noteIndex: number; octave: number; centDeviation: number } {
+      const semitones = 12 * Math.log2(freq / refA4);
+      const roundedSemitones = Math.round(semitones);
+      const centDeviation = (semitones - roundedSemitones) * 100;
+
+      // Note index & octave
+      let noteIndex = (9 + roundedSemitones) % 12;
+      if (noteIndex < 0) noteIndex += 12;
+
+      const octave = 4 + Math.floor((9 + roundedSemitones) / 12);
+
+      return { noteIndex, octave, centDeviation };
+    }
+
+    // Audio Engine initialization
+    function initAudio() {
+      if (audioCtx) return;
+      
+      const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+      audioCtx = new AudioCtxClass();
+      
+      gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.connect(audioCtx.destination);
+
+      statusLight.className = "w-2.5 h-2.5 rounded-full bg-success-accent";
+      statusText.textContent = "Audio System Active";
+    }
+
+    // Click-free start / stop envelope
+    function playTone() {
+      initAudio();
+      if (!audioCtx) return;
+
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      // Stop existing if any
+      stopToneEngine();
+
+      if (strikeAnimationId) {
+        cancelAnimationFrame(strikeAnimationId);
+        strikeAnimationId = null;
+      }
+      strikeStartTime = null;
+      tuningForkSvg.style.setProperty('--vibe-intensity', '1');
+
+      const time = audioCtx.currentTime;
+
+      // Main Oscillator
+      oscNode = audioCtx.createOscillator();
+      oscNode.type = currentWaveform as OscillatorType;
+      oscNode.frequency.setValueAtTime(targetFreq, time);
+      oscNode.connect(gainNode!);
+
+      // Envelope Start
+      gainNode!.gain.cancelScheduledValues(time);
+      gainNode!.gain.setValueAtTime(0, time);
+      
+      // Short click-free linear attack
+      const attackTime = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.005 : 0.02;
+      const targetVolume = currentWaveform === "square" ? 0.08 : currentWaveform === "triangle" ? 0.18 : 0.15; // lower square to prevent ear fatigue
+      
+      gainNode!.gain.linearRampToValueAtTime(targetVolume, time + attackTime);
+      oscNode.start(time);
+
+      // Two-Tone Comparison Tone
+      if (compareToneEnable.checked) {
+        startSecondaryTone(time);
+      }
+
+      isPlaying = true;
+      playStopBtn.classList.remove("bg-primary", "hover:bg-charcoal");
+      playStopBtn.classList.add("bg-brand-coral", "hover:bg-coral-dark");
+      playBtnText.textContent = "Stop Tone";
+      playIcon.classList.add("hidden");
+      stopIcon.classList.remove("hidden");
+
+      // Animated tuning fork triggers
+      tuningForkSvg?.classList.add("vibrating");
+      forkRipples.forEach(r => r.classList.add("rippling"));
+
+      // Trigger structural ringing animation (CSS ripple)
+      triggerRingingVisual();
+      animateVisualLevel(targetVolume);
+    }
+
+    function strikeTone() {
+      initAudio();
+      if (!audioCtx) return;
+
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+
+      // Stop existing
+      stopToneEngine();
+      if (strikeAnimationId) {
+        cancelAnimationFrame(strikeAnimationId);
+        strikeAnimationId = null;
+      }
+
+      const time = audioCtx.currentTime;
+      strikeStartTime = time;
+
+      // Main Oscillator
+      oscNode = audioCtx.createOscillator();
+      oscNode.type = currentWaveform as OscillatorType;
+      oscNode.frequency.setValueAtTime(targetFreq, time);
+      oscNode.connect(gainNode!);
+
+      // Envelope Start - Strike
+      gainNode!.gain.cancelScheduledValues(time);
+      gainNode!.gain.setValueAtTime(0, time);
+      
+      // Near-instant attack to simulate mechanical strike
+      gainNode!.gain.linearRampToValueAtTime(0.25, time + 0.004);
+      // Exponential decay
+      gainNode!.gain.exponentialRampToValueAtTime(0.0001, time + DECAY_DURATION);
+      
+      oscNode.start(time);
+      isPlaying = true;
+
+      // Two-Tone Comparison Tone in Strike mode (plays simultaneously if enabled)
+      if (compareToneEnable.checked) {
+        const secondaryFreq = parseFloat(compareFreqInput.value);
+        gainNode2 = audioCtx.createGain();
+        gainNode2.gain.setValueAtTime(0, time);
+        gainNode2.connect(audioCtx.destination);
+        
+        oscNode2 = audioCtx.createOscillator();
+        oscNode2.type = currentWaveform as OscillatorType;
+        oscNode2.frequency.setValueAtTime(secondaryFreq, time);
+        oscNode2.connect(gainNode2);
+
+        gainNode2.gain.linearRampToValueAtTime(0.25, time + 0.004);
+        gainNode2.gain.exponentialRampToValueAtTime(0.0001, time + DECAY_DURATION);
+        
+        oscNode2.start(time);
+      }
+
+      // Toggle UI State
+      playStopBtn.classList.remove("bg-primary", "hover:bg-charcoal");
+      playStopBtn.classList.add("bg-brand-coral", "hover:bg-coral-dark");
+      playBtnText.textContent = "Stop Tone";
+      playIcon.classList.add("hidden");
+      stopIcon.classList.remove("hidden");
+
+      tuningForkSvg?.classList.add("vibrating");
+      forkRipples.forEach(r => r.classList.add("rippling"));
+      triggerRingingVisual();
+
+      // Decay loop
+      function updateStrikeDecay() {
+        if (!isPlaying || !strikeStartTime || !audioCtx) {
+          tuningForkSvg.style.setProperty('--vibe-intensity', '0');
+          return;
+        }
+        const elapsed = audioCtx.currentTime - strikeStartTime;
+        const progress = Math.max(0, 1 - (elapsed / DECAY_DURATION));
+        
+        if (progress > 0) {
+          tuningForkSvg.style.setProperty('--vibe-intensity', String(progress));
+          
+          // Update Level Meter
+          levelBar.style.width = `${progress * 100}%`;
+          levelPercentage.textContent = `${Math.round(progress * 100)}%`;
+          
+          strikeAnimationId = requestAnimationFrame(updateStrikeDecay);
+        } else {
+          stopTone();
+        }
+      }
+      updateStrikeDecay();
+    }
+
+    function stopTone() {
+      if (!audioCtx || !isPlaying) return;
+
+      const time = audioCtx.currentTime;
+      const releaseTime = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.005 : 0.02;
+
+      // Smooth envelope ramp down to 0
+      gainNode!.gain.cancelScheduledValues(time);
+      gainNode!.gain.linearRampToValueAtTime(0, time + releaseTime);
+
+      if (gainNode2) {
+        gainNode2.gain.cancelScheduledValues(time);
+        gainNode2.gain.linearRampToValueAtTime(0, time + releaseTime);
+      }
+
+      // Schedule exact stop
+      const oscToStop = oscNode;
+      const osc2ToStop = oscNode2;
+
+      setTimeout(() => {
+        try {
+          if (oscToStop) oscToStop.stop();
+          if (osc2ToStop) osc2ToStop.stop();
+        } catch (e) {}
+      }, (releaseTime + 0.01) * 1000);
+
+      isPlaying = false;
+      strikeStartTime = null;
+      if (strikeAnimationId) {
+        cancelAnimationFrame(strikeAnimationId);
+        strikeAnimationId = null;
+      }
+      tuningForkSvg.style.setProperty('--vibe-intensity', '0');
+
+      playStopBtn.classList.add("bg-primary", "hover:bg-charcoal");
+      playStopBtn.classList.remove("bg-brand-coral", "hover:bg-coral-dark");
+      playBtnText.textContent = "Start Tone";
+      playIcon.classList.remove("hidden");
+      stopIcon.classList.add("hidden");
+
+      // Animated tuning fork resets
+      tuningForkSvg?.classList.remove("vibrating");
+      forkRipples.forEach(r => r.classList.remove("rippling"));
+
+      clearInterval(altTimer);
+      animateVisualLevel(0);
+    }
+
+    function stopToneEngine() {
+      try {
+        if (oscNode) {
+          oscNode.stop();
+          oscNode = null;
+        }
+        if (oscNode2) {
+          oscNode2.stop();
+          oscNode2 = null;
+        }
+        clearInterval(altTimer);
+      } catch (e) {}
+    }
+
+    // Secondary oscillator comparison engine
+    function startSecondaryTone(time: number) {
+      if (!audioCtx) return;
+
+      const secondaryFreq = parseFloat(compareFreqInput.value);
+      
+      gainNode2 = audioCtx.createGain();
+      gainNode2.gain.setValueAtTime(0, time);
+      gainNode2.connect(audioCtx.destination);
+
+      oscNode2 = audioCtx.createOscillator();
+      oscNode2.type = currentWaveform as OscillatorType;
+      oscNode2.frequency.setValueAtTime(secondaryFreq, time);
+      oscNode2.connect(gainNode2);
+
+      const attackTime = 0.02;
+      const targetVolume = currentWaveform === "square" ? 0.08 : currentWaveform === "triangle" ? 0.18 : 0.15;
+
+      const compareMode = getCheckedRadioValue("compare-mode");
+      if (compareMode === "simultaneous") {
+        gainNode2.gain.linearRampToValueAtTime(targetVolume, time + attackTime);
+        oscNode2.start(time);
+      } else {
+        // Alternating A/B mode
+        oscNode2.start(time);
+        let currentActive = 1;
+        
+        gainNode!.gain.setValueAtTime(targetVolume, time);
+        gainNode2.gain.setValueAtTime(0, time);
+
+        altTimer = setInterval(() => {
+          if (!audioCtx || !isPlaying) return;
+          const switchTime = audioCtx.currentTime;
+          if (currentActive === 1) {
+            gainNode!.gain.linearRampToValueAtTime(0, switchTime + 0.02);
+            gainNode2!.gain.linearRampToValueAtTime(targetVolume, switchTime + 0.02);
+            currentActive = 2;
+          } else {
+            gainNode2!.gain.linearRampToValueAtTime(0, switchTime + 0.02);
+            gainNode!.gain.linearRampToValueAtTime(targetVolume, switchTime + 0.02);
+            currentActive = 1;
+          }
+        }, 1000);
+      }
+    }
+
+    function getCheckedRadioValue(name: string): string {
+      for (let i = 0; i < compareModeRadios.length; i++) {
+        if (compareModeRadios[i].checked) {
+          return compareModeRadios[i].value;
+        }
+      }
+      return "simultaneous";
+    }
+
+    // Envelope visualization level meter
+    function animateVisualLevel(val: number) {
+      if (val === 0) {
+        levelBar.style.width = "0%";
+        levelPercentage.textContent = "0%";
+        return;
+      }
+      // Simulate level fluctuations or steady state
+      levelBar.style.width = "100%";
+      levelPercentage.textContent = "100%";
+    }
+
+    // Ripple ringing animation
+    function triggerRingingVisual() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      rippleOverlay.className = "absolute inset-0 bg-brand-blue/15 pointer-events-none transition-none";
+      setTimeout(() => {
+        rippleOverlay.className = "absolute inset-0 bg-brand-blue/0 pointer-events-none transition-all duration-1000 ease-out";
+      }, 50);
+    }
+
+    // Dynamic needle gauge & display sweeps
+    function updateGauge(immediate = false) {
+      // 1. Digital text updates
+      freqReadout.textContent = targetFreq.toFixed(2);
+      
+      const { noteIndex, octave, centDeviation } = getNoteFromFrequency(targetFreq, targetRefPitch);
+      noteNameReadout.textContent = `Note: ${NOTES[noteIndex]}${octave} (${centDeviation >= 0 ? '+' : ''}${centDeviation.toFixed(1)} cents)`;
+      needleCenteredNote.textContent = `${NOTES[noteIndex]}${octave}`;
+
+      // Set needle rotation
+      // Center (0 cents deviation) is rotate(0deg)
+      // Range: -50 cents to +50 cents maps to -60deg to +60deg
+      let rotation = centDeviation * 1.2; // 50 * 1.2 = 60 degrees max
+      if (rotation > 75) rotation = 75;
+      if (rotation < -75) rotation = -75;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gaugeNeedle.style.transition = "none";
+        gaugeProgressArc.style.transition = "none";
+      } else if (immediate) {
+        gaugeNeedle.style.transition = "none";
+        gaugeProgressArc.style.transition = "none";
+      } else {
+        gaugeNeedle.style.transition = "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)";
+        gaugeProgressArc.style.transition = "stroke-dashoffset 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)";
+      }
+
+      gaugeNeedle.style.transform = `rotate(${rotation}deg)`;
+
+      // Map progress arc: dasharray is 126. 0 deviation is centered (offset 63)
+      const maxOffset = 126;
+      const targetPercent = (centDeviation + 50) / 100; // 0 to 1
+      const offset = maxOffset - (targetPercent * maxOffset);
+      gaugeProgressArc.style.strokeDashoffset = String(offset);
+
+      // Sync active notes rendering
+      syncSelectedNoteStates(noteIndex, octave);
+
+      // If audio is active, dynamically update active oscillator pitch immediately
+      if (audioCtx && isPlaying && oscNode) {
+        oscNode.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.05);
+      }
+    }
+
+    function syncSelectedNoteStates(selectedIdx: number, octave: number) {
+      octaveSelect.value = String(octave);
+      const buttons = noteSelectorContainer.querySelectorAll("button");
+      buttons.forEach((btn, idx) => {
+        if (idx === selectedIdx) {
+          btn.className = "bg-primary text-canvas text-xs font-bold w-11 h-11 rounded-full cursor-pointer transition-all active:scale-95 shadow-subtle shrink-0";
+        } else {
+          btn.className = "bg-canvas hover:bg-surface text-slate text-xs font-bold w-11 h-11 rounded-full cursor-pointer transition-all border border-hairline shrink-0";
+        }
+      });
+    }
+
+    // Render notes picker
+    function renderNoteButtons() {
+      noteSelectorContainer.innerHTML = "";
+      NOTES.forEach((note, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = note;
+        btn.className = "bg-canvas hover:bg-surface text-slate text-xs font-bold w-11 h-11 rounded-full cursor-pointer transition-all border border-hairline shrink-0";
+        btn.addEventListener("click", () => {
+          currentNoteIndex = idx;
+          currentOctave = parseInt(octaveSelect.value);
+          const computed = calculateFreqFromNote(idx, currentOctave, targetRefPitch);
+          setFrequencyValue(computed);
+        });
+        noteSelectorContainer.appendChild(btn);
+      });
+    }
+
+    // Frequency state handling
+    function setFrequencyValue(val: number) {
+      if (val < 20) val = 20;
+      if (val > 5000) val = 5000;
+      targetFreq = val;
+
+      freqInput.value = targetFreq.toFixed(2);
+      
+      // Update slider bounds dynamically if fine mode
+      if (isFineDragMode) {
+        freqSlider.value = String(targetFreq);
+      } else {
+        if (targetFreq <= 2000) {
+          freqSlider.value = String(Math.round(targetFreq));
+        }
+      }
+
+      localStorage.setItem(KEY_FREQ, String(targetFreq));
+      updateGauge();
+    }
+
+    function updateSliderBoundaries() {
+      if (isFineDragMode) {
+        // Narrow slider window: ±5Hz around target
+        const minVal = Math.max(20, targetFreq - 5);
+        const maxVal = Math.min(5000, targetFreq + 5);
+        freqSlider.min = String(minVal);
+        freqSlider.max = String(maxVal);
+        freqSlider.step = "0.01";
+        freqSlider.value = String(targetFreq);
+        toggleFineDrag.textContent = "Switch to Coarse Slider Mode";
+      } else {
+        freqSlider.min = "20";
+        freqSlider.max = "2000";
+        freqSlider.step = "1";
+        freqSlider.value = String(Math.min(2000, Math.round(targetFreq)));
+        toggleFineDrag.textContent = "Switch to Fine Slider Mode";
+      }
+    }
+
+    // Listeners for frequency modifiers
+    freqInput.addEventListener("change", () => {
+      const val = parseFloat(freqInput.value);
+      if (!isNaN(val)) {
+        setFrequencyValue(val);
+      }
+    });
+
+    freqSlider.addEventListener("input", () => {
+      setFrequencyValue(parseFloat(freqSlider.value));
+    });
+
+    freqDecBtn.addEventListener("click", () => {
+      setFrequencyValue(targetFreq - 1);
+    });
+
+    freqIncBtn.addEventListener("click", () => {
+      setFrequencyValue(targetFreq + 1);
+    });
+
+    toggleFineDrag.addEventListener("click", () => {
+      isFineDragMode = !isFineDragMode;
+      updateSliderBoundaries();
+    });
+
+    // Waveform select change
+    waveformSelect.addEventListener("change", () => {
+      currentWaveform = waveformSelect.value;
+      localStorage.setItem(KEY_WAVE, currentWaveform);
+      if (oscNode && audioCtx) {
+        oscNode.type = currentWaveform as OscillatorType;
+      }
+    });
+
+    // A4 Calibration controls
+    refPitchSlider.addEventListener("input", () => {
+      targetRefPitch = parseInt(refPitchSlider.value);
+      refPitchVal.textContent = `${targetRefPitch} Hz`;
+      refPitchDisplay.textContent = `${targetRefPitch} Hz`;
+      localStorage.setItem(KEY_REF, String(targetRefPitch));
+
+      // Recompute and update frequency if note locked
+      const computed = calculateFreqFromNote(currentNoteIndex, currentOctave, targetRefPitch);
+      setFrequencyValue(computed);
+    });
+
+    resetRefBtn.addEventListener("click", () => {
+      targetRefPitch = 440;
+      refPitchSlider.value = "440";
+      refPitchVal.textContent = "440 Hz";
+      refPitchDisplay.textContent = "440 Hz";
+      localStorage.setItem(KEY_REF, "440");
+
+      const computed = calculateFreqFromNote(currentNoteIndex, currentOctave, targetRefPitch);
+      setFrequencyValue(computed);
+    });
+
+    octaveSelect.addEventListener("change", () => {
+      currentOctave = parseInt(octaveSelect.value);
+      const computed = calculateFreqFromNote(currentNoteIndex, currentOctave, targetRefPitch);
+      setFrequencyValue(computed);
+    });
+
+    // Audio Play Action listener
+    playStopBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        stopTone();
+      } else {
+        playTone();
+      }
+    });
+
+    strikeForkBtn.addEventListener("click", () => {
+      strikeTone();
+    });
+
+    // Favorites Logic
+    saveFavoriteBtn.addEventListener("click", () => {
+      const label = favoriteLabel.value.trim() || `${targetFreq.toFixed(1)}Hz Pitch`;
+      
+      const rawFavorites = localStorage.getItem(KEY_FAVORITES);
+      let favorites: FavoriteItem[] = rawFavorites ? JSON.parse(rawFavorites) : [];
+
+      const newItem: FavoriteItem = {
+        id: Math.random().toString(36).substring(2, 9),
+        label: label,
+        freq: targetFreq,
+        ref: targetRefPitch,
+        wave: currentWaveform
+      };
+
+      favorites.unshift(newItem);
+      localStorage.setItem(KEY_FAVORITES, JSON.stringify(favorites));
+
+      favoriteLabel.value = "";
+      updateFavoritesList();
+      showToast("✓ Saved to favorites");
+    });
+
+    function updateFavoritesList() {
+      const rawFavorites = localStorage.getItem(KEY_FAVORITES);
+      if (!rawFavorites) {
+        favoritesContainer.innerHTML = '<p class="text-[11px] text-stone italic">No saved frequencies yet.</p>';
+        return;
+      }
+
+      const favorites: FavoriteItem[] = JSON.parse(rawFavorites);
+      if (favorites.length === 0) {
+        favoritesContainer.innerHTML = '<p class="text-[11px] text-stone italic">No saved frequencies yet.</p>';
+        return;
+      }
+
+      favoritesContainer.innerHTML = "";
+      favorites.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "flex items-center justify-between gap-2 p-1.5 border border-hairline rounded-lg bg-surface-soft hover:bg-canvas transition-all";
+
+        const loadBtn = document.createElement("button");
+        loadBtn.type = "button";
+        loadBtn.className = "text-left text-[11px] font-semibold text-slate hover:text-primary cursor-pointer truncate flex-grow pr-2";
+        loadBtn.innerHTML = `<span class="text-primary font-bold">${item.freq.toFixed(1)}Hz</span> - ${item.label}`;
+        loadBtn.addEventListener("click", () => {
+          targetRefPitch = item.ref;
+          refPitchSlider.value = String(item.ref);
+          refPitchVal.textContent = `${item.ref} Hz`;
+          refPitchDisplay.textContent = `${targetRefRefined(item.ref)} Hz`;
+          
+          currentWaveform = item.wave;
+          waveformSelect.value = item.wave;
+          
+          setFrequencyValue(item.freq);
+        });
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.className = "text-stone hover:text-brand-coral cursor-pointer text-xs px-1.5 font-bold transition-all";
+        deleteBtn.textContent = "×";
+        deleteBtn.addEventListener("click", () => {
+          const raw = localStorage.getItem(KEY_FAVORITES);
+          if (raw) {
+            let list: FavoriteItem[] = JSON.parse(raw);
+            list = list.filter(f => f.id !== item.id);
+            localStorage.setItem(KEY_FAVORITES, JSON.stringify(list));
+            updateFavoritesList();
+          }
+        });
+
+        row.appendChild(loadBtn);
+        row.appendChild(deleteBtn);
+        favoritesContainer.appendChild(row);
+      });
+    }
+
+    // Share link as URL query param
+    const shareBtn = document.getElementById("share-btn");
+    shareBtn?.addEventListener("click", () => {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?freq=${targetFreq.toFixed(2)}&ref=${targetRefPitch}&wave=${currentWaveform}`;
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast("✓ Link copied!");
+      });
+    });
+
+    function showToast(msg: string) {
+      toastMessage.textContent = msg;
+      toastMessage.classList.remove("opacity-0");
+      toastMessage.classList.add("opacity-100");
+      setTimeout(() => {
+        toastMessage.classList.remove("opacity-100");
+        toastMessage.classList.add("opacity-0");
+      }, 2000);
+    }
+
+    // Reset button logic (verbatim implementation)
+    resetBtn.addEventListener("click", () => {
+      // Contract: stop tone, reset pitch/waveform, clear localStorage
+      stopTone();
+      stopToneEngine();
+
+      targetFreq = 440.00;
+      targetRefPitch = 440.00;
+      currentWaveform = "sine";
+
+      freqInput.value = "440.00";
+      freqSlider.value = "440";
+      refPitchSlider.value = "440";
+      refPitchVal.textContent = "440 Hz";
+      refPitchDisplay.textContent = "440 Hz";
+      waveformSelect.value = "sine";
+
+      // Clear local storage keys for this tool
+      localStorage.removeItem(KEY_FREQ);
+      localStorage.removeItem(KEY_REF);
+      localStorage.removeItem(KEY_WAVE);
+      localStorage.removeItem(KEY_FAVORITES);
+
+      updateSliderBoundaries();
+      updateGauge(true);
+      updateFavoritesList();
+      showToast("Tuning Fork Reset complete.");
+    });
+
+    // Preset button clicks
+    const presetChips = document.querySelectorAll(".preset-chip");
+    presetChips.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Toggle highlight state on click
+        presetChips.forEach(c => c.className = "preset-chip bg-canvas hover:bg-surface text-slate text-[11px] font-bold py-1.5 px-3 rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-all border border-hairline shrink-0");
+        btn.className = "preset-chip bg-primary text-canvas text-[11px] font-bold py-1.5 px-3 rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-all shadow-subtle border border-primary shrink-0";
+
+        const val = parseFloat(btn.getAttribute("data-freq") || "440");
+        setFrequencyValue(val);
+      });
+    });
+
+    // Keyboard Shortcuts Guide
+    shortcutsBtn?.addEventListener("click", () => {
+      shortcutsModal.classList.remove("hidden");
+    });
+    closeShortcutsBtn?.addEventListener("click", () => {
+      shortcutsModal.classList.add("hidden");
+    });
+    shortcutsModal.addEventListener("click", (e) => {
+      if (e.target === shortcutsModal) {
+        shortcutsModal.classList.add("hidden");
+      }
+    });
+
+    // How it works modal interactions
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Keyboard controls
+    window.addEventListener("keydown", (e) => {
+      if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "SELECT") {
+        return; // ignore when typing in form controls
+      }
+
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (isPlaying) {
+          stopTone();
+        } else {
+          playTone();
+        }
+      } else if (e.code === "ArrowUp") {
+        e.preventDefault();
+        setFrequencyValue(targetFreq + 1.0);
+      } else if (e.code === "ArrowDown") {
+        e.preventDefault();
+        setFrequencyValue(targetFreq - 1.0);
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        setFrequencyValue(targetFreq - 0.1);
+      } else if (e.code === "ArrowRight") {
+        e.preventDefault();
+        setFrequencyValue(targetFreq + 0.1);
+      } else if (e.code === "Escape") {
+        e.preventDefault();
+        // Close modals first
+        if (!shortcutsModal.classList.contains("hidden")) {
+          shortcutsModal.classList.add("hidden");
+        } else if (!howItWorksModal.classList.contains("hidden")) {
+          howItWorksModal.classList.add("hidden");
+        } else {
+          // Reset calibration
+          targetRefPitch = 440;
+          refPitchSlider.value = "440";
+          refPitchVal.textContent = "440 Hz";
+          refPitchDisplay.textContent = "440 Hz";
+          localStorage.setItem(KEY_REF, "440");
+          const computed = calculateFreqFromNote(currentNoteIndex, currentOctave, targetRefPitch);
+          setFrequencyValue(computed);
+        }
+      }
+    });
+
+    // Mobile touch Audio Context unlock
+    document.addEventListener("touchstart", () => {
+      if (audioCtx && audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }, { once: true });
+
+    // Collapsible Two Tone Transition
+    compareToneEnable.addEventListener("change", () => {
+      if (compareToneEnable.checked) {
+        compareTonePanel.classList.remove("hidden");
+        compareTonePanel.classList.add("flex");
+      } else {
+        compareTonePanel.classList.add("hidden");
+        compareTonePanel.classList.remove("flex");
+      }
+      
+      // Sync live audio playing if checked/unchecked
+      if (isPlaying && audioCtx) {
+        if (compareToneEnable.checked) {
+          startSecondaryTone(audioCtx.currentTime);
+        } else {
+          if (oscNode2) {
+            oscNode2.stop();
+            oscNode2 = null;
+          }
+          clearInterval(altTimer);
+        }
+      }
+    });
+
+    compareIntervalSelect.addEventListener("change", () => {
+      const val = compareIntervalSelect.value;
+      let ratio = 1.0;
+      switch (val) {
+        case "unison": ratio = 1.0; break;
+        case "minor-second": ratio = 16/15; break;
+        case "major-second": ratio = 9/8; break;
+        case "major-third": ratio = 5/4; break;
+        case "perfect-fourth": ratio = 4/3; break;
+        case "tritone": ratio = 45/32; break;
+        case "perfect-fifth": ratio = 3/2; break;
+        case "octave": ratio = 2.0; break;
+        default: ratio = 0; break;
+      }
+      
+      if (ratio > 0) {
+        compareFreqInput.value = (targetFreq * ratio).toFixed(2);
+      } else {
+        compareFreqInput.value = (targetFreq + 5.0).toFixed(2); // default custom beat
+      }
+
+      if (isPlaying && audioCtx && oscNode2) {
+        oscNode2.frequency.setTargetAtTime(parseFloat(compareFreqInput.value), audioCtx.currentTime, 0.05);
+      }
+    });
+
+    init();
+  </script>
 </Layout>
+
+<style>
+  @keyframes vibrate {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-0.5px, 0.5px) rotate(-0.2deg); }
+    40% { transform: translate(-0.5px, -0.5px) rotate(0.2deg); }
+    60% { transform: translate(0.5px, 0.5px) rotate(-0.2deg); }
+    80% { transform: translate(0.5px, -0.5px) rotate(0.2deg); }
+  }
+  @keyframes prong-left-vibrate {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(calc(-3.5deg * var(--vibe-intensity, 1))); }
+  }
+  @keyframes prong-right-vibrate {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(calc(3.5deg * var(--vibe-intensity, 1))); }
+  }
+  .vibrating {
+    animation: vibrate 0.04s linear infinite;
+    color: var(--color-brand-blue) !important;
+  }
+  #left-prong-group {
+    transform-origin: 30px 80px;
+    transform-box: fill-box;
+  }
+  #right-prong-group {
+    transform-origin: 70px 80px;
+    transform-box: fill-box;
+  }
+  .vibrating #left-prong-group {
+    animation: prong-left-vibrate 0.03s ease-in-out infinite;
+  }
+  .vibrating #right-prong-group {
+    animation: prong-right-vibrate 0.03s ease-in-out infinite;
+  }
+  @keyframes ripple {
+    0% { transform: scale(0.3); opacity: 0.9; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  .rippling {
+    animation: ripple 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+  }
+</style>
