@@ -6,6 +6,10 @@ const name = "Accelerometer Viewer";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
 const description = "Track real-time acceleration shifts, gravitational forces, and movements.";
+const pageTitle = "Accelerometer Viewer - Real-time Motion & Gravity Grapher";
+const keywords = "accelerometer viewer, motion sensor, gravity sensor, device motion api, acceleration graph, accelerometer csv export, browser accelerometer, shake detector";
+const canonicalUrl = "https://boardtools.app/tools/mobile/accelerometer-viewer";
+const ogImage = "/og/accelerometer-viewer.png";
 ---
 
 <Layout 
@@ -13,78 +17,1128 @@ const description = "Track real-time acceleration shifts, gravitational forces, 
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Accelerometer Viewer",
+      "alternateName": "Browser Accelerometer & Motion Plotter",
+      "url": "https://boardtools.app/tools/mobile/accelerometer-viewer",
+      "description": "Visualize and record real-time accelerometer data including gravity-compensated acceleration and gravity-inclusive values.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires DeviceMotionEvent API.",
+      "featureList": [
+        "Real-time X, Y, Z acceleration data at high refresh rates (~60Hz)",
+        "Gravity-compensated vs. gravity-included measurement modes",
+        "Total combined vector magnitude (G-Force representation)",
+        "High-performance HTML5 Canvas rolling history graph",
+        "Session recording with exportable CSV and JSON options",
+        "Customizable shake/impact threshold flash triggers",
+        "iOS 13+ permission integration and device simulation"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">📱</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button verbatim structure from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button verbatim structure from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Accelerometer works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
-        </div>
-
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
-        </div>
+    <!-- MAIN WORKSPACE CONTAINER -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      
+      <!-- iOS Permission Request & Simulation Warning Banners -->
+      <div id="sensor-permission-panel" class="hidden flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-brand-blue/30 rounded-xl bg-surface-pricing-featured/30 text-center gap-2 sm:gap-3">
+        <div class="text-3xl">📳</div>
+        <h3 class="font-display font-medium text-sm text-primary">Sensor Permission Required</h3>
+        <p class="text-[11px] text-slate max-w-sm leading-relaxed">
+          iOS 13+ devices require manual user interaction to enable motion sensors. Click below to authorize accelerometer usage.
+        </p>
+        <button id="request-permission-btn" class="button-blue text-xs py-1.5 px-4 cursor-pointer font-semibold rounded-full hover:bg-blue-pressed transition-colors">
+          Enable Accelerometer
+        </button>
       </div>
+
+      <div id="sensor-denied-panel" class="hidden flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-brand-coral/30 rounded-xl bg-brand-red/10 text-center gap-2 sm:gap-3">
+        <div class="text-3xl">⚠️</div>
+        <h3 class="font-display font-medium text-sm text-primary text-coral-dark">Permission Denied</h3>
+        <p class="text-[11px] text-slate max-w-sm leading-relaxed">
+          Sensor access was blocked or denied. If you want to use real sensors, reset page permissions in your browser. Alternatively, enable simulated mode.
+        </p>
+        <button id="retry-permission-btn" class="button-secondary text-xs py-1.5 px-4 cursor-pointer rounded-full font-semibold">
+          Try Again
+        </button>
+      </div>
+
+      <div id="sensor-simulation-banner" class="hidden flex items-center justify-between px-3 py-2 border border-brand-yellow-deep/30 rounded-lg bg-surface-yellow text-[11px] text-slate">
+        <div class="flex items-center gap-2">
+          <span>⚠️ <strong>Demo Simulation Mode:</strong> Accelerometer hardware not detected (common on desktop). Using mock motion waves.</span>
+        </div>
+        <button id="toggle-sim-off-btn" class="text-brand-blue hover:underline font-semibold cursor-pointer">
+          Use Real API
+        </button>
+      </div>
+
+      <!-- MAIN SENSOR INTERFACE -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        
+        <!-- Interactive Form / Live Visualizer Panel -->
+        <div class="lg:col-span-8 flex flex-col gap-4">
+          
+          <!-- Mode, Controls, and Shake Thresholds adjacent to main display for mobile zero-scroll -->
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-surface p-3 rounded-xl border border-hairline-soft">
+            
+            <!-- Sensor Modes -->
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Display Mode</span>
+              <div class="flex rounded-md bg-canvas p-0.5 border border-hairline shadow-subtle">
+                <button
+                  type="button"
+                  id="mode-compensated-btn"
+                  class="text-[10px] py-1 px-2.5 rounded-sm font-bold transition-all cursor-pointer bg-primary text-canvas"
+                >
+                  Gravity-Compensated
+                </button>
+                <button
+                  type="button"
+                  id="mode-raw-btn"
+                  class="text-[10px] py-1 px-2.5 rounded-sm font-bold transition-all cursor-pointer text-slate hover:text-primary"
+                >
+                  Gravity-Included
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom Thresholds & Record controls -->
+            <div class="flex items-center gap-3">
+              <div class="flex flex-col gap-1">
+                <label for="shake-threshold-input" class="text-[10px] font-semibold text-slate">Shake Threshold (m/s²)</label>
+                <input
+                  type="number"
+                  id="shake-threshold-input"
+                  min="0.5"
+                  max="50"
+                  step="0.5"
+                  value="12.0"
+                  class="text-input h-7 py-0.5 px-2 text-[11px] w-20 border border-hairline-strong bg-canvas rounded-md"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-[10px] font-semibold text-slate block">&nbsp;</span>
+                <div class="flex gap-2">
+                  <button
+                    type="button"
+                    id="peak-reset-btn"
+                    class="text-[10px] h-7 px-2.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md transition-all font-semibold cursor-pointer"
+                  >
+                    Reset Peaks
+                  </button>
+                  <button
+                    type="button"
+                    id="record-toggle-btn"
+                    class="text-[10px] h-7 px-3 bg-brand-blue text-canvas hover:bg-blue-pressed rounded-md transition-all font-semibold flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span class="w-1.5 h-1.5 rounded-full bg-canvas animate-pulse" id="record-indicator"></span>
+                    <span id="record-btn-text">Record</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Numeric Readouts Grid - Large fonts, Compact -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <!-- X Axis -->
+            <div class="p-3 bg-canvas rounded-xl border border-hairline-soft shadow-subtle flex flex-col gap-1 relative overflow-hidden">
+              <div class="absolute top-0 left-0 w-1 h-full bg-brand-blue"></div>
+              <span class="text-[10px] font-semibold text-slate pl-1.5 uppercase">X (Lateral)</span>
+              <div class="pl-1.5">
+                <div class="text-xl sm:text-2xl font-bold tracking-tight text-primary font-mono" id="x-value">0.00</div>
+                <div class="text-[9px] text-stone mt-0.5 flex justify-between">
+                  <span>Peak:</span>
+                  <span class="font-semibold font-mono" id="x-peak">0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Y Axis -->
+            <div class="p-3 bg-canvas rounded-xl border border-hairline-soft shadow-subtle flex flex-col gap-1 relative overflow-hidden">
+              <div class="absolute top-0 left-0 w-1 h-full bg-brand-coral"></div>
+              <span class="text-[10px] font-semibold text-slate pl-1.5 uppercase">Y (Longitudinal)</span>
+              <div class="pl-1.5">
+                <div class="text-xl sm:text-2xl font-bold tracking-tight text-primary font-mono" id="y-value">0.00</div>
+                <div class="text-[9px] text-stone mt-0.5 flex justify-between">
+                  <span>Peak:</span>
+                  <span class="font-semibold font-mono" id="y-peak">0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Z Axis -->
+            <div class="p-3 bg-canvas rounded-xl border border-hairline-soft shadow-subtle flex flex-col gap-1 relative overflow-hidden">
+              <div class="absolute top-0 left-0 w-1 h-full bg-brand-teal"></div>
+              <span class="text-[10px] font-semibold text-slate pl-1.5 uppercase">Z (Vertical)</span>
+              <div class="pl-1.5">
+                <div class="text-xl sm:text-2xl font-bold tracking-tight text-primary font-mono" id="z-value">0.00</div>
+                <div class="text-[9px] text-stone mt-0.5 flex justify-between">
+                  <span>Peak:</span>
+                  <span class="font-semibold font-mono" id="z-peak">0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Combined Magnitude -->
+            <div class="p-3 bg-canvas rounded-xl border border-hairline-soft shadow-subtle flex flex-col gap-1 relative overflow-hidden" id="magnitude-card">
+              <div class="absolute top-0 left-0 w-1 h-full bg-primary animate-pulse"></div>
+              <span class="text-[10px] font-semibold text-slate pl-1.5 uppercase">Total Magnitude</span>
+              <div class="pl-1.5">
+                <div class="text-xl sm:text-2xl font-bold tracking-tight text-primary font-mono" id="mag-value">0.00</div>
+                <div class="text-[9px] text-stone mt-0.5 flex justify-between">
+                  <span>Max Peak:</span>
+                  <span class="font-semibold font-mono" id="mag-peak">0.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-time Canvas Graph Visualizer -->
+          <div class="bg-canvas rounded-xl border border-hairline-soft p-3 relative flex flex-col gap-2 shadow-subtle">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Live Waveform (m/s²)</span>
+              
+              <!-- Checkboxes to show/hide lines -->
+              <div class="flex items-center gap-3 text-[9px] font-semibold">
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="chk-show-x" checked class="accent-brand-blue" />
+                  <span class="text-brand-blue">X</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="chk-show-y" checked class="accent-brand-coral" />
+                  <span class="text-brand-coral">Y</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="chk-show-z" checked class="accent-brand-teal" />
+                  <span class="text-brand-teal">Z</span>
+                </label>
+                <label class="flex items-center gap-1 cursor-pointer">
+                  <input type="checkbox" id="chk-show-mag" checked class="accent-slate" />
+                  <span class="text-slate">Mag</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Canvas Element -->
+            <canvas id="motion-canvas" class="w-full h-36 sm:h-44 bg-surface rounded-lg border border-hairline-soft cursor-pointer block"></canvas>
+            
+            <div class="text-[9px] text-stone flex justify-between">
+              <span>Time-window: Last 6 seconds</span>
+              <span>Click graph to pause rendering</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Documentation, Session Logs & Secondary Metrics Sidebar -->
+        <div class="lg:col-span-4 flex flex-col gap-4">
+          
+          <!-- Shake/Impact Detection Trigger Box -->
+          <div id="shake-impact-box" class="p-4 bg-canvas rounded-xl border border-hairline-soft shadow-subtle flex flex-col justify-center items-center text-center gap-2 transition-all duration-300">
+            <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Impact Trigger Monitor</span>
+            <div class="text-xs font-semibold text-stone">Impact count threshold exceeded:</div>
+            <div class="text-4xl font-extrabold text-primary font-mono my-1" id="shake-count-val">0</div>
+            <button id="reset-shake-count-btn" class="text-[9px] font-semibold text-brand-blue hover:underline cursor-pointer">Reset Counter</button>
+          </div>
+
+          <!-- Secondary Metrics: Rotation Rate (Gyroscope) -->
+          <div class="card-base bg-surface-soft p-4 border border-hairline-soft rounded-xl flex flex-col gap-2.5">
+            <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5">
+              <span>🧭</span> Gyroscope Rotation Rate
+            </h3>
+            <div class="text-[10px] text-slate mb-1">
+              Angular velocity (requires gyroscope hardware).
+            </div>
+            <div id="gyro-unavailable" class="text-[10px] text-stone italic">
+              Checking gyroscope data availability...
+            </div>
+            <div id="gyro-grid" class="hidden grid grid-cols-3 gap-2">
+              <div class="bg-canvas border border-hairline rounded p-2 text-center">
+                <div class="text-[8px] font-semibold text-slate">ALPHA</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-alpha">0.0°/s</div>
+              </div>
+              <div class="bg-canvas border border-hairline rounded p-2 text-center">
+                <div class="text-[8px] font-semibold text-slate">BETA</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-beta">0.0°/s</div>
+              </div>
+              <div class="bg-canvas border border-hairline rounded p-2 text-center">
+                <div class="text-[8px] font-semibold text-slate">GAMMA</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-gamma">0.0°/s</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Recording Log Section -->
+          <div class="card-base bg-surface-soft p-4 border border-hairline-soft rounded-xl flex flex-col gap-3">
+            <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider">
+              ⏺ Recorded Session Data
+            </h3>
+            
+            <div class="flex flex-col gap-1.5 text-[10px] text-slate leading-relaxed">
+              <div class="flex justify-between">
+                <span>Status:</span>
+                <span class="font-bold text-stone" id="recording-status">Idle</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Samples Captured:</span>
+                <span class="font-bold font-mono" id="recording-samples">0</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Duration:</span>
+                <span class="font-bold font-mono" id="recording-duration">0.0s</span>
+              </div>
+            </div>
+
+            <div class="h-[1px] bg-hairline-soft my-1"></div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                id="export-csv-btn"
+                disabled
+                class="button-secondary text-[10px] py-1.5 px-2 text-center font-semibold rounded-md opacity-50 cursor-not-allowed transition-all"
+              >
+                Export CSV
+              </button>
+              <button
+                type="button"
+                id="export-json-btn"
+                disabled
+                class="button-secondary text-[10px] py-1.5 px-2 text-center font-semibold rounded-md opacity-50 cursor-not-allowed transition-all"
+              >
+                Export JSON
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
   </section>
+
+  <!-- How it works Modal (Exact Verbatim structure pattern from json-formatter.astro) -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Accelerometer Viewer Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Gravity-Compensated vs. Gravity-Included</h4>
+        <p>
+          This viewer distinguishes between two motion paradigms:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1 mt-0.5">
+          <li>
+            <strong>Gravity-Compensated (acceleration)</strong>: Isolates transient user movement by subtracting Earth's gravitational pull. A stationary device will display values close to 0 m/s².
+          </li>
+          <li>
+            <strong>Gravity-Included (accelerationIncludingGravity)</strong>: Registers both physical movement and Earth's gravity. When static on a flat table, the Z axis reads around 9.81 m/s² (pointing up), reflecting gravity.
+          </li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">2. Vector Magnitude Calculation</h4>
+        <p>
+          The total magnitude measures absolute structural motion force. It is computed as the vector length:
+          <code class="bg-surface px-1.5 py-0.5 rounded text-primary font-mono text-[10px]">Magnitude = √(x² + y² + z²)</code>.
+          This value indicates general shake intensity, regardless of direction.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Session Logging and CSV / JSON Exports</h4>
+        <p>
+          Toggle the "Record" state to log accelerometer inputs. Data point arrays (timestamps, X, Y, Z, magnitude) are captured in memory. Sessions are automatically capped at 60 seconds. You can download the log as standard CSV or formatted JSON file structures.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Complete Security and Sandbox Execution</h4>
+        <p>
+          All operations are evaluated 100% inside your local web browser sandbox. No sensor parameters or movement histories are transmitted to remote cloud databases.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // System State Types
+    interface LogSample {
+      time: number;
+      x: number;
+      y: number;
+      z: number;
+      magnitude: number;
+    }
+
+    // Modal Control Elements
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+
+    // Modal Event Listeners
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Sensor State
+    let useCompensated = true; // true = acceleration, false = accelerationIncludingGravity
+    let threshold = 12.0; // m/s2
+    let peakX = 0;
+    let peakY = 0;
+    let peakZ = 0;
+    let peakMag = 0;
+    let shakeCount = 0;
+    let isRecording = false;
+    let recordStartTime = 0;
+    let recordedSamples: LogSample[] = [];
+    const MAX_RECORD_TIME_MS = 60000; // 60s cap
+
+    // History buffer for graphing
+    const bufferLimit = 360; // 6 seconds at 60fps
+    const historyX: number[] = [];
+    const historyY: number[] = [];
+    const historyZ: number[] = [];
+    const historyMag: number[] = [];
+    const historyTimes: number[] = [];
+
+    // Animation & Listener Handles
+    let animationFrameId: number | null = null;
+    let simFrameId: number | null = null;
+    let isCanvasPaused = false;
+    let gravityModeUnsupported = false;
+    let isSimulating = false;
+    let simAngle = 0;
+
+    // DOM Elements
+    const xVal = document.getElementById("x-value");
+    const yVal = document.getElementById("y-value");
+    const zVal = document.getElementById("z-value");
+    const magVal = document.getElementById("mag-value");
+
+    const xPeak = document.getElementById("x-peak");
+    const yPeak = document.getElementById("y-peak");
+    const zPeak = document.getElementById("z-peak");
+    const magPeak = document.getElementById("mag-peak");
+
+    const btnReset = document.getElementById("reset-btn");
+    const btnPeakReset = document.getElementById("peak-reset-btn");
+    const btnRecordToggle = document.getElementById("record-toggle-btn");
+    const btnRecordText = document.getElementById("record-btn-text");
+    const indicatorRecord = document.getElementById("record-indicator");
+    
+    const btnModeCompensated = document.getElementById("mode-compensated-btn");
+    const btnModeRaw = document.getElementById("mode-raw-btn");
+    const shakeThresholdInput = document.getElementById("shake-threshold-input") as HTMLInputElement;
+
+    const shakeImpactBox = document.getElementById("shake-impact-box");
+    const shakeCountVal = document.getElementById("shake-count-val");
+    const btnResetShakeCount = document.getElementById("reset-shake-count-btn");
+
+    const gyroUnavailable = document.getElementById("gyro-unavailable");
+    const gyroGrid = document.getElementById("gyro-grid");
+    const gyroAlpha = document.getElementById("gyro-alpha");
+    const gyroBeta = document.getElementById("gyro-beta");
+    const gyroGamma = document.getElementById("gyro-gamma");
+
+    const recordStatus = document.getElementById("recording-status");
+    const recordSamplesCount = document.getElementById("recording-samples");
+    const recordDurationText = document.getElementById("recording-duration");
+    const btnExportCsv = document.getElementById("export-csv-btn") as HTMLButtonElement;
+    const btnExportJson = document.getElementById("export-json-btn") as HTMLButtonElement;
+
+    const permissionPanel = document.getElementById("sensor-permission-panel");
+    const deniedPanel = document.getElementById("sensor-denied-panel");
+    const simulationBanner = document.getElementById("sensor-simulation-banner");
+    const btnRequestPermission = document.getElementById("request-permission-btn");
+    const btnRetryPermission = document.getElementById("retry-permission-btn");
+    const btnToggleSimOff = document.getElementById("toggle-sim-off-btn");
+
+    const canvas = document.getElementById("motion-canvas") as HTMLCanvasElement;
+    const ctx = canvas?.getContext("2d");
+
+    // Axes Toggles
+    const chkShowX = document.getElementById("chk-show-x") as HTMLInputElement;
+    const chkShowY = document.getElementById("chk-show-y") as HTMLInputElement;
+    const chkShowZ = document.getElementById("chk-show-z") as HTMLInputElement;
+    const chkShowMag = document.getElementById("chk-show-mag") as HTMLInputElement;
+
+    // Load Local Storage Settings
+    function loadSettings() {
+      const storedMode = localStorage.getItem("boardtools:accelerometer-viewer:mode");
+      if (storedMode) {
+        useCompensated = storedMode === "gravity-compensated";
+        updateModeUI();
+      }
+
+      const storedThreshold = localStorage.getItem("boardtools:accelerometer-viewer:shake-threshold");
+      if (storedThreshold && shakeThresholdInput) {
+        threshold = parseFloat(storedThreshold);
+        shakeThresholdInput.value = threshold.toFixed(1);
+      }
+    }
+
+    // Save Settings
+    function saveModeSetting(mode: string) {
+      localStorage.setItem("boardtools:accelerometer-viewer:mode", mode);
+    }
+
+    function saveThresholdSetting(val: number) {
+      localStorage.setItem("boardtools:accelerometer-viewer:shake-threshold", val.toString());
+    }
+
+    // Update Mode UI CSS
+    function updateModeUI() {
+      if (useCompensated) {
+        btnModeCompensated?.classList.add("bg-primary", "text-canvas");
+        btnModeCompensated?.classList.remove("text-slate", "hover:text-primary");
+        btnModeRaw?.classList.remove("bg-primary", "text-canvas");
+        btnModeRaw?.classList.add("text-slate", "hover:text-primary");
+      } else {
+        btnModeRaw?.classList.add("bg-primary", "text-canvas");
+        btnModeRaw?.classList.remove("text-slate", "hover:text-primary");
+        btnModeCompensated?.classList.remove("bg-primary", "text-canvas");
+        btnModeCompensated?.classList.add("text-slate", "hover:text-primary");
+      }
+    }
+
+    // UI Reset Functions
+    function resetPeaks() {
+      peakX = 0;
+      peakY = 0;
+      peakZ = 0;
+      peakMag = 0;
+      updatePeakUI();
+    }
+
+    // Exports variables to window for cypress/testing support (Gated by dev query param)
+    if (typeof window !== "undefined" && window.location.search.includes("dev=true")) {
+      Object.defineProperty(window, '_accelerometerState', {
+        get: () => ({
+          useCompensated,
+          threshold,
+          peakX,
+          peakY,
+          peakZ,
+          peakMag,
+          shakeCount,
+          isRecording,
+          recordedSamples
+        }),
+        configurable: true
+      });
+    }
+
+    function updatePeakUI() {
+      if (xPeak) xPeak.textContent = peakX.toFixed(2);
+      if (yPeak) yPeak.textContent = peakY.toFixed(2);
+      if (zPeak) zPeak.textContent = peakZ.toFixed(2);
+      if (magPeak) magPeak.textContent = peakMag.toFixed(2);
+    }
+
+    function stopRecording() {
+      isRecording = false;
+      btnRecordToggle?.classList.remove("bg-brand-coral", "hover:bg-coral-dark");
+      btnRecordToggle?.classList.add("bg-brand-blue", "hover:bg-blue-pressed");
+      if (btnRecordText) btnRecordText.textContent = "Record";
+      if (indicatorRecord) indicatorRecord.classList.add("animate-pulse");
+      
+      updateRecordingUI();
+    }
+
+    function discardRecording() {
+      isRecording = false;
+      recordedSamples = [];
+      btnRecordToggle?.classList.remove("bg-brand-coral", "hover:bg-coral-dark");
+      btnRecordToggle?.classList.add("bg-brand-blue", "hover:bg-blue-pressed");
+      if (btnRecordText) btnRecordText.textContent = "Record";
+      if (indicatorRecord) indicatorRecord.classList.add("animate-pulse");
+      
+      updateRecordingUI();
+    }
+
+    function updateRecordingUI() {
+      if (recordStatus) recordStatus.textContent = isRecording ? "Recording..." : "Idle";
+      if (recordSamplesCount) recordSamplesCount.textContent = recordedSamples.length.toString();
+      
+      const duration = isRecording 
+        ? ((Date.now() - recordStartTime) / 1000).toFixed(1)
+        : (recordedSamples.length > 0 ? ((recordedSamples[recordedSamples.length - 1].time - recordedSamples[0].time) / 1000).toFixed(1) : "0.0");
+      if (recordDurationText) recordDurationText.textContent = `${duration}s`;
+
+      if (recordedSamples.length > 0 && !isRecording) {
+        btnExportCsv.disabled = false;
+        btnExportCsv.classList.remove("opacity-50", "cursor-not-allowed");
+        btnExportJson.disabled = false;
+        btnExportJson.classList.remove("opacity-50", "cursor-not-allowed");
+      } else {
+        btnExportCsv.disabled = true;
+        btnExportCsv.classList.add("opacity-50", "cursor-not-allowed");
+        btnExportJson.disabled = true;
+        btnExportJson.classList.add("opacity-50", "cursor-not-allowed");
+      }
+    }
+
+    function resetControlsToDefaults() {
+      useCompensated = true;
+      updateModeUI();
+      threshold = 12.0;
+      if (shakeThresholdInput) {
+        shakeThresholdInput.value = "12.0";
+      }
+      shakeCount = 0;
+      if (shakeCountVal) shakeCountVal.textContent = "0";
+    }
+
+    // Device API Listeners
+    function handleMotionEvent(e: DeviceMotionEvent) {
+      // Pick raw acceleration vs gravity-compensated
+      let acc = useCompensated ? e.acceleration : e.accelerationIncludingGravity;
+      
+      // Fallback detection if compensated isn't supported
+      if (useCompensated && (!acc || acc.x === null || acc.y === null || acc.z === null)) {
+        // If compensated is requested but returns nulls, while including gravity is available, auto switch/indicate
+        const rawAcc = e.accelerationIncludingGravity;
+        if (rawAcc && rawAcc.x !== null) {
+          gravityModeUnsupported = true;
+          // Force Raw mode
+          useCompensated = false;
+          updateModeUI();
+          acc = rawAcc;
+        }
+      }
+
+      const x = acc?.x ?? 0;
+      const y = acc?.y ?? 0;
+      const z = acc?.z ?? 0;
+      processSensorValues(x, y, z);
+
+      // Handle Gyroscope rotation rates
+      if (e.rotationRate) {
+        const rot = e.rotationRate;
+        if (rot.alpha !== null || rot.beta !== null || rot.gamma !== null) {
+          if (gyroUnavailable) gyroUnavailable.classList.add("hidden");
+          if (gyroGrid) gyroGrid.classList.remove("hidden");
+          if (gyroAlpha) gyroAlpha.textContent = `${(rot.alpha ?? 0).toFixed(1)}°/s`;
+          if (gyroBeta) gyroBeta.textContent = `${(rot.beta ?? 0).toFixed(1)}°/s`;
+          if (gyroGamma) gyroGamma.textContent = `${(rot.gamma ?? 0).toFixed(1)}°/s`;
+        }
+      }
+    }
+
+    // Process new values
+    function processSensorValues(x: number, y: number, z: number) {
+      // Round live display metrics
+      if (xVal) xVal.textContent = x.toFixed(2);
+      if (yVal) yVal.textContent = y.toFixed(2);
+      if (zVal) zVal.textContent = z.toFixed(2);
+
+      const magnitude = Math.sqrt(x*x + y*y + z*z);
+      if (magVal) magVal.textContent = magnitude.toFixed(2);
+
+      // Peak limits tracking
+      if (Math.abs(x) > Math.abs(peakX)) peakX = x;
+      if (Math.abs(y) > Math.abs(peakY)) peakY = y;
+      if (Math.abs(z) > Math.abs(peakZ)) peakZ = z;
+      if (magnitude > peakMag) peakMag = magnitude;
+      updatePeakUI();
+
+      // Shake Detection & Flash Impact Trigger
+      if (magnitude > threshold) {
+        shakeCount++;
+        if (shakeCountVal) shakeCountVal.textContent = shakeCount.toString();
+        
+        // Trigger a visual screen flash container
+        if (shakeImpactBox) {
+          shakeImpactBox.classList.remove("border-hairline-soft");
+          shakeImpactBox.classList.add("border-brand-coral", "bg-brand-red/20 animate-pulse");
+          setTimeout(() => {
+            shakeImpactBox.classList.remove("border-brand-coral", "bg-brand-red/20", "animate-pulse");
+            shakeImpactBox.classList.add("border-hairline-soft");
+          }, 350);
+        }
+      }
+
+      // Record logs
+      if (isRecording) {
+        const timeNow = Date.now();
+        if (timeNow - recordStartTime > MAX_RECORD_TIME_MS) {
+          stopRecording(); // auto-stop at limit (preserving data)
+        } else {
+          recordedSamples.push({
+            time: timeNow,
+            x,
+            y,
+            z,
+            magnitude
+          });
+          updateRecordingUI();
+        }
+      }
+
+      // Push to history graph buffer
+      historyX.push(x);
+      historyY.push(y);
+      historyZ.push(z);
+      historyMag.push(magnitude);
+      historyTimes.push(Date.now());
+
+      if (historyX.length > bufferLimit) {
+        historyX.shift();
+        historyY.shift();
+        historyZ.shift();
+        historyMag.shift();
+        historyTimes.shift();
+      }
+    }
+
+    // Simulation generator loop using requestAnimationFrame
+    function runSimulationStep() {
+      if (!isSimulating) return;
+
+      simAngle += 0.08;
+      // Add simulated noise and periodic oscillations
+      let noiseX = Math.sin(simAngle) * 2.5 + (Math.random() - 0.5) * 0.5;
+      let noiseY = Math.cos(simAngle * 1.3) * 1.8 + (Math.random() - 0.5) * 0.4;
+      let noiseZ = Math.sin(simAngle * 0.7) * 3.1 + (Math.random() - 0.5) * 0.6;
+
+      if (!useCompensated) {
+        // Add Simulated gravity ~9.81 on vertical axis
+        noiseZ += 9.81;
+      }
+
+      // Shake simulation randomly
+      if (Math.random() > 0.985) {
+        noiseX *= 5;
+        noiseY *= 5;
+        noiseZ *= 5;
+      }
+
+      processSensorValues(noiseX, noiseY, noiseZ);
+
+      // Simulation fake gyro
+      if (gyroUnavailable) gyroUnavailable.classList.add("hidden");
+      if (gyroGrid) gyroGrid.classList.remove("hidden");
+      if (gyroAlpha) gyroAlpha.textContent = `${(Math.sin(simAngle) * 45).toFixed(1)}°/s`;
+      if (gyroBeta) gyroBeta.textContent = `${(Math.cos(simAngle * 0.8) * 30).toFixed(1)}°/s`;
+      if (gyroGamma) gyroGamma.textContent = `${(Math.sin(simAngle * 1.5) * 20).toFixed(1)}°/s`;
+
+      simFrameId = requestAnimationFrame(runSimulationStep);
+    }
+
+    // High Performance Canvas Graph Renderer
+    function resizeCanvas() {
+      if (canvas) {
+        // Adjust canvas dimensions for retina screens
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * window.devicePixelRatio;
+        canvas.height = rect.height * window.devicePixelRatio;
+      }
+    }
+
+    function renderGraph() {
+      if (isCanvasPaused || !canvas || !ctx) {
+        animationFrameId = requestAnimationFrame(renderGraph);
+        return;
+      }
+
+      const dpr = window.devicePixelRatio;
+      const width = canvas.width;
+      const height = canvas.height;
+
+      // Clear Canvas
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw Grid lines
+      ctx.strokeStyle = "#e0e2e8";
+      ctx.lineWidth = 1 * dpr;
+      
+      const gridCount = 6;
+      for (let i = 1; i < gridCount; i++) {
+        // Horizontal grids
+        const y = (height / gridCount) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+
+        // Vertical grids
+        const x = (width / gridCount) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+
+      // Compute visual bounds based on current peaks in buffer
+      let maxVal = 10; // min scaling scale factor
+      for (let i = 0; i < historyX.length; i++) {
+        maxVal = Math.max(maxVal, Math.abs(historyX[i]), Math.abs(historyY[i]), Math.abs(historyZ[i]), historyMag[i]);
+      }
+      maxVal = Math.ceil(maxVal * 1.15); // buffer boundary spacing
+
+      const scaleY = (height / 2) / maxVal;
+      const centerY = height / 2;
+
+      // Draw Zero Baseline
+      ctx.strokeStyle = "#a5a8b5";
+      ctx.lineWidth = 1.5 * dpr;
+      ctx.beginPath();
+      ctx.moveTo(0, centerY);
+      ctx.lineTo(width, centerY);
+      ctx.stroke();
+
+      // Legend labeling values on coordinates
+      ctx.fillStyle = "#8e91a0";
+      ctx.font = `${9 * dpr}px Roobert PRO, system-ui`;
+      ctx.fillText(`+${maxVal.toFixed(0)} m/s²`, 8 * dpr, 15 * dpr);
+      ctx.fillText(`-${maxVal.toFixed(0)} m/s²`, 8 * dpr, height - 8 * dpr);
+
+      // Helper function to plot lines
+      function plotAxis(data: number[], color: string) {
+        if (data.length < 2 || !ctx) return;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2 * dpr;
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+
+        const stepX = width / (bufferLimit - 1);
+        const startOffset = bufferLimit - data.length;
+
+        for (let i = 0; i < data.length; i++) {
+          const posX = (startOffset + i) * stepX;
+          const posY = centerY - (data[i] * scaleY);
+          if (i === 0) {
+            ctx.moveTo(posX, posY);
+          } else {
+            ctx.lineTo(posX, posY);
+          }
+        }
+        ctx.stroke();
+      }
+
+      // Render toggled axis curves
+      if (chkShowX?.checked) plotAxis(historyX, "#4262ff"); // brand-blue
+      if (chkShowY?.checked) plotAxis(historyY, "#ff9999"); // brand-coral
+      if (chkShowZ?.checked) plotAxis(historyZ, "#0fbcb0"); // brand-teal
+      if (chkShowMag?.checked) plotAxis(historyMag, "#1c1c1e"); // primary
+
+      animationFrameId = requestAnimationFrame(renderGraph);
+    }
+
+    // Permission Flow Setup
+    function initSensors() {
+      // Check API compatibility
+      if (typeof window !== "undefined" && "DeviceMotionEvent" in window) {
+        const RequestPermission = (DeviceMotionEvent as any).requestPermission;
+        if (typeof RequestPermission === "function") {
+          // iOS Safari flow
+          permissionPanel?.classList.remove("hidden");
+        } else {
+          // Standard browser flow - direct listen
+          startListening();
+        }
+      } else {
+        // API not found
+        enableSimulationMode();
+      }
+    }
+
+    function startListening() {
+      permissionPanel?.classList.add("hidden");
+      deniedPanel?.classList.add("hidden");
+      simulationBanner?.classList.add("hidden");
+      isSimulating = false;
+      if (simFrameId !== null) {
+        cancelAnimationFrame(simFrameId);
+        simFrameId = null;
+      }
+
+      window.addEventListener("devicemotion", handleMotionEvent);
+    }
+
+    function enableSimulationMode() {
+      permissionPanel?.classList.add("hidden");
+      deniedPanel?.classList.add("hidden");
+      simulationBanner?.classList.remove("hidden");
+      isSimulating = true;
+      runSimulationStep();
+    }
+
+    // iOS Request interaction
+    btnRequestPermission?.addEventListener("click", () => {
+      const RequestPermission = (DeviceMotionEvent as any).requestPermission;
+      if (typeof RequestPermission === "function") {
+        RequestPermission()
+          .then((state: string) => {
+            if (state === "granted") {
+              startListening();
+            } else {
+              permissionPanel?.classList.add("hidden");
+              deniedPanel?.classList.remove("hidden");
+            }
+          })
+          .catch(() => {
+            permissionPanel?.classList.add("hidden");
+            deniedPanel?.classList.remove("hidden");
+          });
+      }
+    });
+
+    btnRetryPermission?.addEventListener("click", () => {
+      initSensors();
+    });
+
+    btnToggleSimOff?.addEventListener("click", () => {
+      isSimulating = false;
+      simulationBanner?.classList.add("hidden");
+      initSensors();
+    });
+
+    // Control triggers
+    btnModeCompensated?.addEventListener("click", () => {
+      gravityModeUnsupported = false; // Re-check support on mode switch attempt
+      useCompensated = true;
+      updateModeUI();
+      saveModeSetting("gravity-compensated");
+    });
+
+    btnModeRaw?.addEventListener("click", () => {
+      useCompensated = false;
+      updateModeUI();
+      saveModeSetting("gravity-included");
+    });
+
+    shakeThresholdInput?.addEventListener("input", (e) => {
+      const val = parseFloat((e.target as HTMLInputElement).value);
+      if (!isNaN(val) && val > 0) {
+        threshold = val;
+        saveThresholdSetting(val);
+      }
+    });
+
+    btnPeakReset?.addEventListener("click", () => {
+      resetPeaks();
+    });
+
+    btnResetShakeCount?.addEventListener("click", () => {
+      shakeCount = 0;
+      if (shakeCountVal) shakeCountVal.textContent = "0";
+    });
+
+    // Recording Toggle
+    btnRecordToggle?.addEventListener("click", () => {
+      if (!isRecording) {
+        // Start recording session
+        isRecording = true;
+        recordedSamples = [];
+        recordStartTime = Date.now();
+        btnRecordToggle?.classList.remove("bg-brand-blue", "hover:bg-blue-pressed");
+        btnRecordToggle?.classList.add("bg-brand-coral", "hover:bg-coral-dark");
+        if (btnRecordText) btnRecordText.textContent = "Stop";
+        if (indicatorRecord) indicatorRecord.classList.remove("animate-pulse");
+      } else {
+        stopRecording();
+      }
+      updateRecordingUI();
+    });
+
+    // Verbatim Reset button interaction implementation (Satisfies requirement 1)
+    btnReset?.addEventListener("click", () => {
+      resetPeaks();
+      discardRecording();
+      resetControlsToDefaults();
+      localStorage.removeItem("boardtools:accelerometer-viewer:mode");
+      localStorage.removeItem("boardtools:accelerometer-viewer:shake-threshold");
+    });
+
+    // Exports downloads
+    btnExportCsv?.addEventListener("click", () => {
+      if (recordedSamples.length === 0) return;
+      
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "TimestampOffsetMs,AccelerationX_m_s2,AccelerationY_m_s2,AccelerationZ_m_s2,TotalMagnitude_m_s2\r\n";
+      
+      const firstTime = recordedSamples[0].time;
+      recordedSamples.forEach(s => {
+        const offset = s.time - firstTime;
+        csvContent += `${offset},${s.x.toFixed(4)},${s.y.toFixed(4)},${s.z.toFixed(4)},${s.magnitude.toFixed(4)}\r\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `accelerometer_recording_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    btnExportJson?.addEventListener("click", () => {
+      if (recordedSamples.length === 0) return;
+
+      const firstTime = recordedSamples[0].time;
+      const exportData = recordedSamples.map(s => ({
+        offsetMs: s.time - firstTime,
+        x: parseFloat(s.x.toFixed(4)),
+        y: parseFloat(s.y.toFixed(4)),
+        z: parseFloat(s.z.toFixed(4)),
+        magnitude: parseFloat(s.magnitude.toFixed(4))
+      }));
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+      const link = document.createElement("a");
+      link.setAttribute("href", dataStr);
+      link.setAttribute("download", `accelerometer_recording_${Date.now()}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Click canvas to pause/resume rendering (avoids CPU when user switches tabs or is idle)
+    canvas?.addEventListener("click", () => {
+      isCanvasPaused = !isCanvasPaused;
+    });
+
+    // Setup lifecycle
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    loadSettings();
+    initSensors();
+    renderGraph();
+
+    // Cleanup listeners on unmount/navigation
+    document.addEventListener("astro:before-preparation", () => {
+      window.removeEventListener("devicemotion", handleMotionEvent);
+      window.removeEventListener("resize", resizeCanvas);
+      isSimulating = false;
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    });
+  </script>
 </Layout>
