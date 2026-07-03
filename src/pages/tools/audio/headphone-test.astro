@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Headphone Test Suite";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Test headphone stereo balance, bass response ranges, and dynamic sound levels.";
+const description = "Diagnostic utility to test stereo balance, frequency sweep limits, low-end bass extension, and driver dynamic response.";
 ---
 
 <Layout 
@@ -14,77 +14,1643 @@ const description = "Test headphone stereo balance, bass response ranges, and dy
   toolName={name}
   toolCategory={category}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
-    <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
-        <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
-        <span>/</span>
-        <span class="text-brand-blue capitalize">{category}</span>
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
+    <!-- Header Title Area -->
+    <div class="border-b border-hairline pb-3 sm:pb-4 flex flex-col gap-2">
+      <div class="flex items-center gap-1.5 text-stone text-[10px] sm:text-xs font-bold uppercase tracking-wider">
+        <span>Audio Diagnostics</span>
+        <span>•</span>
+        <span class="text-brand-blue font-bold">Calibration Tools</span>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-lg sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[9px] sm:text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🎵</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-2.5 h-2.5 sm:w-3 sm:h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How headphone test works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+      <!-- Left: Interactive workspace containing current test module / controls -->
+      <div class="lg:col-span-8 flex flex-col gap-4 sm:gap-6">
+        
+        <!-- Activation Banner & Safety Controls -->
+        <div class="card-base p-4 sm:p-5 flex flex-col gap-4 relative overflow-hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Device Configuration</span>
+              <div class="flex items-center gap-2">
+                <input
+                  type="text"
+                  id="device-name"
+                  placeholder="e.g. Sony WH-1000XM5"
+                  class="text-input h-9 px-3 py-1.5 text-xs w-full sm:w-64 border border-hairline bg-surface rounded-md focus:border-brand-blue outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <!-- Master Volume Control -->
+            <div class="flex-1 max-w-xs flex flex-col gap-1">
+              <div class="flex justify-between items-center text-[10px] font-bold text-slate uppercase">
+                <span>Master Volume</span>
+                <span id="volume-readout">50%</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+                <input
+                  type="range"
+                  id="master-volume"
+                  min="0"
+                  max="100"
+                  value="50"
+                  class="w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Audio Initialization Gate -->
+          <div id="audio-gate" class="p-4 rounded-xl border border-brand-yellow-deep/30 bg-yellow-light/20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-yellow-dark">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-yellow-deep opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-yellow-deep"></span>
+              </span>
+              <span>Audio context is inactive. Tap to initialize and grant audio permissions.</span>
+            </div>
+            <button
+              type="button"
+              id="init-audio-btn"
+              class="button-primary text-[11px] py-1 px-4 !rounded-full shadow-subtle transition-all cursor-pointer font-bold whitespace-nowrap bg-brand-yellow hover:bg-brand-yellow-deep text-primary border-none"
+            >
+              Start Audio Engine
+            </button>
+          </div>
+
+          <!-- Safety Volume Warning -->
+          <div id="volume-warning" class="hidden p-3 rounded-lg border border-brand-coral bg-coral-light/20 text-xs text-coral-dark flex items-center gap-2">
+            <span>⚠️</span>
+            <span class="font-medium">Caution: High volume settings can cause permanent hearing damage. Adjust gradually.</span>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
+        <!-- Mode Toggle Slider -->
+        <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full">
+          <button
+            type="button"
+            id="mode-guided-btn"
+            class="flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+          >
+            Guided Test Suite
+          </button>
+          <button
+            type="button"
+            id="mode-individual-btn"
+            class="flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-primary"
+          >
+            Individual Diagnostic Tools
+          </button>
+        </div>
+
+        <!-- Section 1: Guided Test Suite Sandbox -->
+        <div id="guided-suite-panel" class="card-base p-6 flex flex-col gap-6">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-4">
+            <div class="flex flex-col gap-1">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider" id="guided-step-badge">Test 1 of 5</span>
+              <h2 id="guided-step-title" class="font-display font-semibold text-lg text-primary">Stereo Balance & Channel Test</h2>
+            </div>
+            
+            <!-- Checklist UI of completed tests -->
+            <div class="flex items-center gap-1.5">
+              <div class="step-dot" data-step="1"></div>
+              <div class="step-dot" data-step="2"></div>
+              <div class="step-dot" data-step="3"></div>
+              <div class="step-dot" data-step="4"></div>
+              <div class="step-dot" data-step="5"></div>
+              <div class="step-dot" data-step="6"></div>
+              <div class="step-dot" data-step="7"></div>
+              <div class="step-dot" data-step="8"></div>
+            </div>
+          </div>
+
+          <!-- Step Panels Container -->
+          <div class="relative min-h-[320px] flex flex-col justify-center">
+            
+            <!-- Step 1: Stereo Balance -->
+            <div id="guided-step-1" class="guided-step-content flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Confirm your left and right audio channels are connected correctly and outputting identical sound pressure. Click play to start cycling sounds.
+              </p>
+              
+              <div class="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto w-full">
+                <!-- Left Channel Box -->
+                <div id="left-channel-indicator" class="flex flex-col items-center justify-center p-4 sm:p-6 border border-hairline rounded-xl bg-surface transition-all gap-2 sm:gap-3 text-center duration-300">
+                  <span class="text-xl sm:text-2xl font-bold text-slate">L</span>
+                  <span class="text-[9px] sm:text-[10px] uppercase font-bold text-stone">Left Channel</span>
+                  <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-brand-blue opacity-0 indicator-light"></div>
+                </div>
+                
+                <!-- Right Channel Box -->
+                <div id="right-channel-indicator" class="flex flex-col items-center justify-center p-4 sm:p-6 border border-hairline rounded-xl bg-surface transition-all gap-2 sm:gap-3 text-center duration-300">
+                  <span class="text-xl sm:text-2xl font-bold text-slate">R</span>
+                  <span class="text-[9px] sm:text-[10px] uppercase font-bold text-stone">Right Channel</span>
+                  <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-brand-teal opacity-0 indicator-light"></div>
+                </div>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="stereo">
+                  <span class="play-icon">▶ Play Test</span>
+                  <span class="stop-icon hidden">■ Stop Test</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Frequency Sweep -->
+            <div id="guided-step-2" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Sweeps from 30Hz up to 18,000Hz (18kHz) in a smooth logarithmic ramp. Listen for dead spots, volume dips, or harsh resonances.
+              </p>
+
+              <!-- Sweep Progress Visualizer -->
+              <div class="w-full max-w-md mx-auto bg-surface border border-hairline rounded-xl p-4 sm:p-6 flex flex-col gap-3 sm:gap-4">
+                <div class="flex justify-between items-baseline">
+                  <span class="text-[10px] font-bold text-slate uppercase">Current Pitch</span>
+                  <span id="sweep-frequency-readout" class="font-mono text-xl sm:text-2xl font-semibold text-brand-blue">30 Hz</span>
+                </div>
+                
+                <div class="w-full bg-hairline h-1.5 sm:h-2 rounded-full overflow-hidden">
+                  <div id="sweep-progress-bar" class="bg-brand-blue h-full w-0 transition-all duration-100 ease-linear"></div>
+                </div>
+
+                <div class="flex justify-between text-[9px] font-bold text-stone uppercase">
+                  <span>30 Hz (Sub-Bass)</span>
+                  <span>18 kHz (Treble)</span>
+                </div>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="sweep">
+                  <span class="play-icon">▶ Play Sweep</span>
+                  <span class="stop-icon hidden">■ Stop Sweep</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Bass Response -->
+            <div id="guided-step-3" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Test low-frequency extension and consistency using precise sub-bass pulses. Select a frequency or cycle through each to inspect clarity.
+              </p>
+
+              <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+                <button type="button" class="bass-btn px-3 py-1.5 sm:px-4 sm:py-2 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="40">40 Hz (Deep Sub)</button>
+                <button type="button" class="bass-btn px-3 py-1.5 sm:px-4 sm:py-2 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="60">60 Hz (Sub-bass)</button>
+                <button type="button" class="bass-btn px-3 py-1.5 sm:px-4 sm:py-2 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="80">80 Hz (Mid-bass)</button>
+                <button type="button" class="bass-btn px-3 py-1.5 sm:px-4 sm:py-2 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="100">100 Hz (Upper-bass)</button>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="bass">
+                  <span class="play-icon">▶ Start Pulses</span>
+                  <span class="stop-icon hidden">■ Stop Pulses</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Dynamic Range -->
+            <div id="guided-step-4" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                A sequence of tones decreasing in volume steps. Checks driver sensitivity, matching steps, and ambient isolation.
+              </p>
+
+              <!-- Dynamic range steps indicator -->
+              <div class="flex justify-center items-end gap-2 max-w-sm mx-auto h-20 pb-2">
+                <div class="dynamic-step w-10 flex flex-col items-center gap-1 transition-all duration-300" data-db="0">
+                  <div class="w-full bg-slate-200 h-14 rounded-md relative overflow-hidden"><div class="absolute inset-x-0 bottom-0 bg-brand-blue transition-all duration-300 h-0 bar"></div></div>
+                  <span class="text-[9px] font-bold text-stone">0dB</span>
+                </div>
+                <div class="dynamic-step w-10 flex flex-col items-center gap-1 transition-all duration-300" data-db="-10">
+                  <div class="w-full bg-slate-200 h-10 rounded-md relative overflow-hidden"><div class="absolute inset-x-0 bottom-0 bg-brand-blue transition-all duration-300 h-0 bar"></div></div>
+                  <span class="text-[9px] font-bold text-stone">-10dB</span>
+                </div>
+                <div class="dynamic-step w-10 flex flex-col items-center gap-1 transition-all duration-300" data-db="-20">
+                  <div class="w-full bg-slate-200 h-7 rounded-md relative overflow-hidden"><div class="absolute inset-x-0 bottom-0 bg-brand-blue transition-all duration-300 h-0 bar"></div></div>
+                  <span class="text-[9px] font-bold text-stone">-20dB</span>
+                </div>
+                <div class="dynamic-step w-10 flex flex-col items-center gap-1 transition-all duration-300" data-db="-30">
+                  <div class="w-full bg-slate-200 h-5 rounded-md relative overflow-hidden"><div class="absolute inset-x-0 bottom-0 bg-brand-blue transition-all duration-300 h-0 bar"></div></div>
+                  <span class="text-[9px] font-bold text-stone">-30dB</span>
+                </div>
+                <div class="dynamic-step w-10 flex flex-col items-center gap-1 transition-all duration-300" data-db="-40">
+                  <div class="w-full bg-slate-200 h-3 rounded-md relative overflow-hidden"><div class="absolute inset-x-0 bottom-0 bg-brand-blue transition-all duration-300 h-0 bar"></div></div>
+                  <span class="text-[9px] font-bold text-stone">-40dB</span>
+                </div>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="dynamic">
+                  <span class="play-icon">▶ Play Steps</span>
+                  <span class="stop-icon hidden">■ Stop Steps</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 5: Driver Rattle/Distortion -->
+            <div id="guided-step-5" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Plays a sustained sub-bass tone at a fixed 55Hz with a slowly rising volume. Listen closely for clicking, rattling, buzzing, or uneven vibration.
+              </p>
+
+              <!-- Safety Warning Banner -->
+              <div class="p-3 bg-coral-light/20 border border-brand-coral text-coral-dark rounded-xl max-w-md mx-auto flex items-start gap-2.5 text-left transition-all duration-300" id="distortion-warn-card">
+                <span class="text-sm mt-0.5">⚠️</span>
+                <div class="flex flex-col gap-0.5">
+                  <h4 class="font-bold text-[11px] uppercase tracking-wider">Safety Warning</h4>
+                  <p class="text-[10px] leading-normal text-slate">
+                    Stop the test immediately if you hear any rattle, severe buzz, or if the sound becomes uncomfortably loud. Do not force drivers past physical limits.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Ramp visualizer -->
+              <div class="w-full max-w-sm mx-auto bg-surface border border-hairline rounded-lg h-5 relative overflow-hidden flex items-center justify-center">
+                <div id="rattle-ramp-bar" class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-brand-blue via-brand-yellow to-brand-coral w-0 transition-all duration-100 ease-linear opacity-40"></div>
+                <span id="rattle-ramp-readout" class="relative z-10 text-[10px] font-bold text-primary font-mono">0% Amplitude</span>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="rattle">
+                  <span class="play-icon">▶ Start Sweep</span>
+                  <span class="stop-icon hidden">■ Stop Sweep</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 6: Stereo Crosstalk Test -->
+            <div id="guided-step-6" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Check stereo isolation. Pulses play in one channel while the other channel should remain completely silent. If you hear bleeding, your headphones or cable have crosstalk.
+              </p>
+
+              <div class="grid grid-cols-2 gap-3 sm:gap-4 max-w-sm mx-auto w-full">
+                <!-- Left active box -->
+                <div id="crosstalk-left-indicator" class="flex flex-col items-center justify-center p-4 border border-hairline rounded-xl bg-surface transition-all gap-1 text-center duration-300">
+                  <span class="text-xl font-bold text-slate">Left Active</span>
+                  <span class="text-[9px] uppercase font-bold text-stone">Listen to Left</span>
+                  <div class="text-xs" id="crosstalk-left-label">Idle</div>
+                </div>
+
+                <!-- Right active box -->
+                <div id="crosstalk-right-indicator" class="flex flex-col items-center justify-center p-4 border border-hairline rounded-xl bg-surface transition-all gap-1 text-center duration-300">
+                  <span class="text-xl font-bold text-slate">Right Active</span>
+                  <span class="text-[9px] uppercase font-bold text-stone">Listen to Right</span>
+                  <div class="text-xs" id="crosstalk-right-label">Idle</div>
+                </div>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="crosstalk">
+                  <span class="play-icon">▶ Play Crosstalk</span>
+                  <span class="stop-icon hidden">■ Stop Test</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 7: High-Frequency Limit Test -->
+            <div id="guided-step-7" class="guided-step-content hidden flex flex-col gap-4 sm:gap-6">
+              <p class="text-xs text-slate max-w-md mx-auto text-center leading-relaxed">
+                Test upper treble limits. High frequencies decay with age and driver quality. Select a tone to check if it's audible.
+              </p>
+
+              <div class="flex flex-wrap justify-center gap-2 max-w-md mx-auto">
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="10000">10 kHz</button>
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="12000">12 kHz</button>
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="14000">14 kHz</button>
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="16000">16 kHz</button>
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="18000">18 kHz</button>
+                <button type="button" class="hifreq-btn px-3 py-1.5 border border-hairline rounded-lg text-xs bg-surface font-semibold text-primary transition-all hover:bg-canvas" data-freq="20000">20 kHz</button>
+              </div>
+
+              <div class="flex justify-center gap-3">
+                <button type="button" class="button-primary px-5 py-1.5 sm:px-6 sm:py-2 flex items-center gap-2 test-play-btn" data-test="highfreq">
+                  <span class="play-icon">▶ Play Tone</span>
+                  <span class="stop-icon hidden">■ Stop Tone</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 8: Test Results Summary Checklist -->
+            <div id="guided-step-8" class="guided-step-content hidden flex flex-col gap-4 sm:gap-5">
+              <h3 class="font-display font-semibold text-sm sm:text-base text-primary text-center">Self-Report Test Results</h3>
+              <p class="text-[11px] text-slate text-center -mt-2">
+                Evaluate your audio performance below to compile a saved session history log.
+              </p>
+
+              <div class="max-w-md mx-auto w-full flex flex-col gap-2 sm:gap-3 max-h-60 overflow-y-auto pr-1">
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-stereo" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">Balanced Stereo Imaging</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I heard clear separation between left/right channels, and they align with the physical tags on my headphones.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-sweep" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">Continuous Frequency Span</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">The frequency sweep was smooth without sudden dips, dropouts, or piercing resonances.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-bass" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">Bass Extension & Clean Lows</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I heard sub-bass frequencies (below 60Hz) clearly and without static distortion.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-dynamic" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">High Dynamic Sensitivity</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I was able to hear extremely quiet steps (down to -40dB) without background noise interface.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-distortion" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">Zero Driver Rattle</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I detected no buzzing, vibration noise, or harmonic rattle during the volume ramp.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-crosstalk" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">Zero Stereo Crosstalk</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I heard no bleed in the opposite channel when testing individual channels.</span>
+                  </div>
+                </label>
+
+                <label class="flex items-start gap-3 p-2 sm:p-3 rounded-lg border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-colors">
+                  <input type="checkbox" id="check-highfreq" class="mt-0.5 rounded border-hairline text-brand-blue focus:ring-brand-blue" />
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-xs font-semibold text-primary">High-Frequency Clarity</span>
+                    <span class="text-[9px] sm:text-[10px] text-slate">I was able to hear high-frequency tones up to 14kHz or higher.</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="flex justify-center gap-3 mt-2">
+                <button type="button" id="save-results-btn" class="button-primary text-xs py-2 px-5 font-bold">
+                  💾 Save & Tag Session
+                </button>
+                <button type="button" id="export-results-btn" class="button-secondary text-xs py-2 px-5 font-bold">
+                  📤 Export Text Report
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Navigation Step Controls (Thumb-reachable) -->
+          <div class="flex items-center justify-between border-t border-hairline-soft pt-4 mt-2">
+            <button
+              type="button"
+              id="prev-step-btn"
+              class="inline-flex items-center gap-1.5 text-xs font-bold text-slate px-4 py-2 border border-hairline rounded-full bg-canvas hover:bg-surface disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              disabled
+            >
+              ← Back
+            </button>
+
+            <span class="text-xs font-medium text-slate" id="step-index-text">Step 1 of 6</span>
+
+            <button
+              type="button"
+              id="next-step-btn"
+              class="inline-flex items-center gap-1.5 text-xs font-bold text-canvas px-5 py-2 rounded-full bg-brand-blue hover:bg-blue-pressed transition-all"
+            >
+              Next Step →
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 2: Individual Diagnostics Cards Grid (Hidden initially) -->
+        <div id="individual-diagnostics-panel" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Card 1: Stereo Balance -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 1</span>
+              <h3 class="font-display font-semibold text-base text-primary">Stereo Balance</h3>
+              <p class="text-xs text-slate leading-relaxed">Cycles sound left, right, and center to verify channel separation and orientation.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="stereo">
+              <span class="play-icon">▶ Play Balance Test</span>
+              <span class="stop-icon hidden">■ Stop Test</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Frequency Sweep -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 2</span>
+              <h3 class="font-display font-semibold text-base text-primary">Frequency Sweep</h3>
+              <p class="text-xs text-slate leading-relaxed">Smooth linear/logarithmic sweep from 30Hz to 18kHz to discover audible gaps.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="sweep">
+              <span class="play-icon">▶ Play Sweep Test</span>
+              <span class="stop-icon hidden">■ Stop Sweep</span>
+            </button>
+          </div>
+
+          <!-- Card 3: Bass response -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 3</span>
+              <h3 class="font-display font-semibold text-base text-primary">Bass Response</h3>
+              <p class="text-xs text-slate leading-relaxed">Select low frequencies (40Hz to 100Hz) to test structural sub-bass driver responses.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="bass">
+              <span class="play-icon">▶ Play Bass Pulses</span>
+              <span class="stop-icon hidden">■ Stop Pulses</span>
+            </button>
+          </div>
+
+          <!-- Card 4: Dynamic Range -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 4</span>
+              <h3 class="font-display font-semibold text-base text-primary">Dynamic Range</h3>
+              <p class="text-xs text-slate leading-relaxed">Runs volume level steps to test signal threshold limits and quiet channel detail.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="dynamic">
+              <span class="play-icon">▶ Play Dynamic Steps</span>
+              <span class="stop-icon hidden">■ Stop Steps</span>
+            </button>
+          </div>
+
+          <!-- Card 5: Driver rattle check -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 5</span>
+              <h3 class="font-display font-semibold text-base text-primary">Driver Rattle & Buzz Check</h3>
+              <p class="text-xs text-slate leading-relaxed">Rising volume envelope sweep at 55Hz to discover physical buzzing/casing defects.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="rattle">
+              <span class="play-icon">▶ Play Rattle Check</span>
+              <span class="stop-icon hidden">■ Stop Check</span>
+            </button>
+          </div>
+
+          <!-- Card 6: Stereo Crosstalk -->
+          <div class="card-base flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 6</span>
+              <h3 class="font-display font-semibold text-base text-primary">Stereo Crosstalk</h3>
+              <p class="text-xs text-slate leading-relaxed">Checks channel bleeding by pulsing audio in one channel while keeping the other silent.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="crosstalk">
+              <span class="play-icon">▶ Play Crosstalk Test</span>
+              <span class="stop-icon hidden">■ Stop Test</span>
+            </button>
+          </div>
+
+          <!-- Card 7: High-Frequency Limit -->
+          <div class="card-base md:col-span-2 flex flex-col justify-between gap-4">
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Test 7</span>
+              <h3 class="font-display font-semibold text-base text-primary">High-Frequency Limit</h3>
+              <p class="text-xs text-slate leading-relaxed">Select high-frequency pitch tones (10kHz to 20kHz) to check driver and audibility limits.</p>
+            </div>
+            <button type="button" class="button-secondary text-xs py-2 px-4 font-bold border border-hairline hover:bg-surface w-full test-play-btn" data-test="highfreq">
+              <span class="play-icon">▶ Play Treble Pitch</span>
+              <span class="stop-icon hidden">■ Stop Tone</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Sidebar: Diagnostics Details & Session History Log -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        
+        <!-- Safety Guarantee / Header card -->
         <div class="card-feature-coral flex flex-col gap-3">
-          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SAFE LISTENING</span>
+          <h3 class="font-display font-semibold text-base text-primary">Hearing Protection Policy</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            All frequency and tone generations are structured with absolute safety margins. The volume level ramps gradually on start to prevent sudden dynamic peaks. <strong>Always keep volume below 75% for comfort.</strong>
           </p>
+        </div>
+
+        <!-- Saved Diagnostic Sessions list -->
+        <div class="card-base flex flex-col gap-4">
+          <div class="flex justify-between items-center pb-2 border-b border-hairline">
+            <h3 class="font-display font-semibold text-xs uppercase tracking-wider text-slate">Session History</h3>
+            <button type="button" id="clear-history-btn" class="text-[10px] font-bold text-brand-coral hover:underline bg-transparent border-none cursor-pointer">Clear History</button>
+          </div>
+          
+          <div id="history-list" class="flex flex-col gap-2 max-h-64 overflow-y-auto pr-1 text-xs text-slate">
+            <div class="p-3 bg-surface rounded-lg text-center text-stone">
+              No session logs recorded yet. Complete the guided suite to save diagnostic logs.
+            </div>
+          </div>
+        </div>
+
+        <!-- How it works sidebar details -->
+        <div class="card-base bg-surface-soft flex flex-col gap-4">
+          <h3 class="font-display font-semibold text-base text-primary">How to Test</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            Connect your target headphone device. Ensure any system-level surround processing, spatial audio, or eq configurations are disabled to ensure flat response analysis.
+          </p>
+          <div class="h-[1px] bg-hairline my-1"></div>
+          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Suite Coverage</h4>
+          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
+            <li>Stereo assignment confirmation</li>
+            <li>Audible range frequency mapping (30Hz - 18kHz)</li>
+            <li>Bass definition & structural distortion thresholds</li>
+            <li>Volume-step scale integrity</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Headphone Suite Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. Listening Precautions
+        </h4>
+        <p>
+          Web Audio oscillators generate precise math-based waves. Sine waves carry high energy density compared to typical music. Set your system volume low before playing sweeps, and adjust carefully using our Master Volume slider.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Channel Assignments</h4>
+        <p>
+          Ensure headphones are worn correctly (Left on left ear, Right on right). The channel sweep checks for balance and prevents crosstalk.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Sweeps & Bass Extension</h4>
+        <p>
+          Low sub-bass tests (like 40Hz) require proper driver seal and fit. Frequency sweeps expose resonant buzzing in plastic shells or failing voice coils.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Dynamic steps & Rattle</h4>
+        <p>
+          Ensuring your drivers increase in volume linearly without introducing clipping artifacts. Disconnect or stop the audio immediately if hardware starts rattling.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  /* Step indicator dots */
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: var(--color-hairline, #e0e2e8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .step-dot.active {
+    background-color: var(--color-brand-blue, #4262ff);
+    transform: scale(1.25);
+  }
+  .step-dot.completed {
+    background-color: var(--color-brand-teal, #0fbcb0);
+  }
+
+  /* Audio Indicator Pulses */
+  .pulse-left {
+    animation: left-glow-pulse 1.2s infinite ease-in-out;
+  }
+  .pulse-right {
+    animation: right-glow-pulse 1.2s infinite ease-in-out;
+  }
+  
+  @keyframes left-glow-pulse {
+    0%, 100% {
+      border-color: #4262ff;
+      box-shadow: 0 0 4px rgba(66, 98, 255, 0.15);
+      background-color: rgba(66, 98, 255, 0.03);
+    }
+    50% {
+      border-color: #5b76fe;
+      box-shadow: 0 0 16px rgba(66, 98, 255, 0.45);
+      background-color: rgba(66, 98, 255, 0.08);
+    }
+  }
+
+  @keyframes right-glow-pulse {
+    0%, 100% {
+      border-color: #0fbcb0;
+      box-shadow: 0 0 4px rgba(15, 188, 176, 0.15);
+      background-color: rgba(15, 188, 176, 0.03);
+    }
+    50% {
+      border-color: #0fbcb0;
+      box-shadow: 0 0 16px rgba(15, 188, 176, 0.45);
+      background-color: rgba(15, 188, 176, 0.08);
+    }
+  }
+
+  /* Step transitions styling */
+  .guided-step-content {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  
+  /* Fallback for prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .step-dot, .guided-step-content, .pulse-left, .pulse-right, #distortion-warn-card.warning-pulse {
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+    .pulse-left {
+      border-color: #4262ff !important;
+      background-color: rgba(66, 98, 255, 0.08) !important;
+    }
+    .pulse-right {
+      border-color: #0fbcb0 !important;
+      background-color: rgba(15, 188, 176, 0.08) !important;
+    }
+    #distortion-warn-card.warning-pulse {
+      border-color: #ff9999 !important;
+      background-color: rgba(255, 153, 153, 0.15) !important;
+    }
+  }
+
+  /* Safe warning pulse */
+  .warning-pulse {
+    animation: warn-glow-pulse 1.5s infinite ease-in-out;
+  }
+  @keyframes warn-glow-pulse {
+    0%, 100% {
+      border-color: #ff9999;
+      background-color: rgba(255, 153, 153, 0.05);
+    }
+    50% {
+      border-color: #e3c5c5;
+      background-color: rgba(255, 153, 153, 0.15);
+    }
+  }
+</style>
+
+<script>
+  // DOM Elements and State
+  let audioCtx: AudioContext | null = null;
+  let masterGainNode: GainNode | null = null;
+  let currentOscNode: OscillatorNode | null = null;
+  let currentTestType: string | null = null;
+  let currentGuidedStep = 1;
+  let testInterval: any = null;
+  let stepTimer: any = null;
+  
+  // Storage Keys
+  const STORAGE_PREFIX = 'boardtools:headphone-test:';
+  const HISTORY_KEY = `${STORAGE_PREFIX}history`;
+  const DEVICE_KEY = `${STORAGE_PREFIX}device-name`;
+
+  // Get UI components
+  const initAudioBtn = document.getElementById('init-audio-btn');
+  const audioGate = document.getElementById('audio-gate');
+  const masterVolumeInput = document.getElementById('master-volume') as HTMLInputElement;
+  const volumeReadout = document.getElementById('volume-readout');
+  const volumeWarning = document.getElementById('volume-warning');
+  const deviceNameInput = document.getElementById('device-name') as HTMLInputElement;
+  
+  const resetBtn = document.getElementById('reset-btn');
+  const howItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const modalOkBtn = document.getElementById('modal-ok-btn');
+
+  const modeGuidedBtn = document.getElementById('mode-guided-btn');
+  const modeIndividualBtn = document.getElementById('mode-individual-btn');
+  const guidedPanel = document.getElementById('guided-suite-panel');
+  const individualPanel = document.getElementById('individual-diagnostics-panel');
+  
+  const prevStepBtn = document.getElementById('prev-step-btn') as HTMLButtonElement;
+  const nextStepBtn = document.getElementById('next-step-btn') as HTMLButtonElement;
+  const stepIndexText = document.getElementById('step-index-text');
+  const guidedStepBadge = document.getElementById('guided-step-badge');
+  const guidedStepTitle = document.getElementById('guided-step-title');
+  
+  const historyList = document.getElementById('history-list');
+  const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+  // Step indicator references
+  const stepDots = document.querySelectorAll('.step-dot');
+
+  // How it works modal toggling
+  howItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeModalBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  modalOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
+    }
+  });
+
+  // Safe initialize AudioContext
+  function initAudio() {
+    if (!audioCtx) {
+      try {
+        const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+        audioCtx = new AudioCtxClass();
+        
+        // Explicitly set stereo destination properties to prevent browser/OS mono downmixing
+        if (audioCtx.destination) {
+          try {
+            audioCtx.destination.channelCount = 2;
+            audioCtx.destination.channelCountMode = 'explicit';
+            audioCtx.destination.channelInterpretation = 'speakers';
+          } catch (e) {
+            console.warn("Could not explicitly set stereo destination properties", e);
+          }
+        }
+
+        masterGainNode = audioCtx.createGain();
+        
+        // Initial volume setup
+        const vol = parseFloat(masterVolumeInput.value) / 100;
+        masterGainNode.gain.setValueAtTime(vol * 0.5, audioCtx.currentTime); // safety scaling factor
+        
+        masterGainNode.connect(audioCtx.destination);
+        
+        if (audioGate) {
+          audioGate.classList.add('hidden');
+        }
+      } catch (err) {
+        console.error("Failed to initialize AudioContext", err);
+      }
+    } else if (audioCtx.state === 'suspended') {
+      audioCtx.resume().then(() => {
+        if (audioGate) {
+          audioGate.classList.add('hidden');
+        }
+      });
+    }
+  }
+
+  initAudioBtn?.addEventListener('click', initAudio);
+
+  // Volume scale styling / warnings
+  masterVolumeInput?.addEventListener('input', () => {
+    const vol = parseInt(masterVolumeInput.value);
+    if (volumeReadout) volumeReadout.textContent = `${vol}%`;
+    
+    if (vol >= 75) {
+      volumeWarning?.classList.remove('hidden');
+    } else {
+      volumeWarning?.classList.add('hidden');
+    }
+
+    if (audioCtx && masterGainNode) {
+      const dbScale = vol / 100;
+      // safety limit master volume at max 0.6 standard scaling
+      masterGainNode.gain.linearRampToValueAtTime(dbScale * 0.6, audioCtx.currentTime + 0.05);
+    }
+  });
+
+  // Device tagging auto load/save
+  if (deviceNameInput) {
+    const savedDevice = localStorage.getItem(DEVICE_KEY);
+    if (savedDevice) deviceNameInput.value = savedDevice;
+    deviceNameInput.addEventListener('input', () => {
+      localStorage.setItem(DEVICE_KEY, deviceNameInput.value);
+    });
+  }
+
+  // Diagnostic history management
+  function loadHistory() {
+    if (!historyList) return;
+    try {
+      const rawHistory = localStorage.getItem(HISTORY_KEY);
+      const items = rawHistory ? JSON.parse(rawHistory) : [];
+      
+      if (items.length === 0) {
+        historyList.innerHTML = `
+          <div class="p-3 bg-surface rounded-lg text-center text-stone">
+            No session logs recorded yet. Complete the guided suite to save diagnostic logs.
+          </div>
+        `;
+        return;
+      }
+
+      historyList.innerHTML = items.map((item: any) => `
+        <div class="p-3 border border-hairline rounded-lg bg-surface flex flex-col gap-1">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-primary">${item.device || 'Generic Device'}</span>
+            <span class="text-[10px] text-stone">${new Date(item.timestamp).toLocaleDateString()}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-[10px] mt-1 text-slate">
+            <div>Stereo: ${item.results.stereo ? '✅ Pass' : '❌ Fail'}</div>
+            <div>Sweep: ${item.results.sweep ? '✅ Pass' : '❌ Fail'}</div>
+            <div>Bass: ${item.results.bass ? '✅ Pass' : '❌ Fail'}</div>
+            <div>Dynamic: ${item.results.dynamic ? '✅ Pass' : '❌ Fail'}</div>
+            <div>Rattle: ${item.results.rattle ? '✅ Pass' : '❌ Fail'}</div>
+            <div>Crosstalk: ${item.results.crosstalk ? '✅ Pass' : '❌ Fail'}</div>
+            <div>High Freq: ${item.results.highfreq ? '✅ Pass' : '❌ Fail'}</div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  clearHistoryBtn?.addEventListener('click', () => {
+    localStorage.removeItem(HISTORY_KEY);
+    loadHistory();
+  });
+
+  // Switch display panel
+  modeGuidedBtn?.addEventListener('click', () => {
+    modeGuidedBtn.className = "flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+    modeIndividualBtn!.className = "flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-primary";
+    guidedPanel?.classList.remove('hidden');
+    individualPanel?.classList.add('hidden');
+    stopAllAudio();
+  });
+
+  modeIndividualBtn?.addEventListener('click', () => {
+    modeIndividualBtn.className = "flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+    modeGuidedBtn!.className = "flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-primary";
+    individualPanel?.classList.remove('hidden');
+    guidedPanel?.classList.add('hidden');
+    stopAllAudio();
+  });
+
+  // Safe Oscillator helpers
+  function stopAllAudio() {
+    clearInterval(testInterval);
+    clearTimeout(stepTimer);
+    if (currentOscNode) {
+      try {
+        currentOscNode.stop();
+        currentOscNode.disconnect();
+      } catch(e){}
+      currentOscNode = null;
+    }
+    currentTestType = null;
+
+    // Reset Play icons
+    document.querySelectorAll('.test-play-btn').forEach(btn => {
+      btn.querySelector('.play-icon')?.classList.remove('hidden');
+      btn.querySelector('.stop-icon')?.classList.add('hidden');
+      btn.classList.remove('bg-brand-coral', 'hover:bg-brand-coral/80');
+    });
+
+    // Reset visualizer indicators
+    document.getElementById('left-channel-indicator')?.classList.remove('pulse-left');
+    document.getElementById('right-channel-indicator')?.classList.remove('pulse-right');
+    document.querySelector('#left-channel-indicator .indicator-light')?.classList.add('opacity-0');
+    document.querySelector('#right-channel-indicator .indicator-light')?.classList.add('opacity-0');
+    
+    // Reset crosstalk indicators
+    document.getElementById('crosstalk-left-indicator')?.classList.remove('bg-brand-blue/10', 'border-brand-blue');
+    document.getElementById('crosstalk-right-indicator')?.classList.remove('bg-brand-teal/10', 'border-brand-teal');
+    const ctL = document.getElementById('crosstalk-left-label');
+    if (ctL) ctL.textContent = "Idle";
+    const ctR = document.getElementById('crosstalk-right-label');
+    if (ctR) ctR.textContent = "Idle";
+
+    // Reset warning pulse
+    document.getElementById('distortion-warn-card')?.classList.remove('warning-pulse');
+
+    // Reset progress sweep
+    const sweepProgress = document.getElementById('sweep-progress-bar');
+    if (sweepProgress) sweepProgress.style.width = '0%';
+    const sweepReadout = document.getElementById('sweep-frequency-readout');
+    if (sweepReadout) sweepReadout.textContent = '30 Hz';
+  }
+
+  // Audio Test Implementation Engines
+  function runStereoTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+    
+    currentTestType = "stereo";
+    
+    // Create individual gain nodes for left/right mapping via merger to guarantee true channel separation
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    const leftGain = audioCtx.createGain();
+    const rightGain = audioCtx.createGain();
+    const merger = audioCtx.createChannelMerger(2);
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime); // 440 Hz standard A tone
+    
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    leftGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    rightGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(leftGain);
+    testGain.connect(rightGain);
+    
+    leftGain.connect(merger, 0, 0);  // Route left gain node output to Merger channel 0 (Left)
+    rightGain.connect(merger, 0, 1); // Route right gain node output to Merger channel 1 (Right)
+    
+    merger.connect(masterGainNode);
+    
+    osc.start();
+    currentOscNode = osc;
+
+    let cycle = 0; // 0 = Left, 1 = Right, 2 = Both
+    
+    const leftInd = document.getElementById('left-channel-indicator');
+    const rightInd = document.getElementById('right-channel-indicator');
+    const leftLight = document.querySelector('#left-channel-indicator .indicator-light');
+    const rightLight = document.querySelector('#right-channel-indicator .indicator-light');
+
+    function executeCycle() {
+      if (currentTestType !== "stereo") return;
+      
+      // Stop pulse classes
+      leftInd?.classList.remove('pulse-left');
+      rightInd?.classList.remove('pulse-right');
+      leftLight?.classList.add('opacity-0');
+      rightLight?.classList.add('opacity-0');
+
+      // Ramp down current volume
+      testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + 0.1);
+      leftGain.gain.setValueAtTime(0, audioCtx!.currentTime + 0.1);
+      rightGain.gain.setValueAtTime(0, audioCtx!.currentTime + 0.1);
+
+      stepTimer = setTimeout(() => {
+        if (currentTestType !== "stereo") return;
+        
+        if (cycle === 0) {
+          // Left
+          leftGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          rightGain.gain.setValueAtTime(0.0, audioCtx!.currentTime);
+          leftInd?.classList.add('pulse-left');
+          leftLight?.classList.remove('opacity-0');
+        } else if (cycle === 1) {
+          // Right
+          leftGain.gain.setValueAtTime(0.0, audioCtx!.currentTime);
+          rightGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          rightInd?.classList.add('pulse-right');
+          rightLight?.classList.remove('opacity-0');
+        } else {
+          // Both
+          leftGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          rightGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          leftInd?.classList.add('pulse-left');
+          rightInd?.classList.add('pulse-right');
+          leftLight?.classList.remove('opacity-0');
+          rightLight?.classList.remove('opacity-0');
+        }
+
+        // Ramp volume up safely
+        testGain.gain.exponentialRampToValueAtTime(0.2, audioCtx!.currentTime + 0.15);
+        
+        cycle = (cycle + 1) % 3;
+      }, 150);
+    }
+
+    executeCycle();
+    testInterval = setInterval(executeCycle, 2000);
+  }
+
+  function runSweepTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+
+    currentTestType = "sweep";
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(30, audioCtx.currentTime);
+    
+    // Safety gain ramp-up
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    testGain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 0.2);
+    
+    osc.connect(testGain);
+    testGain.connect(masterGainNode);
+    
+    const duration = 12; // 12 seconds logarithmic frequency ramp
+    const startTime = audioCtx.currentTime + 0.2;
+    const endTime = startTime + duration;
+
+    // Logarithmic frequency sweep ramp
+    osc.frequency.exponentialRampToValueAtTime(18000, endTime);
+    
+    osc.start();
+    currentOscNode = osc;
+
+    const progressBar = document.getElementById('sweep-progress-bar');
+    const readout = document.getElementById('sweep-frequency-readout');
+    const startRealTime = Date.now();
+
+    function updateSweepUI() {
+      if (currentTestType !== "sweep") return;
+      const elapsed = (Date.now() - startRealTime) / 1000;
+      const percent = Math.min((elapsed / duration) * 100, 100);
+      
+      if (progressBar) progressBar.style.width = `${percent}%`;
+      
+      // Calculate corresponding logarithmic frequency
+      const startF = 30;
+      const endF = 18000;
+      const currentF = Math.round(startF * Math.pow(endF / startF, Math.min(elapsed, duration) / duration));
+      
+      if (readout) {
+        if (currentF >= 1000) {
+          readout.textContent = `${(currentF / 1000).toFixed(1)} kHz`;
+        } else {
+          readout.textContent = `${currentF} Hz`;
+        }
+      }
+
+      if (elapsed < duration) {
+        requestAnimationFrame(updateSweepUI);
+      } else {
+        stopAllAudio();
+      }
+    }
+
+    requestAnimationFrame(updateSweepUI);
+  }
+
+  let selectedBassFreq = 60;
+  // Handle frequency selector clicks
+  document.querySelectorAll('.bass-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.bass-btn').forEach(b => b.classList.remove('bg-brand-blue', 'text-canvas', 'border-brand-blue'));
+      const target = e.currentTarget as HTMLButtonElement;
+      target.classList.add('bg-brand-blue', 'text-canvas', 'border-brand-blue');
+      selectedBassFreq = parseInt(target.getAttribute('data-freq') || '60');
+      
+      // Re-trigger if playing
+      if (currentTestType === "bass") {
+        stopAllAudio();
+        runBassTest();
+      }
+    });
+  });
+
+  function runBassTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+
+    currentTestType = "bass";
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(selectedBassFreq, audioCtx.currentTime);
+    
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(masterGainNode);
+    osc.start();
+    currentOscNode = osc;
+
+    // Pulse low bass tones (0.6s on, 0.4s off)
+    let isOn = false;
+    function executePulse() {
+      if (currentTestType !== "bass") return;
+      if (isOn) {
+        testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + 0.1);
+      } else {
+        testGain.gain.exponentialRampToValueAtTime(0.25, audioCtx!.currentTime + 0.1);
+      }
+      isOn = !isOn;
+    }
+
+    executePulse();
+    testInterval = setInterval(executePulse, 500);
+  }
+
+  function runDynamicTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+
+    currentTestType = "dynamic";
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1000, audioCtx.currentTime); // 1kHz standard calibration frequency
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(masterGainNode);
+    osc.start();
+    currentOscNode = osc;
+
+    const steps = [
+      { db: 0, amp: 0.25 },
+      { db: -10, amp: 0.08 },
+      { db: -20, amp: 0.025 },
+      { db: -30, amp: 0.008 },
+      { db: -40, amp: 0.0025 }
+    ];
+
+    let currentStepIdx = 0;
+    
+    function playStep() {
+      if (currentTestType !== "dynamic") return;
+      
+      // Reset visual bars
+      document.querySelectorAll('.dynamic-step').forEach(el => {
+        el.querySelector('.bar')?.classList.replace('h-full', 'h-0');
+      });
+
+      if (currentStepIdx >= steps.length) {
+        stopAllAudio();
+        return;
+      }
+
+      const step = steps[currentStepIdx];
+      const activeEl = document.querySelector(`.dynamic-step[data-db="${step.db}"]`);
+      activeEl?.querySelector('.bar')?.classList.replace('h-0', 'h-full');
+
+      // Ramp step safely
+      testGain.gain.exponentialRampToValueAtTime(step.amp, audioCtx!.currentTime + 0.1);
+      
+      currentStepIdx++;
+      stepTimer = setTimeout(() => {
+        testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + 0.1);
+        stepTimer = setTimeout(playStep, 300); // silent gap
+      }, 1800);
+    }
+
+    playStep();
+  }
+
+  function runRattleTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+
+    currentTestType = "rattle";
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(55, audioCtx.currentTime); // 55Hz sustained clean bass
+    
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(masterGainNode);
+    osc.start();
+    currentOscNode = osc;
+
+    const duration = 10; // 10 second sweep up
+    const startTime = Date.now();
+    
+    // Ramp gain linearly up to 0.35 max test amplitude
+    testGain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + duration);
+
+    const rampBar = document.getElementById('rattle-ramp-bar');
+    const readout = document.getElementById('rattle-ramp-readout');
+    const warnCard = document.getElementById('distortion-warn-card');
+
+    function updateRampUI() {
+      if (currentTestType !== "rattle") return;
+      
+      const elapsed = (Date.now() - startTime) / 1000;
+      const percent = Math.min((elapsed / duration) * 100, 100);
+      
+      if (rampBar) rampBar.style.width = `${percent}%`;
+      if (readout) readout.textContent = `${Math.round(percent)}% Amplitude`;
+
+      // Visual safety pulsing cue at higher level ranges
+      if (percent >= 70) {
+        warnCard?.classList.add('warning-pulse');
+      } else {
+        warnCard?.classList.remove('warning-pulse');
+      }
+
+      if (elapsed < duration) {
+        requestAnimationFrame(updateRampUI);
+      } else {
+        stopAllAudio();
+      }
+    }
+
+    requestAnimationFrame(updateRampUI);
+  }
+
+  function runCrosstalkTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+    
+    currentTestType = "crosstalk";
+    
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    const leftGain = audioCtx.createGain();
+    const rightGain = audioCtx.createGain();
+    const merger = audioCtx.createChannelMerger(2);
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1000, audioCtx.currentTime); 
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    leftGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    rightGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(leftGain);
+    testGain.connect(rightGain);
+    
+    leftGain.connect(merger, 0, 0);
+    rightGain.connect(merger, 0, 1);
+    
+    merger.connect(masterGainNode);
+    
+    osc.start();
+    currentOscNode = osc;
+
+    let side = 0; // 0 = Left, 1 = Right
+    
+    const leftBox = document.getElementById('crosstalk-left-indicator');
+    const rightBox = document.getElementById('crosstalk-right-indicator');
+    const leftLabel = document.getElementById('crosstalk-left-label');
+    const rightLabel = document.getElementById('crosstalk-right-label');
+
+    function executeCrosstalkCycle() {
+      if (currentTestType !== "crosstalk") return;
+      
+      leftBox?.classList.remove('bg-brand-blue/10', 'border-brand-blue');
+      rightBox?.classList.remove('bg-brand-teal/10', 'border-brand-teal');
+      if (leftLabel) leftLabel.textContent = "Silent";
+      if (rightLabel) rightLabel.textContent = "Silent";
+
+      testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + 0.1);
+      leftGain.gain.setValueAtTime(0, audioCtx!.currentTime + 0.1);
+      rightGain.gain.setValueAtTime(0, audioCtx!.currentTime + 0.1);
+
+      stepTimer = setTimeout(() => {
+        if (currentTestType !== "crosstalk") return;
+        
+        if (side === 0) {
+          leftGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          rightGain.gain.setValueAtTime(0.0, audioCtx!.currentTime);
+          leftBox?.classList.add('bg-brand-blue/10', 'border-brand-blue');
+          if (leftLabel) leftLabel.textContent = "Pulsing...";
+        } else {
+          leftGain.gain.setValueAtTime(0.0, audioCtx!.currentTime);
+          rightGain.gain.setValueAtTime(1.0, audioCtx!.currentTime);
+          rightBox?.classList.add('bg-brand-teal/10', 'border-brand-teal');
+          if (rightLabel) rightLabel.textContent = "Pulsing...";
+        }
+        
+        testGain.gain.exponentialRampToValueAtTime(0.2, audioCtx!.currentTime + 0.15);
+        side = side === 0 ? 1 : 0;
+      }, 150);
+    }
+
+    executeCrosstalkCycle();
+    testInterval = setInterval(executeCrosstalkCycle, 1500);
+  }
+
+  let selectedHighFreq = 12000;
+  document.querySelectorAll('.hifreq-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.hifreq-btn').forEach(b => b.classList.remove('bg-brand-blue', 'text-canvas', 'border-brand-blue'));
+      const target = e.currentTarget as HTMLButtonElement;
+      target.classList.add('bg-brand-blue', 'text-canvas', 'border-brand-blue');
+      selectedHighFreq = parseInt(target.getAttribute('data-freq') || '12000');
+      
+      if (currentTestType === "highfreq") {
+        stopAllAudio();
+        runHighFreqTest();
+      }
+    });
+  });
+
+  function runHighFreqTest() {
+    initAudio();
+    if (!audioCtx || !masterGainNode) return;
+
+    currentTestType = "highfreq";
+    const osc = audioCtx.createOscillator();
+    const testGain = audioCtx.createGain();
+    
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(selectedHighFreq, audioCtx.currentTime);
+    testGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    
+    osc.connect(testGain);
+    testGain.connect(masterGainNode);
+    osc.start();
+    currentOscNode = osc;
+
+    let isOn = false;
+    function executePulse() {
+      if (currentTestType !== "highfreq") return;
+      if (isOn) {
+        testGain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + 0.05);
+      } else {
+        testGain.gain.exponentialRampToValueAtTime(0.15, audioCtx!.currentTime + 0.05);
+      }
+      isOn = !isOn;
+    }
+
+    executePulse();
+    testInterval = setInterval(executePulse, 500);
+  }
+
+  // Handle generalized Test Actions
+  document.querySelectorAll('.test-play-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const test = target.getAttribute('data-test') || '';
+      
+      const playLabel = target.querySelector('.play-icon');
+      const stopLabel = target.querySelector('.stop-icon');
+      
+      if (currentTestType === test) {
+        stopAllAudio();
+        return;
+      }
+      
+      // Stop other playing tests
+      stopAllAudio();
+
+      // Start requested test
+      playLabel?.classList.add('hidden');
+      stopLabel?.classList.remove('hidden');
+      target.classList.add('bg-brand-coral', 'hover:bg-brand-coral/80');
+
+      if (test === "stereo") runStereoTest();
+      else if (test === "sweep") runSweepTest();
+      else if (test === "bass") runBassTest();
+      else if (test === "dynamic") runDynamicTest();
+      else if (test === "rattle") runRattleTest();
+      else if (test === "crosstalk") runCrosstalkTest();
+      else if (test === "highfreq") runHighFreqTest();
+    });
+  });
+
+  // Guided Mode Step Engine Navigation
+  function updateGuidedStep() {
+    // Hide all step panels
+    document.querySelectorAll('.guided-step-content').forEach(panel => panel.classList.add('hidden'));
+    
+    // Show current panel
+    const currentPanel = document.getElementById(`guided-step-${currentGuidedStep}`);
+    if (currentPanel) currentPanel.classList.remove('hidden');
+
+    // Update Dots
+    stepDots.forEach((dot, idx) => {
+      dot.classList.remove('active');
+      if (idx + 1 === currentGuidedStep) {
+        dot.classList.add('active');
+      }
+      if (idx + 1 < currentGuidedStep) {
+        dot.classList.add('completed');
+      } else {
+        dot.classList.remove('completed');
+      }
+    });
+
+    // Update Step Metadata
+    if (currentGuidedStep === 8) {
+      guidedStepBadge!.textContent = "Final Step";
+      guidedStepTitle!.textContent = "Diagnostic Results Summary";
+      nextStepBtn!.textContent = "Finish Suite";
+    } else {
+      guidedStepBadge!.textContent = `Test ${currentGuidedStep} of 7`;
+      nextStepBtn!.textContent = "Next Step →";
+      
+      const titles = [
+        "Stereo Balance & Channel Test",
+        "Frequency Sweep & Range Diagnostic",
+        "Low Bass Response Extension",
+        "Dynamic Volume Range Check",
+        "Driver Rattle & Buzz Analysis",
+        "Stereo Crosstalk Isolation",
+        "High-Frequency Treble Limit"
+      ];
+      guidedStepTitle!.textContent = titles[currentGuidedStep - 1] || "";
+    }
+
+    if (stepIndexText) stepIndexText.textContent = `Step ${currentGuidedStep} of 8`;
+    
+    // Disable back if at first step
+    prevStepBtn.disabled = currentGuidedStep === 1;
+    
+    // Stop all playing audio on transition
+    stopAllAudio();
+  }
+
+  nextStepBtn?.addEventListener('click', () => {
+    if (currentGuidedStep < 8) {
+      currentGuidedStep++;
+      updateGuidedStep();
+    } else {
+      // Completed, return to step 1
+      currentGuidedStep = 1;
+      updateGuidedStep();
+    }
+  });
+
+  prevStepBtn?.addEventListener('click', () => {
+    if (currentGuidedStep > 1) {
+      currentGuidedStep--;
+      updateGuidedStep();
+    }
+  });
+
+  // Save session to localStorage
+  const saveBtn = document.getElementById('save-results-btn');
+  saveBtn?.addEventListener('click', () => {
+    const rawHistory = localStorage.getItem(HISTORY_KEY);
+    const history = rawHistory ? JSON.parse(rawHistory) : [];
+    
+    const results = {
+      stereo: (document.getElementById('check-stereo') as HTMLInputElement).checked,
+      sweep: (document.getElementById('check-sweep') as HTMLInputElement).checked,
+      bass: (document.getElementById('check-bass') as HTMLInputElement).checked,
+      dynamic: (document.getElementById('check-dynamic') as HTMLInputElement).checked,
+      rattle: (document.getElementById('check-distortion') as HTMLInputElement).checked,
+      crosstalk: (document.getElementById('check-crosstalk') as HTMLInputElement).checked,
+      highfreq: (document.getElementById('check-highfreq') as HTMLInputElement).checked
+    };
+
+    const device = deviceNameInput.value.trim() || 'Default Headphone';
+    
+    history.unshift({
+      timestamp: Date.now(),
+      device,
+      results
+    });
+    
+    // Store up to 20 tests
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 20)));
+    loadHistory();
+    
+    alert(`Diagnostic session details successfully saved for: ${device}`);
+  });
+
+  // Export diagnostic report
+  const exportBtn = document.getElementById('export-results-btn');
+  exportBtn?.addEventListener('click', () => {
+    const device = deviceNameInput.value.trim() || 'Default Headphone';
+    const stereo = (document.getElementById('check-stereo') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const sweep = (document.getElementById('check-sweep') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const bass = (document.getElementById('check-bass') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const dynamic = (document.getElementById('check-dynamic') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const rattle = (document.getElementById('check-distortion') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const crosstalk = (document.getElementById('check-crosstalk') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+    const highfreq = (document.getElementById('check-highfreq') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
+
+    const text = `====================================
+BOARDTOOLS AUDIO DIAGNOSTIC REPORT
+Device: ${device}
+Date: ${new Date().toLocaleString()}
+====================================
+Stereo Assignment Test:     [ ${stereo} ]
+Audible Sweep Profile:      [ ${sweep} ]
+Sub-bass Extension Level:   [ ${bass} ]
+Dynamic Amplitude Steps:   [ ${dynamic} ]
+Voice Coil Rattle check:    [ ${rattle} ]
+Stereo Crosstalk Isolation: [ ${crosstalk} ]
+High-Frequency Treble Limit:[ ${highfreq} ]
+====================================
+Generated via BoardTools Headphone Test Suite.`;
+
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `boardtools-audio-report-${device.toLowerCase().replace(/\s+/g, '-')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Reset button action (stop, clear progress, clear localStorage)
+  resetBtn?.addEventListener('click', () => {
+    stopAllAudio();
+    
+    // Clear localStorage
+    localStorage.removeItem(HISTORY_KEY);
+    localStorage.removeItem(DEVICE_KEY);
+    
+    if (deviceNameInput) deviceNameInput.value = '';
+    
+    // Reset guided flow
+    currentGuidedStep = 1;
+    updateGuidedStep();
+
+    // Reset Checklist inputs
+    document.querySelectorAll('.guided-step-content input[type="checkbox"]').forEach(chk => {
+      (chk as HTMLInputElement).checked = false;
+    });
+
+    loadHistory();
+  });
+
+  // Initial Load
+  loadHistory();
+</script>
