@@ -1,90 +1,1034 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Polling Rate Test";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Track mouse report polling frequencies and verify data coordinate throughput rates.";
+
+// On-page SEO metadata
+const pageTitle = "Mouse Polling Rate Test - Measure Mouse Hz & Stability";
+const description = "Free online browser mouse polling rate test. Measure mouse event frequency in Hz, capture coalesced pointer events, and verify report rate consistency.";
+const canonicalUrl = "https://boardtools.app/tools/display/polling-rate";
+const ogImage = "/og/polling-rate.png";
+const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse response time, check mouse polling rate, browser mouse rate, coalesced pointer events, gaming mouse check, response rate test";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse Polling Rate Test",
+      "alternateName": "Mouse Hz Analyzer",
+      "url": "https://boardtools.app/tools/display/polling-rate",
+      "description": "Measure and analyze mouse reporting rate and event intervals in real-time. Features coalesced pointer event capture for high-frequency gaming mice.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires PointerEvent support.",
+      "featureList": [
+        "Real-time mouse pointer event frequency calculation (Hz)",
+        "Support for PointerEvent.getCoalescedEvents() for high-rate gaming mice",
+        "Visual feedback trail using high-performance HTML5 Canvas",
+        "Consistent/Stabilized Hz calculation using median interval analysis",
+        "Detailed statistical readout (Median, Standard Deviation, Consistency %)",
+        "Session-based history log saved locally",
+        "100% secure client-side execution"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Polling Rate Test",
+          "item": "https://boardtools.app/tools/display/polling-rate"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How polling rate test works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Friendly warning for Touch-Only devices -->
+    <div
+      id="touch-warning-banner"
+      class="hidden p-3 rounded-lg border border-brand-yellow-deep/50 bg-surface-yellow text-xs text-yellow-dark leading-relaxed flex items-center justify-between animate-fade-in print:hidden"
+    >
+      <div class="flex items-center gap-2">
+        <span>⚠️</span>
+        <span>
+          <strong>Touch-Only Device Detected:</strong> This test is designed to measure physical mouse report intervals. Touch interfaces coalesce/filter inputs differently and won't show accurate hardware polling rates. Connect a physical mouse to begin.
+        </span>
+      </div>
+      <button
+        type="button"
+        id="dismiss-warning-btn"
+        class="text-xs font-bold px-2 py-0.5 rounded-full hover:bg-yellow-light/50 border border-transparent hover:border-yellow-dark/30 transition-all cursor-pointer"
+      >
+        Dismiss
+      </button>
+    </div>
+
+    <!-- Accuracy mode status badge banner -->
+    <div
+      id="accuracy-banner"
+      class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface border-hairline text-slate print:hidden"
+    >
+      <span id="accuracy-msg" class="font-semibold flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate"></span>
+        Detecting support...
+      </span>
+      <span class="font-mono text-[9px] text-stone">Method: Feature-detecting getCoalescedEvents</span>
+    </div>
+
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch relative">
+      <!-- Controls & Live Statistics (Column 1: 4 cols on lg, 3 cols on xl) -->
+      <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-3">
+        <div class="card-base p-3 flex flex-col gap-3 h-full justify-between">
+          <div class="flex flex-col gap-3">
+            <h2 class="font-display font-semibold text-xs text-primary flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+              Live Diagnostics
+            </h2>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 gap-2">
+              <!-- Live Hz display -->
+              <div class="p-2.5 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center col-span-2 relative overflow-hidden group">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Live Polling Rate</span>
+                <span id="live-hz" class="text-3xl font-display font-medium text-brand-blue tracking-tight">0 <span class="text-xs text-slate">Hz</span></span>
+                <span id="live-hz-subtext" class="text-[9px] text-stone">Move mouse to start</span>
+              </div>
+
+              <!-- Median Interval -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Median Delay</span>
+                <span id="median-delay" class="text-xs font-bold text-primary">0.00 ms</span>
+                <span class="text-[8px] text-stone">Target report</span>
+              </div>
+
+              <!-- Consistency % -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Consistency</span>
+                <span id="stability-pct" class="text-xs font-bold text-primary">0.0%</span>
+                <span class="text-[8px] text-stone">Interval stability</span>
+              </div>
+
+              <!-- Minimum observed delay -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Min / Max Delay</span>
+                <span id="delay-min-max" class="text-[10px] font-bold text-primary">0.0 / 0.0 ms</span>
+                <span class="text-[8px] text-stone">Range limits</span>
+              </div>
+
+              <!-- Total Events -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Samples</span>
+                <span id="event-counter" class="text-[10px] font-bold text-primary">0</span>
+                <span class="text-[8px] text-stone">Pointer reports</span>
+              </div>
+            </div>
+
+            <!-- Movement Speed indicator -->
+            <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Speed Threshold</span>
+                <span id="speed-status" class="text-[8px] font-bold text-coral-dark bg-brand-coral/40 px-1.5 py-0.5 rounded-full">TOO SLOW</span>
+              </div>
+              <div class="relative w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+                <div id="speed-bar" class="absolute top-0 left-0 h-full bg-brand-teal transition-all duration-100" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Test Duration Selector -->
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Duration</span>
+              <span id="duration-countdown" class="text-[9px] font-mono font-bold text-brand-blue hidden">--</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1" id="duration-btns" role="radiogroup" aria-label="Test duration">
+              <button type="button" data-duration="5" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">5s</button>
+              <button type="button" data-duration="10" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer duration-active">10s</button>
+              <button type="button" data-duration="15" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">15s</button>
+              <button type="button" data-duration="30" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">30s</button>
+              <button type="button" data-duration="60" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">60s</button>
+              <button type="button" data-duration="0" class="duration-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">∞ Free</button>
+            </div>
+          </div>
+
+          <!-- Quick Test Capture Triggers -->
+          <div class="flex flex-col gap-1.5">
+            <button
+              type="button"
+              id="start-stop-btn"
+              class="w-full button-primary text-xs py-2 px-4 !rounded-full shadow-subtle hover:scale-[1.02] active:scale-95 transition-all cursor-pointer font-bold text-center flex items-center justify-center gap-1.5"
+            >
+              <span id="start-stop-icon">▶</span>
+              <span id="start-stop-text">Start Capture</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test Area & Canvas Visualizer (Column 2: 5 cols on lg, 6 cols on xl) -->
+      <div class="lg:col-span-5 xl:col-span-6 flex flex-col gap-3">
+        <!-- Interactive Test Zone Card -->
+        <div id="test-zone" class="card-base flex-1 min-h-[300px] h-[340px] lg:h-[380px] p-4 flex flex-col items-center justify-center border-2 border-dashed border-hairline-strong bg-canvas hover:border-brand-blue/50 transition-colors select-none relative group cursor-crosshair overflow-hidden">
+          <canvas id="trail-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+          <!-- Countdown overlay inside test zone -->
+          <div id="zone-countdown-overlay" class="absolute top-4 right-4 z-20 pointer-events-none hidden">
+            <div class="flex flex-col items-center bg-canvas/80 backdrop-blur-sm border border-brand-blue/40 rounded-2xl px-3 py-1.5 shadow-lg">
+              <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Time Left</span>
+              <span id="zone-countdown-value" class="text-2xl font-display font-bold text-brand-blue tabular-nums">10</span>
+              <span class="text-[9px] text-stone">seconds</span>
+            </div>
+          </div>
+
+          <!-- Progress arc overlay -->
+          <div id="zone-progress-bar" class="absolute bottom-0 left-0 right-0 h-1 pointer-events-none hidden">
+            <div id="zone-progress-fill" class="h-full bg-brand-blue/70 transition-all duration-1000 ease-linear" style="width: 100%"></div>
+          </div>
+
+          <div id="test-zone-instructions" class="pointer-events-none flex flex-col items-center text-center gap-2 z-10 transition-opacity duration-300">
+            <div class="text-3xl animate-bounce">🖱️</div>
+            <div class="flex flex-col gap-1">
+              <h3 class="font-display font-medium text-sm sm:text-base text-primary">Mouse Polling Rate Test Box</h3>
+              <p class="text-xs text-slate max-w-sm leading-relaxed">
+                Click <strong class="text-brand-blue">Start Capture</strong>, then move your mouse in fast, steady circles inside this box.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Reference values / chips (more compact) -->
+        <div class="card-base p-3 flex flex-col gap-2">
+          <h3 class="font-display font-semibold text-[10px] text-primary">Standard Polling Rate Specifications</h3>
+          <div class="grid grid-cols-5 gap-1 text-center">
+            <div class="p-1 border border-hairline rounded bg-surface flex flex-col items-center">
+              <span class="text-[10px] font-bold text-primary">125 Hz</span>
+              <span class="text-[8px] text-stone">8.0 ms</span>
+            </div>
+            <div class="p-1 border border-hairline rounded bg-surface flex flex-col items-center">
+              <span class="text-[10px] font-bold text-primary">500 Hz</span>
+              <span class="text-[8px] text-stone">2.0 ms</span>
+            </div>
+            <div class="p-1 border border-hairline rounded bg-surface flex flex-col items-center">
+              <span class="text-[10px] font-bold text-primary">1000 Hz</span>
+              <span class="text-[8px] text-stone">1.0 ms</span>
+            </div>
+            <div class="p-1 border border-hairline rounded bg-surface flex flex-col items-center">
+              <span class="text-[10px] font-bold text-primary">4000 Hz</span>
+              <span class="text-[8px] text-stone">0.25 ms</span>
+            </div>
+            <div class="p-1 border border-hairline rounded bg-surface flex flex-col items-center">
+              <span class="text-[10px] font-bold text-primary">8000 Hz</span>
+              <span class="text-[8px] text-stone">0.125 ms</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Panel (Column 3: 3 cols on lg/xl) -->
+      <div class="lg:col-span-3 xl:col-span-3 flex flex-col gap-3">
+        <div class="card-base p-3 flex flex-col gap-3 h-full justify-between">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between border-b border-hairline-soft pb-2">
+              <h3 class="font-display font-semibold text-xs text-primary flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate"></span>
+                History
+              </h3>
+              <div class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  id="export-btn"
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded transition-all cursor-pointer shadow-subtle"
+                >
+                  Copy
+                </button>
+                <button
+                  type="button"
+                  id="clear-history-btn"
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded transition-all cursor-pointer shadow-subtle"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="max-h-[220px] lg:max-h-[250px] xl:max-h-[280px] overflow-y-auto pr-1">
+              <table class="w-full text-left border-collapse text-[10px]">
+                <thead>
+                  <tr class="border-b border-hairline text-slate font-semibold sticky top-0 bg-canvas z-10">
+                    <th class="py-1 px-1">Hz</th>
+                    <th class="py-1 px-1 text-right">Delay</th>
+                    <th class="py-1 px-1 text-right">Cons.</th>
+                    <th class="py-1 px-1 text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="history-tbody">
+                  <tr>
+                    <td colspan="4" class="py-4 px-1 text-center text-stone italic">No tests saved.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Security & Privacy Guard Tag -->
+          <div class="flex items-center justify-between text-[9px] text-slate border-t border-hairline-soft pt-2">
+            <span class="flex items-center gap-0.5">
+              <span class="text-success-accent font-semibold">✓</span> Client-Side
+            </span>
+            <span>v2.0.0</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Understanding Mouse Polling Rates & Browser Throttling
+      </h2>
+      <p class="text-sm leading-relaxed">
+        A mouse's polling rate (or report rate) determines how frequently it sends its current position coordinates to the computer. Measured in Hertz (Hz), higher polling rates like 1000Hz, 4000Hz, or 8000Hz represent lower input lag (1ms down to 0.125ms), which is crucial for competitive gaming.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Standard Browser mousemove is Throttled
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Standard web browsers batch coordinates changes to match the screen's refresh cycle. In engines like Safari or Firefox, the standard <code>mousemove</code> event will fire only as fast as the monitor refreshes (e.g. 60Hz or 144Hz), even if you have a 1000Hz gaming mouse. To bypass this, Chromium-based browsers support <code>PointerEvent.getCoalescedEvents()</code>, which retrieves the fine-grained events generated by the OS between animation frames.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How the Calculations Work
+      </h3>
+      <p class="text-sm leading-relaxed">
+        This tool monitors coordinates updates and calculates the duration (delta time) between successive events. Pauses and low velocities are excluded. The tool then calculates the median interval from all captured events. The final estimated polling rate is calculated as: <code>1000 / median interval</code>. Median is utilized over mean averages to eliminate occasional system-level micro-stuts and scheduling hiccups from skewing the final result.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal copied verbatim pattern from json-formatter.astro -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Polling Rate Test Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is Mouse Polling Rate?
+        </h4>
+        <p>
+          Polling rate is the frequency at which the mouse reports its position data to the computer, measured in Hz. A 1000Hz polling rate means the mouse sends updates 1000 times per second (once every 1ms).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. The Browser Coalescing Limitation</h4>
+        <p>
+          Web browsers typically throttle mouse events to match the screen's refresh cycle to save processing power. To solve this, this tool utilizes <code>PointerEvent.getCoalescedEvents()</code> to fetch true OS-level pointer messages, allowing precision measurement on supported browsers.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. How to get an Accurate Test</h4>
+        <p>
+          To get a high-quality readout, you must move your mouse rapidly and consistently in circular patterns inside the test box. Slow movements do not saturate the report rate and will result in lower, inaccurate readings.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Interfaces
+    interface TestRun {
+      timestamp: number;
+      rate: number;
+      medianDelay: number;
+      consistency: number;
+      mode: string;
+      status: string;
+    }
+
+    // State Variables
+    let isCapturing = false;
+    let eventTimestamps: number[] = [];
+    let intervals: number[] = [];
+    let trailPoints: Array<{ x: number; y: number; time: number }> = [];
+    let lastX = 0;
+    let lastY = 0;
+    let lastTime = 0;
+    let methodSupported = "Standard mode: mousemove throttled by browser";
+    let coalescedCount = 0;
+
+    // Duration state
+    let selectedDurationSec = 10; // default 10 sec
+    let captureStartTime = 0;
+    let countdownTimer: ReturnType<typeof setInterval> | null = null;
+
+    // DOM Elements
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+    
+    const touchWarningBanner = document.getElementById("touch-warning-banner") as HTMLDivElement;
+    const dismissWarningBtn = document.getElementById("dismiss-warning-btn") as HTMLButtonElement;
+    
+    const accuracyBanner = document.getElementById("accuracy-banner") as HTMLDivElement;
+    const accuracyMsg = document.getElementById("accuracy-msg") as HTMLSpanElement;
+    
+    const testZone = document.getElementById("test-zone") as HTMLDivElement;
+    const instructions = document.getElementById("test-zone-instructions") as HTMLDivElement;
+    const trailCanvas = document.getElementById("trail-canvas") as HTMLCanvasElement;
+    
+    const startStopBtn = document.getElementById("start-stop-btn") as HTMLButtonElement;
+    const startStopIcon = document.getElementById("start-stop-icon") as HTMLSpanElement;
+    const startStopText = document.getElementById("start-stop-text") as HTMLSpanElement;
+    
+    // Stats Readouts
+    const liveHz = document.getElementById("live-hz") as HTMLSpanElement;
+    const liveHzSubtext = document.getElementById("live-hz-subtext") as HTMLSpanElement;
+    const medianDelay = document.getElementById("median-delay") as HTMLSpanElement;
+    const stabilityPct = document.getElementById("stability-pct") as HTMLSpanElement;
+    const delayMinMax = document.getElementById("delay-min-max") as HTMLSpanElement;
+    const eventCounter = document.getElementById("event-counter") as HTMLSpanElement;
+    const speedStatus = document.getElementById("speed-status") as HTMLSpanElement;
+    const speedBar = document.getElementById("speed-bar") as HTMLDivElement;
+    
+    const historyTbody = document.getElementById("history-tbody") as HTMLTableSectionElement;
+    const exportBtn = document.getElementById("export-btn") as HTMLButtonElement;
+    const clearHistoryBtn = document.getElementById("clear-history-btn") as HTMLButtonElement;
+
+    // Duration UI
+    const durationCountdown = document.getElementById("duration-countdown") as HTMLSpanElement;
+    const zoneCountdownOverlay = document.getElementById("zone-countdown-overlay") as HTMLDivElement;
+    const zoneCountdownValue = document.getElementById("zone-countdown-value") as HTMLSpanElement;
+    const zoneProgressBar = document.getElementById("zone-progress-bar") as HTMLDivElement;
+    const zoneProgressFill = document.getElementById("zone-progress-fill") as HTMLDivElement;
+    const durationBtns = document.querySelectorAll<HTMLButtonElement>(".duration-btn");
+
+    // Wire up duration buttons
+    durationBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (isCapturing) return; // lock while running
+        durationBtns.forEach(b => b.classList.remove("duration-active"));
+        btn.classList.add("duration-active");
+        selectedDurationSec = Number(btn.dataset.duration);
+        if (selectedDurationSec === 0) {
+          startStopText.textContent = "Start Capture (Free)";
+        } else {
+          startStopText.textContent = `Start ${selectedDurationSec}s Capture`;
+        }
+      });
+    });
+
+    // Apply initial active style to the default button (10 sec)
+    (document.querySelector(".duration-btn[data-duration='10']") as HTMLButtonElement)?.classList.add("duration-active");
+    startStopText.textContent = "Start 10s Capture";
+
+    // LocalStorage Keys
+    const LS_KEY_HISTORY = "boardtools:polling-rate:history";
+
+    // Setup Canvas context
+    const ctx = trailCanvas.getContext("2d");
+    
+    function resizeCanvas() {
+      if (!trailCanvas) return;
+      const rect = trailCanvas.getBoundingClientRect();
+      trailCanvas.width = rect.width * window.devicePixelRatio;
+      trailCanvas.height = rect.height * window.devicePixelRatio;
+      if (ctx) {
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      }
+    }
+    
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Check features
+    function detectFeatures() {
+      if (typeof PointerEvent.prototype.getCoalescedEvents === "function") {
+        methodSupported = "High-accuracy mode: coalesced events";
+        accuracyBanner.classList.add("bg-success-accent/10", "border-success-accent/40", "text-success-accent");
+        accuracyMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent animate-pulse"></span>High-accuracy mode: coalesced events active`;
+      } else {
+        methodSupported = "Standard mode: mousemove throttled by browser";
+        accuracyBanner.classList.add("bg-surface-yellow", "border-yellow-light/80", "text-yellow-dark");
+        accuracyMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span>Standard mode: mousemove throttled by browser`;
+      }
+      
+      // Detect touch screen
+      if (window.matchMedia("(pointer: coarse)").matches) {
+        touchWarningBanner.classList.remove("hidden");
+      }
+    }
+    detectFeatures();
+
+    // Event handlers for How it works modal
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+    
+    const closeModal = () => {
+      howItWorksModal.classList.add("hidden");
+    };
+    
+    closeModalBtn.addEventListener("click", closeModal);
+    modalOkBtn.addEventListener("click", closeModal);
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    dismissWarningBtn.addEventListener("click", () => {
+      touchWarningBanner.classList.add("hidden");
+    });
+
+    // Start/Stop Control
+    startStopBtn.addEventListener("click", toggleCapture);
+
+    function toggleCapture() {
+      if (!isCapturing) {
+        startCapture();
+      } else {
+        stopCapture();
+      }
+    }
+
+    function startCapture() {
+      isCapturing = true;
+      eventTimestamps = [];
+      intervals = [];
+      trailPoints = [];
+      coalescedCount = 0;
+      lastTime = performance.now();
+      captureStartTime = Date.now();
+      
+      startStopIcon.textContent = "⏹";
+      startStopText.textContent = "Stop Capture";
+      startStopBtn.classList.remove("button-primary");
+      startStopBtn.classList.add("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
+      
+      // Lock duration buttons during capture
+      durationBtns.forEach(b => b.setAttribute("disabled", "true"));
+      
+      instructions.classList.add("opacity-25");
+      testZone.classList.remove("border-dashed");
+      testZone.classList.add("border-solid", "border-brand-blue", "shadow-lg", "shadow-brand-blue/10");
+      
+      resizeCanvas();
+
+      // Show/hide countdown widgets
+      if (selectedDurationSec > 0) {
+        durationCountdown.textContent = `${selectedDurationSec}s`;
+        durationCountdown.classList.remove("hidden");
+        zoneCountdownOverlay.classList.remove("hidden");
+        zoneProgressBar.classList.remove("hidden");
+        zoneCountdownValue.textContent = String(selectedDurationSec);
+        zoneProgressFill.style.transition = "none";
+        zoneProgressFill.style.width = "100%";
+
+        // Kick off the shrink animation after a tick
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            zoneProgressFill.style.transition = `width ${selectedDurationSec}s linear`;
+            zoneProgressFill.style.width = "0%";
+          });
+        });
+
+        let remaining = selectedDurationSec;
+        countdownTimer = setInterval(() => {
+          remaining--;
+          zoneCountdownValue.textContent = String(remaining);
+          durationCountdown.textContent = `${remaining}s`;
+          if (remaining <= 0) {
+            if (countdownTimer !== null) clearInterval(countdownTimer);
+            stopCapture();
+          }
+        }, 1000);
+      } else {
+        // Free mode — hide countdown
+        durationCountdown.classList.add("hidden");
+        zoneCountdownOverlay.classList.add("hidden");
+        zoneProgressBar.classList.add("hidden");
+      }
+    }
+
+    function stopCapture() {
+      if (!isCapturing) return;
+      isCapturing = false;
+
+      if (countdownTimer !== null) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      
+      startStopIcon.textContent = "▶";
+      const label = selectedDurationSec > 0 ? `Start ${selectedDurationSec}s Capture` : "Start Capture (Free)";
+      startStopText.textContent = label;
+      startStopBtn.classList.add("button-primary");
+      startStopBtn.classList.remove("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
+
+      // Unlock duration buttons
+      durationBtns.forEach(b => b.removeAttribute("disabled"));
+      
+      // Hide countdown widgets
+      durationCountdown.classList.add("hidden");
+      zoneCountdownOverlay.classList.add("hidden");
+      zoneProgressBar.classList.add("hidden");
+      
+      instructions.classList.remove("opacity-25");
+      testZone.classList.add("border-dashed");
+      testZone.classList.remove("border-solid", "border-brand-blue", "shadow-lg", "shadow-brand-blue/10");
+      
+      saveRunToHistory();
+    }
+
+    // Reset button contract (verbatim callback trigger)
+    resetBtn.addEventListener("click", () => {
+      stopCapture();
+      // Clear variables
+      eventTimestamps = [];
+      intervals = [];
+      trailPoints = [];
+      coalescedCount = 0;
+      smoothHz = 0;
+      
+      // Reset UI
+      liveHz.innerHTML = `0 <span class="text-xs text-slate">Hz</span>`;
+      liveHzSubtext.textContent = "Move mouse to start measuring";
+      medianDelay.textContent = "0.00 ms";
+      stabilityPct.textContent = "0.0%";
+      delayMinMax.textContent = "0.0 / 0.0 ms";
+      eventCounter.textContent = "0";
+      speedStatus.textContent = "TOO SLOW";
+      speedStatus.className = "text-[9px] font-bold text-coral-dark bg-brand-coral/40 px-1.5 py-0.5 rounded-full";
+      speedBar.style.width = "0%";
+      
+      if (ctx && trailCanvas) {
+        ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+      }
+      
+      // Clear localStorage
+      localStorage.removeItem(LS_KEY_HISTORY);
+      renderHistory();
+    });
+
+    // Core Hz and pointer handler
+    testZone.addEventListener("pointermove", (e: PointerEvent) => {
+      if (!isCapturing) return;
+      
+      const now = performance.now();
+      const rect = testZone.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Add visual points for trail
+      trailPoints.push({ x, y, time: now });
+      
+      // Filter out points older than 300ms
+      trailPoints = trailPoints.filter(p => now - p.time < 300);
+
+      // Handle coalesced events for precision
+      let events: PointerEvent[] = [];
+      if (typeof e.getCoalescedEvents === "function") {
+        events = e.getCoalescedEvents();
+      } else {
+        events = [e];
+      }
+      
+      coalescedCount += events.length;
+
+      // Extract intervals
+      events.forEach((ev) => {
+        const t = ev.timeStamp; // high precision browser timestamp
+        
+        if (eventTimestamps.length > 0) {
+          const dt = t - eventTimestamps[eventTimestamps.length - 1];
+          // Filter out pauses / idle frames (any interval > 100ms)
+          if (dt > 0.01 && dt < 100) {
+            intervals.push(dt);
+          }
+        }
+        eventTimestamps.push(t);
+      });
+
+      // Calculate speed
+      const dt = now - lastTime;
+      if (dt > 0) {
+        const dx = x - lastX;
+        const dy = y - lastY;
+        const speed = Math.sqrt(dx * dx + dy * dy) / dt; // pixels per ms
+        
+        // Speed bar display (relative to a target speed of 3 pixels/ms)
+        const pct = Math.min(100, (speed / 3) * 100);
+        speedBar.style.width = `${pct}%`;
+        
+        if (speed > 1.2) {
+          speedStatus.textContent = "OPTIMAL";
+          speedStatus.className = "text-[9px] font-bold text-success-accent bg-success-accent/10 px-1.5 py-0.5 rounded-full";
+        } else {
+          speedStatus.textContent = "TOO SLOW";
+          speedStatus.className = "text-[9px] font-bold text-coral-dark bg-brand-coral/40 px-1.5 py-0.5 rounded-full";
+        }
+        
+        lastX = x;
+        lastY = y;
+      }
+      lastTime = now;
+    });
+
+    // RAF loop for smooth UI updates
+    let lastRenderTime = 0;
+    let smoothHz = 0;
+    
+    function animate(timestamp: number) {
+      requestAnimationFrame(animate);
+      
+      const now = performance.now();
+      
+      // 1. Draw cursor trail
+      if (ctx && trailCanvas) {
+        ctx.clearRect(0, 0, trailCanvas.width / window.devicePixelRatio, trailCanvas.height / window.devicePixelRatio);
+        
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        
+        if (prefersReduced) {
+          // Draw only a single point
+          if (trailPoints.length > 0) {
+            const last = trailPoints[trailPoints.length - 1];
+            ctx.beginPath();
+            ctx.arc(last.x, last.y, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#4262ff";
+            ctx.fill();
+          }
+        } else if (trailPoints.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(trailPoints[0].x, trailPoints[0].y);
+          
+          for (let i = 1; i < trailPoints.length; i++) {
+            const p = trailPoints[i];
+            const age = now - p.time;
+            const alpha = Math.max(0, 1 - age / 300);
+            
+            ctx.lineTo(p.x, p.y);
+            ctx.strokeStyle = `rgba(66, 98, 255, ${alpha * 0.7})`;
+            ctx.lineWidth = 3 * alpha;
+            ctx.stroke();
+            
+            // Start path for next segment to allow fading opacity
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+          }
+        }
+      }
+
+      // 2. Throttle text/DOM stats recalculation to ~60ms intervals for performance
+      if (now - lastRenderTime < 60) return;
+      lastRenderTime = now;
+      
+      if (!isCapturing || intervals.length < 5) return;
+
+      // Make a copy and sort to get statistics
+      const sorted = [...intervals].sort((a, b) => a - b);
+      const medianIdx = Math.floor(sorted.length / 2);
+      const medianVal = sorted.length % 2 !== 0 
+        ? sorted[medianIdx] 
+        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
+      
+      if (medianVal <= 0) return;
+
+      const rawHz = 1000 / medianVal;
+      
+      // Rolling average smoothing for live display
+      smoothHz = smoothHz === 0 ? rawHz : smoothHz * 0.85 + rawHz * 0.15;
+      
+      // Calculate stability consistency (% of intervals within 15% of median)
+      const margin = medianVal * 0.15;
+      const consistentCount = intervals.filter(val => Math.abs(val - medianVal) <= margin).length;
+      const consistency = (consistentCount / intervals.length) * 100;
+      
+      // Delay min/max
+      const minVal = sorted[0];
+      const maxVal = sorted[sorted.length - 1];
+
+      // Update UI
+      liveHz.innerHTML = `${Math.round(smoothHz)} <span class="text-xs text-slate">Hz</span>`;
+      liveHzSubtext.textContent = `Smoothing active (${Math.round(rawHz)} Hz raw)`;
+      medianDelay.textContent = `${medianVal.toFixed(2)} ms`;
+      stabilityPct.textContent = `${consistency.toFixed(1)}%`;
+      delayMinMax.textContent = `${minVal.toFixed(1)} / ${maxVal.toFixed(1)} ms`;
+      eventCounter.textContent = coalescedCount.toString();
+    }
+    requestAnimationFrame(animate);
+
+    // Save and history
+    function saveRunToHistory() {
+      if (intervals.length < 15) return;
+      
+      const sorted = [...intervals].sort((a, b) => a - b);
+      const medianIdx = Math.floor(sorted.length / 2);
+      const medianVal = sorted.length % 2 !== 0 
+        ? sorted[medianIdx] 
+        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
+        
+      const rawHz = Math.round(1000 / medianVal);
+      const margin = medianVal * 0.15;
+      const consistentCount = intervals.filter(val => Math.abs(val - medianVal) <= margin).length;
+      const consistency = Math.round((consistentCount / intervals.length) * 100);
+
+      const run: TestRun = {
+        timestamp: Date.now(),
+        rate: rawHz,
+        medianDelay: Number(medianVal.toFixed(2)),
+        consistency,
+        mode: methodSupported.includes("coalesced") ? "Coalesced" : "Standard",
+        status: consistency > 85 ? "Excellent" : consistency > 60 ? "Good" : "Unstable"
+      };
+
+      const history = getHistory();
+      history.unshift(run);
+      localStorage.setItem(LS_KEY_HISTORY, JSON.stringify(history.slice(0, 10)));
+      renderHistory();
+    }
+
+    function getHistory(): TestRun[] {
+      const stored = localStorage.getItem(LS_KEY_HISTORY);
+      if (!stored) return [];
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+      if (history.length === 0) {
+        historyTbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-4 px-1 text-center text-stone italic">No tests saved.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      historyTbody.innerHTML = history.map(item => `
+        <tr class="border-b border-hairline-soft hover:bg-surface/40">
+          <td class="py-1.5 px-1 font-bold text-primary">${item.rate} Hz</td>
+          <td class="py-1.5 px-1 text-right font-mono">${item.medianDelay} ms</td>
+          <td class="py-1.5 px-1 text-right font-mono">${item.consistency}%</td>
+          <td class="py-1.5 px-1 text-right">
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold ${
+              item.status === "Excellent" ? "bg-success-accent/10 text-success-accent" : 
+              item.status === "Good" ? "bg-brand-blue/10 text-brand-blue" : "bg-brand-coral/10 text-coral-dark"
+            }">${item.status}</span>
+          </td>
+        </tr>
+      `).join("");
+    }
+    
+    // Export summary to clipboard
+    exportBtn.addEventListener("click", () => {
+      const history = getHistory();
+      if (history.length === 0) {
+        alert("No history to copy.");
+        return;
+      }
+      
+      let text = "BoardTools Polling Rate Test Results Summary:\n";
+      text += "=========================================\n";
+      history.forEach((run, i) => {
+        text += `Run #${i + 1}: ${run.rate}Hz | Median: ${run.medianDelay}ms | Consistency: ${run.consistency}% | Mode: ${run.mode} | Status: ${run.status}\n`;
+      });
+      
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Summary copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy", err);
+      });
+    });
+
+    clearHistoryBtn.addEventListener("click", () => {
+      localStorage.removeItem(LS_KEY_HISTORY);
+      renderHistory();
+    });
+
+    // Initial render
+    renderHistory();
+  </script>
+
+  <style>
+    /* Duration selector active state */
+    .duration-btn.duration-active {
+      background-color: var(--color-surface-pricing-featured, oklch(0.92 0.03 250));
+      border-color: var(--color-brand-blue, oklch(0.55 0.22 265));
+      color: var(--color-brand-blue, oklch(0.55 0.22 265));
+      font-weight: 700;
+    }
+    .duration-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  </style>
 </Layout>
