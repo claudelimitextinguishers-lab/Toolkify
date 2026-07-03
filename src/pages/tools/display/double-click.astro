@@ -1,90 +1,997 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Double Click Test";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Audit and detect mechanical mouse switch double-click issues on primary inputs.";
+
+// On-page SEO metadata
+const pageTitle = "Mouse Double Click Test - Detect Switch Chatter & Double Clicking";
+const description = "Free online browser mouse double click test. Detect switch bounce/chatter, measure click intervals, and test mouse buttons with real-time diagnostics.";
+const canonicalUrl = "https://boardtools.app/tools/display/double-click";
+const ogImage = "/og/double-click.png";
+const keywords = "double click test, mouse chatter test, mouse double click test, check mouse double click, mouse switch chatter test, double click rate, mouse test, mouse button tester";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse Double Click Test",
+      "alternateName": "Mouse Switch Chatter Detector",
+      "url": "https://boardtools.app/tools/display/double-click",
+      "description": "Measure and detect mechanical mouse switch chatter and double click issues. Analyze click intervals and verify hardware reliability.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires Mouse input.",
+      "featureList": [
+        "Real-time click interval calculation in milliseconds",
+        "Adjustable hardware switch chatter threshold (5ms - 150ms)",
+        "Separate button diagnostics (Left, Middle, Right)",
+        "Satisfying visual ripple feedback and shake animations on chatter",
+        "Detailed session statistics and CSV data export",
+        "Click speed rhythm practice secondary mode",
+        "100% private client-side execution"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Double Click Test",
+          "item": "https://boardtools.app/tools/display/double-click"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How double click test works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div
+      class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0"
+    >
+      <!-- Touch Warning Banner (Hidden by default) -->
+      <div
+        id="touch-warning"
+        class="hidden bg-brand-red border border-brand-red-dark/30 text-coral-dark p-3 rounded-lg text-xs flex items-center gap-2 animate-fade-in"
+      >
+        <span class="text-base">⚠️</span>
+        <div>
+          <strong>Touch input detected.</strong> A physical mouse is highly recommended to accurately measure hardware switch chatter. Touch screen tap data might mask or skew results.
+        </div>
+      </div>
+
+      <!-- Settings & Dashboard Controls -->
+      <div
+        class="border-b border-hairline-soft pb-3 flex flex-col md:flex-row justify-between items-start md:items-center gap-3"
+      >
+        <!-- Threshold control -->
+        <div class="w-full md:w-auto flex flex-col sm:flex-row sm:items-center gap-3">
+          <div class="flex flex-col gap-1 w-full sm:w-48">
+            <div class="flex justify-between items-center text-[10px] font-semibold text-slate">
+              <label for="chatter-threshold-range">Chatter Threshold</label>
+              <span id="chatter-threshold-val" class="text-brand-blue font-bold">80ms</span>
+            </div>
+            <input
+              type="range"
+              id="chatter-threshold-range"
+              min="5"
+              max="150"
+              value="80"
+              step="5"
+              class="w-full h-1 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              aria-label="Adjust chatter detection threshold in milliseconds"
+            />
+          </div>
+
+          <div class="flex items-center gap-2 mt-2 sm:mt-0">
+            <span class="text-[10px] font-semibold text-slate">Practice Mode</span>
+            <button
+              type="button"
+              id="practice-toggle-btn"
+              class="inline-flex items-center gap-1 text-[10px] font-bold px-3 py-1 bg-surface hover:bg-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+            >
+              Off
+            </button>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Filter tabs for logs -->
+        <div class="flex items-center gap-1.5 self-end md:self-auto">
+          <span class="text-[10px] font-semibold text-slate hidden sm:inline">Show Button:</span>
+          <div class="flex bg-surface p-0.5 rounded-full border border-hairline text-[10px] font-bold text-slate">
+            <button
+              type="button"
+              id="filter-all"
+              class="px-2.5 py-0.5 rounded-full bg-primary text-canvas transition-all"
+            >
+              All
+            </button>
+            <button
+              type="button"
+              id="filter-left"
+              class="px-2.5 py-0.5 rounded-full transition-all"
+            >
+              Left
+            </button>
+            <button
+              type="button"
+              id="filter-middle"
+              class="px-2.5 py-0.5 rounded-full transition-all"
+            >
+              Mid
+            </button>
+            <button
+              type="button"
+              id="filter-right"
+              class="px-2.5 py-0.5 rounded-full transition-all"
+            >
+              Right
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Practice rhythm selection (hidden by default) -->
+      <div id="practice-settings-panel" class="hidden flex flex-wrap items-center gap-3 bg-surface-soft p-3 rounded-xl border border-hairline transition-all">
+        <span class="text-[10px] font-semibold text-slate">Practice Target BPM:</span>
+        <div class="flex gap-2">
+          <button type="button" data-bpm="120" class="bpm-btn px-3 py-1 text-[10px] font-bold rounded-full border border-hairline bg-canvas text-slate hover:text-primary transition-all">120 BPM</button>
+          <button type="button" data-bpm="180" class="bpm-btn px-3 py-1 text-[10px] font-bold rounded-full border border-hairline bg-canvas text-slate hover:text-primary transition-all">180 BPM</button>
+          <button type="button" data-bpm="240" class="bpm-btn px-3 py-1 text-[10px] font-bold rounded-full border border-hairline bg-primary text-canvas transition-all">240 BPM (Fast)</button>
+        </div>
+        <div class="flex items-center gap-2 ml-auto text-[10px] text-slate">
+          <span>Practice visual rhythm:</span>
+          <div id="practice-metronome" class="w-3.5 h-3.5 rounded-full bg-slate-400 transition-all duration-100"></div>
+        </div>
+      </div>
+
+      <!-- Main Workspace Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-[360px]">
+        <!-- Primary Click Test Zone & Counters -->
+        <div class="lg:col-span-8 flex flex-col gap-4">
+          <!-- Counters -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="card-base p-3 bg-surface-soft border border-hairline-soft flex flex-col items-center justify-center text-center">
+              <span class="text-[10px] font-semibold text-slate uppercase">Total Clicks</span>
+              <span id="counter-total" class="font-display font-medium text-2xl sm:text-3xl text-primary mt-1">0</span>
+            </div>
+            <div id="chatter-card" class="card-base p-3 bg-surface-soft border border-hairline-soft flex flex-col items-center justify-center text-center transition-all duration-300">
+              <span class="text-[10px] font-semibold text-slate uppercase">Chatter Events</span>
+              <span id="counter-chatter" class="font-display font-medium text-2xl sm:text-3xl text-primary mt-1">0</span>
+            </div>
+            <div class="card-base p-3 bg-surface-soft border border-hairline-soft flex flex-col items-center justify-center text-center">
+              <span class="text-[10px] font-semibold text-slate uppercase">Chatter Rate</span>
+              <span id="counter-rate" class="font-display font-medium text-2xl sm:text-3xl text-primary mt-1">0.0%</span>
+            </div>
+          </div>
+
+          <!-- Click zone -->
+          <div
+            id="click-zone"
+            class="flex-1 min-h-[220px] bg-canvas border-2 border-dashed border-hairline-strong/80 hover:border-brand-blue/60 rounded-xl relative flex flex-col items-center justify-center text-center cursor-pointer select-none overflow-hidden transition-all duration-300 shadow-sm"
+          >
+            <div id="practice-guide-box" class="absolute inset-0 bg-transparent flex items-center justify-center pointer-events-none opacity-0 transition-opacity">
+              <div id="practice-target-ring" class="w-24 h-24 rounded-full border-4 border-dashed border-brand-blue/30 scale-95 transition-all"></div>
+            </div>
+
+            <!-- Ripple container -->
+            <div id="ripple-overlay" class="absolute inset-0 pointer-events-none z-0"></div>
+
+            <div class="flex flex-col items-center gap-2 pointer-events-none z-10 p-4">
+              <div class="text-3xl sm:text-4xl animate-bounce">🖱️</div>
+              <h3 class="font-display font-semibold text-sm sm:text-base text-primary">
+                Click inside this area to test mouse switches
+              </h3>
+              <p class="text-[10px] sm:text-xs text-stone max-w-sm leading-relaxed">
+                Supports Left click, Right click, and Middle scroll wheel click. Context menu is prevented.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar logs & summaries -->
+        <div class="lg:col-span-4 flex flex-col gap-4">
+          <!-- Interval Log Panel -->
+          <div class="flex-1 card-base p-4 border border-hairline flex flex-col gap-3 max-h-[360px]">
+            <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+              <h3 class="font-display font-semibold text-xs text-primary">Interval Log</h3>
+              <button
+                type="button"
+                id="btn-export-csv"
+                class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer"
+                disabled
+              >
+                Export CSV
+              </button>
+            </div>
+
+            <div
+              id="log-list"
+              class="flex-1 overflow-y-auto text-[11px] font-mono text-slate flex flex-col gap-1.5 pr-1 min-h-[150px]"
+            >
+              <div class="text-stone italic text-center py-8">
+                No clicks registered yet.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session summary report section -->
+      <div id="summary-section" class="hidden border-t border-hairline pt-4 mt-2 animate-fade-in">
+        <div class="card-feature p-5 bg-surface-soft border border-hairline-soft flex flex-col gap-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h3 class="font-display font-semibold text-base text-primary">
+              Session Summary Report
+            </h3>
+            <span id="diagnostic-status" class="badge-success bg-success-accent text-canvas text-[10px]">HEALTHY</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Stats overview -->
+            <div class="flex flex-col gap-1 text-xs">
+              <span class="text-slate">Overall Diagnostics:</span>
+              <p id="diagnostic-text" class="text-stone font-medium mt-1 leading-relaxed">
+                No chatter issues detected in this session.
+              </p>
+            </div>
+
+            <!-- Button Breakdown table -->
+            <div class="md:col-span-2 flex flex-col gap-2">
+              <span class="text-xs text-slate font-semibold">Button Breakdown:</span>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-[11px] font-semibold text-slate border-collapse">
+                  <thead>
+                    <tr class="border-b border-hairline text-stone text-[10px] uppercase">
+                      <th class="py-1">Button</th>
+                      <th class="py-1">Clicks</th>
+                      <th class="py-1">Chatter Clicks</th>
+                      <th class="py-1">Min Interval</th>
+                      <th class="py-1">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="summary-breakdown-body">
+                    <!-- Dynamic button breakdown rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Double Click Test Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What is Mouse Switch Chatter?
+        </h4>
+        <p>
+          As mechanical mouse switches age, their internal metal leaf spring degrades, losing tension or building up corrosion. When pressed or released, the metal contact points can bounce/chatter rapidly instead of making a single clean connection. This results in the computer receiving two or more clicks within an extremely short window (typically under 50-80ms), causing accidental double-clicks.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. How this Tool Works</h4>
+        <p>
+          This test measures the precise millisecond interval between consecutive clicks. If the delay is abnormally short (below the threshold you configure), it is flagged as hardware switch chatter. Intentional rapid double-clicks by a human rarely fall below 80ms, whereas hardware bounce events typically register in the 5ms to 50ms range.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Recommended Settings</h4>
+        <p>
+          We recommend setting the chatter threshold between 50ms and 80ms. If you observe click intervals consistently within this window during a single physical click, your mouse switch likely has hardware issues.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    interface ClickEventLog {
+      button: string; // "Left", "Middle", "Right"
+      timestamp: number;
+      interval: number;
+      isChatter: boolean;
+    }
+
+    // State Variables
+    let totalClicks = 0;
+    let chatterClicks = 0;
+    let chatterThreshold = 80; // ms
+    let clickHistory: ClickEventLog[] = [];
+    let practiceModeActive = false;
+    let practiceBpm = 240;
+    let metronomeIntervalId: number | null = null;
+    let currentFilter: "all" | "left" | "middle" | "right" = "all";
+
+    // Track last click timestamps per button to isolate buttons
+    const lastClickTime: Record<string, number> = {
+      Left: 0,
+      Middle: 0,
+      Right: 0,
+    };
+
+    const minInterval: Record<string, number> = {
+      Left: Infinity,
+      Middle: Infinity,
+      Right: Infinity,
+    };
+
+    const buttonClicks: Record<string, number> = {
+      Left: 0,
+      Middle: 0,
+      Right: 0,
+    };
+
+    const buttonChatter: Record<string, number> = {
+      Left: 0,
+      Middle: 0,
+      Right: 0,
+    };
+
+    // DOM Elements
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+    const touchWarning = document.getElementById("touch-warning") as HTMLDivElement;
+
+    const chatterThresholdRange = document.getElementById("chatter-threshold-range") as HTMLInputElement;
+    const chatterThresholdVal = document.getElementById("chatter-threshold-val") as HTMLSpanElement;
+
+    const practiceToggleBtn = document.getElementById("practice-toggle-btn") as HTMLButtonElement;
+    const practiceSettingsPanel = document.getElementById("practice-settings-panel") as HTMLDivElement;
+    const practiceMetronome = document.getElementById("practice-metronome") as HTMLDivElement;
+    const practiceGuideBox = document.getElementById("practice-guide-box") as HTMLDivElement;
+    const practiceTargetRing = document.getElementById("practice-target-ring") as HTMLDivElement;
+
+    const clickZone = document.getElementById("click-zone") as HTMLDivElement;
+    const rippleOverlay = document.getElementById("ripple-overlay") as HTMLDivElement;
+
+    const counterTotal = document.getElementById("counter-total") as HTMLSpanElement;
+    const counterChatter = document.getElementById("counter-chatter") as HTMLSpanElement;
+    const counterRate = document.getElementById("counter-rate") as HTMLSpanElement;
+    const chatterCard = document.getElementById("chatter-card") as HTMLDivElement;
+
+    const logList = document.getElementById("log-list") as HTMLDivElement;
+    const btnExportCsv = document.getElementById("btn-export-csv") as HTMLButtonElement;
+
+    const summarySection = document.getElementById("summary-section") as HTMLDivElement;
+    const diagnosticStatus = document.getElementById("diagnostic-status") as HTMLSpanElement;
+    const diagnosticText = document.getElementById("diagnostic-text") as HTMLParagraphElement;
+    const summaryBreakdownBody = document.getElementById("summary-breakdown-body") as HTMLTableSectionElement;
+
+    // Filter elements
+    const filterAll = document.getElementById("filter-all") as HTMLButtonElement;
+    const filterLeft = document.getElementById("filter-left") as HTMLButtonElement;
+    const filterMiddle = document.getElementById("filter-middle") as HTMLButtonElement;
+    const filterRight = document.getElementById("filter-right") as HTMLButtonElement;
+
+    // Initialize LocalStorage state
+    function init() {
+      // Load settings
+      const savedThreshold = localStorage.getItem("boardtools:double-click:threshold");
+      if (savedThreshold) {
+        chatterThreshold = parseInt(savedThreshold, 10);
+        chatterThresholdRange.value = String(chatterThreshold);
+        chatterThresholdVal.textContent = `${chatterThreshold}ms`;
+      }
+
+      // Load click history from localStorage if exists
+      const savedHistory = localStorage.getItem("boardtools:double-click:history");
+      if (savedHistory) {
+        try {
+          const parsed = JSON.parse(savedHistory);
+          if (Array.isArray(parsed)) {
+            clickHistory = parsed;
+            recalculateStatsFromHistory();
+            updateDashboard();
+          }
+        } catch (e) {
+          console.warn("Failed to load click history from local storage.", e);
+        }
+      }
+
+      // Touch warning verification
+      if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+        touchWarning.classList.remove("hidden");
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem("boardtools:double-click:threshold", String(chatterThreshold));
+      localStorage.setItem("boardtools:double-click:history", JSON.stringify(clickHistory));
+    }
+
+    function recalculateStatsFromHistory() {
+      totalClicks = clickHistory.length;
+      chatterClicks = clickHistory.filter(c => c.isChatter).length;
+
+      // Reset aggregates
+      Object.keys(buttonClicks).forEach(k => {
+        buttonClicks[k] = 0;
+        buttonChatter[k] = 0;
+        minInterval[k] = Infinity;
+        lastClickTime[k] = 0;
+      });
+
+      clickHistory.forEach(log => {
+        buttonClicks[log.button]++;
+        if (log.isChatter) {
+          buttonChatter[log.button]++;
+        }
+        if (log.interval > 0 && log.interval < minInterval[log.button]) {
+          minInterval[log.button] = log.interval;
+        }
+      });
+    }
+
+    // Reset logic
+    function handleReset() {
+      totalClicks = 0;
+      chatterClicks = 0;
+      clickHistory = [];
+
+      Object.keys(lastClickTime).forEach(k => {
+        lastClickTime[k] = 0;
+        minInterval[k] = Infinity;
+        buttonClicks[k] = 0;
+        buttonChatter[k] = 0;
+      });
+
+      // Clear local storage
+      localStorage.removeItem("boardtools:double-click:threshold");
+      localStorage.removeItem("boardtools:double-click:history");
+
+      // Reset UI elements
+      chatterThreshold = 80;
+      chatterThresholdRange.value = "80";
+      chatterThresholdVal.textContent = "80ms";
+
+      updateDashboard();
+      triggerMicroAnimation(resetBtn);
+    }
+
+    // Animate counter values
+    function animateCounter(element: HTMLSpanElement, start: number, end: number, duration = 300, isPercentage = false) {
+      const startTime = performance.now();
+      
+      // Respect prefers-reduced-motion
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        element.textContent = isPercentage ? `${end.toFixed(1)}%` : String(Math.round(end));
+        return;
+      }
+
+      function update(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOutQuad = (t: number) => t * (2 - t);
+        const currentVal = start + (end - start) * easeOutQuad(progress);
+
+        element.textContent = isPercentage ? `${currentVal.toFixed(1)}%` : String(Math.round(currentVal));
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+      requestAnimationFrame(update);
+    }
+
+    function updateDashboard() {
+      const prevTotal = parseInt(counterTotal.textContent || "0", 10);
+      const prevChatter = parseInt(counterChatter.textContent || "0", 10);
+      const prevRate = parseFloat(counterRate.textContent || "0.0%");
+
+      const rate = totalClicks > 0 ? (chatterClicks / totalClicks) * 100 : 0.0;
+
+      animateCounter(counterTotal, prevTotal, totalClicks);
+      animateCounter(counterChatter, prevChatter, chatterClicks);
+      animateCounter(counterRate, prevRate, rate, 300, true);
+
+      // Warning styling on Chatter card if chatter rate > 0
+      if (chatterClicks > 0) {
+        chatterCard.className = "card-base p-3 bg-brand-red border border-brand-red-dark/30 text-coral-dark flex flex-col items-center justify-center text-center transition-all duration-300";
+      } else {
+        chatterCard.className = "card-base p-3 bg-surface-soft border border-hairline-soft flex flex-col items-center justify-center text-center transition-all duration-300";
+      }
+
+      // Render Logs
+      renderLogs();
+
+      // Render Summary Report
+      renderSummaryReport();
+
+      // Enable/Disable CSV export button
+      btnExportCsv.disabled = clickHistory.length === 0;
+    }
+
+    function renderLogs() {
+      logList.innerHTML = "";
+
+      const filtered = clickHistory.filter(c => {
+        if (currentFilter === "all") return true;
+        return c.button.toLowerCase() === currentFilter;
+      });
+
+      if (filtered.length === 0) {
+        logList.innerHTML = `<div class="text-stone italic text-center py-8">No matching clicks.</div>`;
+        return;
+      }
+
+      // Scroll/Slide animations
+      filtered.slice().reverse().forEach((log) => {
+        const item = document.createElement("div");
+        const isChatter = log.isChatter;
+        
+        item.className = `flex items-center justify-between p-2 rounded-lg border transition-all duration-200 ${
+          isChatter
+            ? "bg-brand-red/60 border-brand-red-dark/30 text-coral-dark font-bold animate-shake"
+            : "bg-canvas border-hairline-soft hover:bg-surface-soft"
+        }`;
+
+        const buttonBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] uppercase font-bold ${
+          log.button === "Left" ? "bg-brand-blue/10 text-brand-blue" :
+          log.button === "Right" ? "bg-brand-coral/10 text-coral-dark" :
+          "bg-yellow-light text-yellow-dark"
+        }">${log.button}</span>`;
+
+        const intervalText = log.interval === 0 ? "First Click" : `${log.interval.toFixed(1)}ms`;
+        const timeStr = new Date(log.timestamp).toLocaleTimeString([], { hour12: false, fractionSecondDigits: 3 } as any).split(" ")[0];
+
+        item.innerHTML = `
+          <div class="flex items-center gap-2">
+            ${buttonBadge}
+            <span>${timeStr}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>${intervalText}</span>
+            ${isChatter ? `<span class="text-[9px] bg-coral-dark text-canvas px-1 rounded font-bold uppercase animate-pulse">CHATTER</span>` : ""}
+          </div>
+        `;
+
+        logList.appendChild(item);
+      });
+    }
+
+    function renderSummaryReport() {
+      if (clickHistory.length === 0) {
+        summarySection.classList.add("hidden");
+        return;
+      }
+
+      summarySection.classList.remove("hidden");
+      summaryBreakdownBody.innerHTML = "";
+
+      const overallChatterRate = (chatterClicks / totalClicks) * 100;
+      const hasSevereIssues = overallChatterRate > 5.0;
+
+      if (hasSevereIssues) {
+        diagnosticStatus.textContent = "ATTENTION REQUIRED";
+        diagnosticStatus.className = "badge-tag-coral bg-coral-light text-coral-dark text-[10px] py-1 px-3 rounded-full font-semibold uppercase animate-pulse";
+        diagnosticText.innerHTML = `Your mouse has a chatter rate of <strong>${overallChatterRate.toFixed(1)}%</strong>. This highly indicates a hardware contact bounce issue. You may experience accidental double-clicks.`;
+      } else {
+        diagnosticStatus.textContent = "HEALTHY";
+        diagnosticStatus.className = "badge-success bg-success-accent text-canvas text-[10px] py-1 px-3 rounded-full font-semibold uppercase";
+        diagnosticText.innerHTML = `No significant hardware double-clicking issue detected (Chatter rate is <strong>${overallChatterRate.toFixed(1)}%</strong>).`;
+      }
+
+      // Fill table rows
+      ["Left", "Middle", "Right"].forEach(btn => {
+        const count = buttonClicks[btn];
+        if (count === 0) return;
+
+        const chatter = buttonChatter[btn];
+        const rate = (chatter / count) * 100;
+        const minInt = minInterval[btn] === Infinity ? "-" : `${minInterval[btn].toFixed(1)}ms`;
+        const status = rate > 5.0 ? `<span class="text-coral-dark font-bold">Chattering</span>` : `<span class="text-success-accent">Healthy</span>`;
+
+        const row = document.createElement("tr");
+        row.className = "border-b border-hairline-soft text-slate";
+        row.innerHTML = `
+          <td class="py-2">${btn}</td>
+          <td class="py-2">${count}</td>
+          <td class="py-2">${chatter} (${rate.toFixed(1)}%)</td>
+          <td class="py-2">${minInt}</td>
+          <td class="py-2">${status}</td>
+        `;
+        summaryBreakdownBody.appendChild(row);
+      });
+    }
+
+    // Metronome/Rhythm Helper for Practice Mode
+    function startMetronome() {
+      if (metronomeIntervalId) clearInterval(metronomeIntervalId);
+
+      const msPerBeat = 60000 / practiceBpm;
+      metronomeIntervalId = window.setInterval(() => {
+        // Pulse Metronome Icon
+        practiceMetronome.classList.add("bg-brand-blue", "scale-125");
+        practiceTargetRing.classList.remove("scale-95");
+        practiceTargetRing.classList.add("scale-105", "border-brand-blue/80");
+
+        setTimeout(() => {
+          practiceMetronome.classList.remove("bg-brand-blue", "scale-125");
+          practiceTargetRing.classList.remove("scale-105", "border-brand-blue/80");
+          practiceTargetRing.classList.add("scale-95");
+        }, 100);
+      }, msPerBeat);
+    }
+
+    // metronome stop
+    function stopMetronome() {
+      if (metronomeIntervalId) {
+        clearInterval(metronomeIntervalId);
+        metronomeIntervalId = null;
+      }
+    }
+
+    // Click registration logic
+    function handleMouseClick(e: MouseEvent) {
+      // Stop execution if touched & touchwarning active
+      if ((e as any).pointerType && (e as any).pointerType !== "mouse") {
+        touchWarning.classList.remove("hidden");
+      }
+
+      e.preventDefault();
+
+      let buttonName = "Left";
+      if (e.button === 1) buttonName = "Middle";
+      if (e.button === 2) buttonName = "Right";
+
+      const now = performance.now();
+      const lastTime = lastClickTime[buttonName];
+      let interval = 0;
+
+      if (lastTime > 0) {
+        interval = now - lastTime;
+      }
+
+      // Check chatter
+      const isChatter = interval > 0 && interval < chatterThreshold;
+
+      // Update local state
+      lastClickTime[buttonName] = now;
+      totalClicks++;
+      buttonClicks[buttonName]++;
+
+      if (isChatter) {
+        chatterClicks++;
+        buttonChatter[buttonName]++;
+        triggerChatterFeedback();
+      } else {
+        triggerNormalFeedback(e);
+      }
+
+      if (interval > 0 && interval < minInterval[buttonName]) {
+        minInterval[buttonName] = interval;
+      }
+
+      clickHistory.push({
+        button: buttonName,
+        timestamp: Date.now(),
+        interval: interval,
+        isChatter: isChatter,
+      });
+
+      saveState();
+      updateDashboard();
+    }
+
+    // Ripple feedback
+    function triggerNormalFeedback(e: MouseEvent) {
+      // Ripple Animation inside Click zone
+      const rect = clickZone.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const ripple = document.createElement("div");
+      ripple.className = "absolute rounded-full bg-brand-blue/20 pointer-events-none transform -translate-x-1/2 -translate-y-1/2 scale-0 animate-ping duration-300";
+      ripple.style.width = "60px";
+      ripple.style.height = "60px";
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+
+      rippleOverlay.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 400);
+
+      // Light flash on click zone
+      clickZone.classList.add("bg-surface");
+      setTimeout(() => clickZone.classList.remove("bg-surface"), 100);
+    }
+
+    function triggerChatterFeedback() {
+      // Shake and Flash Click Zone Alarmingly
+      clickZone.classList.add("bg-brand-red", "border-brand-red-dark/80", "animate-shake");
+      
+      // Respect prefers-reduced-motion
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        clickZone.classList.remove("animate-shake");
+      }
+
+      setTimeout(() => {
+        clickZone.classList.remove("bg-brand-red", "border-brand-red-dark/80", "animate-shake");
+      }, 350);
+    }
+
+    // CSV Exporter
+    function exportToCsv() {
+      if (clickHistory.length === 0) return;
+
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Button,Timestamp,Interval (ms),Is Chatter\n";
+
+      clickHistory.forEach(log => {
+        const timeStr = new Date(log.timestamp).toISOString();
+        csvContent += `${log.button},${timeStr},${log.interval.toFixed(2)},${log.isChatter}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `double_click_test_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Micro interactions helper
+    function triggerMicroAnimation(btn: HTMLButtonElement) {
+      btn.classList.add("scale-95");
+      setTimeout(() => {
+        btn.classList.remove("scale-95");
+      }, 100);
+    }
+
+    // Event Listeners
+    clickZone.addEventListener("mousedown", handleMouseClick);
+    clickZone.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    chatterThresholdRange.addEventListener("input", () => {
+      chatterThreshold = parseInt(chatterThresholdRange.value, 10);
+      chatterThresholdVal.textContent = `${chatterThreshold}ms`;
+      saveState();
+    });
+
+    practiceToggleBtn.addEventListener("click", () => {
+      practiceModeActive = !practiceModeActive;
+      if (practiceModeActive) {
+        practiceToggleBtn.textContent = "On";
+        practiceToggleBtn.className = "inline-flex items-center gap-1 text-[10px] font-bold px-3 py-1 bg-primary text-canvas rounded-full transition-all cursor-pointer";
+        practiceSettingsPanel.classList.remove("hidden");
+        practiceGuideBox.classList.remove("opacity-0");
+        practiceGuideBox.classList.add("opacity-100");
+        startMetronome();
+      } else {
+        practiceToggleBtn.textContent = "Off";
+        practiceToggleBtn.className = "inline-flex items-center gap-1 text-[10px] font-bold px-3 py-1 bg-surface hover:bg-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer";
+        practiceSettingsPanel.classList.add("hidden");
+        practiceGuideBox.classList.add("opacity-0");
+        practiceGuideBox.classList.remove("opacity-100");
+        stopMetronome();
+      }
+    });
+
+    // BPM change listeners
+    document.querySelectorAll(".bpm-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const bpm = parseInt(target.getAttribute("data-bpm") || "240", 10);
+        practiceBpm = bpm;
+
+        // Visual selection update
+        document.querySelectorAll(".bpm-btn").forEach(b => {
+          b.className = "bpm-btn px-3 py-1 text-[10px] font-bold rounded-full border border-hairline bg-canvas text-slate hover:text-primary transition-all";
+        });
+        target.className = "bpm-btn px-3 py-1 text-[10px] font-bold rounded-full border border-hairline bg-primary text-canvas transition-all";
+
+        if (practiceModeActive) startMetronome();
+      });
+    });
+
+    // Filter Listeners
+    function applyFilter(filterName: typeof currentFilter, activeBtn: HTMLButtonElement) {
+      currentFilter = filterName;
+
+      [filterAll, filterLeft, filterMiddle, filterRight].forEach(b => {
+        b.className = "px-2.5 py-0.5 rounded-full transition-all";
+      });
+      activeBtn.className = "px-2.5 py-0.5 rounded-full bg-primary text-canvas transition-all";
+
+      renderLogs();
+    }
+
+    filterAll.addEventListener("click", () => applyFilter("all", filterAll));
+    filterLeft.addEventListener("click", () => applyFilter("left", filterLeft));
+    filterMiddle.addEventListener("click", () => applyFilter("middle", filterMiddle));
+    filterRight.addEventListener("click", () => applyFilter("right", filterRight));
+
+    // Reset button triggers
+    resetBtn.addEventListener("click", handleReset);
+    btnExportCsv.addEventListener("click", exportToCsv);
+
+    // Modal Events
+    howItWorksBtn.addEventListener("click", () => howItWorksModal.classList.remove("hidden"));
+    closeModalBtn.addEventListener("click", () => howItWorksModal.classList.add("hidden"));
+    modalOkBtn.addEventListener("click", () => howItWorksModal.classList.add("hidden"));
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Cleanup listeners on navigate
+    document.addEventListener("astro:before-swap", () => {
+      stopMetronome();
+    });
+
+    // Run init
+    init();
+  </script>
+
+  <!-- Global styles overrides -->
+  <style is:global>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shake 0.3s ease-in-out;
+    }
+  </style>
 </Layout>
