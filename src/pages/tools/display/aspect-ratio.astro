@@ -1,90 +1,2612 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Aspect Ratio Checker";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Calculate screen aspect ratios, viewport pixel geometries, and scaling grids.";
+const description =
+  "Calculate and verify screen aspect ratios, viewport pixel geometries, physical scales, and CSS properties.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Aspect Ratio Checker - Viewport, Screen & Resolution Calculator";
+const seoKeywords =
+  "aspect ratio checker, screen ratio calculator, check aspect ratio, viewport dimensions, resolution scaling calculator, screen size ratio, css aspect-ratio, display diagnostic, ppi calculator, pixels per inch, monitor resolution";
+const canonicalUrl = "https://boardtools.app/tools/display/aspect-ratio";
+const ogImage = "/og/aspect-ratio.png";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={seoKeywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Aspect Ratio Checker",
+      "alternateName": "Resolution Ratio Tool",
+      "url": "https://boardtools.app/tools/display/aspect-ratio",
+      "description": "Compute screen aspect ratios, live browser viewport measurements, device pixel scaling, PPI calculations, and ratio comparisons in real-time.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript.",
+      "featureList": [
+        "Live viewport and screen pixel aspect ratio tracking",
+        "Exact GCD ratio reduction algorithm",
+        "Nearest common video display ratio matching",
+        "Live scaling aspect ratio visual shape previewer",
+        "Three-way interactive dimension constraint solver",
+        "Pixel-perfect image and video scaling grid",
+        "Custom user-named resolution preset saving",
+        "Side-by-side ratio comparison mode",
+        "PPI (pixels per inch) density calculator",
+        "Use-case reference panel with popular platforms",
+        "One-click orientation flip (portrait/landscape)",
+        "Ratio history with last 10 calculations"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Aspect Ratio Checker",
+          "item": "https://boardtools.app/tools/display/aspect-ratio"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+          >
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div
+          class="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-start sm:justify-end"
+        >
+          <!-- Keyboard shortcuts button -->
+          <button
+            type="button"
+            id="shortcuts-btn"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="View keyboard shortcuts"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <rect
+                x="2"
+                y="4"
+                width="20"
+                height="16"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="2"
+                fill="none"></rect>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"
+              ></path>
+            </svg>
+            <span>Shortcuts</span>
+          </button>
+
+          <!-- Reset button -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How aspect ratio checker works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Top-level Mode Tabs -->
+    <div
+      class="flex rounded-full bg-surface p-1 border border-hairline w-full max-w-lg"
+    >
+      <button
+        type="button"
+        id="tab-live-btn"
+        class="flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas shadow-subtle"
+      >
+        <span class="hidden sm:inline">Live Viewport</span>
+        <span class="sm:hidden">Live</span>
+      </button>
+      <button
+        type="button"
+        id="tab-custom-btn"
+        class="flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-primary"
+      >
+        <span class="hidden sm:inline">Custom Calculator</span>
+        <span class="sm:hidden">Custom</span>
+      </button>
+      <button
+        type="button"
+        id="tab-compare-btn"
+        class="flex-1 text-center text-xs py-2 rounded-full font-bold transition-all cursor-pointer text-slate hover:text-primary"
+      >
+        <span class="hidden sm:inline">Compare Ratios</span>
+        <span class="sm:hidden">Compare</span>
+      </button>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-start">
+      <!-- Left Column: Visual previewer + diagnostics -->
+      <div class="lg:col-span-7 flex flex-col gap-4 sm:gap-6">
+        <!-- ============================================================ -->
+        <!-- SINGLE RATIO PREVIEW PANEL (Live / Custom modes)             -->
+        <!-- ============================================================ -->
+        <div id="single-preview-panel" class="flex flex-col gap-4">
+          <!-- Interactive Visual Shape Previewer -->
+          <div
+            class="card-base flex flex-col gap-0 items-center justify-between min-h-[300px] sm:min-h-[380px] relative overflow-hidden bg-surface-soft/60 p-0"
+          >
+            <div
+              class="w-full flex items-center justify-between px-3 pt-3 pb-2 z-10"
+            >
+              <div class="flex items-center gap-1.5">
+                <span
+                  class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+                  id="live-indicator"></span>
+                <span
+                  class="text-[10px] font-bold text-slate uppercase tracking-wider"
+                  id="preview-mode-label">Live Viewport Preview</span
+                >
+              </div>
+              <div
+                class="flex items-center gap-1 sm:gap-2 flex-wrap justify-end"
+              >
+                <!-- Grid lines toggle -->
+                <button
+                  id="toggle-grid-btn"
+                  type="button"
+                  title="Toggle grid lines"
+                  class="px-2 py-0.5 text-[9px] font-bold rounded-full text-slate hover:text-primary border border-hairline hover:border-primary transition-all flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    ><path
+                      d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"
+                    ></path></svg
+                  >
+                  Grid
+                </button>
+                <!-- Orientation flip -->
+                <button
+                  id="flip-orientation-btn"
+                  type="button"
+                  title="Flip portrait / landscape (F)"
+                  class="px-2 py-0.5 text-[9px] font-bold rounded-full text-slate hover:text-primary border border-hairline hover:border-primary transition-all flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    ><path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"
+                    ></path></svg
+                  >
+                  Flip
+                </button>
+                <!-- Simplified vs Decimal Toggle -->
+                <div
+                  class="bg-canvas border border-hairline rounded-full p-0.5 flex gap-1 shadow-subtle shrink-0"
+                >
+                  <button
+                    id="toggle-ratio-simp"
+                    class="px-2 py-0.5 text-[9px] font-bold rounded-full bg-primary text-canvas transition-all"
+                    type="button"
+                  >
+                    <span class="hidden sm:inline">Simplified</span>
+                    <span class="sm:hidden">Ratio</span>
+                  </button>
+                  <button
+                    id="toggle-ratio-dec"
+                    class="px-2 py-0.5 text-[9px] font-bold rounded-full text-slate hover:text-primary transition-all"
+                    type="button"
+                  >
+                    <span class="hidden sm:inline">Decimal</span>
+                    <span class="sm:hidden">Dec</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scaled Box -->
+            <div
+              class="w-full flex items-center justify-center px-6 pb-4 pt-2 relative"
+              id="preview-area"
+              style="min-height: 180px; height: 220px;"
+            >
+              <div
+                id="visual-ratio-box"
+                class="border-2 border-primary bg-brand-yellow/15 rounded-xl shadow-lg flex flex-col items-center justify-center gap-2 p-4 transition-all duration-300 relative overflow-hidden"
+                style="width: 200px; height: 120px;"
+              >
+                <!-- Grid overlay (hidden by default) -->
+                <div
+                  id="grid-overlay"
+                  class="absolute inset-0 opacity-20 pointer-events-none hidden"
+                  style="background-image: repeating-linear-gradient(0deg,#1c1c1e 0,#1c1c1e 1px,transparent 1px,transparent 33.33%),repeating-linear-gradient(90deg,#1c1c1e 0,#1c1c1e 1px,transparent 1px,transparent 33.33%);"
+                >
+                </div>
+                <!-- Rule of thirds overlay (3x3 grid) -->
+
+                <span
+                  id="box-ratio-label"
+                  class="font-display font-medium text-xl sm:text-2xl text-primary drop-shadow-sm select-none z-10"
+                  >16:9</span
+                >
+                <span
+                  id="box-pixels-label"
+                  class="text-[11px] text-slate font-mono select-none z-10"
+                  >1920 × 1080</span
+                >
+
+                <!-- CSS aspect-ratio previewer watermark -->
+                <span
+                  id="box-css-label"
+                  class="text-[9px] text-stone font-mono bg-canvas px-1.5 py-0.5 rounded border border-hairline select-none z-10"
+                  >aspect-ratio: 16 / 9</span
+                >
+              </div>
+            </div>
+
+            <!-- Proportion bar — visual width:height ratio strip -->
+            <div class="w-full px-3 pb-3">
+              <div class="flex items-center gap-1.5 mb-1">
+                <span
+                  class="text-[9px] font-bold text-stone uppercase tracking-wider"
+                  >Proportion</span
+                >
+              </div>
+              <div
+                class="w-full h-4 rounded-full bg-surface border border-hairline overflow-hidden flex"
+              >
+                <div
+                  id="prop-bar-w"
+                  class="h-full bg-primary transition-all duration-300 flex items-center justify-center"
+                  style="width:64%"
+                >
+                  <span
+                    id="prop-bar-w-label"
+                    class="text-[8px] text-canvas font-bold select-none truncate px-1"
+                    >W</span
+                  >
+                </div>
+                <div
+                  id="prop-bar-h"
+                  class="h-full bg-brand-yellow/80 transition-all duration-300 flex items-center justify-center"
+                  style="width:36%"
+                >
+                  <span
+                    id="prop-bar-h-label"
+                    class="text-[8px] text-primary font-bold select-none truncate px-1"
+                    >H</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- CSS copy overlay snippet -->
+            <div
+              class="w-full border-t border-hairline-soft bg-canvas/70 px-3 py-2 flex flex-row items-center justify-between gap-3 text-xs"
+            >
+              <code
+                class="font-mono text-slate truncate select-all"
+                id="css-snippet-text">aspect-ratio: 16 / 9;</code
+              >
+              <div class="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  id="export-btn"
+                  class="px-2.5 py-1 text-[11px] font-semibold bg-surface hover:bg-hairline text-slate rounded-full transition-all cursor-pointer shadow-subtle flex items-center gap-1 active:scale-95"
+                  title="Export ratio info as JSON"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3.5 h-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    ><path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    ></path></svg
+                  >
+                  <span>Export</span>
+                </button>
+                <button
+                  type="button"
+                  id="copy-css-btn"
+                  class="px-2.5 py-1 text-[11px] font-semibold bg-primary hover:bg-charcoal text-canvas rounded-full transition-all cursor-pointer shadow-subtle flex items-center gap-1 shrink-0 active:scale-95"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-3.5 h-3.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                    ></path>
+                  </svg>
+                  <span>Copy CSS</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Live Diagnostics Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="card-base p-3 flex flex-col gap-1 justify-center">
+              <span
+                class="text-[10px] font-bold text-slate uppercase tracking-wider"
+                >CSS Viewport</span
+              >
+              <span
+                id="stat-css-viewport"
+                class="text-sm font-semibold font-mono text-primary">---</span
+              >
+              <span class="text-[9px] text-stone">Logical size</span>
+            </div>
+            <div class="card-base p-3 flex flex-col gap-1 justify-center">
+              <span
+                class="text-[10px] font-bold text-slate uppercase tracking-wider"
+                >Physical Screen</span
+              >
+              <span
+                id="stat-phys-screen"
+                class="text-sm font-semibold font-mono text-primary">---</span
+              >
+              <span class="text-[9px] text-stone">Hardware resolution</span>
+            </div>
+            <div class="card-base p-3 flex flex-col gap-1 justify-center">
+              <span
+                class="text-[10px] font-bold text-slate uppercase tracking-wider"
+                >Device Pixel Ratio</span
+              >
+              <span
+                id="stat-dpr"
+                class="text-sm font-semibold font-mono text-primary">---</span
+              >
+              <span class="text-[9px] text-stone">Pixel scaling factor</span>
+            </div>
+            <div class="card-base p-3 flex flex-col gap-1 justify-center">
+              <span
+                class="text-[10px] font-bold text-slate uppercase tracking-wider"
+                >Nearest Standard</span
+              >
+              <span
+                id="stat-nearest-ratio"
+                class="text-sm font-semibold text-brand-blue">---</span
+              >
+              <span class="text-[9px] text-stone">Closest display ratio</span>
+            </div>
+          </div>
+
+          <!-- Ratio History Strip -->
+          <div class="card-base flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <h3
+                class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-coral"></span>
+                Recent Calculations
+              </h3>
+              <button
+                type="button"
+                id="clear-history-btn"
+                class="text-[9px] text-stone hover:text-brand-coral transition-colors cursor-pointer font-semibold"
+                >Clear</button
+              >
+            </div>
+            <div id="history-list" class="flex flex-wrap gap-1.5 min-h-[28px]">
+              <span class="text-[10px] text-stone italic" id="history-empty"
+                >No history yet.</span
+              >
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- ============================================================ -->
+        <!-- COMPARE PANEL (side-by-side visual comparison)               -->
+        <!-- ============================================================ -->
+        <div id="compare-panel" class="hidden flex-col gap-4">
+          <div class="card-base flex flex-col gap-3 p-4">
+            <h3
+              class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+              Side-by-Side Comparison
+            </h3>
+            <p class="text-[10px] text-slate leading-relaxed">
+              Enter two ratios to see them visually scaled at the same height
+              for an instant size comparison.
+            </p>
+
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Ratio A -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[10px] font-bold text-slate uppercase"
+                  >Ratio A</label
+                >
+                <div class="flex gap-2">
+                  <input
+                    type="number"
+                    id="compare-a-w"
+                    value="16"
+                    min="1"
+                    class="w-full bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-2 h-9 focus:border-brand-blue outline-none transition-all"
+                    placeholder="W"
+                  />
+                  <span class="flex items-center text-stone font-bold text-sm"
+                    >:</span
+                  >
+                  <input
+                    type="number"
+                    id="compare-a-h"
+                    value="9"
+                    min="1"
+                    class="w-full bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-2 h-9 focus:border-brand-blue outline-none transition-all"
+                    placeholder="H"
+                  />
+                </div>
+              </div>
+              <!-- Ratio B -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[10px] font-bold text-slate uppercase"
+                  >Ratio B</label
+                >
+                <div class="flex gap-2">
+                  <input
+                    type="number"
+                    id="compare-b-w"
+                    value="4"
+                    min="1"
+                    class="w-full bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-2 h-9 focus:border-brand-blue outline-none transition-all"
+                    placeholder="W"
+                  />
+                  <span class="flex items-center text-stone font-bold text-sm"
+                    >:</span
+                  >
+                  <input
+                    type="number"
+                    id="compare-b-h"
+                    value="3"
+                    min="1"
+                    class="w-full bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-2 h-9 focus:border-brand-blue outline-none transition-all"
+                    placeholder="H"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual comparison boxes -->
+            <div
+              class="relative bg-surface-soft rounded-xl border border-hairline-soft p-4 flex items-end gap-4 min-h-[200px] overflow-hidden"
+            >
+              <div class="flex flex-col items-center gap-2 flex-1">
+                <div
+                  id="compare-box-a"
+                  class="border-2 border-primary bg-primary/10 rounded-lg flex items-center justify-center transition-all duration-300"
+                  style="width:100%;height:120px;"
+                >
+                  <span
+                    id="compare-label-a"
+                    class="font-display font-semibold text-primary text-sm select-none"
+                    >16:9</span
+                  >
+                </div>
+                <div class="text-center">
+                  <div
+                    id="compare-a-info"
+                    class="text-[10px] font-bold text-primary"
+                  >
+                    16:9
+                  </div>
+                  <div
+                    id="compare-a-decimal"
+                    class="text-[9px] text-stone font-mono"
+                  >
+                    ≈ 1.778
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center gap-2 flex-1">
+                <div
+                  id="compare-box-b"
+                  class="border-2 border-brand-blue bg-brand-blue/10 rounded-lg flex items-center justify-center transition-all duration-300"
+                  style="width:100%;height:90px;"
+                >
+                  <span
+                    id="compare-label-b"
+                    class="font-display font-semibold text-brand-blue text-sm select-none"
+                    >4:3</span
+                  >
+                </div>
+                <div class="text-center">
+                  <div
+                    id="compare-b-info"
+                    class="text-[10px] font-bold text-brand-blue"
+                  >
+                    4:3
+                  </div>
+                  <div
+                    id="compare-b-decimal"
+                    class="text-[9px] text-stone font-mono"
+                  >
+                    ≈ 1.333
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparison stats -->
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div
+                class="bg-surface rounded-lg p-2 border border-hairline-soft"
+              >
+                <div class="text-[9px] text-stone uppercase font-bold mb-0.5">
+                  Width Diff
+                </div>
+                <div
+                  id="compare-stat-width"
+                  class="text-xs font-bold text-primary font-mono"
+                >
+                  —
+                </div>
+              </div>
+              <div
+                class="bg-surface rounded-lg p-2 border border-hairline-soft"
+              >
+                <div class="text-[9px] text-stone uppercase font-bold mb-0.5">
+                  Ratio Diff
+                </div>
+                <div
+                  id="compare-stat-ratio"
+                  class="text-xs font-bold text-primary font-mono"
+                >
+                  —
+                </div>
+              </div>
+              <div
+                class="bg-surface rounded-lg p-2 border border-hairline-soft"
+              >
+                <div class="text-[9px] text-stone uppercase font-bold mb-0.5">
+                  Area Diff
+                </div>
+                <div
+                  id="compare-stat-area"
+                  class="text-xs font-bold text-primary font-mono"
+                >
+                  —
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Calculators, PPI, presets, use-cases -->
+      <div class="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
+        <!-- Dynamic Preset Chips Panel -->
+        <div class="card-base flex flex-col gap-3">
+          <h3
+            class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep"></span>
+            Resolution Presets
+          </h3>
+          <div class="flex flex-wrap gap-1.5" id="presets-container">
+            <button
+              type="button"
+              data-w="1920"
+              data-h="1080"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >1920×1080 <span class="opacity-60 text-[9px]">(16:9)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="2560"
+              data-h="1440"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >2560×1440 <span class="opacity-60 text-[9px]">(16:9)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="3840"
+              data-h="2160"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >3840×2160 <span class="opacity-60 text-[9px]">(4K UHD)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="1080"
+              data-h="1920"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >1080×1920 <span class="opacity-60 text-[9px]">(9:16 Mobile)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="1280"
+              data-h="720"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >1280×720 <span class="opacity-60 text-[9px]">(720p HD)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="1440"
+              data-h="900"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >1440×900 <span class="opacity-60 text-[9px]">(16:10)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="800"
+              data-h="600"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >800×600 <span class="opacity-60 text-[9px]">(4:3 Classic)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="1080"
+              data-h="1080"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >1080×1080 <span class="opacity-60 text-[9px]">(1:1 Square)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="2560"
+              data-h="1080"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >2560×1080 <span class="opacity-60 text-[9px]">(21:9 UW)</span
+              ></button
+            >
+            <button
+              type="button"
+              data-w="7680"
+              data-h="4320"
+              class="chip bg-surface hover:bg-hairline text-slate hover:text-primary text-[11px] font-semibold px-2.5 py-1 rounded-full border border-hairline transition-all cursor-pointer"
+              >7680×4320 <span class="opacity-60 text-[9px]">(8K UHD)</span
+              ></button
+            >
+          </div>
+        </div>
+
+        <!-- Custom Dimension Solver Block -->
+        <div
+          class="card-base flex flex-col gap-4 transition-all duration-300"
+          id="solver-panel"
+        >
+          <div class="flex items-center justify-between">
+            <h3
+              class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+              Dimension &amp; Ratio Solver
+            </h3>
+            <span
+              class="text-[10px] text-slate font-semibold"
+              id="solver-status">Custom Workspace</span
+            >
+          </div>
+
+          <div class="flex flex-col gap-3">
+            <!-- Solve selection -->
+            <div class="flex flex-col gap-1.5">
+              <label
+                for="solve-select"
+                class="text-[10px] font-bold text-slate uppercase"
+                >I want to solve for:</label
+              >
+              <select
+                id="solve-select"
+                class="w-full bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-3 py-2 h-10 focus:border-brand-blue outline-none transition-all cursor-pointer"
+              >
+                <option value="ratio"
+                  >Aspect Ratio (Width &amp; Height known)</option
+                >
+                <option value="height">Height (Width &amp; Ratio known)</option>
+                <option value="width">Width (Height &amp; Ratio known)</option>
+              </select>
+            </div>
+
+            <!-- Custom Calculator Grid -->
+            <div class="grid grid-cols-2 gap-3" id="solver-inputs-grid">
+              <div class="flex flex-col gap-1 relative">
+                <label
+                  for="input-width"
+                  class="text-[10px] font-bold text-slate uppercase"
+                  >Width (px)</label
+                >
+                <input
+                  type="number"
+                  id="input-width"
+                  value="1920"
+                  min="1"
+                  class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-3 py-2 h-10 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition-all"
+                />
+              </div>
+
+              <div class="flex flex-col gap-1 relative">
+                <div class="flex items-center justify-between">
+                  <label
+                    for="input-height"
+                    class="text-[10px] font-bold text-slate uppercase"
+                    >Height (px)</label
+                  >
+                </div>
+                <input
+                  type="number"
+                  id="input-height"
+                  value="1080"
+                  min="1"
+                  class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-3 py-2 h-10 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <!-- Orientation flip row -->
+            <div class="flex items-center gap-2">
+              <button
+                id="flip-orientation-btn2"
+                type="button"
+                class="flex items-center gap-1.5 text-[10px] font-bold px-3 py-1.5 bg-surface hover:bg-hairline border border-hairline rounded-full text-slate hover:text-primary transition-all cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-3 h-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"
+                  ></path></svg
+                >
+                Swap W ↔ H
+              </button>
+              <span class="text-[10px] text-stone">Flip portrait/landscape</span
+              >
+            </div>
+
+            <!-- Custom Ratio Solver inputs (Hidden/Shown based on solver option) -->
+            <div class="flex flex-col gap-1 hidden" id="ratio-input-wrapper">
+              <label
+                for="input-ratio"
+                class="text-[10px] font-bold text-slate uppercase"
+                >Aspect Ratio (e.g. 16:9 or 1.778)</label
+              >
+              <div class="flex gap-2">
+                <input
+                  type="text"
+                  id="input-ratio"
+                  placeholder="e.g. 16:9"
+                  value="16:9"
+                  class="flex-1 bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-3 py-2 h-10 focus:border-brand-blue focus:ring-1 focus:ring-brand-blue outline-none transition-all"
+                />
+                <select
+                  id="standard-ratios-dropdown"
+                  class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-2 h-10 focus:border-brand-blue outline-none transition-all cursor-pointer"
+                >
+                  <option value="">-- Preset Ratios --</option>
+                  <option value="16:9">16:9 (Widescreen)</option>
+                  <option value="16:10">16:10 (Monitor)</option>
+                  <option value="21:9">21:9 (Ultrawide)</option>
+                  <option value="32:9">32:9 (Super Ultrawide)</option>
+                  <option value="4:3">4:3 (Legacy SD)</option>
+                  <option value="3:2">3:2 (Tablet/Photo)</option>
+                  <option value="1:1">1:1 (Square)</option>
+                  <option value="9:16">9:16 (Vertical)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PPI Calculator (new!) -->
+        <div class="card-base flex flex-col gap-3">
+          <h3
+            class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-teal"></span>
+            PPI Calculator
+          </h3>
+          <p class="text-[10px] text-slate leading-relaxed">
+            Enter your display's diagonal size (in inches) to calculate the
+            pixel density of any resolution.
           </p>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div class="flex flex-col gap-1">
+              <label
+                for="ppi-width"
+                class="text-[9px] font-bold text-slate uppercase"
+                >Width (px)</label
+              >
+              <input
+                type="number"
+                id="ppi-width"
+                value="1920"
+                min="1"
+                class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-1.5 h-9 focus:border-brand-blue outline-none transition-all"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label
+                for="ppi-height"
+                class="text-[9px] font-bold text-slate uppercase"
+                >Height (px)</label
+              >
+              <input
+                type="number"
+                id="ppi-height"
+                value="1080"
+                min="1"
+                class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-1.5 h-9 focus:border-brand-blue outline-none transition-all"
+              />
+            </div>
+            <div class="flex flex-col gap-1">
+              <label
+                for="ppi-diagonal"
+                class="text-[9px] font-bold text-slate uppercase"
+                >Diagonal (in)</label
+              >
+              <input
+                type="number"
+                id="ppi-diagonal"
+                value="24"
+                min="1"
+                step="0.1"
+                class="bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2 py-1.5 h-9 focus:border-brand-blue outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div
+              class="bg-surface rounded-lg p-2.5 border border-hairline-soft flex flex-col gap-0.5"
+            >
+              <span
+                class="text-[9px] font-bold text-stone uppercase tracking-wider"
+                >Pixel Density</span
+              >
+              <span
+                id="ppi-result"
+                class="text-lg font-bold text-primary font-mono">---</span
+              >
+              <span class="text-[9px] text-stone">pixels per inch</span>
+            </div>
+            <div
+              class="bg-surface rounded-lg p-2.5 border border-hairline-soft flex flex-col gap-0.5"
+            >
+              <span
+                class="text-[9px] font-bold text-stone uppercase tracking-wider"
+                >Quality Tier</span
+              >
+              <span id="ppi-tier" class="text-sm font-bold text-primary"
+                >---</span
+              >
+              <span id="ppi-tier-desc" class="text-[9px] text-stone">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proportional Scaler Panel -->
+        <div class="card-base flex flex-col gap-3">
+          <h3
+            class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            Proportional Scaler
+          </h3>
+          <p class="text-[10px] text-slate leading-relaxed">
+            Scale the active ratio proportionally to fit any target layout
+            dimension.
+          </p>
+
+          <div class="grid grid-cols-2 gap-3 mt-1">
+            <div
+              class="flex flex-col gap-1 bg-surface-soft p-2.5 rounded-lg border border-hairline-soft"
+            >
+              <label
+                for="scale-width"
+                class="text-[9px] font-bold text-slate uppercase"
+                >Target Width</label
+              >
+              <input
+                type="number"
+                id="scale-width"
+                placeholder="Scale to width"
+                class="bg-canvas text-ink text-xs rounded-md border border-hairline px-2 py-1.5 outline-none focus:border-brand-blue"
+              />
+              <span class="text-[9px] text-stone mt-1">Height is solved</span>
+            </div>
+
+            <div
+              class="flex flex-col gap-1 bg-surface-soft p-2.5 rounded-lg border border-hairline-soft"
+            >
+              <label
+                for="scale-height"
+                class="text-[9px] font-bold text-slate uppercase"
+                >Target Height</label
+              >
+              <input
+                type="number"
+                id="scale-height"
+                placeholder="Scale to height"
+                class="bg-canvas text-ink text-xs rounded-md border border-hairline px-2 py-1.5 outline-none focus:border-brand-blue"
+              />
+              <span class="text-[9px] text-stone mt-1">Width is solved</span>
+            </div>
+          </div>
+
+          <div
+            class="bg-surface p-2.5 rounded-lg border border-hairline flex flex-col gap-1.5 items-center justify-between text-xs font-semibold text-primary"
+          >
+            <span class="text-[9px] text-slate uppercase tracking-wider"
+              >Scaled Geometry</span
+            >
+            <div
+              class="flex items-center gap-2 font-mono"
+              id="scale-geometry-result"
+            >
+              <span>-- px</span>
+              <span class="text-stone">×</span>
+              <span>-- px</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Use-Case Reference Panel (new!) -->
+        <div class="card-base flex flex-col gap-3">
+          <h3
+            class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+          >
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-rose"></span>
+            Use-Case Reference
+          </h3>
+          <p class="text-[10px] text-slate leading-relaxed">
+            Standard ratios mapped to real-world platforms and media formats.
+            Click any to load it.
+          </p>
+          <div class="flex flex-col gap-1" id="use-case-list">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Custom Persistent Presets Panel -->
+        <div class="card-base flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h3
+              class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-rose"></span>
+              Your Saved Presets
+            </h3>
+            <span class="text-[9px] text-stone">Persisted locally</span>
+          </div>
+
+          <form id="save-preset-form" class="flex gap-2">
+            <input
+              type="text"
+              id="new-preset-name"
+              required
+              placeholder="Name (e.g. My Monitor)"
+              class="flex-1 bg-canvas text-ink text-xs rounded-md border border-hairline-strong px-2.5 py-1.5 outline-none focus:border-brand-blue transition-all"
+            />
+            <button
+              type="submit"
+              class="px-3 py-1.5 bg-primary hover:bg-charcoal text-canvas text-xs font-bold rounded-full transition-all cursor-pointer shadow-subtle shrink-0"
+            >
+              + Save
+            </button>
+          </form>
+
+          <div
+            id="saved-presets-list"
+            class="flex flex-col gap-1.5 max-h-[140px] overflow-y-auto pr-1"
+          >
+            <p
+              class="text-[10px] text-stone italic text-center py-2"
+              id="no-saved-presets"
+            >
+              No custom presets saved yet.
+            </p>
+          </div>
+        </div>
+
+        <!-- Share URL panel -->
+        <div class="card-feature-teal flex flex-col gap-2 p-4">
+          <span
+            class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start"
+            >SHARE LINK</span
+          >
+          <h3 class="font-display font-semibold text-xs text-primary">
+            Aspect Ratio URL Link
+          </h3>
+          <p class="text-[10px] text-moss-dark leading-relaxed">
+            Generate a shareable URL pre-filled with your current custom solver
+            values.
+          </p>
+          <div class="flex items-center gap-2 mt-1">
+            <input
+              type="text"
+              id="share-link-input"
+              readonly
+              class="flex-1 bg-canvas/80 text-ink text-[11px] rounded-md border border-hairline-strong px-2 py-1.5 outline-none select-all"
+            />
+            <button
+              type="button"
+              id="copy-share-btn"
+              class="px-2.5 py-1.5 text-[10px] font-bold bg-primary hover:bg-charcoal text-canvas rounded-full transition-all cursor-pointer flex items-center gap-1 active:scale-95"
+            >
+              Copy
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Aspect Ratio Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <p>
+          An <strong>Aspect Ratio</strong> represents the proportional relationship
+          between a shape's width and its height. It is written as two numbers separated
+          by a colon (e.g. <code>16:9</code>).
+        </p>
+
+        <h4 class="font-bold text-primary mt-1">
+          Logical vs. Physical Dimensions
+        </h4>
+        <p>
+          Modern screens have high-density pixel layers (like Apple Retina or
+          high-DPI panels).
+          <strong>CSS Pixels</strong> represent logical layout grid points used to
+          scale web layouts.
+          <strong>Physical Pixels</strong> are the actual individual LEDs or subpixel
+          hardware grids. Multiplying CSS dimensions by the <code
+            >devicePixelRatio</code
+          > gives the exact physical hardware output.
+        </p>
+
+        <h4 class="font-bold text-primary mt-1">GCD-Based Ratio Reduction</h4>
+        <p>
+          We simplify dimensions into exact aspect ratios using the greatest
+          common divisor (GCD) formula. This produces clean integer ratios like <code
+            >16:9</code
+          > instead of floating-point approximations.
+        </p>
+
+        <h4 class="font-bold text-primary mt-1">
+          Nearest Standard Ratio Matching
+        </h4>
+        <p>
+          Since window boundaries can be uneven, exact ratios can be chaotic.
+          Our matching engine compares your current shape's decimal aspect
+          against standard display templates and highlights the closest visual
+          match.
+        </p>
+
+        <h4 class="font-bold text-primary mt-1">Calculator Modes</h4>
+        <ul class="list-disc pl-4 flex flex-col gap-1">
+          <li>
+            <strong>Live Viewport:</strong> Monitors your active browser window dimensions
+            in real-time.
+          </li>
+          <li>
+            <strong>Custom Calculator:</strong> Solve unknown dimensions, scaling
+            factors, or ratios.
+          </li>
+          <li>
+            <strong>Compare Ratios:</strong> Visual side-by-side comparison of two
+            different ratios.
+          </li>
+        </ul>
+
+        <h4 class="font-bold text-primary mt-1">PPI Calculator</h4>
+        <p>
+          Pixel-per-inch density measures the sharpness of a display. Enter a
+          display diagonal in inches with a resolution to compute PPI.
+          Generally, &gt;200 PPI is considered Retina/HiDPI quality.
+        </p>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-hairline-soft">
+        <button
+          type="button"
+          id="modal-ok-btn"
+          class="px-4 py-2 bg-primary text-canvas hover:bg-charcoal text-[11px] font-semibold rounded-full transition-all cursor-pointer"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div
+    id="shortcuts-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-sm w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-base text-primary">
+          Keyboard Shortcuts
+        </h3>
+        <button
+          type="button"
+          id="close-shortcuts-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+          >✕</button
+        >
+      </div>
+      <div class="flex flex-col gap-2 text-xs">
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Switch to Live mode</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >L</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Switch to Custom mode</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >C</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Switch to Compare mode</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >V</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Flip orientation</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >F</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Toggle grid overlay</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >G</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Toggle simplified/decimal</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >D</kbd
+          >
+        </div>
+        <div
+          class="flex items-center justify-between py-1.5 border-b border-hairline-soft"
+        >
+          <span class="text-slate">Copy CSS snippet</span>
+          <span class="flex gap-1"
+            ><kbd
+              class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+              >Ctrl</kbd
+            ><kbd
+              class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+              >Shift</kbd
+            ><kbd
+              class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+              >C</kbd
+            ></span
+          >
+        </div>
+        <div class="flex items-center justify-between py-1.5">
+          <span class="text-slate">Reset everything</span>
+          <kbd
+            class="bg-surface border border-hairline rounded px-1.5 py-0.5 font-mono text-[10px] text-primary"
+            >Esc</kbd
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript logic -->
+  <script is:inline>
+    (function () {
+      // -----------------------------------------------------------------------
+      // Configuration & Namespacing
+      // -----------------------------------------------------------------------
+      const STORAGE_PRESETS_KEY = "boardtools:aspect-ratio:named-presets";
+      const STORAGE_HISTORY_KEY = "boardtools:aspect-ratio:history";
+
+      // Common Standard Ratios for closest matching
+      const STANDARD_RATIOS = [
+        { label: "16:9", ratio: 16 / 9, w: 16, h: 9 },
+        { label: "16:10", ratio: 16 / 10, w: 16, h: 10 },
+        { label: "21:9", ratio: 21 / 9, w: 21, h: 9 },
+        { label: "32:9", ratio: 32 / 9, w: 32, h: 9 },
+        { label: "4:3", ratio: 4 / 3, w: 4, h: 3 },
+        { label: "3:2", ratio: 3 / 2, w: 3, h: 2 },
+        { label: "1:1", ratio: 1 / 1, w: 1, h: 1 },
+        { label: "9:16", ratio: 9 / 16, w: 9, h: 16 },
+        { label: "3:4", ratio: 3 / 4, w: 3, h: 4 },
+        { label: "2:3", ratio: 2 / 3, w: 2, h: 3 },
+      ];
+
+      // Use-case reference data
+      const USE_CASES = [
+        {
+          label: "YouTube Video",
+          ratio: "16:9",
+          w: 16,
+          h: 9,
+          color: "#FF0000",
+          emoji: "▶",
+        },
+        {
+          label: "Instagram Post",
+          ratio: "1:1",
+          w: 1,
+          h: 1,
+          color: "#E1306C",
+          emoji: "📷",
+        },
+        {
+          label: "Instagram Story",
+          ratio: "9:16",
+          w: 9,
+          h: 16,
+          color: "#833AB4",
+          emoji: "📱",
+        },
+        {
+          label: "Twitter / X Banner",
+          ratio: "3:1",
+          w: 3,
+          h: 1,
+          color: "#1DA1F2",
+          emoji: "𝕏",
+        },
+        {
+          label: "Cinema (Widescreen)",
+          ratio: "21:9",
+          w: 21,
+          h: 9,
+          color: "#1c1c1e",
+          emoji: "🎬",
+        },
+        {
+          label: "DSLR Photo",
+          ratio: "3:2",
+          w: 3,
+          h: 2,
+          color: "#4262ff",
+          emoji: "📸",
+        },
+        {
+          label: "iPad / Tablet",
+          ratio: "4:3",
+          w: 4,
+          h: 3,
+          color: "#0fbcb0",
+          emoji: "💻",
+        },
+        {
+          label: "TikTok / Reels",
+          ratio: "9:16",
+          w: 9,
+          h: 16,
+          color: "#69C9D0",
+          emoji: "🎵",
+        },
+        {
+          label: "LinkedIn Banner",
+          ratio: "4:1",
+          w: 4,
+          h: 1,
+          color: "#0077B5",
+          emoji: "💼",
+        },
+        {
+          label: "Facebook Landscape",
+          ratio: "1.91:1",
+          w: 191,
+          h: 100,
+          color: "#1877F2",
+          emoji: "f",
+        },
+      ];
+
+      // State Management
+      let currentMode = "live"; // "live" | "custom" | "compare"
+      let displayDecimal = false;
+      let gridVisible = false;
+      let cachedLiveWidth = window.innerWidth;
+      let cachedLiveHeight = window.innerHeight;
+      let customWidth = 1920;
+      let customHeight = 1080;
+      let historyItems = [];
+
+      // -----------------------------------------------------------------------
+      // DOM Elements
+      // -----------------------------------------------------------------------
+      const resetBtn = document.getElementById("reset-btn");
+      const howItWorksBtn = document.getElementById("how-it-works-btn");
+      const howItWorksModal = document.getElementById("how-it-works-modal");
+      const closeModalBtn = document.getElementById("close-modal-btn");
+      const modalOkBtn = document.getElementById("modal-ok-btn");
+      const shortcutsBtn = document.getElementById("shortcuts-btn");
+      const shortcutsModal = document.getElementById("shortcuts-modal");
+      const closeShortcutsBtn = document.getElementById("close-shortcuts-btn");
+
+      // Tabs
+      const tabLiveBtn = document.getElementById("tab-live-btn");
+      const tabCustomBtn = document.getElementById("tab-custom-btn");
+      const tabCompareBtn = document.getElementById("tab-compare-btn");
+      const liveIndicator = document.getElementById("live-indicator");
+      const previewModeLabel = document.getElementById("preview-mode-label");
+
+      // Visual box elements
+      const visualRatioBox = document.getElementById("visual-ratio-box");
+      const boxRatioLabel = document.getElementById("box-ratio-label");
+      const boxPixelsLabel = document.getElementById("box-pixels-label");
+      const boxCssLabel = document.getElementById("box-css-label");
+      const cssSnippetText = document.getElementById("css-snippet-text");
+      const copyCssBtn = document.getElementById("copy-css-btn");
+      const exportBtn = document.getElementById("export-btn");
+      const gridOverlay = document.getElementById("grid-overlay");
+      const toggleGridBtn = document.getElementById("toggle-grid-btn");
+      const propBarW = document.getElementById("prop-bar-w");
+      const propBarH = document.getElementById("prop-bar-h");
+      const propBarWLabel = document.getElementById("prop-bar-w-label");
+      const propBarHLabel = document.getElementById("prop-bar-h-label");
+
+      // Diagnostics Output
+      const statCssViewport = document.getElementById("stat-css-viewport");
+      const statPhysScreen = document.getElementById("stat-phys-screen");
+      const statDpr = document.getElementById("stat-dpr");
+      const statNearestRatio = document.getElementById("stat-nearest-ratio");
+
+      // Ratio simplification toggles
+      const toggleRatioSimp = document.getElementById("toggle-ratio-simp");
+      const toggleRatioDec = document.getElementById("toggle-ratio-dec");
+
+      // Solver
+      const solverPanel = document.getElementById("solver-panel");
+      const solverStatus = document.getElementById("solver-status");
+      const solveSelect = document.getElementById("solve-select");
+      const inputWidth = document.getElementById("input-width");
+      const inputHeight = document.getElementById("input-height");
+      const ratioInputWrapper = document.getElementById("ratio-input-wrapper");
+      const inputRatio = document.getElementById("input-ratio");
+      const standardRatiosDropdown = document.getElementById(
+        "standard-ratios-dropdown",
+      );
+      const solverInputsGrid = document.getElementById("solver-inputs-grid");
+
+      // Preset Chips
+      const presetsContainer = document.getElementById("presets-container");
+
+      // Scaler
+      const scaleWidthInput = document.getElementById("scale-width");
+      const scaleHeightInput = document.getElementById("scale-height");
+      const scaleGeometryResult = document.getElementById(
+        "scale-geometry-result",
+      );
+
+      // Saved Presets
+      const savePresetForm = document.getElementById("save-preset-form");
+      const newPresetName = document.getElementById("new-preset-name");
+      const savedPresetsList = document.getElementById("saved-presets-list");
+      const noSavedPresets = document.getElementById("no-saved-presets");
+
+      // Share Link
+      const shareLinkInput = document.getElementById("share-link-input");
+      const copyShareBtn = document.getElementById("copy-share-btn");
+
+      // Orientation flip buttons
+      const flipOrientationBtn = document.getElementById(
+        "flip-orientation-btn",
+      );
+      const flipOrientationBtn2 = document.getElementById(
+        "flip-orientation-btn2",
+      );
+
+      // Panels
+      const singlePreviewPanel = document.getElementById(
+        "single-preview-panel",
+      );
+      const comparePanel = document.getElementById("compare-panel");
+
+      // Compare inputs
+      const compareAW = document.getElementById("compare-a-w");
+      const compareAH = document.getElementById("compare-a-h");
+      const compareBW = document.getElementById("compare-b-w");
+      const compareBH = document.getElementById("compare-b-h");
+      const compareBoxA = document.getElementById("compare-box-a");
+      const compareBoxB = document.getElementById("compare-box-b");
+      const compareLabelA = document.getElementById("compare-label-a");
+      const compareLabelB = document.getElementById("compare-label-b");
+      const compareAInfo = document.getElementById("compare-a-info");
+      const compareADecimal = document.getElementById("compare-a-decimal");
+      const compareBInfo = document.getElementById("compare-b-info");
+      const compareBDecimal = document.getElementById("compare-b-decimal");
+      const compareStatWidth = document.getElementById("compare-stat-width");
+      const compareStatRatio = document.getElementById("compare-stat-ratio");
+      const compareStatArea = document.getElementById("compare-stat-area");
+
+      // PPI Calculator
+      const ppiWidthInput = document.getElementById("ppi-width");
+      const ppiHeightInput = document.getElementById("ppi-height");
+      const ppiDiagonalInput = document.getElementById("ppi-diagonal");
+      const ppiResult = document.getElementById("ppi-result");
+      const ppiTier = document.getElementById("ppi-tier");
+      const ppiTierDesc = document.getElementById("ppi-tier-desc");
+
+      // History
+      const historyList = document.getElementById("history-list");
+      const historyEmpty = document.getElementById("history-empty");
+      const clearHistBtn = document.getElementById("clear-history-btn");
+
+      // Use-case list
+      const useCaseList = document.getElementById("use-case-list");
+
+      // -----------------------------------------------------------------------
+      // Math Helpers
+      // -----------------------------------------------------------------------
+      function getGcd(a, b) {
+        a = Math.abs(Math.round(a));
+        b = Math.abs(Math.round(b));
+        while (b) {
+          let t = b;
+          b = a % b;
+          a = t;
+        }
+        return a;
+      }
+
+      function getSimplifiedRatio(w, h) {
+        if (!w || !h) return "0:0";
+        const gcd = getGcd(w, h);
+        return `${w / gcd}:${h / gcd}`;
+      }
+
+      function getNearestStandardRatio(w, h) {
+        if (!w || !h) return "Unknown";
+        const targetRatio = w / h;
+        let closest = STANDARD_RATIOS[0];
+        let minDiff = Math.abs(targetRatio - closest.ratio);
+        for (let i = 1; i < STANDARD_RATIOS.length; i++) {
+          const diff = Math.abs(targetRatio - STANDARD_RATIOS[i].ratio);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closest = STANDARD_RATIOS[i];
+          }
+        }
+        return minDiff < 0.08 ? closest.label : "Custom";
+      }
+
+      function parseRatio(str) {
+        if (!str) return 1;
+        if (str.includes(":")) {
+          const [w, h] = str.split(":").map(parseFloat);
+          if (w && h) return w / h;
+        }
+        if (str.includes("/")) {
+          const [w, h] = str.split("/").map(parseFloat);
+          if (w && h) return w / h;
+        }
+        const val = parseFloat(str);
+        return isNaN(val) ? 1 : val;
+      }
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // -----------------------------------------------------------------------
+      // Tab / Mode Management
+      // -----------------------------------------------------------------------
+      function setMode(mode) {
+        currentMode = mode;
+
+        // Reset all tabs
+        [tabLiveBtn, tabCustomBtn, tabCompareBtn].forEach((btn) => {
+          btn.classList.remove("bg-primary", "text-canvas", "shadow-subtle");
+          btn.classList.add("text-slate", "hover:text-primary");
+        });
+
+        if (mode === "live") {
+          tabLiveBtn.classList.add(
+            "bg-primary",
+            "text-canvas",
+            "shadow-subtle",
+          );
+          tabLiveBtn.classList.remove("text-slate", "hover:text-primary");
+
+          liveIndicator.classList.remove("hidden");
+          liveIndicator.classList.add("bg-emerald-500");
+          previewModeLabel.textContent = "Live Viewport Preview";
+          solverStatus.textContent = "Live Monitoring Active";
+          solverStatus.className =
+            "text-[10px] text-emerald-500 font-bold uppercase";
+
+          inputWidth.disabled = true;
+          inputHeight.disabled = true;
+          inputRatio.disabled = true;
+          standardRatiosDropdown.disabled = true;
+          solveSelect.disabled = true;
+          solverPanel.classList.add("opacity-60");
+
+          singlePreviewPanel.classList.remove("hidden");
+          singlePreviewPanel.classList.add("flex");
+          comparePanel.classList.add("hidden");
+          comparePanel.classList.remove("flex");
+        } else if (mode === "custom") {
+          tabCustomBtn.classList.add(
+            "bg-primary",
+            "text-canvas",
+            "shadow-subtle",
+          );
+          tabCustomBtn.classList.remove("text-slate", "hover:text-primary");
+
+          liveIndicator.classList.add("hidden");
+          previewModeLabel.textContent = "Custom Dimension Preview";
+          solverStatus.textContent = "Custom Mode Override";
+          solverStatus.className =
+            "text-[10px] text-brand-blue font-bold uppercase";
+
+          inputWidth.disabled = false;
+          inputHeight.disabled = false;
+          inputRatio.disabled = false;
+          standardRatiosDropdown.disabled = false;
+          solveSelect.disabled = false;
+          solverPanel.classList.remove("opacity-60");
+
+          singlePreviewPanel.classList.remove("hidden");
+          singlePreviewPanel.classList.add("flex");
+          comparePanel.classList.add("hidden");
+          comparePanel.classList.remove("flex");
+        } else if (mode === "compare") {
+          tabCompareBtn.classList.add(
+            "bg-primary",
+            "text-canvas",
+            "shadow-subtle",
+          );
+          tabCompareBtn.classList.remove("text-slate", "hover:text-primary");
+
+          liveIndicator.classList.add("hidden");
+          previewModeLabel.textContent = "Compare Mode";
+
+          singlePreviewPanel.classList.add("hidden");
+          singlePreviewPanel.classList.remove("flex");
+          comparePanel.classList.remove("hidden");
+          comparePanel.classList.add("flex");
+
+          updateCompare();
+          return;
+        }
+
+        recalculate();
+      }
+
+      tabLiveBtn.addEventListener("click", () => setMode("live"));
+      tabCustomBtn.addEventListener("click", () => setMode("custom"));
+      tabCompareBtn.addEventListener("click", () => setMode("compare"));
+
+      // -----------------------------------------------------------------------
+      // Core Recalculation
+      // -----------------------------------------------------------------------
+      function recalculate() {
+        let activeWidth = 0;
+        let activeHeight = 0;
+
+        if (currentMode === "live") {
+          activeWidth = window.innerWidth;
+          activeHeight = window.innerHeight;
+        } else {
+          const mode = solveSelect.value;
+          if (mode === "ratio") {
+            activeWidth = Math.max(1, parseInt(inputWidth.value) || 1);
+            activeHeight = Math.max(1, parseInt(inputHeight.value) || 1);
+          } else if (mode === "height") {
+            activeWidth = Math.max(1, parseInt(inputWidth.value) || 1);
+            const ratioVal = parseRatio(inputRatio.value);
+            activeHeight = Math.round(activeWidth / ratioVal) || 1;
+            inputHeight.value = activeHeight;
+          } else if (mode === "width") {
+            activeHeight = Math.max(1, parseInt(inputHeight.value) || 1);
+            const ratioVal = parseRatio(inputRatio.value);
+            activeWidth = Math.round(activeHeight * ratioVal) || 1;
+            inputWidth.value = activeWidth;
+          }
+          customWidth = activeWidth;
+          customHeight = activeHeight;
+        }
+
+        // 1. Live diagnostics panel
+        const dpr = window.devicePixelRatio || 1;
+        statCssViewport.textContent = `${window.innerWidth} × ${window.innerHeight}`;
+        statPhysScreen.textContent = `${Math.round(window.screen.width * dpr)} × ${Math.round(window.screen.height * dpr)}`;
+        statDpr.textContent = `${dpr.toFixed(1)}x`;
+        statNearestRatio.textContent = getNearestStandardRatio(
+          activeWidth,
+          activeHeight,
+        );
+
+        // 2. Visual display computations
+        const rawRatio = activeWidth / activeHeight;
+        const simplifiedRatio = getSimplifiedRatio(activeWidth, activeHeight);
+        const decimalRatio = rawRatio.toFixed(3);
+
+        const displayRatioString = displayDecimal
+          ? decimalRatio
+          : simplifiedRatio;
+        boxRatioLabel.textContent = displayRatioString;
+        boxPixelsLabel.textContent = `${activeWidth} × ${activeHeight} px`;
+
+        const exactGcd = getGcd(activeWidth, activeHeight);
+        const cssAspect = `aspect-ratio: ${activeWidth / exactGcd} / ${activeHeight / exactGcd}`;
+        boxCssLabel.textContent = cssAspect;
+        cssSnippetText.textContent = `${cssAspect};`;
+
+        // 3. Resize visual ratio preview box
+        const previewArea = document.getElementById("preview-area");
+        // clientWidth/clientHeight can be 0 on first render in a flex column on mobile
+        // Use getBoundingClientRect for reliability, with sensible fallbacks
+        const areaBounds = previewArea.getBoundingClientRect();
+        const pWidth = Math.max(80, (areaBounds.width || previewArea.clientWidth || 300) - 48);
+        const pHeight = Math.max(80, (areaBounds.height || previewArea.clientHeight || 220) - 24);
+        const containerRatio = pWidth / pHeight;
+        let newW, newH;
+
+        if (rawRatio > containerRatio) {
+          newW = pWidth;
+          newH = pWidth / rawRatio;
+        } else {
+          newH = pHeight;
+          newW = pHeight * rawRatio;
+        }
+
+        // Clamp: never exceed container, never shrink below readable minimum
+        newW = Math.min(pWidth, Math.max(60, newW));
+        newH = Math.min(pHeight, Math.max(40, newH));
+
+        visualRatioBox.style.width = `${newW}px`;
+        visualRatioBox.style.height = `${newH}px`;
+
+        // Adjust font sizes & visibility based on box dimensions to prevent overflow on mobile/small boxes
+        if (newW < 120 || newH < 85) {
+          boxRatioLabel.className =
+            "font-display font-medium text-xs text-primary drop-shadow-sm select-none z-10 truncate max-w-full text-center px-1";
+          boxPixelsLabel.classList.add("hidden");
+          boxCssLabel.classList.add("hidden");
+        } else if (newW < 185 || newH < 125) {
+          boxRatioLabel.className =
+            "font-display font-medium text-sm sm:text-base text-primary drop-shadow-sm select-none z-10 truncate max-w-full text-center px-1";
+          boxPixelsLabel.className =
+            "text-[9px] text-slate font-mono select-none z-10 truncate max-w-full text-center px-1";
+          boxPixelsLabel.classList.remove("hidden");
+          boxCssLabel.classList.add("hidden");
+        } else {
+          boxRatioLabel.className =
+            "font-display font-medium text-xl sm:text-2xl text-primary drop-shadow-sm select-none z-10 truncate max-w-full text-center px-1";
+          boxPixelsLabel.className =
+            "text-[11px] text-slate font-mono select-none z-10 truncate max-w-full text-center px-1";
+          boxPixelsLabel.classList.remove("hidden");
+          boxCssLabel.className =
+            "text-[9px] text-stone font-mono bg-canvas px-1.5 py-0.5 rounded border border-hairline select-none z-10 truncate max-w-full text-center";
+          boxCssLabel.classList.remove("hidden");
+        }
+
+        // 4. Proportion bar
+        const totalParts = activeWidth + activeHeight;
+        const wPct = ((activeWidth / totalParts) * 100).toFixed(1);
+        const hPct = ((activeHeight / totalParts) * 100).toFixed(1);
+        propBarW.style.width = `${wPct}%`;
+        propBarH.style.width = `${hPct}%`;
+        propBarWLabel.textContent = `W ${wPct}%`;
+        propBarHLabel.textContent = `H ${hPct}%`;
+
+        // 5. Proportional scaler
+        updateScaler(activeWidth, activeHeight);
+
+        // 6. Share link
+        updateShareLink(activeWidth, activeHeight);
+
+        // 7. PPI calculator sync (from current dimensions)
+        ppiWidthInput.value = activeWidth;
+        ppiHeightInput.value = activeHeight;
+        updatePpi();
+
+        // 8. Push to history
+        pushHistory(activeWidth, activeHeight, displayRatioString);
+      }
+
+      // -----------------------------------------------------------------------
+      // Proportional Scaler
+      // -----------------------------------------------------------------------
+      function updateScaler(activeW, activeH) {
+        const ratio = activeW / activeH;
+        const targetW = parseFloat(scaleWidthInput.value);
+        const targetH = parseFloat(scaleHeightInput.value);
+        const focusedEl = document.activeElement;
+
+        if (focusedEl === scaleWidthInput && !isNaN(targetW) && targetW > 0) {
+          const solvedH = Math.round(targetW / ratio);
+          scaleGeometryResult.innerHTML = `<span>${Math.round(targetW)} px</span> <span class="text-stone">×</span> <span>${solvedH} px</span>`;
+          scaleHeightInput.value = solvedH;
+        } else if (
+          focusedEl === scaleHeightInput &&
+          !isNaN(targetH) &&
+          targetH > 0
+        ) {
+          const solvedW = Math.round(targetH * ratio);
+          scaleGeometryResult.innerHTML = `<span>${solvedW} px</span> <span class="text-stone">×</span> <span>${Math.round(targetH)} px</span>`;
+          scaleWidthInput.value = solvedW;
+        } else {
+          scaleGeometryResult.innerHTML = `<span>${activeW} px</span> <span class="text-stone">×</span> <span>${activeH} px</span>`;
+        }
+      }
+
+      scaleWidthInput.addEventListener("input", () => {
+        if (
+          scaleHeightInput.value &&
+          document.activeElement === scaleWidthInput
+        )
+          scaleHeightInput.value = "";
+        recalculate();
+      });
+      scaleHeightInput.addEventListener("input", () => {
+        if (
+          scaleWidthInput.value &&
+          document.activeElement === scaleHeightInput
+        )
+          scaleWidthInput.value = "";
+        recalculate();
+      });
+
+      // -----------------------------------------------------------------------
+      // Share Link
+      // -----------------------------------------------------------------------
+      function updateShareLink(w, h) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("w", w);
+        url.searchParams.set("h", h);
+        shareLinkInput.value = url.toString();
+      }
+
+      // -----------------------------------------------------------------------
+      // Copy / Export helpers
+      // -----------------------------------------------------------------------
+      function animateCopySuccess(btn, originalText) {
+        btn.classList.add("bg-success-accent", "hover:bg-success-accent");
+        btn.classList.remove("bg-primary", "hover:bg-charcoal");
+        const span = btn.querySelector("span");
+        if (span) span.textContent = "Copied!";
+        setTimeout(() => {
+          btn.classList.remove("bg-success-accent", "hover:bg-success-accent");
+          btn.classList.add("bg-primary", "hover:bg-charcoal");
+          if (span) span.textContent = originalText;
+        }, 1200);
+      }
+
+      copyCssBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(cssSnippetText.textContent).then(() => {
+          animateCopySuccess(copyCssBtn, "Copy CSS");
+        });
+      });
+
+      copyShareBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+          animateCopySuccess(copyShareBtn, "Copy");
+        });
+      });
+
+      exportBtn.addEventListener("click", () => {
+        const activeW =
+          currentMode === "live" ? window.innerWidth : customWidth;
+        const activeH =
+          currentMode === "live" ? window.innerHeight : customHeight;
+        const dpr = window.devicePixelRatio || 1;
+        const data = {
+          width: activeW,
+          height: activeH,
+          simplifiedRatio: getSimplifiedRatio(activeW, activeH),
+          decimalRatio: (activeW / activeH).toFixed(6),
+          nearestStandard: getNearestStandardRatio(activeW, activeH),
+          cssProperty: `aspect-ratio: ${activeW / getGcd(activeW, activeH)} / ${activeH / getGcd(activeW, activeH)}`,
+          devicePixelRatio: dpr,
+          physicalWidth: Math.round(window.screen.width * dpr),
+          physicalHeight: Math.round(window.screen.height * dpr),
+          generatedAt: new Date().toISOString(),
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], {
+          type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `aspect-ratio-${activeW}x${activeH}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // -----------------------------------------------------------------------
+      // Orientation Flip
+      // -----------------------------------------------------------------------
+      function flipOrientation() {
+        if (currentMode !== "custom") {
+          setMode("custom");
+          solveSelect.value = "ratio";
+          adjustInputsLayout();
+        }
+        const w = parseInt(inputWidth.value) || customWidth;
+        const h = parseInt(inputHeight.value) || customHeight;
+        inputWidth.value = h;
+        inputHeight.value = w;
+        visualRatioBox.classList.add("scale-[0.97]", "opacity-80");
+        setTimeout(
+          () => visualRatioBox.classList.remove("scale-[0.97]", "opacity-80"),
+          200,
+        );
+        recalculate();
+      }
+
+      flipOrientationBtn.addEventListener("click", flipOrientation);
+      flipOrientationBtn2.addEventListener("click", flipOrientation);
+
+      // -----------------------------------------------------------------------
+      // Grid Toggle
+      // -----------------------------------------------------------------------
+      toggleGridBtn.addEventListener("click", () => {
+        gridVisible = !gridVisible;
+        gridOverlay.classList.toggle("hidden", !gridVisible);
+        toggleGridBtn.classList.toggle("bg-primary", gridVisible);
+        toggleGridBtn.classList.toggle("text-canvas", gridVisible);
+        toggleGridBtn.classList.toggle("text-slate", !gridVisible);
+      });
+
+      // -----------------------------------------------------------------------
+      // Preset Chip clicks
+      // -----------------------------------------------------------------------
+      presetsContainer.addEventListener("click", (e) => {
+        const chip = e.target.closest("button.chip");
+        if (!chip) return;
+
+        const w = parseInt(chip.getAttribute("data-w"));
+        const h = parseInt(chip.getAttribute("data-h"));
+
+        setMode("custom");
+        solveSelect.value = "ratio";
+        adjustInputsLayout();
+
+        inputWidth.value = w;
+        inputHeight.value = h;
+
+        visualRatioBox.classList.add("scale-[1.03]", "bg-brand-yellow/30");
+        setTimeout(
+          () =>
+            visualRatioBox.classList.remove(
+              "scale-[1.03]",
+              "bg-brand-yellow/30",
+            ),
+          250,
+        );
+
+        recalculate();
+      });
+
+      // -----------------------------------------------------------------------
+      // Simplified / Decimal Toggle
+      // -----------------------------------------------------------------------
+      toggleRatioSimp.addEventListener("click", () => {
+        displayDecimal = false;
+        toggleRatioSimp.classList.add("bg-primary", "text-canvas");
+        toggleRatioSimp.classList.remove("text-slate", "hover:text-primary");
+        toggleRatioDec.classList.remove("bg-primary", "text-canvas");
+        toggleRatioDec.classList.add("text-slate", "hover:text-primary");
+        recalculate();
+      });
+
+      toggleRatioDec.addEventListener("click", () => {
+        displayDecimal = true;
+        toggleRatioDec.classList.add("bg-primary", "text-canvas");
+        toggleRatioDec.classList.remove("text-slate", "hover:text-primary");
+        toggleRatioSimp.classList.remove("bg-primary", "text-canvas");
+        toggleRatioSimp.classList.add("text-slate", "hover:text-primary");
+        recalculate();
+      });
+
+      // -----------------------------------------------------------------------
+      // Solver input layout adjustments
+      // -----------------------------------------------------------------------
+      function adjustInputsLayout() {
+        const mode = solveSelect.value;
+        if (mode === "ratio") {
+          solverInputsGrid.classList.remove("hidden");
+          ratioInputWrapper.classList.add("hidden");
+          inputWidth.parentElement.classList.remove("hidden");
+          inputHeight.parentElement.classList.remove("hidden");
+        } else if (mode === "height") {
+          solverInputsGrid.classList.remove("hidden");
+          ratioInputWrapper.classList.remove("hidden");
+          inputWidth.parentElement.classList.remove("hidden");
+          inputHeight.parentElement.classList.add("hidden");
+        } else if (mode === "width") {
+          solverInputsGrid.classList.remove("hidden");
+          ratioInputWrapper.classList.remove("hidden");
+          inputWidth.parentElement.classList.add("hidden");
+          inputHeight.parentElement.classList.remove("hidden");
+        }
+      }
+
+      solveSelect.addEventListener("change", () => {
+        adjustInputsLayout();
+        recalculate();
+      });
+      inputWidth.addEventListener("input", recalculate);
+      inputHeight.addEventListener("input", recalculate);
+      inputRatio.addEventListener("input", recalculate);
+
+      standardRatiosDropdown.addEventListener("change", () => {
+        if (standardRatiosDropdown.value) {
+          inputRatio.value = standardRatiosDropdown.value;
+          recalculate();
+        }
+      });
+
+      // -----------------------------------------------------------------------
+      // PPI Calculator
+      // -----------------------------------------------------------------------
+      function updatePpi() {
+        const w = parseFloat(ppiWidthInput.value);
+        const h = parseFloat(ppiHeightInput.value);
+        const d = parseFloat(ppiDiagonalInput.value);
+
+        if (!w || !h || !d || w <= 0 || h <= 0 || d <= 0) {
+          ppiResult.textContent = "---";
+          ppiTier.textContent = "---";
+          ppiTierDesc.textContent = "—";
+          return;
+        }
+
+        const ppi = Math.round(Math.sqrt(w * w + h * h) / d);
+        ppiResult.textContent = `${ppi} PPI`;
+
+        let tier, desc;
+        if (ppi >= 400) {
+          tier = "Ultra HD";
+          desc = "Microscopic pixels — premium mobile";
+        } else if (ppi >= 220) {
+          tier = "Retina";
+          desc = "Pixel-perfect at normal viewing dist";
+        } else if (ppi >= 160) {
+          tier = "HiDPI";
+          desc = "High-density, sharp text & graphics";
+        } else if (ppi >= 100) {
+          tier = "Standard";
+          desc = "Good for desktop at arm's length";
+        } else if (ppi >= 70) {
+          tier = "Low";
+          desc = "Visible pixels, okay for large displays";
+        } else {
+          tier = "Very Low";
+          desc = "Jagged edges visible at close range";
+        }
+
+        ppiTier.textContent = tier;
+        ppiTierDesc.textContent = desc;
+      }
+
+      ppiWidthInput.addEventListener("input", updatePpi);
+      ppiHeightInput.addEventListener("input", updatePpi);
+      ppiDiagonalInput.addEventListener("input", updatePpi);
+
+      // -----------------------------------------------------------------------
+      // Compare Mode
+      // -----------------------------------------------------------------------
+      function updateCompare() {
+        const aw = parseFloat(compareAW.value) || 16;
+        const ah = parseFloat(compareAH.value) || 9;
+        const bw = parseFloat(compareBW.value) || 4;
+        const bh = parseFloat(compareBH.value) || 3;
+
+        const ratioA = aw / ah;
+        const ratioB = bw / bh;
+
+        // Determine max box width from the compare container (each side is ~50% minus gap)
+        const compareContainer = document.querySelector("#compare-panel .relative.bg-surface-soft");
+        const containerW = compareContainer ? compareContainer.clientWidth : 300;
+        // Each column gets ~half the container minus padding/gap
+        const maxBoxW = Math.max(60, Math.floor((containerW / 2) - 32));
+
+        const BASE_H = Math.max(60, Math.min(140, maxBoxW / Math.max(ratioA, ratioB)));
+        const heightA = BASE_H;
+        const widthA = Math.min(maxBoxW, Math.round(BASE_H * ratioA));
+        const heightB = BASE_H;
+        const widthB = Math.min(maxBoxW, Math.round(BASE_H * ratioB));
+
+        compareBoxA.style.width = `${widthA}px`;
+        compareBoxA.style.height = `${heightA}px`;
+        compareBoxB.style.width = `${widthB}px`;
+        compareBoxB.style.height = `${heightB}px`;
+
+        const simpA = getSimplifiedRatio(aw, ah);
+        const simpB = getSimplifiedRatio(bw, bh);
+        compareLabelA.textContent = simpA;
+        compareLabelB.textContent = simpB;
+        compareAInfo.textContent = simpA;
+        compareBInfo.textContent = simpB;
+        compareADecimal.textContent = `≈ ${ratioA.toFixed(3)}`;
+        compareBDecimal.textContent = `≈ ${ratioB.toFixed(3)}`;
+
+        // Stats: compare at a reference 1000px height
+        const refH = 1000;
+        const wA = Math.round(refH * ratioA);
+        const wB = Math.round(refH * ratioB);
+        const widthDiff = Math.abs(wA - wB);
+        const ratioDiff = Math.abs(ratioA - ratioB).toFixed(4);
+        const areaA = wA * refH;
+        const areaB = wB * refH;
+        const areaDiff = (
+          ((Math.max(areaA, areaB) - Math.min(areaA, areaB)) /
+            Math.min(areaA, areaB)) *
+          100
+        ).toFixed(1);
+
+        compareStatWidth.textContent = `${widthDiff} px wider`;
+        compareStatRatio.textContent = `Δ ${ratioDiff}`;
+        compareStatArea.textContent = `${areaDiff}% more area`;
+      }
+
+      [compareAW, compareAH, compareBW, compareBH].forEach((el) => {
+        el.addEventListener("input", updateCompare);
+      });
+
+      // -----------------------------------------------------------------------
+      // Ratio History
+      // -----------------------------------------------------------------------
+      function loadHistory() {
+        try {
+          const raw = localStorage.getItem(STORAGE_HISTORY_KEY);
+          historyItems = raw ? JSON.parse(raw) : [];
+        } catch {
+          historyItems = [];
+        }
+        renderHistory();
+      }
+
+      function pushHistory(w, h, label) {
+        const key = `${w}x${h}`;
+        historyItems = historyItems.filter((i) => i.key !== key);
+        historyItems.unshift({ key, w, h, label, time: Date.now() });
+        historyItems = historyItems.slice(0, 10);
+        try {
+          localStorage.setItem(
+            STORAGE_HISTORY_KEY,
+            JSON.stringify(historyItems),
+          );
+        } catch {}
+        renderHistory();
+      }
+
+      function renderHistory() {
+        historyList.innerHTML = "";
+        if (historyItems.length === 0) {
+          historyList.appendChild(historyEmpty);
+          return;
+        }
+        historyItems.forEach((item) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.title = `Load ${item.w} × ${item.h}`;
+          btn.className =
+            "text-[10px] font-semibold px-2.5 py-1 rounded-full bg-surface hover:bg-hairline border border-hairline text-slate hover:text-primary transition-all cursor-pointer flex items-center gap-1";
+          btn.innerHTML = `<span class="font-mono">${item.w}×${item.h}</span><span class="opacity-50">(${item.label})</span>`;
+          btn.addEventListener("click", () => {
+            setMode("custom");
+            solveSelect.value = "ratio";
+            adjustInputsLayout();
+            inputWidth.value = item.w;
+            inputHeight.value = item.h;
+            recalculate();
+          });
+          historyList.appendChild(btn);
+        });
+      }
+
+      clearHistBtn.addEventListener("click", () => {
+        historyItems = [];
+        try {
+          localStorage.removeItem(STORAGE_HISTORY_KEY);
+        } catch {}
+        renderHistory();
+      });
+
+      // -----------------------------------------------------------------------
+      // Use-Case Reference Panel
+      // -----------------------------------------------------------------------
+      function renderUseCases() {
+        USE_CASES.forEach((uc) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className =
+            "flex items-center justify-between gap-3 px-3 py-2 rounded-lg bg-surface hover:bg-hairline border border-hairline text-left transition-all cursor-pointer group w-full";
+          btn.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="text-sm">${uc.emoji}</span>
+              <div>
+                <div class="text-[11px] font-semibold text-primary">${escapeHtml(uc.label)}</div>
+                <div class="text-[9px] text-stone font-mono">${uc.ratio}</div>
+              </div>
+            </div>
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded border border-hairline bg-canvas text-slate group-hover:text-brand-blue transition-colors">Load</span>
+          `;
+          btn.addEventListener("click", () => {
+            setMode("custom");
+            solveSelect.value = "ratio";
+            adjustInputsLayout();
+            inputWidth.value = uc.w;
+            inputHeight.value = uc.h;
+            visualRatioBox.classList.add("scale-[1.02]", "bg-brand-yellow/25");
+            setTimeout(
+              () =>
+                visualRatioBox.classList.remove(
+                  "scale-[1.02]",
+                  "bg-brand-yellow/25",
+                ),
+              250,
+            );
+            recalculate();
+          });
+          useCaseList.appendChild(btn);
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // Custom Saved Presets
+      // -----------------------------------------------------------------------
+      let savedPresets = [];
+
+      function loadSavedPresets() {
+        try {
+          const raw = localStorage.getItem(STORAGE_PRESETS_KEY);
+          savedPresets = raw ? JSON.parse(raw) : [];
+        } catch {
+          savedPresets = [];
+        }
+        renderSavedPresets();
+      }
+
+      function savePresetsToStorage() {
+        localStorage.setItem(STORAGE_PRESETS_KEY, JSON.stringify(savedPresets));
+        renderSavedPresets();
+      }
+
+      function renderSavedPresets() {
+        savedPresetsList.innerHTML = "";
+        if (savedPresets.length === 0) {
+          savedPresetsList.appendChild(noSavedPresets);
+          return;
+        }
+        savedPresets.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className =
+            "flex items-center justify-between gap-2 bg-surface hover:bg-hairline p-2 rounded-lg border border-hairline transition-all text-xs";
+          div.innerHTML = `
+            <div class="flex flex-col select-none">
+              <span class="font-semibold text-primary">${escapeHtml(item.name)}</span>
+              <span class="text-[10px] text-stone font-mono">${item.width} × ${item.height} (${getSimplifiedRatio(item.width, item.height)})</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button type="button" class="apply-preset-btn text-[10px] bg-canvas hover:bg-surface border border-hairline font-bold px-2 py-0.5 rounded transition-all cursor-pointer" data-index="${index}">Load</button>
+              <button type="button" class="delete-preset-btn text-brand-coral hover:text-coral-dark text-[11px] font-bold px-1.5 cursor-pointer" data-index="${index}" aria-label="Delete preset">✕</button>
+            </div>
+          `;
+          savedPresetsList.appendChild(div);
+        });
+      }
+
+      savePresetForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = newPresetName.value.trim();
+        if (!name) return;
+        const activeW =
+          currentMode === "live"
+            ? window.innerWidth
+            : parseInt(inputWidth.value) || 1;
+        const activeH =
+          currentMode === "live"
+            ? window.innerHeight
+            : parseInt(inputHeight.value) || 1;
+        savedPresets.push({ name, width: activeW, height: activeH });
+        newPresetName.value = "";
+        savePresetsToStorage();
+      });
+
+      savedPresetsList.addEventListener("click", (e) => {
+        const loadBtn = e.target.closest(".apply-preset-btn");
+        const deleteBtn = e.target.closest(".delete-preset-btn");
+        if (loadBtn) {
+          const item =
+            savedPresets[parseInt(loadBtn.getAttribute("data-index"))];
+          if (item) {
+            setMode("custom");
+            solveSelect.value = "ratio";
+            adjustInputsLayout();
+            inputWidth.value = item.width;
+            inputHeight.value = item.height;
+            recalculate();
+          }
+        } else if (deleteBtn) {
+          savedPresets.splice(
+            parseInt(deleteBtn.getAttribute("data-index")),
+            1,
+          );
+          savePresetsToStorage();
+        }
+      });
+
+      // -----------------------------------------------------------------------
+      // Modal management
+      // -----------------------------------------------------------------------
+      howItWorksBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.remove("hidden"),
+      );
+      closeModalBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+      modalOkBtn?.addEventListener("click", () =>
+        howItWorksModal?.classList.add("hidden"),
+      );
+      howItWorksModal?.addEventListener("click", (e) => {
+        if (e.target === howItWorksModal)
+          howItWorksModal.classList.add("hidden");
+      });
+
+      shortcutsBtn?.addEventListener("click", () =>
+        shortcutsModal?.classList.remove("hidden"),
+      );
+      closeShortcutsBtn?.addEventListener("click", () =>
+        shortcutsModal?.classList.add("hidden"),
+      );
+      shortcutsModal?.addEventListener("click", (e) => {
+        if (e.target === shortcutsModal) shortcutsModal.classList.add("hidden");
+      });
+
+      // -----------------------------------------------------------------------
+      // Reset Button
+      // -----------------------------------------------------------------------
+      resetBtn.addEventListener("click", () => {
+        currentMode = "live";
+        displayDecimal = false;
+        gridVisible = false;
+
+        inputWidth.value = 1920;
+        inputHeight.value = 1080;
+        inputRatio.value = "16:9";
+        scaleWidthInput.value = "";
+        scaleHeightInput.value = "";
+        solveSelect.value = "ratio";
+        standardRatiosDropdown.value = "";
+        ppiDiagonalInput.value = "24";
+
+        gridOverlay.classList.add("hidden");
+        toggleGridBtn.classList.remove("bg-primary", "text-canvas");
+        toggleGridBtn.classList.add("text-slate");
+
+        toggleRatioSimp.classList.add("bg-primary", "text-canvas");
+        toggleRatioSimp.classList.remove("text-slate", "hover:text-primary");
+        toggleRatioDec.classList.remove("bg-primary", "text-canvas");
+        toggleRatioDec.classList.add("text-slate", "hover:text-primary");
+
+        localStorage.removeItem(STORAGE_PRESETS_KEY);
+        localStorage.removeItem(STORAGE_HISTORY_KEY);
+        historyItems = [];
+        savedPresets = [];
+        loadSavedPresets();
+        loadHistory();
+
+        setMode("live");
+        adjustInputsLayout();
+        recalculate();
+
+        document.body.classList.add("opacity-50");
+        setTimeout(() => document.body.classList.remove("opacity-50"), 150);
+      });
+
+      // -----------------------------------------------------------------------
+      // Keyboard Shortcuts
+      // -----------------------------------------------------------------------
+      document.addEventListener("keydown", (e) => {
+        const tag = document.activeElement.tagName.toLowerCase();
+        if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+        switch (e.key.toUpperCase()) {
+          case "L":
+            setMode("live");
+            break;
+          case "C":
+            setMode("custom");
+            break;
+          case "V":
+            setMode("compare");
+            break;
+          case "F":
+            flipOrientation();
+            break;
+          case "D":
+            if (!displayDecimal) {
+              toggleRatioDec.click();
+            } else {
+              toggleRatioSimp.click();
+            }
+            break;
+          case "G":
+            toggleGridBtn.click();
+            break;
+          case "ESCAPE":
+            if (!howItWorksModal.classList.contains("hidden")) {
+              howItWorksModal.classList.add("hidden");
+            } else if (!shortcutsModal.classList.contains("hidden")) {
+              shortcutsModal.classList.add("hidden");
+            }
+            break;
+        }
+        // Ctrl+Shift+C → copy CSS
+        if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "C") {
+          e.preventDefault();
+          copyCssBtn.click();
+        }
+      });
+
+      // -----------------------------------------------------------------------
+      // Debounced resize listener
+      // -----------------------------------------------------------------------
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (
+            window.innerWidth !== cachedLiveWidth ||
+            window.innerHeight !== cachedLiveHeight
+          ) {
+            cachedLiveWidth = window.innerWidth;
+            cachedLiveHeight = window.innerHeight;
+            recalculate();
+          }
+          // Always re-render compare boxes on resize (orientation change etc.)
+          if (currentMode === "compare") updateCompare();
+        }, 60);
+      });
+
+      // -----------------------------------------------------------------------
+      // Init
+      // -----------------------------------------------------------------------
+      function init() {
+        renderUseCases();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlW = parseInt(urlParams.get("w"));
+        const urlH = parseInt(urlParams.get("h"));
+
+        if (!isNaN(urlW) && !isNaN(urlH) && urlW > 0 && urlH > 0) {
+          setMode("custom");
+          solveSelect.value = "ratio";
+          inputWidth.value = urlW;
+          inputHeight.value = urlH;
+        } else {
+          setMode("live");
+        }
+
+        loadSavedPresets();
+        loadHistory();
+        adjustInputsLayout();
+        recalculate();
+        updatePpi();
+        updateCompare();
+
+        // Re-run after one frame so getBoundingClientRect has real layout dimensions
+        requestAnimationFrame(() => {
+          recalculate();
+          updateCompare();
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </Layout>
