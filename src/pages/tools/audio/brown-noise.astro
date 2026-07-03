@@ -5,7 +5,10 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Brown Noise Generator";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Play deeper, lower-frequency brown noise tracks for relaxation and sound masking.";
+const description = "Generate pure, continuous brown noise with adjustable depth, stereo widening, and a sleep timer.";
+const canonicalUrl = "https://boardtools.app/tools/audio/brown-noise";
+const ogImage = "/og/brown-noise.png";
+const keywords = "brown noise generator, brown noise, sleep sounds, sound masking, relax audio, white noise, pink noise, audio utilities, boardtools";
 ---
 
 <Layout 
@@ -13,78 +16,1026 @@ const description = "Play deeper, lower-frequency brown noise tracks for relaxat
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Brown Noise Generator",
+      "alternateName": "Red Noise Generator",
+      "url": "https://boardtools.app/tools/audio/brown-noise",
+      "description": "Professional client-side brown noise generator. Features adjustable depth, headphone stereo widening, custom presets, sleep timer, and live waveform visualizer.",
+      "applicationCategory": "AudioApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 AudioContext.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-lg sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[9px] sm:text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🎵</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How brown noise works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Main Workspace -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+      <!-- Left Controls Panel -->
+      <div class="lg:col-span-8 card-base p-3.5 sm:p-5 flex flex-col gap-4 sm:gap-6">
+        
+        <!-- Big Mobile-Friendly Play Button & Presets -->
+        <div class="flex flex-col md:flex-row items-center gap-4 sm:gap-6 p-3 sm:p-4 rounded-xl bg-surface-soft border border-hairline">
+          <!-- Main Play Control -->
+          <div class="relative flex flex-col items-center">
+            <button
+              id="btn-play-pause"
+              class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-primary text-canvas flex flex-col items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 relative z-10 cursor-pointer focus:outline-none focus:ring-4 focus:ring-brand-blue/30"
+              aria-label="Play noise"
+            >
+              <div id="play-icon" class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider mt-0.5">Play</span>
+              </div>
+              <div id="pause-icon" class="hidden flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-10 sm:h-10" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+                <span class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider mt-0.5">Pause</span>
+              </div>
+            </button>
+            <div id="play-glow" class="absolute inset-0 rounded-full bg-brand-coral/20 blur-md opacity-0 scale-95 transition-all duration-700 pointer-events-none"></div>
+          </div>
+
+          <!-- Quick Presets -->
+          <div class="flex-1 flex flex-col gap-2 w-full">
+            <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Preset Moods</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2">
+              <button type="button" class="preset-btn pill-tab text-center text-xs py-1.5 px-3 transition-all cursor-pointer font-semibold border hover:bg-surface justify-center" data-depth="0.1" data-vol="0.6">
+                🛏️ Deep Sleep
+              </button>
+              <button type="button" class="preset-btn pill-tab text-center text-xs py-1.5 px-3 transition-all cursor-pointer font-semibold border hover:bg-surface justify-center" data-depth="0.3" data-vol="0.5">
+                🧘 Relaxation
+              </button>
+              <button type="button" class="preset-btn pill-tab text-center text-xs py-1.5 px-3 transition-all cursor-pointer font-semibold border hover:bg-surface justify-center" data-depth="0.5" data-vol="0.7">
+                💨 Sound Masking
+              </button>
+              <button type="button" class="preset-btn pill-tab text-center text-xs py-1.5 px-3 transition-all cursor-pointer font-semibold border hover:bg-surface justify-center" data-depth="0.2" data-vol="0.4">
+                🍼 Infant Soothing
+              </button>
+              <button type="button" class="preset-btn pill-tab text-center text-xs py-1.5 px-3 transition-all cursor-pointer font-semibold border hover:bg-surface justify-center" data-depth="0.7" data-vol="0.6">
+                🎯 Focus
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sliders & Sound Options -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Volume Slider -->
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <label for="vol-slider" class="text-xs font-semibold text-slate uppercase tracking-wider">Volume</label>
+              <span id="vol-display" class="font-mono text-xs font-semibold text-brand-blue">60% (-4.4 dB)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs">🔈</span>
+              <input 
+                type="range" 
+                id="vol-slider" 
+                min="0" 
+                max="1" 
+                step="0.01" 
+                value="0.6" 
+                class="flex-grow accent-primary h-1.5 bg-hairline rounded-lg cursor-pointer appearance-none"
+              />
+              <span class="text-xs">🔊</span>
+            </div>
+          </div>
+
+          <!-- Depth/Tone Slider -->
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <label for="depth-slider" class="text-xs font-semibold text-slate uppercase tracking-wider">Depth / Tone</label>
+              <span id="depth-display" class="font-mono text-xs font-semibold text-brand-blue">Balanced</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-[10px] text-slate font-semibold">RUMBLY</span>
+              <input 
+                type="range" 
+                id="depth-slider" 
+                min="0.05" 
+                max="0.95" 
+                step="0.01" 
+                value="0.5" 
+                class="flex-grow accent-primary h-1.5 bg-hairline rounded-lg cursor-pointer appearance-none"
+              />
+              <span class="text-[10px] text-slate font-semibold">LIGHTER</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary Controls & Headphone Wide Mode -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-hairline-soft">
+          <!-- Stereo Widening -->
+          <label class="relative inline-flex items-center gap-3 cursor-pointer select-none">
+            <input type="checkbox" id="stereo-checkbox" class="sr-only peer" checked />
+            <div class="w-9 h-5 bg-hairline peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+            <span class="text-xs font-semibold text-charcoal">🎧 Binaural Stereo Widening</span>
+          </label>
+
+          <!-- Share Settings -->
+          <button
+            type="button"
+            id="btn-share"
+            class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-blue hover:underline cursor-pointer"
+          >
+            🔗 Copy Shareable Link
+          </button>
+        </div>
+
+        <!-- Custom Preset Management -->
+        <div class="flex flex-col gap-3 pt-4 border-t border-hairline-soft">
+          <span class="text-xs font-semibold text-slate uppercase tracking-wider">Custom Presets</span>
+          
+          <div class="flex gap-2">
+            <input 
+              type="text" 
+              id="custom-preset-name" 
+              placeholder="e.g. My Study Setup" 
+              class="text-input flex-grow text-xs h-9 px-3 border border-hairline-strong rounded-md"
+              maxlength="20"
+            />
+            <button 
+              type="button" 
+              id="btn-save-preset"
+              class="button-primary text-xs py-1.5 px-4 !rounded-md font-semibold cursor-pointer whitespace-nowrap"
+            >
+              Save Preset
+            </button>
+          </div>
+
+          <div id="custom-presets-container" class="flex flex-wrap gap-2 mt-1">
+            <span class="text-[11px] text-stone">No custom presets saved. Customize sliders and save above.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Visualizer & Timer -->
+      <div class="lg:col-span-4 flex flex-col gap-4 sm:gap-6">
+        
+        <!-- Sleep Timer card -->
+        <div class="card-base bg-surface-soft p-4 sm:p-5 flex flex-col gap-3 sm:gap-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-display font-semibold text-xs uppercase tracking-wider text-slate">Sleep Timer</h3>
+            <span id="timer-countdown" class="font-mono text-xs font-bold text-primary hidden">00:00</span>
+          </div>
+
+          <!-- Timer selection grid -->
+          <div class="grid grid-cols-5 gap-1.5" id="timer-presets">
+            <button type="button" class="timer-preset-btn text-[10px] py-1 border border-hairline hover:bg-surface rounded font-semibold text-slate cursor-pointer" data-minutes="5">5m</button>
+            <button type="button" class="timer-preset-btn text-[10px] py-1 border border-hairline hover:bg-surface rounded font-semibold text-slate cursor-pointer" data-minutes="15">15m</button>
+            <button type="button" class="timer-preset-btn text-[10px] py-1 border border-hairline hover:bg-surface rounded font-semibold text-slate cursor-pointer" data-minutes="30">30m</button>
+            <button type="button" class="timer-preset-btn text-[10px] py-1 border border-hairline hover:bg-surface rounded font-semibold text-slate cursor-pointer" data-minutes="60">60m</button>
+            <button type="button" class="timer-preset-btn text-[10px] py-1 border border-hairline hover:bg-surface rounded font-semibold text-slate cursor-pointer" id="timer-custom-btn">Custom</button>
+          </div>
+
+          <!-- Custom minute inputs -->
+          <div id="custom-timer-container" class="hidden flex items-center gap-2">
+            <input 
+              type="number" 
+              id="custom-timer-min" 
+              placeholder="Min" 
+              min="1" 
+              max="480"
+              class="text-input text-xs w-16 h-8 text-center border border-hairline-strong rounded"
+            />
+            <button type="button" id="btn-custom-timer-set" class="button-primary text-[10px] py-1 px-3 !rounded font-bold cursor-pointer">Set</button>
+          </div>
+
+          <!-- Timer Progress -->
+          <div id="timer-progress-container" class="hidden flex-col gap-1.5 mt-1">
+            <div class="w-full h-1.5 bg-hairline rounded-full overflow-hidden">
+              <div id="timer-progress-bar" class="w-full h-full bg-primary transition-all duration-1000"></div>
+            </div>
+            <button type="button" id="btn-cancel-timer" class="text-[10px] font-bold text-brand-coral hover:underline text-left self-start cursor-pointer">
+              Cancel Timer
+            </button>
+          </div>
+        </div>
+
+        <!-- Warmer, slower visualizer canvas -->
+        <div class="card-base p-3 sm:p-4 flex flex-col gap-2 items-stretch h-[150px] sm:h-[200px] relative overflow-hidden bg-primary/5">
+          <span class="text-[10px] font-semibold text-slate uppercase tracking-wider absolute top-3 left-3 z-10">Soundscape Spectrum</span>
+          <canvas id="visualizer-canvas" class="w-full h-full rounded-lg"></canvas>
+          <div id="visualizer-fallback" class="absolute inset-0 flex items-center justify-center text-center text-xs text-stone p-4 font-semibold">
+            Visualizer suspended. Press play to start.
+          </div>
         </div>
 
         <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-coral flex flex-col gap-3">
+        <div class="card-feature-coral flex flex-col gap-3 !p-4 sm:!p-5 !rounded-2xl">
           <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+          <h3 class="font-display font-semibold text-xs sm:text-sm text-primary">Local Sandbox Processing</h3>
+          <p class="text-[11px] sm:text-xs leading-relaxed text-slate">
+            All audio generation and visualization is computed client-side using the Web Audio API. Absolutely no audio or diagnostic data is sent to external servers.
           </p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        What is Brown Noise and How Does it Work?
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Brown noise, also referred to as red noise, is an acoustic sound signal characterized by a deep, low-frequency sound signature. In mathematical terms, the power density of brown noise decreases by 6 dB per octave as frequency increases (a spectral density proportional to 1/f²). This is a steeper drop-off than pink noise (3 dB/octave) or white noise (constant energy across all frequencies).
+      </p>
+      
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Differences: Brown vs. White vs. Pink Noise
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Unlike white noise, which contains equal energy at all frequencies and often sounds like harsh static or radio hiss, brown noise emphasizes lower frequencies. This gives it a deep, soothing rumble resembling a distant waterfall, heavy rainfall, or low thunder. Pink noise sits comfortably in the middle, offering a balanced, natural sound similar to gentle rustling wind.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Benefits of Listening to Brown Noise
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Due to its low-frequency focus, brown noise is exceptionally effective at masking high-pitched background sounds, such as traffic, conversations, or sirens. Many users find it helps reduce stress, ease symptoms of tinnitus, soothe infants to sleep, and promote deep focus during study or work sessions.
+      </p>
+    </article>
+  </section>
+
+  <!-- Toast notification for link copy -->
+  <div id="toast-msg" class="fixed bottom-4 right-4 bg-success-accent text-canvas text-xs font-bold py-2 px-4 rounded-md shadow-subtle opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    Link Copied!
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Brown Noise Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. What is Brown Noise?</h4>
+        <p>
+          Brown noise represents a random walk algorithm (Brownian motion) where each sample is built by adding a small random step to the previous sample. The name comes from Robert Brown, who discovered Brownian motion, not the color brown!
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5">
+          <li><strong>Real-time DSP Synthesis</strong>: Pure synthesized noise avoiding looping seams of static audio files.</li>
+          <li><strong>Tone Control</strong>: Tweak the filter cutoff to morph between rumbling low frequencies and lighter pinkish tones.</li>
+          <li><strong>Sleep Timer</strong>: Gradually fades out the sound in the final 10 seconds to avoid waking you up with abrupt silence.</li>
+          <li><strong>Binaural Widening</strong>: Generates distinct random channels for Left and Right ear, giving a wide spatial soundscape on headphones.</li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">3. Safe Client-Side Execution</h4>
+        <p>
+          All operations occur directly inside your browser sandbox using the Web Audio API. Audio processing ceases completely the moment you close this tab.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client logic script -->
+  <script>
+    // System definitions
+    interface Preset {
+      name: string;
+      depth: number;
+      volume: number;
+    }
+
+    // Web Audio state variables
+    let audioCtx: AudioContext | null = null;
+    let noiseNode: ScriptProcessorNode | null = null;
+    let biquadFilter: BiquadFilterNode | null = null;
+    let gainNode: GainNode | null = null;
+    let analyserNode: AnalyserNode | null = null;
+    let visualizerAnimationId = 0;
+    let isPlaying = false;
+
+    // Timer variables
+    let timerInterval: any = null;
+    let timerTotalSeconds = 0;
+    let timerRemainingSeconds = 0;
+    let isFadingOut = false;
+
+    // Local Storage keys
+    const KEY_VOLUME = 'boardtools:brown-noise:volume';
+    const KEY_DEPTH = 'boardtools:brown-noise:depth';
+    const KEY_STEREO = 'boardtools:brown-noise:stereo';
+    const KEY_TIMER = 'boardtools:brown-noise:timer';
+    const KEY_PRESETS = 'boardtools:brown-noise:custom-presets';
+
+    // DOM Element hooks
+    const btnPlayPause = document.getElementById('btn-play-pause') as HTMLButtonElement;
+    const playIcon = document.getElementById('play-icon') as HTMLDivElement;
+    const pauseIcon = document.getElementById('pause-icon') as HTMLDivElement;
+    const playGlow = document.getElementById('play-glow') as HTMLDivElement;
+
+    const volSlider = document.getElementById('vol-slider') as HTMLInputElement;
+    const volDisplay = document.getElementById('vol-display') as HTMLSpanElement;
+
+    const depthSlider = document.getElementById('depth-slider') as HTMLInputElement;
+    const depthDisplay = document.getElementById('depth-display') as HTMLSpanElement;
+
+    const stereoCheckbox = document.getElementById('stereo-checkbox') as HTMLInputElement;
+
+    const customPresetName = document.getElementById('custom-preset-name') as HTMLInputElement;
+    const btnSavePreset = document.getElementById('btn-save-preset') as HTMLButtonElement;
+    const customPresetsContainer = document.getElementById('custom-presets-container') as HTMLDivElement;
+
+    const timerCountdown = document.getElementById('timer-countdown') as HTMLSpanElement;
+    const customTimerContainer = document.getElementById('custom-timer-container') as HTMLDivElement;
+    const customTimerMin = document.getElementById('custom-timer-min') as HTMLInputElement;
+    const btnCustomTimerSet = document.getElementById('btn-custom-timer-set') as HTMLButtonElement;
+    const timerProgressContainer = document.getElementById('timer-progress-container') as HTMLDivElement;
+    const timerProgressBar = document.getElementById('timer-progress-bar') as HTMLDivElement;
+    const btnCancelTimer = document.getElementById('btn-cancel-timer') as HTMLButtonElement;
+
+    const visualizerCanvas = document.getElementById('visualizer-canvas') as HTMLCanvasElement;
+    const visualizerFallback = document.getElementById('visualizer-fallback') as HTMLDivElement;
+
+    const btnShare = document.getElementById('btn-share') as HTMLButtonElement;
+    const toastMsg = document.getElementById('toast-msg') as HTMLDivElement;
+
+    const btnReset = document.getElementById('reset-btn') as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById('how-it-works-btn');
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalOkBtn = document.getElementById('modal-ok-btn');
+
+    // Canvas drawing context
+    const canvasCtx = visualizerCanvas.getContext('2d')!;
+
+    // Initializer
+    function init() {
+      // 1. Set up resize observer for high-DPI canvas
+      setupCanvas();
+
+      // 2. Load stored settings from localStorage
+      const storedVol = localStorage.getItem(KEY_VOLUME);
+      const storedDepth = localStorage.getItem(KEY_DEPTH);
+      const storedStereo = localStorage.getItem(KEY_STEREO);
+      const storedTimer = localStorage.getItem(KEY_TIMER);
+
+      if (storedVol !== null) volSlider.value = storedVol;
+      if (storedDepth !== null) depthSlider.value = storedDepth;
+      if (storedStereo !== null) stereoCheckbox.checked = storedStereo === 'true';
+      if (storedTimer !== null) customTimerMin.value = storedTimer;
+
+      updateVolumeDisplay();
+      updateDepthDisplay();
+
+      // 3. Load presets
+      renderCustomPresets();
+
+      // 4. Check URL params for shared state
+      const params = new URLSearchParams(window.location.search);
+      const paramVol = params.get('v');
+      const paramDepth = params.get('d');
+      const paramStereo = params.get('s');
+      const paramTimer = params.get('t');
+
+      if (paramVol !== null) volSlider.value = paramVol;
+      if (paramDepth !== null) depthSlider.value = paramDepth;
+      if (paramStereo !== null) stereoCheckbox.checked = paramStereo === '1';
+      if (paramTimer !== null) {
+        startTimer(parseInt(paramTimer, 10));
+      }
+
+      updateVolumeDisplay();
+      updateDepthDisplay();
+    }
+
+    // Setup High DPI Canvas
+    function setupCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = visualizerCanvas.getBoundingClientRect();
+      visualizerCanvas.width = rect.width * dpr;
+      visualizerCanvas.height = rect.height * dpr;
+      canvasCtx.scale(dpr, dpr);
+    }
+
+    window.addEventListener('resize', setupCanvas);
+
+    // Audio volume to dB helper
+    function getDbText(gain: number) {
+      if (gain <= 0.001) return '-∞ dB';
+      const db = (20 * Math.log10(gain)).toFixed(1);
+      return `${db} dB`;
+    }
+
+    function updateVolumeDisplay() {
+      const volVal = parseFloat(volSlider.value);
+      volDisplay.textContent = `${Math.round(volVal * 100)}% (${getDbText(volVal)})`;
+      if (gainNode && !isFadingOut) {
+        gainNode.gain.setValueAtTime(volVal, audioCtx!.currentTime);
+      }
+      localStorage.setItem(KEY_VOLUME, volSlider.value);
+    }
+
+    // Tone Control Filter logic: Lowpass filter mapped logarithmically
+    function updateDepthDisplay() {
+      const depthVal = parseFloat(depthSlider.value);
+      let text = 'Balanced';
+      if (depthVal < 0.3) text = 'Deep / Rumbling';
+      else if (depthVal > 0.7) text = 'Lighter / Soft';
+      depthDisplay.textContent = text;
+
+      if (biquadFilter && audioCtx) {
+        const minHz = 90;
+        const maxHz = 5000;
+        const cutoffHz = minHz * Math.pow(maxHz / minHz, depthVal);
+        biquadFilter.frequency.setValueAtTime(cutoffHz, audioCtx.currentTime);
+      }
+      localStorage.setItem(KEY_DEPTH, depthSlider.value);
+    }
+
+    // Web Audio Engine Initializer
+    function setupAudioContext() {
+      if (audioCtx) return;
+
+      const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+      audioCtx = new AudioCtxClass();
+
+      // ScriptProcessorNode handles custom sample creation
+      noiseNode = audioCtx.createScriptProcessor(4096, 0, 2);
+
+      // DSP Random Walk variables (integrated white noise with leak correction)
+      let lastOutL = 0.0;
+      let lastOutR = 0.0;
+
+      noiseNode.onaudioprocess = (e) => {
+        const outputBuffer = e.outputBuffer;
+        const channelL = outputBuffer.getChannelData(0);
+        const channelR = outputBuffer.getChannelData(1);
+
+        const isStereo = stereoCheckbox.checked;
+
+        for (let i = 0; i < outputBuffer.length; i++) {
+          const whiteL = Math.random() * 2 - 1;
+          
+          if (isStereo) {
+            // Uncorrelated random walks for left and right channels to widen stereo field
+            const whiteR = Math.random() * 2 - 1;
+            lastOutL = (lastOutL + (0.02 * whiteL)) / 1.02;
+            lastOutR = (lastOutR + (0.02 * whiteR)) / 1.02;
+            channelL[i] = lastOutL * 3.5;
+            channelR[i] = lastOutR * 3.5;
+          } else {
+            // Identical noise in both channels (Mono)
+            lastOutL = (lastOutL + (0.02 * whiteL)) / 1.02;
+            channelL[i] = lastOutL * 3.5;
+            channelR[i] = lastOutL * 3.5;
+          }
+
+          // Safe clipping threshold
+          if (channelL[i] > 1.0) channelL[i] = 1.0;
+          else if (channelL[i] < -1.0) channelL[i] = -1.0;
+
+          if (channelR[i] > 1.0) channelR[i] = 1.0;
+          else if (channelR[i] < -1.0) channelR[i] = -1.0;
+        }
+      };
+
+      // Lowpass filter for tone/depth controls
+      biquadFilter = audioCtx.createBiquadFilter();
+      biquadFilter.type = 'lowpass';
+
+      // Set up volume gain node
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = 0.0; // Start at 0 for fade-in
+
+      // Set up analyzer node for canvas
+      analyserNode = audioCtx.createAnalyser();
+      analyserNode.fftSize = 256;
+
+      // Pipeline route
+      noiseNode.connect(biquadFilter);
+      biquadFilter.connect(gainNode);
+      gainNode.connect(analyserNode);
+      analyserNode.connect(audioCtx.destination);
+
+      updateDepthDisplay();
+    }
+
+    // Transport control: Start Noise
+    function startNoise() {
+      setupAudioContext();
+
+      if (audioCtx!.state === 'suspended') {
+        audioCtx!.resume();
+      }
+
+      const targetVol = parseFloat(volSlider.value);
+      gainNode!.gain.cancelScheduledValues(audioCtx!.currentTime);
+      gainNode!.gain.setValueAtTime(0.0, audioCtx!.currentTime);
+      // Smooth 0.5s fade-in transition
+      gainNode!.gain.linearRampToValueAtTime(targetVol, audioCtx!.currentTime + 0.5);
+
+      isPlaying = true;
+      togglePlayUI(true);
+
+      // Start spectrum loop
+      visualizerFallback.classList.add('hidden');
+      startVisualizer();
+    }
+
+    // Transport control: Pause Noise
+    function pauseNoise() {
+      if (!audioCtx || !isPlaying) return;
+
+      const currentVal = gainNode!.gain.value;
+      gainNode!.gain.cancelScheduledValues(audioCtx!.currentTime);
+      gainNode!.gain.setValueAtTime(currentVal, audioCtx!.currentTime);
+      // Smooth 0.4s fade-out transition
+      gainNode!.gain.linearRampToValueAtTime(0.0, audioCtx!.currentTime + 0.4);
+
+      isPlaying = false;
+      togglePlayUI(false);
+
+      setTimeout(() => {
+        if (!isPlaying && audioCtx) {
+          audioCtx.suspend();
+        }
+      }, 450);
+    }
+
+    // Transport control: Fully stop noise (resets visualizer/timer)
+    function stopNoise() {
+      pauseNoise();
+      cancelAnimationFrame(visualizerAnimationId);
+      clearCanvas();
+      visualizerFallback.classList.remove('hidden');
+    }
+
+    // UI State Toggles
+    function togglePlayUI(playing: boolean) {
+      if (playing) {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        playGlow.classList.remove('opacity-0');
+        playGlow.classList.add('opacity-100', 'animate-pulse');
+      } else {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        playGlow.classList.remove('opacity-100', 'animate-pulse');
+        playGlow.classList.add('opacity-0');
+      }
+    }
+
+    // Animated spectrum visualizer for brown noise (warmer, slow-moving waves)
+    function startVisualizer() {
+      if (!analyserNode) return;
+
+      const bufferLength = analyserNode.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      function draw() {
+        if (!isPlaying) return;
+        visualizerAnimationId = requestAnimationFrame(draw);
+
+        analyserNode!.getByteFrequencyData(dataArray);
+
+        const width = visualizerCanvas.width / (window.devicePixelRatio || 1);
+        const height = visualizerCanvas.height / (window.devicePixelRatio || 1);
+
+        canvasCtx.clearRect(0, 0, width, height);
+
+        // Warm color gradient matching BoardTools style guidelines
+        const gradient = canvasCtx.createLinearGradient(0, height, 0, 0);
+        gradient.addColorStop(0, '#fde0f0'); 
+        gradient.addColorStop(0.5, '#ff9999'); 
+        gradient.addColorStop(1, '#ffc6c6'); 
+
+        canvasCtx.fillStyle = gradient;
+
+        const barWidth = (width / bufferLength) * 1.5;
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+          const frequencyWeight = (bufferLength - i) / bufferLength;
+          const barHeight = (dataArray[i] / 255) * height * 0.9 * frequencyWeight;
+
+          // Render slow rounded wave-form columns
+          canvasCtx.beginPath();
+          canvasCtx.roundRect(x, height - barHeight, barWidth - 1.5, barHeight, 2);
+          canvasCtx.fill();
+
+          x += barWidth;
+        }
+      }
+
+      draw();
+    }
+
+    function clearCanvas() {
+      const width = visualizerCanvas.width / (window.devicePixelRatio || 1);
+      const height = visualizerCanvas.height / (window.devicePixelRatio || 1);
+      canvasCtx.clearRect(0, 0, width, height);
+    }
+
+    // Sleep Timer Engine
+    function startTimer(minutes: number) {
+      clearInterval(timerInterval);
+      isFadingOut = false;
+
+      timerTotalSeconds = minutes * 60;
+      timerRemainingSeconds = timerTotalSeconds;
+
+      timerCountdown.classList.remove('hidden');
+      timerProgressContainer.classList.remove('hidden');
+      
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        timerRemainingSeconds--;
+        updateTimerUI();
+
+        // Start fading audio out 10 seconds before completion
+        if (timerRemainingSeconds <= 10 && timerRemainingSeconds > 0 && !isFadingOut) {
+          isFadingOut = true;
+          if (gainNode && audioCtx) {
+            gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(gainNode.gain.value, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 10);
+            
+            // Pulse timer display to alert the user of the final fade out sequence
+            timerCountdown.classList.add('text-brand-coral', 'animate-pulse');
+          }
+        }
+
+        if (timerRemainingSeconds <= 0) {
+          clearInterval(timerInterval);
+          stopNoise();
+          resetTimerUI();
+        }
+      }, 1000);
+
+      localStorage.setItem(KEY_TIMER, minutes.toString());
+    }
+
+    function cancelTimer() {
+      clearInterval(timerInterval);
+      resetTimerUI();
+      localStorage.removeItem(KEY_TIMER);
+
+      // Restore original volume if cancelled mid-fadeout
+      if (isFadingOut && gainNode && audioCtx) {
+        isFadingOut = false;
+        const targetVol = parseFloat(volSlider.value);
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(targetVol, audioCtx.currentTime + 0.5);
+      }
+    }
+
+    function updateTimerUI() {
+      const mins = Math.floor(timerRemainingSeconds / 60);
+      const secs = timerRemainingSeconds % 60;
+      timerCountdown.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+      // Progress bar percentage
+      const pct = (timerRemainingSeconds / timerTotalSeconds) * 100;
+      timerProgressBar.style.width = `${pct}%`;
+    }
+
+    function resetTimerUI() {
+      timerCountdown.classList.add('hidden');
+      timerCountdown.classList.remove('text-brand-coral', 'animate-pulse');
+      timerProgressContainer.classList.add('hidden');
+      timerProgressBar.style.width = '100%';
+    }
+
+    // Saved Preset Actions
+    function renderCustomPresets() {
+      const raw = localStorage.getItem(KEY_PRESETS);
+      let list: Preset[] = [];
+      try {
+        list = JSON.parse(raw || '[]');
+      } catch (e) {}
+
+      customPresetsContainer.innerHTML = '';
+      if (list.length === 0) {
+        customPresetsContainer.innerHTML = '<span class="text-[11px] text-stone">No custom presets saved. Customize sliders and save above.</span>';
+        return;
+      }
+
+      list.forEach((preset, index) => {
+        const item = document.createElement('div');
+        item.className = 'inline-flex items-center gap-1.5 p-1 px-2.5 bg-canvas border border-hairline rounded-full text-xs font-semibold text-charcoal hover:bg-surface-soft shadow-subtle';
+        
+        const loadBtn = document.createElement('button');
+        loadBtn.type = 'button';
+        loadBtn.className = 'cursor-pointer hover:text-brand-blue';
+        loadBtn.textContent = preset.name;
+        loadBtn.addEventListener('click', () => {
+          volSlider.value = preset.volume.toString();
+          depthSlider.value = preset.depth.toString();
+          updateVolumeDisplay();
+          updateDepthDisplay();
+          if (isPlaying) {
+            startNoise();
+          }
+        });
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'text-stone hover:text-brand-coral font-bold cursor-pointer ml-1';
+        deleteBtn.textContent = '×';
+        deleteBtn.title = 'Delete Preset';
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteCustomPreset(index);
+        });
+
+        item.appendChild(loadBtn);
+        item.appendChild(deleteBtn);
+        customPresetsContainer.appendChild(item);
+      });
+    }
+
+    function saveCustomPreset() {
+      const name = customPresetName.value.trim();
+      if (!name) return;
+
+      const raw = localStorage.getItem(KEY_PRESETS);
+      let list: Preset[] = [];
+      try {
+        list = JSON.parse(raw || '[]');
+      } catch (e) {}
+
+      list.push({
+        name: name,
+        volume: parseFloat(volSlider.value),
+        depth: parseFloat(depthSlider.value)
+      });
+
+      localStorage.setItem(KEY_PRESETS, JSON.stringify(list));
+      customPresetName.value = '';
+      renderCustomPresets();
+    }
+
+    function deleteCustomPreset(index: number) {
+      const raw = localStorage.getItem(KEY_PRESETS);
+      let list: Preset[] = [];
+      try {
+        list = JSON.parse(raw || '[]');
+      } catch (e) {}
+
+      list.splice(index, 1);
+      localStorage.setItem(KEY_PRESETS, JSON.stringify(list));
+      renderCustomPresets();
+    }
+
+    // Event Bindings
+    btnPlayPause.addEventListener('click', () => {
+      if (isPlaying) {
+        pauseNoise();
+      } else {
+        startNoise();
+      }
+    });
+
+    volSlider.addEventListener('input', updateVolumeDisplay);
+    depthSlider.addEventListener('input', updateDepthDisplay);
+    stereoCheckbox.addEventListener('change', () => {
+      localStorage.setItem(KEY_STEREO, stereoCheckbox.checked.toString());
+      if (isPlaying) {
+        startNoise();
+      }
+    });
+
+    // Preset button bindings
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const depth = target.getAttribute('data-depth');
+        const vol = target.getAttribute('data-vol');
+        if (depth !== null) depthSlider.value = depth;
+        if (vol !== null) volSlider.value = vol;
+
+        updateVolumeDisplay();
+        updateDepthDisplay();
+
+        if (isPlaying) {
+          startNoise();
+        }
+      });
+    });
+
+    // Timer Preset Bindings
+    document.querySelectorAll('.timer-preset-btn').forEach(btn => {
+      if (btn.id === 'timer-custom-btn') return;
+      btn.addEventListener('click', (e) => {
+        const min = parseInt((e.currentTarget as HTMLButtonElement).getAttribute('data-minutes')!, 10);
+        startTimer(min);
+        customTimerContainer.classList.add('hidden');
+      });
+    });
+
+    // Custom Timer Toggle
+    const customTimerBtn = document.getElementById('timer-custom-btn')!;
+    customTimerBtn.addEventListener('click', () => {
+      customTimerContainer.classList.toggle('hidden');
+    });
+
+    btnCustomTimerSet.addEventListener('click', () => {
+      const minutes = parseInt(customTimerMin.value, 10);
+      if (minutes > 0) {
+        startTimer(minutes);
+        customTimerContainer.classList.add('hidden');
+        customTimerMin.value = '';
+      }
+    });
+
+    btnCancelTimer.addEventListener('click', cancelTimer);
+    btnSavePreset.addEventListener('click', saveCustomPreset);
+
+    // Share link generation
+    btnShare.addEventListener('click', () => {
+      const vol = volSlider.value;
+      const depth = depthSlider.value;
+      const stereo = stereoCheckbox.checked ? '1' : '0';
+      const timer = timerCountdown.classList.contains('hidden') ? '' : Math.round(timerRemainingSeconds / 60).toString();
+
+      let url = `${window.location.origin}${window.location.pathname}?v=${vol}&d=${depth}&s=${stereo}`;
+      if (timer) url += `&t=${timer}`;
+
+      navigator.clipboard.writeText(url).then(() => {
+        toastMsg.classList.add('opacity-100');
+        setTimeout(() => {
+          toastMsg.classList.remove('opacity-100');
+        }, 2000);
+      });
+    });
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        btnPlayPause.click();
+      } else if (e.code === 'ArrowUp') {
+        e.preventDefault();
+        const nextVol = Math.min(1, parseFloat(volSlider.value) + 0.05);
+        volSlider.value = nextVol.toFixed(2);
+        updateVolumeDisplay();
+      } else if (e.code === 'ArrowDown') {
+        e.preventDefault();
+        const nextVol = Math.max(0, parseFloat(volSlider.value) - 0.05);
+        volSlider.value = nextVol.toFixed(2);
+        updateVolumeDisplay();
+      }
+    });
+
+    // Reset button logic: stops audio, resets controls, clears localstorage keys, resets visualizer
+    btnReset.addEventListener('click', () => {
+      stopNoise();
+
+      volSlider.value = '0.6';
+      depthSlider.value = '0.5';
+      stereoCheckbox.checked = true;
+      cancelTimer();
+
+      updateVolumeDisplay();
+      updateDepthDisplay();
+
+      localStorage.removeItem(KEY_VOLUME);
+      localStorage.removeItem(KEY_DEPTH);
+      localStorage.removeItem(KEY_STEREO);
+      localStorage.removeItem(KEY_TIMER);
+      localStorage.removeItem(KEY_PRESETS);
+
+      renderCustomPresets();
+    });
+
+    // How it works Modal controls
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Start everything
+    init();
+  </script>
 </Layout>
