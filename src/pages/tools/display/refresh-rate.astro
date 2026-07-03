@@ -1,90 +1,1191 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Refresh Rate Test";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Measure browser monitor display refresh rates and detect visual frame pacing drops.";
+
+// On-page SEO metadata
+const pageTitle = "Refresh Rate Test - Measure Monitor Hz & Frame Pacing";
+const description = "Free online browser refresh rate test. Measure your monitor's actual refresh rate in Hz, detect dropped frames, and analyze frame-to-frame consistency in real-time.";
+const canonicalUrl = "https://boardtools.app/tools/display/refresh-rate";
+const ogImage = "/og/refresh-rate.png";
+const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh rate, measure hz, fps test, check refresh rate, display hz check, frame pacing test, dropped frames";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Refresh Rate Test",
+      "alternateName": "Monitor Hz Analyzer",
+      "url": "https://boardtools.app/tools/display/refresh-rate",
+      "description": "Measure and analyze your monitor display refresh rate and frame pacing consistency in real-time using high-precision requestAnimationFrame loops.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires requestAnimationFrame support.",
+      "featureList": [
+        "Real-time display refresh rate estimation (Hz)",
+        "Trimmed mean and median calculations to filter out OS/compositor hiccups",
+        "Visual scrolling frame-interval pacing graph using HTML5 Canvas",
+        "Dropped frames counter detection",
+        "Fullscreen test driver overlay to optimize GPU prioritizing",
+        "Toggles for Quick Test vs. Continuous Monitoring",
+        "Troubleshooting suggestions for display capping issues"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Refresh Rate Test",
+          "item": "https://boardtools.app/tools/display/refresh-rate"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How refresh rate test works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Status Banner / Accuracy Mode -->
+    <div
+      id="status-banner"
+      class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface border-hairline text-slate print:hidden"
+    >
+      <span id="status-msg" class="font-semibold flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-success-accent animate-pulse"></span>
+        Ready to test. High-precision hardware clock active.
+      </span>
+      <span class="font-mono text-[9px] text-stone">Method: requestAnimationFrame Sampling</span>
+    </div>
+
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch relative">
+      <!-- Left Controls & Diagnostics (Column 1: 4 cols on lg, 3 cols on xl) -->
+      <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-3">
+        <div class="card-base p-3 flex flex-col gap-3 h-full justify-between">
+          <div class="flex flex-col gap-3">
+            <h2 class="font-display font-semibold text-xs text-primary flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse"></span>
+              Live Diagnostics
+            </h2>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 gap-2">
+              <!-- Live Hz display -->
+              <div class="p-2.5 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center col-span-2 relative overflow-hidden group">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Estimated Rate</span>
+                <span id="live-hz" class="text-3xl font-display font-medium text-brand-blue tracking-tight">0.0 <span class="text-xs text-slate">Hz</span></span>
+                <span id="live-hz-subtext" class="text-[9px] text-stone">Likely -- Hz Display</span>
+              </div>
+
+              <!-- Median Interval -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Median Interval</span>
+                <span id="median-interval" class="text-xs font-bold text-primary">0.00 ms</span>
+                <span class="text-[8px] text-stone">Frame delay</span>
+              </div>
+
+              <!-- Jitter / Confidence -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Stability (SD)</span>
+                <span id="sd-val" class="text-xs font-bold text-primary">±0.00 ms</span>
+                <span class="text-[8px] text-stone">Frame variance</span>
+              </div>
+
+              <!-- Dropped Frames -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Dropped Frames</span>
+                <span id="dropped-counter" class="text-[10px] font-bold text-primary">0</span>
+                <span class="text-[8px] text-stone">Intervals > 1.5x</span>
+              </div>
+
+              <!-- Total Frames Sampled -->
+              <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Total Samples</span>
+                <span id="sample-counter" class="text-[10px] font-bold text-primary">0</span>
+                <span class="text-[8px] text-stone">rAF ticks</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Section -->
+          <div class="flex flex-col gap-2.5">
+            <!-- Mode Toggle -->
+            <div class="flex flex-col gap-1">
+              <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Test Mode</span>
+              <div class="grid grid-cols-2 gap-1" role="radiogroup" aria-label="Test mode">
+                <button type="button" id="mode-quick-btn" class="text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer active-mode">Quick (3s)</button>
+                <button type="button" id="mode-cont-btn" class="text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface hover:bg-surface-pricing-featured hover:border-brand-blue hover:text-brand-blue text-slate transition-all cursor-pointer">Continuous</button>
+              </div>
+            </div>
+
+            <!-- Test Driver Speed/Style -->
+            <div class="flex flex-col gap-1">
+              <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Visual Test Driver</span>
+              <div class="grid grid-cols-3 gap-1" role="radiogroup" aria-label="Test driver type">
+                <button type="button" data-driver="bar" class="driver-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface text-slate transition-all cursor-pointer driver-active">Bar</button>
+                <button type="button" data-driver="block" class="driver-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface text-slate transition-all cursor-pointer">Block</button>
+                <button type="button" data-driver="none" class="driver-btn text-[9px] font-semibold py-1 px-1 rounded border border-hairline bg-surface text-slate transition-all cursor-pointer">None</button>
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex flex-col gap-1.5">
+              <button
+                type="button"
+                id="start-stop-btn"
+                class="w-full button-primary text-xs py-2 px-4 !rounded-full shadow-subtle hover:scale-[1.02] active:scale-95 transition-all cursor-pointer font-bold text-center flex items-center justify-center gap-1.5"
+              >
+                <span id="start-stop-icon">▶</span>
+                <span id="start-stop-text">Start Test</span>
+              </button>
+              
+              <button
+                type="button"
+                id="fullscreen-btn"
+                class="w-full inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+              >
+                <span>🎎</span>
+                <span>Fullscreen Overlay</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Test Area & Canvas Graph (Column 2: 5 cols on lg, 6 cols on xl) -->
+      <div class="lg:col-span-5 xl:col-span-6 flex flex-col gap-3">
+        <!-- Interactive Visualizer -->
+        <div id="test-zone" class="card-base flex-1 min-h-[300px] h-[340px] lg:h-[380px] p-4 flex flex-col items-center justify-center border-2 border-dashed border-hairline-strong bg-canvas hover:border-brand-blue/50 transition-colors select-none relative group overflow-hidden">
+          <!-- Live Pacing Scrolling Canvas -->
+          <canvas id="pacing-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40"></canvas>
+
+          <!-- Countdown / Progress Overlay -->
+          <div id="zone-countdown-overlay" class="absolute top-4 right-4 z-20 pointer-events-none hidden">
+            <div class="flex flex-col items-center bg-canvas/80 backdrop-blur-sm border border-brand-blue/40 rounded-2xl px-3 py-1.5 shadow-lg">
+              <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Time Left</span>
+              <span id="zone-countdown-value" class="text-2xl font-display font-bold text-brand-blue tabular-nums">3</span>
+              <span class="text-[9px] text-stone">seconds</span>
+            </div>
+          </div>
+
+          <div id="zone-progress-bar" class="absolute bottom-0 left-0 right-0 h-1 pointer-events-none hidden">
+            <div id="zone-progress-fill" class="h-full bg-brand-blue/70 transition-all text-brand-blue" style="width: 100%"></div>
+          </div>
+
+          <!-- Dynamic Visual Drivers Container -->
+          <div id="visual-driver-container" class="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
+            <!-- Sliding Bar -->
+            <div id="driver-bar" class="absolute top-0 bottom-0 w-2.5 bg-brand-blue shadow-[0_0_10px_rgba(66,98,255,0.6)] hidden"></div>
+            <!-- Bouncing Block -->
+            <div id="driver-block" class="absolute w-12 h-12 bg-brand-teal rounded-lg shadow-lg hidden"></div>
+          </div>
+
+          <div id="test-zone-instructions" class="pointer-events-none flex flex-col items-center text-center gap-2 z-10 transition-opacity duration-300">
+            <div class="text-3xl animate-bounce">⚡</div>
+            <div class="flex flex-col gap-1">
+              <h3 class="font-display font-medium text-sm sm:text-base text-primary">Refresh Rate Diagnostics Box</h3>
+              <p class="text-xs text-slate max-w-sm leading-relaxed">
+                Click <strong class="text-brand-blue">Start Test</strong> to sample frame rendering performance. Running in Fullscreen improves browser scheduler prioritization.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Troubleshooting Panel (Shown under test zone if issues detected) -->
+        <div id="troubleshoot-panel" class="hidden card-base p-3 bg-surface-yellow border border-brand-yellow-deep/40 flex flex-col gap-2 animate-fade-in">
+          <h3 class="font-display font-semibold text-xs text-yellow-dark flex items-center gap-1.5">
+            <span>⚠️</span> Low Refresh Rate or High Jitter Detected
+          </h3>
+          <div class="text-[10px] text-yellow-dark leading-relaxed flex flex-col gap-1">
+            <p>Your browser reports high variance or capped frame rates. Common solutions:</p>
+            <ul class="list-disc pl-4 flex flex-col gap-0.5">
+              <li>Enable **Hardware Acceleration** in browser settings.</li>
+              <li>Check Windows/macOS advanced display settings to confirm monitor Hz is set correctly (e.g. 144Hz, not 60Hz).</li>
+              <li>Close background apps or other browser tabs that consume GPU resources.</li>
+              <li>Run the test in **Fullscreen Overlay** mode to bypass compositor limitations.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Panel (Column 3: 3 cols on lg/xl) -->
+      <div class="lg:col-span-3 xl:col-span-3 flex flex-col gap-3">
+        <div class="card-base p-3 flex flex-col gap-3 h-full justify-between">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between border-b border-hairline-soft pb-2">
+              <h3 class="font-display font-semibold text-xs text-primary flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate"></span>
+                History
+              </h3>
+              <div class="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  id="export-btn"
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded transition-all cursor-pointer shadow-subtle"
+                >
+                  Copy
+                </button>
+                <button
+                  type="button"
+                  id="clear-history-btn"
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded transition-all cursor-pointer shadow-subtle"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <div class="max-h-[220px] lg:max-h-[250px] xl:max-h-[280px] overflow-y-auto pr-1">
+              <table class="w-full text-left border-collapse text-[10px]">
+                <thead>
+                  <tr class="border-b border-hairline text-slate font-semibold sticky top-0 bg-canvas z-10">
+                    <th class="py-1 px-1">Hz</th>
+                    <th class="py-1 px-1 text-right">Interval</th>
+                    <th class="py-1 px-1 text-right">Jitter</th>
+                    <th class="py-1 px-1 text-right">Drops</th>
+                  </tr>
+                </thead>
+                <tbody id="history-tbody">
+                  <tr>
+                    <td colspan="4" class="py-4 px-1 text-center text-stone italic">No tests saved.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Security & Privacy Guard Tag -->
+          <div class="flex items-center justify-between text-[9px] text-slate border-t border-hairline-soft pt-2">
+            <span class="flex items-center gap-0.5">
+              <span class="text-success-accent font-semibold">✓</span> Client-Side
+            </span>
+            <span>v2.0.0</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Fullscreen Floating Visualizer Overlay -->
+  <div id="fullscreen-overlay" class="fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center hidden select-none cursor-none">
+    <!-- Active Driver for Fullscreen -->
+    <div id="fs-driver-container" class="absolute inset-0 w-full h-full">
+      <div id="fs-driver-bar" class="absolute top-0 bottom-0 w-3 bg-brand-blue shadow-[0_0_15px_rgba(66,98,255,0.8)] hidden"></div>
+      <div id="fs-driver-block" class="absolute w-20 h-20 bg-brand-teal rounded-xl shadow-2xl hidden"></div>
+    </div>
+
+    <!-- Stats display overlay (semi-trans) -->
+    <div class="absolute bottom-8 left-8 right-8 flex justify-between items-end pointer-events-none z-10">
+      <div class="bg-primary/80 border border-hairline-soft/20 backdrop-blur-md p-4 rounded-xl flex flex-col gap-1 text-white shadow-2xl">
+        <span class="text-[10px] font-semibold text-stone uppercase tracking-wider">Measuring Rate</span>
+        <span id="fs-hz" class="text-4xl font-display font-medium text-brand-blue tabular-nums">0.0 Hz</span>
+        <span id="fs-dropped" class="text-[10px] text-brand-coral font-mono">0 dropped frames</span>
+      </div>
+      <div class="text-right text-stone text-[10px] flex flex-col gap-1">
+        <p>Press <kbd class="px-1.5 py-0.5 bg-charcoal rounded text-white font-mono">ESC</kbd> or click anywhere to exit Fullscreen</p>
+        <p id="fs-progress" class="font-bold text-brand-blue tabular-nums"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Understanding Display Refresh Rates & Pacing
+      </h2>
+      <p class="text-sm leading-relaxed">
+        The refresh rate of a monitor defines how many times per second the display updates its visual buffer. Measured in Hertz (Hz), higher values like 120Hz, 144Hz, 240Hz, or 360Hz provide fluid animations and reduced motion blur. This is critical for gaming and fast UI interactions.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How browsers schedule rendering loops
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Web browsers attempt to synchronize rendering with the display compositor using the <code>requestAnimationFrame</code> API. By tracking the high-precision timestamp supplied to this callback, the browser can calculate the precise interval between adjacent frame draws.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Filtering Compositor Noise and OS Hiccups
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Even on clean monitors, system processes can delay the browser compositor, causing an occasional delayed frame (often called "stutter"). To determine your hardware's actual refresh rate without these outliers skewing the average, this test ignores extreme values (the highest and lowest 10% samples) and reports the **Median Interval** and **Trimmed Mean Hz**.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Refresh Rate Test Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. How is refresh rate measured?
+        </h4>
+        <p>
+          The page runs a continuous loop synced with your browser's draw calls via <code>requestAnimationFrame</code>. We measure the elapsed time in milliseconds between successive frame renders.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Why does the display value jump?</h4>
+        <p>
+          System background processes, mouse movements, or browser scheduling can temporarily delay the compositor. We apply statistical outlier filtering to yield a stable, accurate read.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Visual Test Drivers</h4>
+        <p>
+          Animating a vertical bar or block forces your graphics card to continuously re-render the workspace, keeping browser frame rates matching the display hardware.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Interfaces
+    interface RefreshRun {
+      timestamp: number;
+      rate: number;
+      medianDelay: number;
+      jitter: number;
+      dropped: number;
+    }
+
+    // State Variables
+    let isTesting = false;
+    let isContinuous = false;
+    let frameTimestamps: number[] = [];
+    let frameIntervals: number[] = [];
+    let lastFrameTime = 0;
+    
+    let activeDriver: 'bar' | 'block' | 'none' = 'bar';
+    let isFullscreenMode = false;
+    let testStartTime = 0;
+    let quickTestDuration = 3000; // 3 seconds
+    let rafId = 0;
+    
+    // Animation driver state variables
+    let barX = 0;
+    let barDirection = 1;
+    let blockX = 10;
+    let blockY = 10;
+    let blockDx = 2.5;
+    let blockDy = 2.5;
+    
+    // LocalStorage Keys
+    const LS_KEY_HISTORY = "boardtools:refresh-rate:history";
+
+    // DOM Elements
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+    
+    const startStopBtn = document.getElementById("start-stop-btn") as HTMLButtonElement;
+    const startStopIcon = document.getElementById("start-stop-icon") as HTMLSpanElement;
+    const startStopText = document.getElementById("start-stop-text") as HTMLSpanElement;
+    
+    const fullscreenBtn = document.getElementById("fullscreen-btn") as HTMLButtonElement;
+    const fullscreenOverlay = document.getElementById("fullscreen-overlay") as HTMLDivElement;
+    
+    const modeQuickBtn = document.getElementById("mode-quick-btn") as HTMLButtonElement;
+    const modeContBtn = document.getElementById("mode-cont-btn") as HTMLButtonElement;
+    const driverBtns = document.querySelectorAll<HTMLButtonElement>(".driver-btn");
+    
+    // Stats elements
+    const liveHz = document.getElementById("live-hz") as HTMLSpanElement;
+    const liveHzSubtext = document.getElementById("live-hz-subtext") as HTMLSpanElement;
+    const medianInterval = document.getElementById("median-interval") as HTMLSpanElement;
+    const sdVal = document.getElementById("sd-val") as HTMLSpanElement;
+    const droppedCounter = document.getElementById("dropped-counter") as HTMLSpanElement;
+    const sampleCounter = document.getElementById("sample-counter") as HTMLSpanElement;
+    
+    const zoneCountdownOverlay = document.getElementById("zone-countdown-overlay") as HTMLDivElement;
+    const zoneCountdownValue = document.getElementById("zone-countdown-value") as HTMLSpanElement;
+    const zoneProgressBar = document.getElementById("zone-progress-bar") as HTMLDivElement;
+    const zoneProgressFill = document.getElementById("zone-progress-fill") as HTMLDivElement;
+    
+    const testZone = document.getElementById("test-zone") as HTMLDivElement;
+    const instructions = document.getElementById("test-zone-instructions") as HTMLDivElement;
+    const pacingCanvas = document.getElementById("pacing-canvas") as HTMLCanvasElement;
+    const troubleshootPanel = document.getElementById("troubleshoot-panel") as HTMLDivElement;
+    
+    const historyTbody = document.getElementById("history-tbody") as HTMLTableSectionElement;
+    const exportBtn = document.getElementById("export-btn") as HTMLButtonElement;
+    const clearHistoryBtn = document.getElementById("clear-history-btn") as HTMLButtonElement;
+    
+    // Interactive driver components
+    const driverBar = document.getElementById("driver-bar") as HTMLDivElement;
+    const driverBlock = document.getElementById("driver-block") as HTMLDivElement;
+    const fsDriverBar = document.getElementById("fs-driver-bar") as HTMLDivElement;
+    const fsDriverBlock = document.getElementById("fs-driver-block") as HTMLDivElement;
+    
+    const fsHz = document.getElementById("fs-hz") as HTMLSpanElement;
+    const fsDropped = document.getElementById("fs-dropped") as HTMLSpanElement;
+    const fsProgress = document.getElementById("fs-progress") as HTMLParagraphElement;
+
+    // Canvas rendering context
+    const ctx = pacingCanvas.getContext("2d");
+
+    function resizeCanvas() {
+      if (!pacingCanvas) return;
+      const rect = pacingCanvas.getBoundingClientRect();
+      pacingCanvas.width = rect.width * window.devicePixelRatio;
+      pacingCanvas.height = rect.height * window.devicePixelRatio;
+      if (ctx) {
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      }
+    }
+    
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Setup how it works modal events
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+    
+    const closeModal = () => {
+      howItWorksModal.classList.add("hidden");
+    };
+    
+    closeModalBtn.addEventListener("click", closeModal);
+    modalOkBtn.addEventListener("click", closeModal);
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Test mode controls
+    modeQuickBtn.addEventListener("click", () => {
+      if (isTesting) return;
+      isContinuous = false;
+      modeQuickBtn.classList.add("active-mode");
+      modeContBtn.classList.remove("active-mode");
+    });
+    
+    modeContBtn.addEventListener("click", () => {
+      if (isTesting) return;
+      isContinuous = true;
+      modeContBtn.classList.add("active-mode");
+      modeQuickBtn.classList.remove("active-mode");
+    });
+
+    // Driver buttons
+    driverBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        driverBtns.forEach(b => b.classList.remove("driver-active"));
+        btn.classList.add("driver-active");
+        activeDriver = btn.dataset.driver as 'bar' | 'block' | 'none';
+        updateDriverVisibility();
+      });
+    });
+
+    function updateDriverVisibility() {
+      // Hide all initially
+      driverBar.classList.add("hidden");
+      driverBlock.classList.add("hidden");
+      fsDriverBar.classList.add("hidden");
+      fsDriverBlock.classList.add("hidden");
+
+      if (!isTesting) return;
+
+      const container = isFullscreenMode ? fsDriverBar.parentElement : driverBar.parentElement;
+      if (!container) return;
+      
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      if (isFullscreenMode) {
+        if (activeDriver === 'bar') {
+          fsDriverBar.classList.remove("hidden");
+        } else if (activeDriver === 'block') {
+          fsDriverBlock.classList.remove("hidden");
+          blockX = width / 2;
+          blockY = height / 2;
+        }
+      } else {
+        if (activeDriver === 'bar') {
+          driverBar.classList.remove("hidden");
+        } else if (activeDriver === 'block') {
+          driverBlock.classList.remove("hidden");
+          blockX = width / 2;
+          blockY = height / 2;
+        }
+      }
+    }
+
+    // Toggle testing
+    startStopBtn.addEventListener("click", () => {
+      if (!isTesting) {
+        startTest();
+      } else {
+        stopTest();
+      }
+    });
+
+    // Fullscreen Overlay Toggle
+    fullscreenBtn.addEventListener("click", () => {
+      enterFullscreen();
+    });
+
+    fullscreenOverlay.addEventListener("click", () => {
+      exitFullscreen();
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        exitFullscreenState();
+      }
+    });
+
+    function enterFullscreen() {
+      isFullscreenMode = true;
+      fullscreenOverlay.classList.remove("hidden");
+      
+      // Request standard fullscreen
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch((err) => {
+          console.error("Fullscreen request failed", err);
+        });
+      }
+      
+      startTest();
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch((e) => {
+          // ignore
+        });
+      }
+      exitFullscreenState();
+    }
+
+    function exitFullscreenState() {
+      isFullscreenMode = false;
+      fullscreenOverlay.classList.add("hidden");
+      stopTest();
+    }
+
+    function startTest() {
+      isTesting = true;
+      frameTimestamps = [];
+      frameIntervals = [];
+      lastFrameTime = performance.now();
+      testStartTime = lastFrameTime;
+      
+      troubleshootPanel.classList.add("hidden");
+
+      if (!isFullscreenMode) {
+        startStopIcon.textContent = "⏹";
+        startStopText.textContent = "Stop Test";
+        startStopBtn.classList.remove("button-primary");
+        startStopBtn.classList.add("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
+        
+        modeQuickBtn.setAttribute("disabled", "true");
+        modeContBtn.setAttribute("disabled", "true");
+        
+        instructions.classList.add("opacity-20");
+        testZone.classList.remove("border-dashed");
+        testZone.classList.add("border-solid", "border-brand-blue", "shadow-lg", "shadow-brand-blue/10");
+        
+        if (!isContinuous) {
+          zoneCountdownOverlay.classList.remove("hidden");
+          zoneProgressBar.classList.remove("hidden");
+          zoneCountdownValue.textContent = "3";
+          zoneProgressFill.style.transition = "none";
+          zoneProgressFill.style.width = "100%";
+        }
+      } else {
+        fsHz.textContent = "0.0 Hz";
+        fsDropped.textContent = "0 dropped frames";
+        fsProgress.textContent = !isContinuous ? "Duration: 3s" : "Continuous";
+      }
+
+      updateDriverVisibility();
+      resizeCanvas();
+
+      rafId = requestAnimationFrame(loop);
+    }
+
+    function stopTest() {
+      if (!isTesting) return;
+      isTesting = false;
+      cancelAnimationFrame(rafId);
+      
+      if (!isFullscreenMode) {
+        startStopIcon.textContent = "▶";
+        startStopText.textContent = "Start Test";
+        startStopBtn.classList.add("button-primary");
+        startStopBtn.classList.remove("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
+        
+        modeQuickBtn.removeAttribute("disabled");
+        modeContBtn.removeAttribute("disabled");
+        
+        instructions.classList.remove("opacity-20");
+        testZone.classList.add("border-dashed");
+        testZone.classList.remove("border-solid", "border-brand-blue", "shadow-lg", "shadow-brand-blue/10");
+        
+        zoneCountdownOverlay.classList.add("hidden");
+        zoneProgressBar.classList.add("hidden");
+      }
+
+      // Hide animation drivers
+      driverBar.classList.add("hidden");
+      driverBlock.classList.add("hidden");
+      fsDriverBar.classList.add("hidden");
+      fsDriverBlock.classList.add("hidden");
+
+      // Save summary to history and trigger check
+      saveRunToHistory();
+      checkDisplayDiagnostics();
+    }
+
+    // Core Frame loop
+    function loop(timestamp: number) {
+      if (!isTesting) return;
+      
+      const elapsed = timestamp - lastFrameTime;
+      lastFrameTime = timestamp;
+
+      // Skip initial frames to wait for stabilizer
+      if (frameTimestamps.length > 0) {
+        // Exclude pauses like background tab swaps (> 150ms)
+        if (elapsed > 1 && elapsed < 150) {
+          frameIntervals.push(elapsed);
+        }
+      }
+      frameTimestamps.push(timestamp);
+
+      // Render Visual Driver animation
+      animateDriver(elapsed);
+
+      // Handle Quick test countdown
+      if (!isContinuous) {
+        const testElapsed = timestamp - testStartTime;
+        const remaining = Math.max(0, Math.ceil((quickTestDuration - testElapsed) / 1000));
+        
+        if (!isFullscreenMode) {
+          zoneCountdownValue.textContent = remaining.toString();
+          const pct = Math.max(0, 100 - (testElapsed / quickTestDuration) * 100);
+          zoneProgressFill.style.width = `${pct}%`;
+        } else {
+          fsProgress.textContent = `${(testElapsed / 1000).toFixed(1)}s / 3.0s`;
+        }
+
+        if (testElapsed >= quickTestDuration) {
+          stopTest();
+          return;
+        }
+      }
+
+      // Live Stats computation
+      updateStats();
+
+      // Render scrolling Canvas Graph
+      renderGraph();
+
+      rafId = requestAnimationFrame(loop);
+    }
+
+    // Move the bar or block elements
+    function animateDriver(elapsed: number) {
+      if (activeDriver === 'none') return;
+
+      const container = isFullscreenMode ? fsDriverBar.parentElement : driverBar.parentElement;
+      if (!container) return;
+
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+
+      const targetBar = isFullscreenMode ? fsDriverBar : driverBar;
+      const targetBlock = isFullscreenMode ? fsDriverBlock : driverBlock;
+
+      // Animate sliding bar
+      if (activeDriver === 'bar') {
+        const speed = containerWidth / 1500; // cross screen in 1.5s
+        barX += speed * elapsed * barDirection;
+        if (barX >= containerWidth - 10) {
+          barX = containerWidth - 10;
+          barDirection = -1;
+        } else if (barX <= 0) {
+          barX = 0;
+          barDirection = 1;
+        }
+        targetBar.style.transform = `translateX(${barX}px)`;
+      }
+
+      // Animate bouncing block
+      if (activeDriver === 'block') {
+        const speedMultiplier = containerWidth / 400; // normalize bounce speed
+        blockX += blockDx * speedMultiplier * (elapsed / 16.6);
+        blockY += blockDy * speedMultiplier * (elapsed / 16.6);
+
+        const size = isFullscreenMode ? 80 : 48;
+
+        if (blockX + size >= containerWidth) {
+          blockX = containerWidth - size;
+          blockDx *= -1;
+        } else if (blockX <= 0) {
+          blockX = 0;
+          blockDx *= -1;
+        }
+
+        if (blockY + size >= containerHeight) {
+          blockY = containerHeight - size;
+          blockDy *= -1;
+        } else if (blockY <= 0) {
+          blockY = 0;
+          blockDy *= -1;
+        }
+
+        targetBlock.style.transform = `translate(${blockX}px, ${blockY}px)`;
+      }
+    }
+
+    // Render Realtime scrolling frame pacing graph
+    function renderGraph() {
+      if (!ctx || !pacingCanvas || frameIntervals.length < 2) return;
+
+      const dpr = window.devicePixelRatio;
+      const w = pacingCanvas.width / dpr;
+      const h = pacingCanvas.height / dpr;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Max items to fit on canvas
+      const maxSamples = Math.min(frameIntervals.length, 120);
+      const startIdx = frameIntervals.length - maxSamples;
+      const samples = frameIntervals.slice(startIdx);
+
+      // Compute standard height scale targeting typical display values (around 16.6ms for 60Hz)
+      const maxVal = 35; // Cap height scaling to max 35ms to ignore high spikes
+      const minVal = 2;
+
+      ctx.beginPath();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "rgba(66, 98, 255, 0.7)";
+
+      const step = w / 110;
+
+      for (let i = 0; i < samples.length; i++) {
+        const val = samples[i];
+        const x = i * step;
+        // Clamp height
+        const clampedVal = Math.max(minVal, Math.min(maxVal, val));
+        const y = h - ((clampedVal - minVal) / (maxVal - minVal)) * (h - 20) - 10;
+
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+
+      // Draw standard guideline (e.g. median line)
+      if (samples.length > 5) {
+        const sorted = [...samples].sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)];
+        const medianY = h - ((median - minVal) / (maxVal - minVal)) * (h - 20) - 10;
+        
+        ctx.beginPath();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = "rgba(0, 180, 115, 0.4)";
+        ctx.moveTo(0, medianY);
+        ctx.lineTo(w, medianY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    }
+
+    // Compute stats
+    function updateStats() {
+      if (frameIntervals.length < 5) return;
+
+      // 1. Median
+      const sorted = [...frameIntervals].sort((a, b) => a - b);
+      const medianIdx = Math.floor(sorted.length / 2);
+      const median = sorted.length % 2 !== 0
+        ? sorted[medianIdx]
+        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
+
+      // 2. Trimmed Mean (ignoring top and bottom 10% outliers to filter stutters)
+      const trimCount = Math.floor(sorted.length * 0.1);
+      const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
+      const sum = trimmed.reduce((acc, v) => acc + v, 0);
+      const mean = sum / trimmed.length;
+
+      // 3. Estimated Hz
+      const estHz = 1000 / mean;
+
+      // 4. Standard Deviation (Jitter)
+      const variance = trimmed.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / trimmed.length;
+      const sd = Math.sqrt(variance);
+
+      // 5. Dropped Frames (any frame > 1.5 * expected interval)
+      const expected = median;
+      const dropped = frameIntervals.filter(v => v > 1.5 * expected).length;
+
+      // Map to standard Hz
+      const standardHzs = [60, 75, 90, 120, 144, 165, 240, 280, 360, 500];
+      let closestHz = 60;
+      let minDiff = Infinity;
+      standardHzs.forEach(hz => {
+        const diff = Math.abs(estHz - hz);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestHz = hz;
+        }
+      });
+
+      // Update UI readouts
+      liveHz.innerHTML = `${estHz.toFixed(1)} <span class="text-xs text-slate">Hz</span>`;
+      liveHzSubtext.textContent = `Likely ${closestHz}Hz Display`;
+      medianInterval.textContent = `${median.toFixed(2)} ms`;
+      sdVal.textContent = `±${sd.toFixed(2)} ms`;
+      droppedCounter.textContent = dropped.toString();
+      sampleCounter.textContent = frameIntervals.length.toString();
+
+      if (isFullscreenMode) {
+        fsHz.textContent = `${estHz.toFixed(1)} Hz`;
+        fsDropped.textContent = `${dropped} dropped frames`;
+      }
+    }
+
+    // Diagnostics Troubleshooting display
+    function checkDisplayDiagnostics() {
+      if (frameIntervals.length < 10) return;
+
+      const sorted = [...frameIntervals].sort((a, b) => a - b);
+      const medianIdx = Math.floor(sorted.length / 2);
+      const median = sorted.length % 2 !== 0
+        ? sorted[medianIdx]
+        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
+
+      const estHz = 1000 / (frameIntervals.reduce((a, b) => a + b, 0) / frameIntervals.length);
+
+      // Compute SD
+      const mean = frameIntervals.reduce((a, b) => a + b, 0) / frameIntervals.length;
+      const variance = frameIntervals.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / frameIntervals.length;
+      const sd = Math.sqrt(variance);
+
+      // If estimated refresh rate is below 45Hz or frame jitter is high (> 3.5ms)
+      if (estHz < 45 || sd > 3.5) {
+        troubleshootPanel.classList.remove("hidden");
+      }
+    }
+
+    // Reset layout
+    resetBtn.addEventListener("click", () => {
+      stopTest();
+      
+      // Clear variables
+      frameTimestamps = [];
+      frameIntervals = [];
+      
+      // Reset UI
+      liveHz.innerHTML = `0.0 <span class="text-xs text-slate">Hz</span>`;
+      liveHzSubtext.textContent = "Likely -- Hz Display";
+      medianInterval.textContent = "0.00 ms";
+      sdVal.textContent = "±0.00 ms";
+      droppedCounter.textContent = "0";
+      sampleCounter.textContent = "0";
+      
+      troubleshootPanel.classList.add("hidden");
+      
+      if (ctx && pacingCanvas) {
+        ctx.clearRect(0, 0, pacingCanvas.width, pacingCanvas.height);
+      }
+      
+      // Clear localStorage history
+      localStorage.removeItem(LS_KEY_HISTORY);
+      renderHistory();
+    });
+
+    // History and Persistence functions
+    function saveRunToHistory() {
+      if (frameIntervals.length < 30) return;
+
+      const sorted = [...frameIntervals].sort((a, b) => a - b);
+      const medianIdx = Math.floor(sorted.length / 2);
+      const median = sorted.length % 2 !== 0
+        ? sorted[medianIdx]
+        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
+
+      const trimCount = Math.floor(sorted.length * 0.1);
+      const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
+      const sum = trimmed.reduce((acc, v) => acc + v, 0);
+      const mean = sum / trimmed.length;
+
+      const estHz = 1000 / mean;
+      const variance = trimmed.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / trimmed.length;
+      const sd = Math.sqrt(variance);
+
+      const dropped = frameIntervals.filter(v => v > 1.5 * median).length;
+
+      const run: RefreshRun = {
+        timestamp: Date.now(),
+        rate: Number(estHz.toFixed(1)),
+        medianDelay: Number(median.toFixed(2)),
+        jitter: Number(sd.toFixed(2)),
+        dropped
+      };
+
+      const history = getHistory();
+      history.unshift(run);
+      localStorage.setItem(LS_KEY_HISTORY, JSON.stringify(history.slice(0, 10)));
+      renderHistory();
+    }
+
+    function getHistory(): RefreshRun[] {
+      const stored = localStorage.getItem(LS_KEY_HISTORY);
+      if (!stored) return [];
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+      if (history.length === 0) {
+        historyTbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-4 px-1 text-center text-stone italic">No tests saved.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      historyTbody.innerHTML = history.map(item => `
+        <tr class="border-b border-hairline-soft hover:bg-surface/40">
+          <td class="py-1.5 px-1 font-bold text-primary">${item.rate} Hz</td>
+          <td class="py-1.5 px-1 text-right font-mono">${item.medianDelay} ms</td>
+          <td class="py-1.5 px-1 text-right font-mono">±${item.jitter} ms</td>
+          <td class="py-1.5 px-1 text-right font-mono text-coral-dark">${item.dropped}</td>
+        </tr>
+      `).join("");
+    }
+
+    // Export Results Summary
+    exportBtn.addEventListener("click", () => {
+      const history = getHistory();
+      if (history.length === 0) {
+        alert("No history to copy.");
+        return;
+      }
+      
+      let text = "BoardTools Refresh Rate Test Results Summary:\n";
+      text += "=========================================\n";
+      history.forEach((run, i) => {
+        text += `Run #${i + 1}: ${run.rate}Hz | Median: ${run.medianDelay}ms | Jitter: ±${run.jitter}ms | Dropped Frames: ${run.dropped}\n`;
+      });
+      
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Summary copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy history", err);
+      });
+    });
+
+    clearHistoryBtn.addEventListener("click", () => {
+      localStorage.removeItem(LS_KEY_HISTORY);
+      renderHistory();
+    });
+
+    // Suspend loop if browser tab is backgrounded
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && isTesting) {
+        stopTest();
+      }
+    });
+
+    // Initial render
+    renderHistory();
+  </script>
+
+  <style>
+    /* Styling states */
+    .active-mode {
+      background-color: var(--color-surface-pricing-featured, oklch(0.92 0.03 250));
+      border-color: var(--color-brand-blue, oklch(0.55 0.22 265));
+      color: var(--color-brand-blue, oklch(0.55 0.22 265));
+      font-weight: 700;
+    }
+    
+    .driver-active {
+      background-color: var(--color-primary, oklch(0.20 0.01 200));
+      border-color: var(--color-primary, oklch(0.20 0.01 200));
+      color: var(--color-on-primary, oklch(1.0 0.0 0.0));
+      font-weight: 600;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  </style>
 </Layout>
