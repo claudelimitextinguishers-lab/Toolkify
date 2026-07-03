@@ -1,90 +1,1005 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
-// Tool metadata
+// On-page SEO metadata
 const name = "Spirit Level / Bubble Level";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
-const description = "Turn mobile devices into digital spirit levels using device orientation angles.";
+
+const pageTitle = "Spirit Level & Bubble Level - Precise Client-Side Tilt Tool";
+const description = "Free online spirit level and carpenter's level tool. Calibrate offsets, switch units between degrees and percent grade, and read real-time gyroscopic orientation directly in your mobile browser.";
+const canonicalUrl = "https://boardtools.app/tools/mobile/spirit-level";
+const ogImage = "/og/spirit-level.png";
+const keywords = "spirit level, bubble level, online level, gyro level, inclinometer, mobile level, tilt sensor, carpenter level, calibration, device orientation";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Spirit Level / Bubble Level",
+      "alternateName": "Digital Inclinometer & Carpenter Level",
+      "url": "https://boardtools.app/tools/mobile/spirit-level",
+      "description": "A high-precision client-side digital bubble level and carpenter level utilizing the device orientation gyroscopic sensors. Offers calibration offsets, vibration confirmation, and degree vs percent grade readouts.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires DeviceOrientation API.",
+      "featureList": [
+        "Circular 2-axis bubble level for flat surfaces",
+        "Linear 1-axis carpenter's level for edges",
+        "Sub-degree calibration and offset saving",
+        "Toggle units between degrees and percent grade",
+        "Adjustable level-tolerance sensitivity",
+        "Optional haptic feedback / vibration confirmation",
+        "Desktop interactive simulation fallback"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mobile",
+          "item": "https://boardtools.app/tools/mobile"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Spirit Level",
+          "item": "https://boardtools.app/tools/mobile/spirit-level"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">📱</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button (verbatim pattern from json-formatter.astro) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button (verbatim pattern from json-formatter.astro) -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How spirit level works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <!-- Left Column: Interactive Level (above fold optimization) -->
+      <div class="lg:col-span-8 card-base flex flex-col gap-3 sm:gap-4 relative justify-between min-h-[380px] sm:min-h-[520px]">
+        
+        <!-- Live status notification banner / Simulation banner -->
+        <div id="status-banner" class="hidden text-xs py-1.5 px-3 rounded-lg font-medium text-center transition-all">
+          No gyroscope detected. Simulation mode active: click or drag level bubble.
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Permission Dialog Screen (shown on iOS or initially) -->
+        <div id="permission-screen" class="hidden flex-1 flex flex-col items-center justify-center text-center p-6 gap-5">
+          <div class="w-16 h-16 rounded-full bg-blue-450/10 flex items-center justify-center text-3xl animate-bounce">
+            📱
+          </div>
+          <div class="max-w-md flex flex-col gap-2">
+            <h3 class="font-display font-semibold text-lg text-primary">Sensor Access Required</h3>
+            <p class="text-xs text-slate leading-relaxed">
+              BoardTools Spirit Level needs access to your device's motion sensors to show real-time orientation. iOS requires manual confirmation.
+            </p>
+          </div>
+          <button
+            type="button"
+            id="request-permission-btn"
+            class="button-primary text-xs py-2.5 px-6 shadow-md hover:scale-105 active:scale-95 transition-all"
+          >
+            Enable Motion Sensors
+          </button>
+          <button
+            type="button"
+            id="skip-permission-btn"
+            class="text-[11px] font-semibold text-slate hover:text-primary transition-colors underline"
+          >
+            Use Interactive Simulator Mode
+          </button>
+        </div>
+
+        <!-- Live Level Workspace -->
+        <div id="level-workspace" class="hidden flex-1 flex flex-col justify-between gap-4">
+          
+          <!-- Top Row: Mode indicator + giant numeric readout -->
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+            <div class="flex flex-col">
+              <span id="active-mode-label" class="text-[10px] uppercase font-bold tracking-wider text-slate">Circular Mode (2-Axis)</span>
+              <span id="calibration-indicator" class="text-[9px] font-semibold text-brand-blue hidden">Calibrated Offset Applied</span>
+            </div>
+            
+            <!-- Large Glanceable Readout -->
+            <div class="flex items-baseline gap-2">
+              <span id="primary-readout" class="font-display font-semibold text-4xl sm:text-5xl text-primary tabular-nums">0.0°</span>
+              <span id="secondary-readout" class="text-xs font-medium text-slate tabular-nums hidden sm:inline"></span>
+            </div>
+          </div>
+
+          <!-- The Visual Level Container -->
+          <div class="flex-1 flex items-center justify-center py-2 relative min-h-[220px]">
+            
+            <!-- Dynamic Glowing Ring when Level -->
+            <div id="level-glow" class="absolute inset-0 bg-success-accent/0 rounded-full blur-2xl transition-all duration-300 opacity-20 pointer-events-none scale-75"></div>
+
+            <!-- 1. Circular Bubble Level View -->
+            <div id="circular-level-container" class="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border border-hairline bg-surface-soft/60 shadow-inner flex items-center justify-center cursor-pointer select-none">
+              <!-- Grid lines -->
+              <div class="absolute w-full h-[1px] bg-hairline/40"></div>
+              <div class="absolute h-full w-[1px] bg-hairline/40"></div>
+              
+              <!-- Center target rings -->
+              <div class="absolute w-8 h-8 rounded-full border border-hairline-strong/30"></div>
+              <div class="absolute w-16 h-16 rounded-full border border-hairline-strong/20"></div>
+              
+              <!-- Core center crosshair / boundary -->
+              <div class="absolute w-3 h-3 rounded-full border border-primary/20"></div>
+              
+              <!-- Floating Bubble -->
+              <div id="circular-bubble" class="absolute w-7 h-7 rounded-full bg-brand-blue/80 shadow-md border border-white/60 transition-transform duration-75 flex items-center justify-center">
+                <!-- Highlight reflections -->
+                <div class="w-1.5 h-1.5 bg-white/60 rounded-full absolute top-1 left-1.5"></div>
+              </div>
+            </div>
+
+            <!-- 2. Linear / Carpenter's Level View -->
+            <div id="linear-level-container" class="hidden relative w-full max-w-sm h-14 rounded-full border border-hairline bg-surface-soft/60 shadow-inner flex items-center justify-center cursor-pointer select-none overflow-hidden">
+              <!-- Center indicator lines -->
+              <div class="absolute top-0 bottom-0 left-[calc(50%-12px)] w-[1px] bg-hairline-strong/60"></div>
+              <div class="absolute top-0 bottom-0 left-[calc(50%+12px)] w-[1px] bg-hairline-strong/60"></div>
+              <div class="absolute top-0 bottom-0 left-1/2 w-[1px] bg-primary/20"></div>
+              
+              <!-- Sliding Tube Bubble -->
+              <div id="linear-bubble" class="absolute w-9 h-9 rounded-full bg-brand-blue/80 shadow-md border border-white/60 transition-transform duration-75 flex items-center justify-center">
+                <!-- Highlight reflections -->
+                <div class="w-2.5 h-2.5 bg-white/60 rounded-full absolute top-1 left-2"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Above-fold controls row -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-hairline-soft">
+            <button
+              type="button"
+              id="calibrate-btn"
+              class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
+              title="Set current position as 0"
+            >
+              🎯 Calibrate Zero
+            </button>
+            
+            <button
+              type="button"
+              id="mode-toggle-btn"
+              class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
+            >
+              🔄 Circular / Linear
+            </button>
+
+            <button
+              type="button"
+              id="unit-toggle-btn"
+              class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
+            >
+              📐 Unit: Degrees
+            </button>
+
+            <button
+              type="button"
+              id="haptics-toggle-btn"
+              class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
+            >
+              📳 Haptics: On
+            </button>
+          </div>
+
+          <!-- Advanced Adjustments (Inline & Compact) -->
+          <div class="flex flex-wrap items-center justify-between gap-4 py-2 px-3 bg-surface/50 border border-hairline rounded-xl mt-1">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-semibold text-slate uppercase">Tolerance Sensitivity</span>
+              <span id="tolerance-val" class="text-xs font-bold text-brand-blue">0.5°</span>
+            </div>
+            <div class="flex-1 max-w-[180px]">
+              <input 
+                type="range" 
+                id="tolerance-slider" 
+                min="0.1" 
+                max="2.0" 
+                step="0.1" 
+                value="0.5" 
+                class="w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue" 
+              />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Right Column: Info & Details Sidebar -->
+      <div class="lg:col-span-4 flex flex-col gap-4 print:hidden">
+        
+        <!-- Quick Specs panel -->
+        <div class="card-base flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-sm text-primary">Live Sensor Output</h3>
+          
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center py-1 border-b border-hairline-soft">
+              <span class="text-xs text-slate">Roll (Gamma)</span>
+              <span id="raw-gamma-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0°</span>
+            </div>
+            <div class="flex justify-between items-center py-1 border-b border-hairline-soft">
+              <span class="text-xs text-slate">Pitch (Beta)</span>
+              <span id="raw-beta-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0°</span>
+            </div>
+            <div id="offset-details" class="hidden flex-col gap-1 mt-1 bg-surface-yellow/50 p-2 rounded-lg border border-yellow-light/60">
+              <span class="text-[10px] uppercase font-bold text-yellow-dark">Saved Offsets</span>
+              <div class="flex justify-between text-[11px] text-slate font-mono">
+                <span>Offset Beta: <span id="offset-beta-val">0.0</span></span>
+                <span>Offset Gamma: <span id="offset-gamma-val">0.0</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacy Guard Feature Card -->
+        <div class="card-feature-teal flex flex-col gap-2.5">
+          <span class="badge-tag-purple bg-teal-light text-moss-dark self-start text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase">100% Private</span>
+          <h3 class="font-display font-semibold text-sm text-primary">Local Sandbox Processing</h3>
+          <p class="text-[11px] text-slate leading-relaxed">
+            All physical sensor API computations happen immediately on your hardware. No accelerometer coordinates or motion variables are ever saved, stored, or streamed to outer servers.
           </p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal Container -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Spirit Level Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. Sensor Orientation Mapping
+        </h4>
+        <p>
+          This level measures two tilt planes: <strong>Roll (Y-axis tilt / Gamma)</strong> for horizontal drift, and <strong>Pitch (X-axis tilt / Beta)</strong> for vertical slope. When laying the device flat, the bubble represents the high point. The tool maps device rotation dynamically, aligning the physical movement with standard portrait and landscape views.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Circular vs. Linear Level Modes</h4>
+        <p>
+          - <strong>Circular (2-Axis)</strong>: Best for checking horizontal planes. Lay the phone flat on its back (face up) on tables, shelves, or structures.<br/>
+          - <strong>Linear (1-Axis)</strong>: Mimics a traditional carpenter's bubble tube level. Stand the device on its side edge to check walls, picture frames, or vertical alignment.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Calibration & Accuracy</h4>
+        <p>
+          Due to protective phone cases and camera bumps, standard readings may hover off-balance even when flat. Tap <strong>Calibrate Zero</strong> to offset any current slant as the base point.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Units Explained</h4>
+        <p>
+          - <strong>Degrees (°)</strong>: Angular measurement, where 0° is true horizontal level.<br/>
+          - <strong>Percent Grade (%)</strong>: Rise divided by run. A grade of 100% indicates a 45-degree angle (1 unit of vertical rise for every 1 unit of horizontal distance).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants
+    const LS_OFFSET_BETA = "boardtools:spirit-level:offset-beta";
+    const LS_OFFSET_GAMMA = "boardtools:spirit-level:offset-gamma";
+    const LS_UNIT = "boardtools:spirit-level:unit";
+    const LS_MODE = "boardtools:spirit-level:mode";
+    const LS_TOLERANCE = "boardtools:spirit-level:tolerance";
+    const LS_HAPTICS = "boardtools:spirit-level:haptics";
+
+    // App state
+    let state = {
+      offsetBeta: 0,
+      offsetGamma: 0,
+      unit: "deg", // 'deg' or 'percent'
+      mode: "circular", // 'circular' or 'linear'
+      tolerance: 0.5,
+      haptics: true,
+      rawBeta: 0,
+      rawGamma: 0,
+      calibratedBeta: 0,
+      calibratedGamma: 0,
+      isSimulated: false,
+      permissionGranted: false
+    };
+
+    // Low-pass filter smoothing helper
+    let smoothedBeta = 0;
+    let smoothedGamma = 0;
+    const filterAlpha = 0.18; // Response vs Jitter balance
+
+    // DOM References
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    
+    const permissionScreen = document.getElementById("permission-screen") as HTMLDivElement;
+    const levelWorkspace = document.getElementById("level-workspace") as HTMLDivElement;
+    const requestPermissionBtn = document.getElementById("request-permission-btn") as HTMLButtonElement;
+    const skipPermissionBtn = document.getElementById("skip-permission-btn") as HTMLButtonElement;
+    const statusBanner = document.getElementById("status-banner") as HTMLDivElement;
+
+    const circularLevelContainer = document.getElementById("circular-level-container") as HTMLDivElement;
+    const linearLevelContainer = document.getElementById("linear-level-container") as HTMLDivElement;
+    const circularBubble = document.getElementById("circular-bubble") as HTMLDivElement;
+    const linearBubble = document.getElementById("linear-bubble") as HTMLDivElement;
+    const levelGlow = document.getElementById("level-glow") as HTMLDivElement;
+    
+    const activeModeLabel = document.getElementById("active-mode-label") as HTMLSpanElement;
+    const calibrationIndicator = document.getElementById("calibration-indicator") as HTMLSpanElement;
+    const primaryReadout = document.getElementById("primary-readout") as HTMLSpanElement;
+    const secondaryReadout = document.getElementById("secondary-readout") as HTMLSpanElement;
+    
+    const calibrateBtn = document.getElementById("calibrate-btn") as HTMLButtonElement;
+    const modeToggleBtn = document.getElementById("mode-toggle-btn") as HTMLButtonElement;
+    const unitToggleBtn = document.getElementById("unit-toggle-btn") as HTMLButtonElement;
+    const hapticsToggleBtn = document.getElementById("haptics-toggle-btn") as HTMLButtonElement;
+    const toleranceSlider = document.getElementById("tolerance-slider") as HTMLInputElement;
+    const toleranceVal = document.getElementById("tolerance-val") as HTMLSpanElement;
+
+    const rawGammaDisplay = document.getElementById("raw-gamma-display") as HTMLSpanElement;
+    const rawBetaDisplay = document.getElementById("raw-beta-display") as HTMLSpanElement;
+    const offsetDetails = document.getElementById("offset-details") as HTMLDivElement;
+    const offsetBetaVal = document.getElementById("offset-beta-val") as HTMLSpanElement;
+    const offsetGammaVal = document.getElementById("offset-gamma-val") as HTMLSpanElement;
+
+    // Load initial settings
+    function loadSettings() {
+      state.offsetBeta = parseFloat(localStorage.getItem(LS_OFFSET_BETA) || "0");
+      state.offsetGamma = parseFloat(localStorage.getItem(LS_OFFSET_GAMMA) || "0");
+      state.unit = localStorage.getItem(LS_UNIT) || "deg";
+      state.mode = localStorage.getItem(LS_MODE) || "circular";
+      state.tolerance = parseFloat(localStorage.getItem(LS_TOLERANCE) || "0.5");
+      state.haptics = (localStorage.getItem(LS_HAPTICS) !== "false");
+
+      toleranceSlider.value = state.tolerance.toString();
+      toleranceVal.textContent = state.tolerance.toFixed(1) + "°";
+      updateUIStrings();
+    }
+
+    // Save single settings helpers
+    function saveSetting(key: string, val: any) {
+      localStorage.setItem(key, String(val));
+    }
+
+    // Modal behavior verbatim
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Reset button behavioral contract
+    resetBtn?.addEventListener("click", () => {
+      // Clear localStorage keys
+      localStorage.removeItem(LS_OFFSET_BETA);
+      localStorage.removeItem(LS_OFFSET_GAMMA);
+      localStorage.removeItem(LS_UNIT);
+      localStorage.removeItem(LS_MODE);
+      localStorage.removeItem(LS_TOLERANCE);
+      localStorage.removeItem(LS_HAPTICS);
+
+      // Revert state
+      state.offsetBeta = 0;
+      state.offsetGamma = 0;
+      state.unit = "deg";
+      state.mode = "circular";
+      state.tolerance = 0.5;
+      state.haptics = true;
+
+      // Update inputs & indicators
+      toleranceSlider.value = "0.5";
+      toleranceVal.textContent = "0.5°";
+      
+      updateUIStrings();
+      updateSensorFlow();
+    });
+
+    // Toggle button handlers
+    modeToggleBtn.addEventListener("click", () => {
+      state.mode = state.mode === "circular" ? "linear" : "circular";
+      saveSetting(LS_MODE, state.mode);
+      updateUIStrings();
+      updateSensorFlow();
+    });
+
+    unitToggleBtn.addEventListener("click", () => {
+      state.unit = state.unit === "deg" ? "percent" : "deg";
+      saveSetting(LS_UNIT, state.unit);
+      updateUIStrings();
+    });
+
+    hapticsToggleBtn.addEventListener("click", () => {
+      state.haptics = !state.haptics;
+      saveSetting(LS_HAPTICS, state.haptics);
+      updateUIStrings();
+    });
+
+    toleranceSlider.addEventListener("input", (e) => {
+      const val = parseFloat((e.target as HTMLInputElement).value);
+      state.tolerance = val;
+      toleranceVal.textContent = val.toFixed(1) + "°";
+      saveSetting(LS_TOLERANCE, val);
+    });
+
+    calibrateBtn.addEventListener("click", () => {
+      // Offset tilt from the same aligned (rotation-corrected) coordinate frame used in live calculations
+      let rotationAngle = getRotationOffset();
+      let alignedBeta = state.rawBeta;
+      let alignedGamma = state.rawGamma;
+
+      if (rotationAngle === 90) {
+        alignedBeta = -state.rawGamma;
+        alignedGamma = state.rawBeta;
+      } else if (rotationAngle === -90 || rotationAngle === 270) {
+        alignedBeta = state.rawGamma;
+        alignedGamma = -state.rawBeta;
+      } else if (rotationAngle === 180) {
+        alignedBeta = -state.rawBeta;
+        alignedGamma = -state.rawGamma;
+      }
+
+      state.offsetBeta = alignedBeta;
+      state.offsetGamma = alignedGamma;
+      saveSetting(LS_OFFSET_BETA, state.offsetBeta);
+      saveSetting(LS_OFFSET_GAMMA, state.offsetGamma);
+      updateUIStrings();
+    });
+
+    // Dynamic strings updates
+    function updateUIStrings() {
+      // Update Calibration visual hint
+      if (Math.abs(state.offsetBeta) > 0.01 || Math.abs(state.offsetGamma) > 0.01) {
+        calibrationIndicator.classList.remove("hidden");
+        offsetDetails.classList.remove("hidden");
+        offsetBetaVal.textContent = state.offsetBeta.toFixed(1);
+        offsetGammaVal.textContent = state.offsetGamma.toFixed(1);
+      } else {
+        calibrationIndicator.classList.add("hidden");
+        offsetDetails.classList.add("hidden");
+      }
+
+      // Modes
+      if (state.mode === "circular") {
+        activeModeLabel.textContent = "Circular Mode (2-Axis)";
+        circularLevelContainer.classList.remove("hidden");
+        linearLevelContainer.classList.add("hidden");
+      } else {
+        activeModeLabel.textContent = "Linear Tube Mode (1-Axis)";
+        circularLevelContainer.classList.add("hidden");
+        linearLevelContainer.classList.remove("hidden");
+      }
+
+      // Units
+      unitToggleBtn.textContent = state.unit === "deg" ? "📐 Unit: Degrees" : "📐 Unit: % Grade";
+      
+      // Haptics
+      hapticsToggleBtn.textContent = state.haptics ? "📳 Haptics: On" : "📴 Haptics: Off";
+    }
+
+    // Screen display transitions
+    function showPermissionPrompt() {
+      permissionScreen.classList.remove("hidden");
+      levelWorkspace.classList.add("hidden");
+    }
+
+    function showLiveWorkspace() {
+      permissionScreen.classList.add("hidden");
+      levelWorkspace.classList.remove("hidden");
+    }
+
+    // Check device rotation direction
+    function getRotationOffset() {
+      if (window.screen && window.screen.orientation && window.screen.orientation.angle !== undefined) {
+        return window.screen.orientation.angle;
+      }
+      if (window.orientation !== undefined) {
+        return Number(window.orientation);
+      }
+      return 0;
+    }
+
+    // Main orientation reading update logic
+    function handleOrientation(beta: number, gamma: number) {
+      state.rawBeta = beta;
+      state.rawGamma = gamma;
+
+      // Filter raw coordinates based on Device rotation Angle
+      let rotationAngle = getRotationOffset();
+      let alignedBeta = beta;
+      let alignedGamma = gamma;
+
+      if (rotationAngle === 90) {
+        alignedBeta = -gamma;
+        alignedGamma = beta;
+      } else if (rotationAngle === -90 || rotationAngle === 270) {
+        alignedBeta = gamma;
+        alignedGamma = -beta;
+      } else if (rotationAngle === 180) {
+        alignedBeta = -beta;
+        alignedGamma = -gamma;
+      }
+
+      // Apply calibration offsets
+      state.calibratedBeta = alignedBeta - state.offsetBeta;
+      state.calibratedGamma = alignedGamma - state.offsetGamma;
+
+      // Apply low pass filter
+      smoothedBeta = (state.calibratedBeta * filterAlpha) + (smoothedBeta * (1 - filterAlpha));
+      smoothedGamma = (state.calibratedGamma * filterAlpha) + (smoothedGamma * (1 - filterAlpha));
+
+      processTiltValues(smoothedBeta, smoothedGamma);
+    }
+
+    // Render loop helper
+    let hapticThrottle = false;
+    function processTiltValues(betaVal: number, gammaVal: number) {
+      // Raw info displays
+      rawBetaDisplay.textContent = state.rawBeta.toFixed(1) + "°";
+      rawGammaDisplay.textContent = state.rawGamma.toFixed(1) + "°";
+
+      // Compute total error tilt angle
+      let tiltAngle = 0;
+      if (state.mode === "circular") {
+        // Compound angle error
+        tiltAngle = Math.sqrt(betaVal * betaVal + gammaVal * gammaVal);
+      } else {
+        // Single axis horizontal tilt
+        tiltAngle = Math.abs(gammaVal);
+      }
+
+      // Check level status against tolerance threshold
+      const isTrueLevel = tiltAngle <= state.tolerance;
+
+      // Formatted value display
+      let formattedText = "";
+      if (state.unit === "deg") {
+        formattedText = tiltAngle.toFixed(1) + "°";
+      } else {
+        // Percentage Grade rise/run tan calculation
+        const pct = Math.abs(Math.tan(tiltAngle * Math.PI / 180) * 100);
+        formattedText = (pct > 999 ? ">999" : pct.toFixed(1)) + "%";
+      }
+      primaryReadout.textContent = formattedText;
+
+      if (state.mode === "circular") {
+        secondaryReadout.classList.remove("hidden");
+        secondaryReadout.textContent = `X: ${gammaVal.toFixed(1)}° Y: ${betaVal.toFixed(1)}°`;
+      } else {
+        secondaryReadout.classList.add("hidden");
+      }
+
+      // Bubble UI update positions
+      // Max displacement range
+      if (state.mode === "circular") {
+        const containerSize = circularLevelContainer.clientWidth || 192;
+        const maxRadius = (containerSize / 2) - 14 - 4; // Subtracted bubble radius and border padding
+        
+        // Physical mapping: bubble moves to higher side. Offset proportional to minus angle.
+        // Sensitivity factor mapping 20deg to full displacement
+        const sensitivity = maxRadius / 20;
+        let dx = -gammaVal * sensitivity;
+        let dy = -betaVal * sensitivity;
+        
+        // Clip distance inside boundary circle
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > maxRadius) {
+          dx = (dx / dist) * maxRadius;
+          dy = (dy / dist) * maxRadius;
+        }
+
+        circularBubble.style.transform = `translate(${dx}px, ${dy}px)`;
+      } else {
+        const containerWidth = linearLevelContainer.clientWidth || 320;
+        const maxOffset = (containerWidth / 2) - 18 - 8; // Max horizontal travel
+        const sensitivity = maxOffset / 20;
+        let dx = -gammaVal * sensitivity;
+        if (dx > maxOffset) dx = maxOffset;
+        if (dx < -maxOffset) dx = -maxOffset;
+
+        linearBubble.style.transform = `translateX(${dx}px)`;
+      }
+
+      // Level trigger visual & haptics update
+      if (isTrueLevel) {
+        // High contrast active level state
+        levelGlow.classList.add("scale-100", "bg-success-accent/30");
+        levelGlow.classList.remove("scale-75", "bg-success-accent/0");
+
+        circularBubble.classList.remove("bg-brand-blue/80");
+        circularBubble.classList.add("bg-success-accent");
+        linearBubble.classList.remove("bg-brand-blue/80");
+        linearBubble.classList.add("bg-success-accent");
+
+        if (state.haptics && !hapticThrottle) {
+          if ("vibrate" in navigator) {
+            navigator.vibrate(40); // Soft haptic bump
+          }
+          hapticThrottle = true;
+          setTimeout(() => hapticThrottle = false, 1000); // Throttling vibration trigger
+        }
+      } else {
+        levelGlow.classList.remove("scale-100", "bg-success-accent/30");
+        levelGlow.classList.add("scale-75", "bg-success-accent/0");
+
+        circularBubble.classList.add("bg-brand-blue/80");
+        circularBubble.classList.remove("bg-success-accent");
+        linearBubble.classList.add("bg-brand-blue/80");
+        linearBubble.classList.remove("bg-success-accent");
+      }
+    }
+
+    // Desktop/fallback manual drag simulation implementation
+    let isDragging = false;
+    let simulationInitialized = false;
+
+    // Module-level event handlers for simulator to avoid stacking
+    const circularMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      const rect = circularLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(e.clientX, e.clientY, rect, true);
+    };
+
+    const linearMouseDown = (e: MouseEvent) => {
+      isDragging = true;
+      const rect = linearLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(e.clientX, e.clientY, rect, false);
+    };
+
+    const windowMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      if (state.mode === "circular") {
+        const rect = circularLevelContainer.getBoundingClientRect();
+        triggerManualSimulation(e.clientX, e.clientY, rect, true);
+      } else {
+        const rect = linearLevelContainer.getBoundingClientRect();
+        triggerManualSimulation(e.clientX, e.clientY, rect, false);
+      }
+    };
+
+    const windowMouseUp = () => {
+      isDragging = false;
+    };
+
+    const circularTouchStart = (e: TouchEvent) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      const rect = circularLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(touch.clientX, touch.clientY, rect, true);
+    };
+
+    const circularTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const rect = circularLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(touch.clientX, touch.clientY, rect, true);
+    };
+
+    const circularTouchEnd = () => {
+      isDragging = false;
+    };
+
+    const linearTouchStart = (e: TouchEvent) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      const rect = linearLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(touch.clientX, touch.clientY, rect, false);
+    };
+
+    const linearTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const rect = linearLevelContainer.getBoundingClientRect();
+      triggerManualSimulation(touch.clientX, touch.clientY, rect, false);
+    };
+
+    const linearTouchEnd = () => {
+      isDragging = false;
+    };
+
+    function triggerManualSimulation(clientX: number, clientY: number, rect: DOMRect, isCircularMode: boolean) {
+      if (isCircularMode) {
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        // Calculate relative offsets mapping to simulated angles (scale to max 15 degs)
+        const relX = (clientX - centerX) / (rect.width / 2);
+        const relY = (clientY - centerY) / (rect.height / 2);
+        
+        // Bubble follows physical slope direction
+        handleOrientation(-relY * 18, -relX * 18);
+      } else {
+        const centerX = rect.left + rect.width / 2;
+        const relX = (clientX - centerX) / (rect.width / 2);
+        handleOrientation(0, -relX * 18);
+      }
+    }
+
+    function initSimulation() {
+      state.isSimulated = true;
+      statusBanner.classList.remove("hidden");
+      statusBanner.className = "text-xs py-1.5 px-3 rounded-lg font-medium text-center bg-surface-yellow text-yellow-dark border border-yellow-light/60";
+
+      if (simulationInitialized) return;
+      simulationInitialized = true;
+
+      circularLevelContainer.addEventListener("mousedown", circularMouseDown);
+      linearLevelContainer.addEventListener("mousedown", linearMouseDown);
+      window.addEventListener("mousemove", windowMouseMove);
+      window.addEventListener("mouseup", windowMouseUp);
+
+      circularLevelContainer.addEventListener("touchstart", circularTouchStart, { passive: true });
+      circularLevelContainer.addEventListener("touchmove", circularTouchMove, { passive: true });
+      circularLevelContainer.addEventListener("touchend", circularTouchEnd);
+
+      linearLevelContainer.addEventListener("touchstart", linearTouchStart, { passive: true });
+      linearLevelContainer.addEventListener("touchmove", linearTouchMove, { passive: true });
+      linearLevelContainer.addEventListener("touchend", linearTouchEnd);
+    }
+
+    function removeSimulationListeners() {
+      if (!simulationInitialized) return;
+      simulationInitialized = false;
+
+      circularLevelContainer.removeEventListener("mousedown", circularMouseDown);
+      linearLevelContainer.removeEventListener("mousedown", linearMouseDown);
+      window.removeEventListener("mousemove", windowMouseMove);
+      window.removeEventListener("mouseup", windowMouseUp);
+
+      circularLevelContainer.removeEventListener("touchstart", circularTouchStart);
+      circularLevelContainer.removeEventListener("touchmove", circularTouchMove);
+      circularLevelContainer.removeEventListener("touchend", circularTouchEnd);
+
+      linearLevelContainer.removeEventListener("touchstart", linearTouchStart);
+      linearLevelContainer.removeEventListener("touchmove", linearTouchMove);
+      linearLevelContainer.removeEventListener("touchend", linearTouchEnd);
+    }
+
+    // Motion Sensor Initialization / Support Check
+    let eventCount = 0;
+    let sensorCheckTimer: any = null;
+
+    function updateSensorFlow() {
+      // Hide simulation banner and reset simulation status initially
+      statusBanner.classList.add("hidden");
+      state.isSimulated = false;
+      removeSimulationListeners();
+
+      // Clean previous listener & check timer
+      window.removeEventListener("deviceorientation", onOrientationEvent);
+      if (sensorCheckTimer) {
+        clearTimeout(sensorCheckTimer);
+        sensorCheckTimer = null;
+      }
+      eventCount = 0;
+
+      // Check if iOS 13+ permission flow is required
+      const deviceOrientationSupport = typeof window !== "undefined" && "DeviceOrientationEvent" in window;
+      const requiresPermission = deviceOrientationSupport &&
+        typeof (DeviceOrientationEvent as any).requestPermission === "function";
+
+      if (requiresPermission) {
+        showPermissionPrompt();
+      } else if (deviceOrientationSupport) {
+        // Direct event registration
+        window.addEventListener("deviceorientation", onOrientationEvent);
+        showLiveWorkspace();
+        // Give 1.5s to verify if events actually emit, fallback if flat numbers are zero or silent
+        sensorCheckTimer = setTimeout(() => {
+          if (eventCount === 0) {
+            // Truly zero events arrived in 1.5s -> assume desktop/sensorless fallback
+            initSimulation();
+          }
+        }, 1500);
+      } else {
+        // Fallback for desktops / browsers without Gyroscope
+        showLiveWorkspace();
+        initSimulation();
+      }
+    }
+
+    let consecutiveNullCount = 0;
+
+    function onOrientationEvent(e: DeviceOrientationEvent) {
+      eventCount++;
+      if (e.beta === null || e.gamma === null) {
+        consecutiveNullCount++;
+        if (consecutiveNullCount >= 10) { // Require several consecutive null readings before assuming unavailable
+          initSimulation();
+        }
+        return;
+      }
+      consecutiveNullCount = 0; // reset count on successful reading
+      handleOrientation(e.beta, e.gamma);
+    }
+
+    // Permission button triggers
+    requestPermissionBtn.addEventListener("click", () => {
+      if (
+        typeof DeviceOrientationEvent !== "undefined" &&
+        typeof (DeviceOrientationEvent as any).requestPermission === "function"
+      ) {
+        (DeviceOrientationEvent as any).requestPermission()
+          .then((response: string) => {
+            if (response === "granted") {
+              state.permissionGranted = true;
+              window.addEventListener("deviceorientation", onOrientationEvent);
+              showLiveWorkspace();
+            } else {
+              // Denied fallback
+              statusBanner.textContent = "Permission denied. Switched to Interactive Simulation.";
+              showLiveWorkspace();
+              initSimulation();
+            }
+          })
+          .catch((err: Error) => {
+            console.error("Sensor request permission error", err);
+            showLiveWorkspace();
+            initSimulation();
+          });
+      } else {
+        showLiveWorkspace();
+        initSimulation();
+      }
+    });
+
+    skipPermissionBtn.addEventListener("click", () => {
+      showLiveWorkspace();
+      initSimulation();
+    });
+
+    function cleanup() {
+      window.removeEventListener("deviceorientation", onOrientationEvent);
+      removeSimulationListeners();
+      if (sensorCheckTimer) {
+        clearTimeout(sensorCheckTimer);
+        sensorCheckTimer = null;
+      }
+    }
+
+    // Cleanup page listeners on navigation unmount
+    window.addEventListener("beforeunload", cleanup);
+    document.addEventListener("astro:before-preparation", cleanup);
+
+    // Startup Init
+    loadSettings();
+    updateSensorFlow();
+  </script>
 </Layout>
