@@ -1,90 +1,1003 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Key Repeat Test";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Test keyboard repeat rates, input bounce delays, and keystroke logs.";
+
+// On-page SEO metadata
+const pageTitle = "Keyboard Key Repeat Test - Measure Repeat Delay, Rate & Bounce";
+const description = "Free client-side tool to test keyboard key repeat delay, rate, and detect ghost or bouncy keys. View real-time keystroke metrics, logs, and export reports.";
+const canonicalUrl = "https://boardtools.app/tools/display/key-repeat";
+const ogImage = "/og/key-repeat.png";
+const keywords = "key repeat test, keyboard repeat rate, repeat delay test, bounce keys, ghost keys, mechanical keyboard test, chatter check, keystroke log";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Keyboard Key Repeat Test",
+      "alternateName": "Key Repeat Delay & Rate Analyzer",
+      "url": "https://boardtools.app/tools/display/key-repeat",
+      "description": "Measure physical keyboard repeat delay, auto-fire repeat rate, bounce double-presses, and stuck/ghost keys locally in your browser.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires Physical Keyboard.",
+      "featureList": [
+        "OS-level repeat delay measurement in milliseconds",
+        "Key-repeat rate frequency calculations (Hz)",
+        "Hardware switch bounce (chatter) detection under custom threshold",
+        "Ghost and stuck key hold duration flagging",
+        "Individual per-key history and averages table",
+        "Passive background monitoring free-typing text area",
+        "CSV/JSON diagnostic log exporter",
+        "100% private client-side processing"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Key Repeat Test",
+          "item": "https://boardtools.app/tools/display/key-repeat"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button copied verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How key repeat test works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div
+      class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0"
+    >
+      <!-- Virtual/Mobile Keyboard Warning Alert Banner (Hidden by default) -->
+      <div
+        id="touch-warning"
+        class="hidden bg-surface-yellow border border-yellow-dark/20 text-yellow-dark rounded-xl p-3.5 text-xs flex items-start gap-2.5"
+      >
+        <span class="text-base select-none">⚠️</span>
+        <div class="flex-1 flex flex-col gap-0.5">
+          <span class="font-semibold">Physical Keyboard Recommended</span>
+          <p class="leading-relaxed">
+            Mobile virtual keyboards do not trigger native OS-level key repeat events. Connect a physical Bluetooth/OTG keyboard or open this tool on a desktop device for full capabilities.
           </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Header Panel -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-surface rounded-xl p-3 border border-hairline flex flex-col gap-0.5 justify-center relative overflow-hidden">
+          <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Repeat Delay</span>
+          <div class="flex items-baseline gap-1">
+            <span id="stat-delay" class="text-2xl font-semibold text-primary transition-all duration-300">0</span>
+            <span class="text-xs text-slate">ms</span>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <div class="bg-surface rounded-xl p-3 border border-hairline flex flex-col gap-0.5 justify-center relative overflow-hidden">
+          <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Repeat Rate</span>
+          <div class="flex items-baseline gap-1">
+            <span id="stat-rate" class="text-2xl font-semibold text-primary transition-all duration-300">0</span>
+            <span class="text-xs text-slate">Hz</span>
+          </div>
+        </div>
+
+        <div class="bg-surface rounded-xl p-3 border border-hairline flex flex-col gap-0.5 justify-center relative overflow-hidden">
+          <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Bouncy Keys</span>
+          <div class="flex items-baseline gap-1">
+            <span id="stat-bounce" class="text-2xl font-semibold text-primary">0</span>
+            <span class="text-xs text-slate">flags</span>
+          </div>
+        </div>
+
+        <div class="bg-surface rounded-xl p-3 border border-hairline flex flex-col gap-0.5 justify-center relative overflow-hidden">
+          <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Ghost/Stuck Keys</span>
+          <div class="flex items-baseline gap-1">
+            <span id="stat-ghost" class="text-2xl font-semibold text-primary">0</span>
+            <span class="text-xs text-slate">flags</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive testing zone layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- Capture test zone and settings (col-span-2) -->
+        <div class="lg:col-span-2 flex flex-col gap-3">
+          <!-- Primary Capture Zone -->
+          <div
+            id="test-zone"
+            tabindex="0"
+            class="card-base min-h-[180px] flex flex-col items-center justify-center border-2 border-dashed border-hairline-strong text-slate focus-within:border-brand-blue cursor-pointer relative overflow-hidden select-none outline-none transition-all duration-200"
+            aria-label="Key repeat capture area"
+          >
+            <div id="test-zone-ripple-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+            
+            <div id="test-zone-placeholder" class="text-center p-4 flex flex-col items-center gap-1.5 pointer-events-none">
+              <span class="text-2xl">⌨️</span>
+              <span class="font-display font-medium text-xs text-primary">Click here to focus and test key repeat</span>
+              <span class="text-[10px] text-slate">Hold down any key (e.g. Space, F5, A, Enter)</span>
+            </div>
+
+            <!-- Active feedback status overlay -->
+            <div id="test-zone-active" class="hidden text-center flex flex-col items-center gap-2 select-none pointer-events-none z-10">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-success-accent animate-pulse"></span>
+                <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Capturing keystrokes</span>
+              </div>
+              <div class="flex flex-col items-center">
+                <span id="active-key-display" class="text-3xl font-display font-bold text-primary tracking-tight">Key</span>
+                <span id="active-key-type" class="text-[9px] text-slate mt-0.5 uppercase font-semibold">Ready</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Held Keys bar -->
+          <div class="flex flex-col gap-1">
+            <span class="text-[10px] font-semibold text-slate uppercase">Currently Held Keys</span>
+            <div id="held-keys-container" class="flex flex-wrap gap-1.5 min-h-[36px] p-2 bg-surface rounded-xl border border-hairline items-center">
+              <span class="text-[11px] text-stone italic px-1">None active. Hold keys to view.</span>
+            </div>
+          </div>
+
+          <!-- Free Typing Test Area -->
+          <div class="flex flex-col gap-1">
+            <div class="flex justify-between items-center">
+              <h3 class="text-[10px] font-bold text-primary uppercase tracking-wider">Free-Typing Passive Monitor</h3>
+              <span class="bg-teal-light text-moss-dark text-[8px] py-0.5 px-1.5 rounded-full font-semibold uppercase">Passive</span>
+            </div>
+            <textarea
+              id="typing-sandbox"
+              rows="2"
+              placeholder="Start typing standard text here to check keys on the fly..."
+              class="w-full text-input min-h-[50px] p-2 text-xs leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand-blue"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Right settings & Keystroke Log panel -->
+        <div class="flex flex-col gap-3">
+          <div class="bg-surface rounded-xl p-3 border border-hairline flex flex-col gap-3">
+            <h3 class="text-[10px] font-bold text-primary uppercase tracking-wider">Test Settings</h3>
+            
+            <!-- Bounce threshold slider -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="font-medium text-slate">Bounce Threshold</span>
+                <span id="bounce-threshold-val" class="font-semibold text-primary">30ms</span>
+              </div>
+              <input
+                type="range"
+                id="bounce-threshold-range"
+                min="5"
+                max="150"
+                value="30"
+                step="5"
+                class="w-full h-1 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+            </div>
+
+            <!-- Ghost Threshold slider -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="font-medium text-slate">Ghost Key Hold Limit</span>
+                <span id="ghost-threshold-val" class="font-semibold text-primary">5s</span>
+              </div>
+              <input
+                type="range"
+                id="ghost-threshold-range"
+                min="1"
+                max="10"
+                value="5"
+                step="1"
+                class="w-full h-1 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+            </div>
+          </div>
+
+          <!-- Keystroke Log -->
+          <div class="bg-surface rounded-xl p-3 border border-hairline flex-1 flex flex-col gap-1.5 min-h-[140px]">
+            <h3 class="text-[10px] font-bold text-primary uppercase tracking-wider">Keystroke Log</h3>
+            <div class="flex-1 bg-canvas rounded-lg p-2 border border-hairline h-[120px] overflow-y-auto font-mono text-[9px] leading-relaxed flex flex-col gap-1" id="log-console">
+              <span class="text-stone italic">[System] Listening for keyboard input events...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results History and Exporter -->
+      <div class="flex flex-col gap-2 border-t border-hairline pt-3 mt-1">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+          <h3 class="text-[10px] font-bold text-primary uppercase tracking-wider">Per-Key Performance summary</h3>
+          <div class="flex items-center gap-1.5">
+            <button
+              type="button"
+              id="export-csv-btn"
+              class="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+            >
+              📊 Export CSV
+            </button>
+            <button
+              type="button"
+              id="export-json-btn"
+              class="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+            >
+              📁 Export JSON
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto border border-hairline rounded-xl max-h-[150px] overflow-y-auto">
+          <table class="w-full text-left border-collapse text-[11px]">
+            <thead class="sticky top-0 z-10">
+              <tr class="bg-surface border-b border-hairline font-semibold text-slate select-none">
+                <th class="p-2">Key Tested</th>
+                <th class="p-2">Avg Repeat Delay</th>
+                <th class="p-2">Avg Repeat Rate</th>
+                <th class="p-2">Bounce Count</th>
+                <th class="p-2">Ghost Count</th>
+                <th class="p-2">Consistency</th>
+              </tr>
+            </thead>
+            <tbody id="per-key-tbody" class="divide-y divide-hairline-soft">
+              <tr>
+                <td colspan="6" class="p-3 text-center text-stone italic">No keystroke records in session. Start holding down keys to collect diagnostics.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- How it works Modal - Extracted verbatim from json-formatter.astro pattern -->
+    <div
+      id="how-it-works-modal"
+      class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+    >
+      <div
+        class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+      >
+        <div
+          class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+        >
+          <h3 class="font-display font-semibold text-lg text-primary">
+            Key Repeat Guide
+          </h3>
+          <button
+            type="button"
+            id="close-modal-btn"
+            class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+          <h4 class="font-semibold text-primary">
+            1. What is Keyboard Key Repeat?
+          </h4>
+          <p>
+            When you hold down a key on your keyboard, your computer automatically registers it as a repeated input after an initial delay. This behavior is controlled by a combination of the hardware controller, the Operating System settings (e.g. keyboard repeat speed preferences), and the browser container.
           </p>
+
+          <h4 class="font-semibold text-primary font-display">2. Key Metrics Tracked</h4>
+          <p>
+            <ul class="list-disc pl-4 flex flex-col gap-1.5">
+              <li>
+                <strong>Repeat Delay</strong>: The duration (in milliseconds) from when the key is first pressed to when the OS auto-repeat function triggers.
+              </li>
+              <li>
+                <strong>Repeat Rate (Hz)</strong>: The frequency (characters per second or hertz) at which subsequent repeated keystrokes fire.
+              </li>
+              <li>
+                <strong>Bouncy Keys (Chatter)</strong>: Mechanical keyboard switches sometimes suffer from chatter, triggering two key presses almost simultaneously (e.g., &lt; 30ms).
+              </li>
+              <li>
+                <strong>Ghost/Stuck Keys</strong>: A key held down for an implausibly long duration without release, indicating a potential physical contact failure.
+              </li>
+            </ul>
+          </p>
+
+          <h4 class="font-semibold text-primary font-display">3. Using native event.repeat</h4>
+          <p>
+            This tool uses the browser's native event properties. Specifically, <code>event.repeat</code> allows us to identify system auto-fires directly rather than making guessed assumptions based on event spacing.
+          </p>
+        </div>
+
+        <div class="flex justify-end pt-2 border-t border-hairline-soft">
+          <button
+            type="button"
+            id="modal-ok-btn"
+            class="px-4 py-2 bg-primary text-canvas text-xs font-semibold rounded-full hover:bg-charcoal transition-all cursor-pointer"
+          >
+            Got it
+          </button>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Client-Side Page Script -->
+  <script>
+    // State management
+    interface KeySession {
+      keyDownCount: number;
+      repeatsCount: number;
+      bounceCount: number;
+      ghostCount: number;
+      firstKeyDownTime: number;
+      lastRepeatTime: number;
+      lastKeyupTime: number;
+      repeatDelay: number | null;
+      repeatIntervals: number[];
+      isHeld: boolean;
+    }
+
+    const localStoragePrefix = "boardtools:key-repeat:";
+    
+    let bounceThreshold = 30; // ms
+    let ghostThreshold = 5; // seconds
+
+    let totalBounces = 0;
+    let totalGhosts = 0;
+    
+    // Per key logs in active session
+    let perKeyStats: Record<string, KeySession> = {};
+    let activeHeldKeys = new Set<string>();
+    let keystrokeHistory: Array<{
+      key: string;
+      code: string;
+      type: "down" | "repeat" | "up" | "bounce" | "ghost";
+      timestamp: number;
+      interval: number | null;
+    }> = [];
+
+    // UI elements
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+    const touchWarning = document.getElementById("touch-warning") as HTMLDivElement;
+    
+    const statDelay = document.getElementById("stat-delay") as HTMLSpanElement;
+    const statRate = document.getElementById("stat-rate") as HTMLSpanElement;
+    const statBounce = document.getElementById("stat-bounce") as HTMLSpanElement;
+    const statGhost = document.getElementById("stat-ghost") as HTMLSpanElement;
+
+    const testZone = document.getElementById("test-zone") as HTMLDivElement;
+    const testZonePlaceholder = document.getElementById("test-zone-placeholder") as HTMLDivElement;
+    const testZoneActive = document.getElementById("test-zone-active") as HTMLDivElement;
+    const activeKeyDisplay = document.getElementById("active-key-display") as HTMLSpanElement;
+    const activeKeyType = document.getElementById("active-key-type") as HTMLSpanElement;
+    const testZoneRippleLayer = document.getElementById("test-zone-ripple-layer") as HTMLDivElement;
+    const heldKeysContainer = document.getElementById("held-keys-container") as HTMLDivElement;
+    
+    const bounceThresholdRange = document.getElementById("bounce-threshold-range") as HTMLInputElement;
+    const bounceThresholdVal = document.getElementById("bounce-threshold-val") as HTMLSpanElement;
+    
+    const ghostThresholdRange = document.getElementById("ghost-threshold-range") as HTMLInputElement;
+    const ghostThresholdVal = document.getElementById("ghost-threshold-val") as HTMLSpanElement;
+    
+    const typingSandbox = document.getElementById("typing-sandbox") as HTMLTextAreaElement;
+    const perKeyTbody = document.getElementById("per-key-tbody") as HTMLTableSectionElement;
+    const logConsole = document.getElementById("log-console") as HTMLDivElement;
+
+    const exportCsvBtn = document.getElementById("export-csv-btn") as HTMLButtonElement;
+    const exportJsonBtn = document.getElementById("export-json-btn") as HTMLButtonElement;
+
+    // Detect touch keyboard users
+    function checkTouchCapability() {
+      if ("ontouchstart" in window || navigator.maxTouchPoints > 0) {
+        touchWarning.classList.remove("hidden");
+      }
+    }
+
+    // Set interactive sliders
+    function loadSavedSettings() {
+      try {
+        const savedBounce = localStorage.getItem(`${localStoragePrefix}setting:bounce`);
+        const savedGhost = localStorage.getItem(`${localStoragePrefix}setting:ghost`);
+        if (savedBounce) {
+          bounceThreshold = parseInt(savedBounce, 10);
+          bounceThresholdRange.value = savedBounce;
+          bounceThresholdVal.textContent = `${bounceThreshold}ms`;
+        }
+        if (savedGhost) {
+          ghostThreshold = parseInt(savedGhost, 10);
+          ghostThresholdRange.value = savedGhost;
+          ghostThresholdVal.textContent = `${ghostThreshold}s`;
+        }
+      } catch (err) {
+        console.error("Failed to read localStorage settings:", err);
+      }
+    }
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(`${localStoragePrefix}setting:bounce`, bounceThreshold.toString());
+        localStorage.setItem(`${localStoragePrefix}setting:ghost`, ghostThreshold.toString());
+      } catch (err) {
+        console.error("Failed to write localStorage settings:", err);
+      }
+    }
+
+    // Helper to log console output
+    function addLogEntry(text: string, styleClass = "text-slate") {
+      const line = document.createElement("span");
+      line.className = styleClass;
+      line.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+      logConsole.appendChild(line);
+      logConsole.scrollTop = logConsole.scrollHeight;
+    }
+
+    // Pulse feedback on keydown
+    function triggerPulseAnimation(isRepeat: boolean) {
+      // Create ripple element
+      const pulse = document.createElement("div");
+      if (isRepeat) {
+        pulse.className = "absolute rounded-full bg-brand-blue/10 pointer-events-none transform -translate-x-1/2 -translate-y-1/2 scale-0 animate-ping duration-500";
+        pulse.style.width = "100px";
+        pulse.style.height = "100px";
+      } else {
+        pulse.className = "absolute rounded-full bg-brand-yellow/30 pointer-events-none transform -translate-x-1/2 -translate-y-1/2 scale-0 animate-ping duration-300";
+        pulse.style.width = "120px";
+        pulse.style.height = "120px";
+      }
+      pulse.style.left = `${Math.random() * 80 + 10}%`;
+      pulse.style.top = `${Math.random() * 80 + 10}%`;
+
+      testZoneRippleLayer.appendChild(pulse);
+      setTimeout(() => pulse.remove(), 600);
+    }
+
+    // Bounce error animation
+    function triggerBounceAnimation() {
+      testZone.classList.add("bg-brand-red", "border-brand-red-dark", "animate-shake");
+      
+      // Respect prefers-reduced-motion
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        testZone.classList.remove("animate-shake");
+      }
+
+      setTimeout(() => {
+        testZone.classList.remove("bg-brand-red", "border-brand-red-dark", "animate-shake");
+      }, 300);
+    }
+
+    // Update stats indicators
+    function animateNumericValue(element: HTMLSpanElement, targetValue: number, isFloat = false) {
+      const startValue = parseFloat(element.textContent || "0");
+      if (startValue === targetValue) return;
+
+      const duration = 250; // ms
+      const startTime = performance.now();
+
+      function update(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const currentValue = startValue + progress * (targetValue - startValue);
+        element.textContent = isFloat ? currentValue.toFixed(1) : Math.round(currentValue).toString();
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+      requestAnimationFrame(update);
+    }
+
+    // Update Held Keys Display list
+    function updateHeldKeysUI() {
+      if (activeHeldKeys.size === 0) {
+        heldKeysContainer.innerHTML = `<span class="text-[11px] text-stone italic px-1">None active. Hold keys to view.</span>`;
+        return;
+      }
+
+      heldKeysContainer.innerHTML = "";
+      activeHeldKeys.forEach(k => {
+        const badge = document.createElement("span");
+        badge.className = "px-2.5 py-0.5 rounded-full bg-primary text-canvas text-[11px] font-semibold";
+        badge.textContent = k;
+        heldKeysContainer.appendChild(badge);
+      });
+    }
+
+    // Render per-key stats table
+    function updateStatsTable() {
+      if (Object.keys(perKeyStats).length === 0) {
+        perKeyTbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-stone italic">No keystroke records in session. Start holding down keys to collect diagnostics.</td></tr>`;
+        return;
+      }
+
+      perKeyTbody.innerHTML = "";
+      Object.entries(perKeyStats).forEach(([code, session]) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-surface transition-colors";
+
+        const delayStr = session.repeatDelay !== null ? `${Math.round(session.repeatDelay)} ms` : "-";
+        
+        let avgRateStr = "-";
+        if (session.repeatIntervals.length > 0) {
+          const sumIntervals = session.repeatIntervals.reduce((a, b) => a + b, 0);
+          const avgInterval = sumIntervals / session.repeatIntervals.length;
+          const avgRate = 1000 / avgInterval;
+          avgRateStr = `${avgRate.toFixed(1)} Hz`;
+        }
+
+        // Consistency evaluation
+        let consistency = "Excellent";
+        if (session.repeatIntervals.length > 1) {
+          const sumIntervals = session.repeatIntervals.reduce((a, b) => a + b, 0);
+          const avgInterval = sumIntervals / session.repeatIntervals.length;
+          const variance = session.repeatIntervals.map(x => Math.pow(x - avgInterval, 2)).reduce((a, b) => a + b, 0) / session.repeatIntervals.length;
+          const stdDev = Math.sqrt(variance);
+          
+          if (stdDev > 45) {
+            consistency = "Poor (Unstable)";
+          } else if (stdDev > 20) {
+            consistency = "Moderate";
+          }
+        }
+
+        tr.innerHTML = `
+          <td class="p-3 font-semibold text-primary">${code}</td>
+          <td class="p-3">${delayStr}</td>
+          <td class="p-3">${avgRateStr}</td>
+          <td class="p-3 text-brand-coral font-semibold">${session.bounceCount}</td>
+          <td class="p-3 text-brand-coral font-semibold">${session.ghostCount}</td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${consistency === "Excellent" ? "bg-teal-light text-moss-dark" : consistency.startsWith("Poor") ? "bg-brand-red text-brand-red-dark" : "bg-yellow-light text-yellow-dark"}">
+              ${consistency}
+            </span>
+          </td>
+        `;
+        perKeyTbody.appendChild(tr);
+      });
+    }
+
+    // Helper to clear held keys on focus loss or blur
+    function clearHeldKeys() {
+      activeHeldKeys.clear();
+      Object.values(perKeyStats).forEach(session => {
+        session.isHeld = false;
+      });
+      updateHeldKeysUI();
+      if (activeHeldKeys.size === 0) {
+        testZoneActive.classList.add("hidden");
+        testZonePlaceholder.classList.remove("hidden");
+      }
+    }
+
+    // Core keystroke handler
+    function processKeyDown(e: KeyboardEvent) {
+      const keyName = e.key === " " ? "Space" : e.key;
+      const code = e.code || keyName;
+
+      // Prevent browser default scroll actions, page refresh, and other shortcut overrides when focused
+      if (document.activeElement === testZone) {
+        const isFunctionKey = /^F[1-9]$|^F1[0-2]$/.test(e.key);
+        const preventKeys = ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Tab", "Backspace"];
+        if (preventKeys.includes(e.code) || e.key === " " || isFunctionKey) {
+          e.preventDefault();
+        }
+      }
+
+      const now = performance.now();
+
+      // Show focused capture zone layout
+      testZonePlaceholder.classList.add("hidden");
+      testZoneActive.classList.remove("hidden");
+      activeKeyDisplay.textContent = keyName;
+
+      // Handle Key Session
+      if (!perKeyStats[code]) {
+        perKeyStats[code] = {
+          keyDownCount: 0,
+          repeatsCount: 0,
+          bounceCount: 0,
+          ghostCount: 0,
+          firstKeyDownTime: 0,
+          lastRepeatTime: 0,
+          lastKeyupTime: 0,
+          repeatDelay: null,
+          repeatIntervals: [],
+          isHeld: false
+        };
+      }
+
+      const session = perKeyStats[code];
+
+      if (!e.repeat) {
+        // Genuine new press
+        activeHeldKeys.add(keyName);
+        session.isHeld = true;
+        session.keyDownCount++;
+        session.firstKeyDownTime = now;
+        session.lastRepeatTime = now;
+        
+        activeKeyType.textContent = "New Press";
+        activeKeyType.className = "text-[10px] text-brand-blue mt-1 uppercase font-bold";
+
+        // Check Bounce chatter
+        if (session.lastKeyupTime > 0) {
+          const releaseToPress = now - session.lastKeyupTime;
+          if (releaseToPress < bounceThreshold) {
+            session.bounceCount++;
+            totalBounces++;
+            animateNumericValue(statBounce, totalBounces);
+            addLogEntry(`⚠️ BOUNCE detected on [${keyName}] interval: ${releaseToPress.toFixed(1)}ms`, "text-brand-coral font-bold");
+            keystrokeHistory.push({ key: keyName, code, type: "bounce", timestamp: Date.now(), interval: releaseToPress });
+            triggerBounceAnimation();
+          }
+        }
+
+        keystrokeHistory.push({ key: keyName, code, type: "down", timestamp: Date.now(), interval: null });
+        triggerPulseAnimation(false);
+      } else {
+        // Auto-repeat event
+        session.repeatsCount++;
+        activeKeyType.textContent = "Auto Repeat";
+        activeKeyType.className = "text-[10px] text-yellow-dark mt-1 uppercase font-bold";
+
+        const elapsedSinceFirst = now - session.firstKeyDownTime;
+
+        // Measure Repeat Delay (Time from first keydown to first repeat)
+        if (session.repeatDelay === null) {
+          session.repeatDelay = elapsedSinceFirst;
+          animateNumericValue(statDelay, session.repeatDelay);
+          addLogEntry(`[${keyName}] repeat delay measured: ${Math.round(session.repeatDelay)}ms`, "text-primary");
+        }
+
+        // Measure Repeat Rate Interval
+        const interval = now - session.lastRepeatTime;
+        if (interval > 0) {
+          session.repeatIntervals.push(interval);
+          const currentHz = 1000 / interval;
+          animateNumericValue(statRate, currentHz, true);
+        }
+
+        // Ghost Key Check based on continuous held duration
+        if (elapsedSinceFirst > (ghostThreshold * 1000) && session.ghostCount === 0) {
+          session.ghostCount++;
+          totalGhosts++;
+          animateNumericValue(statGhost, totalGhosts);
+          addLogEntry(`⚠️ GHOST/STUCK detection: [${keyName}] held > ${ghostThreshold}s`, "text-brand-coral font-bold");
+          keystrokeHistory.push({ key: keyName, code, type: "ghost", timestamp: Date.now(), interval: elapsedSinceFirst });
+        }
+
+        session.lastRepeatTime = now;
+        keystrokeHistory.push({ key: keyName, code, type: "repeat", timestamp: Date.now(), interval: interval });
+        triggerPulseAnimation(true);
+      }
+
+      updateHeldKeysUI();
+      updateStatsTable();
+    }
+
+    function processKeyUp(e: KeyboardEvent) {
+      const keyName = e.key === " " ? "Space" : e.key;
+      const code = e.code || keyName;
+      const now = performance.now();
+
+      activeHeldKeys.delete(keyName);
+      updateHeldKeysUI();
+
+      if (perKeyStats[code]) {
+        const session = perKeyStats[code];
+        session.isHeld = false;
+        session.lastKeyupTime = now;
+        
+        keystrokeHistory.push({ key: keyName, code, type: "up", timestamp: Date.now(), interval: null });
+      }
+
+      // Restore normal zone layout if no keys active
+      if (activeHeldKeys.size === 0) {
+        testZoneActive.classList.add("hidden");
+        testZonePlaceholder.classList.remove("hidden");
+      }
+    }
+
+    // Reset handlers
+    function handleReset() {
+      // Clear states
+      perKeyStats = {};
+      activeHeldKeys.clear();
+      keystrokeHistory = [];
+      totalBounces = 0;
+      totalGhosts = 0;
+
+      // Animate resets
+      statDelay.textContent = "0";
+      statRate.textContent = "0";
+      statBounce.textContent = "0";
+      statGhost.textContent = "0";
+
+      testZoneActive.classList.add("hidden");
+      testZonePlaceholder.classList.remove("hidden");
+      
+      typingSandbox.value = "";
+      logConsole.innerHTML = `<span class="text-stone italic">[System] Session reset. Listening for keyboard input events...</span>`;
+
+      // Clear localStorage keys prefix
+      try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith(localStoragePrefix)) {
+            keysToRemove.push(key);
+          }
+        }
+        keysToRemove.forEach(k => localStorage.removeItem(k));
+      } catch (err) {
+        console.error("Failed to clear localStorage keys:", err);
+      }
+
+      updateHeldKeysUI();
+      updateStatsTable();
+      addLogEntry("Session and diagnostic history cleared.");
+    }
+
+    // Exporters
+    function exportToCSV() {
+      if (keystrokeHistory.length === 0) {
+        alert("No logs to export. Record some keystrokes first.");
+        return;
+      }
+
+      let csv = "Timestamp,Key,Event Type,Interval (ms)\n";
+      keystrokeHistory.forEach(item => {
+        const timeStr = new Date(item.timestamp).toISOString();
+        const intervalStr = item.interval !== null ? item.interval.toFixed(1) : "-";
+        csv += `${timeStr},"${item.key}",${item.type},${intervalStr}\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `key_repeat_test_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToJSON() {
+      if (keystrokeHistory.length === 0) {
+        alert("No logs to export. Record some keystrokes first.");
+        return;
+      }
+
+      const exportData = {
+        meta: {
+          exporter: "BoardTools Key Repeat Test",
+          timestamp: new Date().toISOString(),
+          totals: {
+            bounces: totalBounces,
+            ghosts: totalGhosts
+          }
+        },
+        keystrokes: keystrokeHistory,
+        perKeyAverages: Object.entries(perKeyStats).map(([keyName, item]) => {
+          const sumIntervals = item.repeatIntervals.reduce((a, b) => a + b, 0);
+          const avgInterval = item.repeatIntervals.length > 0 ? sumIntervals / item.repeatIntervals.length : null;
+          return {
+            key: keyName,
+            repeatDelay: item.repeatDelay,
+            avgRepeatInterval: avgInterval,
+            avgRateHz: avgInterval ? 1000 / avgInterval : null,
+            bounceCount: item.bounceCount,
+            ghostCount: item.ghostCount
+          };
+        })
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `key_repeat_test_${Date.now()}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Attach listeners
+    testZone.addEventListener("keydown", processKeyDown);
+    testZone.addEventListener("keyup", processKeyUp);
+    
+    typingSandbox.addEventListener("keydown", processKeyDown);
+    typingSandbox.addEventListener("keyup", processKeyUp);
+
+    bounceThresholdRange.addEventListener("input", () => {
+      bounceThreshold = parseInt(bounceThresholdRange.value, 10);
+      bounceThresholdVal.textContent = `${bounceThreshold}ms`;
+      saveSettings();
+    });
+
+    ghostThresholdRange.addEventListener("input", () => {
+      ghostThreshold = parseInt(ghostThresholdRange.value, 10);
+      ghostThresholdVal.textContent = `${ghostThreshold}s`;
+      saveSettings();
+    });
+
+    // Reset and exporter events
+    resetBtn.addEventListener("click", handleReset);
+    exportCsvBtn.addEventListener("click", exportToCSV);
+    exportJsonBtn.addEventListener("click", exportToJSON);
+
+    // Modal logic
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+    closeModalBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    modalOkBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+    // Focus handling for test zone styling and cleanup
+    testZone.addEventListener("focus", () => {
+      testZone.classList.add("border-brand-blue", "bg-canvas");
+      testZone.classList.remove("bg-surface");
+    });
+    testZone.addEventListener("blur", () => {
+      testZone.classList.remove("border-brand-blue");
+      clearHeldKeys();
+    });
+    window.addEventListener("blur", clearHeldKeys);
+
+    // Cleanup listeners on navigate (for single page applications/Astro transitions)
+    document.addEventListener("astro:before-swap", () => {
+      testZone.removeEventListener("keydown", processKeyDown);
+      testZone.removeEventListener("keyup", processKeyUp);
+      typingSandbox.removeEventListener("keydown", processKeyDown);
+      typingSandbox.removeEventListener("keyup", processKeyUp);
+      window.removeEventListener("blur", clearHeldKeys);
+    });
+    checkTouchCapability();
+    loadSavedSettings();
+  </script>
+
+  <style is:global>
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shake 0.3s ease-in-out;
+    }
+  </style>
 </Layout>
