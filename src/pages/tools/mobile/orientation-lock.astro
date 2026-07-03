@@ -1,90 +1,1112 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Orientation Lock Check";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
-const description = "Verify screen rotation responses, lock alignments, and display geometry.";
+const pageTitle = "Orientation Lock Check - Test Screen Rotation & Lock Status";
+const description = "Verify browser screen rotation responses, lock alignments, event timelines, and display geometry geometry-safe areas.";
+const canonicalUrl = "https://boardtools.app/tools/mobile/orientation-lock";
+const ogImage = "/og/orientation-lock.png";
+const keywords = "orientation lock, screen rotation test, screen orientation api, mobile orientation, screen angle, landscape test, portrait test, orientation change log, safe area inset, window dimensions";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Orientation Lock Check",
+      "alternateName": "Screen Rotation Tester & Orientation API Checker",
+      "url": "https://boardtools.app/tools/mobile/orientation-lock",
+      "description": "A client-side screen orientation tester and rotation diagnostic tool. Analyzes screen angle, layout safe area insets, logs orientationchange events, and infers rotation-lock status using motion sensors.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires Screen Orientation API.",
+      "featureList": [
+        "Read live orientation type (portrait-primary, landscape-primary, etc.)",
+        "Live screen angle indicator (0°, 90°, 180°, 270°)",
+        "Phone silhouette visual rotation matching device physical state",
+        "Best-effort rotation-lock status inference via accelerometer motion vs screen state",
+        "Lock testing via screen.orientation.lock() API with clean exception reports",
+        "Test sequence guided checklist for all 4 orientations",
+        "Viewport dimension and CSS environment safe-area inset readouts",
+        "Exportable text diagnostic summary and copy-to-clipboard logs"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mobile",
+          "item": "https://boardtools.app/tools/mobile"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Orientation Lock Check",
+          "item": "https://boardtools.app/tools/mobile/orientation-lock"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">📱</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button (verbatim pattern from json-formatter.astro) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button (verbatim pattern from json-formatter.astro) -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How orientation lock check works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <!-- Left Column: Live indicators & Lock actions (Zero-Scroll Compact Layout) -->
+      <div class="lg:col-span-8 card-base flex flex-col gap-3 sm:gap-4 relative justify-between min-h-[380px] sm:min-h-[485px]">
+        
+        <!-- Live status notification banner for rotation-lock inference -->
+        <div 
+          id="lock-inference-banner" 
+          class="p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300 bg-surface-yellow border-yellow-light/80 text-yellow-dark"
+        >
+          <span id="lock-inference-msg" class="font-bold flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span>
+            Awaiting device movement to verify rotation lock...
+          </span>
+          <span id="permission-pill-btn-container" class="hidden">
+            <button 
+              type="button" 
+              id="request-sensors-btn" 
+              class="text-[9px] bg-primary text-canvas px-2 py-0.5 rounded-full hover:bg-charcoal active:scale-95 transition-all font-semibold uppercase"
+            >
+              Enable Sensors
+            </button>
+          </span>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <div class="flex-grow flex flex-col justify-center items-center py-2 relative min-h-[220px]">
+          <!-- Rotating Phone Silhouette visualizer -->
+          <div 
+            id="phone-visualizer-container" 
+            class="relative w-40 h-56 border border-hairline bg-surface-soft/60 rounded-[28px] shadow-inner flex items-center justify-center transition-transform duration-500 ease-out select-none"
+            style="transform: rotate(0deg);"
+          >
+            <!-- Camera notch top -->
+            <div class="absolute top-2 w-12 h-3 bg-hairline rounded-full flex items-center justify-center">
+              <span class="w-1.5 h-1.5 bg-slate rounded-full"></span>
+            </div>
+
+            <!-- Internal screen display area -->
+            <div class="w-[88%] h-[84%] bg-canvas border border-hairline rounded-xl flex flex-col items-center justify-between p-3 relative overflow-hidden select-none">
+              <!-- Top screen status indicators -->
+              <div class="w-full flex justify-between text-[8px] font-mono text-slate/60 select-none">
+                <span>100% PRIVATE</span>
+                <span id="screen-time">12:00</span>
+              </div>
+
+              <!-- Main orientation visual representation -->
+              <div class="flex flex-col items-center gap-1.5 select-none">
+                <span id="screen-icon" class="text-3xl transition-transform duration-300">📱</span>
+                <span id="screen-angle-text" class="text-xs font-mono font-semibold text-slate uppercase tracking-wider">0° Angle</span>
+              </div>
+
+              <!-- Screen category footer label -->
+              <div class="text-[8px] font-mono text-brand-blue font-bold uppercase tracking-wider select-none">
+                BoardTools
+              </div>
+            </div>
+
+            <!-- Home Bar / bottom indicator -->
+            <div class="absolute bottom-2 w-16 h-1 bg-hairline-strong rounded-full"></div>
+          </div>
         </div>
+
+        <!-- Details and readouts row -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-2 border-t border-hairline-soft">
+          <div class="flex flex-col gap-0.5 bg-surface/50 border border-hairline p-2 rounded-xl text-center">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Orientation Type</span>
+            <span id="type-readout" class="font-display font-medium text-xs text-primary capitalize truncate">Portrait-Primary</span>
+          </div>
+
+          <div class="flex flex-col gap-0.5 bg-surface/50 border border-hairline p-2 rounded-xl text-center">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Rotation Angle</span>
+            <span id="angle-readout" class="font-display font-medium text-xs text-primary">0°</span>
+          </div>
+
+          <div class="col-span-2 sm:col-span-1 flex flex-col gap-0.5 bg-surface/50 border border-hairline p-1.5 rounded-xl justify-center">
+            <button
+              type="button"
+              id="test-lock-api-btn"
+              class="button-secondary text-[11px] py-1.5 px-2 hover:bg-surface !rounded-full transition-all cursor-pointer font-bold leading-none w-full"
+            >
+              Test Lock API
+            </button>
+          </div>
+        </div>
+
+        <!-- Lock API Result Feedback Banner (Hidden by default) -->
+        <div 
+          id="api-result-banner" 
+          class="hidden p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5"
+        >
+          <span class="font-bold flex items-center gap-1" id="api-result-title"></span>
+          <span id="api-result-desc" class="text-slate"></span>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive Diagnostic test sequence & Logs -->
+      <div class="lg:col-span-4 flex flex-col gap-4 print:hidden">
+        
+        <!-- Guided Test Sequence panel -->
+        <div class="card-base flex flex-col gap-3 p-4">
+          <div class="flex justify-between items-center border-b border-hairline-soft pb-2">
+            <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
+              <span>📋</span> Guided Test Checklist
+            </h3>
+            <button 
+              type="button" 
+              id="reset-checklist-btn" 
+              class="text-[9px] font-bold text-brand-blue hover:underline cursor-pointer"
+            >
+              Reset List
+            </button>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div id="check-portrait-primary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
+              <span class="text-xs">Portrait-Primary (0°)</span>
+              <span class="status-icon text-xs">⬜ Pending</span>
+            </div>
+            <div id="check-landscape-primary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
+              <span class="text-xs">Landscape-Primary (90°)</span>
+              <span class="status-icon text-xs">⬜ Pending</span>
+            </div>
+            <div id="check-portrait-secondary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
+              <span class="text-xs">Portrait-Secondary (180°)</span>
+              <span class="status-icon text-xs">⬜ Pending</span>
+            </div>
+            <div id="check-landscape-secondary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
+              <span class="text-xs">Landscape-Secondary (270°)</span>
+              <span class="status-icon text-xs">⬜ Pending</span>
+            </div>
+          </div>
+
+          <div 
+            id="checklist-summary-banner" 
+            class="hidden p-2 rounded-lg border text-[10px] text-center font-semibold bg-success-accent/10 border-success-accent/20 text-moss-dark"
+          >
+            🎉 All 4 orientations detected successfully!
+          </div>
+        </div>
+
+        <!-- Technical geometry details panel -->
+        <div class="card-base flex flex-col gap-2 p-4">
+          <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5 border-b border-hairline-soft pb-2">
+            <span>📐</span> Screen & Safe Area Insets
+          </h3>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] text-slate font-mono">
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Viewport:</span>
+              <span id="geom-viewport" class="text-primary font-semibold">0x0</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Screen:</span>
+              <span id="geom-screen" class="text-primary font-semibold">0x0</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Pixel Ratio:</span>
+              <span id="geom-dpr" class="text-primary font-semibold">1x</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Safe Top:</span>
+              <span id="geom-safe-top" class="text-primary font-semibold">0px</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Safe Bottom:</span>
+              <span id="geom-safe-bottom" class="text-primary font-semibold">0px</span>
+            </div>
+            <div class="flex justify-between border-b border-hairline-soft py-0.5">
+              <span>Safe L/R:</span>
+              <span id="geom-safe-side" class="text-primary font-semibold">0px</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Event Log -->
+        <div class="card-base flex flex-col gap-2 p-4 flex-grow max-h-[220px]">
+          <div class="flex justify-between items-center border-b border-hairline-soft pb-2">
+            <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
+              <span>🕒</span> Event History Log
+            </h3>
+            <div class="flex gap-2">
+              <button 
+                type="button" 
+                id="copy-diagnostics-btn" 
+                class="text-[9px] font-bold text-brand-blue hover:underline cursor-pointer"
+              >
+                Copy Log
+              </button>
+            </div>
+          </div>
+          <div 
+            id="event-log-container" 
+            class="flex-grow overflow-y-auto text-[10px] font-mono text-slate flex flex-col gap-1.5 max-h-[140px] pr-1 leading-normal select-text"
+          >
+            <div class="text-stone italic text-center py-4">No events logged yet. Rotate device to generate logs.</div>
+          </div>
+        </div>
+
       </div>
     </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div
+      class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden"
+    >
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Client-Side Processing, 0KB Sent to Servers
+      </span>
+      <span>v1.0.0</span>
+    </div>
   </section>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Understanding Orientation Lock & Web Standards
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Modern smartphones and tablet operating systems feature native <strong>Orientation Lock</strong> functions 
+        (often called rotation lock). These systems stop UI redraws when you shift your device physically. 
+        For web developers and testers, confirming whether a site responds correctly to different angles or 
+        detecting whether a user has rotation lock active is a key diagnostic step.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How is Rotation Lock Inferred?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Web browsers do not expose a direct API to check if the OS-level rotation lock toggle is active due to fingerprinting and security designs. 
+        Our tool solves this restriction using a <strong>motion-sensor heuristic inference</strong>. 
+        By requesting permission to inspect accelerometer/gyroscope coordinates (`deviceorientation`), we watch the physical angle. 
+        If the physical orientation of the device changes substantially (more than 25° of movement across the X/Y axes) but the browser's 
+        <code>screen.orientation</code> angle or type remains unchanged, the system flags: <em>"Rotation appears locked"</em>. 
+        Conversely, if the screen updates successfully, it registers as <em>"Rotation appears unlocked"</em>.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        The Screen Orientation Lock API
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The <code>screen.orientation.lock()</code> Web API allows progressive web apps (PWAs) or full-screen environments to force 
+        specific alignments (such as landscape-only gaming or portrait-only reading). In regular browser tabs, this API call is blocked 
+        by security policies (requiring full-screen state) or unsupported entirely by iOS Safari. Using our <strong>Test Lock API</strong>, 
+        you can check whether your current mobile context permits web-driven orientation locking.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Orientation Lock Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. Checking Screen Orientation API
+        </h4>
+        <p>
+          We read <code>window.screen.orientation</code> directly to output the current layout state (Portrait vs Landscape, primary vs secondary) 
+          and rotation angles (0°, 90°, 180°, 270°). The central phone silhouette updates dynamically to match.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Best-Effort Lock Heuristic</h4>
+        <p>
+          OS-level orientation lock status is hidden from standard web scripting. This tool infers the status by analyzing 
+          physical accelerometer movement. If you rotate your device but the screen fails to align, the system detects this 
+          and flags rotation lock as active.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Guided Rotation Checklist</h4>
+        <p>
+          Rotate your device in all four directions to verify that every orientation transition functions. On some mobile 
+          operating systems (like Apple iOS), Portrait-Secondary (upside down) is disabled at the system level for phone layouts.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Viewport & Safe-Area Bounds</h4>
+        <p>
+          Displays the layout properties including the pixel ratios and active safe area bounds (e.g. notch regions), which 
+          helps web designers review CSS responsive viewport boundaries.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    // State definitions
+    interface SequenceState {
+      "portrait-primary": boolean;
+      "landscape-primary": boolean;
+      "portrait-secondary": boolean;
+      "landscape-secondary": boolean;
+    }
+
+    interface LogItem {
+      timestamp: string;
+      event: string;
+      details: string;
+    }
+
+    // Local Storage Keys (boardtools:{tool-slug}:{key})
+    const LS_CHECKLIST = "boardtools:orientation-lock:test-sequence";
+
+    let stateChecklist: SequenceState = {
+      "portrait-primary": false,
+      "landscape-primary": false,
+      "portrait-secondary": false,
+      "landscape-secondary": false
+    };
+
+    let eventLogs: LogItem[] = [];
+    
+    // Heuristic analysis buffers
+    let motionHistory: { beta: number; gamma: number; timestamp: number }[] = [];
+    let isRotationLocked: "unlocked" | "locked" | "unknown" = "unknown";
+    let isSensorsEnabled = false;
+
+    // DOM references
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    const lockInferenceBanner = document.getElementById("lock-inference-banner") as HTMLDivElement;
+    const lockInferenceMsg = document.getElementById("lock-inference-msg") as HTMLSpanElement;
+    const permissionPillBtnContainer = document.getElementById("permission-pill-btn-container") as HTMLSpanElement;
+    const requestSensorsBtn = document.getElementById("request-sensors-btn") as HTMLButtonElement;
+
+    const phoneVisualizerContainer = document.getElementById("phone-visualizer-container") as HTMLDivElement;
+    const screenTime = document.getElementById("screen-time") as HTMLSpanElement;
+    const screenIcon = document.getElementById("screen-icon") as HTMLSpanElement;
+    const screenAngleText = document.getElementById("screen-angle-text") as HTMLSpanElement;
+
+    const typeReadout = document.getElementById("type-readout") as HTMLSpanElement;
+    const angleReadout = document.getElementById("angle-readout") as HTMLSpanElement;
+    const testLockApiBtn = document.getElementById("test-lock-api-btn") as HTMLButtonElement;
+
+    const apiResultBanner = document.getElementById("api-result-banner") as HTMLDivElement;
+    const apiResultTitle = document.getElementById("api-result-title") as HTMLSpanElement;
+    const apiResultDesc = document.getElementById("api-result-desc") as HTMLSpanElement;
+
+    const resetChecklistBtn = document.getElementById("reset-checklist-btn") as HTMLButtonElement;
+    const checklistSummaryBanner = document.getElementById("checklist-summary-banner") as HTMLDivElement;
+    const copyDiagnosticsBtn = document.getElementById("copy-diagnostics-btn") as HTMLButtonElement;
+    const eventLogContainer = document.getElementById("event-log-container") as HTMLDivElement;
+
+    // Geometry Displays
+    const geomViewport = document.getElementById("geom-viewport") as HTMLSpanElement;
+    const geomScreen = document.getElementById("geom-screen") as HTMLSpanElement;
+    const geomDpr = document.getElementById("geom-dpr") as HTMLSpanElement;
+    const geomSafeTop = document.getElementById("geom-safe-top") as HTMLSpanElement;
+    const geomSafeBottom = document.getElementById("geom-safe-bottom") as HTMLSpanElement;
+    const geomSafeSide = document.getElementById("geom-safe-side") as HTMLSpanElement;
+
+    // Load initial configuration
+    function init() {
+      // 1. Restore guided checklist from local storage
+      const savedChecklist = localStorage.getItem(LS_CHECKLIST);
+      if (savedChecklist) {
+        try {
+          stateChecklist = JSON.parse(savedChecklist);
+        } catch (e) {
+          console.warn("Could not restore checklist", e);
+        }
+      }
+      updateChecklistUI();
+
+      // 2. Setup screen clock timer
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      // 3. Populate initial screen details
+      updateScreenReadouts(false);
+      updateGeometries();
+
+      // 4. Register event listeners
+      window.addEventListener("resize", updateGeometries);
+      
+      // Screen Orientation API detection
+      if (window.screen && window.screen.orientation) {
+        window.screen.orientation.addEventListener("change", handleOrientationChange);
+      } else {
+        // Fallback for older browsers
+        window.addEventListener("orientationchange", handleLegacyOrientationChange);
+      }
+
+      // Check device motion permissions or prompt on iOS
+      checkSensorAvailability();
+
+      // Add visual logging of starting status
+      logEvent("init", `Initialized: type=${getOrientationType()}, angle=${getOrientationAngle()}°`);
+    }
+
+    // Update screen clock
+    function updateClock() {
+      const now = new Date();
+      const hrs = String(now.getHours()).padStart(2, "0");
+      const mins = String(now.getMinutes()).padStart(2, "0");
+      if (screenTime) {
+        screenTime.textContent = `${hrs}:${mins}`;
+      }
+    }
+
+    // Read orientation metrics safely
+    function getOrientationType(): string {
+      if (window.screen && window.screen.orientation && window.screen.orientation.type) {
+        return window.screen.orientation.type;
+      }
+      // Fallback calculations
+      const orientation = window.orientation;
+      if (orientation === 90) return "landscape-primary";
+      if (orientation === -90 || orientation === 270) return "landscape-secondary";
+      if (orientation === 180) return "portrait-secondary";
+      return "portrait-primary";
+    }
+
+    function getOrientationAngle(): number {
+      if (window.screen && window.screen.orientation && window.screen.orientation.angle !== undefined) {
+        return window.screen.orientation.angle;
+      }
+      if (window.orientation !== undefined) {
+        // Normalize iOS landscape modes
+        const angle = Number(window.orientation);
+        return angle < 0 ? angle + 360 : angle;
+      }
+      return 0;
+    }
+
+    // Process and display orientation information
+    function updateScreenReadouts(fromEvent = false) {
+      const type = getOrientationType();
+      const angle = getOrientationAngle();
+
+      // Readouts
+      if (typeReadout) typeReadout.textContent = type;
+      if (angleReadout) angleReadout.textContent = `${angle}°`;
+
+      // Silhouette Rotation - match reported orientation angle
+      if (phoneVisualizerContainer) {
+        // Rotate silhouette matching the angle
+        phoneVisualizerContainer.style.transform = `rotate(${angle}deg)`;
+      }
+
+      // Inside layout display updates
+      if (screenAngleText) {
+        screenAngleText.textContent = `${angle}° Angle`;
+      }
+      if (screenIcon) {
+        // Change icon layout based on orientation aspect ratio
+        if (type.startsWith("landscape")) {
+          screenIcon.textContent = "💻"; // horizontal device feel
+        } else {
+          screenIcon.textContent = "📱"; // vertical phone feel
+        }
+      }
+
+      // Checkoff checklist items on detection (only from genuine events)
+      if (fromEvent && type in stateChecklist) {
+        const key = type as keyof SequenceState;
+        if (!stateChecklist[key]) {
+          stateChecklist[key] = true;
+          localStorage.setItem(LS_CHECKLIST, JSON.stringify(stateChecklist));
+          updateChecklistUI();
+        }
+      }
+    }
+
+    // Handle Orientation API events
+    function handleOrientationChange(e: Event) {
+      const type = getOrientationType();
+      const angle = getOrientationAngle();
+      logEvent("screen.orientation.onchange", `Type: ${type} | Angle: ${angle}°`);
+      
+      // Since orientation updated successfully, we confirm rotation is unlocked
+      updateLockStatus("unlocked");
+      updateScreenReadouts(true);
+      updateGeometries();
+    }
+
+    // Fallback orientation listener
+    function handleLegacyOrientationChange() {
+      const type = getOrientationType();
+      const angle = getOrientationAngle();
+      logEvent("orientationchange", `Type: ${type} | Angle: ${angle}°`);
+      
+      updateLockStatus("unlocked");
+      updateScreenReadouts(true);
+      updateGeometries();
+    }
+
+    // Event logger manager
+    function logEvent(source: string, details: string) {
+      const now = new Date();
+      const timestamp = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}.${String(now.getMilliseconds()).padStart(3, "0")}`;
+      eventLogs.unshift({ timestamp, event: source, details });
+      
+      // Limit to 40 logs
+      if (eventLogs.length > 40) {
+        eventLogs.pop();
+      }
+
+      renderLogs();
+    }
+
+    function renderLogs() {
+      if (!eventLogContainer) return;
+      if (eventLogs.length === 0) {
+        eventLogContainer.innerHTML = `<div class="text-stone italic text-center py-4">No events logged yet. Rotate device to generate logs.</div>`;
+        return;
+      }
+
+      eventLogContainer.innerHTML = eventLogs
+        .map(
+          (item) => `
+          <div class="border-b border-hairline-soft/40 pb-1 flex flex-col gap-0.5">
+            <div class="flex justify-between items-center text-[9px]">
+              <span class="text-stone font-semibold">${item.timestamp}</span>
+              <span class="text-brand-blue font-bold uppercase tracking-wider">${item.event}</span>
+            </div>
+            <div class="text-[10px] text-primary truncate" title="${item.details}">${item.details}</div>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    // Checklist GUI updates
+    function updateChecklistUI() {
+      let allDone = true;
+      Object.keys(stateChecklist).forEach((key) => {
+        const itemVal = stateChecklist[key as keyof SequenceState];
+        const element = document.getElementById(`check-${key}`);
+        if (element) {
+          const statusSpan = element.querySelector(".status-icon") as HTMLSpanElement;
+          if (itemVal) {
+            statusSpan.textContent = "✅ Completed";
+            statusSpan.className = "status-icon text-xs font-bold text-success-accent";
+            element.className = "flex justify-between items-center py-1 border-b border-hairline-soft text-primary font-medium";
+          } else {
+            statusSpan.textContent = "⬜ Pending";
+            statusSpan.className = "status-icon text-xs text-slate";
+            element.className = "flex justify-between items-center py-1 border-b border-hairline-soft text-slate";
+            allDone = false;
+          }
+        }
+      });
+
+      if (checklistSummaryBanner) {
+        if (allDone) {
+          checklistSummaryBanner.classList.remove("hidden");
+        } else {
+          checklistSummaryBanner.classList.add("hidden");
+        }
+      }
+    }
+
+    let cachedProbe: HTMLDivElement | null = null;
+
+    function getSafeInsetProbe(): HTMLDivElement {
+      if (!cachedProbe) {
+        cachedProbe = document.createElement("div");
+        cachedProbe.style.position = "fixed";
+        cachedProbe.style.top = "env(safe-area-inset-top, 0px)";
+        cachedProbe.style.bottom = "env(safe-area-inset-bottom, 0px)";
+        cachedProbe.style.left = "env(safe-area-inset-left, 0px)";
+        cachedProbe.style.right = "env(safe-area-inset-right, 0px)";
+        cachedProbe.style.visibility = "hidden";
+        cachedProbe.style.pointerEvents = "none";
+        document.body.appendChild(cachedProbe);
+      }
+      return cachedProbe;
+    }
+
+    // Geometry computation
+    function updateGeometries() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const sw = window.screen.width;
+      const sh = window.screen.height;
+      const dpr = window.devicePixelRatio || 1;
+
+      if (geomViewport) geomViewport.textContent = `${vw}x${vh}`;
+      if (geomScreen) geomScreen.textContent = `${sw}x${sh}`;
+      if (geomDpr) geomDpr.textContent = `${dpr.toFixed(1)}x`;
+
+      // Read Safe Area Insets dynamically using cached probe
+      const probe = getSafeInsetProbe();
+      const computed = window.getComputedStyle(probe);
+      const safeTop = computed.top !== "auto" ? computed.top : "0px";
+      const safeBottom = computed.bottom !== "auto" ? computed.bottom : "0px";
+      const safeLeft = computed.left !== "auto" ? computed.left : "0px";
+      const safeRight = computed.right !== "auto" ? computed.right : "0px";
+
+      if (geomSafeTop) geomSafeTop.textContent = safeTop;
+      if (geomSafeBottom) geomSafeBottom.textContent = safeBottom;
+      if (geomSafeSide) geomSafeSide.textContent = `${safeLeft} / ${safeRight}`;
+    }
+
+    // Rotation Lock Inference Heuristic
+    let lastLockTriggerTime = 0;
+
+    function handleDeviceOrientation(event: DeviceOrientationEvent) {
+      const beta = event.beta; // X tilt
+      const gamma = event.gamma; // Y tilt
+      
+      if (beta === null || gamma === null) return;
+
+      const now = Date.now();
+      motionHistory.push({ beta, gamma, timestamp: now });
+
+      // Clean old samples (keep last 3 seconds of movement history)
+      motionHistory = motionHistory.filter((item) => now - item.timestamp < 3000);
+
+      if (motionHistory.length < 15) return; // need enough samples to form variance
+
+      // Compute range of beta/gamma values to detect physical movement
+      let maxBeta = -Infinity, minBeta = Infinity;
+      let maxGamma = -Infinity, minGamma = Infinity;
+
+      motionHistory.forEach((item) => {
+        if (item.beta > maxBeta) maxBeta = item.beta;
+        if (item.beta < minBeta) minBeta = item.beta;
+        if (item.gamma > maxGamma) maxGamma = event.gamma ?? item.gamma; // safely read gamma
+        if (item.gamma < minGamma) minGamma = event.gamma ?? item.gamma;
+      });
+
+      const rangeBeta = maxBeta - minBeta;
+      const rangeGamma = maxGamma - minGamma;
+      const maxMotionRange = Math.max(rangeBeta, rangeGamma);
+
+      // If physical rotation is occurring (variance > 25 degrees)
+      if (maxMotionRange > 25) {
+        // Look at screen orientation type
+        const type = getOrientationType();
+        
+        // If physically rotating, but orientation state has not updated
+        const timeElapsed = now - motionHistory[0].timestamp;
+        if (timeElapsed > 1500) {
+          // If we had motion but screen did not update orientation, lock is highly likely
+          if (isRotationLocked !== "unlocked") {
+            updateLockStatus("locked");
+            lastLockTriggerTime = now;
+          }
+        }
+      } else {
+        // Decay check: if they stopped moving the device and it is locked, decay to "unknown" after 5s
+        if (isRotationLocked === "locked" && now - lastLockTriggerTime > 5000) {
+          updateLockStatus("unknown");
+        }
+      }
+    }
+
+    function updateLockStatus(status: "unlocked" | "locked" | "unknown") {
+      isRotationLocked = status;
+      lockInferenceBanner.className = `p-2.5 rounded-lg border flex items-center justify-between text-[11px] transition-all duration-300`;
+      
+      if (status === "locked") {
+        lockInferenceBanner.classList.add("bg-brand-red", "border-brand-red-dark/30", "text-coral-dark");
+        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-red-dark animate-pulse"></span> <strong>Rotation appears locked</strong> — Device rotated physically but screen remained stationary.`;
+      } else if (status === "unlocked") {
+        lockInferenceBanner.classList.add("bg-success-accent/15", "border-success-accent/40", "text-moss-dark");
+        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span> <strong>Rotation appears unlocked</strong> — Screen is responding dynamically to physical movement.`;
+      } else {
+        lockInferenceBanner.classList.add("bg-surface-yellow", "border-yellow-light/80", "text-yellow-dark");
+        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span> Awaiting device movement to verify rotation lock...`;
+      }
+    }
+
+    // Sensor availability checks
+    function checkSensorAvailability() {
+      // Check if DeviceOrientation API exists
+      if (window.DeviceOrientationEvent) {
+        // iOS 13+ requires permissions
+        if (
+          typeof (DeviceOrientationEvent as any).requestPermission === "function"
+        ) {
+          // Show explicit enable sensors button inside status banner
+          if (permissionPillBtnContainer) {
+            permissionPillBtnContainer.classList.remove("hidden");
+          }
+        } else {
+          // Automatic startup on normal android/web instances
+          enableOrientationSensors();
+        }
+      } else {
+        logEvent("sensor", "DeviceOrientation API not supported by browser/device.");
+      }
+    }
+
+    function enableOrientationSensors() {
+      window.addEventListener("deviceorientation", handleDeviceOrientation);
+      isSensorsEnabled = true;
+      logEvent("sensor", "Motion sensors enabled successfully.");
+      if (permissionPillBtnContainer) {
+        permissionPillBtnContainer.classList.add("hidden");
+      }
+    }
+
+    // iOS explicit sensor request trigger
+    requestSensorsBtn?.addEventListener("click", () => {
+      const req = (DeviceOrientationEvent as any).requestPermission;
+      if (typeof req === "function") {
+        req()
+          .then((response: string) => {
+            if (response === "granted") {
+              enableOrientationSensors();
+            } else {
+              logEvent("sensor", `Permission request denied: ${response}`);
+            }
+          })
+          .catch((err: any) => {
+            logEvent("sensor", `Permission exception: ${err}`);
+          });
+      }
+    });
+
+    // Test lock API call
+    testLockApiBtn?.addEventListener("click", async () => {
+      apiResultBanner.classList.remove("hidden");
+      apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 animate-pulse bg-surface border-hairline text-slate";
+      if (apiResultTitle) apiResultTitle.textContent = "Testing Lock API...";
+      if (apiResultDesc) apiResultDesc.textContent = "Requesting fullscreen & orientation lock...";
+
+      const orientation = (window.screen && window.screen.orientation) as any;
+      if (orientation && typeof orientation.lock === "function") {
+        const currentType = getOrientationType();
+        try {
+          // Request fullscreen first to satisfy browser security requirements
+          if (!document.fullscreenElement) {
+            await document.documentElement.requestFullscreen();
+          }
+          await orientation.lock(currentType);
+          
+          apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-success-accent/15 border-success-accent/30 text-moss-dark";
+          if (apiResultTitle) apiResultTitle.innerHTML = "✅ Lock API Success";
+          if (apiResultDesc) apiResultDesc.textContent = `Screen locked to orientation type: ${currentType}. Exit fullscreen or click Reset to unlock.`;
+          logEvent("screen.orientation.lock", `Successfully locked to ${currentType}`);
+        } catch (err: any) {
+          // If we entered fullscreen but lock failed, clean up fullscreen
+          if (document.fullscreenElement) {
+            try { await document.exitFullscreen(); } catch (_) {}
+          }
+          apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-brand-red border-brand-red-dark/30 text-coral-dark";
+          if (apiResultTitle) apiResultTitle.innerHTML = "❌ Lock API Rejected";
+          if (apiResultDesc) {
+            if (err.name === "NotSupportedError") {
+              apiResultDesc.textContent = "Rejection: NotSupportedError. Locking screen is not supported on this device/browser.";
+            } else if (err.name === "SecurityError") {
+              apiResultDesc.textContent = "Rejection: SecurityError. Screen locking requires fullscreen mode or PWA installation context.";
+            } else {
+              apiResultDesc.textContent = `Rejection: ${err.message || err}`;
+            }
+          }
+          logEvent("screen.orientation.lock", `Failed: ${err.name || err}`);
+        }
+      } else {
+        apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-brand-red border-brand-red-dark/30 text-coral-dark";
+        if (apiResultTitle) apiResultTitle.innerHTML = "❌ API Unsupported";
+        if (apiResultDesc) apiResultDesc.textContent = "Your browser does not implement screen.orientation.lock(). (Unsupported on iOS)";
+        logEvent("screen.orientation.lock", "API unsupported on this browser.");
+      }
+    });
+
+    // Reset button behavioral contract
+    resetBtn?.addEventListener("click", () => {
+      // Clear logs
+      eventLogs = [];
+      renderLogs();
+
+      // Reset diagnostic checklist state & remove from local storage
+      stateChecklist = {
+        "portrait-primary": false,
+        "landscape-primary": false,
+        "portrait-secondary": false,
+        "landscape-secondary": false
+      };
+      localStorage.removeItem(LS_CHECKLIST);
+      updateChecklistUI();
+
+      // Clear lock status
+      updateLockStatus("unknown");
+      motionHistory = [];
+
+      // Clear API tester feedback
+      apiResultBanner.classList.add("hidden");
+
+      // Attempt unlock orientation if API supported
+      const orientation = (window.screen && window.screen.orientation) as any;
+      if (orientation && typeof orientation.unlock === "function") {
+        try {
+          orientation.unlock();
+          logEvent("screen.orientation.unlock", "Unlock orientation triggered.");
+        } catch (e) {}
+      }
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+
+      // Re-read current orientation states
+      updateScreenReadouts();
+      logEvent("reset", "Diagnostic state and localStorage metrics cleared.");
+
+      // Visual flash
+      const cls = "bg-success-accent/40";
+      lockInferenceBanner.classList.add(cls);
+      setTimeout(() => {
+        lockInferenceBanner.classList.remove(cls);
+      }, 300);
+    });
+
+    // Reset Checklist alone button
+    resetChecklistBtn?.addEventListener("click", () => {
+      stateChecklist = {
+        "portrait-primary": false,
+        "landscape-primary": false,
+        "portrait-secondary": false,
+        "landscape-secondary": false
+      };
+      localStorage.removeItem(LS_CHECKLIST);
+      updateChecklistUI();
+      updateScreenReadouts(); // checkoff current immediately
+      logEvent("checklist", "Guided sequence checklist reset.");
+    });
+
+    // Export diagnostics details
+    copyDiagnosticsBtn?.addEventListener("click", () => {
+      const type = getOrientationType();
+      const angle = getOrientationAngle();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const sw = window.screen.width;
+      const sh = window.screen.height;
+      const dpr = window.devicePixelRatio || 1;
+
+      let logText = `BoardTools - Orientation Lock Check Diagnostics Summary\n`;
+      logText += `Generated: ${new Date().toISOString()}\n`;
+      logText += `--------------------------------------------------\n`;
+      logText += `Current Orientation: ${type} (${angle}°)\n`;
+      logText += `Inferred Lock State: ${isRotationLocked.toUpperCase()}\n`;
+      logText += `Viewport Dimensions: ${vw}x${vh} (Screen: ${sw}x${sh})\n`;
+      logText += `Device Pixel Ratio: ${dpr.toFixed(1)}x\n`;
+      logText += `Sensors Enabled: ${isSensorsEnabled ? "YES" : "NO"}\n`;
+      logText += `------------------ Checklist ---------------------\n`;
+      logText += `Portrait-Primary: ${stateChecklist["portrait-primary"] ? "COMPLETED" : "PENDING"}\n`;
+      logText += `Landscape-Primary: ${stateChecklist["landscape-primary"] ? "COMPLETED" : "PENDING"}\n`;
+      logText += `Portrait-Secondary: ${stateChecklist["portrait-secondary"] ? "COMPLETED" : "PENDING"}\n`;
+      logText += `Landscape-Secondary: ${stateChecklist["landscape-secondary"] ? "COMPLETED" : "PENDING"}\n`;
+      logText += `------------------ Event Logs ---------------------\n`;
+      
+      if (eventLogs.length === 0) {
+        logText += `No events recorded.\n`;
+      } else {
+        eventLogs.forEach((item) => {
+          logText += `[${item.timestamp}] ${item.event}: ${item.details}\n`;
+        });
+      }
+
+      navigator.clipboard.writeText(logText).then(() => {
+        const origText = copyDiagnosticsBtn.textContent;
+        copyDiagnosticsBtn.textContent = "Copied!";
+        copyDiagnosticsBtn.className = "text-[9px] font-bold text-success-accent hover:underline cursor-pointer";
+        setTimeout(() => {
+          copyDiagnosticsBtn.textContent = origText;
+          copyDiagnosticsBtn.className = "text-[9px] font-bold text-brand-blue hover:underline cursor-pointer";
+        }, 2000);
+      });
+    });
+
+    // Cleanup listeners on unmount
+    window.addEventListener("beforeunload", () => {
+      window.removeEventListener("resize", updateGeometries);
+      window.removeEventListener("deviceorientation", handleDeviceOrientation);
+      if (window.screen && window.screen.orientation) {
+        window.screen.orientation.removeEventListener("change", handleOrientationChange);
+      } else {
+        window.removeEventListener("orientationchange", handleLegacyOrientationChange);
+      }
+    });
+
+    // How it works modal event listeners
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Initialize logic execution
+    init();
+  </script>
 </Layout>
