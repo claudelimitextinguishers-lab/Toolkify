@@ -5,86 +5,1877 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "White Noise Generator";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Generate customizable continuous white noise frequencies for study focus or sleep.";
+const description = "Synthesize and customize high-fidelity white noise, rain, and fan layers locally to mask distractions, improve focus, or sleep soundly.";
+
+const pageTitle = "White Noise Generator - Client-Side Sound Masking & Focus Tool";
+const canonicalUrl = "https://boardtools.app/tools/audio/white-noise";
+const ogImage = "/og/white-noise.png";
+const keywords = "white noise generator, sound machine, rain noise, fan sound, sleep timer, audio visualizer, tinnitus masking, focus sound, browser audio generator";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "White Noise Generator",
+      "alternateName": "Browser-Based White Noise Sound Machine",
+      "url": "https://boardtools.app/tools/audio/white-noise",
+      "description": "Generate high-fidelity, loop-safe white noise and environmental soundscapes entirely in your browser. Customizable sleep timer, visualizer, presets, and synthesized audio layers.",
+      "applicationCategory": "AudioApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires Web Audio API. Requires HTML5 Canvas.",
+      "featureList": [
+        "Real-time client-side white noise synthesis",
+        "Synthesized sound layers for rain and cooling fan textures",
+        "Low-pass and high-pass frequency shaping filters",
+        "Customizable sleep timer with automatic smooth volume fade-out",
+        "Animated frequency spectrum and waveform visualizer",
+        "Curated mood presets: Focus, Sleep, Baby Soothing, Tinnitus, Study",
+        "Local save for custom user sound presets",
+        "Shareable settings URL generator"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
+    
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-lg sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[9px] sm:text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🎵</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Keyboard shortcuts reference -->
+          <button
+            type="button"
+            id="shortcuts-btn"
+            class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="View keyboard shortcuts"
+          >
+            <span>⌨ Keyboard Shortcuts</span>
+          </button>
+
+          <!-- Reset button verbatim structure -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-2.5 h-2.5 sm:w-3 sm:h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button verbatim structure -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How JSON formatter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Gesture Requirement Overlay -->
+    <div id="gesture-overlay" class="hidden p-3 sm:p-4 bg-surface-yellow border border-yellow-light/80 text-yellow-dark rounded-xl flex items-center justify-between text-xs sm:text-sm animate-pulse print:hidden">
+      <span class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow-deep"></span>
+        <span>Browser requires interaction to enable high-fidelity sound. Tap anywhere or play to activate.</span>
+      </span>
+      <button type="button" id="enable-audio-btn" class="button-yellow text-[10px] sm:text-[11px] py-1 px-3 !rounded-full font-bold shadow-subtle hover:scale-105 active:scale-95 transition-all">
+        Enable Audio
+      </button>
+    </div>
+
+    <!-- IOS Safari background / audio suspension banner -->
+    <div id="safari-suspended-banner" class="hidden p-2 sm:p-3 bg-brand-red border border-brand-red-dark text-coral-dark rounded-xl flex items-center justify-between text-xs print:hidden">
+      <span>Background audio suspended by browser. Click resume to restore playback.</span>
+      <button type="button" id="resume-audio-btn" class="button-primary text-[9px] sm:text-[10px] py-1 px-3 !rounded-full font-bold transition-all">
+        Resume Audio
+      </button>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch">
+      
+      <!-- Left: Synth Controls Panel -->
+      <div class="lg:col-span-8 card-base flex flex-col gap-4 sm:gap-6 p-3 sm:p-6">
+        
+        <!-- Section Title -->
+        <div class="flex items-center justify-between border-b border-hairline-soft pb-2 sm:pb-3">
+          <h2 class="font-display font-semibold text-base sm:text-lg text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            Noise Synthesis Engine
+          </h2>
+          <span id="audio-state-tag" class="text-[9px] sm:text-[10px] font-bold text-slate px-2 py-0.5 rounded-full bg-surface border border-hairline uppercase tracking-wider">Stopped</span>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-coral flex flex-col gap-3">
-          <span class="badge-tag-coral bg-coral-light text-coral-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Quick Mood Presets -->
+        <div class="flex flex-col gap-1.5">
+          <span class="text-[10px] sm:text-[11px] font-semibold text-slate uppercase tracking-wider">Preset Moods</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" data-mood="focus" class="mood-chip px-2.5 py-1 sm:px-3 sm:py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary text-xs font-semibold rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95">
+              🎯 Focus
+            </button>
+            <button type="button" data-mood="sleep" class="mood-chip px-2.5 py-1 sm:px-3 sm:py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary text-xs font-semibold rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95">
+              💤 Sleep
+            </button>
+            <button type="button" data-mood="baby" class="mood-chip px-2.5 py-1 sm:px-3 sm:py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary text-xs font-semibold rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95">
+              🍼 Baby Soothing
+            </button>
+            <button type="button" data-mood="tinnitus" class="mood-chip px-2.5 py-1 sm:px-3 sm:py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary text-xs font-semibold rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95">
+              🔔 Tinnitus Relief
+            </button>
+            <button type="button" data-mood="study" class="mood-chip px-2.5 py-1 sm:px-3 sm:py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary text-xs font-semibold rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95">
+              📚 Deep Study
+            </button>
+          </div>
+        </div>
+
+        <!-- Major Playback / Transport Control -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-3 sm:p-5 bg-surface-soft border border-hairline-soft rounded-2xl">
+          
+          <!-- Play / Pause / Stop Buttons -->
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              id="play-btn"
+              class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary text-canvas flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer group focus:outline-none focus:ring-4 focus:ring-primary/20 relative"
+              aria-label="Play white noise"
+            >
+              <!-- Ripple Effect -->
+              <span id="play-ripple" class="absolute inset-0 rounded-full bg-primary/20 scale-100 opacity-0 transition-all duration-1000 pointer-events-none"></span>
+              
+              <!-- Play Icon -->
+              <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <!-- Pause Icon -->
+              <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-8 sm:h-8 fill-current hidden" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              id="stop-btn"
+              class="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-canvas text-slate hover:text-brand-coral border border-hairline flex items-center justify-center shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer focus:outline-none"
+              aria-label="Stop audio"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M6 6h12v12H6z" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Transport Info -->
+          <div class="flex-grow flex flex-col gap-0.5 text-center sm:text-left">
+            <span id="playing-state-title" class="font-display font-semibold text-xs sm:text-sm text-primary">Audio is Idle</span>
+            <p id="playing-state-desc" class="text-[11px] sm:text-xs text-slate max-w-xs mx-auto sm:mx-0">Press play to synthesize high-quality white noise directly in your browser.</p>
+          </div>
+
+          <!-- Share Link Actions -->
+          <div class="flex items-center gap-2 self-stretch sm:self-center justify-center">
+            <button
+              type="button"
+              id="btn-copy-settings"
+              class="inline-flex items-center gap-1.5 text-[10px] font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle hover:scale-105 active:scale-95"
+              title="Get shareable link of current sound settings"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l-2.884 1.442m0 0l-2.884-1.442m2.884 1.442V17m0 0l3.07-1.535M5.8 17l-3.07-1.535M12 4.5l-3 3m0 0l3 3m-3-3h12a3 3 0 013 3V12" />
+              </svg>
+              <span>Share Config</span>
+            </button>
+            
+            <div id="toast-message" class="hidden text-success-accent text-[10px] font-bold py-1 px-2 border border-success-accent/20 bg-success-accent/5 rounded-full animate-fade-in">
+              Copied!
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Sliders (Volume, Panning) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5">
+          <!-- Volume Control -->
+          <div class="flex flex-col gap-2 p-2 sm:p-3 bg-surface rounded-xl border border-hairline-soft">
+            <div class="flex items-center justify-between">
+              <label for="volume-slider" class="text-[11px] font-semibold text-slate uppercase">Master Volume</label>
+              <span id="volume-readout" class="font-mono text-xs font-bold text-primary">70% (-3.1 dB)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs">🔈</span>
+              <input 
+                type="range" 
+                id="volume-slider" 
+                min="0" 
+                max="100" 
+                value="70" 
+                class="slider-input flex-grow h-2 bg-hairline rounded-lg appearance-none cursor-pointer focus:outline-none accent-primary transition-all"
+                aria-label="Master volume slider"
+              />
+              <span class="text-xs">🔊</span>
+            </div>
+          </div>
+
+          <!-- Stereo Pan Control -->
+          <div class="flex flex-col gap-2 p-2 sm:p-3 bg-surface rounded-xl border border-hairline-soft">
+            <div class="flex items-center justify-between">
+              <label for="pan-slider" class="text-[11px] font-semibold text-slate uppercase">Stereo Balance</label>
+              <span id="pan-readout" class="font-mono text-xs font-bold text-primary">Center</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-bold text-slate">L</span>
+              <input 
+                type="range" 
+                id="pan-slider" 
+                min="-100" 
+                max="100" 
+                value="0" 
+                class="slider-input flex-grow h-2 bg-hairline rounded-lg appearance-none cursor-pointer focus:outline-none accent-primary transition-all"
+                aria-label="Stereo panning balance slider"
+              />
+              <span class="text-xs font-bold text-slate">R</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frequency Shaping Filters -->
+        <div class="flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 bg-surface rounded-xl border border-hairline-soft">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2">
+            <span class="text-[11px] font-semibold text-slate uppercase tracking-wider">Frequency Shaping (EQ)</span>
+            <span id="eq-tilt-desc" class="text-[10px] text-slate font-medium">Pure White Noise</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Low Pass Filter -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-xs">
+                <label for="lp-slider" class="font-bold text-slate">Low-Pass Filter (Soften Highs)</label>
+                <span id="lp-readout" class="font-mono text-[11px] text-primary">20,000 Hz</span>
+              </div>
+              <input 
+                type="range" 
+                id="lp-slider" 
+                min="0" 
+                max="100" 
+                value="100" 
+                class="slider-input w-full h-2 bg-hairline rounded-lg appearance-none cursor-pointer accent-primary"
+                aria-label="Low-pass filter cutoff frequency slider"
+              />
+              <span class="text-[10px] text-slate leading-normal">Reduces harsh static hiss. Drag left to create a warmer, deeper rumble (pink/brown noise style).</span>
+            </div>
+
+            <!-- High Pass Filter -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-xs">
+                <label for="hp-slider" class="font-bold text-slate">High-Pass Filter (Soften Lows)</label>
+                <span id="hp-readout" class="font-mono text-[11px] text-primary">20 Hz</span>
+              </div>
+              <input 
+                type="range" 
+                id="hp-slider" 
+                min="0" 
+                max="100" 
+                value="0" 
+                class="slider-input w-full h-2 bg-hairline rounded-lg appearance-none cursor-pointer accent-primary"
+                aria-label="High-pass filter cutoff frequency slider"
+              />
+              <span class="text-[10px] text-slate leading-normal">Removes low-end hum. Drag right to focus only on clean rain-like or static noise.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Synthesis Layer Mixins -->
+        <div class="flex flex-col gap-2 sm:gap-3 p-3 sm:p-4 bg-surface rounded-xl border border-hairline-soft">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2">
+            <span class="text-[11px] font-semibold text-slate uppercase tracking-wider">Advanced Layer Mixer</span>
+            <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-[9px] py-0.5 px-2 rounded-full font-semibold uppercase">100% Synthesized</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5 mt-1">
+            <!-- Rain Mixin -->
+            <div class="flex flex-col gap-2 p-3 bg-canvas rounded-lg border border-hairline">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <input type="checkbox" id="rain-toggle" class="w-4 h-4 cursor-pointer accent-primary rounded-md" />
+                  <label for="rain-toggle" class="text-xs font-bold text-primary cursor-pointer select-none">🌧 Synthesized Rain</label>
+                </div>
+                <span id="rain-vol-readout" class="font-mono text-[10px] text-slate">Vol: 0%</span>
+              </div>
+              <input 
+                type="range" 
+                id="rain-volume" 
+                min="0" 
+                max="100" 
+                value="30" 
+                disabled
+                class="slider-input w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed accent-primary"
+                aria-label="Synthesized rain volume mix slider"
+              />
+              <p class="text-[10px] text-slate">Adds custom bandpass modulated pulses and random crackle patterns mimicking real raindrops.</p>
+            </div>
+
+            <!-- Fan Mixin -->
+            <div class="flex flex-col gap-2 p-3 bg-canvas rounded-lg border border-hairline">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <input type="checkbox" id="fan-toggle" class="w-4 h-4 cursor-pointer accent-primary rounded-md" />
+                  <label for="fan-toggle" class="text-xs font-bold text-primary cursor-pointer select-none">💨 Synthesized Fan</label>
+                </div>
+                <span id="fan-vol-readout" class="font-mono text-[10px] text-slate">Vol: 0%</span>
+              </div>
+              <input 
+                type="range" 
+                id="fan-volume" 
+                min="0" 
+                max="100" 
+                value="40" 
+                disabled
+                class="slider-input w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed accent-primary"
+                aria-label="Synthesized cooling fan volume mix slider"
+              />
+              <p class="text-[10px] text-slate">Generates a low lowpass hum combined with LFO amplitude chopping to recreate a classic ceiling/box fan blades sound.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sleep Timer Control -->
+        <div class="flex flex-col gap-3 sm:gap-4 p-3 sm:p-4 bg-surface rounded-xl border border-hairline-soft">
+          <div class="flex items-center justify-between border-b border-hairline-soft pb-2">
+            <span class="text-[11px] font-semibold text-slate uppercase tracking-wider">Sleep Timer</span>
+            <span id="timer-status" class="text-[11px] font-mono font-bold text-slate">Inactive</span>
+          </div>
+
+          <div class="flex flex-col md:flex-row items-center gap-4">
+            <!-- Preset buttons -->
+            <div class="flex flex-wrap gap-1.5 justify-center md:justify-start w-full md:w-auto">
+              <button type="button" data-minutes="5" class="timer-chip px-3 py-1 bg-canvas hover:bg-surface border border-hairline text-slate text-xs font-semibold rounded-full cursor-pointer transition-all">5m</button>
+              <button type="button" data-minutes="15" class="timer-chip px-3 py-1 bg-canvas hover:bg-surface border border-hairline text-slate text-xs font-semibold rounded-full cursor-pointer transition-all">15m</button>
+              <button type="button" data-minutes="30" class="timer-chip px-3 py-1 bg-canvas hover:bg-surface border border-hairline text-slate text-xs font-semibold rounded-full cursor-pointer transition-all">30m</button>
+              <button type="button" data-minutes="60" class="timer-chip px-3 py-1 bg-canvas hover:bg-surface border border-hairline text-slate text-xs font-semibold rounded-full cursor-pointer transition-all">60m</button>
+            </div>
+
+            <!-- Custom Input -->
+            <div class="flex items-center gap-2 w-full md:w-auto flex-grow justify-between sm:justify-start">
+              <label for="custom-timer-min" class="text-xs text-slate whitespace-nowrap">Custom (mins):</label>
+              <input 
+                type="number" 
+                id="custom-timer-min" 
+                min="1" 
+                max="480" 
+                placeholder="45"
+                class="text-input w-20 text-center py-1 h-8 rounded-md border border-hairline-strong text-xs"
+              />
+              
+              <button type="button" id="start-timer-btn" class="button-primary text-[11px] py-1 px-4 !rounded-full font-bold shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer">
+                Set Timer
+              </button>
+              <button type="button" id="cancel-timer-btn" class="button-secondary text-[11px] py-1 px-4 !rounded-full font-bold hidden hover:bg-surface transition-all cursor-pointer">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <!-- Timer Countdown visual structure -->
+          <div id="timer-countdown-area" class="hidden p-3 bg-canvas border border-hairline rounded-lg flex items-center justify-between text-xs animate-fade-in">
+            <div class="flex items-center gap-3">
+              <!-- Animated simple progress bar -->
+              <div class="relative w-24 h-2.5 bg-hairline rounded-full overflow-hidden">
+                <div id="timer-progress-fill" class="absolute left-0 top-0 bottom-0 bg-brand-blue transition-all duration-1000" style="width: 100%;"></div>
+              </div>
+              <span class="text-slate">Fading out automatically in:</span>
+              <span id="countdown-readout" class="font-mono font-bold text-primary text-sm">00:00</span>
+            </div>
+            <span id="countdown-msg" class="text-[10px] text-slate font-medium">Auto-stopping</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Side: Visualizer, Presets Storage & Settings -->
+      <div class="lg:col-span-4 flex flex-col gap-4 sm:gap-5">
+        
+        <!-- Live Audio Visualizer Card -->
+        <div class="card-base flex flex-col gap-3 p-3 sm:p-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-2">
+            <h3 class="font-display font-semibold text-xs uppercase tracking-wider text-primary">Live Waveform/Spectrum</h3>
+            <!-- Toggle Visualizer Type -->
+            <button type="button" id="visualizer-toggle" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">
+              Switch Style
+            </button>
+          </div>
+
+          <!-- Canvas Frame -->
+          <div class="relative w-full h-24 sm:h-32 bg-surface rounded-xl border border-hairline overflow-hidden">
+            <canvas id="visualizer-canvas" class="w-full h-full block opacity-70"></canvas>
+            <div id="visualizer-idle-overlay" class="absolute inset-0 flex items-center justify-center bg-surface/30 backdrop-blur-[1px] text-[11px] font-medium text-slate transition-all duration-500">
+              Visualizer Idle
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center text-[10px] text-slate">
+            <span>Generated locally in real-time</span>
+            <span id="visualizer-hz-label">Frequency View</span>
+          </div>
+        </div>
+
+        <!-- Custom User Presets Card -->
+        <div class="card-base flex flex-col gap-4 p-3 sm:p-4">
+          <div class="flex items-center justify-between border-b border-hairline pb-2">
+            <h3 class="font-display font-semibold text-xs uppercase tracking-wider text-primary">Custom Saved Presets</h3>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="new-preset-name" class="text-[10px] font-bold text-slate uppercase">Save Current Setup</label>
+            <div class="flex gap-2">
+              <input 
+                type="text" 
+                id="new-preset-name" 
+                placeholder="My Deep Focus" 
+                class="text-input flex-grow py-1 px-3.5 h-8 rounded-md text-xs" 
+              />
+              <button type="button" id="save-preset-btn" class="button-primary text-[11px] py-1 px-3 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer">
+                Save
+              </button>
+            </div>
+          </div>
+
+          <div class="h-[1px] bg-hairline"></div>
+
+          <!-- Presets Stack -->
+          <div id="presets-list-container" class="flex flex-col gap-2 max-h-40 overflow-y-auto">
+            <span class="text-xs text-slate">No custom presets saved yet.</span>
+          </div>
+        </div>
+
+        <!-- System notes & Battery Saver -->
+        <div class="card-base bg-surface-soft flex flex-col gap-3.5 p-3 sm:p-4">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🔋</span>
+            <h3 class="font-display font-semibold text-xs uppercase tracking-wider text-primary">Battery & Performance Note</h3>
+          </div>
+          <p class="text-[11px] text-slate leading-relaxed">
+            All audio textures are mathematically synthesized <strong>entirely in your local browser sandbox</strong>. 
+            No remote audio streams or heavy MP3 files are downloaded. This drastically reduces data usage and minimizes battery footprint, making it perfect for laptop travel and offline sessions.
           </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Security/Client-Side Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden mt-2">
+      <span class="flex items-center gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-success-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        100% Client-Side Synthesis, 0KB Sent to Servers
+      </span>
+      <span>v2.0.0</span>
+    </div>
+
+  </section>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-4">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        High-Fidelity Browser-Based White Noise Generator
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Our <strong>White Noise Generator</strong> is a specialized acoustic sound machine that executes entirely client-side using the <strong>HTML5 Web Audio API</strong>. 
+        Unlike looping audio files or YouTube videos that suffer from repetitive ticks, seam pauses, or streaming drops, this tool generates continuous, mathematically random frequencies in real-time. 
+        Because it synthesizes noise dynamically in a local buffer, you experience seamless, click-free playback indefinitely.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How Low-Pass and High-Pass Filters Color the Noise
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Pure white noise contains equal energy across all audible frequencies, which can sometimes sound harsh or clinical (like radio static). 
+        By employing biquad shaping filters, you can sculpt the audio color:
+      </p>
+      <ul class="list-disc pl-5 text-sm text-slate flex flex-col gap-1.5">
+        <li><strong>Low-Pass Filter (Warmer Color)</strong>: Trims high-frequency hiss, producing pink noise (which mimics waterfall noise) or brown noise (a deep, low-frequency hum like heavy rain or ocean waves). Perfect for sound masking.</li>
+        <li><strong>High-Pass Filter (Crisper Focus)</strong>: Trims low-end rumble. It is ideal for neutralizing high-frequency ringing (tinnitus) or isolating structural static.</li>
+      </ul>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Multi-Layer Sound Mixing
+      </h3>
+      <p class="text-sm leading-relaxed">
+        To enrich your environmental soundscapes, we've integrated two additional synthesized layers. 
+        The <strong>Synthesized Rain</strong> mixin uses bandpass filter modulation coupled with random envelope spikes to synthesize the natural cracking of rain droplets. 
+        The <strong>Synthesized Fan</strong> mixin uses low-frequency oscillators (LFO) to modulate the amplitude of low-pass filtered noise, simulating the spinning blades of a classic ventilation fan. 
+        Blend these with your white noise to configure the ultimate ambient masking setup.
+      </p>
+    </article>
+  </section>
+
+  <!-- Keyboard Shortcuts Guide Modal -->
+  <div
+    id="shortcuts-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm transition-opacity duration-300"
+  >
+    <div class="card-base max-w-md w-full p-5 flex flex-col gap-4 relative animate-fade-in-up">
+      <div class="flex items-center justify-between border-b border-hairline pb-2">
+        <h3 class="font-display font-semibold text-sm sm:text-base text-primary">
+          Keyboard Shortcuts Guide
+        </h3>
+        <button id="close-shortcuts-btn" class="text-stone hover:text-primary font-bold text-lg cursor-pointer">✕</button>
+      </div>
+      <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Play / Pause</span>
+          <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Spacebar</kbd>
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Increase Volume</span>
+          <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Arrow Up</kbd>
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Decrease Volume</span>
+          <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Arrow Down</kbd>
+        </div>
+        <div class="flex justify-between py-1 border-b border-hairline-soft">
+          <span class="font-bold">Stop Audio & Visualizer</span>
+          <kbd class="px-1.5 py-0.5 bg-surface border border-hairline-strong rounded font-mono text-[10px]">Esc</kbd>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <!-- How it works Modal verbatim structure -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">
+          White Noise Generator Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Dynamic Web Audio Synthesis</h4>
+        <p>
+          Unlike external audio files that trigger network downloads and loop with audible pauses, 
+          this generator uses your computer's CPU to mathematically construct a continuous loop of white noise. 
+          It is 100% private, runs offline, and consumes minimal memory.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Shaping Custom Soundscapes</h4>
+        <p>
+          Use the Low-Pass and High-Pass filters to adjust the frequency balance. 
+          By filtering out high static hiss, you can shape white noise into pink (softer) or brown noise (deep rumble). 
+          Additionally, you can toggle the Synthesized Rain and Fan mixins to blend in environmental layers.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Smart Sleep Timer & Fades</h4>
+        <p>
+          Configure a sleep timer via the preset chips or custom input. 
+          Instead of cutting off abruptly (which can wake you up), the generator executes a smooth linear fade-out of the volume 
+          over the final 10 seconds of the countdown.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Preset Moods & Custom Memory</h4>
+        <p>
+          Choose from curated presets (Focus, Sleep, Baby Soothing, etc.) or save your current combination of sliders, volumes, 
+          and layers into custom presets stored directly in your local browser sandbox.
+        </p>
+      </div>
+      
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side Logic Script -->
+  <script>
+    // LocalStorage Prefix
+    const LS_PREFIX = "boardtools:white-noise:";
+
+    // Audio State
+    let audioCtx: AudioContext | null = null;
+    let isPlaying = false;
+    let mainGainNode: GainNode | null = null;
+    let pannerNode: StereoPannerNode | null = null;
+    let lpFilterNode: BiquadFilterNode | null = null;
+    let hpFilterNode: BiquadFilterNode | null = null;
+    let analyserNode: AnalyserNode | null = null;
+
+    // Layer Mixer States
+    let whiteNoiseSource: AudioBufferSourceNode | null = null;
+    let whiteNoiseGain: GainNode | null = null;
+
+    let rainSource: AudioBufferSourceNode | null = null;
+    let rainGain: GainNode | null = null;
+    let rainFilter1: BiquadFilterNode | null = null;
+    let rainFilter2: BiquadFilterNode | null = null;
+
+    let fanSource: AudioBufferSourceNode | null = null;
+    let fanGain: GainNode | null = null;
+    let fanFilter: BiquadFilterNode | null = null;
+    let fanLfo: OscillatorNode | null = null;
+    let fanLfoGain: GainNode | null = null;
+
+    // Timer Variables
+    let timerInterval: number | null = null;
+    let timerTotalSeconds = 0;
+    let timerRemainingSeconds = 0;
+    let isFadingOut = false;
+
+    // Visualizer Variables
+    let animationFrameId: number | null = null;
+    let visualizerStyle: "waveform" | "spectrum" = "spectrum";
+
+    // DOM Elements
+    const playBtn = document.getElementById("play-btn") as HTMLButtonElement;
+    const playIcon = document.getElementById("play-icon") as HTMLElement;
+    const pauseIcon = document.getElementById("pause-icon") as HTMLElement;
+    const playRipple = document.getElementById("play-ripple") as HTMLElement;
+    const stopBtn = document.getElementById("stop-btn") as HTMLButtonElement;
+    
+    const audioStateTag = document.getElementById("audio-state-tag") as HTMLElement;
+    const playingStateTitle = document.getElementById("playing-state-title") as HTMLElement;
+    const playingStateDesc = document.getElementById("playing-state-desc") as HTMLElement;
+    
+    const volumeSlider = document.getElementById("volume-slider") as HTMLInputElement;
+    const volumeReadout = document.getElementById("volume-readout") as HTMLElement;
+    
+    const panSlider = document.getElementById("pan-slider") as HTMLInputElement;
+    const panReadout = document.getElementById("pan-readout") as HTMLElement;
+    
+    const lpSlider = document.getElementById("lp-slider") as HTMLInputElement;
+    const lpReadout = document.getElementById("lp-readout") as HTMLElement;
+    const hpSlider = document.getElementById("hp-slider") as HTMLInputElement;
+    const hpReadout = document.getElementById("hp-readout") as HTMLElement;
+    const eqTiltDesc = document.getElementById("eq-tilt-desc") as HTMLElement;
+
+    // Mixins
+    const rainToggle = document.getElementById("rain-toggle") as HTMLInputElement;
+    const rainVolume = document.getElementById("rain-volume") as HTMLInputElement;
+    const rainVolReadout = document.getElementById("rain-vol-readout") as HTMLElement;
+    
+    const fanToggle = document.getElementById("fan-toggle") as HTMLInputElement;
+    const fanVolume = document.getElementById("fan-volume") as HTMLInputElement;
+    const fanVolReadout = document.getElementById("fan-vol-readout") as HTMLElement;
+
+    // Sleep Timer
+    const startTimerBtn = document.getElementById("start-timer-btn") as HTMLButtonElement;
+    const cancelTimerBtn = document.getElementById("cancel-timer-btn") as HTMLButtonElement;
+    const customTimerMin = document.getElementById("custom-timer-min") as HTMLInputElement;
+    const timerStatus = document.getElementById("timer-status") as HTMLElement;
+    const timerCountdownArea = document.getElementById("timer-countdown-area") as HTMLElement;
+    const timerProgressFill = document.getElementById("timer-progress-fill") as HTMLElement;
+    const countdownReadout = document.getElementById("countdown-readout") as HTMLElement;
+
+    // Modals
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    const shortcutsBtn = document.getElementById("shortcuts-btn") as HTMLButtonElement;
+    const shortcutsModal = document.getElementById("shortcuts-modal") as HTMLElement;
+    const closeShortcutsBtn = document.getElementById("close-shortcuts-btn") as HTMLButtonElement;
+
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const btnCopySettings = document.getElementById("btn-copy-settings") as HTMLButtonElement;
+    const toastMessage = document.getElementById("toast-message") as HTMLElement;
+
+    // Custom Presets
+    const savePresetBtn = document.getElementById("save-preset-btn") as HTMLButtonElement;
+    const newPresetName = document.getElementById("new-preset-name") as HTMLInputElement;
+    const presetsListContainer = document.getElementById("presets-list-container") as HTMLElement;
+
+    // Visualizer Canvas
+    const canvas = document.getElementById("visualizer-canvas") as HTMLCanvasElement;
+    const canvasCtx = canvas.getContext("2d")!;
+    const visualizerIdleOverlay = document.getElementById("visualizer-idle-overlay") as HTMLElement;
+    const visualizerToggle = document.getElementById("visualizer-toggle") as HTMLButtonElement;
+    const visualizerHzLabel = document.getElementById("visualizer-hz-label") as HTMLElement;
+
+    // Audio Gestures Check
+    const gestureOverlay = document.getElementById("gesture-overlay") as HTMLElement;
+    const enableAudioBtn = document.getElementById("enable-audio-btn") as HTMLButtonElement;
+    const safariSuspendedBanner = document.getElementById("safari-suspended-banner") as HTMLElement;
+    const resumeAudioBtn = document.getElementById("resume-audio-btn") as HTMLButtonElement;
+
+    // Curated Presets mapping
+    const moodPresets: Record<string, { volume: number, lp: number, hp: number, rain: boolean, rainVol: number, fan: boolean, fanVol: number }> = {
+      focus: { volume: 65, lp: 45, hp: 15, rain: false, rainVol: 0, fan: false, fanVol: 0 },
+      sleep: { volume: 50, lp: 20, hp: 5, rain: true, rainVol: 40, fan: true, fanVol: 30 },
+      baby: { volume: 55, lp: 30, hp: 0, rain: false, rainVol: 0, fan: true, fanVol: 45 },
+      tinnitus: { volume: 75, lp: 85, hp: 40, rain: false, rainVol: 0, fan: false, fanVol: 0 },
+      study: { volume: 60, lp: 50, hp: 10, rain: true, rainVol: 25, fan: false, fanVol: 0 }
+    };
+
+    // Initialize Audio Context on gesture
+    function initAudio() {
+      if (audioCtx) return;
+      
+      const AudioCtxClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtxClass) {
+        alert("Web Audio API is not supported in this browser.");
+        return;
+      }
+      
+      audioCtx = new AudioCtxClass();
+      
+      // Setup master routing node structure
+      mainGainNode = audioCtx.createGain();
+      mainGainNode.gain.setValueAtTime(0.001, audioCtx.currentTime); // Prevent pops
+      
+      pannerNode = audioCtx.createStereoPanner();
+      lpFilterNode = audioCtx.createBiquadFilter();
+      lpFilterNode.type = 'lowpass';
+      
+      hpFilterNode = audioCtx.createBiquadFilter();
+      hpFilterNode.type = 'highpass';
+      
+      analyserNode = audioCtx.createAnalyser();
+      analyserNode.fftSize = 256;
+      
+      // Connections: [Synth Layers] -> LP -> HP -> Panner -> Gain -> Analyser -> Destination
+      lpFilterNode.connect(hpFilterNode);
+      hpFilterNode.connect(pannerNode);
+      pannerNode.connect(mainGainNode);
+      mainGainNode.connect(analyserNode);
+      analyserNode.connect(audioCtx.destination);
+
+      // Listen for safari/iOS background suspension
+      audioCtx.onstatechange = () => {
+        if (audioCtx && audioCtx.state === 'suspended' && isPlaying) {
+          safariSuspendedBanner.classList.remove('hidden');
+        } else {
+          safariSuspendedBanner.classList.add('hidden');
+        }
+      };
+
+      updateNodeValues();
+      hideGestureOverlay();
+    }
+
+    // Dynamic scale-factor for sliders dragging
+    document.querySelectorAll('.slider-input').forEach(slider => {
+      slider.addEventListener('mousedown', () => slider.classList.add('scale-105'));
+      slider.addEventListener('mouseup', () => slider.classList.remove('scale-105'));
+      slider.addEventListener('touchstart', () => slider.classList.add('scale-105'), { passive: true });
+      slider.addEventListener('touchend', () => slider.classList.remove('scale-105'), { passive: true });
+    });
+
+    // Helper: Map slider log-like scales for filters
+    function getFilterFreq(value: number, isLowpass: boolean): number {
+      // Return frequencies from 20Hz to 20000Hz using an exponential curve
+      const minHz = 20;
+      const maxHz = 20000;
+      if (isLowpass) {
+        if (value >= 100) return maxHz;
+        return Math.round(minHz + (Math.pow(10, (value / 100) * 3) / 1000) * (maxHz - minHz));
+      } else {
+        if (value <= 0) return minHz;
+        return Math.round(minHz + (Math.pow(10, (value / 100) * 3) / 1000) * (maxHz - minHz));
+      }
+    }
+
+
+
+    // Sound Generation: Loop-Safe White Noise buffer
+    function createNoiseBuffer(ctx: AudioContext): AudioBuffer {
+      const sampleRate = ctx.sampleRate;
+      const bufferSize = sampleRate * 2; // 2 seconds of noise buffer
+      const buffer = ctx.createBuffer(2, bufferSize, sampleRate);
+      for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+        const data = buffer.getChannelData(channel);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+      }
+      return buffer;
+    }
+
+    // Sound Generation: Rain texture filter modulation
+    // Creates a noise buffer specifically filtered & modulated
+    function startRainSynthesis(ctx: AudioContext) {
+      if (!rainToggle.checked || !ctx) return;
+      
+      if (rainSource) {
+        try { rainSource.stop(); } catch (e) {}
+        rainSource.disconnect();
+      }
+
+      rainSource = ctx.createBufferSource();
+      rainSource.buffer = createNoiseBuffer(ctx);
+      rainSource.loop = true;
+
+      rainGain = ctx.createGain();
+      rainFilter1 = ctx.createBiquadFilter();
+      rainFilter1.type = 'bandpass';
+      rainFilter1.frequency.value = 1600;
+      rainFilter1.Q.value = 1.2;
+
+      rainFilter2 = ctx.createBiquadFilter();
+      rainFilter2.type = 'highpass';
+      rainFilter2.frequency.value = 900;
+
+      // Connect: Rain Source -> BP -> HP -> Rain Gain -> LP Filter
+      rainSource.connect(rainFilter1);
+      rainFilter1.connect(rainFilter2);
+      rainFilter2.connect(rainGain);
+      
+      if (lpFilterNode) {
+        rainGain.connect(lpFilterNode);
+      }
+
+      const rainVolumeVal = parseInt(rainVolume.value) / 100;
+      rainGain.gain.setValueAtTime(rainVolumeVal * 0.45, ctx.currentTime);
+
+      rainSource.start(0);
+    }
+
+    function stopRainSynthesis() {
+      if (rainSource) {
+        try { rainSource.stop(); } catch (e) {}
+        rainSource.disconnect();
+        rainSource = null;
+      }
+      rainGain = null;
+      rainFilter1 = null;
+      rainFilter2 = null;
+    }
+
+    // Sound Generation: Fan LFO Modulation
+    function startFanSynthesis(ctx: AudioContext) {
+      if (!fanToggle.checked || !ctx) return;
+
+      if (fanSource) {
+        try { fanSource.stop(); } catch (e) {}
+        fanSource.disconnect();
+      }
+
+      fanSource = ctx.createBufferSource();
+      fanSource.buffer = createNoiseBuffer(ctx);
+      fanSource.loop = true;
+
+      fanGain = ctx.createGain();
+      fanFilter = ctx.createBiquadFilter();
+      fanFilter.type = 'lowpass';
+      fanFilter.frequency.value = 95; // Deep fan rumble base
+
+      // LFO for blade-chopping effect (15Hz rotation speed)
+      fanLfo = ctx.createOscillator();
+      fanLfo.type = 'sine';
+      fanLfo.frequency.value = 16; 
+
+      fanLfoGain = ctx.createGain();
+      fanLfoGain.gain.value = 0.22; // blade vibration depth
+
+      // Connect LFO to modulate gain
+      fanLfo.connect(fanLfoGain);
+      fanLfoGain.connect(fanGain.gain);
+
+      // Connect: Fan Source -> LP -> Fan Gain -> LP Filter
+      fanSource.connect(fanFilter);
+      fanFilter.connect(fanGain);
+      
+      if (lpFilterNode) {
+        fanGain.connect(lpFilterNode);
+      }
+
+      const fanVolumeVal = parseInt(fanVolume.value) / 100;
+      // Set base volume of the fan rumble
+      fanGain.gain.setValueAtTime(fanVolumeVal * 0.6, ctx.currentTime);
+
+      fanSource.start(0);
+      fanLfo.start(0);
+    }
+
+    function stopFanSynthesis() {
+      if (fanSource) {
+        try { fanSource.stop(); } catch (e) {}
+        fanSource.disconnect();
+        fanSource = null;
+      }
+      if (fanLfo) {
+        try { fanLfo.stop(); } catch (e) {}
+        fanLfo.disconnect();
+        fanLfo = null;
+      }
+      fanGain = null;
+      fanFilter = null;
+      fanLfoGain = null;
+    }
+
+    // Primary Playback Engine
+    function startAudio(userGesture = false) {
+      if (userGesture) {
+        initAudio();
+      }
+      if (!audioCtx) return;
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (isPlaying) {
+        pauseAudio();
+        return;
+      }
+
+      // Start White Noise Layer
+      whiteNoiseSource = audioCtx.createBufferSource();
+      whiteNoiseSource.buffer = createNoiseBuffer(audioCtx);
+      whiteNoiseSource.loop = true;
+
+      whiteNoiseGain = audioCtx.createGain();
+      whiteNoiseSource.connect(whiteNoiseGain);
+      
+      if (lpFilterNode) {
+        whiteNoiseGain.connect(lpFilterNode);
+      }
+
+      // Turn on White Noise Base gain
+      whiteNoiseGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+
+      // Start Mixins
+      startRainSynthesis(audioCtx);
+      startFanSynthesis(audioCtx);
+
+      // Update control nodes
+      updateNodeValues();
+
+      // Trigger smooth fade in transition
+      const targetGainVal = parseInt(volumeSlider.value) / 100;
+      if (mainGainNode) {
+        mainGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        mainGainNode.gain.setValueAtTime(mainGainNode.gain.value, audioCtx.currentTime);
+        mainGainNode.gain.linearRampToValueAtTime(targetGainVal, audioCtx.currentTime + 0.65);
+      }
+
+      whiteNoiseSource.start(0);
+
+      isPlaying = true;
+      updateUI();
+      startVisualizer();
+      saveSettingsToLS();
+    }
+
+    function pauseAudio() {
+      if (!audioCtx || !isPlaying) return;
+
+      const currentGain = mainGainNode ? mainGainNode.gain.value : 0;
+      
+      // Smooth fade out before pausing
+      if (mainGainNode) {
+        mainGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        mainGainNode.gain.setValueAtTime(currentGain, audioCtx.currentTime);
+        mainGainNode.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.55);
+      }
+
+      // Stop sources after fade duration
+      setTimeout(() => {
+        if (!isPlaying) {
+          // If we haven't resumed in the meantime
+          stopAllSources();
+        }
+      }, 600);
+
+      isPlaying = false;
+      updateUI();
+      saveSettingsToLS();
+    }
+
+    function stopAudio() {
+      if (!audioCtx) return;
+      
+      if (mainGainNode) {
+        mainGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        mainGainNode.gain.setValueAtTime(mainGainNode.gain.value, audioCtx.currentTime);
+        mainGainNode.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+      }
+
+      setTimeout(() => {
+        stopAllSources();
+        isPlaying = false;
+        isFadingOut = false;
+        stopTimer();
+        updateUI();
+      }, 450);
+    }
+
+    function stopAllSources() {
+      if (whiteNoiseSource) {
+        try { whiteNoiseSource.stop(); } catch (e) {}
+        whiteNoiseSource.disconnect();
+        whiteNoiseSource = null;
+      }
+      whiteNoiseGain = null;
+
+      stopRainSynthesis();
+      stopFanSynthesis();
+      stopVisualizer();
+    }
+
+    // Refresh actual sound variables from sliders
+    function updateNodeValues() {
+      if (!audioCtx) return;
+
+      // Master Volume
+      const vol = parseInt(volumeSlider.value);
+      const gainVal = vol / 100;
+      const db = vol > 0 ? (20 * Math.log10(gainVal)).toFixed(1) : "-∞";
+      volumeReadout.textContent = `${vol}% (${db} dB)`;
+      if (mainGainNode && isPlaying && !isFadingOut) {
+        mainGainNode.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+      }
+
+      // Stereo Pan
+      const pan = parseInt(panSlider.value) / 100;
+      if (pan === 0) {
+        panReadout.textContent = "Center";
+      } else if (pan < 0) {
+        panReadout.textContent = `L ${Math.abs(Math.round(pan * 100))}%`;
+      } else {
+        panReadout.textContent = `R ${Math.round(pan * 100)}%`;
+      }
+      if (pannerNode) {
+        pannerNode.pan.setValueAtTime(pan, audioCtx.currentTime);
+      }
+
+      // Low Pass filter frequency mapping
+      const lpVal = parseInt(lpSlider.value);
+      const lpFreq = getFilterFreq(lpVal, true);
+      lpReadout.textContent = lpFreq === 20000 ? "Bypass" : `${lpFreq.toLocaleString()} Hz`;
+      if (lpFilterNode) {
+        lpFilterNode.frequency.setValueAtTime(lpFreq, audioCtx.currentTime);
+      }
+
+      // High Pass filter frequency mapping
+      const hpVal = parseInt(hpSlider.value);
+      const hpFreq = getFilterFreq(hpVal, false);
+      hpReadout.textContent = hpFreq === 20 ? "Bypass" : `${hpFreq.toLocaleString()} Hz`;
+      if (hpFilterNode) {
+        hpFilterNode.frequency.setValueAtTime(hpFreq, audioCtx.currentTime);
+      }
+
+      // Update Filter Description tag
+      if (lpVal === 100 && hpVal === 0) {
+        eqTiltDesc.textContent = "Pure White Noise";
+      } else if (lpVal < 35 && hpVal === 0) {
+        eqTiltDesc.textContent = "Deep Brown Noise (Ocean/Rumble)";
+      } else if (lpVal < 60 && hpVal === 0) {
+        eqTiltDesc.textContent = "Soft Pink Noise (Rainfall)";
+      } else if (hpVal > 30) {
+        eqTiltDesc.textContent = "High-Static Masking";
+      } else {
+        eqTiltDesc.textContent = "Custom Sculpted EQ";
+      }
+
+      // Rain Gain
+      const rainVolVal = parseInt(rainVolume.value) / 100;
+      rainVolReadout.textContent = `Vol: ${rainVolume.value}%`;
+      if (rainGain && rainToggle.checked) {
+        rainGain.gain.setValueAtTime(rainVolVal * 0.45, audioCtx.currentTime);
+      }
+
+      // Fan Gain
+      const fanVolVal = parseInt(fanVolume.value) / 100;
+      fanVolReadout.textContent = `Vol: ${fanVolume.value}%`;
+      if (fanGain && fanToggle.checked) {
+        fanGain.gain.setValueAtTime(fanVolVal * 0.6, audioCtx.currentTime);
+      }
+    }
+
+    // UI Updates
+    function updateUI() {
+      if (isPlaying) {
+        playIcon.classList.add("hidden");
+        pauseIcon.classList.remove("hidden");
+        playBtn.classList.add("animate-pulse-glow");
+        playRipple.classList.add("scale-[1.15]", "opacity-100");
+        audioStateTag.textContent = "Playing";
+        audioStateTag.classList.add("text-success-accent", "border-success-accent/30", "bg-success-accent/5");
+        audioStateTag.classList.remove("text-slate", "bg-surface");
+        playingStateTitle.textContent = "Now Playing Noise";
+        playingStateDesc.textContent = "Continuous loop-safe frequencies are generating. Relax and enjoy.";
+      } else {
+        playIcon.classList.remove("hidden");
+        pauseIcon.classList.add("hidden");
+        playBtn.classList.remove("animate-pulse-glow");
+        playRipple.classList.remove("scale-[1.15]", "opacity-100");
+        audioStateTag.textContent = "Paused";
+        audioStateTag.classList.remove("text-success-accent", "border-success-accent/30", "bg-success-accent/5");
+        audioStateTag.classList.add("text-slate", "bg-surface");
+        playingStateTitle.textContent = "Audio is Paused";
+        playingStateDesc.textContent = "Synthesis is frozen. Press play to restore sound output.";
+      }
+    }
+
+    // Gesture Banner Overlay
+    function checkInitialGesture() {
+      // Check if Context is suspended due to gesture
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile || (audioCtx && audioCtx.state === 'suspended')) {
+        gestureOverlay.classList.remove('hidden');
+      }
+    }
+
+    function hideGestureOverlay() {
+      gestureOverlay.classList.add('hidden');
+    }
+
+    // Visualizer Canvas loop
+    function startVisualizer() {
+      if (!analyserNode) return;
+      visualizerIdleOverlay.classList.add("opacity-0", "pointer-events-none");
+      drawVisualizer();
+    }
+
+    function stopVisualizer() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      visualizerIdleOverlay.classList.remove("opacity-0", "pointer-events-none");
+      
+      // Clear visualizer to silent state
+      const w = canvas.width;
+      const h = canvas.height;
+      canvasCtx.clearRect(0, 0, w, h);
+      
+      // Draw a subtle flat centerline
+      canvasCtx.strokeStyle = "#8e91a0";
+      canvasCtx.lineWidth = 1.5;
+      canvasCtx.beginPath();
+      canvasCtx.moveTo(0, h / 2);
+      canvasCtx.lineTo(w, h / 2);
+      canvasCtx.stroke();
+    }
+
+    function drawVisualizer() {
+      if (!isPlaying || !analyserNode) return;
+
+      animationFrameId = requestAnimationFrame(drawVisualizer);
+
+      const width = canvas.width = canvas.parentElement!.clientWidth;
+      const height = canvas.height = canvas.parentElement!.clientHeight;
+      const bufferLength = analyserNode.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      canvasCtx.clearRect(0, 0, width, height);
+
+      if (visualizerStyle === "waveform") {
+        analyserNode.getByteTimeDomainData(dataArray);
+        
+        // Calculate volume/activity level using Root Mean Square (RMS)
+        let sum = 0;
+        for (let i = 0; i < bufferLength; i++) {
+          const val = (dataArray[i] - 128) / 128;
+          sum += val * val;
+        }
+        const rms = Math.sqrt(sum / bufferLength);
+        const activity = Math.min(1.0, rms * 4.0); // Scale up for visual presence
+
+        const time = performance.now() * 0.003;
+
+        // Configuration for 3 distinct flowing wave layers
+        const waves = [
+          { stroke: "rgba(66, 98, 255, 0.8)", glow: "rgba(66, 98, 255, 0.4)", speed: 1.0, frequency: 0.015, amplitude: 0.8, phase: 0 },
+          { stroke: "rgba(15, 188, 176, 0.7)", glow: "rgba(15, 188, 176, 0.3)", speed: -1.3, frequency: 0.025, amplitude: 0.5, phase: Math.PI / 3 },
+          { stroke: "rgba(255, 153, 153, 0.6)", glow: "rgba(255, 153, 153, 0.2)", speed: 0.7, frequency: 0.01, amplitude: 0.3, phase: Math.PI / 1.5 }
+        ];
+
+        waves.forEach(w => {
+          canvasCtx.beginPath();
+          canvasCtx.lineWidth = w.amplitude === 0.8 ? 2.5 : 1.5;
+          canvasCtx.strokeStyle = w.stroke;
+          
+          // Premium Glow Effects
+          canvasCtx.shadowBlur = 10;
+          canvasCtx.shadowColor = w.glow;
+
+          for (let x = 0; x < width; x += 2) {
+            const angle = x * w.frequency + time * w.speed + w.phase;
+            
+            // Map x position to index in dataArray to sample real-time noise jitter
+            const dataIndex = Math.floor((x / width) * bufferLength);
+            const audioMod = (dataArray[dataIndex] - 128) / 128.0;
+
+            // Edge envelope (sine curve) to pinch waves at the boundaries
+            const edgeEnvelope = Math.sin((x / width) * Math.PI);
+
+            // Compute vertical displacement (smooth flow + reactive noise micro-jitter)
+            const waveY = Math.sin(angle) * (height * 0.35) * w.amplitude * activity * edgeEnvelope;
+            const reactiveY = audioMod * (height * 0.12) * edgeEnvelope;
+            
+            const y = (height / 2) + waveY + reactiveY;
+
+            if (x === 0) {
+              canvasCtx.moveTo(x, y);
+            } else {
+              canvasCtx.lineTo(x, y);
+            }
+          }
+          canvasCtx.stroke();
+        });
+
+        // Reset canvas context shadow state
+        canvasCtx.shadowBlur = 0;
+        canvasCtx.shadowColor = "transparent";
+      } else {
+        // Spectrum Bars
+        analyserNode.getByteFrequencyData(dataArray);
+        const barWidth = (width / bufferLength) * 1.5;
+        let barHeight;
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+          barHeight = dataArray[i] / 1.6;
+          // Gradient fill
+          const grad = canvasCtx.createLinearGradient(0, height, 0, height - barHeight);
+          grad.addColorStop(0, "#4262ff"); // Brand blue
+          grad.addColorStop(1, "#ff9999"); // Brand coral
+          
+          canvasCtx.fillStyle = grad;
+          canvasCtx.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+
+          x += barWidth;
+        }
+      }
+    }
+
+    // Sleep Timer Mechanics
+    function startTimer(minutes: number) {
+      stopTimer();
+      initAudio();
+
+      timerTotalSeconds = minutes * 60;
+      timerRemainingSeconds = timerTotalSeconds;
+      isFadingOut = false;
+
+      timerStatus.textContent = "Active";
+      timerStatus.classList.add("text-brand-blue");
+      timerCountdownArea.classList.remove("hidden");
+      cancelTimerBtn.classList.remove("hidden");
+      
+      updateTimerDisplay();
+
+      timerInterval = window.setInterval(() => {
+        timerRemainingSeconds--;
+        updateTimerDisplay();
+
+        // 10 Seconds countdown warning
+        if (timerRemainingSeconds <= 10 && timerRemainingSeconds > 0) {
+          timerCountdownArea.classList.add("animate-pulse-fast");
+        }
+
+        // Fade Out Sequence (starts 10 seconds before completion)
+        if (timerRemainingSeconds <= 10 && !isFadingOut && audioCtx && mainGainNode) {
+          isFadingOut = true;
+          mainGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+          mainGainNode.gain.setValueAtTime(mainGainNode.gain.value, audioCtx.currentTime);
+          mainGainNode.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + timerRemainingSeconds);
+        }
+
+        if (timerRemainingSeconds <= 0) {
+          stopAudio();
+        }
+      }, 1000);
+
+      if (!isPlaying) {
+        startAudio();
+      }
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      timerStatus.textContent = "Inactive";
+      timerStatus.classList.remove("text-brand-blue");
+      timerCountdownArea.classList.add("hidden");
+      timerCountdownArea.classList.remove("animate-pulse-fast");
+      cancelTimerBtn.classList.add("hidden");
+      isFadingOut = false;
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerRemainingSeconds / 60);
+      const secs = timerRemainingSeconds % 60;
+      countdownReadout.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      
+      const pct = (timerRemainingSeconds / timerTotalSeconds) * 100;
+      timerProgressFill.style.width = `${pct}%`;
+    }
+
+    // LocalStorage System (using boardtools:white-noise:{key})
+    function saveSettingsToLS() {
+      const config = {
+        volume: parseInt(volumeSlider.value),
+        pan: parseInt(panSlider.value),
+        lp: parseInt(lpSlider.value),
+        hp: parseInt(hpSlider.value),
+        rain: rainToggle.checked,
+        rainVol: parseInt(rainVolume.value),
+        fan: fanToggle.checked,
+        fanVol: parseInt(fanVolume.value)
+      };
+      localStorage.setItem(`${LS_PREFIX}settings`, JSON.stringify(config));
+    }
+
+    function loadSettingsFromLS() {
+      const raw = localStorage.getItem(`${LS_PREFIX}settings`);
+      if (raw) {
+        try {
+          const config = JSON.parse(raw);
+          applyConfig(config);
+        } catch (e) {}
+      }
+    }
+
+    function applyConfig(config: any) {
+      if (config.volume !== undefined) volumeSlider.value = config.volume;
+      if (config.pan !== undefined) panSlider.value = config.pan;
+      if (config.lp !== undefined) lpSlider.value = config.lp;
+      if (config.hp !== undefined) hpSlider.value = config.hp;
+      
+      if (config.rain !== undefined) {
+        rainToggle.checked = config.rain;
+        rainVolume.disabled = !config.rain;
+      }
+      if (config.rainVol !== undefined) rainVolume.value = config.rainVol;
+
+      if (config.fan !== undefined) {
+        fanToggle.checked = config.fan;
+        fanVolume.disabled = !config.fan;
+      }
+      if (config.fanVol !== undefined) fanVolume.value = config.fanVol;
+
+      updateNodeValues();
+      
+      // If audio is already running, apply dynamic components
+      if (isPlaying && audioCtx) {
+        if (config.rain) {
+          startRainSynthesis(audioCtx);
+        } else {
+          stopRainSynthesis();
+        }
+
+        if (config.fan) {
+          startFanSynthesis(audioCtx);
+        } else {
+          stopFanSynthesis();
+        }
+      }
+    }
+
+    // Custom Saved Presets
+    interface UserPreset {
+      name: string;
+      config: any;
+    }
+
+    function loadCustomPresets() {
+      const raw = localStorage.getItem(`${LS_PREFIX}custom-presets`);
+      let list: UserPreset[] = [];
+      if (raw) {
+        try { list = JSON.parse(raw); } catch (e) {}
+      }
+      
+      // Render
+      presetsListContainer.innerHTML = "";
+      if (list.length === 0) {
+        presetsListContainer.innerHTML = '<span class="text-[11px] text-stone">No saved setups yet.</span>';
+        return;
+      }
+
+      list.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between p-2 bg-surface hover:bg-surface-soft border border-hairline rounded-lg text-xs transition-all";
+        
+        const label = document.createElement("button");
+        label.type = "button";
+        label.className = "font-semibold text-primary text-left truncate flex-grow mr-2 hover:underline cursor-pointer";
+        label.textContent = item.name;
+        label.onclick = () => {
+          applyConfig(item.config);
+          saveSettingsToLS();
+        };
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "text-stone hover:text-brand-coral font-bold px-1 transition-all cursor-pointer";
+        delBtn.innerHTML = "×";
+        delBtn.onclick = () => deletePreset(index);
+
+        div.appendChild(label);
+        div.appendChild(delBtn);
+        presetsListContainer.appendChild(div);
+      });
+    }
+
+    function saveCurrentAsPreset() {
+      const nameVal = newPresetName.value.trim();
+      if (!nameVal) return;
+
+      const config = {
+        volume: parseInt(volumeSlider.value),
+        pan: parseInt(panSlider.value),
+        lp: parseInt(lpSlider.value),
+        hp: parseInt(hpSlider.value),
+        rain: rainToggle.checked,
+        rainVol: parseInt(rainVolume.value),
+        fan: fanToggle.checked,
+        fanVol: parseInt(fanVolume.value)
+      };
+
+      const raw = localStorage.getItem(`${LS_PREFIX}custom-presets`);
+      let list: UserPreset[] = [];
+      if (raw) {
+        try { list = JSON.parse(raw); } catch (e) {}
+      }
+
+      list.push({ name: nameVal, config });
+      localStorage.setItem(`${LS_PREFIX}custom-presets`, JSON.stringify(list));
+      
+      newPresetName.value = "";
+      loadCustomPresets();
+    }
+
+    function deletePreset(index: number) {
+      const raw = localStorage.getItem(`${LS_PREFIX}custom-presets`);
+      let list: UserPreset[] = [];
+      if (raw) {
+        try { list = JSON.parse(raw); } catch (e) {}
+      }
+      list.splice(index, 1);
+      localStorage.setItem(`${LS_PREFIX}custom-presets`, JSON.stringify(list));
+      loadCustomPresets();
+    }
+
+    // Share Config link builder
+    function getShareableURL(): string {
+      const config = {
+        v: parseInt(volumeSlider.value),
+        p: parseInt(panSlider.value),
+        l: parseInt(lpSlider.value),
+        h: parseInt(hpSlider.value),
+        r: rainToggle.checked ? 1 : 0,
+        rv: parseInt(rainVolume.value),
+        f: fanToggle.checked ? 1 : 0,
+        fv: parseInt(fanVolume.value)
+      };
+      const query = btoa(JSON.stringify(config));
+      return `${window.location.origin}${window.location.pathname}?config=${query}`;
+    }
+
+    function parseSharedConfig() {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("config");
+      if (query) {
+        try {
+          const config = JSON.parse(atob(query));
+          const fullConfig = {
+            volume: config.v,
+            pan: config.p,
+            lp: config.l,
+            hp: config.h,
+            rain: config.r === 1,
+            rainVol: config.rv,
+            fan: config.f === 1,
+            fanVol: config.fv
+          };
+          applyConfig(fullConfig);
+        } catch (e) {}
+      }
+    }
+
+    // Reset Page state contract
+    function resetAllState() {
+      // 1. Stop all playback
+      stopAudio();
+      
+      // 2. Clear visualizer
+      stopVisualizer();
+
+      // 3. Reset controls to defaults
+      volumeSlider.value = "70";
+      panSlider.value = "0";
+      lpSlider.value = "100";
+      hpSlider.value = "0";
+      
+      rainToggle.checked = false;
+      rainVolume.value = "30";
+      rainVolume.disabled = true;
+
+      fanToggle.checked = false;
+      fanVolume.value = "40";
+      fanVolume.disabled = true;
+
+      customTimerMin.value = "";
+
+      // 4. Update Web Audio nodes
+      updateNodeValues();
+
+      // 5. Clear LS keys
+      localStorage.removeItem(`${LS_PREFIX}settings`);
+      localStorage.removeItem(`${LS_PREFIX}custom-presets`);
+
+      // 6. Reload presets visual lists
+      loadCustomPresets();
+    }
+
+    // Event Bindings
+    playBtn.addEventListener("click", () => {
+      initAudio();
+      startAudio(true);
+    });
+
+    stopBtn.addEventListener("click", stopAudio);
+
+    volumeSlider.addEventListener("input", updateNodeValues);
+    volumeSlider.addEventListener("change", saveSettingsToLS);
+
+    panSlider.addEventListener("input", updateNodeValues);
+    panSlider.addEventListener("change", saveSettingsToLS);
+
+    lpSlider.addEventListener("input", updateNodeValues);
+    lpSlider.addEventListener("change", saveSettingsToLS);
+
+    hpSlider.addEventListener("input", updateNodeValues);
+    hpSlider.addEventListener("change", saveSettingsToLS);
+
+    rainToggle.addEventListener("change", () => {
+      rainVolume.disabled = !rainToggle.checked;
+      updateNodeValues();
+      saveSettingsToLS();
+      if (isPlaying && audioCtx) {
+        if (rainToggle.checked) {
+          startRainSynthesis(audioCtx);
+        } else {
+          stopRainSynthesis();
+        }
+      }
+    });
+    rainVolume.addEventListener("input", updateNodeValues);
+    rainVolume.addEventListener("change", saveSettingsToLS);
+
+    fanToggle.addEventListener("change", () => {
+      fanVolume.disabled = !fanToggle.checked;
+      updateNodeValues();
+      saveSettingsToLS();
+      if (isPlaying && audioCtx) {
+        if (fanToggle.checked) {
+          startFanSynthesis(audioCtx);
+        } else {
+          stopFanSynthesis();
+        }
+      }
+    });
+    fanVolume.addEventListener("input", updateNodeValues);
+    fanVolume.addEventListener("change", saveSettingsToLS);
+
+    // Sleep Timer triggers
+    document.querySelectorAll('.timer-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        const mins = parseInt((e.currentTarget as HTMLElement).getAttribute('data-minutes')!);
+        startTimer(mins);
+      });
+    });
+
+    startTimerBtn.addEventListener("click", () => {
+      const val = parseInt(customTimerMin.value);
+      if (val > 0) {
+        startTimer(val);
+      }
+    });
+
+    cancelTimerBtn.addEventListener("click", stopTimer);
+
+    // Mood presets
+    document.querySelectorAll('[data-mood]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const moodKey = (e.currentTarget as HTMLElement).getAttribute('data-mood')!;
+        const config = moodPresets[moodKey];
+        if (config) {
+          applyConfig(config);
+          saveSettingsToLS();
+        }
+      });
+    });
+
+    // Custom presets list saving
+    savePresetBtn.addEventListener("click", saveCurrentAsPreset);
+    newPresetName.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        saveCurrentAsPreset();
+      }
+    });
+
+    // Visualizer switch toggle
+    visualizerToggle.addEventListener("click", () => {
+      visualizerStyle = visualizerStyle === "spectrum" ? "waveform" : "spectrum";
+      visualizerHzLabel.textContent = visualizerStyle === "spectrum" ? "Frequency View" : "Time Domain View";
+      if (isPlaying) {
+        stopVisualizer();
+        startVisualizer();
+      } else {
+        stopVisualizer();
+      }
+    });
+
+    // Share link trigger
+    btnCopySettings.addEventListener("click", () => {
+      const url = getShareableURL();
+      navigator.clipboard.writeText(url).then(() => {
+        toastMessage.classList.remove("hidden");
+        setTimeout(() => {
+          toastMessage.classList.add("hidden");
+        }, 2000);
+      });
+    });
+
+    // Reset button trigger
+    resetBtn.addEventListener("click", resetAllState);
+
+    // Modals
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+    closeModalBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    modalOkBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    shortcutsBtn.addEventListener("click", () => {
+      shortcutsModal.classList.remove("hidden");
+    });
+    closeShortcutsBtn.addEventListener("click", () => {
+      shortcutsModal.classList.add("hidden");
+    });
+    shortcutsModal.addEventListener("click", (e) => {
+      if (e.target === shortcutsModal) {
+        shortcutsModal.classList.add("hidden");
+      }
+    });
+
+    // Keyboard navigation
+    window.addEventListener("keydown", (e) => {
+      // Prevent hijacking native text inputs
+      if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") {
+        return;
+      }
+
+      if (e.code === "Space") {
+        e.preventDefault();
+        initAudio();
+        startAudio(true);
+      } else if (e.code === "ArrowUp") {
+        e.preventDefault();
+        let vol = parseInt(volumeSlider.value);
+        vol = Math.min(100, vol + 5);
+        volumeSlider.value = vol.toString();
+        updateNodeValues();
+        saveSettingsToLS();
+      } else if (e.code === "ArrowDown") {
+        e.preventDefault();
+        let vol = parseInt(volumeSlider.value);
+        vol = Math.max(0, vol - 5);
+        volumeSlider.value = vol.toString();
+        updateNodeValues();
+        saveSettingsToLS();
+      } else if (e.code === "Escape") {
+        e.preventDefault();
+        stopAudio();
+      }
+    });
+
+    // Mobile gesture enablement
+    enableAudioBtn.addEventListener("click", () => {
+      initAudio();
+      startAudio(true);
+    });
+    
+    resumeAudioBtn.addEventListener("click", () => {
+      if (audioCtx) {
+        audioCtx.resume();
+      }
+    });
+
+    // Tab close node cleanup
+    window.addEventListener("beforeunload", () => {
+      if (audioCtx) {
+        audioCtx.close();
+      }
+    });
+
+    // Page Load Startup sequence
+    checkInitialGesture();
+    parseSharedConfig();
+    loadSettingsFromLS();
+    loadCustomPresets();
+    stopVisualizer(); // Init silent visualizer line
+  </script>
+
+  <style>
+    /* Slider styling custom overrides */
+    .slider-input {
+      outline: none;
+      transition: all 0.2s ease-in-out;
+    }
+    .slider-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #1c1c1e;
+      cursor: pointer;
+      box-shadow: rgba(5, 0, 56, 0.12) 0px 2px 6px 0px;
+      transition: transform 0.15s ease-in-out;
+    }
+    .slider-input::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    .slider-input::-webkit-slider-thumb:active {
+      transform: scale(1.35);
+    }
+    .slider-input::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border: none;
+      border-radius: 50%;
+      background: #1c1c1e;
+      cursor: pointer;
+      box-shadow: rgba(5, 0, 56, 0.12) 0px 2px 6px 0px;
+      transition: transform 0.15s ease-in-out;
+    }
+    .slider-input::-moz-range-thumb:active {
+      transform: scale(1.3);
+    }
+
+    /* Custom Pulse glow and slide elements */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(66, 98, 255, 0.4), rgba(5, 0, 56, 0.08) 0px 12px 32px -4px;
+      }
+      50% {
+        box-shadow: 0 0 20px 6px rgba(66, 98, 255, 0.2), rgba(5, 0, 56, 0.08) 0px 12px 32px -4px;
+      }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseFast {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.55;
+      }
+    }
+    .animate-pulse-fast {
+      animation: pulseFast 0.8s infinite;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
 </Layout>
