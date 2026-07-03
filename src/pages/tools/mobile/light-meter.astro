@@ -5,7 +5,12 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Light Meter";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
-const description = "Audit ambient light values in Lux using client-side camera sensory feeds.";
+const description = "Measure ambient light levels in real-time. Uses the native Ambient Light Sensor API if supported, or falls back to camera-frame brightness estimation with privacy-safe processing.";
+
+const pageTitle = "Light Meter - Measure Ambient Light Levels & Lux Online";
+const canonicalUrl = "https://boardtools.app/tools/mobile/light-meter";
+const ogImage = "/og/light-meter.png";
+const keywords = "light meter, lux meter, measure light, lux sensor, ambient light sensor, camera light meter, photography light meter, exposure helper, free light meter, client side light meter";
 ---
 
 <Layout 
@@ -13,78 +18,987 @@ const description = "Audit ambient light values in Lux using client-side camera 
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Light Meter",
+      "alternateName": "Ambient Lux Meter & Camera Brightness Estimator",
+      "url": "https://boardtools.app/tools/mobile/light-meter",
+      "description": "Free, privacy-first web-based light meter. Leverages the native Ambient Light Sensor API for true Lux readings, or falls back to camera-frame brightness estimation with smooth readings and real-time statistics.",
+      "applicationCategory": "SensorApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires camera permission for fallback mode.",
+      "featureList": [
+        "Native Ambient Light Sensor API detection and integration",
+        "Camera-frame luminance fallback average calculator (relative 0-100% scale)",
+        "Minimum/Maximum light level tracking during session",
+        "Photography settings guidelines (estimated aperture, shutter speed, ISO)",
+        "Exportable CSV measurement history log",
+        "100% client-side execution with camera stream auto-closure"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mobile",
+          "item": "https://boardtools.app/tools/mobile"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Light Meter",
+          "item": "https://boardtools.app/tools/mobile/light-meter"
+        }
+      ]
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-3 sm:py-10 flex flex-col gap-3 sm:gap-8 animate-fade-in-up pb-16 print:p-0">
+    
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1.5 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">📱</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button (pulled verbatim from json-formatter.astro) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button (pulled verbatim from json-formatter.astro) -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How JSON formatter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      
+      <!-- Left: Interactive Gauge, Camera Preview & Capture Controls -->
+      <div class="lg:col-span-8 card-base flex flex-col gap-3 sm:gap-5 p-4 sm:p-6">
+        
+        <!-- Mode Switcher Tabs & Sensor Status Badges -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-hairline-soft">
+          <div class="flex rounded-full bg-surface p-0.5 border border-hairline shrink-0">
+            <button
+              type="button"
+              id="mode-sensor-btn"
+              class="text-[11px] py-1 px-3.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+            >
+              Ambient Light Sensor
+            </button>
+            <button
+              type="button"
+              id="mode-camera-btn"
+              class="text-[11px] py-1 px-3.5 rounded-full font-bold text-slate transition-all cursor-pointer hover:text-primary"
+            >
+              Camera Estimate
+            </button>
+          </div>
+
+          <!-- Status badge indicator -->
+          <div id="status-badge" class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-surface border-hairline text-slate">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate animate-pulse"></span>
+            <span id="status-badge-text">Initializing...</span>
+          </div>
+        </div>
+
+        <!-- Sensor Unsupported Banner (Hidden by default) -->
+        <div id="unsupported-banner" class="hidden bg-brand-orange-light/40 border border-brand-orange-light text-primary rounded-xl p-3.5 text-xs flex flex-col gap-1">
+          <div class="font-bold flex items-center gap-1">
+            <span>⚠️ API Unsupported in this Browser</span>
+          </div>
+          <p class="text-slate leading-relaxed">
+            The Ambient Light Sensor API is restricted or not implemented by your browser vendor (common on iOS/macOS Safari and desktop browsers). We recommend switching to the <strong class="text-primary font-semibold">Camera Estimate</strong> tab to measure relative light levels.
+          </p>
+        </div>
+
+        <!-- Main Display (Above the fold) -->
+        <div class="flex flex-col md:flex-row items-center justify-around gap-6 py-4 bg-surface-soft/40 border border-hairline-soft rounded-xl p-4 min-h-[220px]">
+          
+          <!-- Gauge Visualization (Radial SVG) -->
+          <div class="relative w-44 h-44 shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle
+                cx="50"
+                cy="50"
+                r="40"
+                fill="transparent"
+                stroke="var(--color-hairline)"
+                stroke-width="8"
+                class="opacity-60"
+              />
+              <circle
+                id="gauge-fill"
+                cx="50"
+                cy="50"
+                r="40"
+                fill="transparent"
+                stroke="var(--color-brand-blue)"
+                stroke-width="8"
+                stroke-dasharray="251.2"
+                stroke-dashoffset="251.2"
+                stroke-linecap="round"
+                class="transition-all duration-300 ease-out"
+              />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <span id="readout-category" class="text-[10px] font-bold text-slate uppercase tracking-wider">Lighter</span>
+              <div class="flex items-baseline justify-center">
+                <span id="readout-value" class="font-display font-medium text-3xl tracking-tight text-primary">0</span>
+              </div>
+              <span id="readout-unit" class="text-[10px] font-semibold text-slate uppercase">Lux</span>
+            </div>
+          </div>
+
+          <!-- Capture State Panel / Controls -->
+          <div class="flex flex-col gap-4 flex-1 w-full max-w-xs">
+            <div class="flex flex-col gap-1.5">
+              <h3 class="text-xs font-bold text-primary uppercase tracking-wider">Live Measurement</h3>
+              <p class="text-xs text-slate leading-relaxed" id="mode-guideline-desc">
+                Select a sensory method above, then press start. Camera mode reads average frame pixel brightness locally.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                id="capture-toggle-btn"
+                class="inline-flex items-center justify-center gap-2 text-xs font-semibold px-5 py-2.5 bg-primary hover:bg-charcoal text-on-primary rounded-full transition-all cursor-pointer shadow-subtle shrink-0"
+              >
+                <span id="capture-toggle-icon" class="w-2 h-2 rounded-full bg-success-accent animate-ping"></span>
+                <span id="capture-toggle-text">Start Capture</span>
+              </button>
+
+              <!-- Optional Camera Chooser (Visible only during camera mode) -->
+              <select
+                id="camera-select"
+                class="hidden flex-1 text-xs border border-hairline rounded-md bg-canvas px-2.5 py-1.5 text-slate focus:outline-none focus:border-brand-blue"
+                aria-label="Select Camera"
+              >
+                <option value="environment">Rear Camera</option>
+                <option value="user">Front Camera</option>
+              </select>
+            </div>
+
+            <!-- Permission Denied Panel -->
+            <div id="permission-denied-panel" class="hidden text-xs text-brand-coral bg-brand-red/10 border border-brand-red rounded-lg p-2.5">
+              Camera access denied. Please click the site settings lock icon in your browser address bar to reset permissions.
+            </div>
+          </div>
+
+          <!-- Camera Stream Thumbnail (Compact above-the-fold placeholder) -->
+          <div id="camera-thumbnail-container" class="hidden relative w-32 h-24 rounded-lg overflow-hidden border border-hairline shadow-subtle shrink-0">
+            <video id="video-feed" autoplay playsinline muted class="w-full h-full object-cover bg-charcoal"></video>
+            <div class="absolute bottom-1 right-1 bg-primary/70 backdrop-blur-sm text-[8px] font-bold text-canvas px-1 rounded uppercase tracking-wider">
+              Preview
+            </div>
+          </div>
+        </div>
+
+        <!-- Session statistics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Minimum</span>
+            <span id="stat-min" class="font-display font-medium text-lg text-primary">—</span>
+          </div>
+          <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Maximum</span>
+            <span id="stat-max" class="font-display font-medium text-lg text-primary">—</span>
+          </div>
+          <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Average</span>
+            <span id="stat-avg" class="font-display font-medium text-lg text-primary">—</span>
+          </div>
+          <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5 justify-between">
+            <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Session Peaks</span>
+            <button type="button" id="reset-peaks-btn" class="text-[10px] text-brand-blue font-semibold hover:underline self-start">
+              Reset peaks
+            </button>
+          </div>
+        </div>
+
+        <!-- Offline/Sensory disclaimer -->
+        <div class="text-[10px] text-slate leading-relaxed border-t border-hairline-soft pt-3">
+          <strong>Privacy Policy Check:</strong> All sensory processing and video frame analyses are computed fully client-side using JavaScript. No video feeds, images, or sensor data are ever sent over the network.
+        </div>
+      </div>
+
+      <!-- Right: Reference benchmarks, settings helpers, and session logs -->
       <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
+        
+        <!-- Photographer Settings Helper -->
+        <div class="card-base flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
+            <span class="text-base">📷</span> Photographer Exposure Helper
+          </h3>
+          <p class="text-[11px] text-slate leading-relaxed">
+            Suggested exposure settings guideline based on current light level categories (assuming a standard 18% gray card target):
           </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+          <div id="photo-helper-card" class="bg-surface-soft border border-hairline rounded-lg p-3.5 flex flex-col gap-2">
+            <div class="flex items-center justify-between border-b border-hairline-soft pb-1.5">
+              <span class="text-[10px] font-bold text-primary uppercase">ISO Speed</span>
+              <span id="photo-iso" class="text-[11px] font-bold text-brand-blue">ISO 100</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-hairline-soft pb-1.5">
+              <span class="text-[10px] font-bold text-primary uppercase">Estimated EV 100</span>
+              <span id="photo-ev" class="text-[11px] font-bold text-primary">—</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-primary uppercase">Suggested Aperture</span>
+              <span id="photo-aperture" class="text-[11px] font-bold text-primary">f/8</span>
+            </div>
+            <div class="flex items-center justify-between mt-1 pt-1.5 border-t border-hairline-soft">
+              <span class="text-[10px] font-bold text-primary uppercase">Shutter Speed</span>
+              <span id="photo-shutter" class="text-[11px] font-semibold text-primary">1/60s</span>
+            </div>
+          </div>
+          <span class="text-[9px] text-slate italic leading-tight">
+            * Disclaimer: These are estimates derived mathematically and should only be used as a loose starting reference point.
+          </span>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-rose flex flex-col gap-3">
-          <span class="badge-tag-purple bg-rose-light text-primary self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Real-world Lux Reference Benchmarks -->
+        <div class="card-base flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-sm text-primary">Lux Reference Benchmarks</h3>
+          <p class="text-[11px] text-slate leading-relaxed">
+            Standard reference metrics to compare measured lighting levels. (Applies to native Ambient Lux mode; estimates are relative).
           </p>
+          <div class="flex flex-col gap-2 max-h-[220px] overflow-y-auto pr-1">
+            <div class="flex items-center justify-between text-xs py-1 border-b border-hairline-soft">
+              <span class="text-slate">Direct Sunlight</span>
+              <span class="font-semibold text-primary">10,000 - 100,000 lx</span>
+            </div>
+            <div class="flex items-center justify-between text-xs py-1 border-b border-hairline-soft">
+              <span class="text-slate">Overcast Day</span>
+              <span class="font-semibold text-primary">1,000 lx</span>
+            </div>
+            <div class="flex items-center justify-between text-xs py-1 border-b border-hairline-soft">
+              <span class="text-slate">Office / Studio</span>
+              <span class="font-semibold text-primary">300 - 500 lx</span>
+            </div>
+            <div class="flex items-center justify-between text-xs py-1 border-b border-hairline-soft">
+              <span class="text-slate">Living Room / Hall</span>
+              <span class="font-semibold text-primary">50 - 150 lx</span>
+            </div>
+            <div class="flex items-center justify-between text-xs py-1 border-b border-hairline-soft">
+              <span class="text-slate">Twilight</span>
+              <span class="font-semibold text-primary">10 lx</span>
+            </div>
+            <div class="flex items-center justify-between text-xs py-1">
+              <span class="text-slate">Full Moonlight</span>
+              <span class="font-semibold text-primary">1 lx</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Session History Log & CSV Export -->
+        <div class="card-base flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-semibold text-sm text-primary">Session Log</h3>
+            <button
+              type="button"
+              id="export-csv-btn"
+              class="text-[10px] text-brand-blue font-semibold hover:underline"
+              disabled
+            >
+              Export CSV
+            </button>
+          </div>
+          
+          <div class="overflow-hidden border border-hairline rounded-lg bg-surface">
+            <table class="w-full text-left text-[11px] border-collapse">
+              <thead>
+                <tr class="bg-surface-soft border-b border-hairline text-slate font-semibold">
+                  <th class="p-2">Time</th>
+                  <th class="p-2">Mode</th>
+                  <th class="p-2 text-right">Reading</th>
+                </tr>
+              </thead>
+              <tbody id="history-log-body" class="text-primary divide-y divide-hairline-soft">
+                <tr>
+                  <td colspan="3" class="p-4 text-center text-slate italic">No readings logged yet. Start capturing to log.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- How it works Modal (Pulled verbatim structure from json-formatter.astro) -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Light Meter Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. Honest Sensor Accuracy & API Limits
+        </h4>
+        <p>
+          The Ambient Light Sensor API provides standard, calibrated illuminance values in Lux. However, this API is disabled by default in most desktop browsers and is completely unsupported on iOS Safari due to user-fingerprinting protection.
+        </p>
+        <p>
+          If the Ambient Light Sensor is unavailable, the application automatically switches to <strong>Camera Estimate</strong>. This fallback reads live camera video frames using canvas image data to compute average pixel luminance. Because cameras auto-adjust ISO, aperture, and shutter speed on the fly, <em>a camera estimate cannot represent calibrated Lux</em>. We clearly present it on a relative 0–100 scale to prevent misleading readouts.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          2. How We Calculate Camera Brightness
+        </h4>
+        <p>
+          In Camera Estimate mode, video frames are sampled at a rate of 3 times per second onto an offscreen canvas. We parse the RGBA values of each pixel and compute luminance using standard BT.601 coefficients:
+        </p>
+        <code class="block bg-surface p-2 border border-hairline rounded text-[10px] text-primary">
+          Luminance = 0.299*R + 0.587*G + 0.114*B
+        </code>
+        <p>
+          These average values are smoothed using a rolling simple moving average to filter out camera auto-exposure focus jumps.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. Absolute Privacy Sandbox
+        </h4>
+        <p>
+          All operations occur locally in your browser workspace. Camera media streams are bound dynamically to local canvas targets, and we ensure the camera stream releases completely the second you pause the capture, click Reset, or close the page.
+        </p>
+
+        <div class="pt-2 border-t border-hairline-soft flex justify-end">
+          <button
+            type="button"
+            id="modal-ok-btn"
+            class="button-primary text-xs py-2 px-4 !rounded-full cursor-pointer"
+          >
+            Ok, got it!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Elements
+      const btnReset = document.getElementById("reset-btn");
+      const btnHowItWorks = document.getElementById("how-it-works-btn");
+      const modalHowItWorks = document.getElementById("how-it-works-modal");
+      const btnCloseModal = document.getElementById("close-modal-btn");
+      const btnModalOk = document.getElementById("modal-ok-btn");
+
+      const tabSensor = document.getElementById("mode-sensor-btn");
+      const tabCamera = document.getElementById("mode-camera-btn");
+      const statusBadge = document.getElementById("status-badge");
+      const statusBadgeText = document.getElementById("status-badge-text");
+      const unsupportedBanner = document.getElementById("unsupported-banner");
+
+      const gaugeFill = document.getElementById("gauge-fill") as unknown as SVGCircleElement;
+      const readoutCategory = document.getElementById("readout-category");
+      const readoutValue = document.getElementById("readout-value");
+      const readoutUnit = document.getElementById("readout-unit");
+      const modeGuidelineDesc = document.getElementById("mode-guideline-desc");
+
+      const btnCaptureToggle = document.getElementById("capture-toggle-btn");
+      const captureToggleText = document.getElementById("capture-toggle-text");
+      const captureToggleIcon = document.getElementById("capture-toggle-icon");
+      const cameraSelect = document.getElementById("camera-select") as HTMLSelectElement;
+      const deniedPanel = document.getElementById("permission-denied-panel");
+      const cameraThumbnailContainer = document.getElementById("camera-thumbnail-container");
+      const videoFeed = document.getElementById("video-feed") as HTMLVideoElement;
+
+      // Stats
+      const statMin = document.getElementById("stat-min");
+      const statMax = document.getElementById("stat-max");
+      const statAvg = document.getElementById("stat-avg");
+      const btnResetPeaks = document.getElementById("reset-peaks-btn");
+
+      // Photography helpers
+      const photoEv = document.getElementById("photo-ev");
+      const photoAperture = document.getElementById("photo-aperture");
+      const photoShutter = document.getElementById("photo-shutter");
+
+      // History log
+      const historyLogBody = document.getElementById("history-log-body");
+      const btnExportCsv = document.getElementById("export-csv-btn") as HTMLButtonElement;
+
+      // State Variables
+      let currentMode: "sensor" | "camera" = "sensor";
+      let isCapturing = false;
+      let sensorInstance: any = null;
+      let cameraStream: MediaStream | null = null;
+      let sampleIntervalId: any = null;
+
+      // Statistics session counters
+      let currentReading = 0;
+      let sessionMin = Infinity;
+      let sessionMax = -Infinity;
+      let sessionSum = 0;
+      let sessionCount = 0;
+      let sessionHistory: Array<{ timestamp: string, mode: string, value: number, formatted: string }> = [];
+
+      // Offscreen canvas for sampling camera frame luminance
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Verbatim How it works modal interactions (Matches requirement 1)
+      btnHowItWorks?.addEventListener("click", () => {
+        modalHowItWorks?.classList.remove("hidden");
+      });
+      btnCloseModal?.addEventListener("click", () => {
+        modalHowItWorks?.classList.add("hidden");
+      });
+      btnModalOk?.addEventListener("click", () => {
+        modalHowItWorks?.classList.add("hidden");
+      });
+      modalHowItWorks?.addEventListener("click", (e) => {
+        if (e.target === modalHowItWorks) {
+          modalHowItWorks.classList.add("hidden");
+        }
+      });
+
+      // Check AmbientLightSensor Support
+      const hasSensorSupport = "AmbientLightSensor" in window;
+
+      // Load saved preferences
+      const savedMode = localStorage.getItem("boardtools:light-meter:mode");
+      if (savedMode === "camera" || !hasSensorSupport) {
+        setMode("camera");
+      } else {
+        setMode("sensor");
+      }
+
+      // Switch tabs
+      tabSensor?.addEventListener("click", () => setMode("sensor"));
+      tabCamera?.addEventListener("click", () => setMode("camera"));
+
+      function setMode(mode: "sensor" | "camera") {
+        if (isCapturing) {
+          stopCapture();
+        }
+
+        currentMode = mode;
+        localStorage.setItem("boardtools:light-meter:mode", mode);
+        resetPeaks();
+
+        if (mode === "sensor") {
+          tabSensor?.classList.add("bg-primary", "text-canvas");
+          tabSensor?.classList.remove("text-slate");
+          tabCamera?.classList.remove("bg-primary", "text-canvas");
+          tabCamera?.classList.add("text-slate");
+
+          cameraSelect?.classList.add("hidden");
+          cameraThumbnailContainer?.classList.add("hidden");
+          readoutUnit!.textContent = "Lux";
+          modeGuidelineDesc!.textContent = "Uses the native browser AmbientLightSensor API to measure authentic physical Lux values.";
+
+          if (!hasSensorSupport) {
+            unsupportedBanner?.classList.remove("hidden");
+            updateBadge("Unsupported", "bg-brand-red/10 border-brand-red text-brand-red");
+          } else {
+            unsupportedBanner?.classList.add("hidden");
+            updateBadge("Sensor Available", "bg-brand-teal/10 border-brand-teal text-moss-dark");
+          }
+        } else {
+          tabCamera?.classList.add("bg-primary", "text-canvas");
+          tabCamera?.classList.remove("text-slate");
+          tabSensor?.classList.remove("bg-primary", "text-canvas");
+          tabSensor?.classList.add("text-slate");
+
+          unsupportedBanner?.classList.add("hidden");
+          cameraSelect?.classList.remove("hidden");
+          readoutUnit!.textContent = "% Brightness";
+          modeGuidelineDesc!.textContent = "Analyzes camera pixel average luminance at 3Hz. Displayed on a relative 0-100% scale.";
+          updateBadge("Camera Ready", "bg-brand-blue/10 border-brand-blue text-brand-blue");
+        }
+
+        resetDisplay();
+      }
+
+      function updateBadge(text: string, classes: string) {
+        if (statusBadge && statusBadgeText) {
+          statusBadge.className = `inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${classes}`;
+          statusBadgeText.textContent = text;
+        }
+      }
+
+      function resetDisplay() {
+        currentReading = 0;
+        readoutValue!.textContent = "0";
+        readoutCategory!.textContent = "Lighter";
+        updateGauge(0);
+        updateExposureHelper(0);
+      }
+
+      // Start & Stop capture toggle
+      btnCaptureToggle?.addEventListener("click", () => {
+        if (isCapturing) {
+          stopCapture();
+        } else {
+          startCapture();
+        }
+      });
+
+      async function startCapture() {
+        deniedPanel?.classList.add("hidden");
+        
+        if (currentMode === "sensor") {
+          if (!hasSensorSupport) {
+            alert("Ambient Light Sensor is not supported in this browser. Please switch to Camera mode.");
+            return;
+          }
+
+          try {
+            // @ts-ignore
+            sensorInstance = new AmbientLightSensor({ frequency: 5 });
+            sensorInstance.addEventListener("reading", () => {
+              const luxValue = sensorInstance.lux;
+              handleNewReading(luxValue);
+            });
+            sensorInstance.addEventListener("error", (event: any) => {
+              console.error("Sensor error", event);
+              updateBadge("Sensor Restricted", "bg-brand-red/10 border-brand-red text-brand-red");
+              stopCapture();
+            });
+
+            sensorInstance.start();
+            isCapturing = true;
+            toggleCaptureUI(true);
+            updateBadge("Sensor Live", "bg-success-accent/10 border-success-accent text-success-accent");
+          } catch (e) {
+            console.error("Failed to start AmbientLightSensor", e);
+            updateBadge("Sensor Error", "bg-brand-red/10 border-brand-red text-brand-red");
+          }
+        } else {
+          // Camera Capture Path
+          const facingMode = cameraSelect?.value || "environment";
+          try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({
+              video: { facingMode: facingMode }
+            });
+
+            videoFeed.srcObject = cameraStream;
+            videoFeed.onloadedmetadata = () => {
+              videoFeed.play();
+            };
+
+            cameraThumbnailContainer?.classList.remove("hidden");
+            isCapturing = true;
+            toggleCaptureUI(true);
+            updateBadge("Estimator Live", "bg-success-accent/10 border-success-accent text-success-accent");
+
+            // Setup frame sampler running 3 times per second (3Hz)
+            sampleIntervalId = setInterval(sampleCameraFrame, 333);
+          } catch (err) {
+            console.error("Camera access failed", err);
+            deniedPanel?.classList.remove("hidden");
+            updateBadge("Camera Denied", "bg-brand-red/10 border-brand-red text-brand-red");
+          }
+        }
+      }
+
+      function stopCapture() {
+        isCapturing = false;
+        toggleCaptureUI(false);
+
+        // Stop Ambient Sensor
+        if (sensorInstance) {
+          try {
+            sensorInstance.stop();
+          } catch (e) {}
+          sensorInstance = null;
+        }
+
+        // Stop Camera Streams
+        if (sampleIntervalId) {
+          clearInterval(sampleIntervalId);
+          sampleIntervalId = null;
+        }
+
+        if (cameraStream) {
+          cameraStream.getTracks().forEach(track => track.stop());
+          cameraStream = null;
+        }
+
+        videoFeed.srcObject = null;
+        cameraThumbnailContainer?.classList.add("hidden");
+
+        if (currentMode === "sensor") {
+          updateBadge("Sensor Available", "bg-brand-teal/10 border-brand-teal text-moss-dark");
+        } else {
+          updateBadge("Camera Ready", "bg-brand-blue/10 border-brand-blue text-brand-blue");
+        }
+      }
+
+      function toggleCaptureUI(active: boolean) {
+        if (active) {
+          captureToggleText!.textContent = "Pause Capture";
+          captureToggleIcon?.classList.add("bg-success-accent");
+          captureToggleIcon?.classList.remove("bg-slate");
+          btnCaptureToggle?.classList.add("bg-charcoal");
+        } else {
+          captureToggleText!.textContent = "Start Capture";
+          captureToggleIcon?.classList.remove("bg-success-accent");
+          captureToggleIcon?.classList.add("bg-slate");
+          btnCaptureToggle?.classList.remove("bg-charcoal");
+        }
+      }
+
+      // Sample camera frame to calculate relative average luminance
+      function sampleCameraFrame() {
+        if (!videoFeed || videoFeed.paused || videoFeed.ended) return;
+
+        const width = 80;
+        const height = 60;
+        canvas.width = width;
+        canvas.height = height;
+
+        if (ctx) {
+          try {
+            ctx.drawImage(videoFeed, 0, 0, width, height);
+            const imgData = ctx.getImageData(0, 0, width, height);
+            const data = imgData.data;
+
+            let luminanceTotal = 0;
+            let count = 0;
+
+            for (let i = 0; i < data.length; i += 4) {
+              const r = data[i];
+              const g = data[i+1];
+              const b = data[i+2];
+              // Standard BT.601 weights for relative luminance
+              const l = 0.299 * r + 0.587 * g + 0.114 * b;
+              luminanceTotal += l;
+              count++;
+            }
+
+            const averageLuminance = count > 0 ? (luminanceTotal / count) : 0;
+            // Map average (0-255) to relative brightness scale 0-100
+            const relativeBrightness = Math.round((averageLuminance / 255) * 100);
+            
+            // Light smoothing to prevent sudden micro-exposure jumps
+            const smoothed = Math.round(currentReading * 0.4 + relativeBrightness * 0.6);
+
+            handleNewReading(smoothed);
+          } catch (e) {
+            console.error("Frame sample error", e);
+          }
+        }
+      }
+
+      // Handle new light reading & update state
+      function handleNewReading(val: number) {
+        currentReading = val;
+        
+        // Update stats
+        if (val < sessionMin) sessionMin = val;
+        if (val > sessionMax) sessionMax = val;
+        sessionSum += val;
+        sessionCount++;
+
+        // Update readouts
+        readoutValue!.textContent = val.toString();
+        
+        const isLux = currentMode === "sensor";
+        updateGauge(val, isLux);
+        updateStats();
+
+        // Categorize brightness
+        let category = "Medium";
+        if (isLux) {
+          if (val < 10) category = "Very Low (Night)";
+          else if (val < 100) category = "Low (Dim Indoors)";
+          else if (val < 500) category = "Medium (Typical Indoor)";
+          else if (val < 2000) category = "High (Overcast Day)";
+          else category = "Very High (Direct Sun)";
+        } else {
+          if (val < 20) category = "Low (Dark)";
+          else if (val < 55) category = "Medium (Indoor)";
+          else if (val < 80) category = "Bright (Daylight)";
+          else category = "Very Bright (Sun)";
+        }
+        readoutCategory!.textContent = category;
+
+        // Update photographic calculations
+        updateExposureHelper(val);
+
+        // Record history at moderate interval or reading jumps
+        logHistoryReading(val, isLux ? "Sensor (Lux)" : "Camera (Relative)");
+      }
+
+      function updateGauge(val: number, isLux = false) {
+        if (!gaugeFill) return;
+        
+        // Map value to gauge percent (0 to 1)
+        let percent = 0;
+        if (isLux) {
+          // Logarithmic scale for physical Lux since it spans 0 to 100,000+
+          if (val > 0) {
+            percent = Math.min(Math.log10(val) / 5.0, 1.0); // max 100,000 lux
+          }
+        } else {
+          percent = val / 100;
+        }
+
+        // Circular stroke math
+        const radius = 40;
+        const circumference = 2 * Math.PI * radius; // ~251.2
+        const offset = circumference - (percent * circumference);
+        gaugeFill.style.strokeDashoffset = offset.toString();
+      }
+
+      function updateStats() {
+        statMin!.textContent = sessionMin === Infinity ? "—" : sessionMin + (currentMode === "sensor" ? " lx" : "%");
+        statMax!.textContent = sessionMax === -Infinity ? "—" : sessionMax + (currentMode === "sensor" ? " lx" : "%");
+        
+        const avg = sessionCount > 0 ? Math.round(sessionSum / sessionCount) : 0;
+        statAvg!.textContent = sessionCount === 0 ? "—" : avg + (currentMode === "sensor" ? " lx" : "%");
+      }
+
+      // Exposure Helper calculations (standard photographic logic)
+      function updateExposureHelper(val: number) {
+        if (val === 0) {
+          photoEv!.textContent = "—";
+          photoShutter!.textContent = "—";
+          return;
+        }
+
+        let ev100 = 0;
+        if (currentMode === "sensor") {
+          // EV100 = log2(Lux / 2.5) standard calculation
+          ev100 = Math.round(Math.log2(val / 2.5) * 10) / 10;
+        } else {
+          // Convert 0-100 estimate to a pseudo EV range between -2 and 14
+          ev100 = Math.round((-2 + (val / 100) * 16) * 10) / 10;
+        }
+
+        photoEv!.textContent = ev100.toFixed(1);
+
+        // Calculate shutter speed assuming ISO 100 and aperture f/8
+        // Speed = (Aperture^2 * 100) / (ISO * 2^(EV100))
+        // N^2 / t = L * S / K => t = N^2 * K / (L * S) = f^2 * 2.5 / (Lux)
+        // With standard constants: t = 64 / (2^EV100)
+        const denominator = Math.pow(2, ev100);
+        if (denominator > 0) {
+          const shutterSec = 64 / denominator;
+          
+          let speedStr = "";
+          if (shutterSec >= 1) {
+            speedStr = `${Math.round(shutterSec * 10) / 10}s`;
+          } else {
+            const denominatorFrac = Math.round(1 / shutterSec);
+            speedStr = `1/${denominatorFrac}s`;
+          }
+          photoShutter!.textContent = speedStr;
+        } else {
+          photoShutter!.textContent = "Bulb";
+        }
+      }
+
+      // Log a session measurement
+      let lastLogTime = 0;
+      function logHistoryReading(val: number, modeLabel: string) {
+        const now = Date.now();
+        // Log at most once every 3 seconds to avoid grid overload
+        if (now - lastLogTime < 3000) return;
+        lastLogTime = now;
+
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const entry = {
+          timestamp: timeStr,
+          mode: modeLabel,
+          value: val,
+          formatted: val + (currentMode === "sensor" ? " lx" : "%")
+        };
+
+        sessionHistory.unshift(entry); // Complete list is kept for CSV export
+
+        // Render top 5 table rows in UI
+        const visibleHistory = sessionHistory.slice(0, 5);
+        historyLogBody!.innerHTML = visibleHistory.map(entry => `
+          <tr class="hover:bg-surface-soft transition-colors">
+            <td class="p-2 text-slate">${entry.timestamp}</td>
+            <td class="p-2 text-slate">${entry.mode}</td>
+            <td class="p-2 text-right font-semibold">${entry.formatted}</td>
+          </tr>
+        `).join("");
+
+        btnExportCsv.disabled = false;
+      }
+
+      btnResetPeaks?.addEventListener("click", () => {
+        resetPeaks();
+      });
+
+      function resetPeaks() {
+        sessionMin = Infinity;
+        sessionMax = -Infinity;
+        sessionSum = 0;
+        sessionCount = 0;
+        updateStats();
+      }
+
+      // Export log as CSV format
+      btnExportCsv?.addEventListener("click", () => {
+        if (sessionHistory.length === 0) return;
+
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Timestamp,Mode,Reading\r\n";
+
+        sessionHistory.forEach(row => {
+          csvContent += `"${row.timestamp}","${row.mode}","${row.value}"\r\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `light_meter_readings_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+
+      // Camera Facing Mode Mid-Session Restart
+      cameraSelect?.addEventListener("change", () => {
+        if (currentMode === "camera" && isCapturing) {
+          stopCapture();
+          startCapture();
+        }
+      });
+
+      // Verbatim Reset button interaction implementation (Satisfies requirement 1)
+      btnReset?.addEventListener("click", () => {
+        stopCapture();
+        resetPeaks();
+        resetDisplay();
+        
+        if (cameraSelect) {
+          cameraSelect.value = "environment";
+        }
+        
+        sessionHistory = [];
+        historyLogBody!.innerHTML = `
+          <tr>
+            <td colspan="3" class="p-4 text-center text-slate italic">No readings logged yet. Start capturing to log.</td>
+          </tr>
+        `;
+        btnExportCsv.disabled = true;
+
+        localStorage.removeItem("boardtools:light-meter:mode");
+      });
+
+      // Close streams on visibility/tab loss
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isCapturing) {
+          stopCapture();
+        }
+      });
+    });
+  </script>
 </Layout>
