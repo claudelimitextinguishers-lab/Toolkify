@@ -5,7 +5,7 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Screen Dead Pixel Checker";
 const category = "general";
 const tier = "General Everyday Utilities";
-const description = "Scan and identify dead pixels on your monitor screen using solid backgrounds.";
+const description = "Scan and identify dead or stuck pixels on your display panel using pure, unfiltered color backgrounds.";
 ---
 
 <Layout 
@@ -13,78 +13,923 @@ const description = "Scan and identify dead pixels on your monitor screen using 
   description={description}
   toolName={name}
   toolCategory={category}
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
-    <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Screen Dead Pixel Checker",
+      "genre": "Utility",
+      "url": "https://boardtools.app/tools/general/screen-dead-pixel",
+      "description": "Scan and identify dead or stuck pixels on your display panel using pure, unfiltered color backgrounds.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-3 flex flex-col gap-3 animate-fade-in-up">
+    <!-- Breadcrumb & Header Bar -->
+    <div class="flex flex-col gap-0.5">
+      <nav class="flex items-center gap-1.5 text-slate uppercase tracking-wider text-[10px] font-bold">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Reset button verbatim structure/classes from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button verbatim structure/classes from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Screen Dead Pixel Checker works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+        </div>
       </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
     </div>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
-
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🌍</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
+    <!-- Main Workspace Area: Desktop Side-by-Side, Mobile Stacked, Zero-Scroll target -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+      <!-- Left Column: Test Configuration & Actions -->
+      <div class="lg:col-span-7 flex flex-col gap-4">
+        <!-- Configuration Card -->
+        <div class="card-base flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h2 class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+              Configuration Panel
+            </h2>
+            <span class="text-[10px] font-bold text-slate/70 bg-surface px-2 py-0.5 rounded border border-hairline">CLIENT-SIDE ONLY</span>
           </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+
+          <!-- Mode Select -->
+          <div class="flex flex-col gap-1.5">
+            <label class="text-xs font-semibold text-primary">Navigation Mode</label>
+            <div class="grid grid-cols-2 p-0.5 bg-surface border border-hairline rounded-lg">
+              <button
+                type="button"
+                id="mode-manual-btn"
+                class="py-1 text-xs font-semibold rounded-md transition-all cursor-pointer bg-canvas text-primary shadow-sm"
+              >
+                Manual Advance
+              </button>
+              <button
+                type="button"
+                id="mode-auto-btn"
+                class="py-1 text-xs font-semibold rounded-md transition-all cursor-pointer text-slate hover:text-primary"
+              >
+                Auto-Cycle (Timer)
+              </button>
+            </div>
+          </div>
+
+          <!-- Auto-Cycle Duration Selector -->
+          <div id="duration-config-wrapper" class="hidden flex-col gap-1.5 animate-fade-in-up">
+            <div class="flex items-center justify-between">
+              <label for="auto-duration" class="text-xs font-semibold text-primary">Auto-Advance Interval</label>
+              <span id="duration-val" class="text-xs font-bold text-brand-blue">3 seconds</span>
+            </div>
+            <input
+              type="range"
+              id="auto-duration"
+              min="1"
+              max="15"
+              value="3"
+              step="1"
+              class="w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+            />
+          </div>
+
+          <!-- Custom Colors Input -->
+          <div class="flex flex-col gap-1.5">
+            <label for="custom-hex-input" class="text-xs font-semibold text-primary">Add Custom Hex Test Color</label>
+            <div class="flex gap-2">
+              <div class="relative flex-1">
+                <span id="custom-color-preview" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 rounded border border-hairline" style="background-color: #FF00FF;"></span>
+                <input
+                  type="text"
+                  id="custom-hex-input"
+                  value="#FF00FF"
+                  placeholder="#HEXCODE"
+                  maxlength="7"
+                  class="w-full pl-9 pr-3 py-1.5 text-xs bg-surface border border-hairline rounded-md focus:border-brand-blue focus:outline-none"
+                />
+              </div>
+              <button
+                type="button"
+                id="add-custom-color-btn"
+                class="px-3 py-1.5 text-xs font-semibold bg-primary hover:bg-charcoal text-white rounded-md transition-all cursor-pointer whitespace-nowrap"
+              >
+                + Add Color
+              </button>
+            </div>
+            <span id="custom-color-error" class="text-[10px] text-brand-coral font-semibold hidden">Invalid hex format. Use #RRGGBB or #RGB</span>
+          </div>
+
+          <!-- Color Sequence Preview Panel -->
+          <div class="flex flex-col gap-2">
+            <label class="text-xs font-semibold text-primary">Test Sequence Preview</label>
+            <div id="color-sequence-list" class="flex flex-wrap gap-2 p-2 bg-surface rounded-xl border border-hairline min-h-[50px]">
+              <!-- Generated Dynamically -->
+            </div>
+          </div>
+
+          <!-- Big Action Button -->
+          <button
+            type="button"
+            id="start-test-btn"
+            class="button-primary w-full text-center flex items-center justify-center gap-2 py-3 px-6 !rounded-full shadow-subtle hover:scale-[1.02] active:scale-95 transition-all cursor-pointer font-bold"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span>Start Fullscreen Test</span>
           </button>
         </div>
       </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+      <!-- Right Column: Context & Guidelines -->
+      <div class="lg:col-span-5 flex flex-col gap-4">
+        <!-- Diagnostic Distinctions Card -->
+        <div class="card-base flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
+            Stuck vs. Dead Pixels
+          </h3>
+          <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
+            <div class="p-2.5 bg-surface rounded-lg border border-hairline-soft">
+              <p class="font-semibold text-primary mb-0.5">⚫ Dead Pixels</p>
+              <p>Permanently switched off. Appears as a dark or black dot. Most visible on a <strong class="text-primary">Pure White</strong> background.</p>
+            </div>
+            <div class="p-2.5 bg-surface rounded-lg border border-hairline-soft">
+              <p class="font-semibold text-primary mb-0.5">🔴 Stuck Pixels</p>
+              <p>Frozen on a single subpixel (Red, Green, or Blue). Cycle through pure primary screens to pinpoint the stuck element.</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
+        <!-- Privacy & Security -->
+        <div class="card-feature-teal flex flex-col gap-2.5">
+          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start text-[9px] py-0.5 px-2 rounded-full font-bold uppercase tracking-wider">100% Client-Side</span>
+          <h3 class="font-display font-semibold text-sm text-primary">Display Privacy</h3>
+          <p class="text-xs text-slate leading-relaxed">
+            All colors are rendered locally. No data is sent, loaded, or monitored. Perfect for privacy-conscious screen inspections on any desktop or mobile browser.
           </p>
+        </div>
+
+        <!-- Post-Test Actions / Recommendations (Collapsible or compact by default) -->
+        <div id="post-test-guidance" class="card-base border border-brand-rose bg-surface-soft hidden flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate uppercase tracking-wider">What if you found an issue?</h3>
+            <button id="close-guidance-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 py-0.5">✕ Dismiss</button>
+          </div>
+          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1">
+            <li><strong>Pixel Fixing Tools</strong>: Try rapid-cycle blinking videos to un-stick the pixel.</li>
+            <li><strong>Pressure Method</strong>: GENTLY apply pressure using a damp microfiber cloth (at your own risk).</li>
+            <li><strong>Warranty Claim</strong>: Check if the panel meets the manufacturer's threshold for warranty replacement.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Verbatim modal overlay container from json-formatter.astro pattern -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Screen Dead Pixel Checker Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. What does this tool do?
+        </h4>
+        <p>
+          It renders pure, unmodified solid-color frames on your monitor. By filling the screen completely, you can visual scan for any tiny dots that are off, black (dead), or glowing in a constant static color (stuck).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Core Test Strategy</h4>
+        <p>
+          Cycle through all standard test colors: White, Black, Red, Green, and Blue. Dead pixels stand out against a pure white backdrop. Stuck subpixels show up instantly against contrasting pure colors.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Zoom & Magnifier Mode</h4>
+        <p>
+          Need to confirm if a dot is a real panel defect or just a speck of dust? Toggle <strong>Zoom Mode</strong> using the floating toolbar or by pressing <code>Z</code>. Tap or click on the suspect area to inspect the subpixel structure (visual simulated subpixels layout).
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Safety & Limitations</h4>
+        <p>
+          This checker is a visual diagnostic aid. Modern browser technology has no algorithmic way to physically "read" the physical hardware pixels from the screen panel. Scanning is visual, relying entirely on your inspection.
+        </p>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-hairline-soft">
+        <button
+          type="button"
+          id="modal-ok-btn"
+          class="button-primary text-xs py-2 px-5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN CORE TEST CONTAINER (No margin, padding, or bleed) -->
+  <div
+    id="fullscreen-test-area"
+    class="fixed inset-0 z-50 bg-black cursor-none select-none hidden"
+    style="margin: 0; padding: 0; border: none; box-sizing: border-box; width: 100vw; height: 100vh;"
+  >
+    <!-- Floating Minimal HUD Controller (Fades out when inactive) -->
+    <div
+      id="hud-toolbar"
+      class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-primary/80 backdrop-blur-md text-white/90 px-4 py-2 rounded-full flex items-center gap-3 shadow-lg transition-opacity duration-300 pointer-events-auto text-xs z-55"
+    >
+      <span id="hud-status" class="font-semibold">Color 1 of 6</span>
+      <div class="h-3 w-[1px] bg-white/20"></div>
+      <button
+        type="button"
+        id="hud-zoom-toggle"
+        class="hover:text-brand-yellow font-bold transition-colors cursor-pointer"
+      >
+        🔍 Toggle Zoom Mode (Z)
+      </button>
+      <div class="h-3 w-[1px] bg-white/20"></div>
+      <button
+        type="button"
+        id="hud-exit-btn"
+        class="text-brand-coral hover:text-rose-400 font-bold transition-colors cursor-pointer"
+      >
+        Exit Test (Esc)
+      </button>
+    </div>
+
+    <!-- Floating Top-Right Exit Button (Ensures mobile touch exits are bulletproof) -->
+    <button
+      type="button"
+      id="floating-exit-x"
+      class="fixed top-4 right-4 z-55 w-8 h-8 rounded-full bg-primary/70 backdrop-blur-sm text-white hover:bg-primary border border-white/20 flex items-center justify-center text-sm transition-opacity duration-300 font-bold shadow cursor-pointer"
+      aria-label="Exit fullscreen test"
+    >
+      ✕
+    </button>
+
+    <!-- Simulated High-Fidelity Subpixel Magnifier Lens -->
+    <div
+      id="magnifier-lens"
+      class="absolute w-36 h-36 rounded-full border-4 border-slate/60 bg-black/90 pointer-events-none shadow-2xl overflow-hidden hidden"
+      style="box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.2);"
+    >
+      <canvas id="magnifier-canvas" width="144" height="144" class="w-full h-full"></canvas>
+      <div class="absolute inset-0 border border-white/10 rounded-full pointer-events-none"></div>
+      <!-- Center crosshair -->
+      <div class="absolute top-1/2 left-0 right-0 h-[1px] bg-white/20 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/20 -translate-x-1/2 pointer-events-none"></div>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // LocalStorage Namespace helper
+  const STORAGE_KEY = 'boardtools:screen-dead-pixel:settings';
+
+  interface ToolSettings {
+    customColors: string[];
+    autoAdvance: boolean;
+    interval: number;
+  }
+
+  // State
+  let settings: ToolSettings = {
+    customColors: [],
+    autoAdvance: false,
+    interval: 3
+  };
+
+  // Base list of pure colors
+  const DEFAULT_COLORS = [
+    '#FFFFFF', // Pure White
+    '#000000', // Pure Black
+    '#FF0000', // Pure Red
+    '#00FF00', // Pure Green
+    '#0000FF', // Pure Blue
+    '#808080'  // Mid-Gray
+  ];
+
+  let testColors: string[] = [...DEFAULT_COLORS];
+  let activeIndex = 0;
+  let testActive = false;
+  let autoTimer: any = null;
+  let zoomMode = false;
+  let mouseX = 0;
+  let mouseY = 0;
+  let hudTimeout: any = null;
+
+  // DOM Elements
+  const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+  const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+  const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+  const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+  const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+  const modeManualBtn = document.getElementById("mode-manual-btn") as HTMLButtonElement;
+  const modeAutoBtn = document.getElementById("mode-auto-btn") as HTMLButtonElement;
+  const durationConfigWrapper = document.getElementById("duration-config-wrapper") as HTMLDivElement;
+  const autoDurationInput = document.getElementById("auto-duration") as HTMLInputElement;
+  const durationValSpan = document.getElementById("duration-val") as HTMLSpanElement;
+
+  const customHexInput = document.getElementById("custom-hex-input") as HTMLInputElement;
+  const customColorPreview = document.getElementById("custom-color-preview") as HTMLSpanElement;
+  const addCustomColorBtn = document.getElementById("add-custom-color-btn") as HTMLButtonElement;
+  const customColorError = document.getElementById("custom-color-error") as HTMLSpanElement;
+  const colorSequenceList = document.getElementById("color-sequence-list") as HTMLDivElement;
+
+  const startTestBtn = document.getElementById("start-test-btn") as HTMLButtonElement;
+  const fullscreenTestArea = document.getElementById("fullscreen-test-area") as HTMLDivElement;
+  const hudToolbar = document.getElementById("hud-toolbar") as HTMLDivElement;
+  const hudStatus = document.getElementById("hud-status") as HTMLSpanElement;
+  const hudZoomToggle = document.getElementById("hud-zoom-toggle") as HTMLButtonElement;
+  const hudExitBtn = document.getElementById("hud-exit-btn") as HTMLButtonElement;
+  const floatingExitX = document.getElementById("floating-exit-x") as HTMLButtonElement;
+  const magnifierLens = document.getElementById("magnifier-lens") as HTMLDivElement;
+  const magnifierCanvas = document.getElementById("magnifier-canvas") as HTMLCanvasElement;
+
+  const postTestGuidance = document.getElementById("post-test-guidance") as HTMLDivElement;
+  const closeGuidanceBtn = document.getElementById("close-guidance-btn") as HTMLButtonElement;
+
+  // Load from localStorage
+  function loadSettings() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        settings = JSON.parse(stored);
+      }
+    } catch (e) {
+      console.error("Failed to load settings", e);
+    }
+    applySettingsToUI();
+  }
+
+  // Save to localStorage
+  function saveSettings() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch (e) {
+      console.error("Failed to save settings", e);
+    }
+  }
+
+  // Reset to original settings
+  function performReset() {
+    // 1. Exit fullscreen mode if active
+    if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+      exitFullscreen();
+    }
+    stopTest();
+
+    // 2. Clear this tool's localStorage keys
+    localStorage.removeItem(STORAGE_KEY);
+
+    // 3. Reset color sequence to start & default inputs
+    settings = {
+      customColors: [],
+      autoAdvance: false,
+      interval: 3
+    };
+
+    applySettingsToUI();
+    postTestGuidance.classList.add("hidden");
+  }
+
+  // Update layout and options based on current settings state
+  function applySettingsToUI() {
+    // Auto-advance values
+    if (settings.autoAdvance) {
+      modeAutoBtn.classList.add("bg-canvas", "text-primary", "shadow-sm");
+      modeAutoBtn.classList.remove("text-slate", "hover:text-primary");
+      modeManualBtn.classList.remove("bg-canvas", "text-primary", "shadow-sm");
+      modeManualBtn.classList.add("text-slate", "hover:text-primary");
+      durationConfigWrapper.classList.remove("hidden");
+      durationConfigWrapper.classList.add("flex");
+    } else {
+      modeManualBtn.classList.add("bg-canvas", "text-primary", "shadow-sm");
+      modeManualBtn.classList.remove("text-slate", "hover:text-primary");
+      modeAutoBtn.classList.remove("bg-canvas", "text-primary", "shadow-sm");
+      modeAutoBtn.classList.add("text-slate", "hover:text-primary");
+      durationConfigWrapper.classList.remove("flex");
+      durationConfigWrapper.classList.add("hidden");
+    }
+
+    autoDurationInput.value = String(settings.interval);
+    durationValSpan.textContent = `${settings.interval} second${settings.interval > 1 ? 's' : ''}`;
+
+    // Colors sequence setup
+    testColors = [...DEFAULT_COLORS, ...settings.customColors];
+    renderColorSwatches();
+  }
+
+  // Render swatches preview list
+  function renderColorSwatches() {
+    colorSequenceList.innerHTML = '';
+    testColors.forEach((color, index) => {
+      const isDefault = index < DEFAULT_COLORS.length;
+
+      const swatch = document.createElement('div');
+      swatch.className = "group relative flex items-center justify-center w-8 h-8 rounded-lg border border-hairline shadow-sm shrink-0 select-none transition-transform hover:scale-105";
+      swatch.style.backgroundColor = color;
+      swatch.title = color;
+
+      if (!isDefault) {
+        // Delete button for custom color
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = "absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand-coral hover:bg-rose-600 text-white rounded-full flex items-center justify-center text-[8px] font-bold shadow transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer";
+        delBtn.textContent = '✕';
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const customIndex = index - DEFAULT_COLORS.length;
+          settings.customColors.splice(customIndex, 1);
+          saveSettings();
+          applySettingsToUI();
+        });
+        swatch.appendChild(delBtn);
+      }
+
+      colorSequenceList.appendChild(swatch);
+    });
+  }
+
+  // Validate custom hex colors
+  function validateHex(hex: string): boolean {
+    return /^#([A-Fa-f0-9]{3}){1,2}$/.test(hex);
+  }
+
+  // Update custom color input preview
+  function updateHexInputPreview() {
+    const val = customHexInput.value.trim();
+    if (validateHex(val)) {
+      customColorPreview.style.backgroundColor = val;
+      customColorError.classList.add("hidden");
+    } else {
+      customColorError.classList.remove("hidden");
+    }
+  }
+
+  // Fullscreen helper functions
+  function enterFullscreen(elem: HTMLElement) {
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if ((elem as any).webkitRequestFullscreen) { /* Safari */
+      (elem as any).webkitRequestFullscreen();
+    } else if ((elem as any).msRequestFullscreen) { /* IE11 */
+      (elem as any).msRequestFullscreen();
+    }
+  }
+
+  function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if ((document as any).webkitExitFullscreen) {
+      (document as any).webkitExitFullscreen();
+    } else if ((document as any).msExitFullscreen) {
+      (document as any).msExitFullscreen();
+    }
+  }
+
+  // Active full screen color sequence test loop
+  function startTest() {
+    if (testColors.length === 0) return;
+    activeIndex = 0;
+    testActive = true;
+    zoomMode = false;
+    hudZoomToggle.classList.remove("text-brand-yellow");
+
+    fullscreenTestArea.classList.remove("hidden");
+    fullscreenTestArea.classList.add("flex");
+    
+    // Apply initial test color
+    updateTestColor();
+
+    // Trigger Fullscreen
+    enterFullscreen(fullscreenTestArea);
+
+    // Fade active controls initially
+    resetHudTimeout();
+
+    // Bind event handlers specific to active test
+    fullscreenTestArea.addEventListener("click", handleTestAreaClick);
+    fullscreenTestArea.addEventListener("mousemove", handleMouseMove);
+    fullscreenTestArea.addEventListener("touchmove", handleTouchMove, { passive: true });
+    fullscreenTestArea.addEventListener("touchstart", handleTouchStart, { passive: true });
+    document.addEventListener("keydown", handleKeyNavigation);
+
+    if (settings.autoAdvance) {
+      startAutoTimer();
+    }
+  }
+
+  function stopTest() {
+    if (!testActive) return;
+    testActive = false;
+    fullscreenTestArea.classList.add("hidden");
+    fullscreenTestArea.classList.remove("flex");
+
+    // Clean timers
+    clearAutoTimer();
+    if (hudTimeout) clearTimeout(hudTimeout);
+
+    // Remove active event listeners
+    fullscreenTestArea.removeEventListener("click", handleTestAreaClick);
+    fullscreenTestArea.removeEventListener("mousemove", handleMouseMove);
+    fullscreenTestArea.removeEventListener("touchmove", handleTouchMove);
+    fullscreenTestArea.removeEventListener("touchstart", handleTouchStart);
+    document.removeEventListener("keydown", handleKeyNavigation);
+
+    // Hide magnifier
+    magnifierLens.classList.add("hidden");
+
+    // Show recommendations panel
+    postTestGuidance.classList.remove("hidden");
+    postTestGuidance.classList.add("flex");
+  }
+
+  function updateTestColor() {
+    const color = testColors[activeIndex];
+    fullscreenTestArea.style.backgroundColor = color;
+    hudStatus.textContent = `Color ${activeIndex + 1} of ${testColors.length} (${color})`;
+
+    // Re-draw magnifier if active
+    if (zoomMode) {
+      drawMagnifier();
+    }
+  }
+
+  function nextColor() {
+    activeIndex = (activeIndex + 1) % testColors.length;
+    updateTestColor();
+    if (settings.autoAdvance) {
+      // Refresh interval cycle on manual clicks
+      startAutoTimer();
+    }
+  }
+
+  function prevColor() {
+    activeIndex = (activeIndex - 1 + testColors.length) % testColors.length;
+    updateTestColor();
+    if (settings.autoAdvance) {
+      startAutoTimer();
+    }
+  }
+
+  function startAutoTimer() {
+    clearAutoTimer();
+    autoTimer = setInterval(() => {
+      nextColor();
+    }, settings.interval * 1000);
+  }
+
+  function clearAutoTimer() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+  }
+
+  // Key navigation handler during full screen test
+  function handleKeyNavigation(e: KeyboardEvent) {
+    if (!testActive) return;
+
+    if (e.key === "Escape") {
+      e.preventDefault();
+      exitFullscreen();
+      stopTest();
+    } else if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
+      e.preventDefault();
+      nextColor();
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      prevColor();
+    } else if (e.key === "z" || e.key === "Z") {
+      e.preventDefault();
+      toggleZoomMode();
+    }
+  }
+
+  // Click handler on full screen test
+  function handleTestAreaClick(e: MouseEvent) {
+    // If target is inside HUD or Exit button, let normal listener handle it
+    if ((e.target as HTMLElement).closest('#hud-toolbar') || (e.target as HTMLElement).closest('#floating-exit-x')) {
+      return;
+    }
+
+    if (zoomMode) {
+      // If clicking in zoom mode, reposition magnifier lens to mouse position
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      positionMagnifier();
+    } else {
+      nextColor();
+    }
+  }
+
+  function toggleZoomMode() {
+    zoomMode = !zoomMode;
+    if (zoomMode) {
+      hudZoomToggle.classList.add("text-brand-yellow");
+      magnifierLens.classList.remove("hidden");
+      // Put magnifier lens in center initial position
+      mouseX = window.innerWidth / 2;
+      mouseY = window.innerHeight / 2;
+      positionMagnifier();
+    } else {
+      hudZoomToggle.classList.remove("text-brand-yellow");
+      magnifierLens.classList.add("hidden");
+    }
+  }
+
+  function handleMouseMove(e: MouseEvent) {
+    resetHudTimeout();
+    if (zoomMode) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      positionMagnifier();
+    }
+  }
+
+  function handleTouchStart(e: TouchEvent) {
+    resetHudTimeout();
+    if (zoomMode && e.touches.length > 0) {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+      positionMagnifier();
+    }
+  }
+
+  function handleTouchMove(e: TouchEvent) {
+    resetHudTimeout();
+    if (zoomMode && e.touches.length > 0) {
+      mouseX = e.touches[0].clientX;
+      mouseY = e.touches[0].clientY;
+      positionMagnifier();
+    }
+  }
+
+  function positionMagnifier() {
+    magnifierLens.style.left = `${mouseX - 72}px`;
+    magnifierLens.style.top = `${mouseY - 72}px`;
+    drawMagnifier();
+  }
+
+  // Render a simulated RGB subpixel matrix on canvas magnification
+  function drawMagnifier() {
+    const ctx = magnifierCanvas.getContext("2d");
+    if (!ctx) return;
+
+    const width = magnifierCanvas.width;
+    const height = magnifierCanvas.height;
+    ctx.clearRect(0, 0, width, height);
+
+    const activeColor = testColors[activeIndex];
+    
+    // Parse color to components
+    let r = 0, g = 0, b = 0;
+    if (activeColor.startsWith('#')) {
+      const hex = activeColor.slice(1);
+      if (hex.length === 3) {
+        r = parseInt(hex[0] + hex[0], 16);
+        g = parseInt(hex[1] + hex[1], 16);
+        b = parseInt(hex[2] + hex[2], 16);
+      } else if (hex.length === 6) {
+        r = parseInt(hex.slice(0, 2), 16);
+        g = parseInt(hex.slice(2, 4), 16);
+        b = parseInt(hex.slice(4, 6), 16);
+      }
+    }
+
+    // Grid properties
+    const pixelBlockSize = 12; // size of simulated screen pixel
+    const subpixelWidth = pixelBlockSize / 3;
+
+    // Draw simulated subpixels grid (Red, Green, Blue columns)
+    for (let x = 0; x < width; x += pixelBlockSize) {
+      for (let y = 0; y < height; y += pixelBlockSize) {
+        // Red subpixel
+        ctx.fillStyle = `rgb(${r}, 0, 0)`;
+        ctx.fillRect(x, y, subpixelWidth - 0.5, pixelBlockSize - 0.5);
+
+        // Green subpixel
+        ctx.fillStyle = `rgb(0, ${g}, 0)`;
+        ctx.fillRect(x + subpixelWidth, y, subpixelWidth - 0.5, pixelBlockSize - 0.5);
+
+        // Blue subpixel
+        ctx.fillStyle = `rgb(0, 0, ${b})`;
+        ctx.fillRect(x + 2 * subpixelWidth, y, subpixelWidth - 0.5, pixelBlockSize - 0.5);
+      }
+    }
+  }
+
+  // Temporary minimal HUD fading logic
+  function resetHudTimeout() {
+    hudToolbar.style.opacity = '1';
+    floatingExitX.style.opacity = '1';
+    if (hudTimeout) clearTimeout(hudTimeout);
+    hudTimeout = setTimeout(() => {
+      if (testActive) {
+        hudToolbar.style.opacity = '0.05';
+        floatingExitX.style.opacity = '0.05';
+      }
+    }, 2500);
+  }
+
+  // Handle Fullscreen Event Listener triggers (Backwards-compatibility sync)
+  function handleFullscreenChange() {
+    const isFullscreen = document.fullscreenElement || (document as any).webkitFullscreenElement;
+    if (!isFullscreen && testActive) {
+      stopTest();
+    }
+  }
+
+  // Initial event bindings
+  function init() {
+    loadSettings();
+
+    // Mode toggles
+    modeManualBtn.addEventListener("click", () => {
+      settings.autoAdvance = false;
+      saveSettings();
+      applySettingsToUI();
+    });
+
+    modeAutoBtn.addEventListener("click", () => {
+      settings.autoAdvance = true;
+      saveSettings();
+      applySettingsToUI();
+    });
+
+    autoDurationInput.addEventListener("input", () => {
+      settings.interval = parseInt(autoDurationInput.value, 10);
+      durationValSpan.textContent = `${settings.interval} second${settings.interval > 1 ? 's' : ''}`;
+    });
+
+    autoDurationInput.addEventListener("change", () => {
+      saveSettings();
+    });
+
+    // Custom Hex validation & adding
+    customHexInput.addEventListener("input", () => {
+      let val = customHexInput.value.trim();
+      if (val && !val.startsWith('#')) {
+        val = '#' + val;
+        customHexInput.value = val;
+      }
+      updateHexInputPreview();
+    });
+
+    addCustomColorBtn.addEventListener("click", () => {
+      const val = customHexInput.value.trim();
+      if (validateHex(val)) {
+        if (!settings.customColors.includes(val)) {
+          settings.customColors.push(val);
+          saveSettings();
+          applySettingsToUI();
+        }
+      } else {
+        customColorError.classList.remove("hidden");
+      }
+    });
+
+    // Start action
+    startTestBtn.addEventListener("click", startTest);
+
+    // Floating toolbar events
+    hudZoomToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleZoomMode();
+    });
+    
+    hudExitBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      exitFullscreen();
+      stopTest();
+    });
+
+    floatingExitX.addEventListener("click", (e) => {
+      e.stopPropagation();
+      exitFullscreen();
+      stopTest();
+    });
+
+    // Reset action
+    resetBtn.addEventListener("click", performReset);
+
+    // Modal action handlers
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+
+    modalOkBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    closeGuidanceBtn.addEventListener("click", () => {
+      postTestGuidance.classList.add("hidden");
+    });
+
+    // Listeners for standard fullscreen changes
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+  }
+
+  init();
+</script>
+
+<style>
+  /* Ensure cursor is hidden in fullscreen test area */
+  #fullscreen-test-area {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+</style>
