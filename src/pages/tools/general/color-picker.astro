@@ -1211,7 +1211,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
     }
 
     // --- NATIVE SCREEN EYEDROPPER INTEGRATION ---
-    const hasEyeDropper = typeof EyeDropper !== 'undefined';
+    const hasEyeDropper = typeof (window as any).EyeDropper !== 'undefined';
     if (hasEyeDropper) {
       btnNativeEyedropper.classList.remove("hidden");
       eyedropperUnsupportedNote.classList.add("hidden");

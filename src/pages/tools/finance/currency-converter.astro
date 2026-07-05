@@ -586,7 +586,7 @@ const keywords = "currency converter, exchange calculator, forex calculator, off
     const fromCurrencyBtn = document.getElementById("from-currency-btn") as HTMLButtonElement;
     const toCurrencyBtn = document.getElementById("to-currency-btn") as HTMLButtonElement;
     const swapBtn = document.getElementById("swap-btn") as HTMLButtonElement;
-    const swapIcon = document.getElementById("swap-icon") as SVGElement;
+    const swapIcon = document.getElementById("swap-icon") as unknown as SVGElement;
     
     // Pickers
     const currencyPicker = document.getElementById("currency-picker") as HTMLDivElement;
