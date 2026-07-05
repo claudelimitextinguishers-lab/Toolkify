@@ -78,7 +78,7 @@ const keywords = "code formatter, js beautifier, html formatter, css prettifier,
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
         </div>
         
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <!-- Keyboard shortcuts reference -->
           <button
             type="button"
@@ -91,25 +91,14 @@ const keywords = "code formatter, js beautifier, html formatter, css prettifier,
 
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <button
@@ -133,6 +122,29 @@ const keywords = "code formatter, js beautifier, html formatter, css prettifier,
               ></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -1039,6 +1051,77 @@ const keywords = "code formatter, js beautifier, html formatter, css prettifier,
         });
       } catch (err) {
         showToast('⚠️ Could not generate share URL');
+      }
+    });
+
+    // Top Share Button Event
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn?.addEventListener('click', () => {
+      const code = codeInput.value.trim();
+      if (!code) return;
+
+      try {
+        const base = btoa(code);
+        const lang = selectedLanguage === 'auto' ? detectedLanguage : selectedLanguage;
+        const url = new URL(window.location.origin + window.location.pathname);
+        url.searchParams.set("code", base);
+        url.searchParams.set("lang", lang);
+
+        const shareData = {
+          title: document.title || "Code Formatter",
+          url: url.toString()
+        };
+
+        if (navigator.share) {
+          navigator.share(shareData).catch((err) => {
+            if (err.name !== "AbortError") {
+              copyToClipboard(url.toString());
+            }
+          });
+        } else {
+          copyToClipboard(url.toString());
+        }
+      } catch (err) {
+        showToast('⚠️ Could not generate share URL');
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
       }
     });
 

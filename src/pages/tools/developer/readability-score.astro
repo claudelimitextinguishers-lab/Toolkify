@@ -32,28 +32,16 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
           <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 rounded-full font-semibold uppercase">{tier}</span>
         </div>
         <div class="flex flex-wrap items-center gap-2">
-          <!-- Reset & How it works buttons -->
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <button
@@ -77,6 +65,29 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
               ></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
           
           <span class="hidden sm:inline text-stone mx-1">|</span>
@@ -751,6 +762,7 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
 
   // DOM Elements Setup
   document.addEventListener('DOMContentLoaded', () => {
+    let activeMode = 'single';
     const analyzerInput = document.getElementById('analyzer-input') as HTMLTextAreaElement;
     const highlightView = document.getElementById('analyzer-highlight-view') as HTMLDivElement;
     const charWordCounter = document.getElementById('char-word-counter') as HTMLSpanElement;
@@ -1056,6 +1068,7 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
 
     // Mode Toggle Logic
     btnSingleMode.addEventListener('click', () => {
+      activeMode = 'single';
       btnSingleMode.className = "pill-tab-active bg-primary text-canvas px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border border-primary flex items-center gap-1.5";
       btnCompareMode.className = "pill-tab bg-canvas text-slate hover:text-primary hover:border-slate px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border border-hairline flex items-center gap-1.5";
       singleWorkspace.classList.remove('hidden');
@@ -1066,6 +1079,7 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
     });
 
     btnCompareMode.addEventListener('click', () => {
+      activeMode = 'compare';
       btnCompareMode.className = "pill-tab-active bg-primary text-canvas px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border border-primary flex items-center gap-1.5";
       btnSingleMode.className = "pill-tab bg-canvas text-slate hover:text-primary hover:border-slate px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border border-hairline flex items-center gap-1.5";
       singleWorkspace.classList.remove('flex');
@@ -1164,6 +1178,97 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
       }
     });
 
+    // Top Share Button click
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn?.addEventListener('click', () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("mode", activeMode);
+      if (activeMode === 'single') {
+        url.searchParams.set("text", analyzerInput.value);
+      } else {
+        url.searchParams.set("text-a", compareA.value);
+        url.searchParams.set("text-b", compareB.value);
+      }
+
+      const shareData = {
+        title: document.title || "Readability Checker",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    function handleUrlParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const modeParam = urlParams.get('mode');
+      const textParam = urlParams.get('text');
+      const textAParam = urlParams.get('text-a');
+      const textBParam = urlParams.get('text-b');
+
+      if (textParam !== null) {
+        analyzerInput.value = textParam;
+      }
+      if (textAParam !== null) {
+        compareA.value = textAParam;
+      }
+      if (textBParam !== null) {
+        compareB.value = textBParam;
+      }
+
+      if (modeParam === 'compare') {
+        btnCompareMode.click();
+      } else if (modeParam === 'single') {
+        btnSingleMode.click();
+      }
+    }
+
     // Initialize state
     loadDraftOptions();
     
@@ -1174,6 +1279,8 @@ const description = "Analyze text reading levels using standard Flesch-Kincaid, 
     } else {
       analyzerInput.value = sampleText;
     }
+
+    handleUrlParams();
     processAnalysis();
 
     // Adjust dashboard layout initially for screen size
