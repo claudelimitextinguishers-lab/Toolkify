@@ -112,29 +112,18 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
           >
         </div>
 
-        <div class="flex items-center gap-2">
-          <!-- Reset button (verbatim pattern from json-formatter.astro) -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- Share button -->
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <!-- How it works button (verbatim pattern from json-formatter.astro) -->
@@ -159,6 +148,30 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
               ></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <!-- Reset button (verbatim pattern from json-formatter.astro) -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -440,6 +453,7 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
 
     // DOM References
     const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const shareBtn = document.getElementById("share-btn") as HTMLButtonElement;
     const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
     const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
     const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
@@ -476,12 +490,20 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
 
     // Load initial settings
     function loadSettings() {
-      state.offsetBeta = parseFloat(localStorage.getItem(LS_OFFSET_BETA) || "0");
-      state.offsetGamma = parseFloat(localStorage.getItem(LS_OFFSET_GAMMA) || "0");
-      state.unit = localStorage.getItem(LS_UNIT) || "deg";
-      state.mode = localStorage.getItem(LS_MODE) || "circular";
-      state.tolerance = parseFloat(localStorage.getItem(LS_TOLERANCE) || "0.5");
-      state.haptics = (localStorage.getItem(LS_HAPTICS) !== "false");
+      const urlParams = new URLSearchParams(window.location.search);
+      const get = (lsKey: string, urlKey: string): string | null => {
+        if (urlParams.has(urlKey)) return urlParams.get(urlKey);
+        if (typeof localStorage === 'undefined') return null;
+        try { return localStorage.getItem(lsKey); } catch (e) { return null; }
+      };
+
+      state.offsetBeta = parseFloat(get(LS_OFFSET_BETA, "offsetBeta") || "0");
+      state.offsetGamma = parseFloat(get(LS_OFFSET_GAMMA, "offsetGamma") || "0");
+      state.unit = get(LS_UNIT, "unit") || "deg";
+      state.mode = get(LS_MODE, "mode") || "circular";
+      state.tolerance = parseFloat(get(LS_TOLERANCE, "tolerance") || "0.5");
+      const hapticsVal = get(LS_HAPTICS, "haptics");
+      state.haptics = (hapticsVal !== "false");
 
       toleranceSlider.value = state.tolerance.toString();
       toleranceVal.textContent = state.tolerance.toFixed(1) + "°";
@@ -508,6 +530,12 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
 
     // Reset button behavioral contract
     resetBtn?.addEventListener("click", () => {
+      // Clear URL parameters
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
+
       // Clear localStorage keys
       localStorage.removeItem(LS_OFFSET_BETA);
       localStorage.removeItem(LS_OFFSET_GAMMA);
@@ -530,6 +558,71 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
       
       updateUIStrings();
       updateSensorFlow();
+    });
+
+    // Share Event Listener
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("offsetBeta", state.offsetBeta.toString());
+      url.searchParams.set("offsetGamma", state.offsetGamma.toString());
+      url.searchParams.set("unit", state.unit);
+      url.searchParams.set("mode", state.mode);
+      url.searchParams.set("tolerance", state.tolerance.toString());
+      url.searchParams.set("haptics", state.haptics.toString());
+
+      const shareData = {
+        title: document.title || "Spirit Level",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
     });
 
     // Toggle button handlers

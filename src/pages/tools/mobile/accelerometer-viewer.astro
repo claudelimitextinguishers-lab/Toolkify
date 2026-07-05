@@ -73,29 +73,18 @@ const ogImage = "/og/accelerometer-viewer.png";
           </span>
         </div>
 
-        <div class="flex items-center gap-2">
-          <!-- Reset button verbatim structure from json-formatter.astro -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <!-- Share button -->
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <!-- How it works button verbatim structure from json-formatter.astro -->
@@ -120,6 +109,30 @@ const ogImage = "/og/accelerometer-viewer.png";
               ></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <!-- Reset button verbatim structure from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -546,6 +559,7 @@ const ogImage = "/og/accelerometer-viewer.png";
     const magPeak = document.getElementById("mag-peak");
 
     const btnReset = document.getElementById("reset-btn");
+    const shareBtn = document.getElementById("share-btn");
     const btnPeakReset = document.getElementById("peak-reset-btn");
     const btnRecordToggle = document.getElementById("record-toggle-btn");
     const btnRecordText = document.getElementById("record-btn-text");
@@ -587,15 +601,22 @@ const ogImage = "/og/accelerometer-viewer.png";
     const chkShowZ = document.getElementById("chk-show-z") as HTMLInputElement;
     const chkShowMag = document.getElementById("chk-show-mag") as HTMLInputElement;
 
-    // Load Local Storage Settings
+    // Load Local Storage Settings or URL params
     function loadSettings() {
-      const storedMode = localStorage.getItem("boardtools:accelerometer-viewer:mode");
+      const urlParams = new URLSearchParams(window.location.search);
+      const get = (lsKey: string, urlKey: string): string | null => {
+        if (urlParams.has(urlKey)) return urlParams.get(urlKey);
+        if (typeof localStorage === 'undefined') return null;
+        try { return localStorage.getItem(lsKey); } catch (e) { return null; }
+      };
+
+      const storedMode = get("boardtools:accelerometer-viewer:mode", "mode");
       if (storedMode) {
         useCompensated = storedMode === "gravity-compensated";
         updateModeUI();
       }
 
-      const storedThreshold = localStorage.getItem("boardtools:accelerometer-viewer:shake-threshold");
+      const storedThreshold = get("boardtools:accelerometer-viewer:shake-threshold", "threshold");
       if (storedThreshold && shakeThresholdInput) {
         threshold = parseFloat(storedThreshold);
         shakeThresholdInput.value = threshold.toFixed(1);
@@ -1069,11 +1090,77 @@ const ogImage = "/og/accelerometer-viewer.png";
 
     // Verbatim Reset button interaction implementation (Satisfies requirement 1)
     btnReset?.addEventListener("click", () => {
+      // Clear URL parameters
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
       resetPeaks();
       discardRecording();
       resetControlsToDefaults();
       localStorage.removeItem("boardtools:accelerometer-viewer:mode");
       localStorage.removeItem("boardtools:accelerometer-viewer:shake-threshold");
+    });
+
+    // Share Event Listener
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("mode", useCompensated ? "gravity-compensated" : "gravity-included");
+      url.searchParams.set("threshold", threshold.toString());
+
+      const shareData = {
+        title: document.title || "Accelerometer Viewer",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
     });
 
     // Exports downloads
