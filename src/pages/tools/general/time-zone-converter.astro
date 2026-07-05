@@ -1,90 +1,1168 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Time Zone Converter";
 const category = "general";
 const tier = "General Everyday Utilities";
-const description = "Convert and compare calendar dates and times across global time zones.";
+
+// On-page SEO metadata
+const pageTitle = "Time Zone Converter - Compare Global Times Offline";
+const description = "Convert and compare multiple time zones simultaneously. Completely client-side, DST-aware, and privacy-first with visual day/night slider indicators and a meeting-time finder.";
+const canonicalUrl = "https://boardtools.app/tools/general/time-zone-converter";
+const ogImage = "/og/time-zone-converter.png";
+const keywords = "time zone converter, world clock, meeting planner, dst aware timezone, time zone comparator, multi city clock, offline timezone converter, timezone slider, browser timezone, time map";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Time Zone Converter",
+      "alternateName": "Client-Side World Clock & Meeting Planner",
+      "url": "https://boardtools.app/tools/general/time-zone-converter",
+      "description": "Free offline client-side world clock converter. Plan meetings across multiple timezones with a visual 24-hour day/night slider and auto overlap finder.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Dynamic DST-aware conversion using Intl API",
+        "Searchable timezone picker with fuzzy matching",
+        "Live ticking clock for current moment simulation",
+        "Visual 24-hour day/night and business hour bars",
+        "Automatic meeting-time overlap finder",
+        "Named user presets for team schedules",
+        "URL query parameters to share configured times"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "General Tools",
+          "item": "https://boardtools.app/tools/general"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Time Zone Converter",
+          "item": "https://boardtools.app/tools/general/time-zone-converter"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🌍</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <!-- Reset button verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How time zone converter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-3 sm:p-4 flex flex-col gap-3.5 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      <!-- Upper Panel: Core Inputs -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 border-b border-hairline-soft pb-3.5">
+        <!-- Left: Source Date, Time, Zone -->
+        <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="flex flex-col gap-1">
+            <label for="source-date" class="text-[10px] font-semibold text-slate">Source Date</label>
+            <input
+              type="date"
+              id="source-date"
+              class="text-input w-full py-1 px-2.5 text-xs h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md focus:border-brand-blue outline-none"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="source-time" class="text-[10px] font-semibold text-slate">Source Time</label>
+            <div class="flex items-center gap-1.5">
+              <input
+                type="time"
+                id="source-time"
+                class="text-input flex-1 py-1 px-2.5 text-xs h-9 cursor-pointer border border-hairline-strong bg-canvas rounded-md focus:border-brand-blue outline-none"
+              />
+              <button
+                type="button"
+                id="live-tick-btn"
+                class="h-9 px-2 bg-canvas hover:bg-surface border border-hairline text-brand-blue rounded-md text-[10px] font-bold flex items-center gap-1 shrink-0 transition-all shadow-subtle"
+                title="Lock to current moment and tick live"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-blue animate-ping" id="live-tick-indicator"></span>
+                <span>Live</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1 relative">
+            <label for="source-tz" class="text-[10px] font-semibold text-slate">Source Timezone</label>
+            <input
+              type="text"
+              id="source-tz"
+              class="text-input w-full py-1 px-2.5 text-xs h-9 border border-hairline-strong bg-canvas rounded-md focus:border-brand-blue outline-none"
+              placeholder="Search e.g. New York..."
+              autocomplete="off"
+            />
+            <div
+              id="source-tz-autocomplete"
+              class="absolute top-14 left-0 w-full bg-canvas border border-hairline-strong rounded-md shadow-modal max-h-48 overflow-y-auto hidden z-30 text-xs"
+            ></div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Right: Utility Controls & Presets -->
+        <div class="lg:col-span-4 flex flex-col justify-end gap-3.5">
+          <div class="flex items-center justify-between gap-2">
+            <!-- 12h/24h toggle switch -->
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[10px] font-semibold text-slate">Display Format</span>
+              <div class="flex rounded-full bg-surface p-0.5 border border-hairline h-8 items-center w-24">
+                <button
+                  type="button"
+                  id="format-12h-btn"
+                  class="flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas h-full flex items-center justify-center"
+                >
+                  12H
+                </button>
+                <button
+                  type="button"
+                  id="format-24h-btn"
+                  class="flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer text-slate h-full flex items-center justify-center"
+                >
+                  24H
+                </button>
+              </div>
+            </div>
+
+            <!-- Presets control -->
+            <div class="flex flex-col gap-0.5 flex-1 max-w-[180px]">
+              <label for="preset-select" class="text-[10px] font-semibold text-slate">Presets</label>
+              <select
+                id="preset-select"
+                class="text-input w-full py-0.5 px-2 text-[11px] h-8 cursor-pointer border border-hairline-strong bg-canvas rounded-md"
+              >
+                <option value="">-- Choose Set --</option>
+                <option value="my-team">My Team (Default)</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Main Workspace: Add Zone Input + Comparison List + Overlap Finder -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch relative">
+        <!-- Top Toolbar of comparison area -->
+        <div class="lg:col-span-12 flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2 flex-grow max-w-sm relative">
+            <input
+              type="text"
+              id="add-zone-search"
+              class="text-input w-full py-1 px-3 text-xs h-8.5 border border-hairline-strong bg-canvas rounded-md focus:border-brand-blue outline-none"
+              placeholder="🔍 Add zone (e.g. London, UTC+1, PST)..."
+              autocomplete="off"
+            />
+            <div
+              id="add-zone-autocomplete"
+              class="absolute top-9 left-0 w-full bg-canvas border border-hairline-strong rounded-md shadow-modal max-h-48 overflow-y-auto hidden z-30 text-xs"
+            ></div>
+          </div>
+
+          <!-- Quick Regions list -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] text-stone font-bold uppercase">Quick Add:</span>
+            <button type="button" data-region="Americas" class="quick-add-region-btn text-[10px] px-2 py-0.5 bg-surface hover:bg-hairline border border-hairline rounded-full text-slate transition-all font-semibold">Americas</button>
+            <button type="button" data-region="Europe" class="quick-add-region-btn text-[10px] px-2 py-0.5 bg-surface hover:bg-hairline border border-hairline rounded-full text-slate transition-all font-semibold">Europe</button>
+            <button type="button" data-region="Asia" class="quick-add-region-btn text-[10px] px-2 py-0.5 bg-surface hover:bg-hairline border border-hairline rounded-full text-slate transition-all font-semibold">Asia-Pac</button>
+          </div>
+
+          <!-- Utility buttons -->
+          <div class="flex items-center gap-1.5">
+            <button
+              type="button"
+              id="btn-copy-summary"
+              class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md transition-all cursor-pointer"
+              title="Copy text summary of current times"
+            >
+              📋 Copy Summary
+            </button>
+            <button
+              type="button"
+              id="btn-share-link"
+              class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md transition-all cursor-pointer"
+              title="Copy shareable link"
+            >
+              🔗 Share Link
+            </button>
+          </div>
+        </div>
+
+        <!-- Left Column: Added Timezones list -->
+        <div class="lg:col-span-8 flex flex-col gap-2 min-h-[220px] lg:max-h-[380px] overflow-y-auto" id="zone-cards-list">
+          <!-- Dynamic cards injected here -->
+        </div>
+
+        <!-- Right Column: Meeting Time Overlap Finder & Preset Config -->
+        <div class="lg:col-span-4 flex flex-col gap-3">
+          <!-- Meeting Time Overlap Finder -->
+          <div class="card-base bg-surface-soft border border-hairline p-3 flex flex-col gap-2 rounded-lg flex-1">
+            <h3 class="font-display font-semibold text-xs text-primary flex items-center gap-1">
+              <span>🤝 Meeting Time Finder</span>
+              <span id="overlap-sweep" class="hidden text-[9px] bg-brand-blue/15 text-brand-blue py-0.5 px-1.5 rounded animate-pulse">Analyzing...</span>
+            </h3>
+            <p class="text-[10px] text-slate leading-relaxed">
+              Finds hours when all zones are in waking hours (<strong>8am - 8pm</strong> local time).
+            </p>
+            <div id="overlap-results" class="flex flex-col gap-1.5 mt-1 overflow-y-auto max-h-[160px] pr-1">
+              <!-- Overlap slots injected here -->
+            </div>
+          </div>
+
+          <!-- Save Preset Box -->
+          <div class="card-base border border-hairline-soft p-3 flex flex-col gap-1.5 rounded-lg bg-canvas">
+            <h4 class="text-[10px] font-bold text-slate uppercase">Save Current Set</h4>
+            <div class="flex items-center gap-1.5">
+              <input
+                type="text"
+                id="new-preset-name"
+                class="text-input flex-1 py-1 px-2 text-xs h-7 border border-hairline-strong bg-canvas rounded-md outline-none"
+                placeholder="e.g. Sales Team..."
+              />
+              <button
+                type="button"
+                id="btn-save-preset"
+                class="button-primary text-[10px] h-7 px-3 flex items-center justify-center font-bold"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action feedback toast -->
+      <div
+        id="toast-message"
+        class="fixed bottom-4 right-4 bg-success-accent text-canvas text-xs font-bold py-2 px-4 rounded-md shadow-modal opacity-0 transition-opacity duration-300 pointer-events-none z-50"
+      >
+        Copied to clipboard!
+      </div>
+    </div>
+
+    <!-- Security & Privacy Guard Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Offline Client-Side, Built-In Browser Intl API
+      </span>
+      <span>v1.0.0</span>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Dynamic, Offline-First Global Time Zone Converter
+      </h2>
+      <p class="text-sm leading-relaxed">
+        BoardTools <strong>Time Zone Converter</strong> is a robust utility engineered for teams, project managers, and remote workers to schedule meetings without the headaches of timezone calculations. By operating entirely within your browser via the native <code>Intl</code> standard, it guarantees accurate timezone offsets and handles DST transitions correctly for past, present, or future dates.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why DST-Aware Conversion Matters
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Many basic calculators simply add or subtract fixed UTC offsets (e.g. UTC-5). However, rules for daylight saving transitions vary dynamically by region. By leveraging the full IANA database through the browser's <code>Intl.DateTimeFormat</code> API, our tool automatically determines whether a specific region observes daylight saving time on your selected date, ensuring you never schedule a meeting an hour early or late.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        24-Hour Visual Day/Night indicator & Waking Hours Overlap
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The horizontal day/night bar provides a visual map representing each region's schedule. Color-coded markers quickly flag working hours (9am to 5pm), sleep cycles (10pm to 6am), and standard awake hours (8am to 8pm). The <strong>Meeting Time Finder</strong> consolidates this information across all configured timezones to automatically suggest overlap slots where everyone is comfortably awake.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal (Verbatim Structure from json-formatter.astro) -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Time Zone Converter Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. DST-Aware Dynamic Conversion
+        </h4>
+        <p>
+          This tool uses modern browser APIs to match the full IANA Database. The offset adjusts automatically based on the year, month, and day of the selected source date.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Visual Schedule Bars</h4>
+        <p>
+          Each added location displays a 24-hour horizontal bar. Nighttime hours (10pm to 6am) are shaded dark, standard working hours (9am to 5pm) are highlighted in teal, and sleeping hours are represented by smooth twilight transitions.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          3. Meeting Time Finder Helper
+        </h4>
+        <p>
+          Calculates the optimal hours of overlap where all added zones fall within waking hours (8:00 AM to 8:00 PM). Green highlight rings indicate suitable overlap options.
+        </p>
+
+        <h4 class="font-semibold text-primary">
+          4. Zero Server Footprint
+        </h4>
+        <p>
+          Just like all BoardTools utilities, your configurations, times, and location setups stay locally stored in your browser. Absolutely zero data is logged or sent online.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <!-- Client-side script -->
+  <script>
+    // Supported Timezones
+    let allTimezones: string[] = [];
+    try {
+      allTimezones = (Intl as any).supportedValuesOf('timeZone');
+    } catch(e) {
+      // Fallback
+      allTimezones = [
+        "UTC", "GMT", "Europe/London", "Europe/Paris", "Europe/Berlin", "Europe/Rome",
+        "America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles",
+        "America/Anchorage", "America/Adak", "Pacific/Honolulu", "Asia/Tokyo", "Asia/Shanghai",
+        "Asia/Singapore", "Asia/Kolkata", "Asia/Seoul", "Asia/Dubai", "Australia/Sydney",
+        "Australia/Melbourne", "Pacific/Auckland", "America/Sao_Paulo", "America/Argentina/Buenos_Aires"
+      ];
+    }
+
+    // Common abbreviations list to assist search matching
+    const tzAbbreviations: Record<string, string[]> = {
+      "EST": ["America/New_York", "America/Detroit", "America/Indianapolis", "America/Toronto"],
+      "EDT": ["America/New_York", "America/Detroit", "America/Toronto"],
+      "CST": ["America/Chicago", "America/Winnipeg", "America/Mexico_City"],
+      "CDT": ["America/Chicago", "America/Winnipeg", "America/Mexico_City"],
+      "PST": ["America/Los_Angeles", "America/Vancouver", "America/Tijuana"],
+      "PDT": ["America/Los_Angeles", "America/Vancouver"],
+      "MST": ["America/Denver", "America/Phoenix", "America/Edmonton"],
+      "MDT": ["America/Denver", "America/Edmonton"],
+      "GMT": ["Europe/London", "Europe/Dublin", "Africa/Casablanca"],
+      "BST": ["Europe/London", "Europe/Dublin"],
+      "CET": ["Europe/Paris", "Europe/Berlin", "Europe/Rome", "Europe/Madrid", "Europe/Amsterdam"],
+      "CEST": ["Europe/Paris", "Europe/Berlin", "Europe/Rome", "Europe/Madrid", "Europe/Amsterdam"],
+      "JST": ["Asia/Tokyo"],
+      "KST": ["Asia/Seoul"],
+      "IST": ["Asia/Kolkata"],
+      "AEDT": ["Australia/Sydney", "Australia/Melbourne"],
+      "AEST": ["Australia/Sydney", "Australia/Melbourne"],
+      "NZDT": ["Pacific/Auckland"],
+      "NZST": ["Pacific/Auckland"]
+    };
+
+    // State definitions
+    interface ToolState {
+      sourceDate: string; // YYYY-MM-DD
+      sourceTime: string; // HH:MM
+      sourceTz: string;
+      isLive: boolean;
+      format24h: boolean;
+      targetZones: string[];
+    }
+
+    let state: ToolState = {
+      sourceDate: new Date().toISOString().split('T')[0],
+      sourceTime: new Date().toTimeString().split(' ')[0].substring(0, 5),
+      sourceTz: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+      isLive: true,
+      format24h: false,
+      targetZones: ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo"]
+    };
+
+    // DOM references
+    const sourceDateInput = document.getElementById("source-date") as HTMLInputElement;
+    const sourceTimeInput = document.getElementById("source-time") as HTMLInputElement;
+    const sourceTzInput = document.getElementById("source-tz") as HTMLInputElement;
+    const sourceTzAutocomplete = document.getElementById("source-tz-autocomplete") as HTMLDivElement;
+    const liveTickBtn = document.getElementById("live-tick-btn") as HTMLButtonElement;
+    const liveTickIndicator = document.getElementById("live-tick-indicator") as HTMLSpanElement;
+    const format12hBtn = document.getElementById("format-12h-btn") as HTMLButtonElement;
+    const format24hBtn = document.getElementById("format-24h-btn") as HTMLButtonElement;
+    const presetSelect = document.getElementById("preset-select") as HTMLSelectElement;
+    const addZoneSearch = document.getElementById("add-zone-search") as HTMLInputElement;
+    const addZoneAutocomplete = document.getElementById("add-zone-autocomplete") as HTMLDivElement;
+    const zoneCardsList = document.getElementById("zone-cards-list") as HTMLDivElement;
+    const overlapResults = document.getElementById("overlap-results") as HTMLDivElement;
+    const overlapSweep = document.getElementById("overlap-sweep") as HTMLSpanElement;
+    const newPresetNameInput = document.getElementById("new-preset-name") as HTMLInputElement;
+    const btnSavePreset = document.getElementById("btn-save-preset") as HTMLButtonElement;
+    const btnCopySummary = document.getElementById("btn-copy-summary") as HTMLButtonElement;
+    const btnShareLink = document.getElementById("btn-share-link") as HTMLButtonElement;
+    const toastMessage = document.getElementById("toast-message") as HTMLDivElement;
+
+    // Reset and modal buttons verbatim
+    const btnReset = document.getElementById("reset-btn") as HTMLButtonElement;
+    const btnHowItWorks = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    // Shared ticking interval
+    let tickInterval: number | null = null;
+    let draggedZoneIndex: number | null = null;
+
+    // Initialize State
+    function init() {
+      // 1. Restore state from URL or LocalStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const timeParam = urlParams.get("time");
+      const dateParam = urlParams.get("date");
+      const stzParam = urlParams.get("stz");
+      const zonesParam = urlParams.get("zones");
+
+      if (timeParam && dateParam) {
+        state.sourceTime = timeParam;
+        state.sourceDate = dateParam;
+        state.isLive = false;
+      }
+      if (stzParam) {
+        state.sourceTz = decodeURIComponent(stzParam);
+      }
+      if (zonesParam) {
+        state.targetZones = decodeURIComponent(zonesParam).split(",");
+      } else {
+        // Fallback to local storage
+        const savedZones = localStorage.getItem("boardtools:time-zone-converter:targetZones");
+        if (savedZones) {
+          state.targetZones = JSON.parse(savedZones);
+        }
+      }
+
+      const savedFormat = localStorage.getItem("boardtools:time-zone-converter:format24h");
+      if (savedFormat !== null) {
+        state.format24h = savedFormat === "true";
+      }
+
+      // Sync form displays
+      sourceDateInput.value = state.sourceDate;
+      sourceTimeInput.value = state.sourceTime;
+      sourceTzInput.value = state.sourceTz;
+
+      updateFormatButtons();
+      loadPresetsList();
+
+      if (state.isLive) {
+        startLiveTicking();
+      } else {
+        stopLiveTicking();
+      }
+
+      renderComparisonList();
+      calculateOverlap();
+    }
+
+    function showToast(msg: string) {
+      toastMessage.textContent = msg;
+      toastMessage.classList.remove("opacity-0");
+      toastMessage.classList.add("opacity-100");
+      setTimeout(() => {
+        toastMessage.classList.remove("opacity-100");
+        toastMessage.classList.add("opacity-0");
+      }, 2000);
+    }
+
+    // DST aware timezone offset finder
+    function getTzOffsetMinutes(timeZone: string, date: Date): number {
+      try {
+        const parts = new Intl.DateTimeFormat('en-US', {
+          timeZone,
+          timeZoneName: 'longOffset'
+        }).formatToParts(date);
+        const tzPart = parts.find(p => p.type === 'timeZoneName')?.value || '';
+        if (!tzPart || tzPart === 'GMT' || tzPart === 'UTC') return 0;
+        const match = tzPart.match(/GMT([+-])(\d+):(\d+)/);
+        if (match) {
+          const sign = match[1] === '+' ? 1 : -1;
+          return sign * (parseInt(match[2], 10) * 60 + parseInt(match[3], 10));
+        }
+        const matchShort = tzPart.match(/GMT([+-])(\d+)/);
+        if (matchShort) {
+          const sign = matchShort[1] === '+' ? 1 : -1;
+          return sign * (parseInt(matchShort[2], 10) * 60);
+        }
+      } catch (e) {}
+      return 0;
+    }
+
+    function getTzAbbreviation(timeZone: string, date: Date): string {
+      try {
+        const parts = new Intl.DateTimeFormat('en-US', {
+          timeZone,
+          timeZoneName: 'short'
+        }).formatToParts(date);
+        const part = parts.find(p => p.type === 'timeZoneName');
+        return part ? part.value : '';
+      } catch(e) {
+        return 'UTC';
+      }
+    }
+
+    // Live Ticking control
+    function startLiveTicking() {
+      state.isLive = true;
+      liveTickBtn.classList.remove("bg-canvas", "text-brand-blue");
+      liveTickBtn.classList.add("bg-brand-blue", "text-canvas");
+      liveTickIndicator.classList.add("animate-ping");
+
+      if (tickInterval) clearInterval(tickInterval);
+      tickInterval = window.setInterval(() => {
+        const now = new Date();
+        state.sourceDate = now.toISOString().split('T')[0];
+        state.sourceTime = now.toTimeString().split(' ')[0].substring(0, 5);
+        sourceDateInput.value = state.sourceDate;
+        sourceTimeInput.value = state.sourceTime;
+        renderComparisonList();
+        calculateOverlap();
+      }, 1000);
+    }
+
+    function stopLiveTicking() {
+      state.isLive = false;
+      liveTickBtn.classList.remove("bg-brand-blue", "text-canvas");
+      liveTickBtn.classList.add("bg-canvas", "text-brand-blue");
+      liveTickIndicator.classList.remove("animate-ping");
+      if (tickInterval) {
+        clearInterval(tickInterval);
+        tickInterval = null;
+      }
+    }
+
+    // Formatting utilities
+    function formatTime(date: Date, tz: string, use24h: boolean): string {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: tz,
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: !use24h
+      }).format(date);
+    }
+
+    function getSourceDateTime(): Date {
+      return new Date(`${state.sourceDate}T${state.sourceTime}:00`);
+    }
+
+    // Render Target Zone List
+    function renderComparisonList() {
+      zoneCardsList.innerHTML = "";
+      const sourceDateTime = getSourceDateTime();
+      const sourceOffset = getTzOffsetMinutes(state.sourceTz, sourceDateTime);
+
+      state.targetZones.forEach((tz, index) => {
+        // Compute targets
+        const targetOffset = getTzOffsetMinutes(tz, sourceDateTime);
+        const relativeOffset = targetOffset - sourceOffset;
+        const relativeOffsetStr = relativeOffset === 0 ? "Same time" : 
+          `${relativeOffset > 0 ? "+" : ""}${(relativeOffset / 60).toFixed(relativeOffset % 60 === 0 ? 0 : 1)}h`;
+
+        // Calculate time
+        const targetDateTime = new Date(sourceDateTime.getTime() + (relativeOffset * 60 * 1000));
+        const timeStr = formatTime(targetDateTime, tz, state.format24h);
+        const abbr = getTzAbbreviation(tz, targetDateTime);
+        const city = tz.split('/').pop()?.replace(/_/g, ' ') || tz;
+
+        // Visual day/night bar setup
+        // The bar represents 24 hours. We place current hour marker.
+        const currentHour = targetDateTime.getHours() + (targetDateTime.getMinutes() / 60);
+        const markerPercent = (currentHour / 24) * 100;
+
+        // Render card
+        const card = document.createElement("div");
+        card.className = "flex flex-col gap-2 p-2.5 bg-canvas border border-hairline hover:border-hairline-strong rounded-lg shadow-subtle relative cursor-grab select-none transition-all duration-200 animate-slide-in";
+        card.setAttribute("draggable", "true");
+        card.setAttribute("data-index", String(index));
+
+        // Drag events
+        card.addEventListener("dragstart", (e) => {
+          draggedZoneIndex = index;
+          card.classList.add("opacity-50");
+          if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = "move";
+          }
+        });
+        card.addEventListener("dragend", () => {
+          card.classList.remove("opacity-50");
+          draggedZoneIndex = null;
+        });
+        card.addEventListener("dragover", (e) => {
+          e.preventDefault();
+        });
+        card.addEventListener("drop", (e) => {
+          e.preventDefault();
+          if (draggedZoneIndex !== null && draggedZoneIndex !== index) {
+            const zones = [...state.targetZones];
+            const [moved] = zones.splice(draggedZoneIndex, 1);
+            zones.splice(index, 0, moved);
+            state.targetZones = zones;
+            localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(zones));
+            renderComparisonList();
+            calculateOverlap();
+          }
+        });
+
+        // HTML builder
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="text-stone text-[10px] cursor-move select-none">☰</span>
+              <div class="flex flex-col">
+                <span class="font-display font-semibold text-xs text-primary truncate">${city}</span>
+                <span class="text-[9px] text-slate font-medium truncate">${tz} • ${abbr}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="flex flex-col items-end">
+                <span class="font-mono font-bold text-xs text-brand-blue">${timeStr}</span>
+                <span class="text-[9px] text-stone font-semibold">${relativeOffsetStr}</span>
+              </div>
+              <button
+                type="button"
+                class="remove-zone-btn text-stone hover:text-brand-coral font-bold text-sm h-6 w-6 flex items-center justify-center rounded-full hover:bg-surface transition-colors"
+                data-index="${index}"
+                title="Remove location"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
+          <!-- Day/Night 24h Bar -->
+          <div class="relative w-full h-4 rounded bg-gradient-to-r from-indigo-950 via-sky-300 to-indigo-950 border border-hairline overflow-hidden">
+            <!-- Custom dusk/dawn gradients overlaying standard colors -->
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/40 via-transparent to-slate-900/40 pointer-events-none"></div>
+            <!-- Waking hours bounds (8am - 8pm) -->
+            <div class="absolute top-0 bottom-0 left-[33.33%] right-[16.66%] bg-white/20 border-l border-r border-white/30 pointer-events-none"></div>
+            
+            <!-- Hourly intervals tick marks -->
+            <div class="absolute inset-0 flex justify-between pointer-events-none opacity-20 px-0.5">
+              ${Array.from({length: 24}).map((_) => `<span class="w-[1px] h-full bg-slate-900"></span>`).join('')}
+            </div>
+
+            <!-- Current time marker -->
+            <div 
+              class="absolute top-0 bottom-0 w-1 bg-brand-coral shadow-lg transition-all duration-300"
+              style="left: ${markerPercent}%"
+            >
+              <div class="absolute -top-1 -left-1 w-3 h-3 rounded-full bg-brand-coral border border-canvas"></div>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center text-[9px] text-stone font-mono px-0.5">
+            <span>12 AM</span>
+            <span>6 AM</span>
+            <span>12 PM</span>
+            <span>6 PM</span>
+            <span>12 AM</span>
+          </div>
+        `;
+
+        zoneCardsList.appendChild(card);
+      });
+
+      // Attach remove button listeners
+      document.querySelectorAll(".remove-zone-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const target = e.currentTarget as HTMLButtonElement;
+          const idx = parseInt(target.getAttribute("data-index") || "0", 10);
+          state.targetZones.splice(idx, 1);
+          localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+          renderComparisonList();
+          calculateOverlap();
+        });
+      });
+    }
+
+    // Meeting finder calculations
+    function calculateOverlap() {
+      // Gentle animated highlight sweep
+      overlapSweep.classList.remove("hidden");
+      setTimeout(() => {
+        overlapSweep.classList.add("hidden");
+      }, 600);
+
+      overlapResults.innerHTML = "";
+
+      if (state.targetZones.length === 0) {
+        overlapResults.innerHTML = `<span class="text-[10px] text-stone">Add at least one zone to compare overlap.</span>`;
+        return;
+      }
+
+      // Check all 24 hours of the current selected day (UTC boundaries)
+      const matches: { hour: number; label: string }[] = [];
+      const baseMidnight = new Date(`${state.sourceDate}T00:00:00`);
+
+      for (let h = 0; h < 24; h++) {
+        const testDate = new Date(baseMidnight.getTime() + (h * 60 * 60 * 1000));
+        let allWaking = true;
+
+        state.targetZones.forEach(tz => {
+          const tzOffset = getTzOffsetMinutes(tz, testDate);
+          const tzLocalTime = new Date(testDate.getTime() + (tzOffset * 60 * 1000));
+          const hour = tzLocalTime.getUTCHours(); // local hour relative to local base
+          // Waking hours: 8am (8) to 8pm (20)
+          if (hour < 8 || hour > 20) {
+            allWaking = false;
+          }
+        });
+
+        if (allWaking) {
+          const labelHour = h % 12 === 0 ? 12 : h % 12;
+          const ampm = h >= 12 ? "PM" : "AM";
+          matches.push({ hour: h, label: `${labelHour}:00 ${ampm}` });
+        }
+      }
+
+      if (matches.length === 0) {
+        overlapResults.innerHTML = `<span class="text-[10px] text-brand-coral font-medium">⚠️ No comfortable overlap slots found for these timezones.</span>`;
+        return;
+      }
+
+      matches.forEach(slot => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "w-full text-left p-1.5 border border-hairline rounded bg-canvas hover:bg-surface-yellow hover:border-brand-yellow-deep transition-all text-[11px] font-medium flex items-center justify-between cursor-pointer";
+        item.innerHTML = `
+          <span>🕒 ${slot.label}</span>
+          <span class="text-[9px] bg-success-accent/10 text-success-accent py-0.5 px-2 rounded-full font-bold">Good Match</span>
+        `;
+        item.addEventListener("click", () => {
+          // Set source time to this slot hour
+          state.sourceTime = `${String(slot.hour).padStart(2, '0')}:00`;
+          sourceTimeInput.value = state.sourceTime;
+          stopLiveTicking();
+          renderComparisonList();
+        });
+        overlapResults.appendChild(item);
+      });
+    }
+
+    // Autocomplete / timezone search
+    function setupTimezoneSearch(
+      input: HTMLInputElement,
+      container: HTMLDivElement,
+      onSelect: (tz: string) => void
+    ) {
+      input.addEventListener("input", () => {
+        const val = input.value.trim().toLowerCase();
+        if (!val) {
+          container.classList.add("hidden");
+          return;
+        }
+
+        // Fuzzy match timezones
+        const matches = allTimezones.filter(tz => {
+          const tzLower = tz.toLowerCase();
+          const city = tz.split('/').pop()?.replace(/_/g, ' ').toLowerCase() || '';
+          const abbrMatch = Object.entries(tzAbbreviations).some(([abbr, zones]) => {
+            return abbr.toLowerCase() === val && zones.includes(tz);
+          });
+          return tzLower.includes(val) || city.includes(val) || abbrMatch;
+        }).slice(0, 8);
+
+        container.innerHTML = "";
+        if (matches.length === 0) {
+          container.innerHTML = `<div class="p-2 text-stone text-[10px]">No zones found</div>`;
+          container.classList.remove("hidden");
+          return;
+        }
+
+        matches.forEach(tz => {
+          const div = document.createElement("div");
+          div.className = "p-2 hover:bg-surface cursor-pointer border-b border-hairline-soft last:border-none";
+          div.textContent = tz;
+          div.addEventListener("click", () => {
+            onSelect(tz);
+            container.classList.add("hidden");
+            input.value = "";
+          });
+          container.appendChild(div);
+        });
+        container.classList.remove("hidden");
+      });
+
+      // Close on click outside
+      document.addEventListener("click", (e) => {
+        if (e.target !== input && e.target !== container) {
+          container.classList.add("hidden");
+        }
+      });
+    }
+
+    // Setup autocomplete for source zone
+    setupTimezoneSearch(sourceTzInput, sourceTzAutocomplete, (tz) => {
+      state.sourceTz = tz;
+      sourceTzInput.value = tz;
+      renderComparisonList();
+      calculateOverlap();
+    });
+
+    // Setup autocomplete for added zone
+    setupTimezoneSearch(addZoneSearch, addZoneAutocomplete, (tz) => {
+      if (!state.targetZones.includes(tz)) {
+        state.targetZones.push(tz);
+        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+        renderComparisonList();
+        calculateOverlap();
+      }
+    });
+
+    // Region quick add buttons
+    document.querySelectorAll(".quick-add-region-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const region = btn.getAttribute("data-region");
+        let zonesToAdd: string[] = [];
+        if (region === "Americas") {
+          zonesToAdd = ["America/New_York", "America/Chicago", "America/Denver", "America/Los_Angeles"];
+        } else if (region === "Europe") {
+          zonesToAdd = ["Europe/London", "Europe/Paris", "Europe/Berlin", "Europe/Athens"];
+        } else if (region === "Asia") {
+          zonesToAdd = ["Asia/Tokyo", "Asia/Shanghai", "Asia/Singapore", "Australia/Sydney"];
+        }
+
+        zonesToAdd.forEach(z => {
+          if (!state.targetZones.includes(z)) {
+            state.targetZones.push(z);
+          }
+        });
+        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+        renderComparisonList();
+        calculateOverlap();
+      });
+    });
+
+    // Format toggle buttons
+    function updateFormatButtons() {
+      if (state.format24h) {
+        format24hBtn.className = "flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas h-full flex items-center justify-center";
+        format12hBtn.className = "flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer text-slate h-full flex items-center justify-center";
+      } else {
+        format12hBtn.className = "flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas h-full flex items-center justify-center";
+        format24hBtn.className = "flex-1 text-center text-[9px] py-1 rounded-full font-bold transition-all cursor-pointer text-slate h-full flex items-center justify-center";
+      }
+    }
+
+    format12hBtn.addEventListener("click", () => {
+      state.format24h = false;
+      localStorage.setItem("boardtools:time-zone-converter:format24h", "false");
+      updateFormatButtons();
+      renderComparisonList();
+    });
+
+    format24hBtn.addEventListener("click", () => {
+      state.format24h = true;
+      localStorage.setItem("boardtools:time-zone-converter:format24h", "true");
+      updateFormatButtons();
+      renderComparisonList();
+    });
+
+    // Input change handlers
+    sourceDateInput.addEventListener("input", () => {
+      state.sourceDate = sourceDateInput.value;
+      stopLiveTicking();
+      renderComparisonList();
+      calculateOverlap();
+    });
+
+    sourceTimeInput.addEventListener("input", () => {
+      state.sourceTime = sourceTimeInput.value;
+      stopLiveTicking();
+      renderComparisonList();
+      calculateOverlap();
+    });
+
+    liveTickBtn.addEventListener("click", () => {
+      if (state.isLive) {
+        stopLiveTicking();
+      } else {
+        startLiveTicking();
+      }
+    });
+
+    // Local presets management
+    function loadPresetsList() {
+      presetSelect.innerHTML = `<option value="">-- Choose Set --</option>`;
+      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const presets = rawPresets ? JSON.parse(rawPresets) : {};
+      
+      // Add default Sales Team preset if empty
+      if (!presets["My Team"]) {
+        presets["My Team"] = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo"];
+      }
+
+      Object.keys(presets).forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        presetSelect.appendChild(opt);
+      });
+    }
+
+    presetSelect.addEventListener("change", () => {
+      const presetName = presetSelect.value;
+      if (!presetName) return;
+
+      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const presets = rawPresets ? JSON.parse(rawPresets) : {};
+      
+      // Default fallback
+      if (presetName === "My Team" && !presets["My Team"]) {
+        state.targetZones = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo"];
+      } else if (presets[presetName]) {
+        state.targetZones = presets[presetName];
+      }
+
+      localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+      renderComparisonList();
+      calculateOverlap();
+    });
+
+    btnSavePreset.addEventListener("click", () => {
+      const nameVal = newPresetNameInput.value.trim();
+      if (!nameVal) {
+        showToast("Please enter a name for the preset.");
+        return;
+      }
+
+      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const presets = rawPresets ? JSON.parse(rawPresets) : {};
+      presets[nameVal] = [...state.targetZones];
+
+      localStorage.setItem("boardtools:time-zone-converter:presets", JSON.stringify(presets));
+      newPresetNameInput.value = "";
+      loadPresetsList();
+      presetSelect.value = nameVal;
+      showToast("✓ Preset saved locally!");
+    });
+
+    // Verbatim Reset button structure and action handler
+    btnReset.addEventListener("click", () => {
+      // Clear localStorage
+      localStorage.removeItem("boardtools:time-zone-converter:targetZones");
+      localStorage.removeItem("boardtools:time-zone-converter:format24h");
+      localStorage.removeItem("boardtools:time-zone-converter:presets");
+
+      // Reset to original states
+      state.sourceDate = new Date().toISOString().split('T')[0];
+      state.sourceTime = new Date().toTimeString().split(' ')[0].substring(0, 5);
+      state.sourceTz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+      state.format24h = false;
+      state.targetZones = ["UTC", "America/New_York", "Europe/London", "Asia/Tokyo"];
+
+      sourceDateInput.value = state.sourceDate;
+      sourceTimeInput.value = state.sourceTime;
+      sourceTzInput.value = state.sourceTz;
+
+      updateFormatButtons();
+      loadPresetsList();
+      startLiveTicking();
+      renderComparisonList();
+      calculateOverlap();
+      showToast("🔄 State reset successfully");
+    });
+
+    // Copy Summary Text
+    btnCopySummary.addEventListener("click", () => {
+      const sourceDateTime = getSourceDateTime();
+      let summary = `Time Zone Converter Summary - ${state.sourceDate} at ${state.sourceTime} (${state.sourceTz})\n`;
+      summary += `===================================================\n`;
+      state.targetZones.forEach(tz => {
+        const offset = getTzOffsetMinutes(tz, sourceDateTime);
+        const relativeOffset = offset - getTzOffsetMinutes(state.sourceTz, sourceDateTime);
+        const targetDateTime = new Date(sourceDateTime.getTime() + (relativeOffset * 60 * 1000));
+        const timeStr = formatTime(targetDateTime, tz, state.format24h);
+        const city = tz.split('/').pop()?.replace(/_/g, ' ') || tz;
+        summary += `• ${city} (${tz}): ${timeStr} (Offset: ${relativeOffset >= 0 ? "+" : ""}${(relativeOffset / 60).toFixed(relativeOffset % 60 === 0 ? 0 : 1)}h)\n`;
+      });
+
+      navigator.clipboard.writeText(summary).then(() => {
+        showToast("📋 Summary copied to clipboard");
+      });
+    });
+
+    // Share link as URL query param
+    btnShareLink.addEventListener("click", () => {
+      const zonesEncoded = encodeURIComponent(state.targetZones.join(","));
+      const stzEncoded = encodeURIComponent(state.sourceTz);
+      const shareUrl = `${window.location.origin}${window.location.pathname}?date=${state.sourceDate}&time=${state.sourceTime}&stz=${stzEncoded}&zones=${zonesEncoded}`;
+
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast("🔗 Shareable link copied!");
+      });
+    });
+
+    // Verbatim Modal interactions pulled from json-formatter.astro
+    btnHowItWorks?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Start everything
+    init();
+  </script>
 </Layout>
