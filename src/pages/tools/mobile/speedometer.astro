@@ -1,0 +1,1410 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+// On-page SEO metadata
+const name = "GPS Speedometer & Trip Tracker";
+const category = "mobile";
+const tier = "Mobile Sensor Tools";
+
+const pageTitle = "GPS Speedometer & Trip Tracker - Real-Time Client-Side Speed & Stats";
+const description = "Free online client-side GPS speedometer and trip tracker. Monitor speed, max/average speed, distance traveled, and export logs safely and privately inside your mobile browser.";
+const canonicalUrl = "https://boardtools.app/tools/mobile/speedometer";
+const ogImage = "/og/speedometer.png";
+const keywords = "speedometer, gps speedometer, online speedometer, travel speed, trip tracker, haversine speed, vehicle speed, speed limit, speed log export, client side speedometer";
+---
+
+<Layout
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
+>
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GPS Speedometer & Trip Tracker",
+      "alternateName": "Digital Speedometer & Trip Log",
+      "url": "https://boardtools.app/tools/mobile/speedometer",
+      "description": "High-precision digital and analog-style GPS speedometer operating entirely client-side. Features real-time speed monitoring, trip statistics, and downloadable travel logs.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires Geolocation API.",
+      "featureList": [
+        "Analog radial speedometer dial and large digital readout",
+        "Multiple units: km/h, mph, knots, m/s with persistence",
+        "Fallback calculated speed via Haversine formula when raw speed is unavailable",
+        "Moving average calculation excluding stationary periods",
+        "GPS accuracy monitoring with visual warnings",
+        "Manual speed limit input with visual alert overlay",
+        "Trip summary export as CSV and JSON"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mobile",
+          "item": "https://boardtools.app/tools/mobile"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "GPS Speedometer",
+          "item": "https://boardtools.app/tools/mobile/speedometer"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
+        <span>/</span>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+            >{tier}</span
+          >
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How speedometer works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      
+      <!-- Top Row Controls and Indicators -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline-soft pb-3.5">
+        <!-- Tracking Trigger Button -->
+        <button
+          type="button"
+          id="btn-toggle-tracking"
+          class="button-primary text-xs py-2 px-5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold flex items-center gap-2"
+        >
+          <span id="tracking-status-dot" class="w-2.5 h-2.5 rounded-full bg-success-accent"></span>
+          <span id="tracking-status-text">Start Tracking</span>
+        </button>
+
+        <!-- Accuracy & Source Badges -->
+        <div class="flex items-center gap-2">
+          <!-- GPS Accuracy Status Badge -->
+          <div
+            id="accuracy-badge"
+            class="inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-surface border border-hairline text-slate rounded-full font-semibold transition-all"
+          >
+            <span id="accuracy-pulse" class="w-1.5 h-1.5 rounded-full bg-slate"></span>
+            <span id="accuracy-text">GPS Off</span>
+          </div>
+
+          <!-- Speed Source Method Badge -->
+          <div
+            id="source-badge"
+            class="inline-flex items-center gap-1 text-[10px] py-1 px-2.5 bg-surface border border-hairline text-slate rounded-full font-semibold"
+          >
+            <span id="source-text">No Signal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Visual Layout: Speedometer Gauge + Numerical Display -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+        
+        <!-- Left Side: Analog Radial Dial Gauge -->
+        <div class="col-span-1 md:col-span-7 flex flex-col items-center justify-center relative min-h-[260px] sm:min-h-[300px]">
+          <!-- Gauge SVG -->
+          <svg
+            id="speedometer-svg"
+            width="280"
+            height="280"
+            viewBox="0 0 300 300"
+            class="w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] drop-shadow-subtle select-none"
+          >
+            <!-- Background Arc -->
+            <path
+              d="M 60 240 A 120 120 0 1 1 240 240"
+              fill="none"
+              stroke="#eef0f3"
+              stroke-width="14"
+              stroke-linecap="round"
+            />
+            
+            <!-- Warning / Speed Limit Exceeded Highlight Arc (Dynamic) -->
+            <path
+              id="gauge-limit-arc"
+              d="M 60 240 A 120 120 0 1 1 240 240"
+              fill="none"
+              stroke="#ff9999"
+              stroke-width="14"
+              stroke-linecap="round"
+              stroke-dasharray="754"
+              stroke-dashoffset="754"
+              class="transition-all duration-300 opacity-60"
+            />
+
+            <!-- Speed Level Fill Arc (Dynamic) -->
+            <path
+              id="gauge-fill-arc"
+              d="M 60 240 A 120 120 0 1 1 240 240"
+              fill="none"
+              stroke="#4262ff"
+              stroke-width="14"
+              stroke-linecap="round"
+              stroke-dasharray="565"
+              stroke-dashoffset="565"
+              class="transition-all duration-75"
+            />
+
+            <!-- Tick Marks and Labels -->
+            <!-- Render key speed dial markers: 0 to 180 -->
+            <g id="gauge-ticks" class="text-[10px] font-bold fill-stone font-mono">
+              <!-- Rendered programmatically inside script -->
+            </g>
+
+            <!-- Radial Needle Pin (Center Cap) -->
+            <circle cx="150" cy="150" r="12" fill="#1c1c1e" stroke="#ffffff" stroke-width="2.5" />
+            <circle cx="150" cy="150" r="4" fill="#ffd02f" />
+
+            <!-- Sweeping Needle -->
+            <path
+              id="gauge-needle"
+              d="M 147 150 L 150 45 L 153 150 Z"
+              fill="#1c1c1e"
+              class="transition-transform duration-75 origin-[150px_150px]"
+              transform="rotate(-120 150 150)"
+            />
+          </svg>
+
+          <!-- Digital Readout Floating Over or in the Center of the Arc -->
+          <div class="absolute top-[160px] sm:top-[185px] flex flex-col items-center justify-center text-center">
+            <span
+              id="speed-digits"
+              class="text-5xl sm:text-6xl font-display font-medium text-primary tracking-tighter leading-none"
+            >
+              0.0
+            </span>
+            <span
+              id="speed-unit-lbl"
+              class="text-[10px] font-bold text-slate uppercase tracking-wider mt-1"
+            >
+              km/h
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Side: Config Controls and Stats -->
+        <div class="col-span-1 md:col-span-5 flex flex-col gap-4">
+          <!-- Unit Toggle Pills -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Speed Unit</span>
+            <div class="flex bg-surface p-0.5 border border-hairline rounded-full w-full">
+              <button
+                type="button"
+                data-unit="km/h"
+                class="unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+              >
+                km/h
+              </button>
+              <button
+                type="button"
+                data-unit="mph"
+                class="unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+              >
+                mph
+              </button>
+              <button
+                type="button"
+                data-unit="knots"
+                class="unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+              >
+                knots
+              </button>
+              <button
+                type="button"
+                data-unit="m/s"
+                class="unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+              >
+                m/s
+              </button>
+            </div>
+          </div>
+
+          <!-- Speed Limit Reference Settings -->
+          <div class="flex flex-col gap-1.5">
+            <label for="speed-limit-input" class="text-[10px] font-bold text-slate uppercase tracking-wider">
+              Manual Speed Limit Alert Reference
+            </label>
+            <div class="relative flex items-center">
+              <input
+                type="number"
+                id="speed-limit-input"
+                min="0"
+                max="300"
+                placeholder="No limit set"
+                class="w-full text-xs font-semibold py-2 px-3 border border-hairline-strong bg-canvas rounded-lg outline-none focus:border-brand-blue"
+              />
+              <span id="speed-limit-unit-lbl" class="absolute right-3 text-[10px] font-bold text-stone uppercase">
+                km/h
+              </span>
+            </div>
+            <p class="text-[9px] text-stone leading-tight">
+              Color status updates when you exceed this manual benchmark. Intended for visual assistance.
+            </p>
+          </div>
+
+          <!-- GPS Simulator Test Panel (For testing on desktop / indoors) -->
+          <div class="p-3 bg-surface rounded-xl border border-hairline flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold text-primary uppercase">GPS Simulator Mode</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" id="simulator-toggle" class="sr-only peer" />
+                <div class="w-8 h-4 bg-hairline rounded-full peer peer-focus:ring-2 peer-focus:ring-brand-blue/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-brand-blue"></div>
+              </label>
+            </div>
+            <div id="simulator-controls" class="hidden flex-col gap-1.5 mt-1">
+              <input
+                type="range"
+                id="simulator-speed"
+                min="0"
+                max="180"
+                value="0"
+                class="w-full h-1.5 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue"
+              />
+              <div class="flex justify-between text-[9px] font-mono text-slate">
+                <span>0 <span class="sim-unit-lbl">km/h</span></span>
+                <span id="simulator-val-text">Speed: 0 km/h</span>
+                <span>180 <span class="sim-unit-lbl">km/h</span></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Secondary Row: Live Session Statistics -->
+      <div class="grid grid-cols-3 gap-3 border-t border-hairline-soft pt-4 mt-1">
+        
+        <!-- Max Speed -->
+        <div class="flex flex-col p-2.5 bg-surface-soft border border-hairline rounded-xl text-center">
+          <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Max Speed</span>
+          <span id="stat-max-speed" class="text-xl sm:text-2xl font-display font-medium text-primary mt-0.5">
+            0.0
+          </span>
+          <span class="stat-unit-lbl text-[8px] font-bold text-stone uppercase">km/h</span>
+        </div>
+
+        <!-- Average Moving Speed -->
+        <div class="flex flex-col p-2.5 bg-surface-soft border border-hairline rounded-xl text-center" title="Moving average excludes stops under 0.5 m/s">
+          <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Moving Avg</span>
+          <span id="stat-avg-speed" class="text-xl sm:text-2xl font-display font-medium text-primary mt-0.5">
+            0.0
+          </span>
+          <span class="stat-unit-lbl text-[8px] font-bold text-stone uppercase">km/h</span>
+        </div>
+
+        <!-- Total Distance -->
+        <div class="flex flex-col p-2.5 bg-surface-soft border border-hairline rounded-xl text-center">
+          <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Distance</span>
+          <span id="stat-distance" class="text-xl sm:text-2xl font-display font-medium text-primary mt-0.5">
+            0.00
+          </span>
+          <span id="stat-distance-unit-lbl" class="text-[8px] font-bold text-stone uppercase">km</span>
+        </div>
+
+      </div>
+
+      <!-- Trip Finished Summary Card (Hidden by default, shown on tracking stop) -->
+      <div
+        id="trip-summary-card"
+        class="hidden p-4 rounded-xl border border-brand-blue/30 bg-brand-blue/5 flex-col gap-3 animate-fade-in-up"
+      >
+        <div class="flex items-center justify-between border-b border-brand-blue/10 pb-1.5">
+          <span class="text-xs font-bold text-brand-blue flex items-center gap-1.5">
+            🏁 Trip Summary Session Completed
+          </span>
+          <span id="trip-duration" class="text-[10px] font-mono font-semibold text-slate">Duration: 00:00:00</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2 text-center text-xs">
+          <div class="flex flex-col">
+            <span class="text-[9px] font-semibold text-slate">Distance</span>
+            <span id="summary-distance" class="font-bold text-primary">0.00 km</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[9px] font-semibold text-slate">Max Speed</span>
+            <span id="summary-max" class="font-bold text-primary">0.0 km/h</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[9px] font-semibold text-slate">Avg Speed</span>
+            <span id="summary-avg" class="font-bold text-primary">0.0 km/h</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[9px] font-semibold text-slate">Data Points</span>
+            <span id="summary-points" class="font-bold text-primary">0</span>
+          </div>
+        </div>
+        
+        <!-- Log Export Actions -->
+        <div class="flex items-center justify-end gap-2 mt-1 border-t border-brand-blue/10 pt-2.5">
+          <span class="text-[9px] font-bold text-slate uppercase mr-auto">Download Travel Log:</span>
+          <button
+            type="button"
+            id="btn-export-csv"
+            class="text-[10px] font-bold py-1 px-3 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md cursor-pointer transition-all"
+          >
+            Export CSV
+          </button>
+          <button
+            type="button"
+            id="btn-export-json"
+            class="text-[10px] font-bold py-1 px-3 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md cursor-pointer transition-all"
+          >
+            Export JSON
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden">
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Local In-Browser Processing, 0KB Sent to Servers
+      </span>
+      <span>v2.0.0</span>
+    </div>
+  </section>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free GPS Speedometer & Trip Logger
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Our <strong>GPS Speedometer</strong> is a lightweight, high-accuracy client-side utility designed
+        for passengers, cyclists, walkers, and runners to track speed and distance. It computes your speed
+        in real-time utilizing the hardware GPS module inside your device. If raw speed data from GPS is blocked
+        or unavailable, the system switches transparently to a fallback <strong>Haversine formula</strong> calculation,
+        which measures the spherical distance between consecutive coordinates over time.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Dual Speed Capture Methods
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Modern browsers implement the Geolocation API, which pulls position updates. Most mobile devices report a
+        pre-computed <code>coords.speed</code> directly from the hardware GPS, which is extremely accurate. However, on
+        laptops and some operating systems, this is omitted. In these instances, this tool performs real-time calculations using 
+        the Haversine formula, using the Earth's radius (6,371 km) to calculate the distance between your latest coordinates and 
+        dividing it by the precise time delta. To prevent GPS jitter spikes (where minor signal bounces look like massive sprints), 
+        we apply a smoothing filter and disregard acceleration spikes that exceed physical bounds.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Safe Use Matters
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Speedometer readouts can distract drivers. This tool features a safety lock to remind users that they must not look at 
+        or configure this app while operating a moving vehicle. Passenger or stationary applications (like sports, checking transit speed,
+        or hiking) are fully supported and allow you to export your coordinates and speeds directly to a clean log file format.
+      </p>
+    </article>
+  </section>
+
+  <!-- Safety Warning Interstitial Overlay Modal -->
+  <div
+    id="safety-modal"
+    class="fixed inset-0 bg-primary/95 backdrop-blur-md z-50 flex items-center justify-center p-4"
+  >
+    <div class="bg-canvas rounded-2xl max-w-md w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 text-center">
+      <div class="flex justify-center text-4xl mt-2 text-brand-coral">
+        ⚠️
+      </div>
+      <h3 class="font-display font-semibold text-lg text-primary">
+        Driver Safety Warning & Disclaimer
+      </h3>
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-2.5 text-left border-y border-hairline-soft py-4 my-1">
+        <p class="font-bold text-charcoal">
+          This tool is designed strictly for passengers, cyclists, pedestrians, or stationary use cases.
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1.5 text-[11px]">
+          <li>
+            <strong>Do not actively operate</strong> (stare at, tap, adjust settings) this tool while operating any moving vehicle.
+          </li>
+          <li>
+            Distracted driving is highly dangerous, illegal in many jurisdictions, and carries significant risk of injury or death.
+          </li>
+          <li>
+            Drivers must keep their eyes on the road and both hands on the wheel at all times.
+          </li>
+          <li>
+            GPS accuracy depends entirely on your device's line of sight to satellites. Tunnel walls, tree covers, and buildings can distort readings.
+          </li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        id="safety-accept-btn"
+        class="button-primary text-xs py-2.5 px-5 cursor-pointer font-bold w-full hover:scale-102 transition-transform"
+      >
+        I Am a Passenger / Cyclist & Accept Safety Rules
+      </button>
+    </div>
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Speedometer Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. How is speed detected?
+        </h4>
+        <p>
+          The tool initiates the HTML5 Geolocation API, checking your location continuously. We use direct hardware reports (<code>coords.speed</code>) from your mobile GPS receiver when available, as they offer the highest frequency and precision.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. What is the Fallback Calculation?</h4>
+        <p>
+          If your device does not provide direct speed data, the tool calculates speed using the spherical <strong>Haversine formula</strong> to find the distance between the current and last position, divided by the exact elapsed milliseconds. We filter out impossible speed jumps (such as signal jitter) to keep readings stable.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Moving Average vs. Normal Average</h4>
+        <p>
+          Normal average speeds are heavily skewed downward whenever you stop at traffic lights. This tool computes a <strong>moving average</strong>, meaning it pauses recording average speeds whenever you go below 0.5 m/s (1.8 km/h), capturing only your active travel speed.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Accuracy Levels</h4>
+        <p>
+          The accuracy badge indicates current signal quality in meters. A value below 10m is excellent for vehicular speeds. If accuracy drops (e.g. above 30m), the speed display dims to indicate potentially unstable data.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // State Interface Definitions
+    interface PositionLogEntry {
+      timestamp: string;
+      latitude: number;
+      longitude: number;
+      accuracy: number;
+      speed: number; // in converted unit
+      method: 'gps' | 'calculated' | 'simulated';
+    }
+
+    // Local Storage Namespace Keys
+    const LS_KEY_UNIT = "boardtools:speedometer:unit";
+    const LS_KEY_LIMIT = "boardtools:speedometer:speed-limit";
+    const LS_KEY_SAFETY = "boardtools:speedometer:safety-accepted";
+
+    // Speed conversion constants (from m/s)
+    const CONVERSIONS: Record<string, number> = {
+      "m/s": 1.0,
+      "km/h": 3.6,
+      "mph": 2.23694,
+      "knots": 1.94384
+    };
+
+    // Application State Variables
+    let isTracking = false;
+    let isSimulator = false;
+    let selectedUnit = "km/h";
+    let speedLimit: number | null = null;
+    let watchId: number | null = null;
+
+    // Trip Statistics
+    let currentSpeedMs = 0;
+    let targetSpeedMs = 0; // for needle animation interpolation
+    let maxSpeedObservedMs = 0;
+    let totalMovingSpeedMsAccum = 0;
+    let movingStatsCount = 0;
+    let totalDistanceMeters = 0;
+    let tripStartTime: number | null = null;
+    let totalDurationMs = 0;
+    let lastPosition: GeolocationCoordinates | null = null;
+    let lastTimestamp: number | null = null;
+    let lastSignalReceivedTime = Date.now();
+
+    // Data Log for Exports
+    let travelLog: PositionLogEntry[] = [];
+
+    // DOM Selections
+    const btnToggleTracking = document.getElementById("btn-toggle-tracking") as HTMLButtonElement;
+    const trackingStatusDot = document.getElementById("tracking-status-dot") as HTMLSpanElement;
+    const trackingStatusText = document.getElementById("tracking-status-text") as HTMLSpanElement;
+    const btnReset = document.getElementById("reset-btn") as HTMLButtonElement;
+    const btnHowItWorks = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    // Safety Interstitial Selectors
+    const safetyModal = document.getElementById("safety-modal") as HTMLDivElement;
+    const safetyAcceptBtn = document.getElementById("safety-accept-btn") as HTMLButtonElement;
+
+    // Gauges / Displays
+    const speedDigits = document.getElementById("speed-digits") as HTMLSpanElement;
+    const speedUnitLbl = document.getElementById("speed-unit-lbl") as HTMLSpanElement;
+    const gaugeNeedle = document.getElementById("gauge-needle") as SVGPathElement | null;
+    const gaugeFillArc = document.getElementById("gauge-fill-arc") as SVGPathElement | null;
+    const gaugeLimitArc = document.getElementById("gauge-limit-arc") as SVGPathElement | null;
+    const gaugeTicksGroup = document.getElementById("gauge-ticks") as SVGGElement | null;
+
+    // Badges / Inputs
+    const accuracyBadge = document.getElementById("accuracy-badge") as HTMLDivElement;
+    const accuracyPulse = document.getElementById("accuracy-pulse") as HTMLSpanElement;
+    const accuracyText = document.getElementById("accuracy-text") as HTMLSpanElement;
+    const sourceBadge = document.getElementById("source-badge") as HTMLDivElement;
+    const sourceText = document.getElementById("source-text") as HTMLSpanElement;
+    const unitButtons = document.querySelectorAll(".unit-btn");
+    const speedLimitInput = document.getElementById("speed-limit-input") as HTMLInputElement;
+    const speedLimitUnitLbl = document.getElementById("speed-limit-unit-lbl") as HTMLSpanElement;
+
+    // Simulator
+    const simulatorToggle = document.getElementById("simulator-toggle") as HTMLInputElement;
+    const simulatorControls = document.getElementById("simulator-controls") as HTMLDivElement;
+    const simulatorSpeedSlider = document.getElementById("simulator-speed") as HTMLInputElement;
+    const simulatorValText = document.getElementById("simulator-val-text") as HTMLSpanElement;
+    const simUnitLabels = document.querySelectorAll(".sim-unit-lbl");
+
+    // Stats Displays
+    const statMaxSpeed = document.getElementById("stat-max-speed") as HTMLSpanElement;
+    const statAvgSpeed = document.getElementById("stat-avg-speed") as HTMLSpanElement;
+    const statDistance = document.getElementById("stat-distance") as HTMLSpanElement;
+    const statDistanceUnitLbl = document.getElementById("stat-distance-unit-lbl") as HTMLSpanElement;
+    const statUnitLabels = document.querySelectorAll(".stat-unit-lbl");
+
+    // Trip Summary Panel
+    const tripSummaryCard = document.getElementById("trip-summary-card") as HTMLDivElement;
+    const tripDurationText = document.getElementById("trip-duration") as HTMLSpanElement;
+    const summaryDistance = document.getElementById("summary-distance") as HTMLSpanElement;
+    const summaryMax = document.getElementById("summary-max") as HTMLSpanElement;
+    const summaryAvg = document.getElementById("summary-avg") as HTMLSpanElement;
+    const summaryPoints = document.getElementById("summary-points") as HTMLSpanElement;
+    const btnExportCsv = document.getElementById("btn-export-csv") as HTMLButtonElement;
+    const btnExportJson = document.getElementById("btn-export-json") as HTMLButtonElement;
+
+    // Initialize Page
+    function init() {
+      // 1. Safety Disclaimer logic check
+      const isSafetyAccepted = localStorage.getItem(LS_KEY_SAFETY) === "true";
+      if (isSafetyAccepted) {
+        safetyModal.classList.add("hidden");
+      } else {
+        safetyModal.classList.remove("hidden");
+      }
+
+      // 2. Load preferences
+      const savedUnit = localStorage.getItem(LS_KEY_UNIT);
+      if (savedUnit && CONVERSIONS[savedUnit]) {
+        selectedUnit = savedUnit;
+      }
+      
+      const savedLimit = localStorage.getItem(LS_KEY_LIMIT);
+      if (savedLimit) {
+        speedLimit = parseFloat(savedLimit);
+        speedLimitInput.value = savedLimit;
+      }
+
+      // Sync Unit Button active styles
+      updateUnitPills();
+      updateLabels();
+      buildGaugeTicks();
+
+      // Start interpolation loop for smooth needle movement
+      requestAnimationFrame(updateNeedleSmooth);
+
+      // Check signal loss check periodic loop
+      setInterval(checkSignalLoss, 1000);
+    }
+
+    // Set active style for toggle pills
+    function updateUnitPills() {
+      unitButtons.forEach(btn => {
+        const btnUnit = btn.getAttribute("data-unit");
+        if (btnUnit === selectedUnit) {
+          btn.className = "unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+        } else {
+          btn.className = "unit-btn flex-1 text-center text-[10px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate hover:bg-canvas/40";
+        }
+      });
+    }
+
+    // Sync unit strings throughout UI
+    function updateLabels() {
+      speedUnitLbl.textContent = selectedUnit;
+      speedLimitUnitLbl.textContent = selectedUnit;
+      simUnitLabels.forEach(lbl => lbl.textContent = selectedUnit);
+      statUnitLabels.forEach(lbl => lbl.textContent = selectedUnit);
+
+      // Distance unit matching speed unit (km for metric/knots, mi for mph, m for m/s)
+      if (selectedUnit === "mph") {
+        statDistanceUnitLbl.textContent = "mi";
+      } else if (selectedUnit === "m/s") {
+        statDistanceUnitLbl.textContent = "m";
+      } else {
+        statDistanceUnitLbl.textContent = "km";
+      }
+      
+      updateDisplayValues();
+    }
+
+    // Render radial scale numbers dynamically
+    function buildGaugeTicks() {
+      if (!gaugeTicksGroup) return;
+      gaugeTicksGroup.innerHTML = "";
+
+      const startAngle = -120;
+      const endAngle = 120;
+      const step = 20;
+      
+      for (let speedMark = 0; speedMark <= 180; speedMark += step) {
+        const fraction = speedMark / 180;
+        const angleDegrees = startAngle + fraction * (endAngle - startAngle);
+        const angleRadians = (angleDegrees - 90) * Math.PI / 180;
+
+        // Position tick marks
+        const rTickStart = 110;
+        const rTickEnd = 120;
+        const x1 = 150 + rTickStart * Math.cos(angleRadians);
+        const y1 = 150 + rTickStart * Math.sin(angleRadians);
+        const x2 = 150 + rTickEnd * Math.cos(angleRadians);
+        const y2 = 150 + rTickEnd * Math.sin(angleRadians);
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", String(x1));
+        line.setAttribute("y1", String(y1));
+        line.setAttribute("x2", String(x2));
+        line.setAttribute("y2", String(y2));
+        line.setAttribute("stroke", speedMark % 40 === 0 ? "#2c2c34" : "#8e91a0");
+        line.setAttribute("stroke-width", speedMark % 40 === 0 ? "2.5" : "1");
+        gaugeTicksGroup.appendChild(line);
+
+        // Position numeric labels slightly further in
+        if (speedMark % 40 === 0 || speedMark === 180 || speedMark === 0) {
+          const rText = 93;
+          const tx = 150 + rText * Math.cos(angleRadians);
+          const ty = 150 + rText * Math.sin(angleRadians) + 3; // center offset vertical alignment
+
+          const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          textEl.setAttribute("x", String(tx));
+          textEl.setAttribute("y", String(ty));
+          textEl.setAttribute("text-anchor", "middle");
+          textEl.textContent = String(speedMark);
+          gaugeTicksGroup.appendChild(textEl);
+        }
+      }
+    }
+
+    // Direct UI conversion wrapper
+    function toDisplaySpeed(speedMs: number): number {
+      const conversion = CONVERSIONS[selectedUnit] || 1.0;
+      return speedMs * conversion;
+    }
+
+    function toDisplayDistance(meters: number): number {
+      if (selectedUnit === "mph") {
+        return meters * 0.000621371; // meters to miles
+      } else if (selectedUnit === "m/s") {
+        return meters; // stay meters
+      } else {
+        return meters / 1000; // meters to kilometers
+      }
+    }
+
+    // Refresh digital panels with current values
+    function updateDisplayValues() {
+      // Current speed readout
+      const displayedSpeed = toDisplaySpeed(currentSpeedMs);
+      speedDigits.textContent = displayedSpeed.toFixed(1);
+
+      // Stats
+      statMaxSpeed.textContent = toDisplaySpeed(maxSpeedObservedMs).toFixed(1);
+      
+      const movingAvg = movingStatsCount > 0 ? (totalMovingSpeedMsAccum / movingStatsCount) : 0;
+      statAvgSpeed.textContent = toDisplaySpeed(movingAvg).toFixed(1);
+
+      const distanceVal = toDisplayDistance(totalDistanceMeters);
+      statDistance.textContent = selectedUnit === "m/s" ? distanceVal.toFixed(0) : distanceVal.toFixed(2);
+
+      // Check visual coloring vs manual speed limit limit
+      const activeLimit = speedLimit;
+      const isExceeded = activeLimit !== null && displayedSpeed > activeLimit;
+      
+      if (isExceeded) {
+        speedDigits.classList.remove("text-primary");
+        speedDigits.classList.add("text-brand-coral", "animate-pulse");
+      } else {
+        speedDigits.classList.remove("text-brand-coral", "animate-pulse");
+        speedDigits.classList.add("text-primary");
+      }
+    }
+
+    // Haversine formula calculation for distance between coordinates
+    function calculateHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+      const R = 6371000; // Earth's radius in meters
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    // Check GPS Signal loss. Triggered every 1 sec
+    function checkSignalLoss() {
+      if (!isTracking || isSimulator) return;
+
+      const elapsedSinceLastSignal = Date.now() - lastSignalReceivedTime;
+      if (elapsedSinceLastSignal > 5000) {
+        // GPS lost state
+        targetSpeedMs = 0;
+        
+        accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-brand-red text-coral-dark border border-brand-red-dark rounded-full font-semibold";
+        accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-coral-dark animate-ping";
+        accuracyText.textContent = "Signal Lost";
+
+        sourceBadge.className = "inline-flex items-center gap-1 text-[10px] py-1 px-2.5 bg-surface border border-hairline text-slate rounded-full font-semibold";
+        sourceText.textContent = "Reacquiring...";
+      }
+    }
+
+    // Interpolation Animation Loop (easing physics effect)
+    function updateNeedleSmooth() {
+      // Respect user's motion preferences
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReducedMotion) {
+        currentSpeedMs = targetSpeedMs;
+      } else {
+        // Spring-like interpolation
+        currentSpeedMs += (targetSpeedMs - currentSpeedMs) * 0.15;
+        // Avoid tiny decimal values
+        if (Math.abs(targetSpeedMs - currentSpeedMs) < 0.01) {
+          currentSpeedMs = targetSpeedMs;
+        }
+      }
+
+      // Update visual gauge elements
+      const displayedSpeed = toDisplaySpeed(currentSpeedMs);
+      const speedCap = 180;
+      const fraction = Math.min(Math.max(displayedSpeed / speedCap, 0), 1);
+
+      // Gauge dial rotations: maps 0 to 180 to visual needle degrees (-120deg to 120deg)
+      const needleAngle = -120 + fraction * 240;
+      if (gaugeNeedle) {
+        gaugeNeedle.setAttribute("transform", `rotate(${needleAngle} 150 150)`);
+      }
+
+      // Gauge SVG path colored fillers
+      // Circle circumference A 120 120 is 240 degrees out of 360 = ~502px path length
+      const totalDashArrayLength = 565;
+      const strokeOffset = totalDashArrayLength - (fraction * totalDashArrayLength);
+      if (gaugeFillArc) {
+        gaugeFillArc.style.strokeDashoffset = String(strokeOffset);
+      }
+
+      // Exceeded limit warning filler
+      if (gaugeLimitArc && speedLimit) {
+        const limitFrac = Math.min(Math.max(speedLimit / speedCap, 0), 1);
+        const limitOffset = totalDashArrayLength - (limitFrac * totalDashArrayLength);
+        gaugeLimitArc.style.strokeDashoffset = String(limitOffset);
+      } else if (gaugeLimitArc) {
+        gaugeLimitArc.style.strokeDashoffset = "565";
+      }
+
+      updateDisplayValues();
+      requestAnimationFrame(updateNeedleSmooth);
+    }
+
+    // Geolocation Callback Triggers
+    function handlePositionUpdate(position: GeolocationPosition) {
+      if (!isTracking || isSimulator) return;
+
+      lastSignalReceivedTime = Date.now();
+      const coords = position.coords;
+      const timestamp = position.timestamp;
+
+      let speedMetersPerSec = 0;
+      let captureMethod: 'gps' | 'calculated' = 'gps';
+
+      // 1. Direct hardware read when speed is reported
+      if (coords.speed !== null && coords.speed !== undefined && coords.speed >= 0) {
+        speedMetersPerSec = coords.speed;
+        captureMethod = 'gps';
+        sourceText.textContent = "Hardware GPS";
+      } else {
+        // 2. Haversine delta calculation fallback
+        captureMethod = 'calculated';
+        sourceText.textContent = "Calc Fallback";
+        
+        if (lastPosition && lastTimestamp) {
+          const deltaSec = (timestamp - lastTimestamp) / 1000;
+          
+          if (deltaSec > 0.2) { // protect division by zero
+            const distMeters = calculateHaversineDistance(
+              lastPosition.latitude,
+              lastPosition.longitude,
+              coords.latitude,
+              coords.longitude
+            );
+            
+            const rawCalcSpeed = distMeters / deltaSec;
+
+            // Outlier-rejection: Filter impossible acceleration jumps (e.g. >12m/s² speed changes)
+            const speedDiff = Math.abs(rawCalcSpeed - currentSpeedMs);
+            const acceleration = speedDiff / deltaSec;
+
+            if (acceleration < 12.0 && rawCalcSpeed < 120) { // filter out erratic jumps or speed > 430km/h
+              speedMetersPerSec = rawCalcSpeed;
+              totalDistanceMeters += distMeters;
+            } else {
+              // keep previous speed on outliers
+              speedMetersPerSec = targetSpeedMs;
+            }
+          }
+        }
+      }
+
+      // If we are calculating distance for GPS-reported speed
+      if (captureMethod === 'gps' && lastPosition) {
+        const distMeters = calculateHaversineDistance(
+          lastPosition.latitude,
+          lastPosition.longitude,
+          coords.latitude,
+          coords.longitude
+        );
+        // Only add distance if user is actively moving above 0.5m/s (to filter stationary location bouncing)
+        if (speedMetersPerSec > 0.5 && distMeters < 100) { // filter out massive jumps from signal snaps
+          totalDistanceMeters += distMeters;
+        }
+      }
+
+      // Safety checks: clamp speed limit floor
+      if (speedMetersPerSec < 0.1) {
+        speedMetersPerSec = 0;
+      }
+
+      // Update statistics
+      targetSpeedMs = speedMetersPerSec;
+      
+      if (speedMetersPerSec > maxSpeedObservedMs) {
+        maxSpeedObservedMs = speedMetersPerSec;
+      }
+
+      // Moving average stats: Ignore stationary speeds below 0.5 m/s (1.8 km/h)
+      if (speedMetersPerSec >= 0.5) {
+        totalMovingSpeedMsAccum += speedMetersPerSec;
+        movingStatsCount++;
+      }
+
+      // Accuracy status formatting
+      const accuracy = coords.accuracy;
+      accuracyText.textContent = `${accuracy.toFixed(0)}m Acc.`;
+      
+      if (accuracy <= 10) {
+        // Excellent fix
+        accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-success-accent/10 border border-success-accent/20 text-success-accent rounded-full font-semibold";
+        accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-success-accent animate-pulse";
+        speedDigits.style.opacity = "1";
+      } else if (accuracy <= 30) {
+        // Medium fix
+        accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-surface-yellow border border-yellow-light/80 text-yellow-dark rounded-full font-semibold";
+        accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-yellow-dark";
+        speedDigits.style.opacity = "1";
+      } else {
+        // Poor fix
+        accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-brand-red text-coral-dark border border-brand-red-dark rounded-full font-semibold";
+        accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-coral-dark";
+        // Dim display visual hint to user
+        speedDigits.style.opacity = "0.6";
+      }
+
+      sourceBadge.className = "inline-flex items-center gap-1 text-[10px] py-1 px-2.5 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-full font-semibold";
+
+      // Append data logger values
+      const logEntry: PositionLogEntry = {
+        timestamp: new Date(timestamp).toISOString(),
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        accuracy: coords.accuracy,
+        speed: toDisplaySpeed(speedMetersPerSec),
+        method: captureMethod
+      };
+      travelLog.push(logEntry);
+
+      lastPosition = coords;
+      lastTimestamp = timestamp;
+    }
+
+    function handlePositionError(error: GeolocationPositionError) {
+      let errorMsg = "GPS Error";
+      if (error.code === error.PERMISSION_DENIED) {
+        errorMsg = "Perm. Denied";
+        alert("BoardTools Speedometer requires location permissions to operate. Please enable GPS permissions in browser.");
+      } else if (error.code === error.POSITION_UNAVAILABLE) {
+        errorMsg = "No GPS Signal";
+      } else if (error.code === error.TIMEOUT) {
+        errorMsg = "GPS Timeout";
+      }
+
+      sourceText.textContent = "Error";
+      accuracyText.textContent = errorMsg;
+      accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-brand-red text-coral-dark border border-brand-red-dark rounded-full font-semibold";
+      accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-coral-dark";
+      
+      stopTracking();
+    }
+
+    // Toggle session tracking
+    function toggleTracking() {
+      if (isTracking) {
+        stopTracking();
+        showTripSummary();
+      } else {
+        startTracking();
+      }
+    }
+
+    function startTracking() {
+      if (!("geolocation" in navigator)) {
+        alert("Your browser does not support Geolocation APIs.");
+        return;
+      }
+
+      isTracking = true;
+      tripStartTime = Date.now();
+      travelLog = [];
+      
+      // Visual feedback updates
+      btnToggleTracking.classList.remove("button-primary");
+      btnToggleTracking.classList.add("bg-brand-red", "text-canvas", "hover:bg-coral-dark");
+      trackingStatusDot.className = "w-2.5 h-2.5 rounded-full bg-canvas animate-ping";
+      trackingStatusText.textContent = "Stop Tracking";
+      
+      tripSummaryCard.classList.add("hidden");
+
+      if (isSimulator) {
+        // Using simulator
+        sourceText.textContent = "Simulated";
+        accuracyText.textContent = "Mock GPS";
+        accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-full font-semibold";
+        accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse";
+        sourceBadge.className = "inline-flex items-center gap-1 text-[10px] py-1 px-2.5 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-full font-semibold";
+      } else {
+        // Enable hardware GPS listener
+        watchId = navigator.geolocation.watchPosition(
+          handlePositionUpdate,
+          handlePositionError,
+          {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 8000
+          }
+        );
+      }
+    }
+
+    function stopTracking() {
+      isTracking = false;
+      
+      // Visual adjustments
+      btnToggleTracking.classList.remove("bg-brand-red", "text-canvas", "hover:bg-coral-dark");
+      btnToggleTracking.classList.add("button-primary");
+      trackingStatusDot.className = "w-2.5 h-2.5 rounded-full bg-success-accent";
+      trackingStatusText.textContent = "Start Tracking";
+
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
+
+      if (tripStartTime) {
+        totalDurationMs = Date.now() - tripStartTime;
+      }
+
+      lastPosition = null;
+      lastTimestamp = null;
+      targetSpeedMs = 0;
+
+      accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-slate";
+      accuracyText.textContent = "GPS Off";
+      accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-surface border border-hairline text-slate rounded-full font-semibold";
+      
+      sourceText.textContent = "No Signal";
+      sourceBadge.className = "inline-flex items-center gap-1 text-[10px] py-1 px-2.5 bg-surface border border-hairline text-slate rounded-full font-semibold";
+    }
+
+    // Build statistics display cards
+    function showTripSummary() {
+      tripSummaryCard.classList.remove("hidden");
+      
+      // Time calculations
+      const seconds = Math.floor((totalDurationMs / 1000) % 60);
+      const minutes = Math.floor((totalDurationMs / (1000 * 60)) % 60);
+      const hours = Math.floor((totalDurationMs / (1000 * 60 * 60)) % 24);
+      
+      const pad = (n: number) => String(n).padStart(2, "0");
+      tripDurationText.textContent = `Duration: ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+
+      const dist = toDisplayDistance(totalDistanceMeters);
+      const speedUnit = selectedUnit;
+      let distUnit = "km";
+      if (selectedUnit === "mph") distUnit = "mi";
+      if (selectedUnit === "m/s") distUnit = "m";
+
+      summaryDistance.textContent = `${dist.toFixed(2)} ${distUnit}`;
+      summaryMax.textContent = `${toDisplaySpeed(maxSpeedObservedMs).toFixed(1)} ${speedUnit}`;
+      
+      const movingAvg = movingStatsCount > 0 ? (totalMovingSpeedMsAccum / movingStatsCount) : 0;
+      summaryAvg.textContent = `${toDisplaySpeed(movingAvg).toFixed(1)} ${speedUnit}`;
+      
+      summaryPoints.textContent = String(travelLog.length);
+    }
+
+    // Export Logs Functions
+    function exportToCSV() {
+      if (travelLog.length === 0) {
+        alert("No travel logs available for this session.");
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "Timestamp,Latitude,Longitude,Accuracy(m),Speed(" + selectedUnit + "),Method\n";
+
+      travelLog.forEach(row => {
+        csvContent += `${row.timestamp},${row.latitude},${row.longitude},${row.accuracy},${row.speed.toFixed(2)},${row.method}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `speedometer_log_${Date.now()}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function exportToJSON() {
+      if (travelLog.length === 0) {
+        alert("No travel logs available for this session.");
+        return;
+      }
+
+      const jsonStr = JSON.stringify(travelLog, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `speedometer_log_${Date.now()}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Reset action interface matching contract
+    function handleReset() {
+      stopTracking();
+
+      // Reset internal variables
+      currentSpeedMs = 0;
+      targetSpeedMs = 0;
+      maxSpeedObservedMs = 0;
+      totalMovingSpeedMsAccum = 0;
+      movingStatsCount = 0;
+      totalDistanceMeters = 0;
+      tripStartTime = null;
+      totalDurationMs = 0;
+      travelLog = [];
+
+      // Clear localStorage
+      localStorage.removeItem(LS_KEY_UNIT);
+      localStorage.removeItem(LS_KEY_LIMIT);
+      localStorage.removeItem(LS_KEY_SAFETY);
+
+      // Default back unit
+      selectedUnit = "km/h";
+      speedLimit = null;
+      speedLimitInput.value = "";
+
+      // Hide summary and trigger redisplay of safety lock next load
+      tripSummaryCard.classList.add("hidden");
+      safetyModal.classList.remove("hidden");
+
+      updateUnitPills();
+      updateLabels();
+      updateDisplayValues();
+    }
+
+    // Event Listeners Binding
+    btnToggleTracking.addEventListener("click", toggleTracking);
+    
+    btnReset.addEventListener("click", handleReset);
+
+    // Safety Interstitial Accept Button
+    safetyAcceptBtn.addEventListener("click", () => {
+      localStorage.setItem(LS_KEY_SAFETY, "true");
+      safetyModal.classList.add("hidden");
+    });
+
+    // Unit toggle buttons
+    unitButtons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const newUnit = target.getAttribute("data-unit");
+        if (newUnit && CONVERSIONS[newUnit]) {
+          selectedUnit = newUnit;
+          localStorage.setItem(LS_KEY_UNIT, selectedUnit);
+          updateUnitPills();
+          updateLabels();
+          buildGaugeTicks();
+        }
+      });
+    });
+
+    // Speed limit reference input
+    speedLimitInput.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement;
+      const val = target.value.trim();
+      if (val === "") {
+        speedLimit = null;
+        localStorage.removeItem(LS_KEY_LIMIT);
+      } else {
+        speedLimit = parseFloat(val);
+        localStorage.setItem(LS_KEY_LIMIT, String(speedLimit));
+      }
+      updateDisplayValues();
+    });
+
+    // Simulator slider / triggers
+    simulatorToggle.addEventListener("change", (e) => {
+      const target = e.target as HTMLInputElement;
+      isSimulator = target.checked;
+      
+      if (isSimulator) {
+        simulatorControls.classList.remove("hidden");
+        // Trigger manual sliders
+        const speedValue = parseFloat(simulatorSpeedSlider.value);
+        const speedMs = speedValue / (CONVERSIONS[selectedUnit] || 3.6);
+        targetSpeedMs = speedMs;
+        simulatorValText.textContent = `Speed: ${speedValue.toFixed(1)} ${selectedUnit}`;
+        
+        if (isTracking) {
+          // If already tracking, clear GPS watch to simulate cleanly
+          if (watchId !== null) {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+          }
+          sourceText.textContent = "Simulated";
+          accuracyText.textContent = "Mock GPS";
+          accuracyBadge.className = "inline-flex items-center gap-1.5 text-[10px] py-1 px-2.5 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue rounded-full font-semibold";
+          accuracyPulse.className = "w-1.5 h-1.5 rounded-full bg-brand-blue animate-pulse";
+        }
+      } else {
+        simulatorControls.classList.add("hidden");
+        if (isTracking) {
+          // Re-establish genuine GPS watch
+          startTracking();
+        } else {
+          targetSpeedMs = 0;
+        }
+      }
+    });
+
+    simulatorSpeedSlider.addEventListener("input", (e) => {
+      const target = e.target as HTMLInputElement;
+      const speedValue = parseFloat(target.value);
+      const speedMs = speedValue / (CONVERSIONS[selectedUnit] || 3.6);
+      
+      simulatorValText.textContent = `Speed: ${speedValue.toFixed(1)} ${selectedUnit}`;
+
+      if (isTracking && isSimulator) {
+        targetSpeedMs = speedMs;
+        
+        if (speedMs > maxSpeedObservedMs) {
+          maxSpeedObservedMs = speedMs;
+        }
+
+        if (speedMs >= 0.5) {
+          totalMovingSpeedMsAccum += speedMs;
+          movingStatsCount++;
+        }
+
+        // Add dummy mock data points for logs
+        const logEntry: PositionLogEntry = {
+          timestamp: new Date().toISOString(),
+          latitude: 37.7749 + (Math.random() - 0.5) * 0.001,
+          longitude: -122.4194 + (Math.random() - 0.5) * 0.001,
+          accuracy: 5,
+          speed: speedValue,
+          method: 'simulated'
+        };
+        travelLog.push(logEntry);
+      }
+    });
+
+    // Educational Guide Modal Openers
+    btnHowItWorks.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+    closeModalBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    modalOkBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Bind log export action buttons
+    btnExportCsv.addEventListener("click", exportToCSV);
+    btnExportJson.addEventListener("click", exportToJSON);
+
+    // Initialize triggers
+    init();
+  </script>
+</Layout>
