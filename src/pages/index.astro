@@ -1203,7 +1203,17 @@ const tools = [
                     {tool.name}
                   </h3>
                   <p
-                    class={`text-sm leading-relaxed ${tool.cardClass === "card-feature-yellow" ? "text-yellow-dark/90" : tool.cardClass === "card-feature-teal" ? "text-moss-dark/90" : tool.cardClass === "card-feature-coral" ? "text-coral-dark/90" : "text-slate font-sans font-normal"}`}
+                    class={`text-sm leading-relaxed ${
+                      tool.cardClass === "card-feature-yellow"
+                        ? "text-yellow-dark/90 dark:text-brand-yellow/90"
+                        : tool.cardClass === "card-feature-teal"
+                          ? "text-moss-dark/90 dark:text-brand-teal/90"
+                          : tool.cardClass === "card-feature-coral"
+                            ? "text-coral-dark/90 dark:text-brand-coral/90"
+                            : tool.cardClass === "card-feature-rose"
+                              ? "text-slate font-sans font-normal dark:text-brand-rose/90"
+                              : "text-slate font-sans font-normal"
+                    }`}
                   >
                     {tool.desc}
                   </p>
