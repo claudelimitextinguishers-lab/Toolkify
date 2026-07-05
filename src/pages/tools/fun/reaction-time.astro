@@ -3,8 +3,8 @@ import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
 const name = "Reaction Time Test";
-const category = "engagement";
-const tier = "Engagement Tools";
+const category = "fun";
+const tier = "Fun Tools";
 const description = "Test your cognitive reaction time and visual response speed. Check if your reflexes match a fighter pilot, F1 racer, or pro gamer.";
 
 // SEO metadata
@@ -29,7 +29,7 @@ const seoKeywords = "reaction time test, f1 reaction time test, online reaction 
       "@type": "WebApplication",
       "name": "Reaction Time Test",
       "alternateName": "Online Reaction Time Test & F1 Reflex Game",
-      "url": "https://boardtools.app/tools/engagement/reaction-time",
+      "url": "https://boardtools.app/tools/fun/reaction-time",
       "description": "Free online reaction time test that measures your visual stimulus response speed in milliseconds. This human reaction time test features multi-round trial averages, false-start detection, F1 and pro-gamer reflex benchmarks, and performance charts.",
       "applicationCategory": "GameApplication",
       "operatingSystem": "All",
@@ -111,7 +111,7 @@ const seoKeywords = "reaction time test, f1 reaction time test, online reaction 
           </h1>
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap">{tier}</span>
         </div>
-        <div class="flex items-center gap-2 self-end sm:self-auto">
+        <div class="flex items-center gap-2 self-end sm:self-auto flex-wrap">
           <!-- Audio Toggle -->
           <button
             type="button"
@@ -126,6 +126,32 @@ const seoKeywords = "reaction time test, f1 reaction time test, online reaction 
             <svg id="sound-off-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3" />
             </svg>
+          </button>
+
+          <!-- Share Tool Link Button -->
+          <button
+            type="button"
+            id="share-tool-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <!-- How It Works Button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How reaction time test works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
           </button>
 
           <!-- Reset Button -->
@@ -1062,7 +1088,81 @@ const seoKeywords = "reaction time test, f1 reaction time test, online reaction 
     // Reset button
     resetBtn?.addEventListener('click', () => {
       resetTest();
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
     });
+
+    // Share tool URL logic
+    const shareToolBtn = document.getElementById("share-tool-btn");
+    shareToolBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+
+      const shareData = {
+        title: document.title || "Reaction Time Test",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareToolBtn) {
+          const span = shareToolBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareToolBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareToolBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // How it works modal events
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
 
     // Cursor reactive grid glow
     testBox?.addEventListener('pointermove', (e: PointerEvent) => {
@@ -1075,9 +1175,72 @@ const seoKeywords = "reaction time test, f1 reaction time test, online reaction 
       }
     });
 
+    // Parse URL params on load
+    function loadState() {
+      resetTest();
+    }
+
+    window.addEventListener("popstate", loadState);
+
     // Initial page load
+    loadState();
     init();
   </script>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto z-50">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Reaction Time Test Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Test Mechanics</h4>
+        <p>
+          The test measures how quickly you respond to a visual stimulus. When you click the arena, it prepares the test. The box will turn red, warning you to wait. After a random delay (between 1.5 to 5 seconds), the box turns green.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Registering Your Response</h4>
+        <p>
+          The moment the box turns green, click or press spacebar as fast as you can. The tool records the difference in milliseconds between the green signal and your press.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. False Starts</h4>
+        <p>
+          If you click while the box is red, it registers a false start. You will have to restart that round.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Final Scoring Tiers</h4>
+        <p>
+          Your average over 5 completed rounds is calculated and compared to professional reflex tiers:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1">
+          <li><strong>Fighter Jet Pilot:</strong> Under 180 ms</li>
+          <li><strong>F1 Racer:</strong> 180–210 ms</li>
+          <li><strong>Pro Gamer:</strong> 210–240 ms</li>
+          <li><strong>Average Adult:</strong> 240–300 ms</li>
+          <li><strong>Sleepy Sloth:</strong> 450+ ms</li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 
   <!-- Animation & Effect Styles -->
   <style>

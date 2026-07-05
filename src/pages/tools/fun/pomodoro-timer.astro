@@ -3,8 +3,8 @@ import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Pomodoro / Focus Timer";
-const category = "engagement";
-const tier = "Engagement Tools";
+const category = "fun";
+const tier = "Fun Tools";
 
 // On-page SEO metadata
 // Primary keyword: "pomodoro timer"
@@ -15,7 +15,7 @@ const description =
 const keywords =
   "pomodoro timer, pomodoro timer app, pomodoro timer aesthetic, aesthetic pomodoro timer, pomodoro timer online, best pomodoro timer, online pomodoro timer, pomodoro, pomodoro method, pomodoro technique, pomodoro study method, focus, focus timer, pomodoro focus timer, focus timer app, focus timer online, deep focus timer, study focus timer, focus timer pomodoro";
 const canonical =
-  "https://boardtools.app/tools/engagement/pomodoro-timer";
+  "https://boardtools.app/tools/fun/pomodoro-timer";
 const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
 ---
 
@@ -37,7 +37,7 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
       "@type": "WebApplication",
       "name": "Pomodoro Timer - Aesthetic Online Focus Timer",
       "alternateName": "BoardTools Pomodoro / Focus Timer",
-      "url": "https://boardtools.app/tools/engagement/pomodoro-timer",
+      "url": "https://boardtools.app/tools/fun/pomodoro-timer",
       "description": "A free, aesthetic online Pomodoro timer and focus timer app. Customize focus and break intervals, track focus streaks, get background alerts, and unlock focus classification achievements using the Pomodoro technique.",
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "All",
@@ -76,14 +76,14 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Engagement Tools",
+          "name": "Fun Tools",
           "item": "https://boardtools.app/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Pomodoro Timer",
-          "item": "https://boardtools.app/tools/engagement/pomodoro-timer"
+          "item": "https://boardtools.app/tools/fun/pomodoro-timer"
         }
       ]
     }
@@ -210,6 +210,32 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
             title="Toggle browser notifications"
           >
             🔔
+          </button>
+
+          <!-- Share Tool Link Button -->
+          <button
+            type="button"
+            id="share-tool-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <!-- How It Works Button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Pomodoro timer works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
           </button>
 
           <!-- Reset Button -->
@@ -1447,6 +1473,11 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
       switchStage("focus");
       updateDashboard();
       evaluatePersona();
+
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
     }
 
     resetBtn?.addEventListener("click", resetAllStats);
@@ -1486,7 +1517,103 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
         });
     });
 
+    // Share tool URL logic
+    const shareToolBtn = document.getElementById("share-tool-btn");
+    shareToolBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("focus", focusMinutes.toString());
+      url.searchParams.set("short", shortMinutes.toString());
+      url.searchParams.set("long", longMinutes.toString());
+      url.searchParams.set("interval", longInterval.toString());
+
+      const shareData = {
+        title: document.title || "Pomodoro / Focus Timer",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareToolBtn) {
+          const span = shareToolBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareToolBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareToolBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // How it works modal events
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Parse URL params on load
+    function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      focusMinutes = urlParams.has("focus") ? parseInt(urlParams.get("focus") || "25", 10) : 25;
+      if (inputFocus) inputFocus.value = focusMinutes.toString();
+
+      shortMinutes = urlParams.has("short") ? parseInt(urlParams.get("short") || "5", 10) : 5;
+      if (inputShort) inputShort.value = shortMinutes.toString();
+
+      longMinutes = urlParams.has("long") ? parseInt(urlParams.get("long") || "15", 10) : 15;
+      if (inputLong) inputLong.value = longMinutes.toString();
+
+      longInterval = urlParams.has("interval") ? parseInt(urlParams.get("interval") || "4", 10) : 4;
+      if (inputInterval) inputInterval.value = longInterval.toString();
+
+      pauseTimer();
+      switchStage("focus");
+    }
+
+    window.addEventListener("popstate", loadState);
+
     // Init Page setup
+    loadState();
     completedSessions = parseInt(
       localStorage.getItem("pomodoro-sessions") || "0",
       10,
@@ -1506,6 +1633,55 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
     updateDashboard();
     evaluatePersona();
   </script>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto z-50">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Pomodoro Timer Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. The Pomodoro Method</h4>
+        <p>
+          The Pomodoro Technique is a time management method developed by Francesco Cirillo. It uses a timer to break work down into intervals, traditionally 25 minutes in length, separated by short breaks (typically 5 minutes).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Structured Cycle</h4>
+        <p>
+          The standard routine is:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1">
+          <li><strong>Focus Session:</strong> Work for 25 minutes.</li>
+          <li><strong>Short Break:</strong> Rest for 5 minutes.</li>
+          <li>Repeat the cycle 4 times.</li>
+          <li><strong>Long Break:</strong> Take a longer 15-minute break.</li>
+        </ul>
+
+        <h4 class="font-semibold text-primary">3. Customizing Your Timer</h4>
+        <p>
+          Expand the Timer Settings to adjust focus lengths, short breaks, long breaks, and cycles to fit your specific schedule.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 
   <!-- Animation & Effect Styles -->
   <style>

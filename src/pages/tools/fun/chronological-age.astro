@@ -3,8 +3,8 @@ import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Chronological Age Calculator";
-const category = "engagement";
-const tier = "Engagement Tools";
+const category = "fun";
+const tier = "Fun Tools";
 
 // On-page SEO metadata
 const pageTitle =
@@ -12,7 +12,7 @@ const pageTitle =
 const description =
   "Free chronological age calculator to find out your exact age in years, months, weeks, days, hours, minutes, and seconds. Online age calculator for testing, Pearson & Super Duper scoring.";
 const canonicalUrl =
-  "https://boardtools.app/tools/engagement/chronological-age";
+  "https://boardtools.app/tools/fun/chronological-age";
 const ogImage = "/og/chronological-age-calculator.png";
 const keywords =
   "chronological age calculator, chronological age calculator pearson, super duper chronological age calculator, chronological age calculator find out your age, chronological age calculator for testing, free chronological age calculator, chronological age calculator super duper, biological age vs chronological age calculator, chronological age calculator in months, chronological age calculator year and month, online chronological age calculator, chronological age calculator in years, chronological age calculator in weeks, chronological age calculator in days, chronological age calculator in hours, chronological age calculator in minutes, chronological age calculator in seconds";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Chronological Age Calculator",
       "alternateName": "Chronological Age Calculator (Find Out Your Age)",
-      "url": "https://boardtools.app/tools/engagement/chronological-age",
+      "url": "https://boardtools.app/tools/fun/chronological-age",
       "description": "Free online chronological age calculator that finds your exact age in years, months, weeks, days, hours, minutes, and seconds. Includes clinical 15-day rounding for testing (Pearson and Super Duper style scoring) and corrected age for prematurity.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -136,7 +136,7 @@ const keywords =
             >{tier}</span
           >
         </div>
-        <div class="flex items-center gap-2 self-end sm:self-auto">
+        <div class="flex items-center gap-2 self-end sm:self-auto flex-wrap">
           <!-- Audio Toggle -->
           <button
             type="button"
@@ -175,6 +175,32 @@ const keywords =
                 d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3"
               ></path>
             </svg>
+          </button>
+
+          <!-- Share Tool Link Button -->
+          <button
+            type="button"
+            id="share-tool-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <!-- How It Works Button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How chronological age calculator works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
           </button>
 
           <!-- Reset Button -->
@@ -1334,6 +1360,11 @@ const keywords =
       standardUncorrectedRow?.classList.add("hidden");
       clinicalUncorrectedRow?.classList.add("hidden");
 
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
+
       // Reset mode to standard
       setMode("standard");
 
@@ -1393,7 +1424,208 @@ const keywords =
         console.error("Report copy failed: ", err);
       });
     });
+
+    // Share tool URL logic
+    const shareToolBtn = document.getElementById("share-tool-btn");
+    shareToolBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("dob", inputDob.value);
+      url.searchParams.set("tob", inputTob.value);
+      url.searchParams.set("asof", inputAsof.value);
+      url.searchParams.set("asofTime", inputAsofTime.value);
+      url.searchParams.set("mode", activeMode);
+      if (toggleGestational.checked && inputPrematurity.value) {
+        url.searchParams.set("premature", inputPrematurity.value);
+      }
+      if (toggleRounding.checked) {
+        url.searchParams.set("rounding", "1");
+      }
+
+      const shareData = {
+        title: document.title || "Chronological Age Calculator",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareToolBtn) {
+          const span = shareToolBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareToolBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareToolBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // How it works modal events
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Parse URL params on load
+    function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("dob")) {
+        inputDob.value = urlParams.get("dob") || "";
+      } else {
+        inputDob.value = "";
+      }
+      if (urlParams.has("tob")) {
+        inputTob.value = urlParams.get("tob") || "00:00";
+      } else {
+        inputTob.value = "00:00";
+      }
+      if (urlParams.has("asof")) {
+        inputAsof.value = urlParams.get("asof") || "";
+      } else {
+        setDefaultDates();
+      }
+      if (urlParams.has("asofTime")) {
+        inputAsofTime.value = urlParams.get("asofTime") || "";
+      }
+      if (urlParams.has("mode")) {
+        const mode = urlParams.get("mode") as CalculatorMode;
+        if (mode === "standard" || mode === "clinical") {
+          setMode(mode);
+        }
+      } else {
+        setMode("standard");
+      }
+      if (urlParams.has("premature")) {
+        toggleGestational.checked = true;
+        gestationalInputWrapper?.classList.remove("hidden");
+        gestationalInputWrapper?.classList.add("flex");
+        inputPrematurity.value = urlParams.get("premature") || "";
+      } else {
+        toggleGestational.checked = false;
+        gestationalInputWrapper?.classList.add("hidden");
+        gestationalInputWrapper?.classList.remove("flex");
+        inputPrematurity.value = "";
+      }
+      if (urlParams.has("rounding")) {
+        toggleRounding.checked = urlParams.get("rounding") === "1";
+      } else {
+        toggleRounding.checked = false;
+      }
+      if (urlParams.has("dob")) {
+        triggerCalculation(false);
+      } else {
+        // Reset Output State
+        if (statusLabel) statusLabel.textContent = "Awaiting Input";
+        if (statusDot) {
+          statusDot.className = "relative inline-flex rounded-full h-2 w-2 bg-stone";
+        }
+        if (statusPulse) {
+          statusPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-stone opacity-75";
+        }
+        errorBanner?.classList.add("hidden");
+        resultStandardGrid?.classList.add("hidden");
+        resultStandardGrid?.classList.remove("grid");
+        resultClinicalBox?.classList.add("hidden");
+        milestonesBox?.classList.add("hidden");
+        actionBtnRow?.classList.add("hidden");
+        idleReadout?.classList.remove("hidden");
+        standardUncorrectedRow?.classList.add("hidden");
+        clinicalUncorrectedRow?.classList.add("hidden");
+      }
+    }
+
+    window.addEventListener("popstate", loadState);
+
+    loadState();
   </script>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto z-50">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Chronological Age Calculator Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Standard Date Calculations</h4>
+        <p>
+          Calculates the exact time elapsed between your date of birth and the chosen reference date (defaulting to today). It handles variations in month lengths (28, 29, 30, or 31 days) and leap years.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Clinical Mode (Assessment scoring)</h4>
+        <p>
+          Commonly used by clinicians and psychologists for tests like Pearson or Super Duper. It presents age as <code>Years;Months;Days</code>.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. 15-Day Rounding Rule</h4>
+        <p>
+          Under the 15-day rule (used in clinical testing), if the remaining days are 15 or more, the age rounds up to the next full month. If they are 14 or less, they are rounded down.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Gestational Adjustment</h4>
+        <p>
+          For infants born prematurely (before 37 weeks gestation), the corrected age is calculated by subtracting the weeks of prematurity from the chronological age.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 
   <!-- Animation & Effect Styles -->
   <style>

@@ -3,14 +3,14 @@ import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
 const name = "Spacebar Counter";
-const category = "engagement";
-const tier = "Engagement Tools";
+const category = "fun";
+const tier = "Fun Tools";
 
 // SEO metadata
 const seoTitle = "Spacebar Counter - Free Spacebar Speed Test Online";
 const description = "Spacebar Counter is a free online spacebar test to measure your space bar speed over 5, 10, 30 and 60 seconds. Try this spacebar counter game and beat your high score!";
 const keywords = "spacebar counter, space bar counter, spacebar test, space bar speed test, spacebar counter 60 seconds, spacebar counter 10 seconds, space bar counter 1 minute, space bar counter online, space bar counter test, space bar counter 30 seconds, space bar counter 60, spacebar speed test, spacebar counter 30, space bar test, spacebar counter 60 second test, spacebar counter 60 sec, spacebar counter unblocked, spacebar counter game, spacebar counter 5 seconds, spacebar counter timer, spacebar counter 1 seconds, spacebar counter 30 seconds unblocked, space spacebar counter";
-const canonical = "https://boardtools.app/tools/engagement/spacebar-counter";
+const canonical = "https://boardtools.app/tools/fun/spacebar-counter";
 const ogImage = "https://boardtools.app/og-spacebar-counter.png";
 ---
 
@@ -32,7 +32,7 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
       "@type": "WebApplication",
       "name": "Spacebar Counter",
       "alternateName": ["Space Bar Counter", "Spacebar Speed Test", "Space Bar Speed Test"],
-      "url": "https://boardtools.app/tools/engagement/spacebar-counter",
+      "url": "https://boardtools.app/tools/fun/spacebar-counter",
       "description": "Free online spacebar counter and spacebar speed test. Measure your space bar speed (presses per second) over 5, 10, 30, or 60 second windows with precise key-event handling and rich audio-visual feedback.",
       "applicationCategory": "GameApplication",
       "operatingSystem": "All",
@@ -118,7 +118,7 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
           </h1>
           <span class="bg-rose-light text-coral-dark text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap">{tier}</span>
         </div>
-        <div class="flex items-center gap-2 self-end sm:self-auto">
+        <div class="flex items-center gap-2 self-end sm:self-auto flex-wrap">
           <!-- Audio Toggle -->
           <button
             type="button"
@@ -133,6 +133,32 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
             <svg id="sound-off-icon" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zm10.914-4.5l3 3m0-3l-3 3" />
             </svg>
+          </button>
+
+          <!-- Share Tool Link Button -->
+          <button
+            type="button"
+            id="share-tool-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <!-- How It Works Button -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How spacebar counter works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
           </button>
 
           <!-- Reset Button -->
@@ -991,6 +1017,10 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
     // Reset buttons
     resetBtn?.addEventListener("click", () => {
       resetTest();
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
     });
 
     restartTestBtn?.addEventListener("click", () => {
@@ -1018,13 +1048,163 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
         });
     });
 
+    // Share tool URL logic
+    const shareToolBtn = document.getElementById("share-tool-btn");
+    shareToolBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("duration", selectedDuration.toString());
+
+      const shareData = {
+        title: document.title || "Spacebar Counter",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareToolBtn) {
+          const span = shareToolBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareToolBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareToolBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // How it works modal events
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Parse URL params on load
+    function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const dur = urlParams.has("duration") ? parseInt(urlParams.get("duration") || "10", 10) : 10;
+      if ([5, 10, 30, 60].includes(dur)) {
+        selectedDuration = dur;
+        durationBtns.forEach((btn) => {
+          const btnSec = parseInt(btn.getAttribute("data-seconds") || "10", 10);
+          if (btnSec === dur) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+        if (outputTimeLeft) {
+          outputTimeLeft.textContent = selectedDuration.toFixed(1) + "s";
+        }
+      }
+      resetTest();
+    }
+
+    window.addEventListener("popstate", loadState);
+
     // Auto-focus on mount
     setTimeout(() => {
       spacebarArena?.focus();
     }, 100);
 
+    loadState();
     resetTest();
   </script>
+
+  <!-- Help / How it works Guide Overlay Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto z-50">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Spacebar Counter Works</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Spacebar Test Metrics</h4>
+        <p>
+          Measures your tapping speed by calculating presses per second (PPS) over standard durations. The calculation is: <code>PPS = Total Spacebar Hits / Duration</code>.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Taking the Test</h4>
+        <p>
+          Select a test duration (5s, 10s, 30s, or 60s) from the header panel. Start tapping the spacebar repeatedly. The timer starts automatically on your first press.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Safeguards</h4>
+        <p>
+          The system ensures you physically press and release the spacebar. Holding down the keycap will not count as multiple presses. Focus must be maintained on the arena to register keys.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Speed Classification Tiers</h4>
+        <p>
+          At the end of the timer, your average presses per second is compared to human speed tiers:
+        </p>
+        <ul class="list-disc pl-4 flex flex-col gap-1">
+          <li><strong>Elite Gamer:</strong> 8+ PPS</li>
+          <li><strong>Pro Tapper:</strong> 6–8 PPS</li>
+          <li><strong>Fast:</strong> 5–6 PPS</li>
+          <li><strong>Average:</strong> 4–5 PPS</li>
+          <li><strong>Slower:</strong> Under 4 PPS</li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
 
   <!-- Animation & Effect Styles -->
   <style>
