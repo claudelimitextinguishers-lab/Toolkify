@@ -132,10 +132,10 @@ const keywords =
   </script>
 
   <section
-    class="max-w-[760px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16"
+    class="max-w-[760px] w-full mx-auto px-4 py-3 flex flex-col gap-4 animate-fade-in-up pb-16"
   >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-1">
+    <div class="flex flex-col gap-1.5">
       <nav
         class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
         aria-label="Breadcrumb"
@@ -147,14 +147,76 @@ const keywords =
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
 
-      <div class="flex items-center gap-2 mt-0.5">
-        <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span
-          class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase"
-          >{tier}</span
-        >
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase shrink-0"
+            >{tier}</span
+          >
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How tip calculator works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset calculator inputs"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -523,6 +585,53 @@ const keywords =
         </div>
       </div>
     </div>
+
+    <!-- How it works modal -->
+    <div
+      id="how-it-works-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-primary/40 backdrop-blur-sm p-4 hidden"
+    >
+      <div
+        class="bg-canvas border border-hairline w-full max-w-[500px] rounded-2xl shadow-premium p-6 flex flex-col gap-4 animate-fade-in-up text-left"
+      >
+        <div class="flex items-center justify-between border-b border-hairline pb-3">
+          <h3 class="font-display font-semibold text-lg text-primary">How Tip Calculator Works</h3>
+          <button
+            type="button"
+            id="close-modal-btn"
+            class="text-slate hover:text-primary cursor-pointer transition-colors text-xl font-bold"
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
+        </div>
+
+        <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+          <h4 class="font-semibold text-primary">1. Tip Amount Calculation</h4>
+          <p>
+            The tip amount is calculated by multiplying the bill amount by the tip percentage divided by 100:
+          </p>
+          <div class="p-2.5 bg-surface font-mono rounded-lg border border-hairline text-center text-primary">
+            Tip = Bill Amount &times; (Tip Percentage / 100)
+          </div>
+
+          <h4 class="font-semibold text-primary">2. Split Bill Division</h4>
+          <p>
+            The total bill (Bill Amount + Tip) and the calculated tip are divided evenly among the number of people sharing:
+          </p>
+          <div class="p-2.5 bg-surface font-mono rounded-lg border border-hairline text-center text-primary">
+            Total Per Person = (Bill Amount + Tip) / Number of People
+          </div>
+        </div>
+        <button
+          type="button"
+          id="modal-ok-btn"
+          class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
   </section>
 
   <script>
@@ -556,13 +665,27 @@ const keywords =
 
     // Load initial values from localStorage if available
     function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const getSafeItem = (key: string): string | null => {
+        const paramKey = key.replace("tip-calculator-", "");
+        if (urlParams.has(paramKey)) {
+          return urlParams.get(paramKey);
+        }
+        if (typeof localStorage === 'undefined') return null;
+        try {
+          return localStorage.getItem(key);
+        } catch (e) {
+          return null;
+        }
+      };
+
       try {
-        const savedCurrency = localStorage.getItem("tip-calculator-currency");
-        const savedCustomSymbol = localStorage.getItem("tip-calculator-custom-symbol");
-        const savedCustomCode = localStorage.getItem("tip-calculator-custom-code");
-        const savedTip = localStorage.getItem("tip-calculator-tip-pct");
-        const savedSplit = localStorage.getItem("tip-calculator-split");
-        const savedBill = localStorage.getItem("tip-calculator-bill");
+        const savedCurrency = getSafeItem("tip-calculator-currency");
+        const savedCustomSymbol = getSafeItem("tip-calculator-custom-symbol");
+        const savedCustomCode = getSafeItem("tip-calculator-custom-code");
+        const savedTip = getSafeItem("tip-calculator-tip-pct");
+        const savedSplit = getSafeItem("tip-calculator-split");
+        const savedBill = getSafeItem("tip-calculator-bill");
 
         if (savedCustomSymbol && customCurrencySymbolInput) {
           customCurrencySymbolInput.value = savedCustomSymbol;
@@ -786,6 +909,93 @@ const keywords =
       updateCurrencyFromSelect();
       setTipPercentage(15);
       calculate();
+    });
+
+    // Modal control events
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal?.classList.add("hidden");
+      }
+    });
+
+    // Share button copy link logic
+    const shareBtn = document.getElementById("share-btn");
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      if (currencySelect) url.searchParams.set("currency", currencySelect.value);
+      if (customCurrencySymbolInput) url.searchParams.set("custom-symbol", customCurrencySymbolInput.value);
+      if (customCurrencyCodeInput) url.searchParams.set("custom-code", customCurrencyCodeInput.value);
+      url.searchParams.set("tip-pct", currentTipPct.toString());
+      url.searchParams.set("split", splitPeopleInput.value);
+      url.searchParams.set("bill", billAmountInput.value);
+
+      const shareData = {
+        title: document.title || "Toolkify",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
     });
 
     // Initialize Page

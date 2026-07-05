@@ -167,8 +167,27 @@ const keywords =
 
         <button
           type="button"
+          id="share-btn"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center"
+          aria-label="Share tool link"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>Share</span>
+        </button>
+
+        <button
+          type="button"
           id="how-it-works-btn"
-          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center"
           aria-label="How paycheck calculator works"
         >
           <svg
@@ -186,10 +205,30 @@ const keywords =
           >
           <span>How it works</span>
         </button>
+
+        <button
+          type="button"
+          id="reset-btn"
+          class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle self-center"
+          aria-label="Reset calculator inputs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-3.5 h-3.5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+            ></path>
+          </svg>
+          <span>Reset</span>
+        </button>
       </div>
-      <p class="text-sm text-slate max-w-xl">
-        {description}
-      </p>
     </div>
 
     <!-- Main Workspace Area -->
@@ -3186,6 +3225,137 @@ const keywords =
           scrollToElementWithOffset("results-column", 80);
         });
       }
+
+      // Reset button logic
+      const resetBtn = document.getElementById("reset-btn");
+      resetBtn?.addEventListener("click", () => {
+        window.location.reload();
+      });
+
+      // Share button copy link logic
+      const shareBtn = document.getElementById("share-btn");
+      shareBtn?.addEventListener("click", () => {
+        const url = new URL(window.location.origin + window.location.pathname);
+        url.searchParams.set("mode", salaryMode);
+        url.searchParams.set("salary", annualSalaryInput.value);
+        url.searchParams.set("hourly_rate", hourlyRateInput.value);
+        url.searchParams.set("hours", hoursWeekInput.value);
+        url.searchParams.set("freq", payFrequencySelect.value);
+        url.searchParams.set("status", filingStatusSelect.value);
+        url.searchParams.set("country", countrySelect.value);
+        url.searchParams.set("state", stateSelect.value);
+        url.searchParams.set("ded_401k", ded401kInput.value);
+        url.searchParams.set("ded_401k_unit", ded401kUnitSelect.value);
+        url.searchParams.set("ded_health", dedHealthInput.value);
+        url.searchParams.set("ded_hsa", dedHsaInput.value);
+
+        const shareData = {
+          title: document.title || "Toolkify",
+          url: url.toString()
+        };
+
+        if (navigator.share) {
+          navigator.share(shareData).catch((err) => {
+            if (err.name !== "AbortError") {
+              copyToClipboard(url.toString());
+            }
+          });
+        } else {
+          copyToClipboard(url.toString());
+        }
+
+        function copyToClipboard(text: string) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+          } else {
+            fallbackCopy(text);
+          }
+        }
+
+        function fallbackCopy(text: string) {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand("copy");
+            showSuccess();
+          } catch (err) {
+            console.error(err);
+          }
+          document.body.removeChild(textArea);
+        }
+
+        function showSuccess() {
+          if (shareBtn) {
+            const span = shareBtn.querySelector("span");
+            if (span) {
+              const originalText = span.textContent || "Share";
+              span.textContent = "Link Copied!";
+              shareBtn.classList.add("text-success-accent", "border-success-accent");
+              setTimeout(() => {
+                span.textContent = originalText;
+                shareBtn.classList.remove("text-success-accent", "border-success-accent");
+              }, 2000);
+            }
+          }
+        }
+      });
+
+      // Load parameters on initial run
+      function loadState() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("mode")) {
+          const mode = urlParams.get("mode");
+          if (mode === "hourly" && modeHourlyBtn) {
+            modeHourlyBtn.click();
+          } else if (modeAnnualBtn) {
+            modeAnnualBtn.click();
+          }
+          if (urlParams.has("salary")) {
+            annualSalaryInput.value = urlParams.get("salary") || "75000";
+            if (annualSalaryRange) annualSalaryRange.value = urlParams.get("salary") || "75000";
+          }
+          if (urlParams.has("hourly_rate")) {
+            hourlyRateInput.value = urlParams.get("hourly_rate") || "35";
+            if (hourlyRateRange) hourlyRateRange.value = urlParams.get("hourly_rate") || "35";
+          }
+          if (urlParams.has("hours")) {
+            hoursWeekInput.value = urlParams.get("hours") || "40";
+            if (hoursWeekRange) hoursWeekRange.value = urlParams.get("hours") || "40";
+          }
+          if (urlParams.has("freq")) {
+            payFrequencySelect.value = urlParams.get("freq") || "semimonthly";
+          }
+          if (urlParams.has("status")) {
+            filingStatusSelect.value = urlParams.get("status") || "single";
+          }
+          if (urlParams.has("country")) {
+            countrySelect.value = urlParams.get("country") || "US";
+            countrySelect.dispatchEvent(new Event("change"));
+          }
+          if (urlParams.has("state")) {
+            stateSelect.value = urlParams.get("state") || "CA";
+          }
+          if (urlParams.has("ded_401k")) {
+            ded401kInput.value = urlParams.get("ded_401k") || "6";
+          }
+          if (urlParams.has("ded_401k_unit")) {
+            ded401kUnitSelect.value = urlParams.get("ded_401k_unit") || "percent";
+          }
+          if (urlParams.has("ded_health")) {
+            dedHealthInput.value = urlParams.get("ded_health") || "150";
+          }
+          if (urlParams.has("ded_hsa")) {
+            dedHsaInput.value = urlParams.get("ded_hsa") || "50";
+          }
+        }
+      }
+
+      // Load initial state
+      loadState();
 
       // Pinboard initialization
       renderScenariosGrid();

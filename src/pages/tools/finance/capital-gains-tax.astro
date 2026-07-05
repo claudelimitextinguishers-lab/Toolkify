@@ -141,10 +141,10 @@ const keywords =
   </script>
 
   <section
-    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in-up pb-24 lg:pb-12"
+    class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-3 flex flex-col gap-4 animate-fade-in-up pb-24 lg:pb-12"
   >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-1.5">
       <nav
         class="flex items-center gap-1.5 text-xs font-semibold text-slate uppercase"
         aria-label="Breadcrumb"
@@ -155,68 +155,79 @@ const keywords =
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1
-          class="font-display font-medium text-3xl sm:text-4xl tracking-tight text-primary"
-        >
-          {name}
-        </h1>
-        <span
-          class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase"
-          >{tier}</span
-        >
-
-        <button
-          type="button"
-          id="how-it-works-btn"
-          class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle self-center animate-pulse"
-          aria-label="How capital gains tax estimator works"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-3.5 h-3.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2.5"
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-2xl sm:text-3xl tracking-tight text-primary"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-          <span>How it works</span>
-        </button>
-      </div>
-      <p class="text-sm text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+            {name}
+          </h1>
+          <span
+            class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2.5 rounded-full font-semibold uppercase shrink-0"
+            >{tier}</span
+          >
+        </div>
 
-    <!-- Mode / Toolbar (Pill Style) -->
-    <div class="flex items-center justify-start border-b border-hairline pb-3">
-      <button
-        type="button"
-        id="reset-btn"
-        class="inline-flex items-center gap-1 text-xs font-semibold px-3.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-3 h-3"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2.5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-          ></path>
-        </svg>
-        <span>Reset</span>
-      </button>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How capital gains tax estimator works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-red-dark hover:border-brand-red rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset calculator inputs"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Custom Currency Overlay (Hidden by default) -->
@@ -2677,48 +2688,52 @@ const keywords =
     }
 
     function loadState() {
-      if (typeof localStorage === "undefined") return false;
+      const urlParams = new URLSearchParams(window.location.search);
+      const getSafeItem = (key: string, defaultValue: string = ""): string => {
+        const paramKey = key.replace("cgt_", "");
+        if (urlParams.has(paramKey)) {
+          return urlParams.get(paramKey) || defaultValue;
+        }
+        if (typeof localStorage === "undefined") return defaultValue;
+        try {
+          return localStorage.getItem(key) || defaultValue;
+        } catch (e) {
+          return defaultValue;
+        }
+      };
+
       try {
-        const country = localStorage.getItem("cgt_country");
+        const country = getSafeItem("cgt_country");
         if (!country) return false;
         currencySelect.value = country;
 
-        const asset = localStorage.getItem("cgt_asset") || "stocks";
+        const asset = getSafeItem("cgt_asset", "stocks");
         selectedAsset = asset;
 
         // Populate options first
         updateLayoutForCountry();
 
-        const state = localStorage.getItem("cgt_state");
+        const state = getSafeItem("cgt_state");
         if (state && stateSelect) stateSelect.value = state;
 
-        purchasePriceInput.value =
-          localStorage.getItem("cgt_purchase_price") || "10000";
-        salePriceInput.value =
-          localStorage.getItem("cgt_sale_price") || "25000";
-        annualIncomeInput.value = localStorage.getItem("cgt_income") || "75000";
+        purchasePriceInput.value = getSafeItem("cgt_purchase_price", "10000");
+        salePriceInput.value = getSafeItem("cgt_sale_price", "25000");
+        annualIncomeInput.value = getSafeItem("cgt_income", "75000");
 
-        const long = localStorage.getItem("cgt_holding_long");
+        const long = getSafeItem("cgt_holding_long");
         if (long) toggleHolding(long === "true");
 
-        purchaseDateInput.value =
-          localStorage.getItem("cgt_purchase_date") || "";
-        saleDateInput.value = localStorage.getItem("cgt_sale_date") || "";
-        improvementsInput.value =
-          localStorage.getItem("cgt_improvements") || "0";
-        sellingFeesInput.value =
-          localStorage.getItem("cgt_selling_fees") || "0";
-        filingStatusSelect.value =
-          localStorage.getItem("cgt_filing") || "single";
+        purchaseDateInput.value = getSafeItem("cgt_purchase_date", "");
+        saleDateInput.value = getSafeItem("cgt_sale_date", "");
+        improvementsInput.value = getSafeItem("cgt_improvements", "0");
+        sellingFeesInput.value = getSafeItem("cgt_selling_fees", "0");
+        filingStatusSelect.value = getSafeItem("cgt_filing", "single");
 
-        euFlatRateSlider.value =
-          localStorage.getItem("cgt_eu_flat_rate") || "25";
+        euFlatRateSlider.value = getSafeItem("cgt_eu_flat_rate", "25");
         if (euFlatRateDisplay)
           euFlatRateDisplay.textContent = `${euFlatRateSlider.value}%`;
-        customCurrencySymbolInput.value =
-          localStorage.getItem("cgt_custom_currency_symbol") || "$";
-        customCurrencyCodeInput.value =
-          localStorage.getItem("cgt_custom_currency_code") || "USD";
+        customCurrencySymbolInput.value = getSafeItem("cgt_custom_currency_symbol", "$");
+        customCurrencyCodeInput.value = getSafeItem("cgt_custom_currency_code", "USD");
 
         updateAssetSelection(selectedAsset);
         return true;
@@ -2944,6 +2959,81 @@ const keywords =
       modalOkBtn?.addEventListener("click", () =>
         howItWorksModal?.classList.add("hidden"),
       );
+
+      // Share button copy link logic
+      const shareBtn = document.getElementById("share-btn");
+      shareBtn?.addEventListener("click", () => {
+        const url = new URL(window.location.origin + window.location.pathname);
+        url.searchParams.set("country", currencySelect.value);
+        url.searchParams.set("asset", selectedAsset);
+        if (stateSelect) url.searchParams.set("state", stateSelect.value);
+        url.searchParams.set("purchase_price", purchasePriceInput.value);
+        url.searchParams.set("sale_price", salePriceInput.value);
+        url.searchParams.set("income", annualIncomeInput.value);
+        url.searchParams.set("holding_long", isHoldingLong ? "true" : "false");
+        url.searchParams.set("purchase_date", purchaseDateInput.value);
+        url.searchParams.set("sale_date", saleDateInput.value);
+        url.searchParams.set("improvements", improvementsInput.value);
+        url.searchParams.set("selling_fees", sellingFeesInput.value);
+        url.searchParams.set("filing", filingStatusSelect.value);
+        url.searchParams.set("eu_flat_rate", euFlatRateSlider.value);
+        url.searchParams.set("custom_currency_symbol", customCurrencySymbolInput.value);
+        url.searchParams.set("custom_currency_code", customCurrencyCodeInput.value);
+
+        const shareData = {
+          title: document.title || "Toolkify",
+          url: url.toString()
+        };
+
+        if (navigator.share) {
+          navigator.share(shareData).catch((err) => {
+            if (err.name !== "AbortError") {
+              copyToClipboard(url.toString());
+            }
+          });
+        } else {
+          copyToClipboard(url.toString());
+        }
+
+        function copyToClipboard(text: string) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+          } else {
+            fallbackCopy(text);
+          }
+        }
+
+        function fallbackCopy(text: string) {
+          const textArea = document.createElement("textarea");
+          textArea.value = text;
+          textArea.style.position = "fixed";
+          textArea.style.opacity = "0";
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand("copy");
+            showSuccess();
+          } catch (err) {
+            console.error(err);
+          }
+          document.body.removeChild(textArea);
+        }
+
+        function showSuccess() {
+          if (shareBtn) {
+            const span = shareBtn.querySelector("span");
+            if (span) {
+              const originalText = span.textContent || "Share";
+              span.textContent = "Link Copied!";
+              shareBtn.classList.add("text-success-accent", "border-success-accent");
+              setTimeout(() => {
+                span.textContent = originalText;
+                shareBtn.classList.remove("text-success-accent", "border-success-accent");
+              }, 2000);
+            }
+          }
+        }
+      });
       howItWorksModal?.addEventListener("click", (e) => {
         if (e.target === howItWorksModal) {
           howItWorksModal.classList.add("hidden");
