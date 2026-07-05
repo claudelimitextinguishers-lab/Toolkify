@@ -117,26 +117,54 @@ const keywords =
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
-      <div class="flex items-center justify-between mt-0.5 gap-4">
-        <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
             {name}
           </h1>
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
         </div>
-        <button
-          type="button"
-          id="reset-btn"
-          class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-          aria-label="Reset calculator inputs"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
-          </svg>
-          <span>Reset</span>
-        </button>
+        
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How calorie deficit calculator works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset calculator inputs"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
     </div>
+
 
     <!-- Workspace Container (Zero-Scroll Compact Layout) -->
     <div class="card-base p-4 sm:p-5 flex flex-col gap-4">
@@ -962,6 +990,52 @@ const keywords =
       window.scrollTo(0, 0);
     });
 
+    // Help / How it works Guide Overlay Modal HTML injection
+    const modalHtml = `
+      <div
+        id="how-it-works-modal"
+        class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+      >
+        <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+          <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+            <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Calorie Deficit Calculator Works</h3>
+            <button
+              type="button"
+              id="close-modal-btn"
+              class="text-stone hover:text-primary transition-all text-lg cursor-pointer bg-transparent border-none"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+            <h4 class="font-semibold text-primary">1. BMR & TDEE Calculations</h4>
+            <p>
+              Your Basal Metabolic Rate (BMR) is estimated using the Mifflin-St Jeor equation (or Katch-McArdle if body fat % is provided). Total Daily Energy Expenditure (TDEE) is BMR multiplied by your physical activity level.
+            </p>
+
+            <h4 class="font-semibold text-primary">2. Defining a Deficit</h4>
+            <p>
+              To lose weight, you must create a calorie deficit by consuming fewer calories than your TDEE. For example, a 500 kcal daily deficit yields approximately 0.5 kg (1 lb) of weight loss per week.
+            </p>
+
+            <h4 class="font-semibold text-primary">3. Safety Warning Floors</h4>
+            <p>
+              Consuming too few calories drops below safe metabolic floors (1,200 kcal/day for females, 1,500 kcal/day for males). The calculator flags these ranges to support sustainable, healthy plans.
+            </p>
+          </div>
+          <button
+            type="button"
+            id="modal-ok-btn"
+            class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+
     // Set target date min limit to tomorrow and max to 5 years from today
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -972,22 +1046,113 @@ const keywords =
       targetdateInput.max = maxDate.toISOString().split("T")[0];
     }
 
-    // Load state from localStorage
+    const shareBtn = document.getElementById("share-btn");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // Modal Events
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Share Event
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("unit", currentUnit);
+      url.searchParams.set("sex", sex);
+      url.searchParams.set("age", age.toString());
+      url.searchParams.set("h-cm", heightCm.toString());
+      url.searchParams.set("h-ft", heightFt.toString());
+      url.searchParams.set("h-in", heightIn.toString());
+      url.searchParams.set("w-kg", weightKg.toString());
+      url.searchParams.set("w-lbs", weightLbs.toString());
+      url.searchParams.set("act", activityMultiplier.toString());
+      url.searchParams.set("deficit", selectedDeficit.toString());
+      if (bodyfatInput) url.searchParams.set("bf", bodyfatInput.value);
+      if (targetweightInput) url.searchParams.set("tw", targetweightInput.value);
+      if (targetdateInput) url.searchParams.set("td", targetdateInput.value);
+
+      const shareData = {
+        title: document.title || "Calorie Deficit Calculator",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // Load state from localStorage or URLParams
     function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      // get(lsKey, urlKey): URL params always take priority over localStorage
+      const get = (lsKey: string, urlKey: string): string | null => {
+        if (urlParams.has(urlKey)) return urlParams.get(urlKey);
+        if (typeof localStorage === 'undefined') return null;
+        try { return localStorage.getItem(lsKey); } catch (e) { return null; }
+      };
+
       try {
-        const savedUnit = localStorage.getItem("calorie-unit");
-        const savedSex = localStorage.getItem("calorie-sex");
-        const savedAge = localStorage.getItem("calorie-age");
-        const savedHeightCm = localStorage.getItem("calorie-height-cm");
-        const savedHeightFt = localStorage.getItem("calorie-height-ft");
-        const savedHeightIn = localStorage.getItem("calorie-height-in");
-        const savedWeightKg = localStorage.getItem("calorie-weight-kg");
-        const savedWeightLbs = localStorage.getItem("calorie-weight-lbs");
-        const savedActivity = localStorage.getItem("calorie-activity");
-        const savedDeficit = localStorage.getItem("calorie-deficit");
-        const savedBodyFat = localStorage.getItem("calorie-bodyfat");
-        const savedTargetWeight = localStorage.getItem("calorie-target-weight");
-        const savedTargetDate = localStorage.getItem("calorie-target-date");
+        const savedUnit = get("calorie-unit", "unit");
+        const savedSex = get("calorie-sex", "sex");
+        const savedAge = get("calorie-age", "age");
+        const savedHeightCm = get("calorie-height-cm", "h-cm");
+        const savedHeightFt = get("calorie-height-ft", "h-ft");
+        const savedHeightIn = get("calorie-height-in", "h-in");
+        const savedWeightKg = get("calorie-weight-kg", "w-kg");
+        const savedWeightLbs = get("calorie-weight-lbs", "w-lbs");
+        const savedActivity = get("calorie-activity", "act");
+        const savedDeficit = get("calorie-deficit", "deficit");
+        const savedBodyFat = get("calorie-bodyfat", "bf");
+        const savedTargetWeight = get("calorie-target-weight", "tw");
+        const savedTargetDate = get("calorie-target-date", "td");
 
         if (savedUnit) currentUnit = savedUnit;
         if (savedSex) sex = savedSex;
@@ -1640,6 +1805,12 @@ const keywords =
 
       // Reset button event
       resetBtn?.addEventListener("click", () => {
+        // Clear URL parameters
+        if (window.history.pushState) {
+          const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.pushState({path:newurl}, '', newurl);
+        }
+
         const keys = [
           "calorie-unit",
           "calorie-sex",

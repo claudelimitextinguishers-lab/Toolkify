@@ -145,24 +145,51 @@ const keywords =
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
-      <div class="flex items-center justify-between mt-0.5 gap-4">
-        <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
             {name}
           </h1>
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
         </div>
-        <button
-          type="button"
-          id="reset-btn"
-          class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-          aria-label="Reset calculator inputs"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
-          </svg>
-          <span>Reset</span>
-        </button>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How sleep cycle calculator works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset calculator inputs"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -779,16 +806,100 @@ const keywords =
       "older-adult": { minMins: 420, maxMins: 480, idealCycles: [5], label: "Older Adult (65+ yrs)" }
     };
 
-    // Load state from localStorage
+    // How it works modal injection
+    const modalHtml = `
+      <div
+        id="how-it-works-modal"
+        class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+      >
+        <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+          <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+            <h3 class="font-display font-semibold text-lg text-primary">How the Sleep Cycle Calculator Works</h3>
+            <button type="button" id="close-modal-btn" class="text-stone hover:text-primary transition-all text-lg cursor-pointer bg-transparent border-none">&#x2715;</button>
+          </div>
+          <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+            <h4 class="font-semibold text-primary">1. The 90-Minute Sleep Cycle</h4>
+            <p>The average human sleep cycle lasts about 90 minutes, passing through light sleep, deep slow-wave sleep, and REM sleep. Waking at the natural end of a cycle — rather than mid-cycle — dramatically reduces grogginess (sleep inertia).</p>
+            <h4 class="font-semibold text-primary">2. Fall-Asleep Buffer</h4>
+            <p>It typically takes 10–20 minutes to fall asleep after lying down. The calculator adds this buffer (default 15 min) so your recommended bedtime or wake-up time accounts for real-world sleep onset, not just the moment you close your eyes.</p>
+            <h4 class="font-semibold text-primary">3. Age-Based Recommendations</h4>
+            <p>The number of ideal sleep cycles varies by age. Adults need 5–6 cycles (~7.5–9 hrs), while children and teens need 6–9 cycles. The calculator highlights the optimal range for your selected age group.</p>
+          </div>
+          <button type="button" id="modal-ok-btn" class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer">Got it</button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+    const shareBtn = document.getElementById("share-btn");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("dir", currentDirection);
+      url.searchParams.set("wake", inputWakeTime?.value || "07:00");
+      url.searchParams.set("sleep", inputSleepTime?.value || "22:00");
+      url.searchParams.set("len", cycleLength.toString());
+      url.searchParams.set("buf", fallAsleepBuffer.toString());
+      url.searchParams.set("age", ageGroup);
+      url.searchParams.set("idx", selectedOptionIndex.toString());
+
+      const shareData = { title: document.title || "Sleep Cycle Calculator", url: url.toString() };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") copyToClipboard(url.toString());
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      }
+      function fallbackCopy(text: string) {
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); showSuccess(); } catch(e) {}
+        document.body.removeChild(ta);
+      }
+      function showSuccess() {
+        if (!shareBtn) return;
+        const span = shareBtn.querySelector("span");
+        if (!span) return;
+        const orig = span.textContent || "Share";
+        span.textContent = "Link Copied!";
+        shareBtn.classList.add("text-success-accent", "border-success-accent");
+        setTimeout(() => { span.textContent = orig; shareBtn.classList.remove("text-success-accent", "border-success-accent"); }, 2000);
+      }
+    });
+
+    // Load state from localStorage or URL params
     function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const get = (lsKey: string, urlKey: string): string | null => {
+        if (urlParams.has(urlKey)) return urlParams.get(urlKey);
+        try { return localStorage.getItem(lsKey); } catch(e) { return null; }
+      };
+
       try {
-        const savedDirection = localStorage.getItem("sleep-cycle-direction");
-        const savedTargetWake = localStorage.getItem("sleep-cycle-target-wake");
-        const savedTargetSleep = localStorage.getItem("sleep-cycle-target-sleep");
-        const savedLength = localStorage.getItem("sleep-cycle-length");
-        const savedBuffer = localStorage.getItem("sleep-cycle-buffer");
-        const savedAge = localStorage.getItem("sleep-cycle-age");
-        const savedIndex = localStorage.getItem("sleep-cycle-selected-index");
+        const savedDirection = get("sleep-cycle-direction", "dir");
+        const savedTargetWake = get("sleep-cycle-target-wake", "wake");
+        const savedTargetSleep = get("sleep-cycle-target-sleep", "sleep");
+        const savedLength = get("sleep-cycle-length", "len");
+        const savedBuffer = get("sleep-cycle-buffer", "buf");
+        const savedAge = get("sleep-cycle-age", "age");
+        const savedIndex = get("sleep-cycle-selected-index", "idx");
 
         if (savedDirection) currentDirection = savedDirection;
         if (savedTargetWake && inputWakeTime) inputWakeTime.value = savedTargetWake;
@@ -805,11 +916,9 @@ const keywords =
           ageGroup = savedAge;
           inputAgeGroup.value = savedAge;
         }
-        if (savedIndex) {
-          selectedOptionIndex = parseInt(savedIndex, 10);
-        }
+        if (savedIndex) selectedOptionIndex = parseInt(savedIndex, 10);
       } catch (e) {
-        console.warn("Failed to load state from localStorage:", e);
+        console.warn("Failed to load state:", e);
       }
       updateDirectionUI();
       calculate();
@@ -1232,6 +1341,11 @@ const keywords =
 
     // Reset button listener
     resetBtn?.addEventListener("click", () => {
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({ path: newurl }, "", newurl);
+      }
+
       const keys = [
         "sleep-cycle-direction",
         "sleep-cycle-target-wake",
@@ -1243,7 +1357,6 @@ const keywords =
       ];
       keys.forEach(k => localStorage.removeItem(k));
 
-      // Reset values
       currentDirection = "wake";
       cycleLength = 90;
       fallAsleepBuffer = 15;
@@ -1259,7 +1372,6 @@ const keywords =
       updateDirectionUI();
       calculate();
 
-      // close sections
       if (advancedPanel) {
         advancedPanel.classList.remove("max-h-[500px]", "overflow-visible");
         advancedPanel.classList.add("max-h-0", "overflow-hidden");

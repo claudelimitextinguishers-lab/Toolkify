@@ -117,24 +117,51 @@ const keywords =
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
       </nav>
-      <div class="flex items-center justify-between mt-0.5 gap-4">
-        <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
             {name}
           </h1>
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
         </div>
-        <button
-          type="button"
-          id="reset-btn"
-          class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-          aria-label="Reset calculator inputs"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
-          </svg>
-          <span>Reset</span>
-        </button>
+        
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How macro calculator works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset calculator inputs"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1109,6 +1136,52 @@ const keywords =
       window.scrollTo(0, 0);
     });
 
+    // Help / How it works Guide Overlay Modal HTML injection
+    const modalHtml = `
+      <div
+        id="how-it-works-modal"
+        class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+      >
+        <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+          <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+            <h3 class="font-display font-semibold text-lg text-primary font-medium">How the Macro Calculator Works</h3>
+            <button
+              type="button"
+              id="close-modal-btn"
+              class="text-stone hover:text-primary transition-all text-lg cursor-pointer bg-transparent border-none"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+            <h4 class="font-semibold text-primary">1. Caloric Target Definition</h4>
+            <p>
+              Your TDEE is computed based on your BMR (Mifflin-St Jeor or Katch-McArdle) and activity level. Depending on your chosen goal (fat loss, muscle gain, or recomposition), a caloric deficit or surplus is applied to establish your daily target.
+            </p>
+
+            <h4 class="font-semibold text-primary">2. Diet Presets & Ratio Splits</h4>
+            <p>
+              Your target calories are distributed into Protein, Carbohydrates, and Fats according to standard science-backed macronutrient templates (e.g. Balanced 30/40/30, High Protein 40/30/30, Low Carb 25/15/60, or a Custom percentage/gram setup).
+            </p>
+
+            <h4 class="font-semibold text-primary">3. Meal Distribution</h4>
+            <p>
+              The calculated daily macros are broken down evenly across your preferred number of meals to plan your daily nutrition scheduling efficiently.
+            </p>
+          </div>
+          <button
+            type="button"
+            id="modal-ok-btn"
+            class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML("beforeend", modalHtml);
+
     // Load state from localStorage
     function loadState() {
       try {
@@ -1918,8 +1991,188 @@ const keywords =
         window.print();
       });
 
-      // Reset Button
-      resetBtn?.addEventListener("click", () => {
+    const shareBtn = document.getElementById("share-btn");
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+
+    // Modal Events
+    howItWorksBtn?.addEventListener("click", () => howItWorksModal?.classList.remove("hidden"));
+    closeModalBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+    modalOkBtn?.addEventListener("click", () => howItWorksModal?.classList.add("hidden"));
+
+    // Share Event
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("unit", currentUnit);
+      url.searchParams.set("sex", sex);
+      url.searchParams.set("age", age.toString());
+      url.searchParams.set("h-cm", heightCm.toString());
+      url.searchParams.set("h-ft", heightFt.toString());
+      url.searchParams.set("h-in", heightIn.toString());
+      url.searchParams.set("w-kg", weightKg.toString());
+      url.searchParams.set("w-lbs", weightLbs.toString());
+      url.searchParams.set("act", activityMultiplier.toString());
+      url.searchParams.set("goal", selectedGoal);
+      url.searchParams.set("diet", selectedDiet);
+      if (bodyfatInput) url.searchParams.set("bf", bodyfatInput.value);
+      if (mealSelect) url.searchParams.set("meals", mealSelect.value);
+      url.searchParams.set("cust-mode", customMode);
+      url.searchParams.set("cust-p", customP.toString());
+      url.searchParams.set("cust-c", customC.toString());
+      url.searchParams.set("cust-f", customF.toString());
+
+      const shareData = {
+        title: document.title || "Macro Calculator",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    });
+
+    // Load state from localStorage or URL
+    function loadState() {
+      const urlParams = new URLSearchParams(window.location.search);
+      // get(lsKey, urlKey): URL params always take priority over localStorage
+      const get = (lsKey: string, urlKey: string): string | null => {
+        if (urlParams.has(urlKey)) return urlParams.get(urlKey);
+        if (typeof localStorage === 'undefined') return null;
+        try { return localStorage.getItem(lsKey); } catch (e) { return null; }
+      };
+
+      try {
+        const savedUnit = get("macro-unit", "unit");
+        const savedSex = get("macro-sex", "sex");
+        const savedAge = get("macro-age", "age");
+        const savedHeightCm = get("macro-height-cm", "h-cm");
+        const savedHeightFt = get("macro-height-ft", "h-ft");
+        const savedHeightIn = get("macro-height-in", "h-in");
+        const savedWeightKg = get("macro-weight-kg", "w-kg");
+        const savedWeightLbs = get("macro-weight-lbs", "w-lbs");
+        const savedActivity = get("macro-activity", "act");
+        const savedGoal = get("macro-goal", "goal");
+        const savedDiet = get("macro-diet", "diet");
+        const savedBodyFat = get("macro-bodyfat", "bf");
+        const savedMealCount = get("macro-meals", "meals");
+        
+        const savedCustomMode = get("macro-custom-mode", "cust-mode");
+        const savedCustomP = get("macro-custom-p", "cust-p");
+        const savedCustomC = get("macro-custom-c", "cust-c");
+        const savedCustomF = get("macro-custom-f", "cust-f");
+
+        if (savedUnit) currentUnit = savedUnit;
+        if (savedSex) sex = savedSex;
+        if (savedAge) age = parseInt(savedAge, 10);
+        if (savedHeightCm) heightCm = parseInt(savedHeightCm, 10);
+        if (savedHeightFt) heightFt = parseInt(savedHeightFt, 10);
+        if (savedHeightIn) heightIn = parseInt(savedHeightIn, 10);
+        if (savedWeightKg) weightKg = parseInt(savedWeightKg, 10);
+        if (savedWeightLbs) weightLbs = parseInt(savedWeightLbs, 10);
+        if (savedActivity) activityMultiplier = parseFloat(savedActivity);
+        if (savedGoal) selectedGoal = savedGoal;
+        if (savedDiet) selectedDiet = savedDiet;
+
+        if (sexSelect) sexSelect.value = sex;
+        if (ageInput) ageInput.value = age.toString();
+        if (activitySelect) activitySelect.value = activityMultiplier.toString();
+
+        if (savedBodyFat && bodyfatInput) bodyfatInput.value = savedBodyFat;
+        if (savedMealCount && mealSelect) mealSelect.value = savedMealCount;
+
+        if (savedCustomMode) customMode = savedCustomMode;
+        if (savedCustomP) customP = parseFloat(savedCustomP);
+        if (savedCustomC) customC = parseFloat(savedCustomC);
+        if (savedCustomF) customF = parseFloat(savedCustomF);
+
+        if (customProteinInput) customProteinInput.value = customP.toString();
+        if (customCarbsInput) customCarbsInput.value = customC.toString();
+        if (customFatsInput) customFatsInput.value = customF.toString();
+
+        // Apply active button styles
+        goalButtons.forEach(btn => {
+          if (btn.getAttribute("data-goal") === selectedGoal) {
+            btn.classList.add("ring-2", "ring-brand-blue", "border-transparent", "active");
+            btn.classList.remove("border-hairline", "border-brand-blue/30");
+          } else {
+            btn.classList.remove("ring-2", "ring-brand-blue", "border-transparent", "active");
+            btn.classList.add("border-hairline");
+          }
+        });
+
+        dietButtons.forEach(btn => {
+          if (btn.getAttribute("data-diet") === selectedDiet) {
+            btn.classList.add("ring-2", "ring-brand-blue", "border-transparent", "active");
+            btn.classList.remove("border-hairline", "border-brand-blue/30");
+          } else {
+            btn.classList.remove("ring-2", "ring-brand-blue", "border-transparent", "active");
+            btn.classList.add("border-hairline");
+          }
+        });
+
+      } catch (e) {
+        console.warn("Failed loading state:", e);
+      }
+      updateInputsFromState();
+      updateUnitUI();
+      updateLabels();
+      toggleCustomOverrideDisplay();
+      calculate();
+    }
+
+    resetBtn?.addEventListener("click", () => {
+        if (window.history.pushState) {
+          const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.pushState({path:newurl}, '', newurl);
+        }
+
         localStorage.removeItem("macro-unit");
         localStorage.removeItem("macro-sex");
         localStorage.removeItem("macro-age");
