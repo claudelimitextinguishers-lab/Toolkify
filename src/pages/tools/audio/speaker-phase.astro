@@ -500,6 +500,7 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
     // State definitions
     let audioCtx: AudioContext | null = null;
     let masterGain: GainNode | null = null;
+    let audioEngineVersion = 0;
     let sourceNode: OscillatorNode | AudioBufferSourceNode | null = null;
     let leftGain: GainNode | null = null;
     let rightGain: GainNode | null = null;
@@ -686,6 +687,7 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
     let delayNode: DelayNode | null = null;
 
     function startAudioEngine() {
+      audioEngineVersion++;
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
       }
@@ -775,10 +777,11 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
 
       const oldSource = sourceNode;
       const oldCtx = audioCtx;
+      const currentVersion = audioEngineVersion;
       
       setTimeout(() => {
         try {
-          if (!isPlaying) {
+          if (currentVersion === audioEngineVersion) {
             oldSource.disconnect();
             if (oldSource instanceof OscillatorNode) {
               oldSource.stop();

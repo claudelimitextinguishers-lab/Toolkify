@@ -833,8 +833,8 @@ const keywords = "orientation lock, screen rotation test, screen orientation api
       motionHistory.forEach((item) => {
         if (item.beta > maxBeta) maxBeta = item.beta;
         if (item.beta < minBeta) minBeta = item.beta;
-        if (item.gamma > maxGamma) maxGamma = event.gamma ?? item.gamma; // safely read gamma
-        if (item.gamma < minGamma) minGamma = event.gamma ?? item.gamma;
+        if (item.gamma > maxGamma) maxGamma = item.gamma;
+        if (item.gamma < minGamma) minGamma = item.gamma;
       });
 
       const rangeBeta = maxBeta - minBeta;

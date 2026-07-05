@@ -881,6 +881,7 @@ const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, 
       renderNoteButtons();
       updateGauge(true);
       updateFavoritesList();
+      refPitchDisplay.textContent = `${targetRefRefined(targetRefPitch)} Hz`;
     }
 
     function targetRefRefined(v: number): string {

@@ -889,7 +889,9 @@ const keywords = "light meter, lux meter, measure light, lux sensor, ambient lig
           const shutterSec = 64 / denominator;
           
           let speedStr = "";
-          if (shutterSec >= 1) {
+          if (shutterSec > 30) {
+            speedStr = "Very Long Exposure";
+          } else if (shutterSec >= 1) {
             speedStr = `${Math.round(shutterSec * 10) / 10}s`;
           } else {
             const denominatorFrac = Math.round(1 / shutterSec);

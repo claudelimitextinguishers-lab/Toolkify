@@ -409,6 +409,7 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
       name: string;
       depth: number;
       volume: number;
+      stereo: boolean;
     }
 
     // Web Audio state variables
@@ -838,6 +839,8 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
         loadBtn.addEventListener('click', () => {
           volSlider.value = preset.volume.toString();
           depthSlider.value = preset.depth.toString();
+          stereoCheckbox.checked = preset.stereo !== false;
+          localStorage.setItem(KEY_STEREO, stereoCheckbox.checked.toString());
           updateVolumeDisplay();
           updateDepthDisplay();
           if (isPlaying) {
@@ -874,7 +877,8 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
       list.push({
         name: name,
         volume: parseFloat(volSlider.value),
-        depth: parseFloat(depthSlider.value)
+        depth: parseFloat(depthSlider.value),
+        stereo: stereoCheckbox.checked
       });
 
       localStorage.setItem(KEY_PRESETS, JSON.stringify(list));

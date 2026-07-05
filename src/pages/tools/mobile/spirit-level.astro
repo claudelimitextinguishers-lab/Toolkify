@@ -560,24 +560,9 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
     });
 
     calibrateBtn.addEventListener("click", () => {
-      // Offset tilt from the same aligned (rotation-corrected) coordinate frame used in live calculations
-      let rotationAngle = getRotationOffset();
-      let alignedBeta = state.rawBeta;
-      let alignedGamma = state.rawGamma;
-
-      if (rotationAngle === 90) {
-        alignedBeta = -state.rawGamma;
-        alignedGamma = state.rawBeta;
-      } else if (rotationAngle === -90 || rotationAngle === 270) {
-        alignedBeta = state.rawGamma;
-        alignedGamma = -state.rawBeta;
-      } else if (rotationAngle === 180) {
-        alignedBeta = -state.rawBeta;
-        alignedGamma = -state.rawGamma;
-      }
-
-      state.offsetBeta = alignedBeta;
-      state.offsetGamma = alignedGamma;
+      // Store calibration offsets in raw, rotation-independent sensor coordinates
+      state.offsetBeta = state.rawBeta;
+      state.offsetGamma = state.rawGamma;
       saveSetting(LS_OFFSET_BETA, state.offsetBeta);
       saveSetting(LS_OFFSET_GAMMA, state.offsetGamma);
       updateUIStrings();
@@ -641,25 +626,28 @@ const keywords = "spirit level, bubble level, online level, gyro level, inclinom
       state.rawBeta = beta;
       state.rawGamma = gamma;
 
+      // Apply calibration offsets before rotation-alignment transform
+      let calibratedRawBeta = beta - state.offsetBeta;
+      let calibratedRawGamma = gamma - state.offsetGamma;
+
       // Filter raw coordinates based on Device rotation Angle
       let rotationAngle = getRotationOffset();
-      let alignedBeta = beta;
-      let alignedGamma = gamma;
+      let alignedBeta = calibratedRawBeta;
+      let alignedGamma = calibratedRawGamma;
 
       if (rotationAngle === 90) {
-        alignedBeta = -gamma;
-        alignedGamma = beta;
+        alignedBeta = -calibratedRawGamma;
+        alignedGamma = calibratedRawBeta;
       } else if (rotationAngle === -90 || rotationAngle === 270) {
-        alignedBeta = gamma;
-        alignedGamma = -beta;
+        alignedBeta = calibratedRawGamma;
+        alignedGamma = -calibratedRawBeta;
       } else if (rotationAngle === 180) {
-        alignedBeta = -beta;
-        alignedGamma = -gamma;
+        alignedBeta = -calibratedRawBeta;
+        alignedGamma = -calibratedRawGamma;
       }
 
-      // Apply calibration offsets
-      state.calibratedBeta = alignedBeta - state.offsetBeta;
-      state.calibratedGamma = alignedGamma - state.offsetGamma;
+      state.calibratedBeta = alignedBeta;
+      state.calibratedGamma = alignedGamma;
 
       // Apply low pass filter
       smoothedBeta = (state.calibratedBeta * filterAlpha) + (smoothedBeta * (1 - filterAlpha));

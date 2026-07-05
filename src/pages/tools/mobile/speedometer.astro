@@ -1006,6 +1006,11 @@ const keywords = "speedometer, gps speedometer, online speedometer, travel speed
         }
       }
 
+      // Safety checks: clamp speed limit floor
+      if (speedMetersPerSec < 0.1) {
+        speedMetersPerSec = 0;
+      }
+
       // If we are calculating distance for GPS-reported speed
       if (captureMethod === 'gps' && lastPosition) {
         const distMeters = calculateHaversineDistance(
@@ -1018,11 +1023,6 @@ const keywords = "speedometer, gps speedometer, online speedometer, travel speed
         if (speedMetersPerSec > 0.5 && distMeters < 100) { // filter out massive jumps from signal snaps
           totalDistanceMeters += distMeters;
         }
-      }
-
-      // Safety checks: clamp speed limit floor
-      if (speedMetersPerSec < 0.1) {
-        speedMetersPerSec = 0;
       }
 
       // Update statistics
