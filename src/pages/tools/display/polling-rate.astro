@@ -495,6 +495,7 @@ const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse res
   </div>
 
   <script>
+    if (typeof window !== 'undefined') {
     // Interfaces
     interface TestRun {
       timestamp: number;
@@ -604,7 +605,7 @@ const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse res
 
     // Check features
     function detectFeatures() {
-      if (typeof PointerEvent.prototype.getCoalescedEvents === "function") {
+      if (typeof PointerEvent !== "undefined" && typeof PointerEvent.prototype.getCoalescedEvents === "function") {
         methodSupported = "High-accuracy mode: coalesced events";
         accuracyBanner.classList.add("bg-success-accent/10", "border-success-accent/40", "text-success-accent");
         accuracyMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent animate-pulse"></span>High-accuracy mode: coalesced events active`;
@@ -635,9 +636,10 @@ const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse res
     howItWorksModal.addEventListener("click", (e) => {
       if (e.target === howItWorksModal) closeModal();
     });
-    window.addEventListener("keydown", (e) => {
+    function handleEscapeKey(e: KeyboardEvent) {
       if (e.key === "Escape") closeModal();
-    });
+    }
+    window.addEventListener("keydown", handleEscapeKey);
 
     dismissWarningBtn.addEventListener("click", () => {
       touchWarningBanner.classList.add("hidden");
@@ -767,6 +769,12 @@ const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse res
       if (ctx && trailCanvas) {
         ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
       }
+
+      // Reset active duration button to default (10s)
+      selectedDurationSec = 10;
+      durationBtns.forEach(b => b.classList.remove("duration-active"));
+      (document.querySelector(".duration-btn[data-duration='10']") as HTMLButtonElement)?.classList.add("duration-active");
+      startStopText.textContent = "Start 10s Capture";
       
       // Clear localStorage
       localStorage.removeItem(LS_KEY_HISTORY);
@@ -1013,8 +1021,15 @@ const keywords = "polling rate test, mouse hz test, mouse rate tester, mouse res
       renderHistory();
     });
 
+    // Cleanup listeners on navigate
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("keydown", handleEscapeKey);
+    });
+
     // Initial render
     renderHistory();
+    }
   </script>
 
   <style>

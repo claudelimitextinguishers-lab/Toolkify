@@ -363,6 +363,7 @@ const description = "Scan and identify dead or stuck pixels on your display pane
 </Layout>
 
 <script>
+  if (typeof window !== 'undefined') {
   // LocalStorage Namespace helper
   const STORAGE_KEY = 'boardtools:screen-dead-pixel:settings';
 
@@ -921,9 +922,16 @@ const description = "Scan and identify dead or stuck pixels on your display pane
     // Listeners for standard fullscreen changes
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+    document.addEventListener("astro:before-swap", () => {
+      document.removeEventListener("keydown", handleKeyNavigation);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    });
   }
 
   init();
+  }
 </script>
 
 <style>

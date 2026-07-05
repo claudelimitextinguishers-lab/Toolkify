@@ -498,6 +498,7 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
   </div>
 
   <script>
+    if (typeof window !== 'undefined') {
     // Interfaces
     interface RefreshRun {
       timestamp: number;
@@ -611,9 +612,10 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
     howItWorksModal.addEventListener("click", (e) => {
       if (e.target === howItWorksModal) closeModal();
     });
-    window.addEventListener("keydown", (e) => {
+    function handleEscapeKey(e: KeyboardEvent) {
       if (e.key === "Escape") closeModal();
-    });
+    }
+    window.addEventListener("keydown", handleEscapeKey);
 
     // Test mode controls
     modeQuickBtn.addEventListener("click", () => {
@@ -692,11 +694,12 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
       exitFullscreen();
     });
 
-    document.addEventListener("fullscreenchange", () => {
+    function handleFullscreenChange() {
       if (!document.fullscreenElement) {
         exitFullscreenState();
       }
-    });
+    }
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
     function enterFullscreen() {
       isFullscreenMode = true;
@@ -959,40 +962,49 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
       }
     }
 
-    // Compute stats
-    function updateStats() {
-      if (frameIntervals.length < 5) return;
-
-      // 1. Median
-      const sorted = [...frameIntervals].sort((a, b) => a - b);
+    function calculateStatistics(intervals: number[]) {
+      if (intervals.length === 0) {
+        return { median: 0, mean: 0, estHz: 0, sd: 0, dropped: 0 };
+      }
+      const sorted = [...intervals].sort((a, b) => a - b);
       const medianIdx = Math.floor(sorted.length / 2);
       const median = sorted.length % 2 !== 0
         ? sorted[medianIdx]
         : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
 
-      // 2. Trimmed Mean (ignoring top and bottom 10% outliers to filter stutters)
+      // Trimmed Mean (ignoring top and bottom 10% outliers to filter stutters)
       const trimCount = Math.floor(sorted.length * 0.1);
       const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
-      const sum = trimmed.reduce((acc, v) => acc + v, 0);
-      const mean = sum / trimmed.length;
+      const sum = trimmed.length > 0 ? trimmed.reduce((acc, v) => acc + v, 0) : 0;
+      const mean = trimmed.length > 0 ? sum / trimmed.length : median;
 
-      // 3. Estimated Hz
-      const estHz = 1000 / mean;
+      const estHz = mean > 0 ? 1000 / mean : 0;
 
-      // 4. Standard Deviation (Jitter)
-      const variance = trimmed.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / trimmed.length;
+      // Standard Deviation (Jitter)
+      const variance = trimmed.length > 0
+        ? trimmed.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / trimmed.length
+        : 0;
       const sd = Math.sqrt(variance);
 
-      // 5. Dropped Frames (any frame > 1.5 * expected interval)
+      // Dropped Frames (any frame > 1.5 * expected interval)
       const expected = median;
-      const dropped = frameIntervals.filter(v => v > 1.5 * expected).length;
+      const dropped = intervals.filter(v => v > 1.5 * expected).length;
+
+      return { median, mean, estHz, sd, dropped };
+    }
+
+    // Compute stats
+    function updateStats() {
+      if (frameIntervals.length < 5) return;
+
+      const stats = calculateStatistics(frameIntervals);
 
       // Map to standard Hz
       const standardHzs = [60, 75, 90, 120, 144, 165, 240, 280, 360, 500];
       let closestHz = 60;
       let minDiff = Infinity;
       standardHzs.forEach(hz => {
-        const diff = Math.abs(estHz - hz);
+        const diff = Math.abs(stats.estHz - hz);
         if (diff < minDiff) {
           minDiff = diff;
           closestHz = hz;
@@ -1000,38 +1012,25 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
       });
 
       // Update UI readouts
-      liveHz.innerHTML = `${estHz.toFixed(1)} <span class="text-xs text-slate">Hz</span>`;
+      liveHz.innerHTML = `${stats.estHz.toFixed(1)} <span class="text-xs text-slate">Hz</span>`;
       liveHzSubtext.textContent = `Likely ${closestHz}Hz Display`;
-      medianInterval.textContent = `${median.toFixed(2)} ms`;
-      sdVal.textContent = `±${sd.toFixed(2)} ms`;
-      droppedCounter.textContent = dropped.toString();
+      medianInterval.textContent = `${stats.median.toFixed(2)} ms`;
+      sdVal.textContent = `±${stats.sd.toFixed(2)} ms`;
+      droppedCounter.textContent = stats.dropped.toString();
       sampleCounter.textContent = frameIntervals.length.toString();
 
       if (isFullscreenMode) {
-        fsHz.textContent = `${estHz.toFixed(1)} Hz`;
-        fsDropped.textContent = `${dropped} dropped frames`;
+        fsHz.textContent = `${stats.estHz.toFixed(1)} Hz`;
+        fsDropped.textContent = `${stats.dropped} dropped frames`;
       }
     }
 
     // Diagnostics Troubleshooting display
     function checkDisplayDiagnostics() {
       if (frameIntervals.length < 10) return;
-
-      const sorted = [...frameIntervals].sort((a, b) => a - b);
-      const medianIdx = Math.floor(sorted.length / 2);
-      const median = sorted.length % 2 !== 0
-        ? sorted[medianIdx]
-        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
-
-      const estHz = 1000 / (frameIntervals.reduce((a, b) => a + b, 0) / frameIntervals.length);
-
-      // Compute SD
-      const mean = frameIntervals.reduce((a, b) => a + b, 0) / frameIntervals.length;
-      const variance = frameIntervals.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / frameIntervals.length;
-      const sd = Math.sqrt(variance);
-
+      const stats = calculateStatistics(frameIntervals);
       // If estimated refresh rate is below 45Hz or frame jitter is high (> 3.5ms)
-      if (estHz < 45 || sd > 3.5) {
+      if (stats.estHz < 45 || stats.sd > 3.5) {
         troubleshootPanel.classList.remove("hidden");
       }
     }
@@ -1054,12 +1053,19 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
       
       troubleshootPanel.classList.add("hidden");
       
+      // Reset active mode button visuals to default (Quick)
+      isContinuous = false;
+      modeQuickBtn.classList.add("active-mode");
+      modeContBtn.classList.remove("active-mode");
+
       if (ctx && pacingCanvas) {
         ctx.clearRect(0, 0, pacingCanvas.width, pacingCanvas.height);
       }
       
       // Clear localStorage history
-      localStorage.removeItem(LS_KEY_HISTORY);
+      try {
+        localStorage.removeItem(LS_KEY_HISTORY);
+      } catch (e) {}
       renderHistory();
     });
 
@@ -1067,29 +1073,14 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
     function saveRunToHistory() {
       if (frameIntervals.length < 30) return;
 
-      const sorted = [...frameIntervals].sort((a, b) => a - b);
-      const medianIdx = Math.floor(sorted.length / 2);
-      const median = sorted.length % 2 !== 0
-        ? sorted[medianIdx]
-        : (sorted[medianIdx - 1] + sorted[medianIdx]) / 2;
-
-      const trimCount = Math.floor(sorted.length * 0.1);
-      const trimmed = sorted.slice(trimCount, sorted.length - trimCount);
-      const sum = trimmed.reduce((acc, v) => acc + v, 0);
-      const mean = sum / trimmed.length;
-
-      const estHz = 1000 / mean;
-      const variance = trimmed.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / trimmed.length;
-      const sd = Math.sqrt(variance);
-
-      const dropped = frameIntervals.filter(v => v > 1.5 * median).length;
+      const stats = calculateStatistics(frameIntervals);
 
       const run: RefreshRun = {
         timestamp: Date.now(),
-        rate: Number(estHz.toFixed(1)),
-        medianDelay: Number(median.toFixed(2)),
-        jitter: Number(sd.toFixed(2)),
-        dropped
+        rate: Number(stats.estHz.toFixed(1)),
+        medianDelay: Number(stats.median.toFixed(2)),
+        jitter: Number(stats.sd.toFixed(2)),
+        dropped: stats.dropped
       };
 
       const history = getHistory();
@@ -1151,19 +1142,32 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
     });
 
     clearHistoryBtn.addEventListener("click", () => {
-      localStorage.removeItem(LS_KEY_HISTORY);
+      try {
+        localStorage.removeItem(LS_KEY_HISTORY);
+      } catch (e) {}
       renderHistory();
     });
 
     // Suspend loop if browser tab is backgrounded
-    document.addEventListener("visibilitychange", () => {
+    function handleVisibilityChange() {
       if (document.hidden && isTesting) {
         stopTest();
       }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup listeners on navigate
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("keydown", handleEscapeKey);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopTest();
     });
 
     // Initial render
     renderHistory();
+    }
   </script>
 
   <style>

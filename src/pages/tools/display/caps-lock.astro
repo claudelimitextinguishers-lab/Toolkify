@@ -366,6 +366,7 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
   </div>
 
   <script>
+    if (typeof window !== 'undefined') {
     interface EventLog {
       time: string;
       timestamp: number;
@@ -445,6 +446,17 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
         mobileWarningBanner?.classList.add("hidden");
       }
     }
+
+    let resizeTimeout: number | null = null;
+    function handleResize() {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = window.setTimeout(() => {
+        checkDeviceType();
+      }, 150);
+    }
+    window.addEventListener("resize", handleResize);
 
     // Initialize Page & Load state from local storage
     function init() {
@@ -611,15 +623,16 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
     // Keystroke Casing Log Tracker
     function logKeyPress(key: string) {
       const timestampStr = new Date().toLocaleTimeString();
-      const isShift = key.toUpperCase() !== key.toLowerCase();
-      const charCode = key.charCodeAt(0);
+      const isSpace = key === " ";
+      const displayKey = isSpace ? "Space" : key;
+      const charCode = isSpace ? 32 : key.charCodeAt(0);
 
       const logEntry: EventLog = {
         time: timestampStr,
         timestamp: Date.now(),
         type: 'keypress',
-        details: `Key: '${key}' (Casing: ${key === key.toUpperCase() ? "UPPER" : "lower"}, ASCII: ${charCode})`,
-        rawKey: key
+        details: `Key: '${displayKey}' (Casing: ${isSpace ? "N/A" : (key === key.toUpperCase() ? "UPPER" : "lower")}, ASCII: ${charCode})`,
+        rawKey: displayKey
       };
 
       eventLogs.unshift(logEntry);
@@ -776,14 +789,15 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
     // CSV exporter trigger
     exportCsvBtn?.addEventListener("click", exportToCSV);
 
-    // Initial load
-    init();
-    setupFocusCheckers();
-
-    // Clean up event listeners on beforeunload (Astro SPA standard unmount pattern compatibility)
-    window.addEventListener("beforeunload", () => {
+    // Astro SPA navigation cleanup
+    document.addEventListener("astro:before-swap", () => {
       window.removeEventListener("keydown", evaluateEventState);
       window.removeEventListener("keyup", evaluateEventState);
+      window.removeEventListener("resize", handleResize);
     });
+
+    // Initial load
+    init();
+    }
   </script>
 </Layout>

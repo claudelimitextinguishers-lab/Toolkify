@@ -596,7 +596,9 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
   </div>
 
   <script is:inline>
+    if (typeof window !== 'undefined') {
     (function () {
+      let isDrawActive = true;
       // LocalStorage configurations
       const STORAGE_PREFIX = "boardtools:scroll-wheel:";
       const getStorageKey = (key) => `${STORAGE_PREFIX}${key}`;
@@ -887,7 +889,9 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
           }
 
           phase += 0.4;
-          requestAnimationFrame(draw);
+          if (isDrawActive) {
+            requestAnimationFrame(draw);
+          }
         }
         draw();
       }
@@ -937,7 +941,9 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
             stressTestEnabled: stressTestToggle.checked,
             stressTarget: stressTargetSelect.value
           }));
-        } catch (e) {}
+        } catch (e) {
+          console.warn("Storage quota exceeded or unavailable", e);
+        }
       }
 
       // Reset action
@@ -991,8 +997,10 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
         updateStressProgress();
         drawGauge(0);
 
-        localStorage.removeItem(getStorageKey("stats"));
-        localStorage.removeItem(getStorageKey("settings"));
+        try {
+          localStorage.removeItem(getStorageKey("stats"));
+          localStorage.removeItem(getStorageKey("settings"));
+        } catch (e) {}
       });
 
       // How it works modals
@@ -1243,10 +1251,27 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
         // Bounded tracks
         boundedY = Math.max(0, Math.min(100, boundedY + (normY * 0.1)));
         boundedX = Math.max(0, Math.min(100, boundedX + (normX * 0.1)));
-        const trackH = testZone.offsetHeight - 16 - 12 - 64; // top-4 + bottom-16 + indicator height
-        const trackW = testZone.offsetWidth - 16 - 64 - 12;
-        verticalBoundedIndicator.style.transform = `translateY(${(boundedY / 100) * Math.max(trackH, 100)}px)`;
-        horizontalBoundedIndicator.style.transform = `translateX(${(boundedX / 100) * Math.max(trackW, 100)}px)`;
+        
+        const verticalTrack = verticalBoundedIndicator.parentElement;
+        const horizontalTrack = horizontalBoundedIndicator.parentElement;
+
+        let trackH = 100;
+        let trackW = 100;
+
+        if (verticalTrack && verticalBoundedIndicator) {
+          const trackRect = verticalTrack.getBoundingClientRect();
+          const indicatorRect = verticalBoundedIndicator.getBoundingClientRect();
+          trackH = trackRect.height - indicatorRect.height;
+        }
+
+        if (horizontalTrack && horizontalBoundedIndicator) {
+          const trackRect = horizontalTrack.getBoundingClientRect();
+          const indicatorRect = horizontalBoundedIndicator.getBoundingClientRect();
+          trackW = trackRect.width - indicatorRect.width;
+        }
+
+        verticalBoundedIndicator.style.transform = `translateY(${(boundedY / 100) * Math.max(trackH, 0)}px)`;
+        horizontalBoundedIndicator.style.transform = `translateX(${(boundedX / 100) * Math.max(trackW, 0)}px)`;
 
         updateVelocity(normY || normX);
 
@@ -1475,12 +1500,18 @@ const keywords = "scroll wheel test, mouse test, scroll speed test, scroll ticks
         document.body.removeChild(link);
       });
 
+      // Cleanup listeners on navigate
+      document.addEventListener("astro:before-swap", () => {
+        isDrawActive = false;
+      });
+
       // Boot up
       restoreSettings();
       initGraphCanvas();
       initZoneBgCanvas();
       drawGauge(0);
     })();
+    }
   </script>
 
   <style is:global>

@@ -737,6 +737,7 @@ const keywords =
   </div>
 
   <script>
+    if (typeof window !== 'undefined') {
     // Constants
     const STORAGE_HISTORY = "boardtools:keyboard-latency:history";
     const STORAGE_SETTINGS = "boardtools:keyboard-latency:settings";
@@ -1410,7 +1411,20 @@ const keywords =
     });
 
     // Global safety net: prevent spacebar page scroll and refocus target
-    document.addEventListener("keydown", (e: KeyboardEvent) => {
+    function handleGlobalKeyDown(e: KeyboardEvent) {
+      const active = document.activeElement;
+      const isInteractive = active && (
+        active.tagName === "INPUT" ||
+        active.tagName === "TEXTAREA" ||
+        active.tagName === "SELECT" ||
+        active.tagName === "BUTTON" ||
+        (active as HTMLElement).isContentEditable
+      );
+
+      if (isInteractive) {
+        return; // Don't steal focus or prevent default key actions if focusing on input fields
+      }
+
       if (
         e.key === " " ||
         e.code === "Space" ||
@@ -1427,7 +1441,12 @@ const keywords =
           target.focus();
         }
       }
-    }, true); // Use capture phase to intercept early
+    }
+    document.addEventListener("keydown", handleGlobalKeyDown, true); // Use capture phase to intercept early
+
+    document.addEventListener("astro:before-swap", () => {
+      document.removeEventListener("keydown", handleGlobalKeyDown, true);
+    });
 
     // Initialize State
     function init() {
@@ -1449,6 +1468,7 @@ const keywords =
     }
 
     init();
+    }
   </script>
 
   <style>

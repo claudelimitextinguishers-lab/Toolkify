@@ -603,6 +603,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
   </div>
 
   <script>
+    if (typeof window !== 'undefined') {
     // State definitions
     interface SavedColor {
       id: string;
@@ -631,6 +632,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
       darkgreen: "#006400", darkgrey: "#a9a9a9", darkkhaki: "#bdb76b", darkmagenta: "#8b008b", darkolivegreen: "#556b2f",
       darkorange: "#ff8c00", darkorchid: "#9932cc", darkred: "#8b0000", darksalmon: "#e9967a", darkseagreen: "#8fbc8f",
       darkslateintegrate: "#2f4f4f", darkslategrey: "#2f4f4f", darkturquoise: "#00ced1", darkviolet: "#9400d3",
+      darkslategray: "#2f4f4f",
       deeppink: "#ff1493", deepskyblue: "#00bfff", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1e90ff",
       firebrick: "#b22222", floralwhite: "#fffaf0", forestgreen: "#228b22", fuchsia: "#ff00ff", gainsboro: "#dcdcdc",
       ghostwhite: "#f8f8ff", gold: "#ffd700", goldenrod: "#daa520", gray: "#808080", green: "#008000",
@@ -638,7 +640,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
       indigo: "#4b0082", ivory: "#fffff0", khaki: "#f0e68c", lavender: "#e6e6fa", lavenderblush: "#fff0f5",
       lawngreen: "#7cfc00", lemonchiffon: "#fffacd", lightblue: "#add8e6", lightcoral: "#f08080", lightcyan: "#e0ffff",
       lightgoldenrodyellow: "#fafad2", lightgray: "#d3d3d3", lightgreen: "#90ee90", lightgrey: "#d3d3d3", lightpink: "#ffb6c1",
-      lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", lightskyblue: "#87cefa", lightslateintegrate: "#778899", lightslategrey: "#778899",
+      lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", lightskyblue: "#87cefa", lightslategray: "#778899", lightslategrey: "#778899",
       lightsteelblue: "#b0c4de", lightyellow: "#ffffe0", lime: "#00ff00", limegreen: "#32cd32", linen: "#faf0e6",
       magenta: "#ff00ff", maroon: "#800000", mediumaquamarine: "#66cdaa", mediumblue: "#0000cd", mediumorchid: "#ba55d3",
       mediumpurple: "#9370db", mediumseagreen: "#3cb371", mediumslateblue: "#7b68ee", mediumspringgreen: "#00fa9a", mediumturquoise: "#48d1cc",
@@ -934,30 +936,36 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
       manualIsDragging = true;
       handleSlDrag(e);
     });
-    window.addEventListener("mousemove", (e) => {
+    function onMouseMove(e: MouseEvent) {
       if (manualIsDragging) handleSlDrag(e);
-    });
-    window.addEventListener("mouseup", () => {
+    }
+    function onMouseUp() {
       if (manualIsDragging) {
         manualIsDragging = false;
         // Append to recents on release
         addRecentColor(outputHex.value);
       }
-    });
-
-    // Touch support for S/L Dragging
-    pickerSlBox.addEventListener("touchstart", (e) => {
-      manualIsDragging = true;
-      handleSlDrag(e);
-    }, { passive: true });
-    window.addEventListener("touchmove", (e) => {
+    }
+    function onTouchMove(e: TouchEvent) {
       if (manualIsDragging) handleSlDrag(e);
-    }, { passive: true });
-    window.addEventListener("touchend", () => {
+    }
+    function onTouchEnd() {
       if (manualIsDragging) {
         manualIsDragging = false;
         addRecentColor(outputHex.value);
       }
+    }
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
+
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     });
 
     // Range Sliders Input Action
@@ -1203,7 +1211,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
     }
 
     // --- NATIVE SCREEN EYEDROPPER INTEGRATION ---
-    const hasEyeDropper = 'EyeDropper' in window;
+    const hasEyeDropper = typeof EyeDropper !== 'undefined';
     if (hasEyeDropper) {
       btnNativeEyedropper.classList.remove("hidden");
       eyedropperUnsupportedNote.classList.add("hidden");
@@ -1247,9 +1255,11 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
       // Restore default color
       updateColor(229, 100, 63, 1, "reset");
       // Clear localStorage keys
-      localStorage.removeItem("boardtools:color-picker:current-color");
-      localStorage.removeItem("boardtools:color-picker:saved-palette");
-      localStorage.removeItem("boardtools:color-picker:recent-colors");
+      try {
+        localStorage.removeItem("boardtools:color-picker:current-color");
+        localStorage.removeItem("boardtools:color-picker:saved-palette");
+        localStorage.removeItem("boardtools:color-picker:recent-colors");
+      } catch (e) {}
       savedPalette = [];
       recentColors = [];
       renderSavedPalette();
@@ -1482,6 +1492,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
 
     // Run initialization
     init();
+    }
   </script>
 
   <!-- CSS Custom styling parameters -->

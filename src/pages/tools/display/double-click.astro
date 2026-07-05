@@ -441,7 +441,8 @@ const keywords = "double click test, mouse chatter test, mouse double click test
 
   <!-- Client-side Logic Script -->
   <script>
-    interface ClickEventLog {
+    if (typeof window !== 'undefined') {
+      interface ClickEventLog {
       button: string; // "Left", "Middle", "Right"
       timestamp: number;
       interval: number;
@@ -583,20 +584,14 @@ const keywords = "double click test, mouse chatter test, mouse double click test
 
     // Reset logic
     function handleReset() {
-      totalClicks = 0;
-      chatterClicks = 0;
       clickHistory = [];
-
-      Object.keys(lastClickTime).forEach(k => {
-        lastClickTime[k] = 0;
-        minInterval[k] = Infinity;
-        buttonClicks[k] = 0;
-        buttonChatter[k] = 0;
-      });
+      recalculateStatsFromHistory();
 
       // Clear local storage
-      localStorage.removeItem("boardtools:double-click:threshold");
-      localStorage.removeItem("boardtools:double-click:history");
+      try {
+        localStorage.removeItem("boardtools:double-click:threshold");
+        localStorage.removeItem("boardtools:double-click:history");
+      } catch (e) {}
 
       // Reset UI elements
       chatterThreshold = 80;
@@ -981,6 +976,7 @@ const keywords = "double click test, mouse chatter test, mouse double click test
 
     // Run init
     init();
+    }
   </script>
 
   <!-- Global styles overrides -->

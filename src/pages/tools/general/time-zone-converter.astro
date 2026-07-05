@@ -466,6 +466,7 @@ const keywords = "time zone converter, world clock, meeting planner, dst aware t
 
   <!-- Client-side script -->
   <script>
+    if (typeof window !== 'undefined') {
     // Supported Timezones
     let allTimezones: string[] = [];
     try {
@@ -622,17 +623,31 @@ const keywords = "time zone converter, world clock, meeting planner, dst aware t
           timeZone,
           timeZoneName: 'longOffset'
         }).formatToParts(date);
-        const tzPart = parts.find(p => p.type === 'timeZoneName')?.value || '';
+        let tzPart = parts.find(p => p.type === 'timeZoneName')?.value || '';
         if (!tzPart || tzPart === 'GMT' || tzPart === 'UTC') return 0;
-        const match = tzPart.match(/GMT([+-])(\d+):(\d+)/);
-        if (match) {
-          const sign = match[1] === '+' ? 1 : -1;
-          return sign * (parseInt(match[2], 10) * 60 + parseInt(match[3], 10));
+
+        // Normalize minus signs
+        tzPart = tzPart.replace(/[\u2212−]/g, '-');
+
+        // Match GMT+05:30 or GMT-05:30
+        const matchColon = tzPart.match(/GMT([+-])(\d+):(\d+)/);
+        if (matchColon) {
+          const sign = matchColon[1] === '+' ? 1 : -1;
+          return sign * (parseInt(matchColon[2], 10) * 60 + parseInt(matchColon[3], 10));
         }
-        const matchShort = tzPart.match(/GMT([+-])(\d+)/);
-        if (matchShort) {
-          const sign = matchShort[1] === '+' ? 1 : -1;
-          return sign * (parseInt(matchShort[2], 10) * 60);
+
+        // Match GMT+0530 or GMT-0530
+        const matchNoColon = tzPart.match(/GMT([+-])(\d{2})(\d{2})/);
+        if (matchNoColon) {
+          const sign = matchNoColon[1] === '+' ? 1 : -1;
+          return sign * (parseInt(matchNoColon[2], 10) * 60 + parseInt(matchNoColon[3], 10));
+        }
+
+        // Match GMT+5.5 or GMT-5.5
+        const matchDecimal = tzPart.match(/GMT([+-])(\d+(?:\.\d+)?)/);
+        if (matchDecimal) {
+          const sign = matchDecimal[1] === '+' ? 1 : -1;
+          return sign * Math.round(parseFloat(matchDecimal[2]) * 60);
         }
       } catch (e) {}
       return 0;
@@ -738,21 +753,6 @@ const keywords = "time zone converter, world clock, meeting planner, dst aware t
           card.classList.remove("opacity-50");
           draggedZoneIndex = null;
         });
-        card.addEventListener("dragover", (e) => {
-          e.preventDefault();
-        });
-        card.addEventListener("drop", (e) => {
-          e.preventDefault();
-          if (draggedZoneIndex !== null && draggedZoneIndex !== index) {
-            const zones = [...state.targetZones];
-            const [moved] = zones.splice(draggedZoneIndex, 1);
-            zones.splice(index, 0, moved);
-            state.targetZones = zones;
-            localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(zones));
-            renderComparisonList();
-            calculateOverlap();
-          }
-        });
 
         // HTML builder
         card.innerHTML = `
@@ -852,9 +852,13 @@ const keywords = "time zone converter, world clock, meeting planner, dst aware t
         let allWaking = true;
 
         state.targetZones.forEach(tz => {
-          const tzOffset = getTzOffsetMinutes(tz, testDate);
-          const tzLocalTime = new Date(testDate.getTime() + (tzOffset * 60 * 1000));
-          const hour = tzLocalTime.getUTCHours(); // local hour relative to local base
+          // Use Intl.DateTimeFormat to get local hour in the timezone directly
+          const hourString = new Intl.DateTimeFormat('en-US', {
+            timeZone: tz,
+            hour: 'numeric',
+            hourCycle: 'h23'
+          }).format(testDate);
+          const hour = parseInt(hourString, 10);
           // Waking hours: 8am (8) to 8pm (20)
           if (hour < 8 || hour > 20) {
             allWaking = false;
@@ -1162,7 +1166,48 @@ const keywords = "time zone converter, world clock, meeting planner, dst aware t
       }
     });
 
+    // Container-level drag events
+    zoneCardsList.addEventListener("dragover", (e) => {
+      e.preventDefault();
+    });
+    zoneCardsList.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (draggedZoneIndex === null) return;
+
+      const children = Array.from(zoneCardsList.children);
+      let targetIndex = children.length;
+
+      for (let i = 0; i < children.length; i++) {
+        const rect = children[i].getBoundingClientRect();
+        const middleY = rect.top + rect.height / 2;
+        if (e.clientY < middleY) {
+          targetIndex = i;
+          break;
+        }
+      }
+
+      if (draggedZoneIndex !== targetIndex && draggedZoneIndex !== targetIndex - 1) {
+        const zones = [...state.targetZones];
+        const [moved] = zones.splice(draggedZoneIndex, 1);
+        let insertIndex = targetIndex;
+        if (draggedZoneIndex < targetIndex) {
+          insertIndex = targetIndex - 1;
+        }
+        zones.splice(insertIndex, 0, moved);
+        state.targetZones = zones;
+        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(zones));
+        renderComparisonList();
+        calculateOverlap();
+      }
+    });
+
+    // Cleanup listeners on navigate
+    document.addEventListener("astro:before-swap", () => {
+      stopLiveTicking();
+    });
+
     // Start everything
     init();
+    }
   </script>
 </Layout>

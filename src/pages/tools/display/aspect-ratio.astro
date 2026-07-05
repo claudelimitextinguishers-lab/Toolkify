@@ -1396,6 +1396,7 @@ const ogImage = "/og/aspect-ratio.png";
 
   <!-- Interactive JavaScript logic -->
   <script is:inline>
+    if (typeof window !== 'undefined') {
     (function () {
       // -----------------------------------------------------------------------
       // Configuration & Namespacing
@@ -2507,7 +2508,7 @@ const ogImage = "/og/aspect-ratio.png";
       // -----------------------------------------------------------------------
       // Keyboard Shortcuts
       // -----------------------------------------------------------------------
-      document.addEventListener("keydown", (e) => {
+      function handleKeyDown(e) {
         const tag = document.activeElement.tagName.toLowerCase();
         if (tag === "input" || tag === "textarea" || tag === "select") return;
 
@@ -2547,13 +2548,14 @@ const ogImage = "/og/aspect-ratio.png";
           e.preventDefault();
           copyCssBtn.click();
         }
-      });
+      }
+      document.addEventListener("keydown", handleKeyDown);
 
       // -----------------------------------------------------------------------
       // Debounced resize listener
       // -----------------------------------------------------------------------
       let resizeTimeout;
-      window.addEventListener("resize", () => {
+      function handleResize() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
           if (
@@ -2567,7 +2569,8 @@ const ogImage = "/og/aspect-ratio.png";
           // Always re-render compare boxes on resize (orientation change etc.)
           if (currentMode === "compare") updateCompare();
         }, 60);
-      });
+      }
+      window.addEventListener("resize", handleResize);
 
       // -----------------------------------------------------------------------
       // Init
@@ -2602,11 +2605,18 @@ const ogImage = "/og/aspect-ratio.png";
         });
       }
 
+      document.addEventListener("astro:before-swap", () => {
+        document.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("resize", handleResize);
+        document.removeEventListener("DOMContentLoaded", init);
+      });
+
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init);
       } else {
         init();
       }
     })();
+    }
   </script>
 </Layout>

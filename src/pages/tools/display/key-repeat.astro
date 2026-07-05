@@ -445,6 +445,7 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
 
   <!-- Client-Side Page Script -->
   <script>
+    if (typeof window !== 'undefined') {
     // State management
     interface KeySession {
       keyDownCount: number;
@@ -518,6 +519,17 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
         touchWarning.classList.remove("hidden");
       }
     }
+
+    let resizeTimeout: number | null = null;
+    function handleResize() {
+      if (resizeTimeout) {
+        clearTimeout(resizeTimeout);
+      }
+      resizeTimeout = window.setTimeout(() => {
+        checkTouchCapability();
+      }, 150);
+    }
+    window.addEventListener("resize", handleResize);
 
     // Set interactive sliders
     function loadSavedSettings() {
@@ -687,6 +699,8 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
       activeHeldKeys.clear();
       Object.values(perKeyStats).forEach(session => {
         session.isHeld = false;
+        session.firstKeyDownTime = 0;
+        session.lastRepeatTime = 0;
       });
       updateHeldKeysUI();
       if (activeHeldKeys.size === 0) {
@@ -765,6 +779,13 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
         session.repeatsCount++;
         activeKeyType.textContent = "Auto Repeat";
         activeKeyType.className = "text-[10px] text-yellow-dark mt-1 uppercase font-bold";
+
+        if (session.firstKeyDownTime === 0) {
+          session.firstKeyDownTime = now;
+        }
+        if (session.lastRepeatTime === 0) {
+          session.lastRepeatTime = now;
+        }
 
         const elapsedSinceFirst = now - session.firstKeyDownTime;
 
@@ -985,9 +1006,11 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
       typingSandbox.removeEventListener("keydown", processKeyDown);
       typingSandbox.removeEventListener("keyup", processKeyUp);
       window.removeEventListener("blur", clearHeldKeys);
+      window.removeEventListener("resize", handleResize);
     });
     checkTouchCapability();
     loadSavedSettings();
+    }
   </script>
 
   <style is:global>
