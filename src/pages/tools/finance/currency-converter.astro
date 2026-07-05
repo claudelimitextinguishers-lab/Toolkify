@@ -1,0 +1,1087 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+// Tool metadata
+const name = "Currency Converter";
+const category = "finance";
+const tier = "Finance & Tax";
+
+// On-page SEO metadata
+const pageTitle = "Currency Converter - Free Client-Side Exchange Calculator";
+const description = "Calculate currency exchange rates offline with our static currency converter. Instant client-side conversions with reference rate tables, flags, and quick amount comparison presets.";
+const canonicalUrl = "https://boardtools.app/tools/finance/currency-converter";
+const ogImage = "/og/currency-converter.png";
+const keywords = "currency converter, exchange calculator, forex calculator, offline currency converter, usd to eur, gbp to usd, currency exchange rates, currency conversion table, free currency converter, simple exchange rates";
+---
+
+<Layout
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
+>
+  <!-- SEO JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Currency Converter",
+      "alternateName": "Offline Currency Exchange Rate Calculator",
+      "url": "https://boardtools.app/tools/finance/currency-converter",
+      "description": "Calculate exchange rates instantly on your device with static, local conversion tables. Features bidirectional conversions, comparison list, and custom favorite pairs.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Bidirectional live currency conversions",
+        "Over 25+ major world currencies supported",
+        "Save default favorites to local storage",
+        "Copy formatted outputs",
+        "Full static rate reference table",
+        "Offline privacy-first client-side calculation"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Finance & Tax Tools",
+          "item": "https://boardtools.app/#finance"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Currency Converter",
+          "item": "https://boardtools.app/tools/finance/currency-converter"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[840px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0"
+  >
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
+        <span>/</span>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Reset button pulled verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <!-- How it works button pulled verbatim from json-formatter.astro -->
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How currency converter works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+      
+      <!-- Left Column: Converter Core (Desktop: 7/12 width) -->
+      <div class="md:col-span-7 flex flex-col gap-3">
+        <div class="card-base p-4 sm:p-5 flex flex-col gap-4 relative">
+          
+          <!-- Conversion Box Pair -->
+          <div class="flex flex-col gap-3 relative">
+            
+            <!-- From Amount & Currency -->
+            <div class="flex flex-col gap-1.5">
+              <label for="from-amount" class="text-[11px] font-semibold text-charcoal flex justify-between">
+                <span>From Amount</span>
+                <span id="from-label" class="text-stone">Source Currency</span>
+              </label>
+              <div class="flex gap-2 relative">
+                <!-- Currency Button -->
+                <button
+                  type="button"
+                  id="from-currency-btn"
+                  class="flex items-center justify-between gap-1.5 px-3 py-2 bg-surface hover:bg-canvas border border-hairline-strong rounded-md text-sm font-semibold text-primary transition-all cursor-pointer w-32 select-none"
+                  aria-haspopup="listbox"
+                  aria-label="Source Currency"
+                >
+                  <span class="flex items-center gap-1.5">
+                    <span id="from-flag" class="text-base select-none">🇺🇸</span>
+                    <span id="from-code" class="font-mono">USD</span>
+                  </span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <!-- Decimal Input -->
+                <div class="relative flex-grow">
+                  <span id="from-symbol" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold select-none">$</span>
+                  <input
+                    type="number"
+                    id="from-amount"
+                    value="100"
+                    step="any"
+                    class="text-input w-full pl-7 pr-3 text-sm font-mono"
+                    inputmode="decimal"
+                    placeholder="0.00"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Absolute Swap Button Overlay in between -->
+            <div class="flex justify-center -my-1.5 z-10">
+              <button
+                type="button"
+                id="swap-btn"
+                class="w-8 h-8 flex items-center justify-center bg-canvas hover:bg-surface border border-hairline-strong text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+                title="Swap currencies and amounts"
+                aria-label="Swap Currencies"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="swap-icon"
+                  class="w-4 h-4 transition-transform duration-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- To Amount & Currency -->
+            <div class="flex flex-col gap-1.5">
+              <label for="to-amount" class="text-[11px] font-semibold text-charcoal flex justify-between">
+                <span>To Amount</span>
+                <span id="to-label" class="text-stone">Target Currency</span>
+              </label>
+              <div class="flex gap-2 relative">
+                <!-- Currency Button -->
+                <button
+                  type="button"
+                  id="to-currency-btn"
+                  class="flex items-center justify-between gap-1.5 px-3 py-2 bg-surface hover:bg-canvas border border-hairline-strong rounded-md text-sm font-semibold text-primary transition-all cursor-pointer w-32 select-none"
+                  aria-haspopup="listbox"
+                  aria-label="Target Currency"
+                >
+                  <span class="flex items-center gap-1.5">
+                    <span id="to-flag" class="text-base select-none">🇪🇺</span>
+                    <span id="to-code" class="font-mono">EUR</span>
+                  </span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                <!-- Decimal Input -->
+                <div class="relative flex-grow">
+                  <span id="to-symbol" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold select-none">€</span>
+                  <input
+                    type="number"
+                    id="to-amount"
+                    value="91.74"
+                    step="any"
+                    class="text-input w-full pl-7 pr-3 text-sm font-mono"
+                    inputmode="decimal"
+                    placeholder="0.00"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Currency Picker Floating Popover (Shared for both sides) -->
+          <div
+            id="currency-picker"
+            class="absolute top-1/2 left-4 right-4 -translate-y-1/2 bg-canvas border border-hairline-strong rounded-xl shadow-modal z-50 p-3 hidden flex flex-col gap-2 animate-scale-in"
+            style="max-height: 280px;"
+          >
+            <div class="flex items-center gap-2 pb-1 border-b border-hairline">
+              <span class="text-xs font-bold text-primary flex-grow">Select Currency</span>
+              <button type="button" id="close-picker-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 cursor-pointer">✕</button>
+            </div>
+            <input
+              type="text"
+              id="picker-search"
+              class="text-input text-xs h-9 py-1 px-2.5 w-full bg-surface"
+              placeholder="Search by code, name, or country..."
+              autocomplete="off"
+            />
+            <div id="picker-list" class="flex flex-col gap-0.5 overflow-y-auto flex-grow text-xs pr-1">
+              <!-- Dynamically populated list items -->
+            </div>
+          </div>
+
+          <!-- Preset Chips & Quick Actions -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-hairline-soft mt-1">
+            <div class="flex items-center gap-1">
+              <span class="text-[10px] text-stone font-semibold mr-1">Presets:</span>
+              {
+                [100, 500, 1000, 5000].map((amt) => (
+                  <button
+                    type="button"
+                    class="preset-chip text-[11px] font-semibold px-2 py-0.5 bg-surface hover:bg-hairline rounded border border-hairline text-slate hover:text-primary transition-all cursor-pointer active:scale-95"
+                    data-amount={amt}
+                  >
+                    {amt}
+                  </button>
+                ))
+              }
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                id="favorite-btn"
+                class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+                title="Save current pair as default"
+              >
+                <span id="favorite-icon">☆</span>
+                <span id="favorite-text">Set Default</span>
+              </button>
+              <button
+                type="button"
+                id="copy-btn"
+                class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-blue rounded-full transition-all cursor-pointer"
+                title="Copy conversion text to clipboard"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- HONESTY REQUIREMENT: Static Rates Disclaimer -->
+        <div class="bg-surface border border-hairline-strong rounded-lg p-2.5 text-[11px] text-slate flex flex-col gap-1 leading-normal select-none">
+          <div class="flex items-center justify-between font-bold text-primary">
+            <span class="flex items-center gap-1 text-brand-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              Static Local Exchange Rates
+            </span>
+            <span id="rates-date-label">July 5, 2026</span>
+          </div>
+          <p>
+            <strong>Disclaimer:</strong> This tool uses fixed, bundled offline rates. These figures are for general reference and rough estimation only. Do <strong>NOT</strong> use for actual bank transfers, live foreign exchange transactions, travel money exchanges, or stock/currency trading.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Secondary Side Panel (Desktop: 5/12 width) -->
+      <div class="md:col-span-5 flex flex-col gap-3">
+        <div class="card-base p-3 flex flex-col gap-3 h-full justify-between">
+          <div class="flex flex-col gap-2">
+            <!-- Tabs Header -->
+            <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full">
+              <button
+                type="button"
+                id="tab-compare-btn"
+                class="flex-1 text-center text-[11px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+              >
+                Compare Currencies
+              </button>
+              <button
+                type="button"
+                id="tab-table-btn"
+                class="flex-1 text-center text-[11px] py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary"
+              >
+                Rate Tables
+              </button>
+            </div>
+
+            <!-- Compare Tab Content -->
+            <div id="tab-compare-content" class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between text-[10px] text-stone font-semibold px-1">
+                <span>CONVERSION SUMMARY</span>
+                <span id="compare-base-amount" class="font-mono">100.00 USD</span>
+              </div>
+              <div id="compare-list" class="flex flex-col gap-1 overflow-y-auto max-h-[170px] pr-1">
+                <!-- Comparison entries will be generated here -->
+              </div>
+            </div>
+
+            <!-- Rate Table Tab Content (Hidden by default) -->
+            <div id="tab-table-content" class="flex flex-col gap-1.5 hidden">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="table-search"
+                  class="text-input text-[11px] h-8 py-1 px-2.5 w-full bg-surface"
+                  placeholder="Filter rates by name/code..."
+                  autocomplete="off"
+                />
+              </div>
+              <div id="rate-table-list" class="flex flex-col gap-1 overflow-y-auto max-h-[140px] pr-1 text-xs">
+                <!-- Bundled rates rows relative to USD -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom micro status row -->
+          <div class="border-t border-hairline-soft pt-1.5 flex items-center justify-between text-[9px] text-stone">
+            <span>Offline Enabled</span>
+            <span>Local calculations</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Below the Fold Details / Education (Strict Separator) -->
+    <div class="border-t border-hairline pt-6 mt-4 max-w-[760px] mx-auto text-slate flex flex-col gap-6">
+      <article class="prose max-w-none text-xs leading-relaxed flex flex-col gap-4 text-slate">
+        <h2 class="font-display font-medium text-lg text-primary">About Offline Currency Conversion</h2>
+        <p>
+          Unlike tools that query remote APIs, this Currency Converter runs completely on your local device. The conversion table represents standard median global exchange rates static as of July 5, 2026. This allows for rapid calculations when exploring financial estimations without sending data across networks or running into offline errors.
+        </p>
+        <p>
+          To maintain accurate math when switching currencies (for example, JPY to EUR), this tool uses strict cross-multiplication via a USD base index: 
+          <code class="bg-surface px-1 py-0.5 rounded font-mono">Amount(To) = Amount(From) * [Rate(To) / Rate(From)]</code>.
+          This ensures zero statistical drift and respects the formal fractional differences between various fiat models.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Currency Converter Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <!-- Prominent Disclaimer Repeated In Modal -->
+        <div class="bg-brand-red/40 border border-brand-red-dark text-coral-dark rounded-md p-3 select-none flex flex-col gap-1">
+          <span class="font-semibold text-sm">⚠️ CRITICAL FINANCIAL DISCLAIMER</span>
+          <p>
+            This tool contains stale, hardcoded reference rates from July 5, 2026. These are approximate estimation numbers and do <strong>NOT</strong> represent real-time bank or market exchange rates. Please check with your bank or a live-rate provider for actual financial operations.
+          </p>
+        </div>
+
+        <h4 class="font-semibold text-primary">
+          1. Bidirectional Live Calculation
+        </h4>
+        <p>
+          Simply enter numbers into either the "From" or "To" fields. The tool calculates conversions on the fly, saving you from hitting generic "Calculate" buttons.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Searchable Pickers</h4>
+        <p>
+          Clicking the currency indicators opens a popover containing flags. You can instantly filter the list by currency code (e.g. "JPY"), currency name ("Yen"), or the corresponding country name ("Japan").
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Multi-Currency Compare List</h4>
+        <p>
+          See how your base amount converts to other major international currencies in real time. The side panel calculates equivalents for EUR, JPY, GBP, CAD, AUD, and more instantly.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Default Persistence</h4>
+        <p>
+          If you frequently check a specific conversion pair, click the "Set Default" button. The tool records this selection inside your browser's local storage and loads it automatically on return visits.
+        </p>
+
+        <h4 class="font-semibold text-primary">5. Historical Rate Warning</h4>
+        <p>
+          Historical and live currencies fluctuate second-by-second based on geopolitical updates, interest changes, inflation, and global trading desk flows. Stale reference tables like this are helpful for historical comparison, game styling, mockup budgeting, or educational simulations, but not active financial decisions.
+        </p>
+      </div>
+
+      <div class="flex justify-end pt-2 border-t border-hairline-soft">
+        <button
+          type="button"
+          id="modal-ok-btn"
+          class="bg-primary text-canvas font-semibold px-4 py-1.5 rounded-full text-xs hover:bg-charcoal transition-all cursor-pointer shadow-subtle"
+        >
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Static Rate Table: Relative to USD (1 USD = X Currency units)
+    const RATES: Record<string, number> = {
+      USD: 1.0000,
+      EUR: 0.9174,
+      GBP: 0.7843,
+      JPY: 160.82,
+      CNY: 7.2685,
+      INR: 83.49,
+      AUD: 1.4925,
+      CAD: 1.3636,
+      CHF: 0.8967,
+      NZD: 1.6287,
+      SEK: 10.456,
+      NOK: 10.534,
+      DKK: 6.8450,
+      MXN: 18.084,
+      SGD: 1.3496,
+      HKD: 7.8090,
+      KRW: 1378.5,
+      TRY: 32.724,
+      RUB: 87.950,
+      BRL: 5.4620,
+      ZAR: 18.125,
+      PHP: 58.625,
+      IDR: 16325,
+      MYR: 4.7120,
+      THB: 36.540,
+      AED: 3.6728,
+      SAR: 3.7508,
+      ILS: 3.7120,
+      PLN: 3.9925
+    };
+
+    // Currency metadata details
+    interface CurrencyInfo {
+      name: string;
+      flag: string;
+      symbol: string;
+      precision: number;
+      country: string;
+    }
+
+    const CURRENCY_DETAILS: Record<string, CurrencyInfo> = {
+      USD: { name: "US Dollar", flag: "🇺🇸", symbol: "$", precision: 2, country: "United States USA" },
+      EUR: { name: "Euro", flag: "🇪🇺", symbol: "€", precision: 2, country: "Europe Eurozone Germany France Italy Spain" },
+      GBP: { name: "British Pound", flag: "🇬🇧", symbol: "£", precision: 2, country: "United Kingdom Great Britain England UK" },
+      JPY: { name: "Japanese Yen", flag: "🇯🇵", symbol: "¥", precision: 0, country: "Japan JPY" },
+      CNY: { name: "Chinese Yuan", flag: "🇨🇳", symbol: "¥", precision: 2, country: "China PRC RMB" },
+      INR: { name: "Indian Rupee", flag: "🇮🇳", symbol: "₹", precision: 2, country: "India Bharat" },
+      AUD: { name: "Australian Dollar", flag: "🇦🇺", symbol: "$", precision: 2, country: "Australia" },
+      CAD: { name: "Canadian Dollar", flag: "🇨🇦", symbol: "$", precision: 2, country: "Canada" },
+      CHF: { name: "Swiss Franc", flag: "🇨🇭", symbol: "Fr.", precision: 2, country: "Switzerland" },
+      NZD: { name: "New Zealand Dollar", flag: "🇳🇿", symbol: "$", precision: 2, country: "New Zealand Kiwi" },
+      SEK: { name: "Swedish Krona", flag: "🇸🇪", symbol: "kr", precision: 2, country: "Sweden Stockholm" },
+      NOK: { name: "Norwegian Krone", flag: "🇳🇴", symbol: "kr", precision: 2, country: "Norway Oslo" },
+      DKK: { name: "Danish Krone", flag: "🇩🇰", symbol: "kr", precision: 2, country: "Denmark Copenhagen" },
+      MXN: { name: "Mexican Peso", flag: "🇲🇽", symbol: "$", precision: 2, country: "Mexico Peso" },
+      SGD: { name: "Singapore Dollar", flag: "🇸🇬", symbol: "$", precision: 2, country: "Singapore" },
+      HKD: { name: "Hong Kong Dollar", flag: "🇭🇰", symbol: "$", precision: 2, country: "Hong Kong" },
+      KRW: { name: "South Korean Won", flag: "🇰🇷", symbol: "₩", precision: 0, country: "South Korea Seoul" },
+      TRY: { name: "Turkish Lira", flag: "🇹🇷", symbol: "₺", precision: 2, country: "Turkey Istanbul" },
+      RUB: { name: "Russian Ruble", flag: "🇷🇺", symbol: "₽", precision: 2, country: "Russia Moscow" },
+      BRL: { name: "Brazilian Real", flag: "🇧🇷", symbol: "R$", precision: 2, country: "Brazil Rio" },
+      ZAR: { name: "South African Rand", flag: "🇿🇦", symbol: "R", precision: 2, country: "South Africa Pretoria" },
+      PHP: { name: "Philippine Peso", flag: "🇵🇭", symbol: "₱", precision: 2, country: "Philippines Manila" },
+      IDR: { name: "Indonesian Rupiah", flag: "🇮🇩", symbol: "Rp", precision: 0, country: "Indonesia Jakarta Bali" },
+      MYR: { name: "Malaysian Ringgit", flag: "🇲🇾", symbol: "RM", precision: 2, country: "Malaysia Kuala Lumpur" },
+      THB: { name: "Thai Baht", flag: "🇹🇭", symbol: "฿", precision: 2, country: "Thailand Bangkok" },
+      AED: { name: "UAE Dirham", flag: "🇦🇪", symbol: "د.إ", precision: 2, country: "United Arab Emirates Dubai Abu Dhabi" },
+      SAR: { name: "Saudi Riyal", flag: "🇸🇦", symbol: "ر.س", precision: 2, country: "Saudi Arabia Riyadh" },
+      ILS: { name: "Israeli New Shekel", flag: "🇮🇱", symbol: "₪", precision: 2, country: "Israel Tel Aviv Jerusalem" },
+      PLN: { name: "Polish Zloty", flag: "🇵🇱", symbol: "zł", precision: 2, country: "Poland Warsaw" }
+    };
+
+    // Primary DOM Elements
+    const fromAmountEl = document.getElementById("from-amount") as HTMLInputElement;
+    const toAmountEl = document.getElementById("to-amount") as HTMLInputElement;
+    const fromCurrencyBtn = document.getElementById("from-currency-btn") as HTMLButtonElement;
+    const toCurrencyBtn = document.getElementById("to-currency-btn") as HTMLButtonElement;
+    const swapBtn = document.getElementById("swap-btn") as HTMLButtonElement;
+    const swapIcon = document.getElementById("swap-icon") as SVGElement;
+    
+    // Pickers
+    const currencyPicker = document.getElementById("currency-picker") as HTMLDivElement;
+    const closePickerBtn = document.getElementById("close-picker-btn") as HTMLButtonElement;
+    const pickerSearch = document.getElementById("picker-search") as HTMLInputElement;
+    const pickerList = document.getElementById("picker-list") as HTMLDivElement;
+
+    // Header buttons (Verbatim matching structures)
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+    const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const closeModalBtn = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const modalOkBtn = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    // Additional Features Elements
+    const favoriteBtn = document.getElementById("favorite-btn") as HTMLButtonElement;
+    const favoriteIcon = document.getElementById("favorite-icon") as HTMLSpanElement;
+    const favoriteText = document.getElementById("favorite-text") as HTMLSpanElement;
+    const copyBtn = document.getElementById("copy-btn") as HTMLButtonElement;
+
+    // Tabs
+    const tabCompareBtn = document.getElementById("tab-compare-btn") as HTMLButtonElement;
+    const tabTableBtn = document.getElementById("tab-table-btn") as HTMLButtonElement;
+    const tabCompareContent = document.getElementById("tab-compare-content") as HTMLDivElement;
+    const tabTableContent = document.getElementById("tab-table-content") as HTMLDivElement;
+    const compareList = document.getElementById("compare-list") as HTMLDivElement;
+    const rateTableList = document.getElementById("rate-table-list") as HTMLDivElement;
+    const tableSearch = document.getElementById("table-search") as HTMLInputElement;
+    const compareBaseAmount = document.getElementById("compare-base-amount") as HTMLSpanElement;
+
+    // State Variables
+    let currentFromCurrency = "USD";
+    let currentToCurrency = "EUR";
+    let currentActiveTarget: "from" | "to" = "from";
+    let swapRotation = 0;
+
+    // Local Storage keys matching pattern
+    const STORAGE_KEY_PREFIX = "boardtools:currency-converter";
+    const KEY_FROM = `${STORAGE_KEY_PREFIX}:from`;
+    const KEY_TO = `${STORAGE_KEY_PREFIX}:to`;
+    const KEY_AMOUNT = `${STORAGE_KEY_PREFIX}:amount`;
+    const KEY_FAVORITE = `${STORAGE_KEY_PREFIX}:favorite-pair`;
+
+    // Initialize State from Storage or Defaults
+    function loadState() {
+      // Check saved favorite default pair
+      const savedFavorite = localStorage.getItem(KEY_FAVORITE);
+      let defaultFrom = "USD";
+      let defaultTo = "EUR";
+      
+      if (savedFavorite) {
+        const parts = savedFavorite.split(":");
+        if (parts.length === 2 && RATES[parts[0]] && RATES[parts[1]]) {
+          defaultFrom = parts[0];
+          defaultTo = parts[1];
+        }
+      }
+
+      currentFromCurrency = localStorage.getItem(KEY_FROM) || defaultFrom;
+      currentToCurrency = localStorage.getItem(KEY_TO) || defaultTo;
+
+      // Avoid same currency conflict
+      if (currentFromCurrency === currentToCurrency) {
+        currentToCurrency = currentFromCurrency === "USD" ? "EUR" : "USD";
+      }
+
+      const savedAmount = localStorage.getItem(KEY_AMOUNT) || "100";
+      fromAmountEl.value = savedAmount;
+
+      updateButtonUI();
+      performConversion("from");
+      updateFavoriteUI();
+    }
+
+    // Save Selection State
+    function saveState() {
+      localStorage.setItem(KEY_FROM, currentFromCurrency);
+      localStorage.setItem(KEY_TO, currentToCurrency);
+      localStorage.setItem(KEY_AMOUNT, fromAmountEl.value);
+    }
+
+    // Check if Reduced Motion is enabled
+    function isReducedMotion(): boolean {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+
+    // Animated Counter-Up for Conversion Target Output
+    let animationFrameId: number | null = null;
+    function animateValue(element: HTMLInputElement, startVal: number, endVal: number, decimals: number) {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      if (isReducedMotion() || startVal === endVal) {
+        element.value = endVal.toFixed(decimals);
+        return;
+      }
+
+      const duration = 250; // Short satisfying counter-up
+      const startTime = performance.now();
+
+      function update(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Ease Out Quad
+        const easeProgress = progress * (2 - progress);
+        const currentVal = startVal + (endVal - startVal) * easeProgress;
+        element.value = currentVal.toFixed(decimals);
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(update);
+        } else {
+          element.value = endVal.toFixed(decimals);
+          animationFrameId = null;
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(update);
+    }
+
+    // Bidirectional Core Conversion
+    function performConversion(source: "from" | "to") {
+      const fromRate = RATES[currentFromCurrency];
+      const toRate = RATES[currentToCurrency];
+      
+      const fromDecimals = CURRENCY_DETAILS[currentFromCurrency]?.precision ?? 2;
+      const toDecimals = CURRENCY_DETAILS[currentToCurrency]?.precision ?? 2;
+
+      if (source === "from") {
+        const val = parseFloat(fromAmountEl.value);
+        if (isNaN(val)) {
+          toAmountEl.value = "";
+          return;
+        }
+        // Cross multiplication: EUR = USD * (EUR_rate / USD_rate)
+        const result = val * (toRate / fromRate);
+        const currentToVal = parseFloat(toAmountEl.value) || 0;
+        animateValue(toAmountEl, currentToVal, result, toDecimals);
+      } else {
+        const val = parseFloat(toAmountEl.value);
+        if (isNaN(val)) {
+          fromAmountEl.value = "";
+          return;
+        }
+        const result = val * (fromRate / toRate);
+        const currentFromVal = parseFloat(fromAmountEl.value) || 0;
+        animateValue(fromAmountEl, currentFromVal, result, fromDecimals);
+      }
+
+      saveState();
+      updateComparisonList();
+    }
+
+    // Update Button Labels, Symbols, and Flags
+    function updateButtonUI() {
+      const fromInfo = CURRENCY_DETAILS[currentFromCurrency];
+      const toInfo = CURRENCY_DETAILS[currentToCurrency];
+
+      // From Button
+      (document.getElementById("from-flag") as HTMLSpanElement).textContent = fromInfo.flag;
+      (document.getElementById("from-code") as HTMLSpanElement).textContent = currentFromCurrency;
+      (document.getElementById("from-symbol") as HTMLSpanElement).textContent = fromInfo.symbol;
+      (document.getElementById("from-label") as HTMLSpanElement).textContent = fromInfo.name;
+
+      // To Button
+      (document.getElementById("to-flag") as HTMLSpanElement).textContent = toInfo.flag;
+      (document.getElementById("to-code") as HTMLSpanElement).textContent = currentToCurrency;
+      (document.getElementById("to-symbol") as HTMLSpanElement).textContent = toInfo.symbol;
+      (document.getElementById("to-label") as HTMLSpanElement).textContent = toInfo.name;
+    }
+
+    // Custom Search Picker Popover
+    function openPicker(target: "from" | "to") {
+      currentActiveTarget = target;
+      currencyPicker.classList.remove("hidden");
+      pickerSearch.value = "";
+      pickerSearch.focus();
+      renderPickerList("");
+    }
+
+    function closePicker() {
+      currencyPicker.classList.add("hidden");
+    }
+
+    // Search and Render Picker currencies
+    function renderPickerList(searchQuery: string) {
+      pickerList.innerHTML = "";
+      const q = searchQuery.toLowerCase().trim();
+
+      const sortedKeys = Object.keys(CURRENCY_DETAILS).sort();
+
+      sortedKeys.forEach(code => {
+        const details = CURRENCY_DETAILS[code];
+        const isMatch = code.toLowerCase().includes(q) || 
+                        details.name.toLowerCase().includes(q) || 
+                        details.country.toLowerCase().includes(q);
+
+        if (!isMatch) return;
+
+        // Skip currency if selected in the other slot to avoid conversion to itself
+        const isCurrentlyUsedInOtherTarget = (currentActiveTarget === "from" && code === currentToCurrency) ||
+                                            (currentActiveTarget === "to" && code === currentFromCurrency);
+        
+        if (isCurrentlyUsedInOtherTarget) return;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "flex items-center justify-between p-2 rounded hover:bg-surface text-left cursor-pointer transition-all w-full select-none";
+        
+        // Highlight active one
+        const isActive = (currentActiveTarget === "from" && code === currentFromCurrency) ||
+                         (currentActiveTarget === "to" && code === currentToCurrency);
+        if (isActive) {
+          btn.classList.add("bg-surface-pricing-featured", "font-semibold");
+        }
+
+        btn.innerHTML = `
+          <span class="flex items-center gap-2">
+            <span class="text-base select-none">${details.flag}</span>
+            <span class="font-mono font-bold">${code}</span>
+            <span class="text-stone text-[11px] truncate max-w-[130px]">${details.name}</span>
+          </span>
+          <span class="text-[10px] font-mono text-slate bg-hairline-soft px-1 rounded">${details.symbol}</span>
+        `;
+
+        btn.addEventListener("click", () => {
+          if (currentActiveTarget === "from") {
+            currentFromCurrency = code;
+          } else {
+            currentToCurrency = code;
+          }
+          updateButtonUI();
+          performConversion("from");
+          updateFavoriteUI();
+          closePicker();
+        });
+
+        pickerList.appendChild(btn);
+      });
+    }
+
+    // Swapping Actions
+    function handleSwap() {
+      // Rotation Animation
+      swapRotation += 180;
+      if (!isReducedMotion()) {
+        swapIcon.style.transform = `rotate(${swapRotation}deg)`;
+      }
+
+      // Flip currencies
+      const temp = currentFromCurrency;
+      currentFromCurrency = currentToCurrency;
+      currentToCurrency = temp;
+
+      // Flip values
+      const fromVal = fromAmountEl.value;
+      const toVal = toAmountEl.value;
+      fromAmountEl.value = toVal;
+      toAmountEl.value = fromVal;
+
+      updateButtonUI();
+      performConversion("from");
+      updateFavoriteUI();
+    }
+
+    // Favorites LocalStorage features
+    function handleSetFavorite() {
+      const pairString = `${currentFromCurrency}:${currentToCurrency}`;
+      const currentFavorite = localStorage.getItem(KEY_FAVORITE);
+
+      if (currentFavorite === pairString) {
+        // Toggle off
+        localStorage.removeItem(KEY_FAVORITE);
+      } else {
+        localStorage.setItem(KEY_FAVORITE, pairString);
+      }
+      updateFavoriteUI();
+    }
+
+    // Update Favorites star UI
+    function updateFavoriteUI() {
+      const pairString = `${currentFromCurrency}:${currentToCurrency}`;
+      const isFav = localStorage.getItem(KEY_FAVORITE) === pairString;
+      
+      if (isFav) {
+        favoriteIcon.textContent = "★";
+        favoriteIcon.className = "text-brand-yellow font-bold text-xs animate-scale-in";
+        favoriteText.textContent = "Default Saved";
+      } else {
+        favoriteIcon.textContent = "☆";
+        favoriteIcon.className = "text-slate";
+        favoriteText.textContent = "Set Default";
+      }
+    }
+
+    // Copy formatted result to clipboard
+    function handleCopy() {
+      const fromInfo = CURRENCY_DETAILS[currentFromCurrency];
+      const toInfo = CURRENCY_DETAILS[currentToCurrency];
+      const fromVal = parseFloat(fromAmountEl.value) || 0;
+      const toVal = parseFloat(toAmountEl.value) || 0;
+      
+      const formattedFrom = `${fromInfo.symbol}${fromVal.toFixed(fromInfo.precision)} ${currentFromCurrency}`;
+      const formattedTo = `${toInfo.symbol}${toVal.toFixed(toInfo.precision)} ${currentToCurrency}`;
+
+      const text = `${formattedFrom} = ${formattedTo} (Reference rate static as of July 5, 2026)`;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        // Subtle micro UI feedback
+        const copySpan = copyBtn.querySelector("span");
+        if (copySpan) {
+          const originalText = copySpan.textContent;
+          copySpan.textContent = "Copied!";
+          copySpan.classList.add("text-brand-blue");
+          setTimeout(() => {
+            copySpan.textContent = originalText;
+            copySpan.classList.remove("text-brand-blue");
+          }, 1500);
+        }
+      });
+    }
+
+    // Comparison List: dynamic matching
+    function updateComparisonList() {
+      const fromVal = parseFloat(fromAmountEl.value);
+      if (isNaN(fromVal)) {
+        compareList.innerHTML = `<span class="text-stone text-[11px] px-2 py-4">Enter a conversion amount to compare.</span>`;
+        return;
+      }
+
+      compareBaseAmount.textContent = `${fromVal.toFixed(CURRENCY_DETAILS[currentFromCurrency].precision)} ${currentFromCurrency}`;
+
+      // Pick a selection of standard major target currencies
+      const targets = ["USD", "EUR", "GBP", "JPY", "INR", "AUD", "CAD", "CHF", "CNY", "SGD"].filter(c => c !== currentFromCurrency);
+
+      compareList.innerHTML = "";
+      
+      targets.forEach(code => {
+        const details = CURRENCY_DETAILS[code];
+        const rate = RATES[code];
+        const fromRate = RATES[currentFromCurrency];
+        
+        // Calculate Cross conversion
+        const result = fromVal * (rate / fromRate);
+        const formattedResult = `${details.symbol}${result.toFixed(details.precision)}`;
+
+        const row = document.createElement("div");
+        row.className = "flex items-center justify-between p-2 bg-surface rounded hover:bg-hairline-soft transition-all text-xs border border-hairline-soft cursor-pointer";
+        row.innerHTML = `
+          <span class="flex items-center gap-1.5 font-semibold text-primary">
+            <span class="select-none">${details.flag}</span>
+            <span class="font-mono text-[11px]">${code}</span>
+            <span class="text-[10px] text-stone font-normal truncate max-w-[80px]">${details.name}</span>
+          </span>
+          <span class="font-mono font-bold text-primary select-all">${formattedResult}</span>
+        `;
+        
+        // Quick swap target to this on row click
+        row.addEventListener("click", () => {
+          currentToCurrency = code;
+          updateButtonUI();
+          performConversion("from");
+          updateFavoriteUI();
+        });
+
+        compareList.appendChild(row);
+      });
+    }
+
+    // Rate Table Tab logic
+    function renderRateTableList(searchQuery: string) {
+      rateTableList.innerHTML = "";
+      const q = searchQuery.toLowerCase().trim();
+
+      const sortedKeys = Object.keys(RATES).sort();
+
+      sortedKeys.forEach(code => {
+        const details = CURRENCY_DETAILS[code];
+        const rate = RATES[code];
+
+        const isMatch = code.toLowerCase().includes(q) || details.name.toLowerCase().includes(q);
+        if (!isMatch) return;
+
+        const row = document.createElement("div");
+        row.className = "flex items-center justify-between p-1.5 border-b border-hairline-soft hover:bg-surface rounded transition-all text-[11px]";
+        row.innerHTML = `
+          <span class="flex items-center gap-1.5 text-slate">
+            <span>${details.flag}</span>
+            <span class="font-mono font-bold text-primary">${code}</span>
+            <span class="text-stone text-[10px] truncate max-w-[120px]">${details.name}</span>
+          </span>
+          <span class="font-mono text-primary font-bold">1 USD = ${rate.toFixed(4)} ${details.symbol}</span>
+        `;
+        rateTableList.appendChild(row);
+      });
+    }
+
+    // Tab Buttons Interactions
+    tabCompareBtn.addEventListener("click", () => {
+      tabCompareBtn.className = "flex-1 text-center text-[11px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabTableBtn.className = "flex-1 text-center text-[11px] py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+      tabCompareContent.classList.remove("hidden");
+      tabTableContent.classList.add("hidden");
+    });
+
+    tabTableBtn.addEventListener("click", () => {
+      tabTableBtn.className = "flex-1 text-center text-[11px] py-1 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabCompareBtn.className = "flex-1 text-center text-[11px] py-1 rounded-full font-semibold transition-all cursor-pointer text-slate hover:text-primary";
+      tabTableContent.classList.remove("hidden");
+      tabCompareContent.classList.add("hidden");
+      renderRateTableList("");
+    });
+
+    // Preset Amount Chips Click Handler
+    document.querySelectorAll(".preset-chip").forEach(chip => {
+      chip.addEventListener("click", (e) => {
+        const amt = (e.currentTarget as HTMLButtonElement).dataset.amount;
+        if (amt) {
+          fromAmountEl.value = amt;
+          performConversion("from");
+        }
+      });
+    });
+
+    // Reset button exact contract (clears local values and resets storage)
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem(KEY_FROM);
+      localStorage.removeItem(KEY_TO);
+      localStorage.removeItem(KEY_AMOUNT);
+      
+      // Default selections
+      fromAmountEl.value = "100";
+      currentFromCurrency = "USD";
+      currentToCurrency = "EUR";
+
+      updateButtonUI();
+      performConversion("from");
+      updateFavoriteUI();
+    });
+
+    // Modal Action Bindings
+    howItWorksBtn.addEventListener("click", () => {
+      howItWorksModal.classList.remove("hidden");
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+
+    modalOkBtn.addEventListener("click", () => {
+      howItWorksModal.classList.add("hidden");
+    });
+
+    howItWorksModal.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // Picker Button Openings
+    fromCurrencyBtn.addEventListener("click", () => openPicker("from"));
+    toCurrencyBtn.addEventListener("click", () => openPicker("to"));
+    closePickerBtn.addEventListener("click", closePicker);
+
+    // Search bar event listeners
+    pickerSearch.addEventListener("input", (e) => {
+      renderPickerList((e.target as HTMLInputElement).value);
+    });
+
+    tableSearch.addEventListener("input", (e) => {
+      renderRateTableList((e.target as HTMLInputElement).value);
+    });
+
+    // Bidirectional keyboard triggers
+    fromAmountEl.addEventListener("input", () => performConversion("from"));
+    toAmountEl.addEventListener("input", () => performConversion("to"));
+    swapBtn.addEventListener("click", handleSwap);
+    favoriteBtn.addEventListener("click", handleSetFavorite);
+    copyBtn.addEventListener("click", handleCopy);
+
+    // Close picker when clicking outside
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (
+        !currencyPicker.contains(target) &&
+        !fromCurrencyBtn.contains(target) &&
+        !toCurrencyBtn.contains(target) &&
+        !currencyPicker.classList.contains("hidden")
+      ) {
+        closePicker();
+      }
+    });
+
+    // Load and Start Conversion
+    loadState();
+  </script>
+</Layout>
