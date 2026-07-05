@@ -1,90 +1,1516 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
-const name = "Color Picker";
+const name = "Color Picker & Eyedropper";
 const category = "general";
 const tier = "General Everyday Utilities";
-const description = "Extract HSL, hex, and RGB values from canvas coordinates or input ranges.";
+const description = "Select colors manually, extract them from images via an eyedropper canvas, check WCAG contrast accessibility, and generate harmony palettes.";
+const canonicalUrl = "https://boardtools.app/tools/color-picker";
+const ogImage = "/og/color-picker.png";
+const keywords = "color picker, online eyedropper, image color extractor, contrast checker, wcag accessibility, color harmony, color palette generator, client side color tool";
 ---
 
-<Layout 
+<Layout
   title={`${name} - BoardTools`}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Color Picker & Eyedropper",
+      "alternateName": "Client-Side Color Selector & Image Palette Extractor",
+      "url": "https://boardtools.app/tools/color-picker",
+      "description": "Free online client-side color picker with manual HSL/RGB adjustment, canvas image pixel sampling, WCAG contrast accessibility analysis, and CSS/JSON palette exports.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Interactive Saturation-Lightness square with Hue & Alpha range sliders",
+        "Drag & drop image eyedropper with canvas mapping precision",
+        "Magnified pixel preview cursor on canvas hover",
+        "Native EyeDropper API integration where supported",
+        "Simultaneous live HEX, RGB, RGBA, HSL, and HSLA readouts",
+        "Color harmony generation (complementary, analogous, triadic, monochromatic)",
+        "WCAG contrast validation against black & white",
+        "Saved and recent palettes stored securely in localStorage"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🌍</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How Color Picker works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Workspace Container (Zero-Scroll Compact Layout) -->
+    <div class="card-base p-4 sm:p-5 flex flex-col gap-4 print:border-none print:shadow-none print:bg-transparent print:p-0">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch relative">
+        
+        <!-- Left Pane: Input Selectors -->
+        <div class="lg:col-span-7 flex flex-col gap-3 min-h-[300px] lg:min-h-[420px]">
+          <!-- Switchable Tabs -->
+          <div class="flex rounded-full bg-surface p-0.5 border border-hairline w-full">
+            <button
+              type="button"
+              id="tab-manual-btn"
+              class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas"
+            >
+              Manual Picker
+            </button>
+            <button
+              type="button"
+              id="tab-image-btn"
+              class="flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate"
+            >
+              Image Eyedropper
+            </button>
+          </div>
+
+          <!-- Tab Content 1: Manual Picker -->
+          <div id="panel-manual" class="flex flex-col gap-3 flex-grow">
+            <!-- Saturation & Lightness Picker Canvas Box -->
+            <div
+              id="picker-sl-box"
+              class="relative w-full h-[180px] rounded-lg cursor-crosshair overflow-hidden border border-hairline-strong select-none"
+              style="background-color: hsl(0, 100%, 50%);"
+            >
+              <!-- Gradients layering for S & L -->
+              <div class="absolute inset-0 bg-gradient-to-r from-white to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+              <!-- Drag marker thumb -->
+              <div
+                id="picker-sl-thumb"
+                class="absolute w-4.5 h-4.5 -ml-2.25 -mt-2.25 rounded-full border-2 border-white shadow-md cursor-pointer pointer-events-none"
+                style="left: 100%; top: 0%;"
+              ></div>
+            </div>
+
+            <!-- Hue & Alpha Sliders -->
+            <div class="flex flex-col gap-2.5">
+              <!-- Hue Slider -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between items-center text-[10px] font-semibold text-slate">
+                  <label for="slider-hue">Hue</label>
+                  <span id="label-hue">0°</span>
+                </div>
+                <div class="relative h-6 flex items-center">
+                  <input
+                    type="range"
+                    id="slider-hue"
+                    min="0"
+                    max="360"
+                    value="0"
+                    class="w-full h-3 rounded-full cursor-pointer appearance-none outline-none border border-hairline"
+                    style="background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);"
+                  />
+                </div>
+              </div>
+
+              <!-- Alpha (Opacity) Slider -->
+              <div class="flex flex-col gap-1">
+                <div class="flex justify-between items-center text-[10px] font-semibold text-slate">
+                  <label for="slider-alpha">Opacity</label>
+                  <span id="label-alpha">100%</span>
+                </div>
+                <div class="relative h-6 flex items-center rounded-full overflow-hidden bg-checkerboard border border-hairline">
+                  <input
+                    type="range"
+                    id="slider-alpha"
+                    min="0"
+                    max="100"
+                    value="100"
+                    class="w-full h-3 rounded-full cursor-pointer appearance-none outline-none"
+                    style="background: linear-gradient(to right, transparent, hsl(0, 100%, 50%));"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Native Eyedropper API Button -->
+            <div id="native-eyedropper-container" class="mt-1 flex items-center justify-between">
+              <button
+                type="button"
+                id="btn-native-eyedropper"
+                class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle w-full justify-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.656 48.656 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                </svg>
+                <span>Sample from Screen (EyeDropper)</span>
+              </button>
+              <p id="eyedropper-unsupported-note" class="hidden text-[10px] text-stone text-center w-full py-1">
+                ⚠️ Screen eyedropper is not supported on this browser (use Chrome/Edge).
+              </p>
+            </div>
+          </div>
+
+          <!-- Tab Content 2: Image Eyedropper -->
+          <div id="panel-image" class="hidden flex-col gap-3 flex-grow">
+            <div
+              id="image-drop-zone"
+              class="relative flex-grow flex flex-col items-center justify-center border-2 border-dashed border-hairline-strong rounded-xl bg-surface-soft p-4 text-center cursor-pointer hover:border-brand-blue transition-colors min-h-[160px]"
+            >
+              <input type="file" id="image-uploader" class="hidden" accept="image/*" />
+              
+              <div id="drop-zone-prompt" class="flex flex-col items-center gap-1.5">
+                <span class="text-2xl">🖼️</span>
+                <span class="text-xs font-bold text-brand-blue">Upload or drag-drop an image</span>
+                <span class="text-[10px] text-stone">PNG, JPG, SVG, WebP up to 10MB</span>
+              </div>
+
+              <!-- Canvas and Loupe Wrapper -->
+              <div id="image-canvas-wrapper" class="hidden relative w-full max-h-[220px] overflow-hidden flex justify-center items-center">
+                <canvas id="image-canvas" class="max-w-full max-h-[220px] rounded-lg cursor-crosshair border border-hairline shadow-sm"></canvas>
+                <!-- Loupe Zoom Preview -->
+                <div id="zoom-loupe" class="absolute w-20 h-20 rounded-full border-2 border-white shadow-lg pointer-events-none hidden overflow-hidden z-30 bg-canvas">
+                  <canvas id="loupe-canvas" width="80" height="80" class="w-full h-full image-render-pixelated"></canvas>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <!-- Crosshair center point -->
+                    <div class="w-1.5 h-1.5 border border-white bg-transparent pointer-events-none shadow-sm rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas controls -->
+            <div id="image-canvas-actions" class="hidden flex justify-between items-center text-[10px] font-semibold text-slate">
+              <span id="image-info-label" class="font-mono text-[9px] text-stone"></span>
+              <button type="button" id="btn-clear-image" class="text-brand-coral hover:underline cursor-pointer">Remove Image</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-teal-light text-moss-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- Right Pane: Active Color Preview & Formats -->
+        <div class="lg:col-span-5 flex flex-col gap-3 min-h-[300px] lg:min-h-[420px]">
+          <span class="text-[11px] font-semibold text-charcoal flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+            Color Output Details
+          </span>
+
+          <!-- Main Swatch Box -->
+          <div class="card-base p-3 flex flex-col gap-2 bg-surface-soft border border-hairline relative">
+            <div id="preview-swatch" class="w-full h-16 rounded-lg border border-hairline-strong shadow-inner relative flex items-end p-2 bg-checkerboard">
+              <div class="absolute inset-0 rounded-lg" style="background-color: hsl(0, 100%, 50%);"></div>
+              <!-- Named label overlay -->
+              <span id="preview-name-badge" class="relative z-10 bg-canvas/80 text-[10px] px-2 py-0.5 rounded font-bold text-primary shadow-subtle truncate max-w-full">
+                Red
+              </span>
+            </div>
+          </div>
+
+          <!-- Color Output Readouts -->
+          <div class="flex flex-col gap-2 bg-surface p-2.5 rounded-xl border border-hairline-soft">
+            <!-- Output template helper -->
+            <div class="flex flex-col gap-2" id="outputs-list">
+              <!-- HEX -->
+              <div class="flex items-center justify-between gap-1.5 py-1 border-b border-hairline-soft/60">
+                <span class="text-[10px] font-bold text-slate w-10">HEX</span>
+                <input
+                  type="text"
+                  id="output-hex"
+                  readonly
+                  class="font-mono text-[11px] bg-transparent text-primary outline-none flex-grow"
+                  value="#ff0000"
+                />
+                <button
+                  type="button"
+                  data-copy-target="output-hex"
+                  class="copy-btn text-[10px] font-bold text-brand-blue hover:underline cursor-pointer transition-transform"
+                >
+                  Copy
+                </button>
+              </div>
+
+              <!-- RGB -->
+              <div class="flex items-center justify-between gap-1.5 py-1 border-b border-hairline-soft/60">
+                <span class="text-[10px] font-bold text-slate w-10">RGB</span>
+                <input
+                  type="text"
+                  id="output-rgb"
+                  readonly
+                  class="font-mono text-[11px] bg-transparent text-primary outline-none flex-grow"
+                  value="rgb(255, 0, 0)"
+                />
+                <button
+                  type="button"
+                  data-copy-target="output-rgb"
+                  class="copy-btn text-[10px] font-bold text-brand-blue hover:underline cursor-pointer transition-transform"
+                >
+                  Copy
+                </button>
+              </div>
+
+              <!-- RGBA -->
+              <div class="flex items-center justify-between gap-1.5 py-1 border-b border-hairline-soft/60">
+                <span class="text-[10px] font-bold text-slate w-10">RGBA</span>
+                <input
+                  type="text"
+                  id="output-rgba"
+                  readonly
+                  class="font-mono text-[11px] bg-transparent text-primary outline-none flex-grow"
+                  value="rgba(255, 0, 0, 1.00)"
+                />
+                <button
+                  type="button"
+                  data-copy-target="output-rgba"
+                  class="copy-btn text-[10px] font-bold text-brand-blue hover:underline cursor-pointer transition-transform"
+                >
+                  Copy
+                </button>
+              </div>
+
+              <!-- HSL -->
+              <div class="flex items-center justify-between gap-1.5 py-1 border-b border-hairline-soft/60">
+                <span class="text-[10px] font-bold text-slate w-10">HSL</span>
+                <input
+                  type="text"
+                  id="output-hsl"
+                  readonly
+                  class="font-mono text-[11px] bg-transparent text-primary outline-none flex-grow"
+                  value="hsl(0, 100%, 50%)"
+                />
+                <button
+                  type="button"
+                  data-copy-target="output-hsl"
+                  class="copy-btn text-[10px] font-bold text-brand-blue hover:underline cursor-pointer transition-transform"
+                >
+                  Copy
+                </button>
+              </div>
+
+              <!-- HSLA -->
+              <div class="flex items-center justify-between gap-1.5 py-1">
+                <span class="text-[10px] font-bold text-slate w-10">HSLA</span>
+                <input
+                  type="text"
+                  id="output-hsla"
+                  readonly
+                  class="font-mono text-[11px] bg-transparent text-primary outline-none flex-grow"
+                  value="hsla(0, 100%, 50%, 1.00)"
+                />
+                <button
+                  type="button"
+                  data-copy-target="output-hsla"
+                  class="copy-btn text-[10px] font-bold text-brand-blue hover:underline cursor-pointer transition-transform"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add to Saved Palette -->
+          <button
+            type="button"
+            id="btn-add-palette"
+            class="button-primary text-xs py-2 px-5 w-full flex items-center justify-center gap-1.5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold mt-1"
+          >
+            <span>➕ Save Color to Palette</span>
+          </button>
         </div>
       </div>
     </div>
+
+    <!-- Collapsible Accordion: Accessibility, Harmonies, and Palettes -->
+    <div class="flex flex-col gap-3 print:hidden">
+      <!-- Section 1: Color Harmonies -->
+      <details class="card-base p-4 bg-canvas border border-hairline-soft group" open>
+        <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
+          <span class="flex items-center gap-2">
+            🎨 Color Harmony Generator
+          </span>
+          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+        </summary>
+
+        <div class="mt-4 flex flex-col gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Complementary -->
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-slate uppercase">Complementary</span>
+              <div id="harmony-complementary" class="flex gap-1.5 h-10"></div>
+            </div>
+            <!-- Analogous -->
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-slate uppercase">Analogous</span>
+              <div id="harmony-analogous" class="flex gap-1.5 h-10"></div>
+            </div>
+            <!-- Triadic -->
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-slate uppercase">Triadic</span>
+              <div id="harmony-triadic" class="flex gap-1.5 h-10"></div>
+            </div>
+            <!-- Shades & Tints -->
+            <div class="flex flex-col gap-1.5">
+              <span class="text-[10px] font-bold text-slate uppercase">Monochromatic (Shades/Tints)</span>
+              <div id="harmony-monochromatic" class="flex gap-1.5 h-10"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Section 2: Contrast & Accessibility Checker -->
+      <details class="card-base p-4 bg-canvas border border-hairline-soft group">
+        <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
+          <span class="flex items-center gap-2">
+            ♿ WCAG Accessibility & Contrast Checker
+          </span>
+          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+        </summary>
+
+        <div class="mt-4 flex flex-col gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Contrast against White -->
+            <div class="p-3 bg-surface rounded-xl border border-hairline flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-primary">Contrast Against White (#FFFFFF)</span>
+                <span id="contrast-white-ratio" class="font-mono text-xs font-bold text-primary">1.00:1</span>
+              </div>
+              <div id="contrast-white-preview" class="h-10 rounded border border-hairline flex items-center justify-center text-xs font-medium" style="background-color: #fff; color: #f00;">
+                Example Text Sample
+              </div>
+              <div class="flex gap-2 justify-between text-[10px]">
+                <div class="flex items-center gap-1">
+                  <span>Normal Text:</span>
+                  <span id="white-normal-badge" class="px-1.5 py-0.5 rounded font-bold">FAIL</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span>Large Text:</span>
+                  <span id="white-large-badge" class="px-1.5 py-0.5 rounded font-bold">FAIL</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contrast against Black -->
+            <div class="p-3 bg-surface rounded-xl border border-hairline flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-primary">Contrast Against Black (#000000)</span>
+                <span id="contrast-black-ratio" class="font-mono text-xs font-bold text-primary">21.00:1</span>
+              </div>
+              <div id="contrast-black-preview" class="h-10 rounded border border-hairline flex items-center justify-center text-xs font-medium" style="background-color: #000; color: #f00;">
+                Example Text Sample
+              </div>
+              <div class="flex gap-2 justify-between text-[10px]">
+                <div class="flex items-center gap-1">
+                  <span>Normal Text:</span>
+                  <span id="black-normal-badge" class="px-1.5 py-0.5 rounded font-bold bg-success-accent/10 text-success-accent border border-success-accent/35">AAA PASS</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span>Large Text:</span>
+                  <span id="black-large-badge" class="px-1.5 py-0.5 rounded font-bold bg-success-accent/10 text-success-accent border border-success-accent/35">AAA PASS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- Section 3: Saved Palette & Recents -->
+      <details class="card-base p-4 bg-canvas border border-hairline-soft group">
+        <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
+          <span class="flex items-center gap-2">
+            💾 Saved Palette & Recents
+          </span>
+          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+        </summary>
+
+        <div class="mt-4 flex flex-col gap-4">
+          <!-- Recents Swatches -->
+          <div class="flex flex-col gap-1.5">
+            <span class="text-[10px] font-bold text-slate uppercase">Recently Picked (Click to recall)</span>
+            <div id="recent-colors-container" class="flex flex-wrap gap-1.5 min-h-6">
+              <span class="text-[10px] text-stone">No colors picked yet.</span>
+            </div>
+          </div>
+
+          <!-- Saved Swatches Grid -->
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] font-bold text-slate uppercase">My Saved Palette</span>
+              <div class="flex gap-2">
+                <button type="button" id="btn-export-json" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">Export JSON</button>
+                <span class="text-stone text-[10px]">|</span>
+                <button type="button" id="btn-export-css" class="text-[10px] font-bold text-brand-blue hover:underline cursor-pointer">Export CSS</button>
+              </div>
+            </div>
+            <div id="saved-palette-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
+              <div class="col-span-full text-center py-4 text-[10px] text-stone border border-dashed border-hairline rounded-lg bg-surface-soft/50">
+                Your saved palette is empty. Click "+ Save Color" above to store colors.
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Security & Privacy Guard Footer Tag -->
+    <div class="flex items-center justify-between text-[10px] text-slate px-1 print:hidden mt-2">
+      <span class="flex items-center gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-3 h-3 text-success-accent"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          ></path>
+        </svg>
+        100% Client-Side Processing, 0KB Sent to Servers
+      </span>
+      <span>v2.0.0</span>
+    </div>
   </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Color Picker & Eyedropper Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">
+          1. Manual Color Selection
+        </h4>
+        <p>
+          Drag the indicator inside the Saturation & Lightness picker box to select saturation levels and lightness values. Use the Hue slider underneath to change the core color tone, and the Opacity slider to adjust transparent alpha values.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Image Eyedropper</h4>
+        <p>
+          Switch to the Image Eyedropper tab to drag & drop or upload any image. The image is rendered onto a canvas where you can hover to see a magnified zoomed preview of pixels, and click to capture the exact pixel color.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Screen Sampling (EyeDropper API)</h4>
+        <p>
+          If you are on a browser that supports it (like Chrome or Edge), you will see a "Sample from Screen" button. Clicking this invokes your operating system's native eyedropper, allowing you to click anywhere on your entire display to grab colors.
+        </p>
+
+        <h4 class="font-semibold text-primary">4. Harmonies & Accessibility</h4>
+        <p>
+          Our accessibility checker automatically evaluates the selected color's relative luminance against standard white and black surfaces, ensuring it meets strict WCAG 2.0 AA/AAA readability guidelines. The harmony generator builds perfect complementary, analogous, triadic, and monochromatic shade combinations.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // State definitions
+    interface SavedColor {
+      id: string;
+      hex: string;
+      name: string;
+    }
+
+    // Default starting color: brand blue #4262ff (h:229, s:100, l:63)
+    let currentH = 229;
+    let currentS = 100;
+    let currentL = 63;
+    let currentA = 1; // 0 to 1
+
+    let manualIsDragging = false;
+    let selectedImageSrc: string | null = null;
+    let savedPalette: SavedColor[] = [];
+    let recentColors: string[] = [];
+
+    // Named CSS Colors
+    const cssColors: Record<string, string> = {
+      aliceblue: "#f0f8ff", antiquewhite: "#faebd7", aqua: "#00ffff", aquamarine: "#7fffd4", azure: "#f0ffff",
+      beige: "#f5f5dc", bisque: "#ffe4c4", black: "#000000", blanchedalmond: "#ffebcd", blue: "#0000ff",
+      blueviolet: "#8a2be2", brown: "#a52a2a", burlywood: "#deb887", cadetblue: "#5f9ea0", chartreuse: "#7fff00",
+      chocolate: "#d2691e", coral: "#ff7f50", cornflowerblue: "#6495ed", cornsilk: "#fff8dc", crimson: "#dc143c",
+      cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkgray: "#a9a9a9",
+      darkgreen: "#006400", darkgrey: "#a9a9a9", darkkhaki: "#bdb76b", darkmagenta: "#8b008b", darkolivegreen: "#556b2f",
+      darkorange: "#ff8c00", darkorchid: "#9932cc", darkred: "#8b0000", darksalmon: "#e9967a", darkseagreen: "#8fbc8f",
+      darkslateintegrate: "#2f4f4f", darkslategrey: "#2f4f4f", darkturquoise: "#00ced1", darkviolet: "#9400d3",
+      deeppink: "#ff1493", deepskyblue: "#00bfff", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1e90ff",
+      firebrick: "#b22222", floralwhite: "#fffaf0", forestgreen: "#228b22", fuchsia: "#ff00ff", gainsboro: "#dcdcdc",
+      ghostwhite: "#f8f8ff", gold: "#ffd700", goldenrod: "#daa520", gray: "#808080", green: "#008000",
+      greenyellow: "#adff2f", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", indianred: "#cd5c5c",
+      indigo: "#4b0082", ivory: "#fffff0", khaki: "#f0e68c", lavender: "#e6e6fa", lavenderblush: "#fff0f5",
+      lawngreen: "#7cfc00", lemonchiffon: "#fffacd", lightblue: "#add8e6", lightcoral: "#f08080", lightcyan: "#e0ffff",
+      lightgoldenrodyellow: "#fafad2", lightgray: "#d3d3d3", lightgreen: "#90ee90", lightgrey: "#d3d3d3", lightpink: "#ffb6c1",
+      lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", lightskyblue: "#87cefa", lightslateintegrate: "#778899", lightslategrey: "#778899",
+      lightsteelblue: "#b0c4de", lightyellow: "#ffffe0", lime: "#00ff00", limegreen: "#32cd32", linen: "#faf0e6",
+      magenta: "#ff00ff", maroon: "#800000", mediumaquamarine: "#66cdaa", mediumblue: "#0000cd", mediumorchid: "#ba55d3",
+      mediumpurple: "#9370db", mediumseagreen: "#3cb371", mediumslateblue: "#7b68ee", mediumspringgreen: "#00fa9a", mediumturquoise: "#48d1cc",
+      mediumvioletred: "#c71585", midnightblue: "#191970", mintcream: "#f5fffa", mistyrose: "#ffe4e1", moccasin: "#ffe4b5",
+      navajowhite: "#ffdead", navy: "#000080", oldlace: "#fdf5e6", olive: "#808000", olivedrab: "#6b8e23",
+      orange: "#ffa500", orangered: "#ff4500", orchid: "#da70d6", palegoldenrod: "#eee8aa", palegreen: "#98fb98",
+      paleturquoise: "#afeeee", palevioletred: "#db7093", papayawhip: "#ffefd5", peachpuff: "#ffdab9", peru: "#cd853f",
+      pink: "#ffc0cb", plum: "#dda0dd", powderblue: "#b0e0e6", purple: "#800080", rebeccapurple: "#663399",
+      red: "#ff0000", rosybrown: "#bc8f8f", royalblue: "#4169e1", saddlebrown: "#8b4513", salmon: "#fa8072",
+      sandybrown: "#f4a460", seagreen: "#2e8b57", seashell: "#fff5ee", sienna: "#a0522d", silver: "#c0c0c0",
+      skyblue: "#87ceeb", slateblue: "#6a5acd", slategray: "#708090", slategrey: "#708090", snow: "#fffafa",
+      springgreen: "#00ff7f", steelblue: "#4682b4", tan: "#d2b48c", teal: "#008080", thistle: "#d8bfd8",
+      tomato: "#ff6347", turquoise: "#40e0d0", violet: "#ee82ee", wheat: "#f5deb3", white: "#ffffff",
+      whitesmoke: "#f5f5f5", yellow: "#ffff00", yellowgreen: "#9acd32"
+    };
+
+    // DOM Elements
+    const tabManualBtn = document.getElementById("tab-manual-btn") as HTMLButtonElement;
+    const tabImageBtn = document.getElementById("tab-image-btn") as HTMLButtonElement;
+    const panelManual = document.getElementById("panel-manual") as HTMLDivElement;
+    const panelImage = document.getElementById("panel-image") as HTMLDivElement;
+
+    // Reset & How-it-works
+    const btnReset = document.getElementById("reset-btn") as HTMLButtonElement;
+    const btnHowItWorks = document.getElementById("how-it-works-btn") as HTMLButtonElement;
+    const modalHowItWorks = document.getElementById("how-it-works-modal") as HTMLDivElement;
+    const btnCloseModal = document.getElementById("close-modal-btn") as HTMLButtonElement;
+    const btnModalOk = document.getElementById("modal-ok-btn") as HTMLButtonElement;
+
+    // Manual picker DOM
+    const pickerSlBox = document.getElementById("picker-sl-box") as HTMLDivElement;
+    const pickerSlThumb = document.getElementById("picker-sl-thumb") as HTMLDivElement;
+    const sliderHue = document.getElementById("slider-hue") as HTMLInputElement;
+    const sliderAlpha = document.getElementById("slider-alpha") as HTMLInputElement;
+    const labelHue = document.getElementById("label-hue") as HTMLSpanElement;
+    const labelAlpha = document.getElementById("label-alpha") as HTMLSpanElement;
+    const btnNativeEyedropper = document.getElementById("btn-native-eyedropper") as HTMLButtonElement;
+    const eyedropperUnsupportedNote = document.getElementById("eyedropper-unsupported-note") as HTMLParagraphElement;
+
+    // Image picker DOM
+    const imageDropZone = document.getElementById("image-drop-zone") as HTMLDivElement;
+    const imageUploader = document.getElementById("image-uploader") as HTMLInputElement;
+    const dropZonePrompt = document.getElementById("drop-zone-prompt") as HTMLDivElement;
+    const imageCanvasWrapper = document.getElementById("image-canvas-wrapper") as HTMLDivElement;
+    const imageCanvas = document.getElementById("image-canvas") as HTMLCanvasElement;
+    const btnClearImage = document.getElementById("btn-clear-image") as HTMLButtonElement;
+    const canvasActions = document.getElementById("image-canvas-actions") as HTMLDivElement;
+    const imageInfoLabel = document.getElementById("image-info-label") as HTMLSpanElement;
+    const zoomLoupe = document.getElementById("zoom-loupe") as HTMLDivElement;
+    const loupeCanvas = document.getElementById("loupe-canvas") as HTMLCanvasElement;
+
+    // Output & Swatch DOM
+    const previewSwatch = document.getElementById("preview-swatch") as HTMLDivElement;
+    const previewNameBadge = document.getElementById("preview-name-badge") as HTMLSpanElement;
+    const outputHex = document.getElementById("output-hex") as HTMLInputElement;
+    const outputRgb = document.getElementById("output-rgb") as HTMLInputElement;
+    const outputRgba = document.getElementById("output-rgba") as HTMLInputElement;
+    const outputHsl = document.getElementById("output-hsl") as HTMLInputElement;
+    const outputHsla = document.getElementById("output-hsla") as HTMLInputElement;
+    const btnAddPalette = document.getElementById("btn-add-palette") as HTMLButtonElement;
+
+    // Harmony Panels DOM
+    const harmonyComplementary = document.getElementById("harmony-complementary") as HTMLDivElement;
+    const harmonyAnalogous = document.getElementById("harmony-analogous") as HTMLDivElement;
+    const harmonyTriadic = document.getElementById("harmony-triadic") as HTMLDivElement;
+    const harmonyMonochromatic = document.getElementById("harmony-monochromatic") as HTMLDivElement;
+
+    // Accessibility DOM
+    const contrastWhiteRatio = document.getElementById("contrast-white-ratio") as HTMLSpanElement;
+    const contrastWhitePreview = document.getElementById("contrast-white-preview") as HTMLDivElement;
+    const whiteNormalBadge = document.getElementById("white-normal-badge") as HTMLSpanElement;
+    const whiteLargeBadge = document.getElementById("white-large-badge") as HTMLSpanElement;
+    const contrastBlackRatio = document.getElementById("contrast-black-ratio") as HTMLSpanElement;
+    const contrastBlackPreview = document.getElementById("contrast-black-preview") as HTMLDivElement;
+    const blackNormalBadge = document.getElementById("black-normal-badge") as HTMLSpanElement;
+    const blackLargeBadge = document.getElementById("black-large-badge") as HTMLSpanElement;
+
+    // Palettes DOM
+    const recentColorsContainer = document.getElementById("recent-colors-container") as HTMLDivElement;
+    const savedPaletteGrid = document.getElementById("saved-palette-grid") as HTMLDivElement;
+    const btnExportJson = document.getElementById("btn-export-json") as HTMLButtonElement;
+    const btnExportCss = document.getElementById("btn-export-css") as HTMLButtonElement;
+
+    // --- COLOR CONVERSIONS (ROBUST MATH) ---
+    function hexToRgb(hex: string) {
+      hex = hex.replace(/^#/, '');
+      let r = 0, g = 0, b = 0, a = 1;
+      if (hex.length === 3 || hex.length === 4) {
+        r = parseInt(hex[0] + hex[0], 16);
+        g = parseInt(hex[1] + hex[1], 16);
+        b = parseInt(hex[2] + hex[2], 16);
+        if (hex.length === 4) {
+          a = parseInt(hex[3] + hex[3], 16) / 255;
+        }
+      } else if (hex.length === 6 || hex.length === 8) {
+        r = parseInt(hex.substring(0, 2), 16);
+        g = parseInt(hex.substring(2, 4), 16);
+        b = parseInt(hex.substring(4, 6), 16);
+        if (hex.length === 8) {
+          a = parseInt(hex.substring(6, 8), 16) / 255;
+        }
+      }
+      return { r, g, b, a };
+    }
+
+    function rgbToHex(r: number, g: number, b: number, a = 1) {
+      const toHex = (v: number) => Math.min(255, Math.max(0, Math.round(v))).toString(16).padStart(2, '0');
+      let hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+      if (a < 1) {
+        hex += toHex(a * 255);
+      }
+      return hex;
+    }
+
+    // Convert RGB to HSL with rounding accuracy
+    function rgbToHsl(r: number, g: number, b: number) {
+      r /= 255;
+      g /= 255;
+      b /= 255;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      let h = 0, s = 0, l = (max + min) / 2;
+
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+
+      return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        l: Math.round(l * 100)
+      };
+    }
+
+    // Convert HSL to RGB with rounding accuracy
+    function hslToRgb(h: number, s: number, l: number) {
+      h /= 360;
+      s /= 100;
+      l /= 100;
+      let r, g, b;
+
+      if (s === 0) {
+        r = g = b = l; // achromatic
+      } else {
+        const hue2rgb = (p: number, q: number, t: number) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1/6) return p + (q - p) * 6 * t;
+          if (t < 1/2) return q;
+          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+      }
+
+      return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255)
+      };
+    }
+
+    // Closer Named CSS Color Match (RGB Euclidean Distance)
+    function getClosestNamedColor(r: number, g: number, b: number): string {
+      let minDistance = Infinity;
+      let closestName = "Unknown";
+      for (const [name, hex] of Object.entries(cssColors)) {
+        const rgb = hexToRgb(hex);
+        const dist = Math.pow(r - rgb.r, 2) + Math.pow(g - rgb.g, 2) + Math.pow(b - rgb.b, 2);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestName = name;
+        }
+      }
+      // If reasonably close, capitalize and return, otherwise format nicely
+      const capitalized = closestName.charAt(0).toUpperCase() + closestName.slice(1);
+      return minDistance < 2000 ? capitalized : `${capitalized} (Approximate)`;
+    }
+
+    // --- ACCESSIBILITY LUMINANCE & CONTRAST (WCAG 2.0 specs) ---
+    function getRelativeLuminance(r: number, g: number, b: number): number {
+      const a = [r, g, b].map((v) => {
+        v /= 255;
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+    }
+
+    function getContrastRatio(l1: number, l2: number): number {
+      const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      return Math.round(ratio * 100) / 100;
+    }
+
+    function getWCAGStatus(ratio: number) {
+      return {
+        normalAA: ratio >= 4.5 ? "PASS" : "FAIL",
+        normalAAA: ratio >= 7 ? "PASS" : "FAIL",
+        largeAA: ratio >= 3 ? "PASS" : "FAIL",
+        largeAAA: ratio >= 4.5 ? "PASS" : "FAIL",
+      };
+    }
+
+    // --- UPDATE STATE & RENDERS ---
+    function updateColor(h: number, s: number, l: number, a: number, source: string) {
+      currentH = h;
+      currentS = s;
+      currentL = l;
+      currentA = a;
+
+      const rgb = hslToRgb(h, s, l);
+      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const rgbaHex = rgbToHex(rgb.r, rgb.g, rgb.b, a);
+      const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+      const rgbaStr = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a.toFixed(2)})`;
+      const hslStr = `hsl(${h}, ${s}%, ${l}%)`;
+      const hslaStr = `hsla(${h}, ${s}%, ${l}%, ${a.toFixed(2)})`;
+
+      // Update Outputs
+      outputHex.value = hex;
+      outputRgb.value = rgbStr;
+      outputRgba.value = rgbaStr;
+      outputHsl.value = hslStr;
+      outputHsla.value = hslaStr;
+
+      // Update Swatch & Badges
+      const swatchBg = previewSwatch.firstElementChild as HTMLDivElement;
+      if (swatchBg) {
+        swatchBg.style.backgroundColor = rgbaStr;
+      }
+      previewNameBadge.textContent = getClosestNamedColor(rgb.r, rgb.g, rgb.b);
+
+      // Sync inputs if not updated by themselves
+      if (source !== "sl") {
+        pickerSlThumb.style.left = `${s}%`;
+        pickerSlThumb.style.top = `${100 - l}%`;
+      }
+      if (source !== "hue") {
+        sliderHue.value = String(h);
+        labelHue.textContent = `${h}°`;
+      }
+      if (source !== "alpha") {
+        sliderAlpha.value = String(Math.round(a * 100));
+        labelAlpha.textContent = `${Math.round(a * 100)}%`;
+      }
+
+      // SL Box Color Update
+      pickerSlBox.style.backgroundColor = `hsl(${h}, 100%, 50%)`;
+      // Update Alpha Slider background preview
+      sliderAlpha.style.background = `linear-gradient(to right, transparent, hsl(${h}, ${s}%, ${l}%))`;
+
+      // Update calculations
+      updateAccessibility(rgb.r, rgb.g, rgb.b);
+      updateHarmonies(h, s, l);
+
+      // Save state to localstorage
+      localStorage.setItem("boardtools:color-picker:current-color", JSON.stringify({ h, s, l, a }));
+    }
+
+    // --- MANUAL SL DRAGGERS ---
+    function handleSlDrag(e: MouseEvent | TouchEvent) {
+      const rect = pickerSlBox.getBoundingClientRect();
+      let clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      let clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+
+      let x = clientX - rect.left;
+      let y = clientY - rect.top;
+
+      x = Math.max(0, Math.min(x, rect.width));
+      y = Math.max(0, Math.min(y, rect.height));
+
+      const s = Math.round((x / rect.width) * 100);
+      const l = Math.round((1 - y / rect.height) * 100);
+
+      pickerSlThumb.style.left = `${(x / rect.width) * 100}%`;
+      pickerSlThumb.style.top = `${(y / rect.height) * 100}%`;
+
+      updateColor(currentH, s, l, currentA, "sl");
+    }
+
+    // Attach S/L mouse drag listeners
+    pickerSlBox.addEventListener("mousedown", (e) => {
+      manualIsDragging = true;
+      handleSlDrag(e);
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (manualIsDragging) handleSlDrag(e);
+    });
+    window.addEventListener("mouseup", () => {
+      if (manualIsDragging) {
+        manualIsDragging = false;
+        // Append to recents on release
+        addRecentColor(outputHex.value);
+      }
+    });
+
+    // Touch support for S/L Dragging
+    pickerSlBox.addEventListener("touchstart", (e) => {
+      manualIsDragging = true;
+      handleSlDrag(e);
+    }, { passive: true });
+    window.addEventListener("touchmove", (e) => {
+      if (manualIsDragging) handleSlDrag(e);
+    }, { passive: true });
+    window.addEventListener("touchend", () => {
+      if (manualIsDragging) {
+        manualIsDragging = false;
+        addRecentColor(outputHex.value);
+      }
+    });
+
+    // Range Sliders Input Action
+    sliderHue.addEventListener("input", () => {
+      const h = Number(sliderHue.value);
+      labelHue.textContent = `${h}°`;
+      updateColor(h, currentS, currentL, currentA, "hue");
+    });
+    sliderHue.addEventListener("change", () => {
+      addRecentColor(outputHex.value);
+    });
+
+    sliderAlpha.addEventListener("input", () => {
+      const val = Number(sliderAlpha.value);
+      labelAlpha.textContent = `${val}%`;
+      updateColor(currentH, currentS, currentL, val / 100, "alpha");
+    });
+    sliderAlpha.addEventListener("change", () => {
+      addRecentColor(outputHex.value);
+    });
+
+    // --- ACCESSIBILITY CALCULATIONS ---
+    function updateAccessibility(r: number, g: number, b: number) {
+      const colorL = getRelativeLuminance(r, g, b);
+      const whiteL = 1.0;
+      const blackL = 0.0;
+
+      const whiteRatio = getContrastRatio(colorL, whiteL);
+      const blackRatio = getContrastRatio(colorL, blackL);
+
+      // Update Labels
+      contrastWhiteRatio.textContent = `${whiteRatio.toFixed(2)}:1`;
+      contrastBlackRatio.textContent = `${blackRatio.toFixed(2)}:1`;
+
+      // Update Sample Previews
+      const targetColor = `rgb(${r}, ${g}, ${b})`;
+      contrastWhitePreview.style.color = targetColor;
+      contrastBlackPreview.style.color = targetColor;
+
+      const whiteWCAG = getWCAGStatus(whiteRatio);
+      const blackWCAG = getWCAGStatus(blackRatio);
+
+      // Helper to style badge
+      const applyBadgeStyle = (badge: HTMLSpanElement, status: string, score: string) => {
+        badge.textContent = `${score} ${status}`;
+        if (status === "PASS") {
+          badge.className = "px-1.5 py-0.5 rounded font-bold bg-success-accent/10 text-success-accent border border-success-accent/35";
+        } else {
+          badge.className = "px-1.5 py-0.5 rounded font-bold bg-brand-coral/10 text-coral-dark border border-brand-coral/35";
+        }
+      };
+
+      applyBadgeStyle(whiteNormalBadge, whiteWCAG.normalAA, whiteWCAG.normalAAA === "PASS" ? "AAA" : "AA");
+      applyBadgeStyle(whiteLargeBadge, whiteWCAG.largeAA, whiteWCAG.largeAAA === "PASS" ? "AAA" : "AA");
+      applyBadgeStyle(blackNormalBadge, blackWCAG.normalAA, blackWCAG.normalAAA === "PASS" ? "AAA" : "AA");
+      applyBadgeStyle(blackLargeBadge, blackWCAG.largeAA, blackWCAG.largeAAA === "PASS" ? "AAA" : "AA");
+    }
+
+    // --- COLOR HARMONIES ---
+    function updateHarmonies(h: number, s: number, l: number) {
+      const createSwatch = (hVal: number, sVal: number, lVal: number) => {
+        const div = document.createElement("div");
+        const hex = rgbToHex(hslToRgb(hVal, sVal, lVal).r, hslToRgb(hVal, sVal, lVal).g, hslToRgb(hVal, sVal, lVal).b);
+        div.className = "flex-1 rounded border border-hairline shadow-subtle cursor-pointer hover:scale-105 active:scale-95 transition-all opacity-0 scale-75 animate-bounce-in";
+        div.style.backgroundColor = `hsl(${hVal}, ${sVal}%, ${lVal}%)`;
+        div.title = hex;
+        div.addEventListener("click", () => {
+          updateColor(hVal, sVal, lVal, currentA, "harmony");
+          addRecentColor(hex);
+        });
+        return div;
+      };
+
+      const renderHarmony = (container: HTMLDivElement, swatches: HTMLElement[]) => {
+        container.innerHTML = "";
+        swatches.forEach((sw, index) => {
+          // Staggered animate delay
+          sw.style.animationDelay = `${index * 50}ms`;
+          container.appendChild(sw);
+        });
+      };
+
+      // Complementary (180deg offset)
+      renderHarmony(harmonyComplementary, [
+        createSwatch(h, s, l),
+        createSwatch((h + 180) % 360, s, l)
+      ]);
+
+      // Analogous (-30deg, 0deg, +30deg offset)
+      renderHarmony(harmonyAnalogous, [
+        createSwatch((h + 330) % 360, s, l),
+        createSwatch(h, s, l),
+        createSwatch((h + 30) % 360, s, l)
+      ]);
+
+      // Triadic (0deg, 120deg, 240deg offset)
+      renderHarmony(harmonyTriadic, [
+        createSwatch(h, s, l),
+        createSwatch((h + 120) % 360, s, l),
+        createSwatch((h + 240) % 360, s, l)
+      ]);
+
+      // Monochromatic Shades/Tints
+      renderHarmony(harmonyMonochromatic, [
+        createSwatch(h, s, Math.max(10, l - 30)),
+        createSwatch(h, s, Math.max(10, l - 15)),
+        createSwatch(h, s, l),
+        createSwatch(h, s, Math.min(95, l + 15)),
+        createSwatch(h, s, Math.min(95, l + 30))
+      ]);
+    }
+
+    // --- IMAGE DRAG/DROP & COORDINATE SAMPLING ---
+    let canvasCtx = imageCanvas.getContext("2d");
+    let loupeCtx = loupeCanvas.getContext("2d");
+
+    function loadUploadedImage(file: File) {
+      if (selectedImageSrc) {
+        URL.revokeObjectURL(selectedImageSrc);
+      }
+      selectedImageSrc = URL.createObjectURL(file);
+
+      const img = new Image();
+      img.onload = () => {
+        // Handle canvas sizing properly
+        imageCanvas.width = img.naturalWidth;
+        imageCanvas.height = img.naturalHeight;
+        
+        canvasCtx?.drawImage(img, 0, 0);
+
+        dropZonePrompt.classList.add("hidden");
+        imageCanvasWrapper.classList.remove("hidden");
+        canvasActions.classList.remove("hidden");
+        imageInfoLabel.textContent = `${img.naturalWidth} x ${img.naturalHeight} px`;
+      };
+      img.src = selectedImageSrc;
+    }
+
+    // Drag / Drop Handlers
+    imageDropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      imageDropZone.classList.add("border-brand-blue");
+    });
+    imageDropZone.addEventListener("dragleave", () => {
+      imageDropZone.classList.remove("border-brand-blue");
+    });
+    imageDropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      imageDropZone.classList.remove("border-brand-blue");
+      const files = e.dataTransfer?.files;
+      if (files && files.length > 0) {
+        loadUploadedImage(files[0]);
+      }
+    });
+
+    imageDropZone.addEventListener("click", (e) => {
+      if (e.target !== imageCanvas && !imageCanvas.contains(e.target as Node)) {
+        imageUploader.click();
+      }
+    });
+
+    imageUploader.addEventListener("change", () => {
+      const files = imageUploader.files;
+      if (files && files.length > 0) {
+        loadUploadedImage(files[0]);
+      }
+    });
+
+    // Sample color from canvas coordinates
+    function getCanvasCoordinates(e: MouseEvent) {
+      if (!canvasCtx) return null;
+      const rect = imageCanvas.getBoundingClientRect();
+      // Calculate correct mapping coordinate accounting for image display layout scaling vs canvas buffer dimension
+      const x = Math.floor(((e.clientX - rect.left) / rect.width) * imageCanvas.width);
+      const y = Math.floor(((e.clientY - rect.top) / rect.height) * imageCanvas.height);
+      return { x, y, rect };
+    }
+
+    imageCanvas.addEventListener("mousemove", (e) => {
+      const coords = getCanvasCoordinates(e);
+      if (!coords || !canvasCtx || !loupeCtx) return;
+
+      const { x, y, rect } = coords;
+
+      // Render loupe zoom
+      zoomLoupe.classList.remove("hidden");
+
+      // Center loupe around cursor coordinates relative to wrapper box
+      const wrapperRect = imageCanvasWrapper.getBoundingClientRect();
+      const loupeX = e.clientX - wrapperRect.left - 40;
+      const loupeY = e.clientY - wrapperRect.top - 40;
+      zoomLoupe.style.left = `${loupeX}px`;
+      zoomLoupe.style.top = `${loupeY}px`;
+
+      // Clear loupe canvas
+      loupeCtx.clearRect(0, 0, 80, 80);
+      
+      // Draw magnified view (8x8 grids of pixels around cursor)
+      loupeCtx.imageSmoothingEnabled = false;
+      const zoomFactor = 8;
+      const sourceSize = 10; // 10x10 px zoom
+      const offset = sourceSize / 2;
+
+      // Draw original image section on loupe canvas
+      loupeCtx.drawImage(
+        imageCanvas,
+        x - offset, y - offset, sourceSize, sourceSize,
+        0, 0, 80, 80
+      );
+    });
+
+    imageCanvas.addEventListener("mouseleave", () => {
+      zoomLoupe.classList.add("hidden");
+    });
+
+    imageCanvas.addEventListener("click", (e) => {
+      const coords = getCanvasCoordinates(e);
+      if (!coords || !canvasCtx) return;
+
+      const { x, y } = coords;
+      const pixelData = canvasCtx.getImageData(x, y, 1, 1).data;
+      
+      const hsl = rgbToHsl(pixelData[0], pixelData[1], pixelData[2]);
+      updateColor(hsl.h, hsl.s, hsl.l, currentA, "canvas");
+      addRecentColor(outputHex.value);
+    });
+
+    btnClearImage.addEventListener("click", (e) => {
+      e.stopPropagation();
+      clearCanvasImage();
+    });
+
+    function clearCanvasImage() {
+      if (selectedImageSrc) {
+        URL.revokeObjectURL(selectedImageSrc);
+        selectedImageSrc = null;
+      }
+      dropZonePrompt.classList.remove("hidden");
+      imageCanvasWrapper.classList.add("hidden");
+      canvasActions.classList.add("hidden");
+      zoomLoupe.classList.add("hidden");
+      imageUploader.value = "";
+    }
+
+    // --- NATIVE SCREEN EYEDROPPER INTEGRATION ---
+    const hasEyeDropper = 'EyeDropper' in window;
+    if (hasEyeDropper) {
+      btnNativeEyedropper.classList.remove("hidden");
+      eyedropperUnsupportedNote.classList.add("hidden");
+      btnNativeEyedropper.addEventListener("click", async () => {
+        try {
+          // @ts-ignore
+          const eyeDropper = new EyeDropper();
+          const result = await eyeDropper.open();
+          const rgb = hexToRgb(result.sRGBHex);
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          updateColor(hsl.h, hsl.s, hsl.l, currentA, "native");
+          addRecentColor(result.sRGBHex);
+        } catch (err) {
+          console.warn("EyeDropper closed or failed", err);
+        }
+      });
+    } else {
+      btnNativeEyedropper.classList.add("hidden");
+      eyedropperUnsupportedNote.classList.remove("hidden");
+    }
+
+    // --- TAB SWITCH ACTIONS ---
+    tabManualBtn.addEventListener("click", () => {
+      tabManualBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabImageBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      panelManual.classList.remove("hidden");
+      panelImage.classList.add("hidden");
+    });
+
+    tabImageBtn.addEventListener("click", () => {
+      tabImageBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer bg-primary text-canvas";
+      tabManualBtn.className = "flex-1 text-center text-[11px] py-1.5 rounded-full font-bold transition-all cursor-pointer text-slate";
+      panelImage.classList.remove("hidden");
+      panelManual.classList.add("hidden");
+    });
+
+    // --- RESET CONTRACT BEHAVIOR ---
+    btnReset.addEventListener("click", () => {
+      // Clean canvas images
+      clearCanvasImage();
+      // Restore default color
+      updateColor(229, 100, 63, 1, "reset");
+      // Clear localStorage keys
+      localStorage.removeItem("boardtools:color-picker:current-color");
+      localStorage.removeItem("boardtools:color-picker:saved-palette");
+      localStorage.removeItem("boardtools:color-picker:recent-colors");
+      savedPalette = [];
+      recentColors = [];
+      renderSavedPalette();
+      renderRecentColors();
+    });
+
+    // --- HOW IT WORKS MODAL ACTIONS ---
+    btnHowItWorks.addEventListener("click", () => {
+      modalHowItWorks.classList.remove("hidden");
+    });
+    btnCloseModal.addEventListener("click", () => {
+      modalHowItWorks.classList.add("hidden");
+    });
+    btnModalOk.addEventListener("click", () => {
+      modalHowItWorks.classList.add("hidden");
+    });
+    modalHowItWorks.addEventListener("click", (e) => {
+      if (e.target === modalHowItWorks) {
+        modalHowItWorks.classList.add("hidden");
+      }
+    });
+
+    // --- COPY FUNCTION WITH BRIEF SUCCESS ANIMATION ---
+    const copyButtons = document.querySelectorAll(".copy-btn");
+    copyButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-copy-target");
+        if (!targetId) return;
+
+        const targetEl = document.getElementById(targetId) as HTMLInputElement;
+        if (!targetEl) return;
+
+        navigator.clipboard.writeText(targetEl.value).then(() => {
+          const originalText = btn.textContent;
+          btn.textContent = "Copied! ✓";
+          btn.classList.add("scale-105", "text-success-accent");
+          
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove("scale-105", "text-success-accent");
+          }, 1200);
+        });
+      });
+    });
+
+    // --- RECENT COLORS PALETTE ---
+    function renderRecentColors() {
+      recentColorsContainer.innerHTML = "";
+      if (recentColors.length === 0) {
+        recentColorsContainer.innerHTML = '<span class="text-[10px] text-stone">No colors picked yet.</span>';
+        return;
+      }
+
+      recentColors.forEach((hex) => {
+        const btn = document.createElement("button");
+        btn.className = "w-6 h-6 rounded border border-hairline hover:scale-110 transition-transform cursor-pointer shadow-subtle";
+        btn.style.backgroundColor = hex;
+        btn.title = hex;
+        btn.addEventListener("click", () => {
+          const rgb = hexToRgb(hex);
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          updateColor(hsl.h, hsl.s, hsl.l, rgb.a, "recent");
+        });
+        recentColorsContainer.appendChild(btn);
+      });
+    }
+
+    // Track recently used colors list in localstorage
+    function addRecentColor(hex: string) {
+      if (recentColors[0] === hex) return;
+      recentColors = [hex, ...recentColors.filter((c) => c !== hex)].slice(0, 10);
+      localStorage.setItem("boardtools:color-picker:recent-colors", JSON.stringify(recentColors));
+      renderRecentColors();
+    }
+
+    // --- SAVED PALETTE CRUD & EXPORTS ---
+    function renderSavedPalette() {
+      savedPaletteGrid.innerHTML = "";
+      if (savedPalette.length === 0) {
+        savedPaletteGrid.innerHTML = `
+          <div class="col-span-full text-center py-4 text-[10px] text-stone border border-dashed border-hairline rounded-lg bg-surface-soft/50">
+            Your saved palette is empty. Click "+ Save Color" above to store colors.
+          </div>
+        `;
+        return;
+      }
+
+      savedPalette.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "flex flex-col p-1.5 bg-surface border border-hairline rounded-lg gap-1.5 shadow-subtle";
+        
+        // Swatch
+        const swatch = document.createElement("div");
+        swatch.className = "w-full h-8 rounded border border-hairline-soft cursor-pointer hover:opacity-90 relative group";
+        swatch.style.backgroundColor = item.hex;
+        swatch.addEventListener("click", () => {
+          const rgb = hexToRgb(item.hex);
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          updateColor(hsl.h, hsl.s, hsl.l, rgb.a, "saved");
+        });
+
+        // Name input editable
+        const inputName = document.createElement("input");
+        inputName.type = "text";
+        inputName.className = "text-[9px] font-semibold text-primary bg-transparent outline-none w-full border-b border-transparent focus:border-hairline-strong text-center";
+        inputName.value = item.name;
+        inputName.addEventListener("change", () => {
+          item.name = inputName.value || "Untitled";
+          savePaletteData();
+        });
+
+        // Hex Label
+        const hexLabel = document.createElement("span");
+        hexLabel.className = "text-[8px] font-mono text-stone text-center truncate w-full";
+        hexLabel.textContent = item.hex.toUpperCase();
+
+        // Footer Actions
+        const actions = document.createElement("div");
+        actions.className = "flex justify-between items-center px-0.5 mt-0.5";
+
+        const btnDelete = document.createElement("button");
+        btnDelete.type = "button";
+        btnDelete.className = "text-[8px] font-bold text-brand-coral hover:underline cursor-pointer";
+        btnDelete.textContent = "Remove";
+        btnDelete.addEventListener("click", () => {
+          savedPalette = savedPalette.filter((p) => p.id !== item.id);
+          savePaletteData();
+          renderSavedPalette();
+        });
+
+        actions.appendChild(btnDelete);
+
+        card.appendChild(swatch);
+        card.appendChild(inputName);
+        card.appendChild(hexLabel);
+        card.appendChild(actions);
+
+        savedPaletteGrid.appendChild(card);
+      });
+    }
+
+    function savePaletteData() {
+      localStorage.setItem("boardtools:color-picker:saved-palette", JSON.stringify(savedPalette));
+    }
+
+    // Save to palette
+    btnAddPalette.addEventListener("click", () => {
+      const activeHex = outputHex.value;
+      const name = previewNameBadge.textContent?.replace(" (Approximate)", "") || "Untitled";
+      const newColor: SavedColor = {
+        id: Math.random().toString(36).substring(2, 9),
+        hex: activeHex,
+        name: name
+      };
+
+      savedPalette.push(newColor);
+      savePaletteData();
+      renderSavedPalette();
+    });
+
+    // Exports
+    btnExportJson.addEventListener("click", () => {
+      if (savedPalette.length === 0) return;
+      const dataStr = JSON.stringify(savedPalette, null, 2);
+      navigator.clipboard.writeText(dataStr).then(() => {
+        alert("✓ Exported JSON copied to clipboard!");
+      });
+    });
+
+    btnExportCss.addEventListener("click", () => {
+      if (savedPalette.length === 0) return;
+      let cssStr = ":root {\n";
+      savedPalette.forEach((item) => {
+        const slug = item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        cssStr += `  --color-${slug}: ${item.hex};\n`;
+      });
+      cssStr += "}";
+      navigator.clipboard.writeText(cssStr).then(() => {
+        alert("✓ Exported CSS Variables copied to clipboard!");
+      });
+    });
+
+    // --- PRELOAD AND INITIAL STATE ---
+    function init() {
+      // 1. Check shareable URL parameter (e.g. ?color=ff6347)
+      const params = new URLSearchParams(window.location.search);
+      const urlColor = params.get("color");
+      if (urlColor) {
+        const validatedHex = urlColor.startsWith("#") ? urlColor : `#${urlColor}`;
+        const rgb = hexToRgb(validatedHex);
+        if (!isNaN(rgb.r)) {
+          const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+          updateColor(hsl.h, hsl.s, hsl.l, rgb.a, "url");
+          addRecentColor(validatedHex);
+        }
+      } else {
+        // 2. Load from localstorage state
+        const savedColor = localStorage.getItem("boardtools:color-picker:current-color");
+        if (savedColor) {
+          try {
+            const parsed = JSON.parse(savedColor);
+            updateColor(parsed.h, parsed.s, parsed.l, parsed.a, "init");
+          } catch(e) {
+            updateColor(229, 100, 63, 1, "init");
+          }
+        } else {
+          // Default initial swatch update
+          updateColor(229, 100, 63, 1, "init");
+        }
+      }
+
+      // Load Saved Palette
+      const localPalette = localStorage.getItem("boardtools:color-picker:saved-palette");
+      if (localPalette) {
+        try {
+          savedPalette = JSON.parse(localPalette);
+          renderSavedPalette();
+        } catch(e) {}
+      }
+
+      // Load Recent Colors
+      const localRecents = localStorage.getItem("boardtools:color-picker:recent-colors");
+      if (localRecents) {
+        try {
+          recentColors = JSON.parse(localRecents);
+          renderRecentColors();
+        } catch(e) {}
+      }
+    }
+
+    // Run initialization
+    init();
+  </script>
+
+  <!-- CSS Custom styling parameters -->
+  <style is:global>
+    /* Transparency Checkerboard background utility */
+    .bg-checkerboard {
+      background-image: linear-gradient(45deg, #eef0f3 25%, transparent 25%),
+                        linear-gradient(-45deg, #eef0f3 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #eef0f3 75%),
+                        linear-gradient(-45deg, transparent 75%, #eef0f3 75%);
+      background-size: 10px 10px;
+      background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+    }
+    
+    /* Smooth bounce keyframes */
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.75); }
+      70% { transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .animate-bounce-in {
+      animation: bounceIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .image-render-pixelated {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+  </style>
 </Layout>
