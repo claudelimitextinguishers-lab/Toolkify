@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout 
-  title="Privacy Policy - BoardTools"
-  description="Privacy Guarantee: BoardTools runs 100% in your local browser sandbox. No user inputs, JSON logs, or sketch codes are ever sent to a server."
+  title="Privacy Policy - Toolkify"
+  description="Privacy Guarantee: Toolkify runs 100% in your local browser sandbox. No user inputs, JSON logs, or sketch codes are ever sent to a server."
 >
   <section class="max-w-[800px] w-full mx-auto px-4 py-12 flex flex-col gap-8 animate-fade-in-up">
     <!-- Breadcrumb & Header -->
@@ -17,59 +17,86 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="font-display font-medium text-4xl tracking-tight text-primary mt-1">
         Privacy Policy
       </h1>
-      <p class="text-xs text-slate">Last updated: June 25, 2026</p>
+      <p class="text-xs text-slate">Last updated: July 5, 2026</p>
     </div>
 
     <!-- Core Principle Highlight -->
-    <div class="p-6 bg-success-accent/10 border border-success-accent rounded-2xl flex flex-col sm:flex-row gap-4 items-start">
-      <div class="text-2xl pt-0.5">🔒</div>
+    <div class="p-6 bg-success-accent/5 border border-success-accent/20 rounded-2xl flex flex-col sm:flex-row gap-4 items-start">
+      <div class="text-2xl pt-0.5 select-none">🔒</div>
       <div class="flex flex-col gap-2">
-        <h2 class="font-display font-semibold text-base text-primary">The 100% Browser Execution Guarantee</h2>
+        <h2 class="font-display font-semibold text-base text-primary">Our Promise: Your tool data stays in your browser.</h2>
         <p class="text-xs text-slate leading-relaxed">
-          At BoardTools, we believe your data belongs strictly on your machine. This website is compiled as a static stack of HTML, CSS, and client-side Javascript. We do not maintain any data collection backend. No strings, parameters, files, design variables, or canvas states ever cross your network interface.
+          Toolkify is completely serverless. Every single calculator, converter, drawing canvas, and utility on this site runs directly on your machine. Your input data is never sent to our servers or third parties. However, to keep the site free, we display third-party advertisements which may collect standard browsing data (like your IP address or cookies) as detailed in Section 4 below.
         </p>
       </div>
     </div>
 
     <!-- Content Sections -->
-    <div class="flex flex-col gap-6 text-sm text-slate leading-relaxed font-sans">
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">1. Data We Do Not Collect</h3>
-      <p>
-        When you perform calculations (e.g., mortgage parameters, BMI numbers), input test text, format files, run audio tests, or view mobile sensory coordinates:
-      </p>
-      <ul class="list-disc pl-5 flex flex-col gap-2">
-        <li><strong>No Server Transmission:</strong> Your variables and input details remain within your browser's local sandbox thread.</li>
-        <li><strong>No Server Logs:</strong> Since executions do not hit a server API, no calculation values, input payloads, or parameters are recorded in any remote log.</li>
-        <li><strong>No Telemetry Tracking:</strong> We do not deploy active telemetry keyloggers, session video recorders, or coordinate analyzers.</li>
-      </ul>
+    <div class="flex flex-col gap-8 text-sm text-slate leading-relaxed font-sans">
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">1. Data We Do Not Collect</h3>
+        <p>
+          Whether you are calculating a paycheck, formatting a coding file, checking your sleep cycle, or generating passwords, we maintain zero visibility into your activities:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li><strong>Zero Transmissions:</strong> Your inputs and calculation results remain strictly within your browser's private sandbox thread. They are never transmitted to our servers or any third parties.</li>
+          <li><strong>No Server Logs:</strong> Because these tools run without checking in with a backend API, we keep no records of what you type, calculate, or convert.</li>
+          <li><strong>No Session Recording:</strong> We do not use screen-recording tools, keystroke loggers, or heatmaps to analyze your usage.</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">2. Browser Local Storage (`localStorage`)</h3>
-      <p>
-        To make the user experience convenient, BoardTools utilizes your browser's standard database storage:
-      </p>
-      <ul class="list-disc pl-5 flex flex-col gap-2">
-        <li><strong>Whiteboard & Sketches:</strong> Draggable notes, drawn coordinates, and background colors are saved to your local database so they persist if you reload the tab.</li>
-        <li><strong>Tool History:</strong> A record of the last four tools you loaded is stored locally to populate the "Quick Jump Back" section on the home page.</li>
-        <li><strong>Local Reviews:</strong> Any rating or review submitted on this website is written to your local sandbox so you can inspect your changes instantly.</li>
-      </ul>
-      <p>
-        You can clear all local storage variables at any time by running the developer terminal console command `localStorage.clear()` or resetting site cookies in your browser settings.
-      </p>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">2. How We Use Browser Storage (`localStorage`)</h3>
+        <p>
+          To make your experience seamless, Toolkify stores a few minor settings directly on your device. This is saved only in your browser's local database:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li><strong>Your Custom Whiteboards:</strong> Your draggable notes, sketches, and canvases are saved to your local storage so they are still there when you reload the tab.</li>
+          <li><strong>Site Preferences:</strong> We remember your preference for light or dark mode.</li>
+          <li><strong>Quick History:</strong> We keep track of the last four tools you opened so you can jump back to them quickly from the home page.</li>
+        </ul>
+        <p class="mt-2">
+          This data is private to your device. You can clear it completely at any time by clearing your browser's history and cookies, or by resetting site data.
+        </p>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">3. Security Sandboxing</h3>
-      <p>
-        All inputs are treated strictly as unparsed strings. We apply rigorous escaping to variables compiled inside preview tools (e.g. SVG preview fields) to prevent cross-site scripting (XSS) issues in your browser runtime.
-      </p>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">3. Email & Feedback</h3>
+        <p>
+          When you want to request a new tool, leave a rating, or get in touch:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li>We don't use server-based forms that harvest database entries. Instead, clicking contact or review links will draft an email in your own email app, which you can choose to send.</li>
+          <li>If you email us, we only use your email address to reply to you or to publish your feedback (always with your explicit permission). We never sell or share your contact details.</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">4. Cookies and Advertising</h3>
-      <p>
-        BoardTools does not set tracking cookies, cookie ID tokens, or target marketing pixels. We do not display dynamic network advertisements, and do not track your user profile across the web.
-      </p>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">4. Cookies and Advertising</h3>
+        <p>
+          To keep Toolkify free and accessible, this site may display advertisements served by Google AdSense and/or other third-party ad networks. When ads are shown, here is how advertising data is handled:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li><strong>Google AdSense & Cookies:</strong> Google uses cookies, device/browser identifiers, and standard network request data (such as your IP address) to serve ads based on your visits to Toolkify and other sites on the internet.</li>
+          <li><strong>Data Processing:</strong> This data processing is managed entirely by Google, not Toolkify. You can learn more about how Google uses data by visiting <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Google’s Advertising Privacy & Terms</a>.</li>
+          <li><strong>Opt-Out Options:</strong> You can opt out of personalized advertising by visiting Google's <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Ads Settings</a>. Alternatively, you can opt out of third-party vendors' use of cookies for personalized advertising by visiting <a href="https://optout.aboutads.info" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">YourAdChoices</a> or <a href="https://optout.networkadvertising.org" target="_blank" rel="noopener noreferrer" class="text-brand-blue hover:underline">Network Advertising Initiative (NAI)</a>.</li>
+          <li><strong>Regional Regulations (EU, UK, California):</strong> If you access this site from regions with specific privacy laws (such as the European Union, United Kingdom, or California), you may be presented with a consent banner allowing you to customize your preferences. If you decline consent or choose not to receive personalized ads, you will only see non-personalized ads (which rely on contextual information rather than tracking profiles).</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">5. Contacting Us</h3>
-      <p>
-        If you have questions about our offline architecture, you may inspect the open source codebase directly on GitHub or contact us via our simulated form on the <a href="/contact" class="text-brand-blue hover:underline">Contact Page</a>.
-      </p>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">5. Code Auditing & Transparency</h3>
+        <p>
+          Since all operations happen on your screen, you can inspect the code behind any tool directly in your browser. We compile the site with standard precautions to ensure input fields are safe from cross-site scripting (XSS) and other browser-based vulnerabilities.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3 border-t border-hairline pt-6">
+        <h3 class="font-display font-semibold text-lg text-primary">Questions?</h3>
+        <p>
+          If you have questions about our offline architecture, we'd love to chat. You can learn more on our <a href="/about" class="text-brand-blue hover:underline">About Page</a> or contact us directly on the <a href="/contact" class="text-brand-blue hover:underline">Contact Page</a>.
+        </p>
+      </div>
     </div>
   </section>
 </Layout>

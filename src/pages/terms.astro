@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout 
-  title="Terms & Conditions - BoardTools"
+  title="Terms & Conditions - Toolkify"
   description="Terms of Service: Free local utilities provided 'as-is' under open-source MIT terms with zero warranty obligations."
 >
   <section class="max-w-[800px] w-full mx-auto px-4 py-12 flex flex-col gap-8 animate-fade-in-up">
@@ -17,60 +17,84 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="font-display font-medium text-4xl tracking-tight text-primary mt-1">
         Terms & Conditions
       </h1>
-      <p class="text-xs text-slate">Last updated: June 25, 2026</p>
+      <p class="text-xs text-slate">Last updated: July 5, 2026</p>
     </div>
 
     <!-- Legal disclaimer banner -->
     <div class="p-6 bg-surface border border-hairline-strong rounded-2xl flex flex-col gap-2">
-      <h2 class="font-display font-semibold text-sm text-primary uppercase tracking-wider">Disclaimer of Warranties</h2>
+      <h2 class="font-display font-semibold text-xs text-primary uppercase tracking-wider">Disclaimer of Warranties</h2>
       <p class="text-xs text-slate leading-relaxed font-semibold">
-        BoardTools provides static code converters, checkers, and design workspaces "AS IS" and "AS AVAILABLE" without any warranties of any kind. 
+        Toolkify provides static code converters, calculators, and visual workspaces "AS IS" and "AS AVAILABLE" without warranties of any kind.
       </p>
     </div>
 
-    <!-- Content Columns -->
-    <div class="flex flex-col gap-6 text-sm text-slate leading-relaxed font-sans">
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">1. Agreement to Terms</h3>
-      <p>
-        By accessing this website, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any of these terms, you are prohibited from using or accessing this site. All components, layouts, and tools are provided for educational and utility purposes only.
-      </p>
+    <!-- Content Sections -->
+    <div class="flex flex-col gap-8 text-sm text-slate leading-relaxed font-sans">
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">1. Agreement to Terms</h3>
+        <p>
+          Welcome to Toolkify! By using this website, you agree to these simple Terms & Conditions. If you do not agree with any part of these terms, you should not use the site. All tools and layouts are provided strictly for convenience, utility, and educational purposes.
+        </p>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">2. Open Source & License</h3>
-      <p>
-        BoardTools is inspired by Miro's workspace layouts, but is an independent utility website. Unless explicitly stated otherwise:
-      </p>
-      <ul class="list-disc pl-5 flex flex-col gap-2">
-        <li>The client-side javascript algorithms are licensed under standard open-source parameters (MIT License).</li>
-        <li>You are welcome to clone, copy, run, or distribute the source code locally on your own environment.</li>
-        <li>All designs, styles, logo badges, and headers remain the copyright of BoardTools.</li>
-      </ul>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">2. Open Source & Custom Rights</h3>
+        <p>
+          We believe in sharing code and building open tools:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li><strong>Open-Source Logic:</strong> The client-side javascript algorithms and calculations we write are licensed under standard open-source parameters (MIT License). You are free to view, copy, and run them locally in your own projects.</li>
+          <li><strong>Branding and Designs:</strong> While the logic is open, our specific visual designs, custom logos, layout structures, and header graphics remain the intellectual property of Toolkify. Please do not republish the website as a commercial project under our name.</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">3. Limitation of Liability</h3>
-      <p>
-        Under no circumstances shall BoardTools or its contributors be held liable for any damages, errors, data leaks (caused by your own copy-pasting outside BoardTools), browser tab crashes, or data loss arising out of the use or inability to use the local utilities.
-      </p>
-      <p>
-        Because our tools run entirely client-side, we have no control over:
-      </p>
-      <ul class="list-disc pl-5 flex flex-col gap-2">
-        <li>Browser extensions that may inspect your pasted text variables.</li>
-        <li>Malicious keyloggers running on your operating system.</li>
-        <li>Your local browser storage availability and persistence.</li>
-      </ul>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">3. Your Data, Your Custody</h3>
+        <p>
+          Because we do not run database servers to collect or save your calculations, sketches, or inputs:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li>You retain full ownership and responsibility for whatever text, calculations, or designs you work on.</li>
+          <li>We cannot recover lost whiteboards, cleared history, or previous inputs because we never had access to them in the first place. They live only in your browser storage.</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">4. Accuracy of Tools</h3>
-      <p>
-        While we strive to implement robust converters, JSON parsers, contrast ratio algorithms, and UUID standards:
-      </p>
-      <ul class="list-disc pl-5 flex flex-col gap-2">
-        <li>We do not guarantee that the outputs (e.g. accessibility checks, optimized SVG nodes) are 100% accurate, error-free, or legally compliant with WCAG standards.</li>
-        <li>Users are solely responsible for verifying tool outcomes before deploying them to production systems.</li>
-      </ul>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">4. Accuracy of Tools</h3>
+        <p>
+          We strive to make our 56 calculators, converters, parsers, and diagnostic tests as accurate and helpful as possible. However:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li>We do not guarantee that the outputs (e.g. marginal tax rates, calorie metrics, accessibility colors) are 100% correct, error-free, or legally binding.</li>
+          <li>Always double-check critical outputs before using them for official business, financial contracts, or production code deployments.</li>
+        </ul>
+      </div>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-4">5. Revisions and Modifications</h3>
-      <p>
-        We may update these terms or add/remove client-side tools at any time without prior notice. By continuing to use the website, you agree to be bound by the current version of these Terms & Conditions.
-      </p>
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">5. Limitations of Liability</h3>
+        <p>
+          In no event shall Toolkify or its contributors be held liable for any damages, errors, browser tab crashes, or data issues arising from your use of these local tools. Since everything runs locally on your computer, we have no control over browser extensions that may monitor your inputs, malicious software running on your operating system, or storage errors in your local browser profile.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">6. Third-Party Advertisements</h3>
+        <p>
+          We partner with third-party networks, including Google AdSense, to display advertisements on Toolkify:
+        </p>
+        <ul class="list-disc pl-5 flex flex-col gap-2 mt-1">
+          <li><strong>Ad Delivery:</strong> Third-party ad networks serve ads directly to your browser. These networks operate under their own terms of service and privacy practices, which are independent of Toolkify.</li>
+          <li><strong>No Content Control:</strong> Toolkify does not endorse, control, or take responsibility for the accuracy, quality, or content of third-party advertisements displayed on the site.</li>
+          <li><strong>Liability Disclaimer:</strong> We are not liable for any transactions, damages, security issues, or disputes arising from your interaction with, or clicks on, third-party advertisements or websites linked from those ads.</li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h3 class="font-display font-semibold text-lg text-primary">7. Revisions & Updates</h3>
+        <p>
+          We may add new tools, update existing code, or update these terms at any time without prior notice to make the suite better. By continuing to use Toolkify, you agree to the latest terms published on this page.
+        </p>
+      </div>
     </div>
   </section>
 </Layout>
