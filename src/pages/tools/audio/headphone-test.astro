@@ -34,51 +34,41 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
           >
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-2.5 h-2.5 sm:w-3 sm:h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <button
             type="button"
             id="how-it-works-btn"
-            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="How headphone test works"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -802,6 +792,7 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
   const STORAGE_PREFIX = 'boardtools:headphone-test:';
   const HISTORY_KEY = `${STORAGE_PREFIX}history`;
   const DEVICE_KEY = `${STORAGE_PREFIX}device-name`;
+  const VOLUME_KEY = `${STORAGE_PREFIX}volume`;
 
   // Get UI components
   const initAudioBtn = document.getElementById('init-audio-btn');
@@ -811,6 +802,7 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
   const volumeWarning = document.getElementById('volume-warning');
   const deviceNameInput = document.getElementById('device-name') as HTMLInputElement;
   
+  const shareBtn = document.getElementById('share-btn');
   const resetBtn = document.getElementById('reset-btn');
   const howItWorksBtn = document.getElementById('how-it-works-btn');
   const howItWorksModal = document.getElementById('how-it-works-modal');
@@ -909,12 +901,40 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
       // safety limit master volume at max 0.6 standard scaling
       masterGainNode.gain.linearRampToValueAtTime(dbScale * 0.6, audioCtx.currentTime + 0.05);
     }
+  masterVolumeInput?.addEventListener('change', () => {
+    localStorage.setItem(VOLUME_KEY, masterVolumeInput.value);
   });
 
-  // Device tagging auto load/save
-  if (deviceNameInput) {
+  // Load state from URL parameters or LocalStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  const paramVol = urlParams.get('vol');
+  const paramDevice = urlParams.get('device');
+
+  if (paramVol) {
+    masterVolumeInput.value = paramVol;
+  } else {
+    const savedVol = localStorage.getItem(VOLUME_KEY);
+    if (savedVol) masterVolumeInput.value = savedVol;
+  }
+
+  if (paramDevice) {
+    deviceNameInput.value = paramDevice;
+  } else {
     const savedDevice = localStorage.getItem(DEVICE_KEY);
     if (savedDevice) deviceNameInput.value = savedDevice;
+  }
+
+  // Update volume readout
+  const initialVol = parseInt(masterVolumeInput.value);
+  if (volumeReadout) volumeReadout.textContent = `${initialVol}%`;
+  if (initialVol >= 75) {
+    volumeWarning?.classList.remove('hidden');
+  } else {
+    volumeWarning?.classList.add('hidden');
+  }
+
+  // Device tagging auto save
+  if (deviceNameInput) {
     deviceNameInput.addEventListener('input', () => {
       localStorage.setItem(DEVICE_KEY, deviceNameInput.value);
     });
@@ -1629,15 +1649,88 @@ Generated via BoardTools Headphone Test Suite.`;
     URL.revokeObjectURL(url);
   });
 
+  // Share button action
+  shareBtn?.addEventListener('click', () => {
+    const vol = masterVolumeInput.value;
+    const device = deviceNameInput.value.trim();
+
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.set('vol', vol);
+    if (device) url.searchParams.set('device', device);
+
+    const shareData = {
+      title: document.title || "Headphone Test",
+      url: url.toString()
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch((err) => {
+        if (err.name !== "AbortError") {
+          copyToClipboard(url.toString());
+        }
+      });
+    } else {
+      copyToClipboard(url.toString());
+    }
+
+    function copyToClipboard(text: string) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text: string) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        showSuccess();
+      } catch (err) {
+        console.error(err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showSuccess() {
+      if (shareBtn) {
+        const span = shareBtn.querySelector("span");
+        if (span) {
+          const originalText = span.textContent || "Share";
+          span.textContent = "Link Copied!";
+          shareBtn.classList.add("text-success-accent", "border-success-accent");
+          setTimeout(() => {
+            span.textContent = originalText;
+            shareBtn.classList.remove("text-success-accent", "border-success-accent");
+          }, 2000);
+        }
+      }
+    }
+  });
+
   // Reset button action (stop, clear progress, clear localStorage)
   resetBtn?.addEventListener('click', () => {
     stopAllAudio();
+
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
     
     // Clear localStorage
     localStorage.removeItem(HISTORY_KEY);
     localStorage.removeItem(DEVICE_KEY);
+    localStorage.removeItem(VOLUME_KEY);
     
     if (deviceNameInput) deviceNameInput.value = '';
+    if (masterVolumeInput) masterVolumeInput.value = '50';
+    if (volumeReadout) volumeReadout.textContent = '50%';
+    volumeWarning?.classList.add('hidden');
     
     // Reset guided flow
     currentGuidedStep = 1;

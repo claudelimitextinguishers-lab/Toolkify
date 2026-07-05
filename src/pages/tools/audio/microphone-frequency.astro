@@ -35,53 +35,41 @@ const description = "Analyze and map your microphone's frequency response spectr
           </span>
         </div>
 
-        <div class="flex items-center gap-2">
-          <!-- Reset Button (Verbatim contract from json-formatter.astro) -->
+        <div class="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
-          <!-- How It Works Button (Verbatim pattern from json-formatter.astro) -->
           <button
             type="button"
             id="how-it-works-btn"
-            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="How microphone frequency works"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -386,6 +374,7 @@ const description = "Analyze and map your microphone's frequency response spectr
   const btnPauseResume = document.getElementById("btn-pause-resume")!;
   const btnStopCapture = document.getElementById("btn-stop-capture")!;
   const btnReset = document.getElementById("reset-btn")!;
+  const shareBtn = document.getElementById("share-btn")!;
   const btnFreeze = document.getElementById("btn-freeze")!;
   const btnExport = document.getElementById("btn-export")!;
   const modeSpectrum = document.getElementById("mode-spectrum")!;
@@ -449,40 +438,50 @@ const description = "Analyze and map your microphone's frequency response spectr
   const LS_PEAKS = "boardtools:microphone-frequency:show-peaks";
   const LS_MODE = "boardtools:microphone-frequency:view-mode";
 
-  // Initialize from LocalStorage
+  // Initialize from URL query parameters or LocalStorage
   function loadSavedSettings() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const getParam = (paramName: string, lsKey: string): string | null => {
+      if (urlParams.has(paramName)) return urlParams.get(paramName);
+      try {
+        return localStorage.getItem(lsKey);
+      } catch (e) {
+        return null;
+      }
+    };
+
     try {
-      const savedFft = localStorage.getItem(LS_FFT);
+      const savedFft = getParam("fft", LS_FFT);
       if (savedFft) {
         controlFft.value = savedFft;
         fftVal.textContent = savedFft;
       }
-      const savedSmoothing = localStorage.getItem(LS_SMOOTHING);
+      const savedSmoothing = getParam("smooth", LS_SMOOTHING);
       if (savedSmoothing) {
         controlSmoothing.value = savedSmoothing;
-        smoothingVal.textContent = savedSmoothing;
+        smoothingVal.textContent = parseFloat(savedSmoothing).toFixed(2);
       }
-      const savedYScale = localStorage.getItem(LS_YSCALE);
+      const savedYScale = getParam("yscale", LS_YSCALE);
       if (savedYScale) {
         controlYScale.value = savedYScale;
         yScaleVal.textContent = `${savedYScale} to 0 dB`;
       }
-      const savedRef = localStorage.getItem(LS_REF);
+      const savedRef = getParam("ref", LS_REF);
       if (savedRef !== null) {
         controlReference.checked = savedRef === "true";
       }
-      const savedPeaks = localStorage.getItem(LS_PEAKS);
+      const savedPeaks = getParam("peaks", LS_PEAKS);
       if (savedPeaks !== null) {
         controlPeaks.checked = savedPeaks === "true";
       }
-      const savedMode = localStorage.getItem(LS_MODE);
+      const savedMode = getParam("mode", LS_MODE);
       if (savedMode === "waveform") {
         setMode("waveform");
       } else {
         setMode("spectrum");
       }
     } catch (e) {
-      console.warn("Could not load saved settings from LocalStorage", e);
+      console.warn("Could not load saved settings", e);
     }
   }
 
@@ -1106,9 +1105,86 @@ const description = "Analyze and map your microphone's frequency response spectr
     settingsCard.classList.add("max-lg:hidden");
   });
 
+  // Share button implementation
+  shareBtn?.addEventListener("click", () => {
+    const fft = controlFft.value;
+    const smooth = controlSmoothing.value;
+    const yscale = controlYScale.value;
+    const ref = controlReference.checked ? "true" : "false";
+    const peaks = controlPeaks.checked ? "true" : "false";
+    const mode = viewMode;
+
+    const url = new URL(window.location.origin + window.location.pathname);
+    url.searchParams.set("fft", fft);
+    url.searchParams.set("smooth", smooth);
+    url.searchParams.set("yscale", yscale);
+    url.searchParams.set("ref", ref);
+    url.searchParams.set("peaks", peaks);
+    url.searchParams.set("mode", mode);
+
+    const shareData = {
+      title: document.title || "Microphone Frequency Analyzer",
+      url: url.toString()
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch((err) => {
+        if (err.name !== "AbortError") {
+          copyToClipboard(url.toString());
+        }
+      });
+    } else {
+      copyToClipboard(url.toString());
+    }
+
+    function copyToClipboard(text: string) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text: string) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        showSuccess();
+      } catch (err) {
+        console.error(err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showSuccess() {
+      if (shareBtn) {
+        const span = shareBtn.querySelector("span");
+        if (span) {
+          const originalText = span.textContent || "Share";
+          span.textContent = "Link Copied!";
+          shareBtn.classList.add("text-success-accent", "border-success-accent");
+          setTimeout(() => {
+            span.textContent = originalText;
+            shareBtn.classList.remove("text-success-accent", "border-success-accent");
+          }, 2000);
+        }
+      }
+    }
+  });
+
   // Reset button implementation
   btnReset.addEventListener("click", () => {
     stopMicCapture();
+
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
     
     // Clear localStorage
     clearLocalStorage();

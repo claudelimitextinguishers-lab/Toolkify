@@ -61,51 +61,41 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
           </span>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <button
             type="button"
             id="how-it-works-btn"
-            class="inline-flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 sm:px-2.5 sm:py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="How brown noise works"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3 sm:w-3.5 sm:h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -464,6 +454,7 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
     const visualizerFallback = document.getElementById('visualizer-fallback') as HTMLDivElement;
 
     const btnShare = document.getElementById('btn-share') as HTMLButtonElement;
+    const shareBtn = document.getElementById('share-btn') as HTMLButtonElement;
     const toastMsg = document.getElementById('toast-msg') as HTMLDivElement;
 
     const btnReset = document.getElementById('reset-btn') as HTMLButtonElement;
@@ -963,7 +954,7 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
     btnSavePreset.addEventListener('click', saveCustomPreset);
 
     // Share link generation
-    btnShare.addEventListener('click', () => {
+    function handleShare() {
       const vol = volSlider.value;
       const depth = depthSlider.value;
       const stereo = stereoCheckbox.checked ? '1' : '0';
@@ -972,13 +963,69 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
       let url = `${window.location.origin}${window.location.pathname}?v=${vol}&d=${depth}&s=${stereo}`;
       if (timer) url += `&t=${timer}`;
 
-      navigator.clipboard.writeText(url).then(() => {
-        toastMsg.classList.add('opacity-100');
-        setTimeout(() => {
-          toastMsg.classList.remove('opacity-100');
-        }, 2000);
-      });
-    });
+      const shareData = {
+        title: document.title || "Brown Noise Generator",
+        url: url
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url);
+          }
+        });
+      } else {
+        copyToClipboard(url);
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+        if (toastMsg) {
+          toastMsg.classList.add('opacity-100');
+          setTimeout(() => {
+            toastMsg.classList.remove('opacity-100');
+          }, 2000);
+        }
+      }
+    }
+
+    btnShare?.addEventListener('click', handleShare);
+    shareBtn?.addEventListener('click', handleShare);
 
     // Keyboard Shortcuts
     window.addEventListener('keydown', (e) => {
@@ -1005,6 +1052,11 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
     // Reset button logic: stops audio, resets controls, clears localstorage keys, resets visualizer
     btnReset.addEventListener('click', () => {
       stopNoise();
+
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
 
       volSlider.value = '0.6';
       depthSlider.value = '0.5';
