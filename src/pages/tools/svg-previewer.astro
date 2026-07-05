@@ -1266,6 +1266,24 @@ import Layout from "../../layouts/Layout.astro";
           }
         };
         pruneTree(svgNode);
+
+        // Second pass: recursively remove any newly-empty container groups from bottom up
+        const cleanEmptyGroups = (element: Element) => {
+          let child = element.firstElementChild;
+          while (child) {
+            const next = child.nextElementSibling;
+            cleanEmptyGroups(child);
+            if (
+              child.tagName.toLowerCase() === "g" &&
+              child.children.length === 0 &&
+              !child.hasAttribute("d")
+            ) {
+              element.removeChild(child);
+            }
+            child = next;
+          }
+        };
+        cleanEmptyGroups(svgNode);
       }
 
       // 3. Clean Inline CSS Styles (Styles attribute conversion)

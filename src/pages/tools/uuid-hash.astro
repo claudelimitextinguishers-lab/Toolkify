@@ -725,23 +725,22 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
   }
 
   let clockSequence = Math.floor(Math.random() * 0x3fff);
-  let lastUUIDv1Time = 0;
+  let lastUUIDv1Time = 0n;
   const staticMacNode = new Uint8Array(6);
   crypto.getRandomValues(staticMacNode);
   staticMacNode[0] |= 0x01; // Multicast bit set to identify random nodes
 
   function generateUUIDv1(): string {
-    // Use safe integer arithmetic: split Gregorian epoch offset to avoid exceeding Number.MAX_SAFE_INTEGER
-    const gregorianOffsetHigh = 12219292800; // seconds from 1582 to 1970
-    let now = Date.now() * 10000 + gregorianOffsetHigh * 10000000; // 100ns intervals since Gregorian Reform (1582)
+    const gregorianOffset = 122192928000000000n; // 100ns intervals from 1582 to 1970
+    let now = BigInt(Date.now()) * 10000n + gregorianOffset;
     if (now <= lastUUIDv1Time) {
-      now = lastUUIDv1Time + 1;
+      now = lastUUIDv1Time + 1n;
     }
     lastUUIDv1Time = now;
 
-    const timeLow = now % 0x100000000;
-    const timeMid = Math.floor(now / 0x100000000) % 0x10000;
-    const timeHi = Math.floor(now / 0x1000000000000) & 0x0fff;
+    const timeLow = Number(now & 0xffffffffn);
+    const timeMid = Number((now >> 32n) & 0xffffn);
+    const timeHi = Number((now >> 48n) & 0x0fffn);
 
     const bytes = new Uint8Array(16);
     bytes[0] = (timeLow >>> 24) & 0xff;

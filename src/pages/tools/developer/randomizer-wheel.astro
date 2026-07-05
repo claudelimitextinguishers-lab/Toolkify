@@ -470,6 +470,7 @@ const keywords = "randomizer wheel, decision wheel, spin the wheel, random picke
     let animationFrameId: number | null = null;
     let isSpinningToTarget = false;
     let spinTargetAngle = 0;
+    let startRotation = 0;
     let spinDuration = 0;
     let spinTimeElapsed = 0;
     let targetSegmentWinnerIndex = -1;
@@ -856,6 +857,7 @@ const keywords = "randomizer wheel, decision wheel, spin the wheel, random picke
       isSpinningToTarget = true;
       spinDuration = 180 + Math.floor(Math.random() * 60); // 3-4 seconds of rendering
       spinTimeElapsed = 0;
+      startRotation = rotation;
       
       animateWheelSpin();
     }
@@ -866,14 +868,13 @@ const keywords = "randomizer wheel, decision wheel, spin the wheel, random picke
       if (!isSpinningToTarget) return;
 
       spinTimeElapsed++;
-      const progress = spinTimeElapsed / spinDuration;
+      const progress = Math.min(spinTimeElapsed / spinDuration, 1);
 
       // Eased Deceleration Curve (cubic out style)
       const easeOut = 1 - Math.pow(1 - progress, 3.5);
       
-      // Calculate delta to synthesize sound on segment crossover
-      const prevRot = rotation;
-      rotation = prevRot + (spinTargetAngle - prevRot) * (easeOut - (1 - Math.pow(1 - (progress - 1/spinDuration), 3.5)));
+      // Calculate rotation by interpolating from startRotation to spinTargetAngle
+      rotation = startRotation + (spinTargetAngle - startRotation) * easeOut;
 
       const currentWinnerIdx = getWinnerIndex(rotation);
       if (currentWinnerIdx !== lastPlayedIdx) {

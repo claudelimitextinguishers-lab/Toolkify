@@ -634,6 +634,12 @@ const keywords = "code formatter, js beautifier, html formatter, css prettifier,
             handleFormatError(error);
           }
         };
+
+        worker.onerror = function(e) {
+          console.error("Formatting engine worker error:", e);
+          loadingOverlay.classList.add('hidden');
+          updateBannerStatus('error', 'Formatting engine failed to load — check your connection');
+        };
       } catch (err) {
         console.error("Could not spawn background formatter worker:", err);
         updateBannerStatus('error', 'Formatting Engine failed initialization. Local fallback active.');

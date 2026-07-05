@@ -626,7 +626,6 @@ const canonicalUrl = "https://boardtools.app/tools/developer/word-character-coun
   // Sentence counting (supports English/CJK punctuation)
   function calculateSentenceCount(str: string): number {
     if (!str.trim()) return 0;
-    const matches = str.match(/[^.!?。！？\s][^.!? downtime]?.[^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
     // Standard English/CJK sentence regex fallback
     const standardMatches = str.match(/[^.!?。！？\s][^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
     return standardMatches ? standardMatches.length : 0;

@@ -858,12 +858,14 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
 
   // Share URL logic
   btnExportShare.addEventListener('click', () => {
-    const orig = encodeURIComponent(originalTextarea.value);
-    const chg = encodeURIComponent(changedTextarea.value);
-    const hash = `diff-${currentGranularity}-${currentView}-${orig}-${chg}`;
+    const params = new URLSearchParams();
+    params.set('granularity', currentGranularity);
+    params.set('view', currentView);
+    params.set('original', originalTextarea.value);
+    params.set('changed', changedTextarea.value);
     
     // Set url hash
-    window.location.hash = hash;
+    window.location.hash = 'share?' + params.toString();
     navigator.clipboard.writeText(window.location.href);
     
     // Feedback
@@ -903,21 +905,106 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
     const linesB = contentB.split(/\r?\n/);
     let patch = `--- ${fileNameA}\n+++ ${fileNameB}\n@@ -1,${linesA.length} +1,${linesB.length} @@\n`;
 
-    // Simple line differences for patch export
-    let i = 0, j = 0;
-    while (i < linesA.length || j < linesB.length) {
-      if (i < linesA.length && j < linesB.length && linesA[i] === linesB[j]) {
-        patch += `  ${linesA[i]}\n`;
-        i++;
-        j++;
-      } else if (i < linesA.length && (j >= linesB.length || !linesB.includes(linesA[i]))) {
-        patch += `-${linesA[i]}\n`;
-        i++;
-      } else if (j < linesB.length) {
-        patch += `+${linesB[j]}\n`;
-        j++;
+    function getDiff(A, B) {
+      const N = A.length;
+      const M = B.length;
+
+      if (N === 0) return B.map(val => ({ value: val, type: 'added' }));
+      if (M === 0) return A.map(val => ({ value: val, type: 'removed' }));
+
+      const MAX = N + M;
+      const limitD = Math.min(MAX, 1200);
+
+      const V = new Int32Array(2 * limitD + 1);
+      const offset = limitD;
+      V[offset + 1] = 0;
+
+      const paths = [];
+      let found = false;
+      let x = 0;
+      let y = 0;
+
+      outer: for (let d = 0; d <= limitD; d++) {
+        paths.push(new Int32Array(V));
+
+        for (let k = -d; k <= d; k += 2) {
+          const idx = offset + k;
+          if (k === -d || (k !== d && V[idx - 1] < V[idx + 1])) {
+            x = V[idx + 1];
+          } else {
+            x = V[idx - 1] + 1;
+          }
+          y = x - k;
+
+          while (x < N && y < M && A[x] === B[y]) {
+            x++;
+            y++;
+          }
+
+          V[idx] = x;
+
+          if (x >= N && y >= M) {
+            found = true;
+            break outer;
+          }
+        }
       }
+
+      if (!found) {
+        return [
+          ...A.map(val => ({ value: val, type: 'removed' })),
+          ...B.map(val => ({ value: val, type: 'added' }))
+        ];
+      }
+
+      const result = [];
+      let currX = N;
+      let currY = M;
+
+      for (let d = paths.length - 1; d >= 0; d--) {
+        const V_d = paths[d];
+        const k = currX - currY;
+        const idx = offset + k;
+
+        let prevK;
+        if (k === -d || (k !== d && V_d[idx - 1] < V_d[idx + 1])) {
+          prevK = k + 1;
+        } else {
+          prevK = k - 1;
+        }
+
+        const prevX = V_d[offset + prevK];
+        const prevY = prevX - prevK;
+
+        while (currX > prevX && currY > prevY) {
+          result.push({ value: A[currX - 1], type: 'unchanged' });
+          currX--;
+          currY--;
+        }
+
+        if (currX > prevX) {
+          result.push({ value: A[currX - 1], type: 'removed' });
+          currX--;
+        } else if (currY > prevY) {
+          result.push({ value: B[currY - 1], type: 'added' });
+          currY--;
+        }
+      }
+
+      return result.reverse();
     }
+
+    const diff = getDiff(linesA, linesB);
+    diff.forEach(item => {
+      if (item.type === 'unchanged') {
+        patch += `  ${item.value}\n`;
+      } else if (item.type === 'removed') {
+        patch += `-${item.value}\n`;
+      } else if (item.type === 'added') {
+        patch += `+${item.value}\n`;
+      }
+    });
+
     return patch;
   }
 
@@ -1184,55 +1271,82 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
   function restoreState() {
     // Check URL Hash first (shareable links)
     const hash = window.location.hash;
-    if (hash && hash.startsWith('#diff-')) {
-      try {
-        const parts = hash.split('-');
-        if (parts.length >= 5) {
-          const granularity = parts[1];
-          const view = parts[2];
+    if (hash) {
+      if (hash.startsWith('#share?')) {
+        try {
+          const params = new URLSearchParams(hash.substring(7));
+          const granularity = params.get('granularity');
+          const view = params.get('view');
+          const originalVal = params.get('original');
+          const changedVal = params.get('changed');
           
-          // Reconstruct the rest as encoded values
-          // Hash schema: #diff-[granularity]-[view]-[orig]-[chg]
-          const origIdx = hash.indexOf(`-${view}-`) + view.length + 2;
-          const remaining = hash.substring(origIdx);
-          const splitPoint = remaining.indexOf('-%25'); // search separator
-          
-          let origEncoded = remaining;
-          let chgEncoded = '';
-          
-          // We can parse splitting by URL decoding
-          const decodedRemaining = decodeURIComponent(remaining);
-          
-          // Safer fallback split
-          const partsDecoded = decodedRemaining.split('-');
-          if (partsDecoded.length >= 2) {
-            const halfLength = Math.floor(partsDecoded.length / 2);
-            originalTextarea.value = partsDecoded.slice(0, halfLength).join('-');
-            changedTextarea.value = partsDecoded.slice(halfLength).join('-');
-          } else {
-            originalTextarea.value = decodeURIComponent(parts[3] || '');
-            changedTextarea.value = decodeURIComponent(parts[4] || '');
+          if (granularity && view) {
+            originalTextarea.value = originalVal || '';
+            changedTextarea.value = changedVal || '';
+            currentGranularity = granularity;
+            currentView = view;
+            
+            // Style active tab
+            granularityTabs.forEach(t => {
+              if (t.getAttribute('data-granularity') === currentGranularity) {
+                t.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+                t.classList.remove('text-slate', 'hover:text-primary');
+              } else {
+                t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+                t.classList.add('text-slate', 'hover:text-primary');
+              }
+            });
+            updateViewTabStyles();
+            triggerDiff();
+            return;
           }
-
-          currentGranularity = granularity;
-          currentView = view;
-          
-          // Style active tab
-          granularityTabs.forEach(t => {
-            if (t.getAttribute('data-granularity') === currentGranularity) {
-              t.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
-              t.classList.remove('text-slate', 'hover:text-primary');
-            } else {
-              t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
-              t.classList.add('text-slate', 'hover:text-primary');
-            }
-          });
-          updateViewTabStyles();
-          triggerDiff();
-          return;
+        } catch (err) {
+          console.error("Failed to parse shareable link URL hash parameters", err);
         }
-      } catch (err) {
-        console.error("Failed to parse shareable link URL hash parameters", err);
+      } else if (hash.startsWith('#diff-')) {
+        try {
+          const parts = hash.split('-');
+          if (parts.length >= 5) {
+            const granularity = parts[1];
+            const view = parts[2];
+            
+            // Reconstruct the rest as encoded values
+            // Hash schema: #diff-[granularity]-[view]-[orig]-[chg]
+            const origIdx = hash.indexOf(`-${view}-`) + view.length + 2;
+            const remaining = hash.substring(origIdx);
+            
+            // Safer fallback split
+            const decodedRemaining = decodeURIComponent(remaining);
+            const partsDecoded = decodedRemaining.split('-');
+            if (partsDecoded.length >= 2) {
+              const halfLength = Math.floor(partsDecoded.length / 2);
+              originalTextarea.value = partsDecoded.slice(0, halfLength).join('-');
+              changedTextarea.value = partsDecoded.slice(halfLength).join('-');
+            } else {
+              originalTextarea.value = decodeURIComponent(parts[3] || '');
+              changedTextarea.value = decodeURIComponent(parts[4] || '');
+            }
+
+            currentGranularity = granularity;
+            currentView = view;
+            
+            // Style active tab
+            granularityTabs.forEach(t => {
+              if (t.getAttribute('data-granularity') === currentGranularity) {
+                t.classList.add('bg-primary', 'text-canvas', 'shadow-sm');
+                t.classList.remove('text-slate', 'hover:text-primary');
+              } else {
+                t.classList.remove('bg-primary', 'text-canvas', 'shadow-sm');
+                t.classList.add('text-slate', 'hover:text-primary');
+              }
+            });
+            updateViewTabStyles();
+            triggerDiff();
+            return;
+          }
+        } catch (err) {
+          console.error("Failed to parse shareable link URL hash parameters", err);
+        }
       }
     }
 
