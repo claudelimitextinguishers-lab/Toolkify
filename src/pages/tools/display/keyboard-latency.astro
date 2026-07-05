@@ -1,90 +1,1481 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
+import Layout from "../../../layouts/Layout.astro";
 
 // Tool metadata
 const name = "Keyboard Latency Test";
 const category = "display";
 const tier = "Display & Input Diagnostics";
-const description = "Test keyboard press latencies and measure input-to-screen response times.";
+
+// On-page SEO metadata
+const pageTitle = "Keyboard Latency Test - Measure Browser Input & Render Lag";
+const description =
+  "Test keyboard input lag. Measure the latency between physical keydown registration and frame paint updates inside your browser with live statistical distribution analysis.";
+const canonicalUrl = "https://boardtools.app/tools/display/keyboard-latency";
+const ogImage = "/og/keyboard-latency.png";
+const keywords =
+  "keyboard latency test, input lag test, keyboard lag checker, browser render latency, keyboard paint delay, polling rate, input lag browser, keypress test, spacebar latency";
 ---
 
-<Layout 
-  title={`${name} - BoardTools`}
+<Layout
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
-  <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Keyboard Latency Test",
+      "alternateName": "Browser Keyboard Input lag Analyzer",
+      "url": "https://boardtools.app/tools/display/keyboard-latency",
+      "description": "Determine the latency from browser event delivery to render updates (input-to-paint). Collect multi-press distributions, export session CSV, and A/B compare setups.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 requestAnimationFrame.",
+      "featureList": [
+        "High-resolution monotonic timer performance.now() tracking",
+        "Visual feedback target with instant color change mapped to frame painting",
+        "Session statistical summary containing median, mean, min, and max values",
+        "Local distribution histogram displaying keypress frequency by latency bins",
+        "A/B comparison mode to evaluate two separate browser test configurations",
+        "Browser environment info parsing (browser, version, OS) to contextualize data",
+        "Raw session log viewer with CSV/JSON export functionality",
+        "Mobile-touch warning if no physical keyboard is present"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Display",
+          "item": "https://boardtools.app/tools/display"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Keyboard Latency Test",
+          "item": "https://boardtools.app/tools/display/keyboard-latency"
+        }
+      ]
+    }
+  </script>
+
+  <section
+    class="max-w-[1280px] w-full mx-auto px-4 py-1.5 sm:py-3 flex flex-col gap-2 animate-fade-in-up pb-8 print:p-0"
+  >
     <!-- Breadcrumb & Header -->
-    <div class="flex flex-col gap-2">
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate uppercase">
-        <a href="/" class="hover:text-primary">Home</a>
+    <div class="flex flex-col gap-1 print:hidden">
+      <nav
+        class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
         <span>/</span>
-        <a href="/" class="hover:text-primary">Tools</a>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
         <span>/</span>
         <span class="text-brand-blue capitalize">{category}</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-3 mt-1">
-        <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary">
-          {name}
-        </h1>
-        <span class="badge-tag-purple bg-surface-pricing-featured text-brand-blue text-xs py-1 px-3 self-center rounded-full font-semibold uppercase">{tier}</span>
-      </div>
-      <p class="text-base text-slate max-w-xl">
-        {description}
-      </p>
-    </div>
+      </nav>
 
-    <!-- Main Workspace Area -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-      <!-- Left: Interactive Form / Control Panel -->
-      <div class="lg:col-span-8 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-xl text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
-          Calculator Workspace
-        </h2>
+      <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2"
+      >
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1
+            class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary"
+          >
+            {name}
+          </h1>
+          <span
+            class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
+          >
+            {tier}
+          </span>
+        </div>
 
-        <!-- Placeholder UI Container -->
-        <div class="p-8 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-4 min-h-[300px]">
-          <div class="text-4xl">🖥️</div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-display font-medium text-lg text-primary">{name} Shell</h3>
-            <p class="text-xs text-slate max-w-sm leading-relaxed">
-              This interactive tool is structured and ready for client-side development. Inputs, calculations, and local persistence structures can be developed here.
-            </p>
-          </div>
-          <button class="button-primary text-xs py-2 px-5 !rounded-full opacity-60 cursor-not-allowed" disabled>
-            Interactive Workspace Under Development
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How keyboard latency works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
           </button>
         </div>
       </div>
+    </div>
 
-      <!-- Right: Documentation / Details Sidebar -->
-      <div class="lg:col-span-4 flex flex-col gap-6">
-        <!-- How it works -->
-        <div class="card-base bg-surface-soft flex flex-col gap-4">
-          <h3 class="font-display font-semibold text-base text-primary">How to Use</h3>
-          <p class="text-xs text-slate leading-relaxed">
-            Enter the details required in the inputs panel on the left. The calculator processes formula valuations in your local browser sandbox and renders outputs in real-time.
-          </p>
-          <div class="h-[1px] bg-hairline my-1"></div>
-          <h4 class="text-xs font-bold text-slate uppercase tracking-wider">Features</h4>
-          <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1.5">
-            <li>100% Client-Side calculation</li>
-            <li>No data sent to external servers</li>
-            <li>Local state persistence in browser</li>
-          </ul>
+    <!-- Honesty Caveat Callout Banner -->
+    <div
+      class="p-2 bg-surface-yellow border border-yellow-light/80 rounded-lg text-[11px] text-yellow-dark leading-normal flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-subtle print:hidden"
+    >
+      <div class="flex items-start gap-1.5">
+        <span class="text-xs select-none shrink-0">💡</span>
+        <div>
+          <span class="font-bold">Honesty Disclaimer:</span> Measures <span
+            class="font-bold underline text-primary"
+            >Browser Input-to-Paint Latency</span
+          > (event to next paint frame). True hardware latency requires physical probes.
+        </div>
+      </div>
+    </div>
+
+    <!-- Virtual Keyboard / Touch Detection Warning -->
+    <div
+      id="touch-device-warning"
+      class="hidden p-3.5 bg-brand-red border border-brand-red-dark/50 text-coral-dark rounded-xl text-xs flex items-center gap-2.5 shadow-subtle"
+    >
+      <span class="text-base">⚠️</span>
+      <div>
+        <span class="font-bold">Physical Keyboard Recommended:</span> We detected
+        a touch-only or virtual keyboard environment. For meaningful diagnostics,
+        please connect a physical wired or Bluetooth keyboard.
+      </div>
+    </div>
+
+    <!-- main workspace: compact zero-scroll style grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch relative">
+      <!-- Left: Interactive Test & Live Target Panel (8 columns on lg) -->
+      <div class="lg:col-span-7 flex flex-col gap-3">
+        <div class="card-base p-3 sm:p-4 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2
+              class="font-display font-semibold text-xs text-primary flex items-center gap-1.5"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+              Live Test Target
+            </h2>
+            <div class="flex items-center gap-1.5">
+              <!-- Target sample size setting -->
+              <label
+                for="sample-target-count"
+                class="text-[9px] font-semibold text-slate uppercase"
+                >Batch Size</label
+              >
+              <select
+                id="sample-target-count"
+                class="text-input py-0.5 px-1.5 text-[10px] h-6 cursor-pointer border border-hairline-strong bg-canvas rounded"
+              >
+                <option value="1">Single Press</option>
+                <option value="10">10 Presses</option>
+                <option value="20">20 Presses</option>
+                <option value="30" selected>30 Presses</option>
+                <option value="50">50 Presses</option>
+              </select>
+            </div>
+          </div>
+
+<!-- The Instant Paint Visual Target Flash -->
+            <div
+              id="visual-test-target"
+              class="relative flex flex-col items-center justify-center min-h-[140px] bg-canvas border-2 border-hairline-strong rounded-xl text-center p-3 transition-all duration-75 select-none cursor-pointer focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30"
+              tabindex="0"
+              role="button"
+              aria-label="Keyboard latency test target. Click to focus, then press Spacebar or any key."
+            >
+              <!-- Sync indicator light on paint -->
+              <div
+                id="target-paint-indicator"
+                class="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-stone-400 border border-canvas/20 dark:bg-stone-500"
+              >
+              </div>
+
+              <div id="target-instruction" class="flex flex-col gap-1 pointer-events-none">
+                <span
+                  class="text-sm font-bold text-ink animate-pulse"
+                >
+                  Click here to focus, then press <span
+                    class="bg-surface px-1.5 py-0.5 rounded border border-hairline text-brand-blue"
+                    >Spacebar</span
+                  > or any key
+                </span>
+                <p class="text-[10px] text-slate max-w-sm mx-auto">
+                  Press repeatedly at a natural pace. Hold-down repeats are filtered.
+                </p>
+              </div>
+
+              <!-- Absolute readout in middle of target -->
+              <div
+                id="target-readout-container"
+                class="hidden absolute inset-0 flex flex-col items-center justify-center bg-transparent pointer-events-none"
+              >
+                <span
+                  id="target-number"
+                  class="text-4xl font-mono font-bold tracking-tight text-brand-blue"
+                  >0.0</span
+                >
+                <span
+                  id="target-readout-label"
+                  class="text-[9px] text-slate font-bold tracking-wider uppercase mt-0.5"
+                  >Milliseconds Paint Delay</span
+                >
+              </div>
+            </div>
+
+          <!-- Progress Indicator bar -->
+          <div class="flex flex-col gap-1.5">
+            <div
+              class="flex items-center justify-between text-[10px] font-semibold text-slate"
+            >
+              <span>BATCH PROGRESS</span>
+              <span id="progress-text">0 / 30 Presses</span>
+            </div>
+            <div
+              class="w-full h-1.5 bg-surface border border-hairline rounded-full overflow-hidden"
+            >
+              <div
+                id="progress-bar"
+                class="w-0 h-full bg-brand-blue transition-all duration-150"
+              >
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Privacy Guard (Pastel Accent) -->
-        <div class="card-feature-teal flex flex-col gap-3">
-          <span class="badge-tag-yellow bg-yellow-light text-yellow-dark self-start">SECURITY GUARANTEE</span>
-          <h3 class="font-display font-semibold text-base text-primary">Private Execution</h3>
-          <p class="text-xs ${themeColorText} leading-relaxed">
-            All variables, calculations, and output values remain inside your browser sandbox. None of your inputs or diagnostics data is ever transmitted or logged.
-          </p>
+        <!-- A/B Comparison workspace -->
+        <div class="card-base p-3 sm:p-4 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2
+              class="font-display font-semibold text-xs text-primary flex items-center gap-1.5"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-coral"></span>
+              A/B Comparison Mode
+            </h2>
+            <button
+              type="button"
+              id="toggle-ab-mode"
+              class="text-[9px] font-bold px-2 py-0.5 bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
+            >
+              Enable A/B Mode
+            </button>
+          </div>
+
+          <div
+            id="ab-comparison-grid"
+            class="hidden grid-cols-2 gap-2 items-stretch"
+          >
+            <!-- Setup A Panel -->
+            <div
+              class="p-2 bg-surface rounded-lg border border-hairline flex flex-col gap-1 relative"
+            >
+              <span
+                class="text-[9px] font-bold uppercase tracking-wider text-brand-blue"
+                >Setup A</span
+              >
+              <div class="text-[9px] text-slate flex flex-col gap-0.5">
+                <div class="flex justify-between">
+                  <span>Name:</span>
+                  <span id="ab-a-name" class="font-semibold text-primary truncate max-w-[60px]"
+                    >Unrecorded</span
+                  >
+                </div>
+                <div class="flex justify-between">
+                  <span>Samples:</span>
+                  <span id="ab-a-samples" class="font-mono">0</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Median:</span>
+                  <span id="ab-a-median" class="font-mono font-bold">-</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Avg:</span>
+                  <span id="ab-a-avg" class="font-mono">-</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                id="save-to-a"
+                class="mt-1 text-[9px] font-bold py-0.5 px-2 bg-primary text-canvas rounded hover:opacity-90 active:scale-95 transition-all text-center cursor-pointer"
+              >
+                Copy current
+              </button>
+            </div>
+
+            <!-- Setup B Panel -->
+            <div
+              class="p-2 bg-surface rounded-lg border border-hairline flex flex-col gap-1 relative"
+            >
+              <span
+                class="text-[9px] font-bold uppercase tracking-wider text-brand-coral"
+                >Setup B</span
+              >
+              <div class="text-[9px] text-slate flex flex-col gap-0.5">
+                <div class="flex justify-between">
+                  <span>Name:</span>
+                  <span id="ab-b-name" class="font-semibold text-primary truncate max-w-[60px]"
+                    >Unrecorded</span
+                  >
+                </div>
+                <div class="flex justify-between">
+                  <span>Samples:</span>
+                  <span id="ab-b-samples" class="font-mono">0</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Median:</span>
+                  <span id="ab-b-median" class="font-mono font-bold">-</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Avg:</span>
+                  <span id="ab-b-avg" class="font-mono">-</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                id="save-to-b"
+                class="mt-1 text-[9px] font-bold py-0.5 px-2 bg-primary text-canvas rounded hover:opacity-90 active:scale-95 transition-all text-center cursor-pointer"
+              >
+                Copy current
+              </button>
+            </div>
+          </div>
+
+          <!-- Comparison result text -->
+          <div
+            id="ab-result-banner"
+            class="hidden p-2 rounded border border-hairline bg-surface-yellow text-yellow-dark text-[10px] font-semibold text-center"
+          >
+            A/B setups are not populated yet. Record runs into slots to run a
+            comparative analysis.
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Stats Panel, Histogram & Logs (5 columns on lg) -->
+      <div class="lg:col-span-5 flex flex-col gap-3">
+        <!-- Live Run Stats Card -->
+        <div class="card-base p-3 sm:p-4 flex flex-col gap-3">
+          <h2
+            class="font-display font-semibold text-xs text-primary flex items-center justify-between"
+          >
+            <span>Statistics Summary</span>
+            <span
+              id="stats-banner"
+              class="text-[9px] text-stone font-semibold tracking-wider font-mono"
+              >NO SAMPLES</span
+            >
+          </h2>
+
+          <div class="grid grid-cols-2 gap-1.5 text-center">
+            <!-- Median -->
+            <div
+              class="p-1.5 bg-surface-soft border border-hairline rounded-lg flex flex-col justify-center"
+            >
+              <span class="text-[8px] font-bold text-slate uppercase"
+                >Median</span
+              >
+              <span
+                id="stat-median"
+                class="text-xl font-mono font-bold text-primary">-</span
+              >
+            </div>
+            <!-- Average -->
+            <div
+              class="p-1.5 bg-surface-soft border border-hairline rounded-lg flex flex-col justify-center"
+            >
+              <span class="text-[8px] font-bold text-slate uppercase"
+                >Average</span
+              >
+              <span
+                id="stat-avg"
+                class="text-xl font-mono font-bold text-primary">-</span
+              >
+            </div>
+            <!-- Min -->
+            <div
+              class="p-1.5 bg-surface-soft border border-hairline rounded-lg flex flex-col justify-center"
+            >
+              <span class="text-[8px] font-bold text-slate uppercase"
+                >Min Latency</span
+              >
+              <span
+                id="stat-min"
+                class="text-sm font-mono font-semibold text-success-accent"
+                >-</span
+              >
+            </div>
+            <!-- Max -->
+            <div
+              class="p-1.5 bg-surface-soft border border-hairline rounded-lg flex flex-col justify-center"
+            >
+              <span class="text-[8px] font-bold text-slate uppercase"
+                >Max Latency</span
+              >
+              <span
+                id="stat-max"
+                class="text-sm font-mono font-semibold text-coral-dark"
+                >-</span
+              >
+            </div>
+          </div>
+
+          <!-- Histogram representation -->
+          <div class="flex flex-col gap-1 mt-1">
+            <span
+              class="text-[9px] font-bold text-slate uppercase tracking-wider"
+              >Latency Distribution</span
+            >
+            <div
+              id="histogram-container"
+              class="flex flex-col gap-1 min-h-[70px] justify-center text-[9px] text-stone"
+            >
+              <div class="text-center py-4">
+                No distribution data available. Press keys to plot.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Context -->
+        <div class="card-base p-3 sm:p-4 flex flex-col gap-2">
+          <span
+            class="text-[9px] font-bold text-slate uppercase tracking-wider"
+            >Browser Environment context</span
+          >
+          <div class="text-[11px] text-slate space-y-1">
+            <div
+              class="flex justify-between border-b border-hairline-soft pb-0.5"
+            >
+              <span>Browser:</span>
+              <span id="env-browser" class="font-bold text-primary"
+                >Detecting...</span
+              >
+            </div>
+            <div
+              class="flex justify-between border-b border-hairline-soft pb-0.5"
+            >
+              <span>Operating System:</span>
+              <span id="env-os" class="font-semibold text-primary"
+                >Detecting...</span
+              >
+            </div>
+            <div class="flex justify-between">
+              <span>Pacing Stability:</span>
+              <span id="env-stability" class="font-mono text-stone"
+                >Evaluating...</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lower Panels: 3-column layout on desktop for compact height -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <!-- Log List & Export section -->
+      <div class="card-base p-3 sm:p-4 flex flex-col gap-2">
+        <div
+          class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline-soft pb-1.5"
+        >
+          <h3
+            class="font-display font-semibold text-[11px] text-primary flex items-center gap-1"
+          >
+            🕒 Keystrokes Log
+          </h3>
+          <div class="flex items-center gap-1.5">
+            <button
+              type="button"
+              id="export-csv-btn"
+              class="inline-flex items-center gap-0.5 text-[9px] font-semibold px-1.5 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded transition-all cursor-pointer"
+            >
+              CSV
+            </button>
+            <button
+              type="button"
+              id="export-json-btn"
+              class="inline-flex items-center gap-0.5 text-[9px] font-semibold px-1.5 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded transition-all cursor-pointer"
+            >
+              JSON
+            </button>
+          </div>
+        </div>
+
+        <div class="max-h-28 overflow-y-auto border border-hairline rounded-lg">
+          <table
+            class="w-full text-[10px] text-slate-700 text-left border-collapse"
+          >
+            <thead>
+              <tr
+                class="bg-surface text-slate border-b border-hairline-strong uppercase font-semibold text-[8px] tracking-wider sticky top-0"
+              >
+                <th class="p-1">#</th>
+                <th class="p-1">Key</th>
+                <th class="p-1 text-right">Latency</th>
+              </tr>
+            </thead>
+            <tbody id="keystroke-log-body">
+              <tr>
+                <td colspan="3" class="p-2 text-center text-stone italic"
+                  >No samples captured.</td
+                >
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Historical Sessions Comparative List -->
+      <div class="card-base p-3 sm:p-4 flex flex-col gap-2">
+        <h3
+          class="font-display font-semibold text-[11px] text-primary flex items-center gap-1 border-b border-hairline-soft pb-1.5"
+        >
+          📂 Session History (Local)
+        </h3>
+        <div id="saved-sessions-container" class="flex flex-col gap-1 max-h-28 overflow-y-auto pr-1">
+          <div class="text-[10px] text-stone italic">
+            No historical runs saved.
+          </div>
+        </div>
+      </div>
+
+      <!-- Typical Reference values context panel -->
+      <div class="card-base bg-surface-soft p-3 sm:p-4 flex flex-col gap-2">
+        <h4 class="text-[11px] font-bold text-slate uppercase tracking-wider border-b border-hairline-soft pb-1.5">
+          Latency Reference benchmarks
+        </h4>
+        <div class="flex flex-col gap-1 text-[10px] text-slate leading-relaxed">
+          <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
+            <span class="font-bold text-success-accent whitespace-nowrap">5ms–15ms:</span>
+            <span class="text-[9px] text-stone text-right">Excellent. Low load, high refresh.</span>
+          </div>
+          <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
+            <span class="font-bold text-brand-blue whitespace-nowrap">16ms–30ms:</span>
+            <span class="text-[9px] text-stone text-right">Normal. 60Hz displays.</span>
+          </div>
+          <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
+            <span class="font-bold text-coral-dark whitespace-nowrap">Above 40ms:</span>
+            <span class="text-[9px] text-stone text-right">Suboptimal. CPU throttle or tabs.</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Educational Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Understanding Keyboard Input and Browser Paint Latency
+      </h2>
+      <p class="text-sm leading-relaxed">
+        Input latency is one of the most critical aspects of computing
+        responsiveness. In game development, desktop productivity, and
+        competitive typing, milliseconds of delay can represent the difference
+        between smooth interaction and frustrating sluggishness. Our <strong
+          >Keyboard Latency Test</strong
+        > allows you to diagnose inputs and evaluate how efficiently your browser
+        processes keyboard events and commits those changes visually to the frame.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What is Browser Input-to-Paint Latency?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        This tool measures the duration from when the browser registers a <code
+          >keydown</code
+        > event callback (using high-resolution monotonic timestamps) to when the
+        browser commits the subsequent visual paint update to the screen. Because
+        JavaScript cannot access true physical hardware state (such as the keyboard's
+        internal debounce cycles or USB controller queues), measuring the event timestamp
+        to the next <code>requestAnimationFrame</code> paint represents the absolute
+        proxy for visual latency under the browser's control.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Batch Multiple Keypresses?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        A single input latency measurement is highly vulnerable to timing noise,
+        system interrupts, and browser thread scheduling. Standard operating
+        system activities, garbage collection cycles, or minor screen repaints
+        can easily skew individual timestamps. By capturing 20 to 30 presses
+        inside a natural sample batch, we can filter out anomalies and compute
+        reliable statistical aggregations such as the <strong>median</strong> and
+        <strong>average</strong>.
+      </p>
+    </article>
+  </section>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div
+      class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto"
+    >
+      <div
+        class="flex justify-between items-center pb-2 border-b border-hairline-soft"
+      >
+        <h3 class="font-display font-semibold text-lg text-primary">
+          Keyboard Latency Test Guide
+        </h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. The Measurable Boundary</h4>
+        <p>
+          True end-to-end hardware latency covers the physical switch press to
+          light emission. This requires physical photosensors to compute. Since
+          web pages run inside sandboxed containers, we capture the time
+          difference between the JavaScript keyboard event firing and the next
+          scheduled render frame (using <code>requestAnimationFrame</code>).
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Key Features of this Tool</h4>
+        <p>
+          <ul class="list-disc pl-4 flex flex-col gap-1.5 mt-1">
+            <li>
+              <strong>Instant Flash Feedback</strong>: The visual block flips
+              state immediately on keydown without transitional animations.
+            </li>
+            <li>
+              <strong>Auto-Repeat Exclusion</strong>: Keystrokes generated by
+              holding down keys are automatically filtered out to ensure
+              accurate measurements.
+            </li>
+            <li>
+              <strong>A/B Comparative Mode</strong>: Test two setups
+              back-to-back (e.g. before/after closing background browser tabs or
+              modifying monitor settings) to review differences.
+            </li>
+            <li>
+              <strong>Data Portability</strong>: Raw logs can be downloaded as
+              CSV or JSON format.
+            </li>
+          </ul>
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Constants
+    const STORAGE_HISTORY = "boardtools:keyboard-latency:history";
+    const STORAGE_SETTINGS = "boardtools:keyboard-latency:settings";
+
+    // State Variables
+    let currentSamples: number[] = [];
+    let keystrokesLog: Array<{
+      id: number;
+      key: string;
+      rawTimestamp: number;
+      latency: number;
+    }> = [];
+    let isTestActive = false;
+    let expectedSampleSize = 30;
+
+    // A/B Comparison States
+    let abActive = false;
+    let abAData: {
+      name: string;
+      samples: number;
+      median: number | string;
+      avg: number | string;
+    } | null = null;
+    let abBData: {
+      name: string;
+      samples: number;
+      median: number | string;
+      avg: number | string;
+    } | null = null;
+
+    // DOM Elements
+    const target = document.getElementById(
+      "visual-test-target",
+    ) as HTMLDivElement;
+    const targetIndicator = document.getElementById(
+      "target-paint-indicator",
+    ) as HTMLDivElement;
+    const targetInstruction = document.getElementById(
+      "target-instruction",
+    ) as HTMLDivElement;
+    const readoutContainer = document.getElementById(
+      "target-readout-container",
+    ) as HTMLDivElement;
+    const targetNumber = document.getElementById(
+      "target-number",
+    ) as HTMLSpanElement;
+
+    const sampleCountSelect = document.getElementById(
+      "sample-target-count",
+    ) as HTMLSelectElement;
+    const progressText = document.getElementById(
+      "progress-text",
+    ) as HTMLSpanElement;
+    const progressBar = document.getElementById(
+      "progress-bar",
+    ) as HTMLDivElement;
+
+    // Stats Elements
+    const statMedian = document.getElementById(
+      "stat-median",
+    ) as HTMLSpanElement;
+    const statAvg = document.getElementById("stat-avg") as HTMLSpanElement;
+    const statMin = document.getElementById("stat-min") as HTMLSpanElement;
+    const statMax = document.getElementById("stat-max") as HTMLSpanElement;
+    const statsBanner = document.getElementById(
+      "stats-banner",
+    ) as HTMLSpanElement;
+    const histogramContainer = document.getElementById(
+      "histogram-container",
+    ) as HTMLDivElement;
+
+    // System Environment Elements
+    const envBrowser = document.getElementById(
+      "env-browser",
+    ) as HTMLSpanElement;
+    const envOs = document.getElementById("env-os") as HTMLSpanElement;
+    const envStability = document.getElementById(
+      "env-stability",
+    ) as HTMLSpanElement;
+
+    // Log list
+    const logBody = document.getElementById(
+      "keystroke-log-body",
+    ) as HTMLTableSectionElement;
+
+    // Modals
+    const howItWorksBtn = document.getElementById("how-it-works-btn");
+    const howItWorksModal = document.getElementById("how-it-works-modal");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const modalOkBtn = document.getElementById("modal-ok-btn");
+    const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
+
+    // A/B Elements
+    const toggleAbMode = document.getElementById(
+      "toggle-ab-mode",
+    ) as HTMLButtonElement;
+    const abGrid = document.getElementById(
+      "ab-comparison-grid",
+    ) as HTMLDivElement;
+    const abResultBanner = document.getElementById(
+      "ab-result-banner",
+    ) as HTMLDivElement;
+    const saveToA = document.getElementById("save-to-a") as HTMLButtonElement;
+    const saveToB = document.getElementById("save-to-b") as HTMLButtonElement;
+
+    const abAName = document.getElementById("ab-a-name") as HTMLSpanElement;
+    const abASamples = document.getElementById(
+      "ab-a-samples",
+    ) as HTMLSpanElement;
+    const abAMedian = document.getElementById("ab-a-median") as HTMLSpanElement;
+    const abAAvg = document.getElementById("ab-a-avg") as HTMLSpanElement;
+
+    const abBName = document.getElementById("ab-b-name") as HTMLSpanElement;
+    const abBSamples = document.getElementById(
+      "ab-b-samples",
+    ) as HTMLSpanElement;
+    const abBMedian = document.getElementById("ab-b-median") as HTMLSpanElement;
+    const abBAvg = document.getElementById("ab-b-avg") as HTMLSpanElement;
+
+    const exportCsvBtn = document.getElementById(
+      "export-csv-btn",
+    ) as HTMLButtonElement;
+    const exportJsonBtn = document.getElementById(
+      "export-json-btn",
+    ) as HTMLButtonElement;
+    const savedSessionsContainer = document.getElementById(
+      "saved-sessions-container",
+    ) as HTMLDivElement;
+    const touchWarning = document.getElementById(
+      "touch-device-warning",
+    ) as HTMLDivElement;
+
+    // Parse Browser Context from navigator.userAgent
+    function parseEnvironment() {
+      const ua = navigator.userAgent;
+      let browser = "Unknown Browser";
+      let os = "Unknown OS";
+
+      // Detect Browser
+      if (ua.includes("Firefox/")) {
+        const match = ua.match(/Firefox\/(\d+\.\d+)/);
+        browser = match ? `Firefox ${match[1]}` : "Firefox";
+      } else if (ua.includes("Edg/")) {
+        const match = ua.match(/Edg\/(\d+\.\d+)/);
+        browser = match ? `Edge ${match[1]}` : "Edge";
+      } else if (ua.includes("Chrome/")) {
+        const match = ua.match(/Chrome\/(\d+\.\d+)/);
+        browser = match ? `Chrome ${match[1]}` : "Chrome";
+      } else if (ua.includes("Safari/") && !ua.includes("Chrome/")) {
+        const match = ua.match(/Version\/(\d+\.\d+)/);
+        browser = match ? `Safari ${match[1]}` : "Safari";
+      }
+
+      // Detect OS
+      if (ua.includes("Windows")) {
+        os = "Windows";
+      } else if (ua.includes("Macintosh") || ua.includes("Mac OS")) {
+        os = "macOS";
+      } else if (ua.includes("Linux")) {
+        os = "Linux";
+      } else if (ua.includes("Android")) {
+        os = "Android";
+      } else if (ua.includes("iPhone") || ua.includes("iPad")) {
+        os = "iOS";
+      }
+
+      envBrowser.textContent = browser;
+      envOs.textContent = os;
+    }
+
+    // Touch device warning detection
+    function detectTouchDevice() {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      // If touchscreen exists and window is narrow, alert user about physical keyboard recommendation
+      if (isTouch && window.innerWidth < 1024) {
+        touchWarning.classList.remove("hidden");
+      }
+    }
+
+// High resolution event listener handling
+    function handleKeyDown(e: KeyboardEvent) {
+      // Discard repeat inputs
+      if (e.repeat) return;
+
+      // Prevent default browser actions that cause page scroll (Space especially)
+      // This tool relies on keyboard events for measurement, not browser scrolling.
+      if (
+        e.key === " " ||
+        e.code === "Space" ||
+        e.key === "ArrowDown" ||
+        e.key === "ArrowUp" ||
+        e.key === "PageDown" ||
+        e.key === "PageUp"
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      // Skip event keys that conflict with testing target container navigation
+      if (e.key === "Tab" || e.key === "Shift") return;
+
+      // Start timing ASAP on handler execution
+      const startTime = performance.now();
+
+      // Visual reaction instantaneously (theme-safe & high-contrast)
+      const isFlashed = target.classList.contains("is-flashed");
+      if (!isFlashed) {
+        target.classList.add("is-flashed");
+      } else {
+        target.classList.remove("is-flashed");
+      }
+
+      // Indicator on paint (theme-safe)
+      const isIndicatorOn = targetIndicator.dataset.on === "1";
+      if (!isIndicatorOn) {
+        targetIndicator.dataset.on = "1";
+        targetIndicator.style.backgroundColor = "var(--color-success-accent)";
+      } else {
+        targetIndicator.dataset.on = "0";
+        targetIndicator.style.backgroundColor = "";
+        targetIndicator.classList.remove("bg-success-accent");
+        targetIndicator.classList.add("bg-stone-400", "dark:bg-stone-500");
+      }
+
+      // Schedule callback for visual commit / next paint frame
+      requestAnimationFrame(() => {
+        // Run paint time delta computation
+        const paintTime = performance.now();
+        const delta = paintTime - startTime;
+
+        // Record keypress
+        recordKeystroke(e.key, startTime, delta);
+      });
+    }
+
+    // Record keypress event
+    function recordKeystroke(key: string, timestamp: number, delta: number) {
+      if (currentSamples.length >= expectedSampleSize) {
+        // Start a fresh batch if they keep typing
+        currentSamples = [];
+        keystrokesLog = [];
+      }
+
+      currentSamples.push(delta);
+      keystrokesLog.push({
+        id: keystrokesLog.length + 1,
+        key: key === " " ? "Spacebar" : key,
+        rawTimestamp: timestamp,
+        latency: delta,
+      });
+
+      // Update Target display
+      targetInstruction.classList.add("hidden");
+      readoutContainer.classList.remove("hidden");
+      targetNumber.textContent = delta.toFixed(1);
+
+      updateProgress();
+      computeStats();
+      renderLogs();
+    }
+
+    function updateProgress() {
+      const count = currentSamples.length;
+      progressText.textContent = `${count} / ${expectedSampleSize} Presses`;
+      const percentage = Math.min(100, (count / expectedSampleSize) * 100);
+      progressBar.style.width = `${percentage}%`;
+    }
+
+    function computeStats() {
+      if (currentSamples.length === 0) return;
+
+      const samples = [...currentSamples];
+      samples.sort((a, b) => a - b);
+
+      // Average
+      const sum = samples.reduce((acc, v) => acc + v, 0);
+      const avg = sum / samples.length;
+
+      // Median
+      let median = 0;
+      const mid = Math.floor(samples.length / 2);
+      if (samples.length % 2 === 0) {
+        median = (samples[mid - 1] + samples[mid]) / 2;
+      } else {
+        median = samples[mid];
+      }
+
+      const min = samples[0];
+      const max = samples[samples.length - 1];
+
+      // Update UI elements
+      statMedian.textContent = `${median.toFixed(1)} ms`;
+      statAvg.textContent = `${avg.toFixed(1)} ms`;
+      statMin.textContent = `${min.toFixed(1)} ms`;
+      statMax.textContent = `${max.toFixed(1)} ms`;
+
+      statsBanner.textContent = `${samples.length} SAMPLE${samples.length > 1 ? "S" : ""}`;
+
+      // Pacing stability eval
+      let stability = "Stable";
+      const variance =
+        samples.reduce((acc, v) => acc + Math.pow(v - avg, 2), 0) /
+        samples.length;
+      const stdDev = Math.sqrt(variance);
+      if (stdDev > 8) {
+        stability = "High Jitter";
+      } else if (stdDev > 4) {
+        stability = "Moderate";
+      }
+      envStability.textContent = `${stability} (±${stdDev.toFixed(1)}ms)`;
+
+      // Render Distribution Histogram
+      renderHistogram();
+
+      // Check if batch is completed and save automatically
+      if (currentSamples.length === expectedSampleSize) {
+        saveBatchToHistory(median, avg, stability);
+      }
+    }
+
+    function renderHistogram() {
+      if (currentSamples.length < 2) {
+        histogramContainer.innerHTML = `<div class="text-center py-6">Capturing samples to plot distribution histogram...</div>`;
+        return;
+      }
+
+      const maxVal = Math.max(...currentSamples);
+      const minVal = Math.min(...currentSamples);
+      const binsCount = 5;
+      const range = Math.max(1, maxVal - minVal);
+      const binWidth = range / binsCount;
+
+      const bins = Array(binsCount)
+        .fill(0)
+        .map((_, i) => {
+          const binStart = minVal + i * binWidth;
+          const binEnd = binStart + binWidth;
+          return {
+            label: `${binStart.toFixed(0)}-${binEnd.toFixed(0)}ms`,
+            count: 0,
+          };
+        });
+
+      currentSamples.forEach((val) => {
+        let binIdx = Math.floor((val - minVal) / binWidth);
+        if (binIdx >= binsCount) binIdx = binsCount - 1;
+        bins[binIdx].count += 1;
+      });
+
+      const maxBinCount = Math.max(...bins.map((b) => b.count));
+
+      histogramContainer.innerHTML = "";
+      bins.forEach((bin) => {
+        const barWidth = maxBinCount > 0 ? (bin.count / maxBinCount) * 100 : 0;
+        const row = document.createElement("div");
+        row.className = "flex items-center gap-2";
+        row.innerHTML = `
+          <span class="w-14 text-[9px] font-mono text-slate truncate">${bin.label}</span>
+          <div class="flex-grow h-3 bg-surface border border-hairline rounded overflow-hidden">
+            <div class="h-full bg-brand-blue rounded-r" style="width: ${barWidth}%"></div>
+          </div>
+          <span class="w-4 text-right font-mono font-bold text-primary">${bin.count}</span>
+        `;
+        histogramContainer.appendChild(row);
+      });
+    }
+
+    function renderLogs() {
+      if (keystrokesLog.length === 0) {
+        logBody.innerHTML = `
+          <tr>
+            <td colspan="3" class="p-2 text-center text-stone italic">No samples captured.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      logBody.innerHTML = "";
+      // Display reversed logs (newest at top)
+      [...keystrokesLog].reverse().forEach((log) => {
+        const row = document.createElement("tr");
+        row.className =
+          "border-b border-hairline-soft hover:bg-surface/50 transition-colors";
+        row.innerHTML = `
+          <td class="p-1.5 font-mono text-stone">${log.id}</td>
+          <td class="p-1.5 font-bold text-primary">${log.key}</td>
+          <td class="p-1.5 text-right font-mono font-semibold text-primary">${log.latency.toFixed(1)} ms</td>
+        `;
+        logBody.appendChild(row);
+      });
+    }
+
+    // Local Storage History management
+    interface HistorySession {
+      id: string;
+      timestamp: number;
+      samplesCount: number;
+      median: number;
+      average: number;
+      stability: string;
+      browser: string;
+    }
+
+    function saveBatchToHistory(
+      median: number,
+      average: number,
+      stability: string,
+    ) {
+      try {
+        const rawHistory = localStorage.getItem(STORAGE_HISTORY);
+        let history: HistorySession[] = rawHistory
+          ? JSON.parse(rawHistory)
+          : [];
+
+        const browserText = envBrowser.textContent || "Unknown Browser";
+
+        const newSession: HistorySession = {
+          id: Math.random().toString(36).substring(2, 9),
+          timestamp: Date.now(),
+          samplesCount: currentSamples.length,
+          median: Number(median.toFixed(1)),
+          average: Number(average.toFixed(1)),
+          stability: stability,
+          browser: browserText,
+        };
+
+        history.unshift(newSession);
+        // Cap history to 5 sessions
+        if (history.length > 5) {
+          history = history.slice(0, 5);
+        }
+
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+        updateHistoryList();
+      } catch (err) {
+        console.warn("Could not save run metrics to history.", err);
+      }
+    }
+
+    function updateHistoryList() {
+      try {
+        const rawHistory = localStorage.getItem(STORAGE_HISTORY);
+        if (!rawHistory) return;
+
+        const history: HistorySession[] = JSON.parse(rawHistory);
+        if (history.length === 0) {
+          savedSessionsContainer.innerHTML = `<div class="text-[10px] text-stone italic">No historical runs saved yet.</div>`;
+          return;
+        }
+
+        savedSessionsContainer.innerHTML = "";
+        history.forEach((session, idx) => {
+          const runDate = new Date(session.timestamp).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+          const card = document.createElement("div");
+          card.className =
+            "p-1.5 bg-surface border border-hairline rounded-lg flex items-center justify-between text-[10px]";
+          card.innerHTML = `
+            <div class="flex flex-col gap-0.5">
+              <span class="font-bold text-primary">Run #${history.length - idx} <span class="text-[8px] font-normal text-stone ml-1">(${runDate})</span></span>
+              <span class="text-[9px] text-stone truncate max-w-[120px] block">${session.browser}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <div class="text-right">
+                <span class="text-[8px] font-bold text-slate block uppercase leading-none">Med</span>
+                <span class="font-mono font-bold text-brand-blue">${session.median}</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[8px] font-bold text-slate block uppercase leading-none">Avg</span>
+                <span class="font-mono text-primary">${session.average}</span>
+              </div>
+            </div>
+          `;
+          savedSessionsContainer.appendChild(card);
+        });
+      } catch (err) {}
+    }
+
+    // Exports
+    exportCsvBtn.addEventListener("click", () => {
+      if (keystrokesLog.length === 0) return;
+
+      let csvContent =
+        "data:text/csv;charset=utf-8,Index,Key,Timestamp(ms),Latency(ms)\n";
+      keystrokesLog.forEach((row) => {
+        csvContent += `${row.id},"${row.key}",${row.rawTimestamp.toFixed(2)},${row.latency.toFixed(2)}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute(
+        "download",
+        `keyboard-latency-session-${Date.now()}.csv`,
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    exportJsonBtn.addEventListener("click", () => {
+      if (keystrokesLog.length === 0) return;
+
+      const dataStr =
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(
+          JSON.stringify(
+            {
+              capturedAt: new Date().toISOString(),
+              browser: envBrowser.textContent,
+              os: envOs.textContent,
+              logs: keystrokesLog,
+              statistics: {
+                median: statMedian.textContent,
+                average: statAvg.textContent,
+                min: statMin.textContent,
+                max: statMax.textContent,
+              },
+            },
+            null,
+            2,
+          ),
+        );
+
+      const link = document.createElement("a");
+      link.setAttribute("href", dataStr);
+      link.setAttribute(
+        "download",
+        `keyboard-latency-session-${Date.now()}.json`,
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Reset controls
+    resetBtn.addEventListener("click", () => {
+      currentSamples = [];
+      keystrokesLog = [];
+      statMedian.textContent = "-";
+      statAvg.textContent = "-";
+      statMin.textContent = "-";
+      statMax.textContent = "-";
+      statsBanner.textContent = "NO SAMPLES";
+      targetNumber.textContent = "0.0";
+      targetInstruction.classList.remove("hidden");
+      readoutContainer.classList.add("hidden");
+      envStability.textContent = "Evaluating...";
+
+      // Reset target visual state
+      target.classList.remove("is-flashed");
+      targetIndicator.dataset.on = "0";
+      targetIndicator.style.backgroundColor = "";
+      targetIndicator.classList.remove("bg-success-accent");
+      targetIndicator.classList.add("bg-stone-400", "dark:bg-stone-500");
+
+      // Clear local storage history
+      localStorage.removeItem(STORAGE_HISTORY);
+
+      // Re-focus target for continued testing
+      target.focus();
+
+      updateProgress();
+      renderLogs();
+      renderHistogram();
+      updateHistoryList();
+    });
+
+    // How it works modals
+    howItWorksBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.remove("hidden");
+    });
+    closeModalBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    modalOkBtn?.addEventListener("click", () => {
+      howItWorksModal?.classList.add("hidden");
+    });
+    howItWorksModal?.addEventListener("click", (e) => {
+      if (e.target === howItWorksModal) {
+        howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    // A/B Comparison Setup controls
+    toggleAbMode.addEventListener("click", () => {
+      abActive = !abActive;
+      if (abActive) {
+        abGrid.classList.remove("hidden");
+        abGrid.classList.add("grid");
+        abResultBanner.classList.remove("hidden");
+        toggleAbMode.textContent = "Disable A/B Mode";
+      } else {
+        abGrid.classList.add("hidden");
+        abGrid.classList.remove("grid");
+        abResultBanner.classList.add("hidden");
+        toggleAbMode.textContent = "Enable A/B Mode";
+      }
+    });
+
+    saveToA.addEventListener("click", () => {
+      if (currentSamples.length === 0) return;
+      abAData = {
+        name: envBrowser.textContent || "Setup A",
+        samples: currentSamples.length,
+        median: statMedian.textContent,
+        avg: statAvg.textContent,
+      };
+
+      abAName.textContent = abAData.name;
+      abASamples.textContent = String(abAData.samples);
+      abAMedian.textContent = String(abAData.median);
+      abAAvg.textContent = String(abAData.avg);
+      computeAbResult();
+    });
+
+    saveToB.addEventListener("click", () => {
+      if (currentSamples.length === 0) return;
+      abBData = {
+        name: envBrowser.textContent || "Setup B",
+        samples: currentSamples.length,
+        median: statMedian.textContent,
+        avg: statAvg.textContent,
+      };
+
+      abBName.textContent = abBData.name;
+      abBSamples.textContent = String(abBData.samples);
+      abBMedian.textContent = String(abBData.median);
+      abBAvg.textContent = String(abBData.avg);
+      computeAbResult();
+    });
+
+    function computeAbResult() {
+      if (!abAData || !abBData) {
+        abResultBanner.textContent =
+          "A/B setups are not populated yet. Record runs into slots to run a comparative analysis.";
+        return;
+      }
+
+      const aMed = parseFloat(String(abAData.median));
+      const bMed = parseFloat(String(abBData.median));
+
+      if (isNaN(aMed) || isNaN(bMed)) return;
+
+      const diff = Math.abs(aMed - bMed);
+      const better = aMed < bMed ? "Setup A" : "Setup B";
+
+      if (diff < 1.0) {
+        abResultBanner.textContent = `Results show negligible difference (${diff.toFixed(1)}ms gap between setups).`;
+      } else {
+        abResultBanner.textContent = `🎉 ${better} is faster by ${diff.toFixed(1)}ms (${Math.min(aMed, bMed).toFixed(1)}ms vs ${Math.max(aMed, bMed).toFixed(1)}ms).`;
+      }
+    }
+
+    // Set sample target size settings
+    sampleCountSelect.addEventListener("change", () => {
+      expectedSampleSize = parseInt(sampleCountSelect.value, 10);
+      localStorage.setItem(STORAGE_SETTINGS, String(expectedSampleSize));
+      resetBtn.click();
+    });
+
+    // Event listener mounts on container focus
+    target.addEventListener("focus", () => {
+      target.addEventListener("keydown", handleKeyDown);
+    });
+
+    target.addEventListener("blur", () => {
+      target.removeEventListener("keydown", handleKeyDown);
+    });
+
+    // Global safety net: prevent spacebar page scroll and refocus target
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (
+        e.key === " " ||
+        e.code === "Space" ||
+        e.key === "ArrowDown" ||
+        e.key === "ArrowUp" ||
+        e.key === "PageDown" ||
+        e.key === "PageUp"
+      ) {
+        e.preventDefault();
+        // Only stop propagation if we are focusing the target from outside.
+        // If target is already focused, let the event reach it so handleKeyDown works.
+        if (document.activeElement !== target) {
+          e.stopPropagation();
+          target.focus();
+        }
+      }
+    }, true); // Use capture phase to intercept early
+
+    // Initialize State
+    function init() {
+      parseEnvironment();
+      detectTouchDevice();
+
+      // Restore settings
+      const savedSamples = localStorage.getItem(STORAGE_SETTINGS);
+      if (savedSamples) {
+        sampleCountSelect.value = savedSamples;
+        expectedSampleSize = parseInt(savedSamples, 10);
+      }
+
+      // Auto-focus target for immediate keyboard capture
+      target.focus();
+
+      updateProgress();
+      updateHistoryList();
+    }
+
+    init();
+  </script>
+
+  <style>
+    /* High contrast flash styling for keyboard latency test board */
+    #visual-test-target {
+      transition: background-color 0.05s ease, border-color 0.05s ease;
+    }
+    #visual-test-target.is-flashed {
+      background-color: var(--color-brand-blue) !important;
+      border-color: var(--color-blue-pressed) !important;
+    }
+    #visual-test-target.is-flashed #target-instruction {
+      color: #ffffff !important;
+    }
+    #visual-test-target.is-flashed #target-instruction span {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.4) !important;
+    }
+    #visual-test-target.is-flashed p {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    #visual-test-target.is-flashed #target-number {
+      color: #ffffff !important;
+    }
+    #visual-test-target.is-flashed #target-readout-label {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  </style>
 </Layout>
