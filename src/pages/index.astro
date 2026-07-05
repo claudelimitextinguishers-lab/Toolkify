@@ -831,21 +831,12 @@ const tools = [
       <div
         class="lg:col-span-6 flex flex-col gap-6 items-start text-left animate-fade-in-up"
       >
-        <div
-          class="inline-flex items-center gap-2 px-3 py-1 bg-surface-yellow border border-yellow-light text-yellow-dark rounded-full text-xs font-semibold"
-        >
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-brand-yellow-deep animate-ping"
-          ></span>
-          Zero Server Overhead &bull; 100% Private Sandbox
-        </div>
-
         <h1
           class="font-display font-medium text-5xl sm:text-6xl md:text-7xl lg:text-[76px] tracking-[-2.5px] leading-[1.05] text-primary"
         >
-          See how teams get great done, <span
+          All the tools you need, <span
             class="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-brand-coral font-bold font-display select-none"
-            >computation by computation.</span
+            >built for speed.</span
           >
         </h1>
 
@@ -1199,13 +1190,17 @@ const tools = [
                   <span class={tool.badgeClass} style="align-self: start;">
                     {tool.badgeText}
                   </span>
-                  <h3 class="font-display font-medium text-2xl text-primary tracking-tight">
+                  <h3 class={`font-display font-medium text-2xl tracking-tight ${
+                    tool.cardClass === "card-feature-yellow"
+                      ? "text-[#1c1c1e]"
+                      : "text-primary"
+                  }`}>
                     {tool.name}
                   </h3>
                   <p
                     class={`text-sm leading-relaxed ${
                       tool.cardClass === "card-feature-yellow"
-                        ? "text-yellow-dark/90 dark:text-brand-yellow/90"
+                        ? "text-[#746019]/90"
                         : tool.cardClass === "card-feature-teal"
                           ? "text-moss-dark/90 dark:text-brand-teal/90"
                           : tool.cardClass === "card-feature-coral"
@@ -1220,7 +1215,11 @@ const tools = [
                 </div>
                 <a
                   href={tool.path}
-                  class="font-display font-medium text-sm text-primary flex items-center gap-1 group-hover:translate-x-1.5 transition-transform"
+                  class={`font-display font-medium text-sm flex items-center gap-1 group-hover:translate-x-1.5 transition-transform ${
+                    tool.cardClass === "card-feature-yellow"
+                      ? "text-[#1c1c1e]"
+                      : "text-primary"
+                  }`}
                 >
                   {tool.actionText} &rarr;
                 </a>
@@ -1234,62 +1233,47 @@ const tools = [
           class="card-base border-dashed border-2 border-hairline-strong flex flex-col justify-between gap-4 p-6 hover:shadow-mockup transition-all group animate-fade-in-up delay-300 select-text"
           id="request-grid-card"
         >
-          <div class="flex flex-col gap-3">
-            <span
-              class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start"
-              >SUGGEST</span
-            >
-            <h3
-              class="font-display font-medium text-xl text-primary tracking-tight"
-            >
-              Request a Tool
-            </h3>
-            <p class="text-xs text-slate leading-relaxed font-sans font-normal">
-              Need a custom calculator, audio generator, or sensor reader?
-              Request it here! We build our utilities completely client-side.
-            </p>
-          </div>
+          <div class="flex flex-col gap-3 h-full justify-between">
+            <div class="flex flex-col gap-3">
+              <span
+                class="badge-tag-purple bg-surface-pricing-featured text-brand-blue self-start"
+                >SUGGEST</span
+              >
+              <h3
+                class="font-display font-medium text-xl text-primary tracking-tight"
+              >
+                Request a Tool
+              </h3>
+              <p class="text-xs text-slate leading-relaxed font-sans font-normal">
+                To suggest a required tool, mail us.
+              </p>
+            </div>
 
-          <form
-            id="grid-request-form"
-            class="flex flex-col gap-2 pointer-events-auto"
-          >
-            <input
-              type="email"
-              id="grid-request-email"
-              required
-              placeholder="Enter email address"
-              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue"
-            />
-            <input
-              type="text"
-              id="grid-request-desc"
-              required
-              placeholder="What tool do you want next?"
-              class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue"
-            />
-            <button
-              type="submit"
-              class="button-primary w-full !py-2 !text-xs hover:button-primary-active mt-1"
-            >
-              Submit Idea
-            </button>
-          </form>
+            <div id="grid-request-content" class="mt-4 pointer-events-auto">
+              <a
+                href="#"
+                id="grid-direct-email"
+                class="button-primary text-center w-full !py-2.5 !text-xs hover:button-primary-active block font-semibold transition-all"
+              >
+                To mail us click here.
+              </a>
+            </div>
 
-          <div
-            id="grid-request-success"
-            class="hidden flex-col items-center justify-center text-center py-4 gap-2"
-          >
-            <span
-              class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm"
-              >✓</span
+            <div
+              id="grid-request-success"
+              class="hidden flex-col items-center justify-center text-center py-4 gap-2"
             >
-            <span class="text-xs font-semibold text-primary"
-              >Idea Submitted!</span
-            >
-            <span class="text-[10px] text-slate font-medium"
-              >Thanks! We've saved your request.</span
-            >
+              <span
+                class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm"
+                >✓</span
+              >
+              <span class="text-xs font-semibold text-primary"
+                >Mail Link Prepared!</span
+              >
+              <span class="text-[10px] text-slate font-medium"
+                >Please complete sending the email in your mail client.</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -1325,8 +1309,8 @@ const tools = [
           What Creators Say About BoardTools
         </h2>
         <p class="text-sm text-slate max-w-md mx-auto">
-          Read testimonials from developers and designers who build interfaces
-          using our secure client-side sandbox.
+          Read testimonials from developers and designers. You can email us at 
+          <a href="#" id="home-direct-email" class="text-brand-blue hover:underline font-bold">reviews@boardtools.dev</a> to review the site and give stars. Approved reviews will be added within 1 week.
         </p>
       </div>
 
@@ -1590,47 +1574,150 @@ const tools = [
       </a>
     </div>
   </section>
+
+  <!-- Review Permission Confirmation Modal -->
+  <div id="home-review-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in select-none">
+    <div class="card-base max-w-md w-full flex flex-col gap-5 p-6 border border-hairline-strong bg-canvas shadow-2xl animate-scale-up">
+      <div class="flex items-center gap-3 text-brand-blue">
+        <span class="text-2xl">✉</span>
+        <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
+      </div>
+      <p class="text-xs text-slate leading-relaxed">
+        We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">reviews@boardtools.dev</span>.
+      </p>
+      <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
+        Note: Your review will be moderated and added to the website's community feedback section within 1 week.
+      </p>
+      <div class="flex items-center justify-end gap-3 mt-2">
+        <button type="button" id="home-review-cancel" class="button-ghost py-2 px-4 text-xs font-semibold text-slate hover:bg-surface-soft rounded-lg cursor-pointer">
+          Cancel
+        </button>
+        <button type="button" id="home-review-confirm" class="button-primary py-2 px-4 text-xs font-semibold hover:button-primary-active cursor-pointer">
+          Yes, Open Mail Client
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Tool Grid Permission Confirmation Modal -->
+  <div id="home-request-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in select-none">
+    <div class="card-base max-w-md w-full flex flex-col gap-5 p-6 border border-hairline-strong bg-canvas shadow-2xl animate-scale-up">
+      <div class="flex items-center gap-3 text-brand-blue">
+        <span class="text-2xl">✉</span>
+        <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
+      </div>
+      <p class="text-xs text-slate leading-relaxed">
+        We will open your default email service to send this tool request to <span class="font-bold text-brand-blue select-all">requests@boardtools.dev</span>.
+      </p>
+      <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
+        Note: Your request will be reviewed and we will aim to build and add it to the website within 1 week.
+      </p>
+      <div class="flex items-center justify-end gap-3 mt-2">
+        <button type="button" id="home-request-cancel" class="button-ghost py-2 px-4 text-xs font-semibold text-slate hover:bg-surface-soft rounded-lg cursor-pointer">
+          Cancel
+        </button>
+        <button type="button" id="home-request-confirm" class="button-primary py-2 px-4 text-xs font-semibold hover:button-primary-active cursor-pointer">
+          Yes, Open Mail Client
+        </button>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <script>
   // ============================================
   // GRID REQUEST A TOOL FORM LOGIC
   // ============================================
-  const gridForm = document.getElementById(
-    "grid-request-form",
-  ) as HTMLFormElement | null;
+  const gridRequestContent = document.getElementById("grid-request-content");
   const gridSuccess = document.getElementById("grid-request-success");
 
-  if (gridForm && gridSuccess) {
-    gridForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const emailVal = (
-        document.getElementById("grid-request-email") as HTMLInputElement | null
-      )?.value;
-      const toolVal = (
-        document.getElementById("grid-request-desc") as HTMLInputElement | null
-      )?.value;
+  // Modal elements for reviews
+  const homeReviewModal = document.getElementById("home-review-modal");
+  const homeReviewCancel = document.getElementById("home-review-cancel");
+  const homeReviewConfirm = document.getElementById("home-review-confirm");
+  let pendingReviewMailto = "";
 
-      if (emailVal && toolVal) {
-        const submission = {
-          email: emailVal,
-          tool: toolVal,
-          timestamp: Date.now(),
-          source: "grid",
-        };
+  // Modal elements for requests
+  const homeRequestModal = document.getElementById("home-request-modal");
+  const homeRequestCancel = document.getElementById("home-request-cancel");
+  const homeRequestConfirm = document.getElementById("home-request-confirm");
+  let pendingRequestMailto = "";
 
-        try {
-          const existing = JSON.parse(
-            localStorage.getItem("requested_tools") || "[]",
-          );
-          existing.push(submission);
-          localStorage.setItem("requested_tools", JSON.stringify(existing));
-        } catch (err) {}
+  // Handle Review Modal triggers
+  if (homeReviewCancel) {
+    homeReviewCancel.addEventListener("click", () => {
+      if (homeReviewModal) homeReviewModal.classList.add("hidden");
+      pendingReviewMailto = "";
+    });
+  }
 
-        gridForm.classList.add("hidden");
+  if (homeReviewConfirm) {
+    homeReviewConfirm.addEventListener("click", () => {
+      if (pendingReviewMailto) {
+        window.location.href = pendingReviewMailto;
+      }
+      if (homeReviewModal) homeReviewModal.classList.add("hidden");
+      pendingReviewMailto = "";
+    });
+  }
+
+  // Handle Request Modal triggers
+  if (homeRequestCancel) {
+    homeRequestCancel.addEventListener("click", () => {
+      if (homeRequestModal) homeRequestModal.classList.add("hidden");
+      pendingRequestMailto = "";
+    });
+  }
+
+  if (homeRequestConfirm) {
+    homeRequestConfirm.addEventListener("click", () => {
+      if (pendingRequestMailto) {
+        window.location.href = pendingRequestMailto;
+      }
+      if (homeRequestModal) homeRequestModal.classList.add("hidden");
+      pendingRequestMailto = "";
+
+      // Show success state if it was triggered
+      if (gridRequestContent && gridSuccess) {
+        gridRequestContent.classList.add("hidden");
         gridSuccess.classList.remove("hidden");
         gridSuccess.classList.add("flex");
       }
+    });
+  }
+
+  // Direct Review email link on home page
+  const homeDirectEmail = document.getElementById("home-direct-email");
+  if (homeDirectEmail) {
+    homeDirectEmail.addEventListener("click", (e) => {
+      e.preventDefault();
+      const subject = encodeURIComponent("BoardTools Site Review");
+      const body = encodeURIComponent(
+        `Please rate us (1-5 stars):\n` +
+        `Stars: \n\n` +
+        `Your Review:\n` +
+        `\n\n` +
+        `Your Name & Title:\n`
+      );
+      pendingReviewMailto = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
+      if (homeReviewModal) homeReviewModal.classList.remove("hidden");
+    });
+  }
+
+  // Direct Request email link on home page grid card
+  const gridDirectEmail = document.getElementById("grid-direct-email");
+  if (gridDirectEmail) {
+    gridDirectEmail.addEventListener("click", (e) => {
+      e.preventDefault();
+      const subject = encodeURIComponent("BoardTools Custom Tool Request");
+      const body = encodeURIComponent(
+        "Hi BoardTools Team,\n\n" +
+        "I would like to suggest a custom tool:\n" +
+        "- Tool Description: \n\n" +
+        "Thank you!"
+      );
+      pendingRequestMailto = `mailto:requests@boardtools.dev?subject=${subject}&body=${body}`;
+      if (homeRequestModal) homeRequestModal.classList.remove("hidden");
     });
   }
 
@@ -2388,6 +2475,12 @@ const tools = [
   if (heroClearBtn && heroSketchCanvas && heroCtx) {
     heroClearBtn.addEventListener("click", () => {
       heroCtx.clearRect(0, 0, heroSketchCanvas.width, heroSketchCanvas.height);
+      if (notesContainer) {
+        notesContainer.innerHTML = "";
+      }
+      heroNotes = [];
+      document.getElementById("home-path-1")?.removeAttribute("d");
+      document.getElementById("home-path-2")?.removeAttribute("d");
     });
   }
 

@@ -43,46 +43,48 @@
       </button>
     </div>
     
-    <p class="text-xs text-slate leading-relaxed">
-      Need a JSON converter, cron scheduler, or JWT validator? Give us your email and idea—we'll build it locally next.
-    </p>
-
-    <form id="popup-request-form" class="flex flex-col gap-2.5">
-      <div class="flex flex-col gap-1">
-        <label for="popup-email" class="text-[10px] font-bold text-slate uppercase tracking-wider">Email Address</label>
-        <input 
-          type="email" 
-          id="popup-email" 
-          required 
-          placeholder="your@email.com" 
-          class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
-        />
-      </div>
-
-      <div class="flex flex-col gap-1">
-        <label for="popup-tool-desc" class="text-[10px] font-bold text-slate uppercase tracking-wider">What tool should we build?</label>
-        <input 
-          type="text" 
-          id="popup-tool-desc" 
-          required 
-          placeholder="e.g. JWT Decoder, YAML to JSON..." 
-          class="text-input !h-9 !py-1 !text-xs focus:border-brand-blue" 
-        />
-      </div>
-
-      <button 
-        type="submit" 
-        class="button-primary w-full !py-2 !text-xs mt-1 hover:button-primary-active"
+    <div id="popup-request-content" class="flex flex-col gap-3 py-1">
+      <p class="text-xs text-slate leading-relaxed font-sans font-normal">
+        To suggest a required tool, mail us.
+      </p>
+      <a 
+        href="#" 
+        id="popup-direct-email" 
+        class="button-primary text-center w-full !py-2.5 !text-xs hover:button-primary-active block font-semibold transition-all mt-1"
       >
-        Send Request
-      </button>
-    </form>
+        To mail us click here.
+      </a>
+    </div>
 
     <!-- Popup success message -->
     <div id="popup-success-msg" class="hidden flex-col items-center justify-center text-center py-4 gap-2">
       <span class="w-8 h-8 rounded-full bg-success-accent/25 border border-success-accent text-success-accent flex items-center justify-center font-bold text-sm">✓</span>
-      <span class="text-xs font-semibold text-primary">Request Logged Locally!</span>
-      <span class="text-[10px] text-slate">Thanks! We will notify you when it launches.</span>
+      <span class="text-xs font-semibold text-primary">Mail Link Prepared!</span>
+      <span class="text-[10px] text-slate">Please complete sending the email in your mail client.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Request Tool Permission Confirmation Modal -->
+<div id="popup-permission-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in select-none">
+  <div class="card-base max-w-sm w-full flex flex-col gap-5 p-6 border border-hairline-strong bg-canvas shadow-2xl animate-scale-up">
+    <div class="flex items-center gap-3 text-brand-blue">
+      <span class="text-2xl">✉</span>
+      <h3 class="font-display font-semibold text-base text-primary">Open Mail Application?</h3>
+    </div>
+    <p class="text-xs text-slate leading-relaxed">
+      We will open your default email service to send this tool request to <span class="font-bold text-brand-blue select-all">requests@boardtools.dev</span>.
+    </p>
+    <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
+      Note: Your request will be reviewed and we will aim to build and add it to the website within 1 week.
+    </p>
+    <div class="flex items-center justify-end gap-3 mt-1">
+      <button type="button" id="popup-modal-cancel" class="button-ghost py-1.5 px-3.5 text-xs font-semibold text-slate hover:bg-surface-soft rounded-lg cursor-pointer">
+        Cancel
+      </button>
+      <button type="button" id="popup-modal-confirm" class="button-primary py-1.5 px-3.5 text-xs font-semibold hover:button-primary-active cursor-pointer">
+        Open Mail Client
+      </button>
     </div>
   </div>
 </div>
@@ -93,12 +95,59 @@
   const expanded = document.getElementById('request-expanded-card');
   const closeCollapsed = document.getElementById('close-collapsed-bubble');
   const closeExpanded = document.getElementById('close-expanded-card');
-  const form = document.getElementById('popup-request-form') as HTMLFormElement | null;
+  const requestContent = document.getElementById('popup-request-content');
   const successMsg = document.getElementById('popup-success-msg');
+
+  // Modal elements
+  const popupModal = document.getElementById('popup-permission-modal');
+  const popupCancel = document.getElementById('popup-modal-cancel');
+  const popupConfirm = document.getElementById('popup-modal-confirm');
+  let pendingMailto = '';
+
+  function showPopupModal(mailtoUrl: string) {
+    pendingMailto = mailtoUrl;
+    if (popupModal) {
+      popupModal.classList.remove('hidden');
+    }
+  }
+
+  function hidePopupModal() {
+    if (popupModal) {
+      popupModal.classList.add('hidden');
+    }
+    pendingMailto = '';
+  }
+
+  if (popupCancel) {
+    popupCancel.addEventListener('click', hidePopupModal);
+  }
+
+  if (popupConfirm) {
+    popupConfirm.addEventListener('click', () => {
+      if (pendingMailto) {
+        window.location.href = pendingMailto;
+      }
+      hidePopupModal();
+
+      // Show success state in card
+      if (requestContent && successMsg) {
+        requestContent.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+        successMsg.classList.add('flex');
+
+        setTimeout(() => {
+          if (container) {
+            container.classList.add('hidden');
+          }
+          sessionStorage.setItem('dismissed_request_popup', 'true');
+        }, 3500);
+      }
+    });
+  }
 
   // Load delay: Show popup after 3.5 seconds if not dismissed
   window.addEventListener('load', () => {
-    const isDismissed = localStorage.getItem('dismissed_request_popup');
+    const isDismissed = sessionStorage.getItem('dismissed_request_popup');
     if (!isDismissed && container) {
       setTimeout(() => {
         container.classList.remove('hidden');
@@ -125,7 +174,7 @@
   if (closeCollapsed && container) {
     closeCollapsed.addEventListener('click', () => {
       container.classList.add('hidden');
-      localStorage.setItem('dismissed_request_popup', 'true');
+      sessionStorage.setItem('dismissed_request_popup', 'true');
     });
   }
 
@@ -136,45 +185,23 @@
       expanded.classList.add('hidden');
       collapsed.classList.remove('hidden');
       // Clicking close also dismisses it for future page views
-      localStorage.setItem('dismissed_request_popup', 'true');
+      sessionStorage.setItem('dismissed_request_popup', 'true');
     });
   }
 
-  // Handle Form Submission
-  if (form && successMsg && expanded) {
-    form.addEventListener('submit', (e) => {
+  // Direct email link in popup
+  const directEmail = document.getElementById('popup-direct-email');
+  if (directEmail) {
+    directEmail.addEventListener('click', (e) => {
       e.preventDefault();
-
-      const emailVal = (document.getElementById('popup-email') as HTMLInputElement | null)?.value;
-      const toolVal = (document.getElementById('popup-tool-desc') as HTMLInputElement | null)?.value;
-
-      if (emailVal && toolVal) {
-        const submission = {
-          email: emailVal,
-          tool: toolVal,
-          timestamp: Date.now(),
-          source: 'popup'
-        };
-
-        try {
-          const existing = JSON.parse(localStorage.getItem('requested_tools') || '[]');
-          existing.push(submission);
-          localStorage.setItem('requested_tools', JSON.stringify(existing));
-        } catch(err) {}
-
-        // Hide form fields and display success msg
-        form.classList.add('hidden');
-        successMsg.classList.remove('hidden');
-        successMsg.classList.add('flex');
-
-        // Dismiss completely after 3 seconds
-        setTimeout(() => {
-          if (container) {
-            container.classList.add('hidden');
-          }
-          localStorage.setItem('dismissed_request_popup', 'true');
-        }, 3000);
-      }
+      const subject = encodeURIComponent('BoardTools Custom Tool Request');
+      const body = encodeURIComponent(
+        'Hi BoardTools Team,\n\n' +
+        'I would like to suggest a custom tool:\n' +
+        '- Tool Description: \n\n' +
+        'Thank you!'
+      );
+      showPopupModal(`mailto:requests@boardtools.dev?subject=${subject}&body=${body}`);
     });
   }
 </script>

@@ -17,79 +17,44 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary mt-1">
         Review Our Website
       </h1>
-      <p class="text-base text-slate max-w-xl">
-        Share your experience, suggest layout refinements, or rate our client-side utilities. We read all community logs!
+      <p class="text-sm text-slate max-w-xl">
+        Share your experience, suggest layout refinements, or rate our client-side utilities. 
+        You can submit a review by filling out the form below or emailing us directly at 
+        <a href="#" id="direct-email-link" class="text-brand-blue hover:underline font-bold">reviews@boardtools.dev</a>. 
+        Approved reviews will be added to the live site within 1 week.
       </p>
     </div>
 
     <!-- Review Grid Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Left: Create Review Form -->
-      <div class="lg:col-span-5 card-base flex flex-col gap-6">
-        <h2 class="font-display font-semibold text-lg text-primary flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow-deep"></span>
-          Write a Review
-        </h2>
+      <!-- Left: Email Callout -->
+      <div class="lg:col-span-5 card-base flex flex-col gap-6 bg-surface-yellow border-2 border-brand-yellow-deep p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+        <div class="absolute -top-12 -right-12 w-36 h-36 bg-brand-yellow/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
+        
+        <div class="flex items-center gap-3">
+          <span class="text-3xl animate-pulse">✉️</span>
+          <h2 class="font-display font-semibold text-xl text-primary tracking-tight">
+            Share Your Experience
+          </h2>
+        </div>
+        
+        <p class="text-sm text-slate leading-relaxed">
+          We want to make BoardTools the absolute best visual workspace. Share your reviews, feedback, or rating with us directly.
+        </p>
+        
+        <!-- Highlight Box -->
+        <div class="bg-canvas border border-yellow-light p-6 rounded-xl shadow-subtle flex flex-col gap-3 relative z-10">
+          <p class="text-base text-primary font-medium leading-relaxed">
+            To email us, <a href="#" id="direct-email-link-highlight" class="text-brand-blue hover:text-blue-pressed underline decoration-2 underline-offset-4 font-bold transition-all inline-block hover:scale-105 active:scale-95">Click here</a>.
+          </p>
+          <p class="text-xs text-slate mt-1">
+            Opening your email client will allow you to rate your experience and write a quick review.
+          </p>
+        </div>
 
-        <form id="review-form" class="flex flex-col gap-4">
-          <div class="flex flex-col gap-1.5">
-            <label for="review-name" class="text-xs font-semibold text-slate">Full Name</label>
-            <input 
-              type="text" 
-              id="review-name" 
-              name="name" 
-              required 
-              placeholder="e.g. Sarah Jenkins" 
-              class="text-input focus:border-brand-blue" 
-            />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label for="review-title" class="text-xs font-semibold text-slate">Job Title / Company</label>
-            <input 
-              type="text" 
-              id="review-title" 
-              name="title" 
-              placeholder="e.g. Lead Frontend Engineer at Vercel" 
-              class="text-input focus:border-brand-blue" 
-            />
-          </div>
-
-          <!-- Interactive Star Rating -->
-          <div class="flex flex-col gap-2">
-            <span class="text-xs font-semibold text-slate">Your Rating</span>
-            <div class="flex items-center gap-2">
-              <div class="flex gap-1" id="star-rating-container">
-                <button type="button" data-value="1" class="star-btn text-2xl text-stone hover:scale-110 transition-transform cursor-pointer" aria-label="1 star">★</button>
-                <button type="button" data-value="2" class="star-btn text-2xl text-stone hover:scale-110 transition-transform cursor-pointer" aria-label="2 stars">★</button>
-                <button type="button" data-value="3" class="star-btn text-2xl text-stone hover:scale-110 transition-transform cursor-pointer" aria-label="3 stars">★</button>
-                <button type="button" data-value="4" class="star-btn text-2xl text-stone hover:scale-110 transition-transform cursor-pointer" aria-label="4 stars">★</button>
-                <button type="button" data-value="5" class="star-btn text-2xl text-stone hover:scale-110 transition-transform cursor-pointer" aria-label="5 stars">★</button>
-              </div>
-              <span id="rating-label" class="text-xs font-semibold text-brand-yellow-deep">Select Rating</span>
-            </div>
-            <input type="hidden" name="rating" id="review-rating-value" required />
-          </div>
-
-          <div class="flex flex-col gap-1.5">
-            <label for="review-text" class="text-xs font-semibold text-slate">Your Review</label>
-            <textarea 
-              id="review-text" 
-              name="review" 
-              required 
-              rows="4" 
-              placeholder="What do you think of our offline-first tools, the whiteboard layout, or the dark mode?" 
-              class="w-full p-3 font-sans text-sm bg-surface-soft border border-hairline-strong rounded-lg outline-none focus:border-brand-blue transition-all"
-            ></textarea>
-          </div>
-
-          <button 
-            type="submit" 
-            class="button-primary self-start py-2.5 px-6 text-sm hover:button-primary-active mt-2"
-          >
-            Submit Review
-          </button>
-        </form>
+        <div class="text-[11px] text-slate/85 bg-surface-soft p-3.5 rounded-lg border border-hairline italic mt-1">
+          Note: Submitted reviews will be verified and posted on this page within 1 week.
+        </div>
       </div>
 
       <!-- Right: Live Reviews Feed -->
@@ -102,6 +67,31 @@ import Layout from '../layouts/Layout.astro';
         <!-- Target Reviews Container -->
         <div class="flex flex-col gap-4" id="reviews-feed">
           <!-- Dynamic reviews injected here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Permission Confirmation Modal -->
+    <div id="permission-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in">
+      <div class="card-base max-w-md w-full flex flex-col gap-5 p-6 border border-hairline-strong bg-canvas shadow-2xl animate-scale-up">
+        <div class="flex items-center gap-3 text-brand-blue">
+          <span class="text-2xl">✉</span>
+          <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
+        </div>
+        <p class="text-xs text-slate leading-relaxed">
+          We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">reviews@boardtools.dev</span>. 
+          Your email will contain your name, job title, rating, and review text.
+        </p>
+        <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
+          Note: Your review will be moderated and added to the website's community feedback section within 1 week.
+        </p>
+        <div class="flex items-center justify-end gap-3 mt-2">
+          <button type="button" id="modal-cancel-btn" class="button-ghost py-2 px-4 text-xs font-semibold text-slate hover:bg-surface-soft rounded-lg cursor-pointer">
+            Cancel
+          </button>
+          <button type="button" id="modal-confirm-btn" class="button-primary py-2 px-4 text-xs font-semibold hover:button-primary-active cursor-pointer">
+            Yes, Open Mail Client
+          </button>
         </div>
       </div>
     </div>
@@ -230,9 +220,68 @@ import Layout from '../layouts/Layout.astro';
           <span class="text-xs font-bold text-brand-yellow-deep tracking-wider">${starsHTML}</span>
         </div>
         <p class="text-xs leading-relaxed opacity-90">${item.review}</p>
-        <span class="text-[9px] opacity-60 self-end">${new Date(item.timestamp).toLocaleDateString()}</span>
+        <div class="flex justify-between items-center mt-1">
+          ${!item.color ? '<span class="text-[8px] bg-slate/10 px-1.5 py-0.5 rounded font-semibold text-slate">Local Preview (Pending approval)</span>' : '<span></span>'}
+          <span class="text-[9px] opacity-60">${new Date(item.timestamp).toLocaleDateString()}</span>
+        </div>
       `;
       feed.appendChild(card);
+    });
+  }
+
+  // Modal elements
+  const modal = document.getElementById('permission-modal');
+  const modalCancel = document.getElementById('modal-cancel-btn');
+  const modalConfirm = document.getElementById('modal-confirm-btn');
+  let pendingMailto = '';
+  let pendingReviewData: any = null;
+
+  function showModal(mailtoUrl: string, reviewData?: any) {
+    pendingMailto = mailtoUrl;
+    pendingReviewData = reviewData || null;
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+  }
+
+  function hideModal() {
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+    pendingMailto = '';
+    pendingReviewData = null;
+  }
+
+  if (modalCancel) {
+    modalCancel.addEventListener('click', hideModal);
+  }
+
+  if (modalConfirm) {
+    modalConfirm.addEventListener('click', () => {
+      if (pendingMailto) {
+        window.location.href = pendingMailto;
+      }
+      
+      // If we had review data from the form, save to local storage for local preview
+      if (pendingReviewData) {
+        try {
+          const local = JSON.parse(localStorage.getItem('user_reviews') || '[]');
+          local.unshift(pendingReviewData);
+          localStorage.setItem('user_reviews', JSON.stringify(local));
+        } catch(err) {}
+        renderReviews();
+      }
+
+      // Reset form if it exists
+      if (form) {
+        form.reset();
+        selectedRating = 0;
+        if (ratingInput) ratingInput.value = '';
+        if (ratingLabel) ratingLabel.textContent = 'Select Rating';
+        highlightStars(0);
+      }
+
+      hideModal();
     });
   }
 
@@ -247,31 +296,54 @@ import Layout from '../layouts/Layout.astro';
       }
 
       const formData = new FormData(form);
-      const newReview = {
-        name: formData.get('name'),
-        title: formData.get('title'),
-        rating: Number(formData.get('rating')),
-        review: formData.get('review'),
+      const name = formData.get('name') as string;
+      const title = formData.get('title') as string || 'User';
+      const rating = Number(formData.get('rating'));
+      const reviewText = formData.get('review') as string;
+
+      const reviewData = {
+        name,
+        title,
+        rating,
+        review: reviewText,
         timestamp: Date.now()
       };
 
-      try {
-        const local = JSON.parse(localStorage.getItem('user_reviews') || '[]');
-        local.unshift(newReview); // Prepend to show immediately
-        localStorage.setItem('user_reviews', JSON.stringify(local));
-      } catch(err) {}
+      const subject = encodeURIComponent(`BoardTools Site Review - ${rating} Stars`);
+      const body = encodeURIComponent(
+        `Name: ${name}\n` +
+        `Title: ${title}\n` +
+        `Rating: ${rating}/5 Stars\n\n` +
+        `Review:\n${reviewText}\n\n` +
+        `---\n` +
+        `Sent via BoardTools Review composer. Review will be approved and added to the website within 1 week.`
+      );
+      const mailtoUrl = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
 
-      // Reset
-      form.reset();
-      selectedRating = 0;
-      if (ratingInput) ratingInput.value = '';
-      if (ratingLabel) ratingLabel.textContent = 'Select Rating';
-      highlightStars(0);
-
-      // Re-render
-      renderReviews();
+      showModal(mailtoUrl, reviewData);
     });
   }
+
+  // Handle direct click on email links
+  const emailLinks = ['direct-email-link', 'direct-email-link-highlight'];
+  emailLinks.forEach(id => {
+    const link = document.getElementById(id);
+    if (link) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const subject = encodeURIComponent(`BoardTools Site Review`);
+        const body = encodeURIComponent(
+          `Please rate us (1-5 stars):\n` +
+          `Stars: \n\n` +
+          `Your Review:\n` +
+          `\n\n` +
+          `Your Name & Title:\n`
+        );
+        const mailtoUrl = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
+        showModal(mailtoUrl);
+      });
+    }
+  });
 
   // Initial load
   renderReviews();
