@@ -51,28 +51,16 @@ const description = "Scan and identify dead or stuck pixels on your display pane
         </div>
 
         <div class="flex items-center gap-2">
-          <!-- Reset button verbatim structure/classes from json-formatter.astro -->
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset inputs and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-              ></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
 
           <!-- How it works button verbatim structure/classes from json-formatter.astro -->
@@ -97,6 +85,30 @@ const description = "Scan and identify dead or stuck pixels on your display pane
               ></path>
             </svg>
             <span>How it works</span>
+          </button>
+
+          <!-- Reset button verbatim structure/classes from json-formatter.astro -->
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset inputs and output"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+              ></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -400,6 +412,7 @@ const description = "Scan and identify dead or stuck pixels on your display pane
   let hudTimeout: any = null;
 
   // DOM Elements
+  const shareBtn = document.getElementById("share-btn") as HTMLButtonElement;
   const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
   const howItWorksBtn = document.getElementById("how-it-works-btn") as HTMLButtonElement;
   const howItWorksModal = document.getElementById("how-it-works-modal") as HTMLDivElement;
@@ -431,8 +444,9 @@ const description = "Scan and identify dead or stuck pixels on your display pane
   const postTestGuidance = document.getElementById("post-test-guidance") as HTMLDivElement;
   const closeGuidanceBtn = document.getElementById("close-guidance-btn") as HTMLButtonElement;
 
-  // Load from localStorage
+  // Load from localStorage or URL query parameters
   function loadSettings() {
+    // 1. Load from localStorage
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
@@ -441,6 +455,26 @@ const description = "Scan and identify dead or stuck pixels on your display pane
     } catch (e) {
       console.error("Failed to load settings", e);
     }
+
+    // 2. Override with URL parameters if present
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("auto")) {
+      settings.autoAdvance = urlParams.get("auto") === "true";
+    }
+    if (urlParams.has("interval")) {
+      const parsedInterval = parseInt(urlParams.get("interval") || "3", 10);
+      if (!isNaN(parsedInterval)) {
+        settings.interval = Math.max(1, Math.min(15, parsedInterval));
+      }
+    }
+    if (urlParams.has("colors")) {
+      const colorsParam = urlParams.get("colors");
+      if (colorsParam) {
+        const customHexes = colorsParam.split(",").map(c => c.startsWith("#") ? c : `#${c}`).filter(c => /^#[0-9A-F]{6}$/i.test(c));
+        settings.customColors = customHexes;
+      }
+    }
+
     applySettingsToUI();
   }
 
@@ -464,7 +498,13 @@ const description = "Scan and identify dead or stuck pixels on your display pane
     // 2. Clear this tool's localStorage keys
     localStorage.removeItem(STORAGE_KEY);
 
-    // 3. Reset color sequence to start & default inputs
+    // 3. Clear URL query parameters
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
+
+    // 4. Reset color sequence to start & default inputs
     settings = {
       customColors: [],
       autoAdvance: false,
@@ -891,6 +931,71 @@ const description = "Scan and identify dead or stuck pixels on your display pane
       e.stopPropagation();
       exitFullscreen();
       stopTest();
+    });
+
+    // Share action
+    shareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set("auto", settings.autoAdvance ? "true" : "false");
+      url.searchParams.set("interval", settings.interval.toString());
+      if (settings.customColors.length > 0) {
+        const hexes = settings.customColors.map(c => c.replace("#", ""));
+        url.searchParams.set("colors", hexes.join(","));
+      }
+
+      const shareData = {
+        title: document.title || "Screen Dead Pixel Checker",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
     });
 
     // Reset action
