@@ -109,8 +109,43 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
           </span>
         </div>
 
-        <!-- Toolbar Buttons (Reset and How it works matching json-formatter.astro verbatim) -->
+        <!-- Toolbar Buttons (Share, How it works, Reset) -->
         <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How aspect ratio checker works"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
           <button
             type="button"
             id="reset-btn"
@@ -132,29 +167,6 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
               ></path>
             </svg>
             <span>Reset</span>
-          </button>
-
-          <button
-            type="button"
-            id="how-it-works-btn"
-            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="How JSON formatter works"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>How it works</span>
           </button>
         </div>
       </div>
@@ -382,6 +394,7 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
     const howItWorksModal = document.getElementById("how-it-works-modal");
     const closeModalBtn = document.getElementById("close-modal-btn");
     const modalOkBtn = document.getElementById("modal-ok-btn");
+    const headerShareBtn = document.getElementById("share-btn");
     const btnReset = document.getElementById("reset-btn");
 
     // Local storage key schema matching boardtools:{tool-slug}:{key}
@@ -433,6 +446,63 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
     howItWorksModal?.addEventListener("click", (e) => {
       if (e.target === howItWorksModal) {
         howItWorksModal.classList.add("hidden");
+      }
+    });
+
+    headerShareBtn?.addEventListener("click", () => {
+      const url = new URL(window.location.origin + window.location.pathname);
+      const shareData = {
+        title: document.title || "Caps Lock Test",
+        url: url.toString()
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(url.toString());
+          }
+        });
+      } else {
+        copyToClipboard(url.toString());
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (headerShareBtn) {
+          const span = headerShareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            headerShareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              headerShareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
       }
     });
 
@@ -723,8 +793,13 @@ const keywords = "caps lock test, is caps lock on, check caps lock, caps lock st
       renderLogs();
     });
 
-    // Reset button logic (exact behavioral contract matching json-formatter.astro reset btn)
     btnReset?.addEventListener("click", () => {
+      // Clear URL parameters
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
+
       // Clear logs
       eventLogs = [];
       localStorage.removeItem(STORAGE_KEY_HISTORY);
