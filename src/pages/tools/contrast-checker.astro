@@ -47,14 +47,14 @@ import Layout from '../../layouts/Layout.astro';
           <div class="flex items-center gap-2">
             <button
               type="button"
-              id="reset-btn"
-              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-              aria-label="Reset calculator inputs"
+              id="share-btn"
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+              aria-label="Share tool link"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <span>Reset</span>
+              <span>Share</span>
             </button>
             <button
               type="button"
@@ -66,6 +66,17 @@ import Layout from '../../layouts/Layout.astro';
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>How it works</span>
+            </button>
+            <button
+              type="button"
+              id="reset-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+              aria-label="Reset calculator inputs"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+              </svg>
+              <span>Reset</span>
             </button>
           </div>
         </div>
@@ -501,6 +512,7 @@ import Layout from '../../layouts/Layout.astro';
 
   // New Header, Reset, Modal, and Mobile Tab selectors
   const resetBtn = document.getElementById('reset-btn');
+  const shareBtn = document.getElementById('share-btn');
   const howItWorksBtn = document.getElementById('how-it-works-btn');
   const howItWorksModal = document.getElementById('how-it-works-modal');
   const closeModalBtn = document.getElementById('close-modal-btn');
@@ -1159,8 +1171,79 @@ import Layout from '../../layouts/Layout.astro';
     }
   });
 
+  // Share button action
+  shareBtn?.addEventListener('click', () => {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set('fg', activeFg.replace('#', ''));
+      url.searchParams.set('bg', activeBg.replace('#', ''));
+      const finalUrl = url.toString();
+
+      const shareData = {
+        title: document.title || "Color Contrast Checker",
+        url: finalUrl
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(finalUrl);
+          }
+        });
+      } else {
+        copyToClipboard(finalUrl);
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   // Reset button action
   resetBtn?.addEventListener('click', () => {
+    // Clear URL parameters
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
     updateActiveColors('#1C1C1E', '#FFFFFF');
     pushHistory('#1C1C1E', '#FFFFFF');
   });

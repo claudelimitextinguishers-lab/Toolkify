@@ -71,19 +71,19 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
           <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">{tier}</span>
         </div>
         
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
           <button
             type="button"
-            id="reset-btn"
-            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
-            aria-label="Reset options and output"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>Reset</span>
+            <span>Share</span>
           </button>
-          
+
           <button
             type="button"
             id="how-it-works-btn"
@@ -94,6 +94,18 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset options and output"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -801,6 +813,7 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
   const btnPinPreset = document.getElementById('btn-pin-preset') as HTMLButtonElement;
   
   const btnReset = document.getElementById('reset-btn') as HTMLButtonElement;
+  const shareBtn = document.getElementById('share-btn');
   const btnCopyUuids = document.getElementById('btn-copy-uuids') as HTMLButtonElement;
   const btnDownloadTxt = document.getElementById('btn-download-txt') as HTMLButtonElement;
   const btnDownloadCsv = document.getElementById('btn-download-csv') as HTMLButtonElement;
@@ -831,13 +844,30 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
 
   // --- Initializer ---
   function init() {
-    // Load options
-    uuidVersion.value = localStorage.getItem('bt-uuid-ver') || 'v4';
-    uuidQuantity.value = localStorage.getItem('bt-uuid-qty') || '10';
-    uuidUppercase.checked = localStorage.getItem('bt-uuid-upper') === 'true';
-    uuidNoHyphens.checked = localStorage.getItem('bt-uuid-nohyphens') === 'true';
-    uuidWrapper.value = localStorage.getItem('bt-uuid-wrap') || 'plain';
-    
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTab = urlParams.get('tab');
+    const urlVer = urlParams.get('ver');
+    const urlQty = urlParams.get('qty');
+    const urlUpper = urlParams.get('upper');
+    const urlNoHyphens = urlParams.get('nohyphens');
+    const urlWrap = urlParams.get('wrap');
+    const urlText = urlParams.get('text');
+
+    if (urlTab === 'uuid' || urlTab === 'hash') {
+      toggleTab(urlTab as 'uuid' | 'hash');
+    }
+
+    uuidVersion.value = urlVer || localStorage.getItem('bt-uuid-ver') || 'v4';
+    uuidQuantity.value = urlQty || localStorage.getItem('bt-uuid-qty') || '10';
+    uuidUppercase.checked = urlUpper === 'true' || (urlUpper === null && localStorage.getItem('bt-uuid-upper') === 'true');
+    uuidNoHyphens.checked = urlNoHyphens === 'true' || (urlNoHyphens === null && localStorage.getItem('bt-uuid-nohyphens') === 'true');
+    uuidWrapper.value = urlWrap || localStorage.getItem('bt-uuid-wrap') || 'plain';
+
+    if (urlText !== null && hashTextInput) {
+      hashTextInput.value = decodeURIComponent(urlText);
+      runTextHasher();
+    }
+
     try {
       pinList = JSON.parse(localStorage.getItem('bt-uuid-pins') || '[]');
     } catch (e) {
@@ -987,7 +1017,89 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
     downloadFile(content, "uuid-list.csv", "text/csv");
   });
 
+  // Share button click action
+  shareBtn?.addEventListener('click', () => {
+    try {
+      const params = new URLSearchParams();
+      params.set('tab', activeTab);
+      if (activeTab === 'uuid') {
+        params.set('ver', uuidVersion.value);
+        params.set('qty', uuidQuantity.value);
+        params.set('upper', uuidUppercase.checked ? 'true' : 'false');
+        params.set('nohyphens', uuidNoHyphens.checked ? 'true' : 'false');
+        params.set('wrap', uuidWrapper.value);
+      } else {
+        if (hashTextInput.value) {
+          params.set('text', encodeURIComponent(hashTextInput.value));
+        }
+      }
+      
+      const finalUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+      const shareData = {
+        title: document.title || "UUID & Hash Generator",
+        url: finalUrl
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(finalUrl);
+          }
+        });
+      } else {
+        copyToClipboard(finalUrl);
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   btnReset.addEventListener('click', () => {
+    // Clear URL parameters
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
     localStorage.removeItem('bt-uuid-ver');
     localStorage.removeItem('bt-uuid-qty');
     localStorage.removeItem('bt-uuid-upper');

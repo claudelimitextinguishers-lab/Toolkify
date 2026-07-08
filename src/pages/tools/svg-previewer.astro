@@ -31,28 +31,17 @@ import Layout from "../../layouts/Layout.astro";
             class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0"
             >Design & Assets</span
           >
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <button
               type="button"
-              id="reset-btn"
-              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
-              aria-label="Reset optimizer inputs"
+              id="share-btn"
+              class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+              aria-label="Share tool link"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-3.5 h-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2.5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
-                ></path>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <span>Reset</span>
+              <span>Share</span>
             </button>
             <button
               type="button"
@@ -75,6 +64,28 @@ import Layout from "../../layouts/Layout.astro";
                 ></path>
               </svg>
               <span>How it works</span>
+            </button>
+            <button
+              type="button"
+              id="reset-btn"
+              class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle active:scale-95"
+              aria-label="Reset optimizer inputs"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"
+                ></path>
+              </svg>
+              <span>Reset</span>
             </button>
           </div>
         </div>
@@ -767,6 +778,7 @@ import Layout from "../../layouts/Layout.astro";
 
   // Header Buttons & Modals
   const resetBtn = document.getElementById("reset-btn");
+  const shareBtn = document.getElementById("share-btn");
   const howItWorksBtn = document.getElementById("how-it-works-btn");
   const howItWorksModal = document.getElementById("how-it-works-modal");
   const closeModalBtn = document.getElementById("close-modal-btn");
@@ -831,6 +843,24 @@ import Layout from "../../layouts/Layout.astro";
   document.addEventListener("DOMContentLoaded", () => {
     loadPresetPreferences();
     loadDefaultSVG();
+
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlSvg = urlParams.get("svg");
+      const urlPreset = urlParams.get("preset");
+      if (urlPreset && presetSelect) {
+        presetSelect.value = urlPreset;
+        presetSelect.dispatchEvent(new Event("change"));
+      }
+      if (urlSvg) {
+        const decoded = decodeURIComponent(urlSvg);
+        originalCode = decoded;
+        if (svgInput) svgInput.value = decoded;
+        triggerOptimization();
+      }
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   // Switch between tabs
@@ -931,8 +961,83 @@ import Layout from "../../layouts/Layout.astro";
     mobileDownloadBar?.classList.add("translate-y-full");
   });
 
+  // Share settings and inputs via URL link
+  shareBtn?.addEventListener("click", () => {
+    try {
+      const params = new URLSearchParams();
+      if (originalCode.trim()) {
+        params.set("svg", encodeURIComponent(originalCode));
+      }
+      if (presetSelect) {
+        params.set("preset", presetSelect.value);
+      }
+      const finalUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+      const shareData = {
+        title: document.title || "SVG Optimizer",
+        url: finalUrl
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(finalUrl);
+          }
+        });
+      } else {
+        copyToClipboard(finalUrl);
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (shareBtn) {
+          const span = shareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            shareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              shareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   // Reset all settings and inputs
   resetBtn?.addEventListener("click", () => {
+    // Clear URL parameters
+    if (window.history.pushState) {
+      const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path:newurl}, '', newurl);
+    }
     if (presetSelect) {
       presetSelect.value = "safe";
       presetSelect.dispatchEvent(new Event("change"));

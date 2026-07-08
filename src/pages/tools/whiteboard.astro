@@ -95,6 +95,45 @@ import Layout from '../../layouts/Layout.astro';
       </button>
     </div>
 
+    <!-- Top Center Action Bar (Share, How it works, Reset) -->
+    <div class="absolute left-1/2 -translate-x-1/2 top-4 z-20 flex gap-2 p-1.5 bg-canvas border border-hairline rounded-xl shadow-modal items-center">
+      <button
+        type="button"
+        id="share-btn"
+        class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-lg transition-all cursor-pointer active:scale-95"
+        aria-label="Share whiteboard link"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>Share</span>
+      </button>
+
+      <button
+        type="button"
+        id="how-it-works-btn"
+        class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-lg transition-all cursor-pointer active:scale-95"
+        aria-label="How whiteboard works"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>How it works</span>
+      </button>
+
+      <button
+        type="button"
+        id="reset-btn"
+        class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-lg transition-all cursor-pointer active:scale-95"
+        aria-label="Reset whiteboard"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+        </svg>
+        <span>Reset</span>
+      </button>
+    </div>
+
     <!-- Center tip instruction bubble -->
     <div class="absolute left-1/2 bottom-6 transform -translate-x-1/2 z-20 bg-primary/95 text-canvas text-xs px-4 py-2 rounded-full shadow-modal font-medium flex items-center gap-2 pointer-events-none select-none animate-bounce">
       <span class="w-2 h-2 rounded-full bg-brand-yellow"></span>
@@ -108,9 +147,52 @@ import Layout from '../../layouts/Layout.astro';
     >
       <!-- Draw Canvas -->
       <canvas id="drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
-
+ 
       <!-- Overlay notes container -->
       <div id="sticky-notes-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+    </div>
+  </div>
+
+  <!-- How it works Modal -->
+  <div
+    id="how-it-works-modal"
+    class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 hidden"
+  >
+    <div class="bg-canvas rounded-2xl max-w-lg w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 animate-scale-in max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b border-hairline-soft">
+        <h3 class="font-display font-semibold text-lg text-primary">Whiteboard Guide</h3>
+        <button
+          type="button"
+          id="close-modal-btn"
+          class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
+        <h4 class="font-semibold text-primary">1. Drawing and Sketching</h4>
+        <p>
+          Select the <strong>Pen tool</strong> from the floating toolbar on the left. Click/touch and drag on the canvas to sketch flowcharts, draw diagrams, or scribble notes. Use the color palettes below the pen tool to switch colors, and adjust the stroke width as needed. Use the <strong>Eraser tool</strong> to wipe away specific sketch parts.
+        </p>
+
+        <h4 class="font-semibold text-primary">2. Placing Sticky Notes</h4>
+        <p>
+          Double-click anywhere on the empty canvas to drop a sticky note, or click the <strong>Sticky Note tool</strong>. Drag notes by their background header to position them. You can type inside notes, customize their individual background colors using the palette on each note, or delete them when done.
+        </p>
+
+        <h4 class="font-semibold text-primary">3. Sharing and Saving</h4>
+        <p>
+          Use the <strong>Share</strong> button to save your drawings and notes directly inside a shareable URL. You can also import/export JSON project files or download the board as a high-resolution PNG image with the grid dots preserved.
+        </p>
+      </div>
+      <button
+        type="button"
+        id="modal-ok-btn"
+        class="button-primary text-xs py-2 px-5 mt-2 self-end cursor-pointer"
+      >
+        Got it
+      </button>
     </div>
   </div>
 </Layout>
@@ -189,8 +271,43 @@ import Layout from '../../layouts/Layout.astro';
     ctx.lineWidth = strokeWidth;
   }
 
-  // Load from local storage
+  // Load from local storage or URL query param
   function loadBoardState() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlProject = urlParams.get('project');
+
+    if (urlProject) {
+      try {
+        const decoded = decodeURIComponent(escape(atob(urlProject)));
+        const parsed = JSON.parse(decoded);
+        
+        if (stickyContainer) {
+          stickyContainer.innerHTML = '';
+        }
+        notes = [];
+
+        // Load new notes
+        if (parsed.notes && Array.isArray(parsed.notes)) {
+          notes = parsed.notes;
+          notes.forEach(note => renderStickyNoteHTML(note));
+        }
+
+        // Load drawings layer
+        if (ctx && canvas && parsed.drawings) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0);
+            saveBoardState();
+          };
+          img.src = parsed.drawings;
+        }
+        return;
+      } catch (err) {
+        console.warn('Failed to load board state from URL:', err);
+      }
+    }
+
     const savedNotes = localStorage.getItem('board_notes');
     const savedDrawings = localStorage.getItem('board_drawings');
     
@@ -736,6 +853,117 @@ import Layout from '../../layouts/Layout.astro';
       reader.readAsText(file);
     });
   }
+
+  // Share Button click listener
+  const headerShareBtn = document.getElementById('share-btn');
+  headerShareBtn?.addEventListener('click', () => {
+    try {
+      const projectData = {
+        notes: notes,
+        drawings: canvas ? canvas.toDataURL() : ""
+      };
+      
+      const serialized = btoa(unescape(encodeURIComponent(JSON.stringify(projectData))));
+      const shareUrl = `${window.location.origin}${window.location.pathname}?project=${serialized}`;
+
+      const shareData = {
+        title: document.title || "Whiteboard",
+        url: shareUrl
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch((err) => {
+          if (err.name !== "AbortError") {
+            copyToClipboard(shareUrl);
+          }
+        });
+      } else {
+        copyToClipboard(shareUrl);
+      }
+
+      function copyToClipboard(text: string) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+        } else {
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text: string) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          showSuccess();
+        } catch (err) {
+          console.error(err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      function showSuccess() {
+        if (headerShareBtn) {
+          const span = headerShareBtn.querySelector("span");
+          if (span) {
+            const originalText = span.textContent || "Share";
+            span.textContent = "Link Copied!";
+            headerShareBtn.classList.add("text-success-accent", "border-success-accent");
+            setTimeout(() => {
+              span.textContent = originalText;
+              headerShareBtn.classList.remove("text-success-accent", "border-success-accent");
+            }, 2000);
+          }
+        }
+      }
+    } catch (e) {
+      alert('Failed to share project: ' + e);
+    }
+  });
+
+  // How it works modal
+  const headerHowItWorksBtn = document.getElementById('how-it-works-btn');
+  const howItWorksModal = document.getElementById('how-it-works-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const modalOkBtn = document.getElementById('modal-ok-btn');
+
+  headerHowItWorksBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.remove('hidden');
+  });
+  closeModalBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  modalOkBtn?.addEventListener('click', () => {
+    howItWorksModal?.classList.add('hidden');
+  });
+  howItWorksModal?.addEventListener('click', (e) => {
+    if (e.target === howItWorksModal) {
+      howItWorksModal.classList.add('hidden');
+    }
+  });
+
+  // Reset Whiteboard
+  const headerResetBtn = document.getElementById('reset-btn');
+  headerResetBtn?.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear your sketches, sticky notes, and URL parameters?')) {
+      if (window.history.pushState) {
+        const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+        window.history.pushState({path:newurl}, '', newurl);
+      }
+      localStorage.removeItem('board_notes');
+      localStorage.removeItem('board_drawings');
+      if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      if (stickyContainer) {
+        stickyContainer.innerHTML = '';
+      }
+      notes = [];
+    }
+  });
 
   // Load state on startup
   loadBoardState();
