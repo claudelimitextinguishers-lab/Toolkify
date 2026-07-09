@@ -1,11 +1,159 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+
+// Tool metadata
+const name = "SVG Optimizer";
+const category = "design";
+const tier = "Design & Assets";
+
+// On-page SEO metadata
+const pageTitle = "SVG Optimizer - Free Online SVG Vector Compressor & Minifier";
+const description = "Optimize, minify, and compress vector SVG assets in real-time. Features side-by-side interactive previews, batch processing, and visual diff detection with zero server tracking.";
+const canonicalUrl = "https://boardtools.app/tools/svg-previewer";
+const ogImage = "/og/svg-optimizer.png";
+const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify svg, online svg optimizer, optimize svg, scale vector graphics, compress svg";
 ---
 
 <Layout
-  title="SVG Optimizer - Vector Compression Tool"
-  description="Optimize, minify, and compress vector SVG assets in real-time. Features side-by-side interactive previews, batch processing, and visual diff detection."
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SVG Optimizer",
+      "alternateName": "Vector SVG Compression & Minification Tool",
+      "url": "https://boardtools.app/tools/svg-previewer",
+      "description": "Free client-side SVG optimizer to compress, minify, and clean vector images. Features side-by-side comparison, interactive code diff view, and batch SVG processing.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Interactive side-by-side SVG compression comparison",
+        "Pruning comments, editor metadata, and empty nodes",
+        "Floating point decimal coordinate rounding",
+        "Conversion of styles to presentation attributes",
+        "Wipe comparison slider for visual validation",
+        "Batch SVG optimization with multi-file download support"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tools",
+          "item": "https://boardtools.app/tools"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SVG Optimizer",
+          "item": "https://boardtools.app/tools/svg-previewer"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is SVG?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SVG, which stands for Scalable Vector Graphics, is an XML-based vector image format used for rendering two-dimensional graphics on the web. Unlike pixel-based raster graphics (such as JPEG or PNG), SVG images can scale up or down to any resolution or screen size without losing quality, making them perfect for responsive web design, icons, logos, and illustrations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is an SVG file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An SVG file is a text document that contains XML markup describing lines, curves, shapes, text, and color gradients. It is saved with the .svg extension and is read directly by web browsers to render vector images. Because it is essentially code, you can easily inspect, edit, or compress an SVG file using our free SVG Optimizer to reduce its file size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a SVG file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A SVG file is a vector-based image file format that describes visual elements using mathematical formulas rather than static pixels. This text-based file structure allows developers to easily edit elements inside the SVG markup using CSS or JavaScript, animate paths, and optimize the file code to ensure fast page loading speeds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is SVG a vector file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, SVG is a vector file format. It defines graphics using geometric paths, points, lines, and shapes rather than a fixed grid of colored pixels. This vector nature guarantees that SVG files remain perfectly crisp and sharp at any scale, whether displayed on a small mobile device or a high-definition Retina display."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does SVG stand for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SVG stands for Scalable Vector Graphics. 'Scalable' refers to its ability to scale infinitely without degradation, 'Vector' represents the mathematical path-based rendering of shapes and lines, and 'Graphics' refers to its application as a visual media format for the web."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a .svg file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A .svg file is a file saved in the Scalable Vector Graphics format. It contains XML code that web browsers and graphic design applications use to display vector graphics. Designers often use a free SVG optimizer tool to clean up metadata and empty tags from .svg files before deploying them to websites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to open SVG file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can open an SVG file in any modern web browser (like Google Chrome, Safari, or Firefox) by dragging and dropping it into the window. For editing, you can open it in vector graphic editors like Adobe Illustrator, Figma, Inkscape, or simply open it as a text file in VS Code or Notepad. To view and clean it, you can upload it to our online SVG optimizer tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is SVG format?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SVG format is a standardized XML-based specification developed by the W3C for describing vector graphics. The SVG format supports styling with CSS, interactivity, scripting, animation, and embedded raster images, making it the most versatile graphic standard for modern web application user interfaces."
+          }
+        }
+      ]
+    }
+  </script>
   <section
     class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-10 flex flex-col gap-6"
   >
@@ -728,6 +876,252 @@ import Layout from "../../layouts/Layout.astro";
       </button>
     </div>
   </div>
+
+  <!-- Educational Article & FAQ Section -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="prose max-w-none text-xs leading-relaxed flex flex-col gap-4 text-slate pb-6">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free SVG Optimizer: Prettify, Compress, and Minify Vector Files Instantly
+      </h2>
+      <p class="text-sm leading-relaxed">
+        In modern web design, speed and responsiveness are crucial. Among all visual asset formats, Scalable Vector Graphics, or <strong>svg</strong>, has emerged as the industry standard. Whether you are building complex web layouts, designing mobile-responsive apps, or crafting icons, you are likely to work with an <strong>svg file</strong>. However, graphics exported from popular editors like Adobe Illustrator, Figma, or Sketch are filled with unnecessary code metadata, XML tags, comments, and overly precise coordinate numbers. To improve loading times and clean up code structures, developers use a <strong>free svg</strong> optimizer to compress their assets without losing visual quality.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Do You Need an SVG Optimizer?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        An <strong>SVG Optimizer</strong> works by parsing the text-based XML structure of your vector images and removing redundant instructions. Because vector graphics are mathematically defined coordinates rather than grids of pixels, editors tend to include detailed application-specific metadata (such as designer preferences, layer histories, and empty groups) that browsers do not need to render the graphic. Cleaning these files makes a significant difference in page weight, especially when dealing with icon sets.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Using an online <strong>svg optimizer tool</strong> allows you to toggle specific minification rules. For instance, you can strip XML comments, remove empty container elements, and round float numbers in coordinates. Reducing float precision from four decimal places to one or two decimal places often yields the largest file size savings with absolutely zero visible change on standard screen resolutions.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Interactive Preview & Visual Diff Detection
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Our tool includes a side-by-side interactive comparator and a wipe slider layout. This enables you to inspect the visual effects of aggressive optimization rules in real-time. Additionally, a built-in canvas diff engine automatically processes a pixel-by-pixel comparison of the original and compressed vector graphics, warning you immediately if a layout shift or visual variance occurs. This ensures that your vector compression remains safe and lossless.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Zero Server Tracking: 100% Client-Side Privacy
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Most online file converters upload your assets to third-party servers, presenting potential security risks for proprietary designs. This tool works completely offline, in your browser. All parsing, minification, code comparisons, and renders are handled strictly inside your web browser using HTML5 and JavaScript. No graphics or code snippets are ever transmitted or saved remotely, offering a secure, privacy-first workflow for professional developers and UI designers.
+      </p>
+    </article>
+
+    <!-- Visible FAQ Section -->
+    <div class="flex flex-col gap-4 border-t border-hairline pt-6">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight mb-2">
+        SVG Optimizer & Vector File FAQs
+      </h2>
+      <p class="text-xs text-slate mb-4">
+        Find quick answers to common questions about Scalable Vector Graphics, opening vector files, and optimizing assets.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is SVG?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>SVG (Scalable Vector Graphics) is an XML-based vector image format designed for rendering two-dimensional vector graphics on the web. Unlike raster images (like PNG or JPEG), SVGs can scale infinitely without pixelation or quality loss.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is an SVG file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>An SVG file is a text document containing XML code that describes visual shapes, paths, text, and colors. Web browsers parse this code to render crisp, high-resolution vector images dynamically.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a SVG file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>A SVG file is a standard vector image file containing graphic markup in XML. Since it is written in code, you can open and edit its properties directly inside text editors, clean up its contents using code minifiers, and scale it to any screen size.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Is SVG a vector file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>Yes, SVG is a vector file format. It renders graphics using mathematical formulas (defining lines, points, and curves) rather than static pixel maps. This makes it infinitely scalable and always sharp.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does SVG stand for?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>SVG stands for Scalable Vector Graphics. It describes its main properties: it is highly scalable without quality degradation, built using vector path parameters, and represents standard 2D web graphics.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a .svg file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>A .svg file is a file saved under the Scalable Vector Graphics specification. It holds XML codes rendering vector layouts on browsers. Developers and designers often compress .svg files to reduce loading times.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to open SVG file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>You can open any SVG file simply by dragging and dropping it into any modern web browser. For graphic adjustments, open it in vector editors like Figma, Illustrator, or Sketch. For code modifications, open it in VS Code or Notepad.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is SVG format?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>SVG format is the open standard XML specification maintained by the World Wide Web Consortium (W3C). It supports styles, scripting, shapes, path details, animation, and responsive interactions natively.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <script>
@@ -1771,6 +2165,32 @@ import Layout from "../../layouts/Layout.astro";
     batchTotalReduction.textContent = `${totalPct}%`;
     batchTotalSizeDiff.textContent = `${formatBytes(totalBefore - totalAfter)} saved total`;
   }
+
+  // FAQ Accordion Toggle Interaction
+  const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) {
+        content.classList.toggle("hidden");
+      }
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
+  });
 </script>
 
 <style>
