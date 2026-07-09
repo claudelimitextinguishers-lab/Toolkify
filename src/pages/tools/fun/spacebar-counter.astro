@@ -59,42 +59,42 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is a spacebar counter?",
+          "name": "How fast can you click the spacebar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A spacebar counter is a free online tool that counts how many times you hit the space bar within a set time. This space bar counter measures your spacebar speed in presses per second (PPS) so you can test and improve your tapping speed."
+            "text": "<p>Most people can click the spacebar at 4 to 6 presses per second (PPS) during a standard 10-second test. Practiced gamers and typists typically reach 6 to 8 PPS, and elite tappers using jitter or alternating-finger techniques have been recorded exceeding 10 PPS. Your hardware matters too — a mechanical keyboard with a short-travel switch will register presses faster than a membrane keyboard.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "How does the spacebar speed test work?",
+          "name": "Why is my spacebar not working?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Choose a duration (5, 10, 30, or 60 seconds), then start tapping the spacebar. The spacebar test starts on your first press, counts every valid keypress, and shows your space bar speed and total presses in real time."
+            "text": "<p>If your spacebar is not registering in the spacebar counter, the most common causes are: (1) the arena does not have keyboard focus — click inside the test area first; (2) browser key-repeat or accessibility settings are blocking rapid inputs; (3) dust or debris under the keycap is preventing a clean keystroke; (4) your keyboard's USB polling rate or debounce setting is filtering rapid successive presses. Try clicking the arena directly, refreshing the page, or testing with a different keyboard to isolate the issue.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "What is a good spacebar counter 60 seconds score?",
+          "name": "How many times can you click the spacebar?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "On the spacebar counter 60 seconds mode, an average user sustains 4-6 presses per second. Reaching 6-8 PPS is pro-gamer level, and above 10 PPS over a full 1 minute is exceptional."
+            "text": "<p>The number of times you can click the spacebar depends on the test duration and your tapping speed. At an average of 5 PPS, you would register 50 presses in 10 seconds, 150 presses in 30 seconds, and around 300 presses in the full 60-second test. Top-speed players pushing 10 PPS can exceed 600 spacebar clicks in one minute. Use the 60-second mode on this spacebar counter to find your personal maximum.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Is the spacebar counter unblocked and free to use?",
+          "name": "What is a good spacebar CPS?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. This spacebar counter is 100% free, runs entirely client-side in your browser, and works unblocked at school or work with no downloads or sign-up required."
+            "text": "<p>A good spacebar CPS (clicks per second) is generally considered to be 5 to 7 for a casual user. Reaching 7 to 9 CPS puts you in pro-gamer territory, and anything above 9 CPS is elite. Beginners typically average 3 to 5 CPS. Unlike mouse clicking, spacebar speed is heavily influenced by finger technique — jitter tapping or alternating two fingers across the wide key can significantly boost your spacebar CPS score.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Which spacebar counter durations are available?",
+          "name": "What is a good spacebar speed?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can run the space bar counter for 1 second, 5 seconds, 10 seconds, 30 seconds, or 60 seconds (1 minute). Short timers test burst speed while the 60 second test measures finger stamina."
+            "text": "<p>A good spacebar speed is 5 to 7 presses per second (PPS) for most users. Scores below 4 PPS are considered below average, 4 to 6 PPS is the standard casual range, 6 to 8 PPS is competitive gamer level, and above 8 to 10 PPS is exceptional. For the 60-second endurance test, sustaining 5 PPS or more throughout the full minute is a strong result, since fatigue typically drops speed after the first 20 seconds.</p>"
           }
         }
       ]
@@ -528,6 +528,168 @@ const ogImage = "https://boardtools.app/og-spacebar-counter.png";
         beat your own space bar speed. Bookmark it, share your score, and turn every session into a new high score.
       </p>
     </article>
+
+    <!-- Visible FAQ Section matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 mt-4">
+      <div class="flex flex-col gap-1">
+        <h2 class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+          Spacebar Counter FAQs
+        </h2>
+        <p class="text-xs text-slate">
+          Answers to the most common questions about spacebar speed, clicks per second, and test results.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+
+        <!-- FAQ 1 -->
+        <div class="faq-item group">
+          <button
+            type="button"
+            class="faq-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How fast can you click the spacebar?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Most people can click the spacebar at 4 to 6 presses per second (PPS) during a standard 10-second test. Practiced gamers and typists typically reach 6 to 8 PPS, and elite tappers using jitter or alternating-finger techniques have been recorded exceeding 10 PPS. Your hardware matters too — a mechanical keyboard with a short-travel switch will register presses faster than a membrane keyboard.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item group">
+          <button
+            type="button"
+            class="faq-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why is my spacebar not working?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>If your spacebar is not registering in the spacebar counter, the most common causes are: (1) the arena does not have keyboard focus — click inside the test area first; (2) browser key-repeat or accessibility settings are blocking rapid inputs; (3) dust or debris under the keycap is preventing a clean keystroke; (4) your keyboard's USB polling rate or debounce setting is filtering rapid successive presses. Try clicking the arena directly, refreshing the page, or testing with a different keyboard to isolate the issue.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item group">
+          <button
+            type="button"
+            class="faq-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How many times can you click the spacebar?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The number of times you can click the spacebar depends on the test duration and your tapping speed. At an average of 5 PPS, you would register 50 presses in 10 seconds, 150 presses in 30 seconds, and around 300 presses in the full 60-second test. Top-speed players pushing 10 PPS can exceed 600 spacebar clicks in one minute. Use the 60-second mode on this spacebar counter to find your personal maximum.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item group">
+          <button
+            type="button"
+            class="faq-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a good spacebar CPS?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A good spacebar CPS (clicks per second) is generally considered to be 5 to 7 for a casual user. Reaching 7 to 9 CPS puts you in pro-gamer territory, and anything above 9 CPS is elite. Beginners typically average 3 to 5 CPS. Unlike mouse clicking, spacebar speed is heavily influenced by finger technique — jitter tapping or alternating two fingers across the wide key can significantly boost your spacebar CPS score.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item group">
+          <button
+            type="button"
+            class="faq-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a good spacebar speed?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A good spacebar speed is 5 to 7 presses per second (PPS) for most users. Scores below 4 PPS are considered below average, 4 to 6 PPS is the standard casual range, 6 to 8 PPS is competitive gamer level, and above 8 to 10 PPS is exceptional. For the 60-second endurance test, sustaining 5 PPS or more throughout the full minute is a strong result, since fatigue typically drops speed after the first 20 seconds.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      // FAQ Accordion interaction
+      const faqBtns = document.querySelectorAll(".faq-btn");
+      faqBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const expanded = btn.getAttribute("aria-expanded") === "true";
+
+          // Close all other open items
+          faqBtns.forEach((otherBtn) => {
+            if (otherBtn !== btn) {
+              otherBtn.setAttribute("aria-expanded", "false");
+              const otherContent = otherBtn.nextElementSibling as HTMLElement | null;
+              if (otherContent) otherContent.classList.add("hidden");
+              otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+            }
+          });
+
+          // Toggle current
+          btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+          const content = btn.nextElementSibling as HTMLElement | null;
+          if (content) content.classList.toggle("hidden");
+          btn.querySelector("svg")?.classList.toggle("rotate-180");
+        });
+      });
+    </script>
   </section>
 
   <!-- Client-side Logic Module -->
