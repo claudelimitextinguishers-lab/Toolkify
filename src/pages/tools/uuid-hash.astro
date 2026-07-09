@@ -7,9 +7,9 @@ const category = "developer";
 const tier = "Developer Tools";
 
 // SEO metadata
-const pageTitle = "UUID (v1, v4, v7) & Cryptographic Hash Generator - BoardTools";
-const description = "Free online bulk UUID generator (v1, v4, v7) and client-side hash calculator (MD5, SHA-1, SHA-256, SHA-512). Format UUIDs with quotes/braces and calculate file checksums locally.";
-const keywords = "uuid generator, guid generator, uuid v4, uuid v7, uuid v1, sha256 generator, md5 hash, sha1, file hash checker, checksum verifier, client-side hash, developer tools";
+const pageTitle = "UUID & Hash Generator - Free Online UUID Generator v4 & Hash Generator";
+const description = "Generate random UUID (v1, v4, v7) online and calculate cryptographic hashes (MD5, SHA-1, SHA-256, SHA-512) locally. Fast, secure, free online UUID & Hash Generator tool.";
+const keywords = "UUID & Hash Generator, uuid generator, random uuid generator, uuid generator online, online uuid generator, uuid generator v4, free uuid generator, online uuid generator tool, hash generator, password hash generator online, uuid, generate uuid, uuid meaning, what is uuid, uuid length, uuid format";
 const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
 ---
 
@@ -49,6 +49,104 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "what is uuid",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>uuid</strong> (Universally Unique Identifier) is a 128-bit numeric value represented as a 36-character hexadecimal string, structured in five groups separated by hyphens (8-4-4-4-12 format). It is designed to uniquely identify information in computer systems without requiring central coordinator registers.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is the best uuid generator for developers",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The best <strong>uuid generator for developers</strong> is a secure, client-side utility that executes entirely in the browser (like BoardTools). It should support time-ordered UUID v7, cryptographically random UUID v4, and legacy UUID v1, while allowing options for custom formatting, casing, hyphen removal, and bulk export without uploading data to external servers.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how does uuid generator work",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>uuid generator</strong> works by utilizing system clock values, hardware nodes (MAC address), or cryptographically secure pseudo-random number generator algorithms to generate 128 distinct bits. For version 4, the generator uses randomized bits, whereas version 7 incorporates millisecond-precision Unix timestamps for chronological ordering.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is uuid generator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>uuid generator</strong> is a software tool or algorithm designed to generate Universally Unique Identifiers (UUIDs) based on standard RFC specifications. These identifiers are widely used in software systems for database primary keys, session tracking, transaction logging, and resource mapping.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is a gui hash generator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>gui hash generator</strong> is a graphical user interface tool that allows users to compute mathematical checksum digests (such as MD5, SHA-1, SHA-256, or SHA-512) for texts or files visually. Users can paste string inputs or drag-and-drop local files to instantly get hashes computed offline, avoiding command-line commands.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is a hash generator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>hash generator</strong> is an algorithm-based tool that inputs any length of text or binary data and outputs a unique, fixed-size mathematical digest. Cryptographic hashes are one-way functions, meaning the input data cannot be retrieved from the resulting hash, making it perfect for checking file integrity or verifying credentials.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what does uuid stand for",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>uuid stand for</strong> Universally Unique Identifier, which is standard notation for creating distinctive entity tokens across distributed IT architectures.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how long is a uuid",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A standard <strong>uuid length</strong> is 128 bits. In its canonical text format, it is 36 characters long, composed of 32 hexadecimal characters and 4 separating hyphens.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is uuid used for",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>uuid used for</strong> unique identification across decentralized systems. It is commonly implemented for database primary keys, persistent session tokens, upload filename mapping, tracking distributed transactions, and identifying physical or virtual hardware resources.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how many bytes is a uuid",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A standard <strong>uuid is 16 bytes</strong> (128 bits) in length, which translates into 32 hexadecimal characters when converted to string representation.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how many characters is a uuid",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A canonical <strong>uuid is 36 characters</strong> long, containing 32 hexadecimal values and 4 hyphens. When hyphens are removed, the raw identifier consists of 32 characters.</p>"
+          }
+        }
+      ]
     }
   </script>
 
@@ -443,31 +541,276 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
   </section>
 
   <!-- Educational Article -->
-  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate" aria-labelledby="about-tool-heading">
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-12 flex flex-col gap-8 text-slate" aria-labelledby="about-tool-heading">
     <article class="flex flex-col gap-4">
       <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
-        Private Client-Side UUID & Cryptographic Hash Suite
+        Private Client-Side UUID & Hash Generator Tool Guide
       </h2>
       <p class="text-sm leading-relaxed">
-        Our <strong>UUID & Hash Generator</strong> is a specialized utility designed for developers, systems administrators, and privacy-conscious users. Typical online UUID generators and hash verifiers send your input strings and values back to their databases for processing or ad-tracking. This utility performs all generation (v1, v4, v7) and cryptographic digest math (MD5, SHA-1, SHA-256, SHA-512) 100% inside your web browser. 
+        When developing modern applications and distributed systems, generating unique identifiers and checking data integrity are daily requirements. Our client-side <strong>UUID & Hash Generator</strong> provides an all-in-one workspace designed to let developers generate unique identifier codes and compute hash digests entirely within their browser. Typical web tools send user strings and data to back-end servers, raising security concerns. This <strong>free uuid generator</strong> and <strong>hash generator</strong> runs 100% locally using HTML5 APIs, ensuring your sensitive text, files, and generated keys remain private.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Understanding UUID Versions: v1, v4, and v7
+        The Ultimate Random UUID Generator Online
       </h3>
       <p class="text-sm leading-relaxed">
-        <strong>UUID v4</strong> is completely random and is ideal for most basic identifiers where timestamp ordering is not needed. 
-        <strong>UUID v7</strong> is a modern variant ordered by Unix epoch timestamp, meaning identifiers sort chronologically—significantly improving database index insert performance.
-        <strong>UUID v1</strong> uses a sub-millisecond timestamp and host hardware node address (mac address) to guarantee absolute uniqueness across local machines.
+        A Universally Unique Identifier, or <strong>uuid</strong>, is a 128-bit value designed to ensure unique identification across computer networks without requiring central registry coordination. If you are wondering about the <strong>uuid meaning</strong> or <strong>what is uuid</strong>, it represents a standard value specified under RFC 4122 and RFC 9562 that avoids database ID conflicts. Using our <strong>uuid generator online</strong>, developers can seamlessly generate a <strong>random uuid generator</strong> result instantly. 
+      </p>
+      <p class="text-sm leading-relaxed">
+        Our <strong>online uuid generator tool</strong> supports multiple versions of UUIDs tailored for different engineering use cases:
+      </p>
+      <ul class="list-disc pl-5 text-sm leading-relaxed flex flex-col gap-1">
+        <li><strong>UUID v4</strong>: A completely cryptographically <strong>random uuid generator</strong> standard. This <strong>uuid generator v4</strong> uses the browser's <code>crypto.getRandomValues</code> to generate secure, unguessable IDs suitable for general use cases.</li>
+        <li><strong>UUID v7</strong>: A modern, time-ordered identifier that includes a millisecond-precision Unix epoch timestamp. This ensures that generated IDs are sorted chronologically, dramatically improving indexing and insert performance in databases like PostgreSQL or MySQL.</li>
+        <li><strong>UUID v1</strong>: A timestamp-based identifier that integrates the host machine's MAC node address, suitable for clustered environments where host-specific identification is necessary.</li>
+      </ul>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Understanding UUID Length, Formats, and Specifications
+      </h3>
+      <p class="text-sm leading-relaxed">
+        When you <strong>generate uuid</strong> options, you can choose custom wrapper formats. The canonical <strong>uuid length</strong> is 128 bits. The standard <strong>uuid format</strong> translates these 128 bits into a 36-character hexadecimal string divided into five groups separated by hyphens (8-4-4-4-12 structure). If your system requires alternative formatting, this <strong>online uuid generator</strong> allows you to remove hyphens to obtain a 32-character string, toggle uppercase lettering, or wrap output in single quotes, double quotes, braces, or as a formatted JSON array.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Cryptographic Security Warnings: MD5/SHA-1 vs SHA-2
+        Visual and Local Cryptographic Hash Generator
       </h3>
       <p class="text-sm leading-relaxed">
-        Security standards deprecate both <strong>MD5</strong> and <strong>SHA-1</strong> for collision resistance. Practical exploits can generate identical MD5 or SHA-1 hashes for two differing contents. They remain useful strictly as legacy checksums to verify downloaded file integrity. For security-sensitive processes (such as password hashing, digital signatures, or system integrity checks), always select <strong>SHA-256</strong> or <strong>SHA-512</strong> digests.
+        In addition to unique identifiers, BoardTools features a powerful local <strong>hash generator</strong>. Hashing maps arbitrary input data to a fixed-size bit digest. Using our <strong>gui hash generator</strong> interface, you can easily paste strings or drop files to compute MD5, SHA-1, SHA-256, and SHA-512 hashes. 
+      </p>
+      <ul class="list-disc pl-5 text-sm leading-relaxed flex flex-col gap-1">
+        <li><strong>MD5 & SHA-1</strong>: Legacy algorithms prone to collision vulnerabilities. They should only be used as simple file checksum verifiers.</li>
+        <li><strong>SHA-256 & SHA-512</strong>: Modern, secure cryptographic hash standards. They are ideal for validating system file state integrity and computing digital signatures.</li>
+        <li><strong>Password Hash Generator Online</strong>: If you need to generate quick cryptographic hashes for local development testing, you can use our text hasher as a secure <strong>password hash generator online</strong>. All hashes are generated locally, so your secret passwords never leave your system.</li>
+      </ul>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Privacy Matters for Developer Tools
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Many online utilities route text inputs or files to remote servers, leaving a trail of sensitive keys, test strings, and passwords on third-party servers. Since BoardTools runs completely offline using browser Web Crypto APIs, your raw data is never exposed. Whether you need a secure <strong>password hash generator online</strong> for development tests, or want to bulk-produce identifiers with an <strong>online uuid generator</strong>, our tool guarantees 100% private, client-side processing. By combining a client-side <strong>UUID & Hash Generator</strong> into a single graphical workspace, BoardTools provides developers with a robust, private environment to <strong>generate uuid</strong> sequences and inspect file checksums with zero server latency or data leakage.
       </p>
     </article>
+  </section>
+
+  <!-- Visible FAQ matching FAQ JSON-LD -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-6 text-slate" aria-labelledby="faq-heading">
+    <div class="flex flex-col gap-4">
+      <h2 id="faq-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
+        UUID & Hash Generator FAQs
+      </h2>
+      
+      <div class="flex flex-col border border-hairline rounded-xl divide-y divide-hairline overflow-hidden bg-canvas">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is UUID?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>uuid</strong> (Universally Unique Identifier) is a 128-bit numeric value represented as a 36-character hexadecimal string, structured in five groups separated by hyphens (8-4-4-4-12 format). It is designed to uniquely identify information in computer systems without requiring central coordinator registers.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is the best UUID generator for developers?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              The best <strong>uuid generator for developers</strong> is a secure, client-side utility that executes entirely in the browser (like BoardTools). It should support time-ordered UUID v7, cryptographically random UUID v4, and legacy UUID v1, while allowing options for custom formatting, casing, hyphen removal, and bulk export without uploading data to external servers.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>How does a UUID generator work?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>uuid generator</strong> works by utilizing system clock values, hardware nodes (MAC address), or cryptographically secure pseudo-random number generator algorithms to generate 128 distinct bits. For version 4, the generator uses randomized bits, whereas version 7 incorporates millisecond-precision Unix timestamps for chronological ordering.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is a UUID generator?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>uuid generator</strong> is a software tool or algorithm designed to generate Universally Unique Identifiers (UUIDs) based on standard RFC specifications. These identifiers are widely used in software systems for database primary keys, session tracking, transaction logging, and resource mapping.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is a GUI hash generator?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>gui hash generator</strong> is a graphical user interface tool that allows users to compute mathematical checksum digests (such as MD5, SHA-1, SHA-256, or SHA-512) for texts or files visually. Users can paste string inputs or drag-and-drop local files to instantly get hashes computed offline, avoiding command-line commands.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is a hash generator?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>hash generator</strong> is an algorithm-based tool that inputs any length of text or binary data and outputs a unique, fixed-size mathematical digest. Cryptographic hashes are one-way functions, meaning the input data cannot be retrieved from the resulting hash, making it perfect for checking file integrity or verifying credentials.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What does UUID stand for?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>uuid stand for</strong> Universally Unique Identifier, which is standard notation for creating distinctive entity tokens across distributed IT architectures.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>How long is a UUID?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A standard <strong>uuid length</strong> is 128 bits. In its canonical text format, it is 36 characters long, composed of 32 hexadecimal characters and 4 separating hyphens.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>What is UUID used for?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A <strong>uuid used for</strong> unique identification across decentralized systems. It is commonly implemented for database primary keys, persistent session tokens, upload filename mapping, tracking distributed transactions, and identifying physical or virtual hardware resources.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>How many bytes is a UUID?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A standard <strong>uuid is 16 bytes</strong> (128 bits) in length, which translates into 32 hexadecimal characters when converted to string representation.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 11 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            aria-expanded="false"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4 hover:bg-surface-soft transition-colors duration-200"
+          >
+            <span>How many characters is a UUID?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>
+              A canonical <strong>uuid is 36 characters</strong> long, containing 32 hexadecimal values and 4 hyphens. When hyphens are removed, the raw identifier consists of 32 characters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal -->
@@ -1434,6 +1777,32 @@ const canonicalUrl = "https://boardtools.app/tools/uuid-hash";
     if (e.target === howItWorksModal) {
       howItWorksModal.classList.add('hidden');
     }
+  });
+
+  // FAQ Accordion Toggle Interaction
+  const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) {
+        content.classList.toggle("hidden");
+      }
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
   });
 
   // Run init on startup
