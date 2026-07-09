@@ -61,26 +61,58 @@ const ogImage = "https://boardtools.app/og-calorie-burn.png";
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does this calorie burn calculator work?",
+          "name": "How many steps to burn 1 calorie?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "This exercise calorie burn calculator uses the MET formula: Calories = MET x body weight (kg) x duration (hours). Select an activity such as walking, running, yoga or treadmill, enter your weight and time, and it instantly estimates the calories burned."
+            "text": "<p>On average, it takes about 20 steps to burn 1 calorie. The exact number of steps depends on your body weight, walking speed, and terrain. For instance, a person weighing 160 pounds (73 kg) walking at a moderate speed burns roughly 0.05 calories per step.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "How accurate is the walking and running calorie burn calculator?",
+          "name": "What is my resting calorie burn?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The walking calorie burn calculator and running calorie burn calculator use peer-reviewed MET values, so estimates are close for most people. Actual burn varies with fitness level, muscle mass, terrain and effort, so treat results as a reliable guide rather than a lab measurement."
+            "text": "<p>Your resting calorie burn, also known as your Basal Metabolic Rate (BMR), is the quantity of energy your body expends to support basic physiological processes (like breathing, circulation, cellular repair, and temperature regulation) at rest. For most healthy adults, this accounts for 1,200 to 2,000 calories per day, depending on biological sex, age, height, and weight.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "What is a resting calorie burn?",
+          "name": "Does a calorie deficit burn fat?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Resting calorie burn is the energy your body uses at rest to stay alive, also called basal metabolic rate (BMR). This tool also acts as a resting calorie burn calculator by comparing your exercise burn against the calories you would have burned resting over the same period."
+            "text": "<p>Yes, a calorie deficit is the fundamental physiological requirement for burning fat. When you consume fewer calories than your body uses, it extracts stored energy from body fat reserves, converting them into fuel and leading to fat loss.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the average calorie burn per day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The average calorie burn per day varies depending on age, biological sex, muscle mass, and daily activity levels. In general, adult women burn approximately 1,600 to 2,200 calories per day, whereas adult men burn between 2,000 and 3,000 calories per day.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate are calorie burn calculators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Calorie burn calculators provide estimates based on peer-reviewed MET (Metabolic Equivalent of Task) values. While they are highly valuable benchmarks for workout and nutrition planning, they are not 100% precise as they do not capture individual biological variables like lean muscle-to-fat ratio, genetic differences, metabolic adaptation, or fitness level.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much calories do I burn calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To calculate how many calories you burn during exercise, input your body weight, duration of the activity, and choose the correct exercise from the list. The calculator will automatically apply standard MET values for the activity and compute your active energy expenditure.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to use a calorie burn calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To use a calorie burn calculator, simply enter your current body weight, the length of your workout session, and the specific physical activity you performed. The calculator will estimate the total calories burned using the standard physiological MET formula, helping you track your fitness targets.</p>"
           }
         }
       ]
@@ -739,6 +771,188 @@ const ogImage = "https://boardtools.app/og-calorie-burn.png";
         planning guide, and consult a qualified professional before starting an intense new training program.
       </p>
     </article>
+  </section>
+
+  <!-- Visible FAQ matching FAQ JSON-LD -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-6 print:hidden">
+    <div class="flex flex-col gap-6 w-full">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Calorie Burn Calculator FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Find answers to the most common questions about steps, resting calorie burn, calorie deficit, and calorie burn calculators.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How many steps to burn 1 calorie?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On average, it takes about 20 steps to burn 1 calorie. The exact number of steps depends on your body weight, walking speed, and terrain. For instance, a person weighing 160 pounds (73 kg) walking at a moderate speed burns roughly 0.05 calories per step.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is my resting calorie burn?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Your resting calorie burn, also known as your Basal Metabolic Rate (BMR), is the quantity of energy your body expends to support basic physiological processes (like breathing, circulation, cellular repair, and temperature regulation) at rest. For most healthy adults, this accounts for 1,200 to 2,000 calories per day, depending on biological sex, age, height, and weight.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does a calorie deficit burn fat?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, a calorie deficit is the fundamental physiological requirement for burning fat. When you consume fewer calories than your body uses, it extracts stored energy from body fat reserves, converting them into fuel and leading to fat loss.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the average calorie burn per day?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The average calorie burn per day varies depending on age, biological sex, muscle mass, and daily activity levels. In general, adult women burn approximately 1,600 to 2,200 calories per day, whereas adult men burn between 2,000 and 3,000 calories per day.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How accurate are calorie burn calculators?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Calorie burn calculators provide estimates based on peer-reviewed MET (Metabolic Equivalent of Task) values. While they are highly valuable benchmarks for workout and nutrition planning, they are not 100% precise as they do not capture individual biological variables like lean muscle-to-fat ratio, genetic differences, metabolic adaptation, or fitness level.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much calories do I burn calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To calculate how many calories you burn during exercise, input your body weight, duration of the activity, and choose the correct exercise from the list. The calculator will automatically apply standard MET values for the activity and compute your active energy expenditure.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to use a calorie burn calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To use a calorie burn calculator, simply enter your current body weight, the length of your workout session, and the specific physical activity you performed. The calculator will estimate the total calories burned using the standard physiological MET formula, helping you track your fitness targets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Client-side script module -->
@@ -1713,6 +1927,32 @@ const ogImage = "https://boardtools.app/og-calorie-burn.png";
       updateUnitUI();
       updateActivityList();
       calculate();
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Initial load
