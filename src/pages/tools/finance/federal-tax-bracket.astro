@@ -98,42 +98,82 @@ const keywords =
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does this federal tax bracket calculator work?",
+          "name": "what is the federal income tax bracket",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Enter your annual income, filing status, and deductions, and this federal tax bracket calculator applies the official inflation-adjusted federal income tax brackets for the selected year. It taxes each portion of your income at the correct rate, then shows your total federal income tax, your marginal tax rate, and your effective tax rate instantly. Every calculation runs in your browser, so your numbers stay private."
+            "text": "A federal income tax bracket is a range of income levels taxed at a specific rate. The United States uses a progressive tax system, meaning your income is taxed in progressive bands. As you earn more, your income moves into higher brackets with higher rates (ranging from 10% to 37%), but only the portion of income within each bracket's thresholds is taxed at that specific rate."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the difference between my marginal and effective tax rate?",
+          "name": "how much federal tax should i pay calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your marginal tax rate is the rate applied to your last dollar of taxable income — the top bracket your income reaches. Your effective tax rate is your total federal tax divided by your income, which is always lower because the U.S. uses a progressive system. This federal income tax bracket calculator displays both so you can see the rate that matters for each extra dollar you earn versus what you actually pay overall."
+            "text": "How much federal income tax you should pay is calculated based on your total annual gross income, minus any pre-tax deductions (like 401k or HSA contributions) and either the standard deduction or itemized deductions. Using a federal income tax calculator, you can enter these details to determine your taxable income, apply the progressive tax brackets, and estimate the exact amount of federal tax you owe."
           }
         },
         {
           "@type": "Question",
-          "name": "Does this estimate both state and federal taxes?",
+          "name": "how much state and federal tax calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "This tool focuses on your federal income tax using the federal brackets, deductions, and filing statuses. While a full state and federal tax calculator also layers in your state's income tax, the federal figure produced here is the largest component of most tax bills and the foundation you need before adding any state tax on top."
+            "text": "A state and federal tax calculator estimates your total annual tax liability by calculating both your U.S. federal income tax and your state's income tax. While federal taxes are uniform across the country, state taxes vary widely—some states have flat rates, some have progressive brackets, and others have no state income tax at all."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I use this as an estimated federal tax calculator for my paycheck?",
+          "name": "what is my federal tax rate calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. As an estimated federal tax calculator, you can enter your projected annual income to plan ahead, or use it as a federal tax calculator paycheck tool by multiplying your gross pay by the number of pay periods. It shows roughly how much federal income tax you should expect to owe for the year so you can check your withholding and avoid surprises at tax time."
+            "text": "A tax rate calculator shows both your marginal tax rate (the tax bracket of your highest dollar earned) and your effective tax rate (the actual percentage of your total income paid in taxes). Since tax brackets are progressive, your effective tax rate is always lower than your marginal tax rate."
           }
         },
         {
           "@type": "Question",
-          "name": "What are the federal tax brackets for 2026?",
+          "name": "what federal tax bracket am i in",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For 2026, federal income tax brackets remain at seven rates — 10%, 12%, 22%, 24%, 32%, 35%, and 37% — but the income thresholds are adjusted upward for inflation. This federal tax bracket calculator includes the 2024, 2025, and 2026 brackets for every filing status, so you can compare years and see exactly where your income falls."
+            "text": "To find out what federal tax bracket you are in, you need to calculate your taxable income (gross income minus standard or itemized deductions) and compare it to the IRS tax tables for your filing status (Single, Married Filing Jointly, Married Filing Separately, or Head of Household). Your bracket corresponds to the rate applied to your highest dollar of taxable income."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is the highest federal tax bracket",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The highest federal income tax bracket in the United States is 37%. This top rate applies to taxable incomes exceeding inflation-adjusted thresholds (for 2026, over $640,600 for Single filers and over $768,700 for Married Filing Jointly)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is the federal tax bracket",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The U.S. federal tax bracket system consists of seven tax rates: 10%, 12%, 22%, 24%, 32%, 35%, and 37%. The IRS adjusts the income thresholds for these brackets annually to account for inflation, ensuring that taxpayers do not face \"bracket creep\" simply due to cost-of-living adjustments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is the lowest federal tax bracket",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The lowest federal tax bracket is 10%. This rate applies to the first portion of your taxable income (for 2026, the first $12,400 for Single filers and the first $24,800 for Married Filing Jointly) after standard or itemized deductions are applied."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "does the federal tax bracket include social security and medicare",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, federal income tax brackets do not include Social Security and Medicare taxes. Those are FICA (Federal Insurance Contributions Act) payroll taxes, which are calculated separately at flat rates: 6.2% for Social Security (up to a wage cap) and 1.45% for Medicare (with an additional 0.9% for high earners), typically deducted automatically from your paycheck."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to determine federal tax bracket",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To determine your federal tax bracket:</p><ol><li>Calculate your gross income for the year.</li><li>Subtract pre-tax contributions (401k, HSA) and standard or itemized deductions to find your taxable income.</li><li>Match your taxable income and filing status against the IRS tax bracket tables. The highest bracket your taxable income reaches is your marginal tax bracket.</li></ol>"
           }
         }
       ]
@@ -593,6 +633,263 @@ const keywords =
         data.
       </p>
     </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6 max-w-[760px] mx-auto w-full mt-12 text-slate border-t border-hairline pt-12">
+      <h2 class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary text-center mb-2">
+        Federal Tax Bracket FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-6">
+        Find answers to the most common questions about federal income tax brackets, rates, and calculations.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the federal income tax bracket?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A federal income tax bracket is a range of income levels taxed at a specific rate. The United States uses a progressive tax system, meaning your income is taxed in progressive bands. As you earn more, your income moves into higher brackets with higher rates (ranging from 10% to 37%), but only the portion of income within each bracket's thresholds is taxed at that specific rate.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much federal tax should I pay calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>How much federal income tax you should pay is calculated based on your total annual gross income, minus any pre-tax deductions (like 401k or HSA contributions) and either the standard deduction or itemized deductions. Using a federal income tax calculator, you can enter these details to determine your taxable income, apply the progressive tax brackets, and estimate the exact amount of federal tax you owe.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much state and federal tax calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A state and federal tax calculator estimates your total annual tax liability by calculating both your U.S. federal income tax and your state's income tax. While federal taxes are uniform across the country, state taxes vary widely—some states have flat rates, some have progressive brackets, and others have no state income tax at all.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is my federal tax rate calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A tax rate calculator shows both your marginal tax rate (the tax bracket of your highest dollar earned) and your effective tax rate (the actual percentage of your total income paid in taxes). Since tax brackets are progressive, your effective tax rate is always lower than your marginal tax rate.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What federal tax bracket am I in?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To find out what federal tax bracket you are in, you need to calculate your taxable income (gross income minus standard or itemized deductions) and compare it to the IRS tax tables for your filing status (Single, Married Filing Jointly, Married Filing Separately, or Head of Household). Your bracket corresponds to the rate applied to your highest dollar of taxable income.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the highest federal tax bracket?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The highest federal income tax bracket in the United States is 37%. This top rate applies to taxable incomes exceeding inflation-adjusted thresholds (for 2026, over $640,600 for Single filers and over $768,700 for Married Filing Jointly).</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the federal tax bracket?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The U.S. federal tax bracket system consists of seven tax rates: 10%, 12%, 22%, 24%, 32%, 35%, and 37%. The IRS adjusts the income thresholds for these brackets annually to account for inflation, ensuring that taxpayers do not face "bracket creep" simply due to cost-of-living adjustments.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the lowest federal tax bracket?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The lowest federal tax bracket is 10%. This rate applies to the first portion of your taxable income (for 2026, the first $12,400 for Single filers and the first $24,800 for Married Filing Jointly) after standard or itemized deductions are applied.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does the federal tax bracket include social security and medicare?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>No, federal income tax brackets do not include Social Security and Medicare taxes. Those are FICA (Federal Insurance Contributions Act) payroll taxes, which are calculated separately at flat rates: 6.2% for Social Security (up to a wage cap) and 1.45% for Medicare (with an additional 0.9% for high earners), typically deducted automatically from your paycheck.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to determine federal tax bracket?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To determine your federal tax bracket:</p>
+            <ol class="list-decimal pl-5 flex flex-col gap-1 mt-1">
+              <li>Calculate your gross income for the year.</li>
+              <li>Subtract pre-tax contributions (401k, HSA) and standard or itemized deductions to find your taxable income.</li>
+              <li>Match your taxable income and filing status against the IRS tax bracket tables. The highest bracket your taxable income reaches is your marginal tax bracket.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Mobile Sticky Summary Bar (lg:hidden) -->
@@ -1308,6 +1605,32 @@ const keywords =
     setupCommaFormatting(grossIncomeInput);
     setupCommaFormatting(pretaxDeductionsInput);
     setupCommaFormatting(itemizedDeductionAmtInput);
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
 
     // Initial run
     function loadState() {
