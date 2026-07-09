@@ -8,13 +8,13 @@ const tier = "Developer Tools";
 
 // On-page SEO metadata
 const pageTitle =
-  "JSON Formatter & Validator - Prettify, Validate, and Minify JSON";
+  "JSON Formatter & JSON Viewer - Online JSON Beautifier & Validator";
 const description =
-  "Free online client-side JSON formatter, validator, and minifier. Fix invalid JSON with precise line-by-line syntax error highlights and navigate structures with a collapsible tree view.";
+  "Free client-side online JSON formatter tool and JSON validator. Prettify, inspect, and format JSON strings instantly. Use the interactive tree-based online JSON viewer to validate JSON files with syntax highlighting and zero server tracking.";
 const canonicalUrl = "https://boardtools.app/tools/json-formatter";
 const ogImage = "/og/json-formatter.png";
 const keywords =
-  "json formatter, json validator, json minifier, format json, prettify json, validate json, minify json, json viewer, tree view json, share json, online json tool, parse json, client side json formatter";
+  "json formatter, json formatter tool, online json formatter, what is a json file, json, json viewer, json syntax square brackets, json validator, json beautifier, json file, json format, what is json, format json, json formatter online, online json viewer, online json formatter";
 ---
 
 <Layout
@@ -93,26 +93,106 @@ const keywords =
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does the JSON validation error highlighter work?",
+          "name": "What is a JSON file?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "When raw JSON fails parsing, our tool reads the character offset of the syntax error, computes the exact line and column, and displays the exact line with a visual pointer and explanation so you can fix quotes, commas, or brackets instantly."
+            "text": "A JSON file is a plain text file that stores data structured in the JavaScript Object Notation (JSON) format. It uses the .json file extension and contains data organized in key-value pairs and arrays. Because it is standard text, it can be easily read and written by both humans and machines, making it the most popular data format for APIs and configuration settings."
           }
         },
         {
           "@type": "Question",
-          "name": "Can this tool handle large JSON files without freezing?",
+          "name": "What is JSON?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Our interactive tree view uses an on-demand rendering strategy. Instead of generating the entire DOM hierarchy at once, sub-nodes are only created when expanded, allowing you to explore multi-megabyte JSON trees instantly."
+            "text": "JSON, or JavaScript Object Notation, is a lightweight, text-based data-interchange format. It is completely language-independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. It is widely used to transmit data between a web server and a web application."
           }
         },
         {
           "@type": "Question",
-          "name": "Is my data sent to any server when formatting?",
+          "name": "What is the difference between XML and JSON?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. The JSON Formatter performs all operations (parsing, formatting, validation, tree building) 100% inside your browser. No data is sent to external servers, making it completely secure for API responses and sensitive keys."
+            "text": "XML (eXtensible Markup Language) and JSON are both used to structure and transport data, but they differ significantly in syntax and complexity. JSON is lightweight, has a smaller file size, is faster to parse, and supports arrays directly. XML is tag-based, more verbose, supports document schemas/validation natively, and can include metadata through tag attributes, but is more complex to parse in modern programming languages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to open JSON file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To open a JSON file, you can use any standard text editor such as Notepad, TextEdit, VS Code, or Sublime Text. Alternatively, you can upload or paste the file contents into our online JSON formatter and JSON viewer to see the data formatted with clean indentation, syntax highlighting, and a collapsible tree navigation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is JSON format?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JSON format is a set of syntax rules for structuring data. It is built on two collections: a collection of name/value pairs (an object) and an ordered list of values (an array). In JSON format, keys must be double-quoted strings, and values can be strings, numbers, booleans, null, objects, or arrays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does JSON stand for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JSON stands for JavaScript Object Notation. Although it originated from the JavaScript programming language as a way to represent literal object notation, it is a language-independent data format supported by virtually every programming environment today."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a .json file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A .json file is a text-based file that contains structured data saved in the JavaScript Object Notation format. The .json extension signals to compilers, editors, and web servers that the file contains JSON-encoded data, which should be parsed according to JSON syntax rules."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are JSON files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "JSON files are data files containing text structured according to the JSON specification. They are widely used in modern web development to exchange data between client applications and databases, configure software settings, and share structured datasets across different platforms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to create a JSON file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To create a JSON file, open a text editor of your choice, write or paste your structured data using correct JSON syntax, and save the file with the .json extension (for example, data.json). Ensure all keys are enclosed in double quotes and syntax elements are properly balanced."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to comment in JSON?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard JSON syntax does not support comments (like // or /* */). If you need to include comments in a configuration JSON file, you can create a custom key-value pair such as \"_comment\": \"your comment text here\", or use preprocessors/parsers (like JSONC or YAML) that support comments before converting them to strict JSON."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to read JSON file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To read a JSON file programmatically, you can parse it using built-in libraries in almost any programming language, such as JSON.parse() in JavaScript or json.load() in Python. For manual reading, you can open it in a text editor or load it into our online JSON formatter to view the structured data clearly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to view JSON files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To view JSON files in a clean, human-readable format, you can load them directly into our online JSON viewer. Our tool parses the raw text and displays it in a structured layout, allowing you to collapse and expand nested objects and browse keys in an interactive tree structure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to make a JSON file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To make a JSON file, write your key-value pairs enclosed in curly braces using a text editor. Use double quotes for all string keys and values. Once the data structure is ready, validate it using our online JSON validator to ensure it has no syntax errors, then save it with the .json extension."
           }
         }
       ]
@@ -614,56 +694,384 @@ const keywords =
     </div>
   </section>
 
-  <!-- Educational Article -->
+  <!-- Educational Article & FAQ Section -->
   <section
     class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
     aria-labelledby="about-tool-heading"
   >
-    <article class="flex flex-col gap-4">
+    <article class="prose max-w-none text-xs leading-relaxed flex flex-col gap-4 text-slate pb-6">
       <h2
         id="about-tool-heading"
         class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
       >
-        Free Developer JSON Formatter, Validator & Minifier
+        Ultimate Developer Guide to JSON Formatting, Validation, and Tree Viewing
       </h2>
       <p class="text-sm leading-relaxed">
-        Our <strong>JSON Formatter</strong> is a powerful, client-side utility designed
-        for software engineers, API developers, and data analysts. Unlike standard
-        online formatters that send data back to their servers, this <strong
-          >free JSON formatter</strong
-        > processes files and inputs entirely locally inside your browser. No cookies,
-        no server tracking, and no compliance worries. You can paste nested objects,
-        payload arrays, or dump huge log dumps, validate their structure instantly,
-        and download a beautified file.
+        In modern web development, data is the lifeblood of applications. Among the various data-interchange formats, JavaScript Object Notation, or <strong>json</strong>, stands out as the absolute standard. Whether you are dealing with APIs, configuring software, or storing application states, you will inevitably work with a <strong>json file</strong> daily. However, raw JSON payload data is often compressed or minified to optimize network bandwidth, resulting in a single, unreadable block of text. To inspect this data effectively, developers rely on an <strong>online json formatter</strong> or a <strong>json beautifier</strong> to restore structure and readability to the data.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Why use an Interactive Tree View?
+        What is JSON and Why Does Formatting Matter?
       </h3>
       <p class="text-sm leading-relaxed">
-        Reading large, deeply nested JSON blocks inside raw text output is
-        tedious. That's why we built an on-demand <strong
-          >collapsible JSON tree viewer</strong
-        >. Toggling the interactive mode allows you to expand and contract
-        objects, hide nested arrays, and follow paths as you hover. As you hover
-        over elements, a path breadcrumb updates at the top of the pane (e.g. <code
-          >root.users[2].profile.address.zipcode</code
-        >), allowing you to write precise access paths for JavaScript or Python
-        scripts instantly.
+        Before diving into formatting, it is helpful to understand <strong>what is json</strong> and why it has become so popular. JSON is a lightweight, text-based data format that is language-independent but uses conventions that are highly familiar to programmers. If you are wondering <strong>what is a json file</strong>, it is simply a text file containing structured data saved with a `.json` extension. The official <strong>json format</strong> defines data as key-value pairs (using curly braces `{}`) and ordered lists of values (using <strong>json syntax square brackets</strong> `[]` for arrays).
+      </p>
+      <p class="text-sm leading-relaxed">
+        When developers retrieve raw server responses or inspect configuration files, they often need to <strong>format json</strong> to make it human-readable. A dedicated <strong>json formatter tool</strong> takes minified text, parses it, and prints it with consistent indentation and spacing. This process is commonly known as prettifying. Using a <strong>json formatter</strong> not only improves code legibility but also helps developers quickly locate nested parameters and identify structural anomalies.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Precise Line and Column Error Highlighting
+        Visualizing Data with a JSON Viewer
       </h3>
       <p class="text-sm leading-relaxed">
-        Common formatters simply throw a vague &ldquo;Invalid JSON&rdquo;
-        exception when parsing fails. Our built-in validation system isolates
-        the syntax error location down to the exact line and column, extracts
-        the error context window, and points specifically to the mismatch (e.g.,
-        missing double quotes on property keys, trailing commas, or open
-        braces). Fixing formatting errors becomes a trivial task.
+        For deeply nested and large datasets, standard text formatting is sometimes not enough. An interactive <strong>json viewer</strong> allows you to navigate through complex structures by collapsing or expanding objects and arrays. Toggle between the plain text representation and the <strong>online json viewer</strong> mode to drill down into specific keys without losing context.
+      </p>
+      <p class="text-sm leading-relaxed">
+        When you hover over elements in the tree, breadcrumb access paths update in real time. This is extremely useful for engineers who need to write path queries in JavaScript or Python to access specific elements. By combining a text beautifier with a hierarchical tree viewer, our <strong>json formatter online</strong> delivers the ultimate workspace for debugging API responses.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Validating and Fixing Syntax Errors
+      </h3>
+      <p class="text-sm leading-relaxed">
+        JSON syntax is notoriously strict. A single missing double quote, a trailing comma, or a mismatched bracket will cause standard parsers to fail. This is why a built-in <strong>json validator</strong> is essential. Common issues include using single quotes instead of double quotes, missing colons, or syntax errors in the <strong>json syntax square brackets</strong> configuration.
+      </p>
+      <p class="text-sm leading-relaxed">
+        When formatting fails, our <strong>online json formatter</strong> doesn't just throw a generic error. It acts as an intelligent debugger, pointing to the exact line and column where the syntax error is located. It even renders a visual context indicator, showing you the surrounding code so you can correct brackets or quotes and validate the input instantly.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        100% Client-Side Privacy and Security
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Many online tools send your pasted text to external servers for processing, posing a serious security risk when dealing with private customer details, API tokens, or production configurations. This tool is designed to be completely secure: all parsing, formatting, validation, and tree rendering are performed 100% locally in your web browser. No data ever leaves your machine, making it a safe choice for corporate developers and security-conscious engineers. Bookmark this free tool for all your formatting, minification, and validation workflows!
       </p>
     </article>
+
+    <!-- Visible FAQ Section -->
+    <div class="flex flex-col gap-4 border-t border-hairline pt-6">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight mb-2">
+        JSON Formatter & Viewer FAQs
+      </h2>
+      <p class="text-xs text-slate mb-4">
+        Find helpful answers to frequently asked questions about JSON, file formatting, viewing, and comments.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a JSON file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>A JSON file is a plain text file that stores data structured in the JavaScript Object Notation (JSON) format. It uses the <code>.json</code> file extension and contains data organized in key-value pairs and arrays. Because it is standard text, it can be easily read and written by both humans and machines, making it the most popular data format for APIs and configuration settings.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is JSON?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>JSON, or JavaScript Object Notation, is a lightweight, text-based data-interchange format. It is completely language-independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C++, C#, Java, JavaScript, Perl, Python, and many others. It is widely used to transmit data between a web server and a web application.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the difference between XML and JSON?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>XML (eXtensible Markup Language) and JSON are both used to structure and transport data, but they differ significantly in syntax and complexity. JSON is lightweight, has a smaller file size, is faster to parse, and supports arrays directly. XML is tag-based, more verbose, supports document schemas/validation natively, and can include metadata through tag attributes, but is more complex to parse in modern programming languages.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to open JSON file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>To open a JSON file, you can use any standard text editor such as Notepad, TextEdit, VS Code, or Sublime Text. Alternatively, you can upload or paste the file contents into our online JSON formatter and JSON viewer to see the data formatted with clean indentation, syntax highlighting, and a collapsible tree navigation.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is JSON format?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>JSON format is a set of syntax rules for structuring data. It is built on two collections: a collection of name/value pairs (an object) and an ordered list of values (an array). In JSON format, keys must be double-quoted strings, and values can be strings, numbers, booleans, null, objects, or arrays.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does JSON stand for?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>JSON stands for JavaScript Object Notation. Although it originated from the JavaScript programming language as a way to represent literal object notation, it is a language-independent data format supported by virtually every programming environment today.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a .json file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>A .json file is a text-based file that contains structured data saved in the JavaScript Object Notation format. The <code>.json</code> extension signals to compilers, editors, and web servers that the file contains JSON-encoded data, which should be parsed according to JSON syntax rules.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What are JSON files?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>JSON files are data files containing text structured according to the JSON specification. They are widely used in modern web development to exchange data between client applications and databases, configure software settings, and share structured datasets across different platforms.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to create a JSON file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>To create a JSON file, open a text editor of your choice, write or paste your structured data using correct JSON syntax, and save the file with the <code>.json</code> extension (for example, <code>data.json</code>). Ensure all keys are enclosed in double quotes and syntax elements are properly balanced.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to comment in JSON?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>Standard JSON syntax does not support comments (like <code>//</code> or <code>/* */</code>). If you need to include comments in a configuration JSON file, you can create a custom key-value pair such as <code>"_comment": "your comment text here"</code>, or use preprocessors/parsers (like JSONC or YAML) that support comments before converting them to strict JSON.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 11 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to read JSON file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>To read a JSON file programmatically, you can parse it using built-in libraries in almost any programming language, such as <code>JSON.parse()</code> in JavaScript or <code>json.load()</code> in Python. For manual reading, you can open it in a text editor or load it into our online JSON formatter to view the structured data clearly.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 12 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to view JSON files?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>To view JSON files in a clean, human-readable format, you can load them directly into our online JSON viewer. Our tool parses the raw text and displays it in a structured layout, allowing you to collapse and expand nested objects and browse keys in an interactive tree structure.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 13 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[13px] sm:text-sm text-primary flex items-center justify-between cursor-pointer px-5 py-3.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to make a JSON file?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-3.5 h-3.5 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4 animate-duration-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-5 pb-4 pt-1 text-xs text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10 animate-fade-in">
+            <p>To make a JSON file, write your key-value pairs enclosed in curly braces using a text editor. Use double quotes for all string keys and values. Once the data structure is ready, validate it using our online JSON validator to ensure it has no syntax errors, then save it with the <code>.json</code> extension.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal -->
@@ -1718,6 +2126,32 @@ const keywords =
 
     // Initialize triggers
     init();
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
   </script>
 
   <!-- CSS Custom styling parameters -->
