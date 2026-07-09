@@ -625,141 +625,398 @@ const keywords =
       </p>
     </article>
 
-    <!-- FAQ -->
-    <div class="flex flex-col gap-4">
-      <h2
-        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
-      >
-        Frequently Asked Questions
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Tip & Split Calculator FAQs
       </h2>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Tip calculator how much to tip?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            To calculate how much to tip, multiply the pre-tax bill amount by your desired tip percentage (typically 15% to 20% for standard service in the US). For example, a 20% tip on a $50 bill is $10.
-          </p>
+      <p class="text-xs text-slate text-center mb-4">
+        Find answers to the most common questions about tipping etiquette, splitting bills, and calculating group expenses.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Tip calculator how much to tip?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To calculate how much to tip, multiply the pre-tax bill amount by your desired tip percentage (typically 15% to 20% for standard service in the US). For example, a 20% tip on a $50 bill is $10.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Tip calculator how much to tip on $1?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            When using a tip calculator to tip on a $1 bill or transaction, a standard 15% to 20% tip is about $0.15 to $0.20. However, for very small transactions, many people choose to leave a minimum tip of $1.00 to show appreciation to the service provider.
-          </p>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Tip calculator how much to tip on $1?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>When using a tip calculator to tip on a $1 bill or transaction, a standard 15% to 20% tip is about $0.15 to $0.20. However, for very small transactions, many people choose to leave a minimum tip of $1.00 to show appreciation to the service provider.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Tip calculator how much to tip for takeout?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            While takeout tipping is optional, a standard tip for food takeout is typically 10% to 15% of the bill, or a flat $2 to $5 for large or complex orders, to thank the staff who packaged and prepared your order.
-          </p>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Tip calculator how much to tip for takeout?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>While takeout tipping is optional, a standard tip for food takeout is typically 10% to 15% of the bill, or a flat $2 to $5 for large or complex orders, to thank the staff who packaged and prepared your order.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Tip calculator how much to tip movers?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A standard tip for movers is 10% to 20% of the total move cost, split among the crew, or about $20 to $50 per mover per day depending on the difficulty and duration of the move.
-          </p>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Tip calculator how much to tip movers?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A standard tip for movers is 10% to 20% of the total move cost, split among the crew, or about $20 to $50 per mover per day depending on the difficulty and duration of the move.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How much to tip waitress calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A waitress calculator typically uses standard restaurant tipping rates of 18% to 22% for good to excellent table service, and a minimum of 15% for standard service in the United States.
-          </p>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Movers tip calculator how much to tip waitress calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A waitress calculator typically uses standard restaurant tipping rates of 18% to 22% for good to excellent table service, and a minimum of 15% for standard service in the United States.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How much to tip calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A general how much to tip calculator applies standard industry rates: 18% to 20% for restaurants, 15% to 20% for hair salons and nail salons, 10% to 20% for delivery and movers, and $1 to $2 per drink for bartenders.
-          </p>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much to tip calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A general how much to tip calculator applies standard industry rates: 18% to 20% for restaurants, 15% to 20% for hair salons and nail salons, 10% to 20% for delivery and movers, and $1 to $2 per drink for bartenders.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How much to tip hairdresser calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            When calculating a tip for a hairdresser, the standard etiquette is to tip 15% to 20% of the total service cost, depending on your satisfaction and the complexity of the service (e.g., coloring, styling, or cuts).
-          </p>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much to tip hairdresser calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>When calculating a tip for a hairdresser, the standard etiquette is to tip 15% to 20% of the total service cost, depending on your satisfaction and the complexity of the service (e.g., coloring, styling, or cuts).</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How much to tip nail salon calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            For a nail salon calculator, the standard tipping rate is 15% to 20% of the total bill. For example, on a $50 manicure, a standard 20% tip would be $10.
-          </p>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much to tip nail salon calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>For a nail salon calculator, the standard tipping rate is 15% to 20% of the total bill. For example, on a $50 manicure, a standard 20% tip would be $10.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split bills with spouse calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            To split bills with your spouse, a calculator can split costs either 50/50, proportionally based on income (e.g., one spouse earns 60% and pays 60%), or by leaving individual personal expenses separate while splitting shared household expenses equally.
-          </p>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split bills with spouse calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To split bills with your spouse, a calculator can split costs either 50/50, proportionally based on income (e.g., one spouse earns 60% and pays 60%), or by leaving individual personal expenses separate while splitting shared household expenses equally.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split rent with a couple calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            When splitting rent with a couple in a shared house, a common calculator method splits rent based on bedroom usage and common space usage. Often, the couple pays 60% to 66% of the rent (since they occupy one bedroom but two people use the common spaces), while the single roommate pays 34% to 40%.
-          </p>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split rent with a couple calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>When splitting rent with a couple in a shared house, a common calculator method splits rent based on bedroom usage and common space usage. Often, the couple pays 60% to 66% of the rent (since they occupy one bedroom but two people use the common spaces), while the single roommate pays 34% to 40%.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split tips by hours calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            To split tips by hours worked, add up the total hours worked by all employees, divide the total tips collected by the total hours to find the hourly tip rate, and then multiply each employee's worked hours by that hourly rate.
-          </p>
+
+        <!-- FAQ 11 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split tips by hours calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To split tips by hours worked, add up the total hours worked by all employees, divide the total tips collected by the total hours to find the hourly tip rate, and then multiply each employee's worked hours by that hourly rate.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split bills based on income calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            To split bills proportionally based on income, add both incomes together to find the household total, divide each individual's income by the total to find their percentage share, and multiply that percentage by the total bill amount.
-          </p>
+
+        <!-- FAQ 12 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split bills based on income calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To split bills proportionally based on income, add both incomes together to find the household total, divide each individual's income by the total to find their percentage share, and multiply that percentage by the total bill amount.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split up your paycheck calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A paycheck budget calculator often splits your income using the 50/30/20 rule: 50% for needs (rent, utilities, groceries), 30% for wants (dining out, entertainment), and 20% for savings and debt repayment.
-          </p>
+
+        <!-- FAQ 13 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split up your paycheck calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A paycheck budget calculator often splits your income using the 50/30/20 rule: 50% for needs (rent, utilities, groceries), 30% for wants (dining out, entertainment), and 20% for savings and debt repayment.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split rent with roommates calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A roommate rent calculator splits rent based on private room square footage, amenities (like a private bathroom or balcony), and equal division of common living areas, ensuring everyone pays a fair share for what they use.
-          </p>
+
+        <!-- FAQ 14 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split rent with roommates calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A roommate rent calculator splits rent based on private room square footage, amenities (like a private bathroom or balcony), and equal division of common living areas, ensuring everyone pays a fair share for what they use.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split a bill calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A split-a-bill calculator divides the subtotal, tax, and tip evenly among a group of diners, or calculates individual shares based on what each person ordered plus their proportional share of tax and tip.
-          </p>
+
+        <!-- FAQ 15 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split a bill calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A split-a-bill calculator divides the subtotal, tax, and tip evenly among a group of diners, or calculates individual shares based on what each person ordered plus their proportional share of tax and tip.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How to split money calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A money splitting calculator divides any sum of money among multiple parties. It can divide the total equally, proportionally based on custom percentages, or by inputting specific shares or expenses to calculate who owes what to whom.
-          </p>
+
+        <!-- FAQ 16 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to split money calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A money splitting calculator divides any sum of money among multiple parties. It can divide the total equally, proportionally based on custom percentages, or by inputting specific shares or expenses to calculate who owes what to whom.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1174,6 +1431,32 @@ const keywords =
           }
         }
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Initialize Page
