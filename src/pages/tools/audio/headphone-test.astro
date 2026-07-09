@@ -901,6 +901,7 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
       // safety limit master volume at max 0.6 standard scaling
       masterGainNode.gain.linearRampToValueAtTime(dbScale * 0.6, audioCtx.currentTime + 0.05);
     }
+  });
   masterVolumeInput?.addEventListener('change', () => {
     localStorage.setItem(VOLUME_KEY, masterVolumeInput.value);
   });
