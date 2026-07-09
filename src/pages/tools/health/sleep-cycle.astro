@@ -93,42 +93,74 @@ const keywords =
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does this 90 minute sleep cycle calculator work?",
+          "name": "How long is one sleep cycle?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "This sleep cycle calculator counts backward or forward in 90-minute blocks. Enter the time you need to wake up and it shows the best bedtimes that end on a complete cycle, or enter your bedtime and it shows ideal wake-up times. It also adds a 15-minute fall-asleep buffer by default, so the 90 minute sleep cycle calculator reflects when you actually drift off, not just when you get into bed."
+            "text": "<p>For most healthy adults, one sleep cycle lasts approximately 90 minutes. However, individual cycle lengths can range from 70 to 110 minutes, varying naturally between individuals and changing slightly throughout the night.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "What is a 90 minute sleep cycle?",
+          "name": "How long is a full sleep cycle?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A sleep cycle is one full pass through light sleep, deep sleep, and REM sleep. For most adults a single cycle lasts about 90 minutes, which is why a 90 minute sleep cycle is the standard used in this calculator. Waking at the end of a cycle, rather than in the middle of deep sleep, helps you feel alert instead of groggy."
+            "text": "<p>A full sleep cycle typically lasts between 90 and 110 minutes. It starts with light sleep, transitions into deep slow-wave sleep, and ends with Rapid Eye Movement (REM) sleep before the cycle repeats.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Is this a sleep calculator by age?",
+          "name": "How long is each sleep cycle?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. This sleep cycle calculator by age lets you select an age group — adult, older adult, teenager, school child, or toddler — and highlights the number of cycles that matches the recommended hours of sleep for that age. Teens and children need more cycles than adults, and the hours of sleep calculator flags which options are optimal, sufficient, or insufficient."
+            "text": "<p>Each sleep cycle is about 90 minutes long on average. In the early part of the night, cycles contain more deep NREM sleep, while later cycles toward morning have longer REM (dreaming) sleep periods.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "What time should I go to sleep to wake up at a certain time?",
+          "name": "What is a sleep cycle?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Set the calculator to wake-up mode and enter your target wake time. The online sleep cycle calculator instantly lists bedtimes that allow 5 to 6 full cycles (about 7.5 to 9 hours) for adults. For example, to wake at 7:00 AM, ideal bedtimes fall around 9:45 PM or 11:15 PM, each landing at the end of a 90-minute sleep cycle."
+            "text": "<p>A sleep cycle is a continuous progression through the four stages of sleep: Stage N1 (light transition), Stage N2 (light sleep), Stage N3 (deep slow-wave sleep), and REM sleep (rapid eye movement/dreaming). An average night consists of 4 to 6 of these cycles.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Is this sleep cycle calculator app free and private?",
+          "name": "How long does a sleep cycle last?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. It is a 100% free online sleep cycle calculator that runs entirely in your browser. There is no sign-up, it works as a sleep calculator app on iPhone, Android, and desktop, and your inputs never leave your device."
+            "text": "<p>A sleep cycle typically lasts between 90 and 110 minutes. The duration is influenced by factors such as age, sleep history, genetics, and whether you have consumed alcohol, caffeine, or certain medications before bed.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a normal sleep cycle look like?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A normal sleep cycle begins with NREM Stage 1 (very light sleep), moves into NREM Stage 2 (deeper light sleep with sleep spindles), advances into NREM Stage 3 (restorative deep sleep), returns to Stage 2 briefly, and then enters REM sleep (active brain dreaming stage) before starting over.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What part of the brain controls sleep-wake cycle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The sleep-wake cycle is primarily controlled by the <strong>hypothalamus</strong>, specifically the suprachiasmatic nucleus (SCN). The SCN acts as the body's master pacemaker, receiving light cues from the eyes to regulate melatonin production by the pineal gland.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long is a rem sleep cycle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The REM stage within each sleep cycle changes in length throughout the night. The first REM period of the night may last only 10 minutes, whereas later REM periods in the final cycles of sleep can last up to an hour.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to fix your sleep cycle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To fix your sleep cycle, establish a consistent wake-up and bedtime schedule (even on weekends), expose yourself to bright sunlight first thing in the morning, avoid blue light and screens for 1-2 hours before bed, keep your bedroom cool and dark, and avoid heavy meals, caffeine, and alcohol close to bedtime.</p>"
           }
         }
       ]
@@ -634,72 +666,230 @@ const keywords =
       </p>
     </article>
 
-    <!-- FAQ -->
-    <div class="flex flex-col gap-4">
-      <h2
-        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
-      >
-        Frequently Asked Questions
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Sleep Cycle Calculator FAQs
       </h2>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How does this 90 minute sleep cycle calculator work?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            It counts backward or forward in 90-minute blocks. Enter the time you
-            need to wake up and it shows the best bedtimes that end on a complete
-            cycle, or enter your bedtime and it shows ideal wake-up times. It
-            also adds a 15-minute fall-asleep buffer by default, so the 90 minute
-            sleep cycle calculator reflects when you actually drift off.
-          </p>
+      <p class="text-xs text-slate text-center mb-4">
+        Find answers to the most common questions about sleep cycles, circadian rhythms, and waking up refreshed.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How long is one sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>For most healthy adults, one sleep cycle lasts approximately 90 minutes. However, individual cycle lengths can range from 70 to 110 minutes, varying naturally between individuals and changing slightly throughout the night.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            What is a 90 minute sleep cycle?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A sleep cycle is one full pass through light sleep, deep sleep, and
-            REM sleep. For most adults a single cycle lasts about 90 minutes,
-            which is why a 90 minute sleep cycle is the standard used here.
-            Waking at the end of a cycle, rather than in the middle of deep
-            sleep, helps you feel alert instead of groggy.
-          </p>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How long is a full sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A full sleep cycle typically lasts between 90 and 110 minutes. It starts with light sleep, transitions into deep slow-wave sleep, and ends with Rapid Eye Movement (REM) sleep before the cycle repeats.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Is this a sleep calculator by age?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. This sleep cycle calculator by age lets you select an age group
-            &mdash; adult, older adult, teenager, school child, or toddler
-            &mdash; and highlights the number of cycles that matches recommended
-            hours of sleep for that age. The hours of sleep calculator flags
-            which options are optimal, sufficient, or insufficient.
-          </p>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How long is each sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Each sleep cycle is about 90 minutes long on average. In the early part of the night, cycles contain more deep NREM sleep, while later cycles toward morning have longer REM (dreaming) sleep periods.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            What time should I go to sleep to wake up at a certain time?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Set the calculator to wake-up mode and enter your target wake time.
-            The online sleep cycle calculator instantly lists bedtimes that allow
-            5 to 6 full cycles (about 7.5 to 9 hours) for adults. To wake at 7:00
-            AM, ideal bedtimes fall around 9:45 PM or 11:15 PM, each landing at
-            the end of a 90-minute sleep cycle.
-          </p>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A sleep cycle is a continuous progression through the four stages of sleep: Stage N1 (light transition), Stage N2 (light sleep), Stage N3 (deep slow-wave sleep), and REM sleep (rapid eye movement/dreaming). An average night consists of 4 to 6 of these cycles.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Is this sleep cycle calculator app free and private?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. It is a 100% free online sleep cycle calculator that runs
-            entirely in your browser. There is no sign-up, it works as a sleep
-            calculator app on iPhone, Android, and desktop, and your inputs never
-            leave your device.
-          </p>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How long does a sleep cycle last?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A sleep cycle typically lasts between 90 and 110 minutes. The duration is influenced by factors such as age, sleep history, genetics, and whether you have consumed alcohol, caffeine, or certain medications before bed.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does a normal sleep cycle look like?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A normal sleep cycle begins with NREM Stage 1 (very light sleep), moves into NREM Stage 2 (deeper light sleep with sleep spindles), advances into NREM Stage 3 (restorative deep sleep), returns to Stage 2 briefly, and then enters REM sleep (active brain dreaming stage) before starting over.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What part of the brain controls sleep-wake cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The sleep-wake cycle is primarily controlled by the <strong>hypothalamus</strong>, specifically the suprachiasmatic nucleus (SCN). The SCN acts as the body's master pacemaker, receiving light cues from the eyes to regulate melatonin production by the pineal gland.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How long is a rem sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The REM stage within each sleep cycle changes in length throughout the night. The first REM period of the night may last only 10 minutes, whereas later REM periods in the final cycles of sleep can last up to an hour.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to fix your sleep cycle?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To fix your sleep cycle, establish a consistent wake-up and bedtime schedule (even on weekends), expose yourself to bright sunlight first thing in the morning, avoid blue light and screens for 1-2 hours before bed, keep your bedroom cool and dark, and avoid heavy meals, caffeine, and alcohol close to bedtime.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1381,6 +1571,32 @@ const keywords =
         breakdownSection.classList.remove("max-h-[2000px]");
         breakdownSection.classList.add("max-h-0");
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Load initial state
