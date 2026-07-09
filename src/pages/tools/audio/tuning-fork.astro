@@ -8,11 +8,11 @@ const tier = "Audio Utilities";
 const description = "Emit stable audio tuning pitches at standard frequencies, calibrate reference pitches, and compare musical intervals.";
 
 // SEO
-const pageTitle = "Online Tuning Fork - Calibrate and Generate Reference Pitches";
-const seoDescription = "Free client-side online tuning fork. Generate precise sine wave reference tones (A440, A432, C256), customize frequencies, adjust reference calibration, and compare intervals.";
+const pageTitle = "Online Tuning Fork - Free Sound & Pitch Tuner (A440, A432, 128Hz)";
+const seoDescription = "Free client-side online tuning fork. Generate precise reference pitches like A440, A432, or 128 hz tuning fork. Learn what is a tuning fork and explore tuning fork therapy for health and healing.";
 const canonicalUrl = "https://boardtools.app/tools/audio/tuning-fork";
 const ogImage = "/og/tuning-fork.png";
-const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, frequency generator, tone generator, audio calibrator, equal temperament, musical pitch, client-side synth";
+const keywords = "tuning fork, 128 hz tuning fork, tuning fork meaning, tuning fork for health, tuning fork therapy, tuning fork test, tuning fork for healing, what is a tuning fork, tuning fork therapy side effects, tuning fork frequency chart, tuning fork uses medical, how to use a tuning fork, what is a tuning fork used for, 432 hz tuning fork";
 ---
 
 <Layout 
@@ -26,6 +26,96 @@ const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, 
   ogType="website"
   hideBanner={true}
 >
+  <!-- FAQ Page JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a tuning fork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A tuning fork is a metal acoustic resonator, usually shaped in a two-pronged U-bar. When struck against a surface, it vibrates at a constant, mathematically precise frequency, emitting a pure tone that is widely used for tuning musical instruments, medical testing, and sound therapy.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to use a tuning fork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To use a physical tuning fork, hold it firmly by the single handle (stem) rather than the prongs. Strike the prongs against a firm but elastic surface (such as a rubber mallet or your knee) to initiate the vibration. You can then hold the vibrating prongs near your ear to listen to the tone, or place the stem base directly on a surface to amplify the resonance.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a tuning fork used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A tuning fork is used for calibrating and tuning musical instruments (like pianos and violins), conducting medical hearing tests (such as the Rinne and Weber tests), diagnosing sensory nerve disorders (like peripheral neuropathy), and facilitating sound therapy/vibrational healing sessions.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does a tuning fork work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A tuning fork works by oscillating when struck, creating a physical vibration. Because of its symmetrical design, the two prongs move in opposite directions, canceling out certain kinetic forces at the base and allowing the fork to vibrate at a steady, long-lasting resonant frequency with a clean, sine-wave-like acoustic profile.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where can I buy a tuning fork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You can buy tuning forks from musical instrument retailers, medical supply stores, sound therapy websites, and online marketplaces like Amazon. For digital use, you can access our free, browser-based online tuning fork directly from your computer or smartphone without any installation.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to use a tuning fork for healing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To use a tuning fork for healing, strike the fork to activate its vibration, then place the flat base of the stem directly onto specific bones, joints, muscles, or acupuncture pressure points on the body. The deep micro-vibrations help relieve physical tension and promote relaxation. You can also hover the prongs near your ears for auditory relaxation.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is tuning fork therapy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Tuning fork therapy is an alternative sound healing modality that uses the vibrations of calibrated tuning forks to balance the body's energy fields, reduce muscle spasms, alleviate stress, and stimulate blood flow. It is often combined with acupressure, massage therapy, or meditation.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where to buy a tuning fork?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Tuning forks are available at local music shops, medical supply stores, specialized holistic health outlets, and major online e-commerce platforms. If you do not have a physical fork, you can use our free online tone generator to produce exact standard frequencies.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does tuning fork therapy work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, many people find tuning fork therapy highly effective for relaxation, stress reduction, and pain management. While clinical studies are continuing to explore the physiological impact of sound vibrations, the therapy has been utilized for decades in sound healing and neuromuscular therapy to induce a deep meditative state.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a tuning fork do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A tuning fork generates a single, stable, and highly accurate reference frequency. It translates physical kinetic energy into a pure acoustic tone and mechanical vibration, which serves as a benchmark for musicians, a diagnostic sensor for medical professionals, and a vibrational healing stimulator for therapists.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
   <!-- SEO JSON-LD WebApplication Schema -->
   <script type="application/ld+json" is:inline>
     {
@@ -569,32 +659,307 @@ const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, 
     </div>
   </section>
 
-  <!-- Educational Article -->
-  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
-    <article class="flex flex-col gap-4">
-      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
-        Reference Tuning Pitch & Acoustic Tuning Fork Engine
+  <!-- Educational Article & FAQs -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-12 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-6">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight">
+        The Science and Application of Tuning Forks in Music and Wellness
       </h2>
-      <p class="text-sm leading-relaxed">
-        An acoustic <strong>tuning fork</strong> is an acoustic resonator in the form of a two-pronged fork with the prongs formed from a U-shaped U-bar of elastic metal (usually steel). When struck against a surface, it vibrates at a specific constant frequency, emitting a pure musical tone. Tuning forks are widely used to tune musical instruments, calibrate scientific sound equipment, and test hearing capacity.
+      
+      <p class="text-sm sm:text-base leading-relaxed">
+        To understand the **tuning fork meaning**, one must look at both history and acoustics. Originally invented in 1711 by British musician John Shore, a **tuning fork** is a metal acoustic resonator—typically made of steel, aluminum, or magnesium—shaped like a two-pronged fork. When struck, it vibrates at a highly stable, specific frequency to emit a pure musical tone. Historically, musicians have relied on this tool to calibrate instruments. But **what is a tuning fork used for** in the modern era? While its primary acoustic purpose remains instrument calibration, the **what is a tuning fork** definition has expanded into physics, medicine, and sound therapy.
       </p>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Equal Temperament Math & Audio Synthesizer
-      </h3>
-      <p class="text-sm leading-relaxed">
-        Modern Western music relies on <strong>twelve-tone equal temperament (12-TET)</strong>. In this tuning system, the octave is divided into twelve log-linear intervals called semitones. The frequency $f$ of any note is calculated relative to a reference note (typically A4, calibrated at 440 Hz) using the mathematical formula:
+      <p class="text-sm sm:text-base leading-relaxed">
+        In traditional musical settings, the **tuning fork frequency chart** centers around standard pitches like A440 (440 Hz) or the popular **432 hz tuning fork** (often preferred by musicians who enjoy alternative concert pitch tunings). Our online tuning fork generator acts as a digital version of these physical resonators, producing clean, mathematically precise sine waves using the Web Audio API without the drift or pitch decay associated with physical wear.
       </p>
-      <div class="bg-surface border border-hairline rounded-xl p-4 my-2 text-center">
-        <code class="font-mono text-xs text-primary font-semibold">
-          Frequency (Hz) = A4_Ref_Hz * 2^(semitones_from_A4 / 12)
-        </code>
-      </div>
-      <p class="text-sm leading-relaxed">
-        Our digital Tuning Fork engine applies standard AudioContext synthesis to generate this pure sine wave, ensuring 100% mathematical pitch accuracy. By altering the calibrated A4 reference frequency (e.g. down to 432 Hz or baroque 415 Hz), the relative frequencies of all note choices dynamically adjust in real time.
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Tuning Forks in Medicine and Health Assessment
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Beyond the concert hall, the **tuning fork uses medical** and diagnostic contexts. A standard neurological assessment often includes a **tuning fork test** (such as the Weber or Rinne tests) to differentiate between conductive and sensorineural hearing loss. Doctors strike a 256 Hz or 512 Hz fork and place it near the patient's ear or against the mastoid bone. Additionally, doctors use a **128 hz tuning fork** placed on bony prominences to test a patient's vibratory sensation, which is critical for diagnosing diabetic neuropathy or other sensory nerve deficits.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Tuning Fork Therapy: Healing and Health Benefits
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        In recent years, the concept of a **tuning fork for health** and wellness has gained massive popularity. Known as **tuning fork therapy** or sound healing, this practice uses specific sound frequencies applied on or near the body to promote deep relaxation and stress relief. Practitioners use a **tuning fork for healing** by targeting acupuncture points, muscle groups, or energy centers.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Proponents of sound therapy claim that the vibrations can help balance the nervous system, reduce muscle tension, and alleviate chronic pain. But **does tuning fork therapy work**? While clinical research is ongoing, many users report significant subjective improvements in stress levels, mental clarity, and sleep quality.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When exploring sound wellness, it is crucial to understand **how to use a tuning fork for healing**. Typically, a practitioner strikes the fork to activate the vibration, then gently places the stem of the vibrating fork directly onto a bone, muscle, or joint, allowing the physical vibrations to penetrate deep into the tissues. Alternatively, they may hold the vibrating prongs near the ears so the client can listen to the pure, calming tone.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        How to Use a Tuning Fork Safely
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Whether using a physical or digital tool, learning **how to use a tuning fork** is simple. For physical forks, hold the instrument by its single handle (stem) rather than the prongs, strike it against a firm but elastic surface (like a rubber mallet or your knee), and either hold the vibrating prongs near your ear or press the base against a surface to amplify the sound.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When engaging in sound therapy, it is also important to consider potential **tuning fork therapy side effects**. While generally safe and non-invasive, some individuals may experience mild headaches, dizziness, or sensory overload if the volume is too loud or if the vibrating stem is pressed too hard against sensitive nerve pathways. It is always recommended to start with short, quiet sessions and adjust the frequency and placement to your comfort level.
       </p>
     </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <h3 class="font-display font-semibold text-2xl text-primary tracking-tight">
+          Frequently Asked Questions
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Get answers to common queries about tuning forks, their medical uses, and sound therapy practices.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a tuning fork?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A tuning fork is a metal acoustic resonator, usually shaped in a two-pronged U-bar. When struck against a surface, it vibrates at a constant, mathematically precise frequency, emitting a pure tone that is widely used for tuning musical instruments, medical testing, and sound therapy.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to use a tuning fork?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To use a physical tuning fork, hold it firmly by the single handle (stem) rather than the prongs. Strike the prongs against a firm but elastic surface (such as a rubber mallet or your knee) to initiate the vibration. You can then hold the vibrating prongs near your ear to listen to the tone, or place the stem base directly on a surface to amplify the resonance.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a tuning fork used for?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A tuning fork is used for calibrating and tuning musical instruments (like pianos and violins), conducting medical hearing tests (such as the Rinne and Weber tests), diagnosing sensory nerve disorders (like peripheral neuropathy), and facilitating sound therapy/vibrational healing sessions.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does a tuning fork work?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A tuning fork works by oscillating when struck, creating a physical vibration. Because of its symmetrical design, the two prongs move in opposite directions, canceling out certain kinetic forces at the base and allowing the fork to vibrate at a steady, long-lasting resonant frequency with a clean, sine-wave-like acoustic profile.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Where can I buy a tuning fork?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You can buy tuning forks from musical instrument retailers, medical supply stores, sound therapy websites, and online marketplaces like Amazon. For digital use, you can access our free, browser-based online tuning fork directly from your computer or smartphone without any installation.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to use a tuning fork for healing?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To use a tuning fork for healing, strike the fork to activate its vibration, then place the flat base of the stem directly onto specific bones, joints, muscles, or acupuncture pressure points on the body. The deep micro-vibrations help relieve physical tension and promote relaxation. You can also hover the prongs near your ears for auditory relaxation.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is tuning fork therapy?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Tuning fork therapy is an alternative sound healing modality that uses the vibrations of calibrated tuning forks to balance the body's energy fields, reduce muscle spasms, alleviate stress, and stimulate blood flow. It is often combined with acupressure, massage therapy, or meditation.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Where to buy a tuning fork?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Tuning forks are available at local music shops, medical supply stores, specialized holistic health outlets, and major online e-commerce platforms. If you do not have a physical fork, you can use our free online tone generator to produce exact standard frequencies.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does tuning fork therapy work?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, many people find tuning fork therapy highly effective for relaxation, stress reduction, and pain management. While clinical studies are continuing to explore the physiological impact of sound vibrations, the therapy has been utilized for decades in sound healing and neuromuscular therapy to induce a deep meditative state.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does a tuning fork do?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A tuning fork generates a single, stable, and highly accurate reference frequency. It translates physical kinetic energy into a pure acoustic tone and mechanical vibration, which serves as a benchmark for musicians, a diagnostic sensor for medical professionals, and a vibrational healing stimulator for therapists.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
 
   <!-- How it works Modal -->
   <div
@@ -1719,6 +2084,31 @@ const keywords = "tuning fork, online tuner, pitch generator, A440, A432, C256, 
       if (isPlaying && audioCtx && oscNode2) {
         oscNode2.frequency.setTargetAtTime(parseFloat(compareFreqInput.value), audioCtx.currentTime, 0.05);
       }
+    });
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     init();
