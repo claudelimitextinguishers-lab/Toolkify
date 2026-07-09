@@ -5,21 +5,132 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Brown Noise Generator";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Generate pure, continuous brown noise with adjustable depth, stereo widening, and a sleep timer.";
+const description = "Free online brown noise generator & customizable sound machine. Block distractions, enhance sleep, soothe babies, and support ADHD with deep, high-fidelity, client-side noise.";
+
+const pageTitle = "Best Online Brown Noise Generator - Free Sound Machine for Sleep & Focus";
 const canonicalUrl = "https://boardtools.app/tools/audio/brown-noise";
 const ogImage = "/og/brown-noise.png";
-const keywords = "brown noise generator, brown noise, sleep sounds, sound masking, relax audio, white noise, pink noise, audio utilities, boardtools";
+const keywords = "brown noise, best online brown noise, brown noise for sleep, what is brown noise, brown noise vs white noise, brown noise machine, brown noise for sleeping, white noise vs brown noise, brown noise adhd, is brown noise harmful, what is brown noise good for, deep brown noise, green noise vs brown noise, brown noise vs pink noise, difference between white noise and brown noise";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
   keywords={keywords}
   canonical={canonicalUrl}
   ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
+  <!-- FAQ Page JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is brown noise?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Brown noise (or red noise) is an acoustic signal with a spectral density that is inversely proportional to the square of the frequency (1/f²). This means its energy decreases by 6 dB per octave as the frequency increases, producing a deep, bass-heavy rumble that sounds like heavy rain, distant thunder, or a waterfall.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is brown noise harmful?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>No, brown noise is not harmful when listened to at safe volume levels (ideally below 70-85 decibels for adults, and below 50 decibels for babies). In fact, it is a non-pharmacological sleep and focus aid. To protect your hearing, keep volumes moderate and avoid direct, close proximity to speakers or headphones.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is brown noise good for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Brown noise is exceptionally good for auditory masking, helping block disruptive background sounds like traffic or chatter. It is widely used to improve sleep quality, promote deep focus and concentration (especially for studying or work), soothe babies, reduce symptoms of tinnitus, and manage ADHD.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is brown noise good for sleep?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, brown noise is highly effective for sleep. Its deep, warm frequency profile helps mask sudden, disruptive night noises. This steady auditory blanket prevents your brain from waking up due to environmental changes, facilitating a deeper and more continuous sleep.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does brown noise do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Brown noise works by raising the acoustic baseline in your environment. By filling the background with a steady, low-frequency hum, it masks sudden sounds that would otherwise distract you or wake you up. This helps calm the nervous system, lower stress, and enhance focus.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is brown noise vs white noise?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>While white noise contains all audible frequencies in equal measure, resulting in a bright, static-like hiss, brown noise emphasizes lower frequencies. Brown noise drops off by 6 dB per octave at higher frequencies, making it sound much deeper, warmer, and less harsh than white noise.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does brown noise sound like?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Brown noise sounds like a deep, heavy, and steady rumble. Common comparisons include a heavy, distant rainstorm, a large waterfall, ocean surf, or the low hum of a jet passenger cabin. It lacks the sharp, high-pitched hiss found in white noise.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does brown noise help you sleep?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, brown noise helps you sleep by reducing the dynamic range of sounds in your room. When sudden noises occur, they do not stand out against the background hum, preventing your auditory cortex from reacting and interrupting your sleep cycle.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does brown noise make you poop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>No, the concept of a frequency that causes bowel movements (often called the \"brown note\") is a popular urban myth. Scientific testing has shown that the \"brown note\" is not real, and listening to normal brown noise has no laxative effect.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between white noise and brown noise?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The main difference lies in the frequency spectrum balance. White noise has equal energy across all frequencies (flat spectrum), sounding like high static. Brown noise has a spectrum where power drops off at higher frequencies (deep bass focus), making it sound much deeper, warmer, and more relaxing.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is brown noise good for babies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, brown noise can be very soothing for babies because its low frequencies resemble the loud, swooshing sounds of blood flow heard inside the womb. However, always place the sound source at least 6-7 feet away from the crib, keep the volume under 50 dB, and limit continuous use to sleep times.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the brown noise real?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, brown noise is a real, scientifically defined type of sound (often called Brownian noise or red noise). Its name comes from Robert Brown, the discoverer of Brownian motion (random walk), which describes the mathematical process used to generate its signal. It is not named after the color.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
+  <!-- SEO JSON-LD WebApplication Schema -->
   <!-- SEO JSON-LD WebApplication Schema -->
   <script type="application/ld+json" is:inline>
     {
@@ -310,29 +421,357 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
   </section>
 
   <!-- Educational Article -->
-  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
-    <article class="flex flex-col gap-4">
-      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
-        What is Brown Noise and How Does it Work?
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-12 text-slate print:hidden" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-6">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight">
+        The Science & Practice of Brown Noise for Sleep, ADHD, & Focus
       </h2>
-      <p class="text-sm leading-relaxed">
-        Brown noise, also referred to as red noise, is an acoustic sound signal characterized by a deep, low-frequency sound signature. In mathematical terms, the power density of brown noise decreases by 6 dB per octave as frequency increases (a spectral density proportional to 1/f²). This is a steeper drop-off than pink noise (3 dB/octave) or white noise (constant energy across all frequencies).
-      </p>
-      
-      <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Differences: Brown vs. White vs. Pink Noise
-      </h3>
-      <p class="text-sm leading-relaxed">
-        Unlike white noise, which contains equal energy at all frequencies and often sounds like harsh static or radio hiss, brown noise emphasizes lower frequencies. This gives it a deep, soothing rumble resembling a distant waterfall, heavy rainfall, or low thunder. Pink noise sits comfortably in the middle, offering a balanced, natural sound similar to gentle rustling wind.
+      <p class="text-sm sm:text-base leading-relaxed">
+        If you struggle to calm a racing mind, get high-quality rest, or maintain focus in a noisy environment, you might have heard of sound masking. Among the various sound colors, <strong>brown noise</strong> has risen in popularity as a deeper, warmer, and gentler alternative to traditional static sounds. Our tool offers the <strong>best online brown noise</strong> experience, generated entirely client-side using the Web Audio API for seamless, loop-free, and private playback.
       </p>
 
-      <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Benefits of Listening to Brown Noise
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        What is Brown Noise and How Does it Work?
       </h3>
-      <p class="text-sm leading-relaxed">
-        Due to its low-frequency focus, brown noise is exceptionally effective at masking high-pitched background sounds, such as traffic, conversations, or sirens. Many users find it helps reduce stress, ease symptoms of tinnitus, soothe infants to sleep, and promote deep focus during study or work sessions.
+      <p class="text-sm sm:text-base leading-relaxed">
+        To understand <strong>what is brown noise</strong>, it is helpful to look at how it is mathematically generated. Unlike white noise, which distributes energy equally across all frequencies, brown noise (also known as red noise or Brownian noise) emphasizes lower, bass frequencies. Specifically, the power density of brown noise decreases by 6 decibels per octave as the frequency increases (a spectral density proportional to 1/f²). This creates a deep, soft rumble that resembles a distant thunderstorm, heavy rainfall, or a low jet engine hum.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        The secret behind why it works so well lies in a phenomenon called <strong>auditory masking</strong>. When your room is completely quiet, your brain becomes highly sensitive to sudden auditory spikes, like a passing car, a barking dog, or a floorboard creak. These sudden shifts in volume trigger the brain's alert system, waking you from sleep or disrupting your deep focus. By creating a continuous blanket of background sound, brown noise raises the ambient audio baseline, meaning those sudden noise spikes no longer stand out. The auditory cortex simply filters them out.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Brown Noise vs. White Noise vs. Pink Noise: Which is Better?
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When comparing <strong>brown noise vs white noise</strong>, the primary difference lies in how high frequencies are handled. White noise contains equal power across all frequencies, making it sound like bright television static. For many listeners, this high-frequency hiss can feel harsh or fatiguing over time.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When comparing <strong>white noise vs brown noise</strong>, brown noise filters out the sharp high-end tones to deliver a warmer, gentler soundscape. Additionally, <strong>brown noise vs pink noise</strong> compares two filtered sounds: pink noise sits in the middle with a 3 dB per octave drop-off, sounding like a steady rustling wind, while brown noise has a much deeper, bass-heavy profile. Understanding the <strong>difference between white noise and brown noise</strong> helps you choose the right signal for your specific needs, and our customizable sliders allow you to fine-tune the exact tone, blending between a rumble and lighter textures.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Using a Brown Noise Machine for Sleep and ADHD Support
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Many people turn to a physical <strong>brown noise machine</strong> or a browser-based simulator like ours to block environmental disturbances. Using <strong>brown noise for sleep</strong> is highly effective because of how it blankets the room in a soothing frequency. By raising the baseline noise level, <strong>brown noise for sleeping</strong> covers up sudden acoustic spikes that would otherwise wake you or interrupt your sleep cycles.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Beyond sleep, there is growing scientific and anecdotal interest in using <strong>brown noise adhd</strong> management and cognitive focus. Individuals with ADHD often experience under-arousal in the prefrontal cortex, which can lead to constant distractibility as the brain searches for stimuli. Listening to <strong>deep brown noise</strong> provides a steady, non-distracting sensory baseline that keeps the brain occupied, allowing the individual to focus on tasks without being pulled away by minor background noises.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Is it Safe to Use Brown Noise, and What is it Good For?
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Many first-time users ask: <strong>is brown noise harmful</strong>? The short answer is no, it is completely safe for both adults and babies, provided it is kept at a moderate, comfortable volume (below 50-70 dB) and the speaker or headphones are not placed too close to the ears. When compared to <strong>green noise vs brown noise</strong> (where green noise focuses on mid-range nature-like frequencies), brown noise is much deeper and less intrusive.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        So, <strong>what is brown noise good for</strong>? It is highly effective for sound masking in open offices, soothing infants by mimicking womb-like low-frequency sounds, helping people with tinnitus mask ringing in their ears, and easing anxiety by relaxing the nervous system. Our web tool is designed to work offline, save your battery, and give you high-fidelity sound synthesis without downloading large audio files.
       </p>
     </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <h3 class="font-display font-semibold text-2xl text-primary tracking-tight">
+          Frequently Asked Questions About Brown Noise
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Find answers to the most common questions about using brown noise, deep rumble sounds, and sleep machines.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is brown noise?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Brown noise (or red noise) is an acoustic signal with a spectral density that is inversely proportional to the square of the frequency (1/f²). This means its energy decreases by 6 dB per octave as the frequency increases, producing a deep, bass-heavy rumble that sounds like heavy rain, distant thunder, or a waterfall.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Is brown noise harmful?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>No, brown noise is not harmful when listened to at safe volume levels (ideally below 70-85 decibels for adults, and below 50 decibels for babies). In fact, it is a non-pharmacological sleep and focus aid. To protect your hearing, keep volumes moderate and avoid direct, close proximity to speakers or headphones.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is brown noise good for?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Brown noise is exceptionally good for auditory masking, helping block disruptive background sounds like traffic or chatter. It is widely used to improve sleep quality, promote deep focus and concentration (especially for studying or work), soothe babies, reduce symptoms of tinnitus, and manage ADHD.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Is brown noise good for sleep?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, brown noise is highly effective for sleep. Its deep, warm frequency profile helps mask sudden, disruptive night noises. This steady auditory blanket prevents your brain from waking up due to environmental changes, facilitating a deeper and more continuous sleep.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does brown noise do?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Brown noise works by raising the acoustic baseline in your environment. By filling the background with a steady, low-frequency hum, it masks sudden sounds that would otherwise distract you or wake you up. This helps calm the nervous system, lower stress, and enhance focus.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is brown noise vs white noise?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>While white noise contains all audible frequencies in equal measure, resulting in a bright, static-like hiss, brown noise emphasizes lower frequencies. Brown noise drops off by 6 dB per octave at higher frequencies, making it sound much deeper, warmer, and less harsh than white noise.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does brown noise sound like?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Brown noise sounds like a deep, heavy, and steady rumble. Common comparisons include a heavy, distant rainstorm, a large waterfall, ocean surf, or the low hum of a jet passenger cabin. It lacks the sharp, high-pitched hiss found in white noise.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does brown noise help you sleep?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, brown noise helps you sleep by reducing the dynamic range of sounds in your room. When sudden noises occur, they do not stand out against the background hum, preventing your auditory cortex from reacting and interrupting your sleep cycle.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does brown noise make you poop?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>No, the concept of a frequency that causes bowel movements (often called the "brown note") is a popular urban myth. Scientific testing has shown that the "brown note" is not real, and listening to normal brown noise has no laxative effect.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the difference between white noise and brown noise?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The main difference lies in the frequency spectrum balance. White noise has equal energy across all frequencies (flat spectrum), sounding like high static. Brown noise has a spectrum where power drops off at higher frequencies (deep bass focus), making it sound much deeper, warmer, and more relaxing.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 11 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Is brown noise good for babies?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, brown noise can be very soothing for babies because its low frequencies resemble the loud, swooshing sounds of blood flow heard inside the womb. However, always place the sound source at least 6-7 feet away from the crib, keep the volume under 50 dB, and limit continuous use to sleep times.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 12 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Is the brown noise real?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Yes, brown noise is a real, scientifically defined type of sound (often called Brownian noise or red noise). Its name comes from Robert Brown, the discoverer of Brownian motion (random walk), which describes the mathematical process used to generate its signal. It is not named after the color.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Toast notification for link copy -->
@@ -1089,6 +1528,32 @@ const keywords = "brown noise generator, brown noise, sleep sounds, sound maskin
       if (e.target === howItWorksModal) {
         howItWorksModal.classList.add("hidden");
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Start everything
