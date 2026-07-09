@@ -98,34 +98,82 @@ const keywords =
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does this compound interest calculator work?",
+          "name": "what is compound interest calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Enter your starting balance, interest rate, time period and compounding frequency, and the calculator applies the compound interest formula A = P(1 + r/n)^(nt) to project your future value. You can add regular extra contributions, model withdrawals, and adjust for inflation to see your real, after-inflation balance."
+            "text": "<p>A compound interest calculator is a tool designed to calculate how your initial savings or investments grow over time by earning interest on both your principal and the accumulated interest from previous periods. It helps project the exponential growth of wealth for savings accounts, investment portfolios, 401(k) plans, and retirement accounts.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "What is the difference between daily and monthly compounding?",
+          "name": "how to do compound interest on a calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Daily compounding adds interest to your balance 365 times a year, while monthly compounding does so 12 times a year. The more frequently interest compounds, the faster your money grows. Use this daily compound interest calculator or switch to monthly, annual, or continuous compounding to compare the results."
+            "text": "<p>To do compound interest on a standard calculator, you use the formula A = P(1 + r/n)^(nt). For example, to calculate growth for a $1,000 principal at a 5% interest rate compounded monthly for 10 years, compute: 1 + (0.05 / 12) = 1.004167. Raise this to the power of 120 (months) to get 1.647, then multiply by $1,000 to get a final balance of $1,647.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Can I add extra monthly contributions or withdrawals?",
+          "name": "what is the best compound interest calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. This is a compound interest calculator with extra contributions and withdrawals. Add a recurring monthly or annual deposit to model regular saving, or schedule withdrawals to see how drawing down funds affects long-term growth — perfect for planning a 401k or retirement pot."
+            "text": "<p>The best compound interest calculator is one that allows flexible customization of compounding frequencies (daily, monthly, quarterly, annually, or continuously), regular additional contributions or withdrawals, inflation adjustments, and tax calculations. Our free online calculator offers all of these features client-side to ensure maximum privacy and instant feedback.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Is this compound interest calculator free?",
+          "name": "how much compound interest calculator",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. This is a 100% free, online compound interest calculator that runs entirely in your browser. No sign-up is required and your numbers never leave your device."
+            "text": "<p>How much compound interest you can earn depends entirely on four factors: your initial principal (P), your annual interest rate (r), the compounding frequency (n), and the time horizon in years (t). A higher interest rate and a longer time horizon will compound significantly more interest, making your money work harder for you.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to put compound interest formula in calculator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To input the compound interest formula into a scientific calculator, key in: <strong>P * (1 + r/n) ^ (n * t)</strong>. For example, for $5,000 at 6% compounded quarterly for 5 years, enter: <strong>5000 * (1 + 0.06 / 4) ^ (4 * 5)</strong>, which evaluates to $6,734.28.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to find time in compound interest calculator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To find the time (t) required to reach a specific financial goal with compound interest, use the formula t = ln(A/P) / [n * ln(1 + r/n)]. For example, if you want your money to double (A/P = 2) at a 7% interest rate compounded annually, the time is ln(2) / ln(1.07), which is approximately 10.24 years (often estimated by the Rule of 72 as 72 / 7 = 10.28 years).</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to compound interest on financial calculator",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a financial calculator (like the TI BA II Plus), you use the time-value-of-money (TVM) buttons. Enter the number of periods as <strong>N</strong>, the interest rate per year as <strong>I/Y</strong>, the present value (initial investment) as a negative number in <strong>PV</strong>, and the periodic payment (if any) as <strong>PMT</strong>. Set the compounding periods per year (<strong>P/Y</strong> and <strong>C/Y</strong>), then press <strong>CPT</strong> and <strong>FV</strong> to compute the future value.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how does compound interest work",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Compound interest works by adding the interest you earn back to your principal balance at the end of each compounding period. In the next period, you earn interest on a larger total balance (principal + prior interest). This compounding effect creates exponential growth, accelerating wealth accumulation over long time horizons.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how does the age that a person starts saving impact the amount they can earn in compound interest",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The age you start saving has a dramatic impact due to the exponential nature of compounding. Starting early gives your money more time to compound. For example, a person who invests $200 a month starting at age 25 will accrue roughly twice as much wealth by age 65 as someone starting at age 35, even though they only contributed for 10 additional years. Time is the most critical element of compound interest.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "what is the difference between simple and compound interest",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Simple interest is calculated only on the original principal amount. The interest earned is the same every year. Compound interest is calculated on both the initial principal and the accumulated interest from all previous periods, meaning your earnings grow at an accelerating rate over time.</p>"
           }
         }
       ]
@@ -877,56 +925,253 @@ const keywords =
     </article>
 
     <!-- FAQ -->
-    <div class="flex flex-col gap-4">
-      <h2
-        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
-      >
-        Frequently Asked Questions
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary text-center mb-2">
+        Compound Interest Calculator FAQs
       </h2>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How does this compound interest calculator work?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Enter your starting balance, interest rate, time period, and
-            compounding frequency, and the calculator applies the formula A =
-            P(1 + r/n)^(nt) to project your future value. You can add extra
-            contributions, model withdrawals, and adjust for inflation to see
-            your real, after-inflation balance.
-          </p>
+      <p class="text-xs text-slate text-center mb-6">
+        Find answers to the most common questions about compound interest calculations, formulas, and growth.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a compound interest calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A compound interest calculator is a tool designed to calculate how your initial savings or investments grow over time by earning interest on both your principal and the accumulated interest from previous periods. It helps project the exponential growth of wealth for savings accounts, investment portfolios, 401(k) plans, and retirement accounts.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            What is the difference between daily and monthly compounding?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Daily compounding adds interest 365 times a year, while monthly
-            compounding does so 12 times a year. The more frequently interest
-            compounds, the faster your money grows. Switch between daily,
-            monthly, annual, and continuous compounding to compare the results.
-          </p>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to do compound interest on a calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To do compound interest on a standard calculator, you use the formula A = P(1 + r/n)^(nt). For example, to calculate growth for a $1,000 principal at a 5% interest rate compounded monthly for 10 years, compute: 1 + (0.05 / 12) = 1.004167. Raise this to the power of 120 (months) to get 1.647, then multiply by $1,000 to get a final balance of $1,647.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Can I add extra monthly contributions or withdrawals?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. This is a compound interest calculator with extra contributions
-            and withdrawals. Add a recurring deposit to model regular saving, or
-            schedule withdrawals to see how drawing down funds affects long-term
-            growth &mdash; perfect for 401k or retirement planning.
-          </p>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the best compound interest calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The best compound interest calculator is one that allows flexible customization of compounding frequencies (daily, monthly, quarterly, annually, or continuously), regular additional contributions or withdrawals, inflation adjustments, and tax calculations. Our free online calculator offers all of these features client-side to ensure maximum privacy and instant feedback.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Is this compound interest calculator free?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. This is a 100% free, online compound interest calculator that
-            runs entirely in your browser. No sign-up is required and your
-            numbers never leave your device.
-          </p>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much compound interest calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>How much compound interest you can earn depends entirely on four factors: your initial principal (P), your annual interest rate (r), the compounding frequency (n), and the time horizon in years (t). A higher interest rate and a longer time horizon will compound significantly more interest, making your money work harder for you.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to put compound interest formula in calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To input the compound interest formula into a scientific calculator, key in: <strong>P * (1 + r/n) ^ (n * t)</strong>. For example, for $5,000 at 6% compounded quarterly for 5 years, enter: <strong>5000 * (1 + 0.06 / 4) ^ (4 * 5)</strong>, which evaluates to $6,734.28.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to find time in compound interest calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To find the time (t) required to reach a specific financial goal with compound interest, use the formula t = ln(A/P) / [n * ln(1 + r/n)]. For example, if you want your money to double (A/P = 2) at a 7% interest rate compounded annually, the time is ln(2) / ln(1.07), which is approximately 10.24 years (often estimated by the Rule of 72 as 72 / 7 = 10.28 years).</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to compound interest on financial calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a financial calculator (like the TI BA II Plus), you use the time-value-of-money (TVM) buttons. Enter the number of periods as <strong>N</strong>, the interest rate per year as <strong>I/Y</strong>, the present value (initial investment) as a negative number in <strong>PV</strong>, and the periodic payment (if any) as <strong>PMT</strong>. Set the compounding periods per year (<strong>P/Y</strong> and <strong>C/Y</strong>), then press <strong>CPT</strong> and <strong>FV</strong> to compute the future value.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does compound interest work?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Compound interest works by adding the interest you earn back to your principal balance at the end of each compounding period. In the next period, you earn interest on a larger total balance (principal + prior interest). This compounding effect creates exponential growth, accelerating wealth accumulation over long time horizons.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does the age that a person starts saving impact the amount they can earn in compound interest?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The age you start saving has a dramatic impact due to the exponential nature of compounding. Starting early gives your money more time to compound. For example, a person who invests $200 a month starting at age 25 will accrue roughly twice as much wealth by age 65 as someone starting at age 35, even though they only contributed for 10 additional years. Time is the most critical element of compound interest.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the difference between simple and compound interest?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Simple interest is calculated only on the original principal amount. The interest earned is the same every year. Compound interest is calculated on both the initial principal and the accumulated interest from all previous periods, meaning your earnings grow at an accelerating rate over time.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1974,6 +2219,32 @@ Calculated 100% privately via BoardTools.
       if (e.target === infoModal) {
         infoModal.classList.add("hidden");
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Initialize Page
