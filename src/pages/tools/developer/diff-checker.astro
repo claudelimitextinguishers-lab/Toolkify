@@ -5,12 +5,13 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Text Diff Checker";
 const category = "developer";
 const tier = "Developer & Text Utilities";
-const description = "Compare two texts or files side-by-side or inline. Highlight character, word, or line-level changes instantly with 100% private client-side diffing.";
+const description = "Compare two texts or files side-by-side or inline. Highlight character, word, or line-level changes instantly with this free online text diff checker. Works with JSON, XML, HTML, and SQL, fully private client-side processing.";
 
 // SEO Metadata
-const pageTitle = "Text Diff Checker - Side-by-Side File & Text Comparison";
-const keywords = "diff checker, text compare, compare files, side by side diff, online diff, word diff, line diff, character diff, text comparator, file diff, web diff tool";
+const pageTitle = "Text Diff Checker - Online File & Code Comparison Tool";
 const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
+const ogImage = "/og/text-diff-checker.png";
+const keywords = "Text Diff Checker, diff checker, online diff checker, diff checker online, code diff checker, file diff checker, json diff checker, text diff checker, xml diff checker, string diff checker, word diff checker, character diff checker, list diff checker, html diff checker, sql diff checker";
 ---
 
 <Layout 
@@ -20,6 +21,7 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
   toolCategory={category}
   keywords={keywords}
   canonical={canonicalUrl}
+  ogImage={ogImage}
   hideBanner={true}
 >
   <!-- SEO JSON-LD WebApplication Schema -->
@@ -50,6 +52,93 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
       }
     }
   </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://boardtools.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Developer & Text Utilities",
+          "item": "https://boardtools.app/#developer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Text Diff Checker",
+          "item": "https://boardtools.app/tools/developer/diff-checker"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is diff checker",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>diff checker</strong> is an online utility or software tool that compares two sets of text or source code files side-by-side or inline. It automatically identifies and highlights lines, words, or individual characters that have been added, removed, or modified between the two versions, making manual text comparison obsolete.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to use a diff checker",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To use a <strong>diff checker</strong>, simply paste your original text or code into the left pane (Original) and the updated version into the right pane (Modified). Alternatively, you can upload files directly. The tool instantly compares the inputs in real-time, highlighting deletions in red and insertions in green.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this support file diff checker uploads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes, this <strong>file diff checker</strong> supports uploading local documents. You can drag and drop or upload files such as txt, json, xml, html, css, js, ts, and sql directly to load and compare them instantly.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it as a json diff checker or xml diff checker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Absolutely. It serves as a specialized <strong>json diff checker</strong> and <strong>xml diff checker</strong>. Structured markup formats are aligned so you can pinpoint exactly which keys, nesting tags, or values have been modified between your files.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data safe with this online diff checker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Yes. Unlike other <strong>online diff checker</strong> utilities that send your data to a server, this tool processes everything 100% client-side. The diffing calculations run locally in your browser's Web Worker sandbox, ensuring your sensitive text, keys, and code remain entirely private.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between line, word, and character diff checker modes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Line mode highlights whole rows of changes. A <strong>word diff checker</strong> focuses on inline word alterations, making it ideal for prose and paragraphs. A <strong>character diff checker</strong> isolates individual letter and punctuation changes, which is perfect for debugging code syntax typos.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
 
   <section class="max-w-[1400px] w-full mx-auto px-4 md:px-8 py-6 flex flex-col gap-6 animate-fade-in pb-16 print:p-0">
     <!-- Breadcrumb & Header -->
@@ -294,6 +383,212 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
         </div>
       </div>
     </div>
+
+    <!-- SEO Content & FAQ Section -->
+    <section class="mt-12 flex flex-col gap-10 border-t border-hairline pt-10" aria-label="About Text Diff Checker">
+      <div class="flex flex-col gap-4 max-w-3xl">
+        <h2 class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary">
+          Free Text Diff Checker: Streamlined Online File &amp; Code Comparison
+        </h2>
+        <p class="text-sm text-slate leading-relaxed">
+          Welcome to the ultimate <strong>Text Diff Checker</strong>, designed to help you quickly find differences between two pieces of text, document revisions, code files, or data strings. Whether you are a programmer doing a code review, an editor proofreading article drafts, or a system admin verifying server config files, checking changes manually is tedious and error-prone. Our high-performance, client-side <strong>online diff checker</strong> automates this task, delivering instant visual comparisons.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-lg text-primary">
+            Indispensable Code Diff Checker for Developers
+          </h3>
+          <p class="text-sm text-slate leading-relaxed">
+            Writing code demands extreme precision, and even a single misplaced character can break an application. This <strong>code diff checker</strong> supports syntax and structure-level comparison across standard formats. Paste your files directly to use it as a <strong>json diff checker</strong> or an <strong>xml diff checker</strong>. It works equally well as an <strong>html diff checker</strong> for styling templates or a <strong>sql diff checker</strong> for validating complex database queries. Pinpoint modifications and verify bug fixes effortlessly.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-lg text-primary">
+            Versatile File Diff Checker with Drag &amp; Drop
+          </h3>
+          <p class="text-sm text-slate leading-relaxed">
+            No need to copy and paste manually. Our interactive <strong>file diff checker</strong> lets you drag and drop text documents or code files directly into the workspaces. The tool recognizes standard text-based files, allowing you to run a comparison immediately. Select from Side-by-Side (Split) mode for clear comparative layouts or Inline mode for unified revision streams. Perfect for auditing configuration files, text drafts, scripts, and logs.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-lg text-primary">
+            Adjustable Comparison Granularity
+          </h3>
+          <p class="text-sm text-slate leading-relaxed">
+            Different workflows require different levels of accuracy. Use our <strong>word diff checker</strong> for analyzing documents, articles, and prose where whole words are replaced or rewritten. Switch to the <strong>character diff checker</strong> for precise typo scanning or syntax inspections. For general code logic reviews, standard line-level comparisons show added or deleted lines with subtle intra-line highlighting, ensuring you never miss a minor string update.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <h3 class="font-display font-semibold text-lg text-primary">
+            Secure and Private String Diff Checker
+          </h3>
+          <p class="text-sm text-slate leading-relaxed">
+            Privacy is our top priority. Unlike a traditional <strong>diff checker online</strong> utility that uploads your data to external servers, our <strong>string diff checker</strong> operates 100% locally in your web browser. Using sandboxed Web Workers, your original and modified files are parsed directly inside your browser memory. This guarantees that your sensitive API tokens, database passwords, proprietary source codes, and private documents never leak online.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ Section matching JSON-LD -->
+      <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-10">
+        <h2 class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary text-center mb-2">
+          Text Diff Checker FAQs
+        </h2>
+        <p class="text-xs text-slate text-center mb-6">
+          Find answers to the most common questions about comparing text files, code, and documents online.
+        </p>
+        
+        <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+          <!-- FAQ 1 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>What is diff checker</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>A <strong>diff checker</strong> is a utility tool designed to compare two sets of text or source code files side-by-side or inline. It parses both inputs, aligns the common text blocks, and highlights precisely where additions, deletions, and modifications occur. This eliminates the need to perform slow and error-prone line-by-line manual inspections.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>How to use a diff checker</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>To use an online <strong>diff checker</strong>, paste your baseline/original content into the left pane (Original) and the updated content into the right pane (Modified). You can also drag and drop files directly. The tool computes the difference in real-time, displaying deleted lines or words in red highlights and added elements in green highlights.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>Does this support file diff checker uploads?</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>Yes, this <strong>file diff checker</strong> allows you to load files directly. Use the upload buttons or drag files like HTML, JSON, CSS, XML, Javascript, and SQL to populate the comparison panes instantly without needing manual copy-pasting.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>Can I use it as a json diff checker or xml diff checker?</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>Yes. This tool is optimized to perform as a <strong>json diff checker</strong> and <strong>xml diff checker</strong>. It aligns formatted markup structures, making it extremely easy to spot changes in nesting levels, configuration values, or tags.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>Is my data safe with this online diff checker?</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>Yes. Unlike most other tools, this <strong>online diff checker</strong> processes all calculations entirely on your client machine. By utilizing Web Workers, your data is compared locally inside your browser and is never uploaded to any remote server, giving you absolute privacy.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-accordion-item group">
+            <button
+              type="button"
+              class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+              aria-expanded="false"
+            >
+              <span>What is the difference between line, word, and character diff checker modes?</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+              <p>Line mode highlights complete row adjustments. The <strong>word diff checker</strong> mode highlights specific word replacements within lines, ideal for copywriters. The <strong>character diff checker</strong> mode highlights single letter or symbol differences, which helps developers find typos or formatting bugs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </section>
   <!-- How it Works Modal -->
@@ -1514,6 +1809,32 @@ const canonicalUrl = "https://boardtools.app/tools/developer/diff-checker";
 
   originalTextarea.addEventListener('input', maybeAutoScroll);
   changedTextarea.addEventListener('input', maybeAutoScroll);
+
+  // FAQ Accordion Toggle Interaction
+  const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) {
+        content.classList.toggle("hidden");
+      }
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
+  });
 
   // Start state restoration on page load
   restoreState();
