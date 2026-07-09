@@ -5,14 +5,15 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Speaker Phase Tool";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Diagnose speaker wiring and polarity issues with matched in-phase and out-of-phase signals.";
+const description = "Test speaker polarity and diagnose phase issues with our free Speaker Phase Tool. Check speaker phase cancellation, wiring, and phase switch alignment.";
+const pageTitle = "Speaker Phase Tool - Online Speaker Polarity & Phase Tester";
 const canonicalUrl = "https://boardtools.app/tools/audio/speaker-phase";
 const ogImage = "/og/speaker-phase.png";
-const keywords = "speaker phase, polarity test, audio phase check, invert phase web audio, subwoofer polarity check, speaker wiring test, stereo phase test, online audio frequency generator";
+const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker phase tester, how to check speaker phase, speaker phase cancellation, speaker phase test app, speaker phase issues, speaker phase switch";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
@@ -20,7 +21,66 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
   canonical={canonicalUrl}
   ogImage={ogImage}
   ogType="website"
+  hideBanner={true}
 >
+  <!-- FAQ Page JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "what is speaker phase",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Speaker phase refers to the timing and polarity relation between two or more audio speaker units. When multiple speakers reproduce the same audio signal, their cones should move forward and backward in unison (in-phase). If one speaker's polarity is inverted relative to the other, they operate out-of-phase, causing sound waves to cancel each other out.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to test speaker phase",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You can test speaker phase using our free online Speaker Phase Tool. Play a low-frequency tone (between 40 Hz and 80 Hz) or pink noise through your sound system. Toggle between the In-Phase and Out-of-Phase modes. If the bass is noticeably louder and fuller in the In-Phase mode, your speakers are in-phase. If the bass disappears or gets weaker, they are out-of-phase.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to check speaker phase",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To check speaker phase, sit directly in the center of your stereo speakers and play a mono test signal, such as low-frequency sine waves or correlated pink noise. In-phase speakers produce a strong, centered audio image with full bass. Out-of-phase speakers produce a wide, unfocused soundstage with a hollow center and severely diminished low frequencies.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to tell if speaker is out of phase",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You can tell if a speaker is out of phase by listening for a lack of bass response, a muddy mid-range, and an unstable center image where vocals feel like they are coming from the sides rather than the center. You can also visually inspect speaker wiring to check if the positive (+) terminal of your amplifier connects to the negative (-) terminal of one of the speakers.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "speaker out of phase how to fix",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To fix a speaker that is out-of-phase, turn off your audio receiver or amplifier and inspect the speaker wires. Ensure that the positive (+) output terminal (usually red) on the amplifier connects to the positive (+) terminal on the speaker, and the negative (-) terminal (usually black) connects to the negative (-) terminal on the speaker. If they are crossed, swap the connections on one of the speakers to restore proper polarity alignment.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "how to optimize speaker phase alignment",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To optimize speaker phase alignment, position your speakers symmetrically relative to your primary listening position to avoid acoustic delays. For subwoofers, use a speaker phase switch or a variable phase control dial on the subwoofer amplifier panel to adjust the phase angle (from 0 to 180 degrees) until the crossover frequency range sounds punchy, seamless, and fully integrated with your main monitors.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
   <!-- SEO JSON-LD WebApplication Schema -->
   <script type="application/ld+json" is:inline>
     {
@@ -372,18 +432,207 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
   </section>
 
   <!-- Educational Article -->
-  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden" aria-labelledby="about-tool-heading">
-    <article class="flex flex-col gap-4">
-      <h2 id="about-tool-heading" class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight">
-        Acoustic Phase Cancellation & Speaker Polarity
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-12 text-slate print:hidden mt-12" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-6">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight">
+        Acoustic Phase Alignment & Speaker Polarity Guide
       </h2>
-      <p class="text-sm leading-relaxed">
-        Speaker phase testing is one of the most critical steps in audio calibration. When two stereo speakers are wired properly in-phase, they move in perfect synchronicity: both diaphragms push outward and pull inward together. This constructive interference reinforces acoustic waves, especially low-frequency bass notes.
+      <p class="text-sm sm:text-base leading-relaxed">
+        Achieving perfect audio reproduction requires careful calibration, and verifying your system's phase alignment is one of the most critical steps in any audio setup. Our online <strong>Speaker Phase Tool</strong> serves as a reliable digital <strong>speaker phase tester</strong>, enabling you to identify wiring issues that lead to acoustic degradation. When stereo speakers are set up properly, their cones move in absolute synchronization. This means both diaphragms push outward and pull inward at the exact same moments, creating constructive acoustic interference that reinforces your sound, particularly in low-frequency registers. When speakers are misaligned, the listening experience suffers dramatically, losing punch, clarity, and stereo imaging.
       </p>
-      <p class="text-sm leading-relaxed">
-        However, if one speaker is wired backwards (positive wire connected to the negative terminal), it will be 180 degrees out-of-phase with the other. While one speaker pushes air, the other pulls it. This causes destructive interference, resulting in acoustic <strong>phase cancellation</strong>. The bass frequencies will sound weak or vanish completely, and the soundstage will feel hollow or disorienting.
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        What is Speaker Phase Cancellation?
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        If one of your speakers is wired incorrectly (such as the positive lead connecting to the negative terminal), it will run 180 degrees out-of-phase with its counterpart. This leads to <strong>speaker phase cancellation</strong>, a destructive interference phenomenon where the positive acoustic wave from one channel is neutralized by the inverted negative wave from the opposing channel. Instead of hearing full, punchy bass, you experience a hollow, fatiguing soundstage. In professional driver design, components like a <strong>speaker phase plug</strong> are installed in the center of the cone to prevent physical phase anomalies at higher frequencies by routing sound waves cleanly, but electrical wiring remains the most common source of <strong>speaker phase issues</strong>.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        A classic indicator of a system that is out-of-phase is a diffuse, wandering stereo image. Vocals, which should normally sound locked directly in the center of the stereo field, will seem to emanate from the far left and right edges, or feel as though they are pushing against the sides of your head. If you use a physical <strong>speaker phase switch</strong> on your subwoofer or audio interface, toggling it can instantly flip the signal polarity by 180 degrees to test if alignment improves, showing how sensitive the human ear is to phase differences.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        How to Check Speaker Phase and Polarities
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Wondering <strong>how to check speaker phase</strong> without buying expensive hardware? An online <strong>speaker phase test app</strong> makes it incredibly simple. By playing low-frequency sine waves (like 60 Hz or 80 Hz) or correlated pink noise, you can quickly evaluate the relationship between your speakers. When you run a <strong>speaker phase test</strong>, you compare the system's output in both In-Phase and Out-of-Phase modes.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        During a standard test, you should sit directly in the sweet spot between your left and right speakers. If the audio sounds full and bass-heavy in In-Phase mode, your wiring is correct. If the low end disappears during In-Phase playback but returns when you switch to Out-of-Phase, you have a polarity reversal. Learning <strong>how to test speaker phase</strong> using our browser-based utility allows you to diagnose these anomalies instantly on home stereos, studio monitors, car audio systems, and multi-speaker setups.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Acoustic Optimization & Troubleshooting Phase Switches
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Subwoofers are particularly prone to phase issues because low-frequency waves are long and interact heavily with room boundaries. Many powered subwoofers feature a dedicated <strong>speaker phase switch</strong> (toggling between 0° and 180°) or a variable phase dial. This control compensates for physical distance differences between the subwoofer and the main stereo speakers. By adjusting this switch while playing a low-frequency test tone, you can align the waves at your listening position, ensuring the subwoofer's output constructively sums with the main speakers instead of cancelling them out.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Resolving Common Speaker Phase Issues
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        If your test results reveal that your system is out-of-phase, the fix is straightforward. Turn off your amplifier or receiver to prevent any short circuits. Inspect the speaker wires connecting your amp to the speakers. Standard speaker wires usually have a stripe, ribbing, or color-coding to help differentiate the lines. Make sure the positive (+) red terminal on your amplifier connects directly to the positive (+) red terminal on the back of your speaker cabinet. Do the same for the negative (-) black terminals. If you find a mismatch, swap the wires on one speaker channel, turn your amplifier back on, and re-run our <strong>Speaker Phase Tool</strong> to confirm that proper phase alignment has been restored, returning full fidelity and punch to your system.
       </p>
     </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <h3 class="font-display font-semibold text-2xl text-primary tracking-tight">
+          Frequently Asked Questions
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Find answers to common questions about testing, identifying, and optimizing speaker phase configurations.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to check speaker phase?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To check speaker phase, sit directly between your stereo speakers and play a mono low-frequency tone or pink noise using our Speaker Phase Tool. In-phase speakers produce a clear, centered audio image with full bass. Out-of-phase speakers produce a hollow, disorienting soundstage where bass frequencies cancel out and vocals sound wide and unfocused.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Speaker out of phase how to fix?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To fix a speaker that is out of phase, turn off your audio amplifier and check the speaker wire connections. Make sure that the positive (+) amplifier terminal connects to the positive (+) speaker terminal, and the negative (-) amplifier terminal connects to the negative (-) speaker terminal. If they are reversed on one channel, swap them to restore correct polarity.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is speaker phase?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Speaker phase refers to the timing alignment and electrical polarity relation between multiple speakers. When speakers are in-phase, their diaphragms move forward and backward simultaneously. When they are out-of-phase, one moves forward while the other moves backward, causing sound waves to cancel each other out.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to optimize speaker phase alignment?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Optimize speaker phase alignment by placing your stereo speakers equidistant from your listening position. For subwoofers, place them along the same plane as the main monitors and adjust the physical phase switch or phase control dial (from 0° to 180°) on the subwoofer panel until the crossover range sounds punchy and cohesive.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to tell if speaker is out of phase?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You can tell if a speaker is out of phase by a severe loss of low-frequency bass output, a muddy midrange response, and a lacking center image. Vocals will sound wide and diffuse, appearing to come from the side walls rather than directly in front of you. Inspecting amplifier connections can also confirm reversed positive and negative wires.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test speaker phase?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test speaker phase, play low-frequency sine waves (between 40 Hz and 80 Hz) or pink noise through our Speaker Phase Tool. Switch between the In-Phase and Out-of-Phase controls. If In-Phase sounds thin and Out-of-Phase sounds bassier, your physical speaker wires are crossed. Swap the leads on one channel to fix it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal (Verbatim Structure) -->
@@ -1226,4 +1475,32 @@ const keywords = "speaker phase, polarity test, audio phase check, invert phase 
       }
     }
   </style>
+
+  <script>
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
+  </script>
 </Layout>
