@@ -5,15 +5,106 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Headphone Test Suite";
 const category = "audio";
 const tier = "Audio Utilities";
-const description = "Diagnostic utility to test stereo balance, frequency sweep limits, low-end bass extension, and driver dynamic response.";
+const description = "Free online headphone test. Diagnostic utility to check left right headphone channels, frequency sweep limits, low-end bass, and driver dynamic response.";
+
+const pageTitle = "Online Headphone Test - Left Right Audio & Sound Quality Check";
+const canonicalUrl = "https://boardtools.app/tools/audio/headphone-test";
+const ogImage = "/og/headphone-test.png";
+const keywords = "headphone test, headphone test music, left right headphone test, headphone test left and right, left and right headphone test, online headphone test, right and left headphone test, headphone test left right, headphone test sound, audio headphone test, stereo headphone test";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
+  <!-- FAQ Page JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to test headphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To perform an online headphone test, connect your headphones to your device, set your master volume to a safe level (around 50%), and run diagnostic tests. A comprehensive check includes testing the left and right audio channels for correct orientation, running a frequency sweep from 20 Hz to 20,000 Hz, testing sub-bass extension, and checking for driver rattle at high volumes.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone microphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You can test a headphone microphone by opening your operating system's sound settings or using an online mic testing tool. Select your headphone microphone as the input device, speak at a normal level, and observe the input volume meter. You can also record a short audio sample and play it back to check for clarity, static, or background hums.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone sound quality before buying?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test headphone sound quality before buying, listen to a familiar playlist or high-quality headphone test music that spans various genres. Check the low-end sub-bass extension, the clarity of mid-range vocals, and the crispness of high-frequency treble. Additionally, check for a wide soundstage and natural imaging to ensure the instruments sound properly separated.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone quality?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Testing headphone quality involves checking frequency response limits, dynamic range, harmonic distortion, and build quality. High-quality headphones should reproduce sub-bass frequencies down to 20 Hz, scale volumes linearly without clipping or rattle, and keep crosstalk between channels to an absolute minimum.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone mic on pc?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a PC, open Settings > System > Sound. Under the Input section, verify that your headphone mic is selected. Speak into the microphone and check the 'Test your microphone' volume bar. If the bar moves, your PC is receiving audio. Alternatively, you can use the Windows Voice Recorder app to record and listen to your voice.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone frequency response?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test headphone frequency response, use a logarithmic frequency sweep tool. This sweeps from 20 Hz to 20,000 Hz in a smooth tone. Listen closely for any volume dips, sudden dropouts, or piercing resonances, which indicate an uneven frequency response curve.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone soundstage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Test headphone soundstage by playing binaural audio recordings or tracks recorded with spatial audio. A wide soundstage creates the illusion that sounds are coming from around you in a three-dimensional space, rather than inside your head. Good soundstage headphones let you precisely pinpoint the direction and distance of instruments.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test left and right headphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To perform a left and right headphone test, use a stereo channel balance test. This pulses audio exclusively to the left side, then to the right side, and finally to the center. Ensure the sound matches the physical tags on your headphones (L and R) and that both channels output equal volume.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test headphone noise cancelling?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test Active Noise Cancelling (ANC), play a simulated background noise, such as office chatter or plane cabin hum, through external speakers. Toggle the noise-cancelling mode on your headphones on and off to hear how much of the low-frequency rumble is blocked. Excellent ANC should significantly reduce constant low-frequency noise.</p>"
+          }
+        }
+      ]
+    }
+  </script>
   <section class="max-w-[1200px] w-full mx-auto px-4 py-3 sm:py-6 flex flex-col gap-3 sm:gap-4 animate-fade-in-up pb-16">
     <!-- Header Title Area -->
     <div class="border-b border-hairline pb-3 sm:pb-4 flex flex-col gap-2">
@@ -683,6 +774,274 @@ const description = "Diagnostic utility to test stereo balance, frequency sweep 
       </button>
     </div>
   </div>
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-12 text-slate print:hidden mt-12" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-6">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight">
+        Comprehensive Headphone Test & Audio Calibration Guide
+      </h2>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Whether you are a casual listener, a competitive gamer, or an audiophile, verifying that your audio hardware is functioning correctly is critical to experiencing sound as the creator intended. Our online headphone test offers a professional-grade, browser-based diagnostic utility that requires no downloads, registrations, or installations. By using the Web Audio API, this tool generates real-time mathematical signals directly inside your web browser, giving you an accurate, uncompressed audio headphone test to assess your hardware's performance.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        How to Run a Left Right Headphone Test
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        The fundamental first step in any diagnostic flow is checking the channel assignment. A left and right headphone test ensures that the stereo signals are routed to the correct ears. Wearing your headphones with the incorrect orientation (left ear cup on the right ear, or vice versa) can break the spatial immersion in movies, music, and games. Furthermore, a right and left headphone test lets you confirm channel balance—meaning both drivers output the same level of sound pressure. Run our stereo headphone test to cycle sounds exclusively in the left channel, then the right channel, and finally center mono, checking for proper orientation and balanced volume levels.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Our headphone test left and right sequence isolates each side. During this test, the opposite channel must remain completely silent. If you hear bleeding from one side to the other, your setup suffers from stereo crosstalk. This headphone test left right channel check is essential for detecting cabling defects, loose jacks, or incorrect software audio mixing settings.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Frequency Sweep Limits and Audio Test Music
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Frequency response is a key metric of sound quality. An audio headphone test should evaluate how well your drivers reproduce the entire range of human hearing, which typically spans from 20 Hz to 20,000 Hz. Our built-in logarithmic frequency sweep ramps from the deepest sub-bass registers (30 Hz) up to the high treble limit (18,000 Hz). As the sweep progresses, listen for sudden volume drops, harsh peaks, or resonant buzzes. A high-quality driver will reproduce a smooth, seamless transition.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        While automated sweeps are excellent for identifying technical faults, using dedicated headphone test music is another fantastic way to gauge quality. High-dynamic range acoustic music or orchestral tracks showcase instrument separation, detail retrieval, and overall transient response. A reliable headphone test sound should remain clean and clear without static distortion, even when playing complex arrangements or heavy sub-bass lines.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Testing Sub-Bass and Driver Integrity
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Deep sub-bass extension (below 60 Hz) is difficult for low-quality or poorly sealed headphones to reproduce. Our suite includes custom frequency buttons (40 Hz to 100 Hz) to test low-end responsiveness. A proper acoustic seal is necessary to feel deep bass rumble. Additionally, our driver rattle diagnostic uses a rising amplitude envelope at a sustained 55 Hz. This allows you to listen for physical defects such as voice coil misalignment, hair on the diaphragm, or rattling plastic enclosures, ensuring your hardware remains stable under demanding conditions.
+      </p>
+    </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <h3 class="font-display font-semibold text-2xl text-primary tracking-tight">
+          Frequently Asked Questions About Headphone Diagnostics
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Learn how to test headphone quality, microphone performance, frequency response, soundstage, and active noise cancellation.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test a headphone, connect it to your device and set a safe master volume level (around 50%). Run a channel check to confirm left and right channel orientation, execute a frequency sweep from 30 Hz up to 18,000 Hz, and play deep sub-bass pulses to check driver response and physical rattle.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone microphone?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test a headphone microphone, access your device's sound settings, select the microphone as your active input device, and speak into it. You can observe the input levels or use a basic audio recording tool to capture a short sample and listen for static, low volume, or distortion.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone sound quality before buying?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Before buying, test sound quality by playing high-resolution, familiar music that covers sub-bass, mid-range vocals, and high-frequency treble. Pay attention to instrument separation, clarity, driver speed, and whether the audio sounds muddy, hollow, or uncomfortably sharp.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone quality?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You can test overall headphone quality using a combination of frequency sweeps, dynamic step tests (which check sound depth and signal sensitivity), and channel crosstalk checks. High-quality headphones maintain precise separation and reproduce sound cleanly across the spectrum without cabinet resonance.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone mic on pc?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a PC, go to Settings > System > Sound. Select your headphone mic from the input list and look at the 'Test your microphone' input indicator. If the volume bar moves when you speak, the PC is receiving sound. You can also run the built-in Windows voice recorder app to verify clarity.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone frequency response?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test frequency response, run a continuous audio sweep from 30 Hz to 18,000 Hz. Listen for sudden drops in volume or sharp, piercing peaks. This helps you identify the physical limitations of your headphone drivers and potential imbalances across treble, midrange, and bass ranges.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone soundstage?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You can test headphone soundstage by listening to 3D binaural recordings or gaming test tracks. A wide soundstage creates the perception of physical space and distance, letting you easily identify where different instruments or sounds are placed around you.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test left and right headphone?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test the left and right channels, run a channel orientation check. This sends pulses to the left channel only, then the right channel only, and finally to both. Verify that the sounds match the Left (L) and Right (R) physical markers on your headphone cups.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test headphone noise cancelling?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test Active Noise Cancelling (ANC), play ambient noises like a vacuum, airplane hum, or fan in the room. Toggle your headphones' ANC mode to compare the sound suppression. Quality ANC should heavily suppress constant low-frequency rumbles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <style>
@@ -1747,4 +2106,30 @@ Generated via BoardTools Headphone Test Suite.`;
 
   // Initial Load
   loadHistory();
+
+  // FAQ Accordion Toggle Interaction
+  const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) {
+        content.classList.toggle("hidden");
+      }
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
+  });
 </script>
