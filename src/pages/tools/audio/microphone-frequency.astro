@@ -6,14 +6,90 @@ const name = "Microphone Frequency Response";
 const category = "audio";
 const tier = "Audio Utilities";
 const description = "Analyze and map your microphone's frequency response spectrum and waveforms in real-time.";
+
+const pageTitle = "Microphone Frequency Response - Online Mic Analyzer & Sound Chart";
+const canonicalUrl = "https://boardtools.app/tools/audio/microphone-frequency";
+const ogImage = "/og/microphone-frequency.png";
+const keywords = "microphone frequency response, microphone frequency response measurement, microphone frequency response charts, microphone frequency response chart, wireless microphone frequency chart, microphone frequency, wireless microphone frequency, wireless microphone frequency range";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
 >
+  <!-- FAQ Page JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to test microphone frequency response?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To perform a microphone frequency response measurement, you can use our real-time online Mic Analyzer. Connect your microphone, allow access, and play a calibrated white noise or a logarithmic frequency sweep (20 Hz to 20,000 Hz) through studio monitors. The analyzer will map the input signal, revealing how accurately your microphone captures different frequencies.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is frequency response in microphone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Microphone frequency response is the measure of a microphone's sensitivity across the audible spectrum (usually 20 Hz to 20,000 Hz). It describes how effectively the microphone converts acoustic sound pressure at different frequencies into electrical voltage, determining the tonal character and coloration of the recorded audio.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which microphone has the best frequency response?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The 'best' frequency response depends on the application. For measurement and critical studio recording, a flat frequency response (found in high-end condenser measurement mics) is ideal because it does not color the sound. For vocals, microphones with a presence boost in the mid-to-high frequencies (like the Shure SM58) are preferred to help the voice cut through the mix.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to change microphone frequency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You cannot change the physical frequency response of a microphone capsule itself, as it is fixed by its hardware design. However, you can change the frequency balance of the output using an equalizer (EQ) to boost or cut specific bands, or by utilizing physical switches on the microphone such as low-cut (high-pass) filters.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which wireless microphone frequency is best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The best wireless microphone frequency range is typically in the UHF band (specifically 470 MHz to 608 MHz) because it offers excellent range, signal penetration, and is less congested than 2.4 GHz bands. Always check a wireless microphone frequency chart for your local area to avoid TV channel interference.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to change wireless microphone frequency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To change a wireless microphone frequency, access the menu settings on the transmitter and receiver. Many modern systems feature an automatic sync or scan function: scan for an open channel on the receiver, then align the transmitter with the receiver via infrared (IR) sync or manual channel selection.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to read a microphone frequency response chart?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To read a microphone frequency response chart, look at the frequency line plotted on the graph. The horizontal axis represents pitch (frequencies from 20 Hz bass to 20,000 Hz treble) and the vertical axis represents sensitivity in decibels (dB). A straight, flat line indicates a perfectly neutral response, while peaks indicate boosted bands and dips indicate reduced sensitivity.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
   <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-8 animate-fade-in-up">
     <!-- Breadcrumb & Header -->
     <div class="flex flex-col gap-2">
@@ -352,6 +428,227 @@ const description = "Analyze and map your microphone's frequency response spectr
       </button>
     </div>
   </div>
+
+  <!-- Educational Article -->
+  <section class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-12 text-slate print:hidden mt-12" aria-labelledby="about-tool-heading">
+    <article class="flex flex-col gap-6">
+      <h2 id="about-tool-heading" class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight">
+        The Science of Microphone Frequency Response & Real-Time Measurement
+      </h2>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When choosing, evaluating, or calibrating recording gear, the single most critical factor to analyze is the <strong>microphone frequency response</strong>. This specification represents the microphone capsule's ability to convert acoustic sound pressure waves into electrical signals across the audible spectrum. Because different capsules are built with unique physical diaphragms, materials, and internal acoustic ports, every model possesses a distinct sonic signature. Whether you are performing a professional <strong>microphone frequency response measurement</strong> or tuning a live setup, understanding this response profile is key to obtaining clean, high-fidelity sound.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Deciphering Microphone Frequency Response Charts
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        To visualize how a microphone shapes sound, audio manufacturers supply <strong>microphone frequency response charts</strong>. A <strong>microphone frequency response chart</strong> maps the output level of the microphone (in decibels, or dB) against a series of audio pitches (in Hertz, or Hz) ranging from 20 Hz sub-bass to 20,000 Hz high treble.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        When you study these <strong>microphone frequency response charts</strong>, you will notice a line plotted across the grid. A completely straight, horizontal line indicates a flat response, representing a microphone that captures all frequencies with equal sensitivity. These neutral capsules are ideal for critical <strong>microphone frequency response measurement</strong> applications and room acoustic analysis because they do not color or alter the source sound. In contrast, many popular vocal microphones feature a tailored response curve. For example, they might include a presence boost—a peak between 2 kHz and 6 kHz—which accentuates vocal clarity and helps the singer cut through a dense instrument mix. They may also incorporate a high-pass filter or low-frequency roll-off to mitigate proximity effect rumble and wind noise.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Wireless Microphone Frequency Coordination & Spectrum Selection
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        In live sound, theatrical productions, and broadcasting, handling the <strong>wireless microphone frequency</strong> introduces an additional layer of technical management. Wireless systems transmit audio signals over radio frequency (RF) bands. The typical <strong>wireless microphone frequency range</strong> is located in the Ultra High Frequency (UHF) band, generally between 470 MHz and 608 MHz, though some entry-level and digital units operate in the 900 MHz or 2.4 GHz bands.
+      </p>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Securing a clean, intermodulation-free channel within your system's <strong>wireless microphone frequency range</strong> is vital to avoiding static, RF dropouts, and interference. To navigate congested airwaves, technicians consult a <strong>wireless microphone frequency chart</strong> tailored to their geographical area. A local <strong>wireless microphone frequency chart</strong> indicates which RF channels are occupied by local television stations and emergency communication services. By cross-referencing your system's channels with this chart, you can coordinate multiple transmitters safely. Modern professional receivers often scan the local spectrum automatically, assigning a secure <strong>wireless microphone frequency</strong> to each system to ensure optimal signal integrity throughout the performance.
+      </p>
+
+      <h3 class="font-display font-semibold text-xl text-primary mt-2">
+        Utilizing the Real-Time Mic Analyzer Tool
+      </h3>
+      <p class="text-sm sm:text-base leading-relaxed">
+        Our browser-based microphone analyzer allows you to observe your <strong>microphone frequency</strong> profile in real-time. By utilizing the web browser's native Web Audio API, the tool processes incoming signals and displays a high-resolution, logarithmic spectrum. This logarithmic distribution accurately mirrors human hearing, giving you a detailed view of low-end bass and mid-range frequencies. You can use this tool to check your microphone's response under different environments, test speaker alignment, and visualize how vocal filters affect your tone.
+      </p>
+    </article>
+
+    <!-- FAQ Section -->
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <h3 class="font-display font-semibold text-2xl text-primary tracking-tight">
+          Frequently Asked Questions
+        </h3>
+        <p class="text-sm text-slate leading-relaxed">
+          Find answers to common questions about testing, reading, and configuring microphone frequencies and response profiles.
+        </p>
+      </div>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test microphone frequency response?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To perform a microphone frequency response measurement, you can use our real-time online Mic Analyzer. Connect your microphone, allow access, and play a calibrated white noise or a logarithmic frequency sweep (20 Hz to 20,000 Hz) through studio monitors. The analyzer will map the input signal, revealing how accurately your microphone captures different frequencies.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is frequency response in microphone?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Microphone frequency response is the measure of a microphone's sensitivity across the audible spectrum (usually 20 Hz to 20,000 Hz). It describes how effectively the microphone converts acoustic sound pressure at different frequencies into electrical voltage, determining the tonal character and coloration of the recorded audio.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Which microphone has the best frequency response?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The "best" frequency response depends on the application. For measurement and critical studio recording, a flat frequency response (found in high-end condenser measurement mics) is ideal because it does not color the sound. For vocals, microphones with a presence boost in the mid-to-high frequencies (like the Shure SM58) are preferred to help the voice cut through the mix.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to change microphone frequency?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You cannot change the physical frequency response of a microphone capsule itself, as it is fixed by its hardware design. However, you can change the frequency balance of the output using an equalizer (EQ) to boost or cut specific bands, or by utilizing physical switches on the microphone such as low-cut (high-pass) filters.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Which wireless microphone frequency is best?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The best wireless microphone frequency range is typically in the UHF band (specifically 470 MHz to 608 MHz) because it offers excellent range, signal penetration, and is less congested than 2.4 GHz bands. Always check a wireless microphone frequency chart for your local area to avoid TV channel interference.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to change wireless microphone frequency?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To change a wireless microphone frequency, access the menu settings on the transmitter and receiver. Many modern systems feature an automatic sync or scan function: scan for an open channel on the receiver, then align the transmitter with the receiver via infrared (IR) sync or manual channel selection.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to read a microphone frequency response chart?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To read a microphone frequency response chart, look at the frequency line plotted on the graph. The horizontal axis represents pitch (frequencies from 20 Hz bass to 20,000 Hz treble) and the vertical axis represents sensitivity in decibels (dB). A straight, flat line indicates a perfectly neutral response, while peaks indicate boosted bands and dips indicate reduced sensitivity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
 
 <script>
@@ -1238,5 +1535,31 @@ const description = "Analyze and map your microphone's frequency response spectr
 
   document.addEventListener("astro:before-swap", () => {
     stopMicCapture();
+  });
+
+  // FAQ Accordion Toggle Interaction
+  const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) {
+        content.classList.toggle("hidden");
+      }
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
   });
 </script>
