@@ -53,34 +53,50 @@ const ogImage = "https://boardtools.app/og-default.png";
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does the pregnancy due date calculator work?",
+          "name": "When to take pregnancy test calculator?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Our pregnancy due date calculator estimates your due date using Naegele's rule. It adds 280 days (40 weeks) to the first day of your last menstrual period (LMP). You can also calculate your estimated due date based on your conception date, IVF transfer date, or an ultrasound scan for a more accurate result."
+            "text": "<p>You should generally take a pregnancy test about 12 to 14 days after conception, or on the first day of your missed period. Using a <strong>when to take pregnancy test calculator</strong> helps estimate the earliest date you can get an accurate result based on your last menstrual period (LMP) and average cycle length.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "How accurate is the estimated due date calculator?",
+          "name": "Pregnancy calculator: how many weeks am I?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "An estimated due date is a projection, not a guarantee. Only about 4% of babies are born on their exact due date, and most arrive within two weeks before or after it. Using ultrasound dating or a known conception date generally produces a more accurate due date than LMP alone."
+            "text": "<p>To determine \"how many weeks am I,\" a <strong>pregnancy calculator</strong> tracks gestational age starting from the first day of your last menstrual period (LMP). Even though you aren't conceived yet in the first two weeks, this standard medical calculation places your current week of pregnancy at the elapsed weeks since your LMP.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Can I use the due date calculator based on conception date?",
+          "name": "How far along pregnancy calculator?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Select the conception method and enter your conception date. The due date calculator adds 266 days (38 weeks) from the conception date to estimate your due date, which is useful if you know the exact day of ovulation or fertilization."
+            "text": "<p>A <strong>how far along pregnancy calculator</strong> estimates your current progress by calculating the number of weeks and days that have passed since your last menstrual period (LMP) or conception. It also displays your current trimester and estimated progress percentage to show exactly how far along you are.</p>"
           }
         },
         {
           "@type": "Question",
-          "name": "Does this work as a week by week pregnancy calculator?",
+          "name": "When is my due date calculator?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Beyond the due date, this pregnancy calculator shows your current gestational age in weeks and days, your trimester, a week-by-week progress timeline, and key milestones such as the heartbeat, anatomy scan, viability, and full term."
+            "text": "<p>A <strong>when is my due date calculator</strong> uses Naegele's rule (adding 280 days or 40 weeks to the first day of your last period) to estimate your delivery date. You can also calculate it using your conception date, IVF transfer date, or ultrasound scan results.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When did I conceive by due date calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>If you already know your estimated due date, a <strong>when did i conceive by due date calculator</strong> works backward by subtracting 266 days (38 weeks) from the due date. This gives you the estimated date of conception, which typically coincides with your ovulation window.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What to expect due date calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A <strong>what to expect due date calculator</strong> provides a complete timeline of your pregnancy journey. It outlines what milestones to expect at each stage, such as the baby's first heartbeat (around week 6), the anatomy scan (around week 20), fetal viability (around week 24), and when you reach full term (week 37).</p>"
           }
         }
       ]
@@ -665,45 +681,158 @@ const ogImage = "https://boardtools.app/og-default.png";
       </div>
     </article>
 
-    <!-- FAQ -->
-    <div class="flex flex-col gap-4">
-      <h2
-        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
-      >
-        Frequently Asked Questions
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-2xl sm:text-3xl tracking-tight text-primary text-center mb-2">
+        Pregnancy Due Date Calculator FAQs
       </h2>
-      <div class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How does the pregnancy due date calculator work?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            It estimates your due date using Naegele's rule, adding 280 days (40 weeks) to the first day of your last menstrual period. You can also calculate your estimated due date based on conception date, IVF transfer, or an ultrasound scan for a more accurate result.
-          </p>
+      <p class="text-xs text-slate text-center mb-6">
+        Find answers to the most common questions about pregnancy due dates, tracking weeks, conception timelines, and testing.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>When to take pregnancy test calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You should generally take a pregnancy test about 12 to 14 days after conception, or on the first day of your missed period. Using a <strong>when to take pregnancy test calculator</strong> helps estimate the earliest date you can get an accurate result based on your last menstrual period (LMP) and average cycle length.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            How accurate is the estimated due date calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            A due date is a projection, not a guarantee. Only about 4% of babies are born on their exact due date, and most arrive within two weeks before or after. Ultrasound dating or a known conception date generally produces a more accurate due date than LMP alone.
-          </p>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Pregnancy calculator: how many weeks am I?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To determine "how many weeks am I," a <strong>pregnancy calculator</strong> tracks gestational age starting from the first day of your last menstrual period (LMP). Even though you aren't conceived yet in the first two weeks, this standard medical calculation places your current week of pregnancy at the elapsed weeks since your LMP.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Can I use the due date calculator based on conception date?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. Select the conception method and enter your conception date. The calculator adds 266 days (38 weeks) from that date, which is useful if you know your exact day of ovulation or fertilization.
-          </p>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How far along pregnancy calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A <strong>how far along pregnancy calculator</strong> estimates your current progress by calculating the number of weeks and days that have passed since your last menstrual period (LMP) or conception. It also displays your current trimester and estimated progress percentage to show exactly how far along you are.</p>
+          </div>
         </div>
-        <div class="flex flex-col gap-1.5">
-          <h3 class="text-sm font-semibold text-charcoal">
-            Does this work as a week by week pregnancy calculator?
-          </h3>
-          <p class="text-sm leading-relaxed">
-            Yes. Beyond the due date, this pregnancy calculator shows your current gestational age in weeks and days, your trimester, a week-by-week progress timeline, and key developmental milestones.
-          </p>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>When is my due date calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A <strong>when is my due date calculator</strong> uses Naegele's rule (adding 280 days or 40 weeks to the first day of your last period) to estimate your delivery date. You can also calculate it using your conception date, IVF transfer date, or ultrasound scan results.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>When did I conceive by due date calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>If you already know your estimated due date, a <strong>when did i conceive by due date calculator</strong> works backward by subtracting 266 days (38 weeks) from the due date. This gives you the estimated date of conception, which typically coincides with your ovulation window.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What to expect due date calculator?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A <strong>what to expect due date calculator</strong> provides a complete timeline of your pregnancy journey. It outlines what milestones to expect at each stage, such as the baby's first heartbeat (around week 6), the anatomy scan (around week 20), fetal viability (around week 24), and when you reach full term (week 37).</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1508,6 +1637,32 @@ const ogImage = "https://boardtools.app/og-default.png";
     btnConception?.addEventListener("click", () => switchMethod("conception"));
     btnIvf?.addEventListener("click", () => switchMethod("ivf"));
     btnUltrasound?.addEventListener("click", () => switchMethod("ultrasound"));
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
 
     // Init Page state
     initDefaultDates();
