@@ -2,17 +2,30 @@
 import Layout from '../../../layouts/Layout.astro';
 
 // Tool metadata
-const name = "Screen Dead Pixel Checker";
+const name = "Screen Dead Pixel Test";
 const category = "general";
 const tier = "General Everyday Utilities";
-const description = "Scan and identify dead or stuck pixels on your display panel using pure, unfiltered color backgrounds.";
+
+// On-page SEO metadata
+const pageTitle =
+  "Screen Dead Pixel Test - Free Online Dead Pixel Checker & Tester";
+const description =
+  "Free online screen dead pixel test to check and find dead or stuck pixels on any monitor. Works as a dead pixel checker for Windows, Mac, 4K, iPhone, Android, NVIDIA & AMD displays.";
+const canonicalUrl = "https://boardtools.app/tools/general/screen-dead-pixel";
+const ogImage = "/og/screen-dead-pixel.png";
+const keywords =
+  "screen dead pixel test, dead pixel test, dead pixel checker, dead pixel test online, dead pixel test windows, dead pixel tester, check dead pixels, dead pixel check, find dead pixels, dead pixel monitor test, dead pixel test iphone, dead pixel android, dead pixel test 4k, dead pixel test mac, dead pixel test nvidia, dead pixel test amd, dead pixel test windows 10, dead pixel test app";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
   hideBanner={true}
 >
   <!-- SEO JSON-LD WebApplication Schema -->
@@ -20,12 +33,109 @@ const description = "Scan and identify dead or stuck pixels on your display pane
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Screen Dead Pixel Checker",
+      "name": "Screen Dead Pixel Test",
+      "alternateName": "Dead Pixel Checker & Tester",
       "genre": "Utility",
       "url": "https://boardtools.app/tools/general/screen-dead-pixel",
-      "description": "Scan and identify dead or stuck pixels on your display panel using pure, unfiltered color backgrounds.",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "All"
+      "description": "Free online screen dead pixel test to check, find, and identify dead or stuck pixels on any display using pure, full-screen color backgrounds. Works on Windows, Mac, 4K, iPhone, Android, NVIDIA and AMD monitors.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "featureList": [
+        "Dead pixel test with pure white, black, red, green and blue screens",
+        "Dead pixel checker with custom hex color backgrounds",
+        "Stuck pixel tester with subpixel magnifier zoom",
+        "Auto-cycle mode for hands-free dead pixel checking",
+        "Works as a dead pixel test for Windows, Mac, 4K, iPhone and Android",
+        "100% private, client-side testing"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a dead pixel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A dead pixel is a single point on your screen that no longer produces light or color. Because its transistor has stopped receiving power, it stays permanently black regardless of what the display is showing. On an LCD or OLED panel, a dead pixel appears as a tiny dark dot that never changes, which makes it easiest to spot against a pure white background during a screen dead pixel test.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is there a dead pixel on my screen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A dead pixel usually appears because of a manufacturing defect, a broken transistor, or a loss of electrical connection to that part of the panel. Physical impact, pressure, heat, moisture, or simply age can all cause a pixel to stop working. Sometimes what looks like a dead pixel is actually a stuck pixel, so running a dead pixel test across several colors helps confirm which type you have.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a dead pixel look like?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A dead pixel looks like a very small black or dark dot on the screen that stays the same no matter what image is displayed. It is most visible on bright, solid backgrounds such as pure white or light colors. Unlike a stuck pixel, which may glow red, green, or blue, a true dead pixel remains unlit during every color in a dead pixel test.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you fix a dead pixel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A true dead pixel is difficult to fix because the pixel receives no power at all, so software methods rarely revive it. Stuck pixels, however, can often be repaired using rapid color-cycling videos or gentle pressure techniques. If a genuine dead pixel remains after testing, the most reliable solution is a warranty replacement if the panel meets the manufacturer's dead pixel policy.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to fix a dead pixel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To attempt a fix, first run a dead pixel test to confirm whether the pixel is dead or stuck. For stuck pixels, try a flashing pixel-fixer video that rapidly cycles colors on the affected area, or gently massage the spot with a soft, damp microfiber cloth (at your own risk). These methods can re-energize a stuck subpixel, but a fully dead pixel typically requires a professional repair or panel replacement.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What causes a dead pixel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Dead pixels are caused by a failure in the tiny transistor that controls the pixel's light output. Common causes include manufacturing imperfections, physical shock or pressure on the screen, exposure to extreme heat or cold, moisture damage, and general wear over the display's lifespan. Any of these can permanently cut power to a pixel, leaving it dark.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does dead pixel mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The term dead pixel means a picture element on a display that has completely stopped functioning and no longer emits any light or color. Each pixel is made of red, green, and blue subpixels; when all of them fail and remain off, the pixel is considered dead and shows up as a permanent black dot on the screen.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does a dead pixel happen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A dead pixel happens when the transistor driving that pixel loses power or fails electrically. This can occur during manufacturing, from physical damage such as a drop or excessive pressure, or gradually as the panel ages and its components degrade. Once the connection is broken, the pixel can no longer switch on and stays permanently dark.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a dead pixel look like on a monitor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a monitor, a dead pixel looks like a fixed black speck that does not move, blink, or change color as the screen content updates. It becomes obvious when you display a full-screen white or bright background using a dead pixel monitor test. If the dot instead glows a constant color, it is a stuck pixel rather than a dead one.</p>"
+          }
+        }
+      ]
     }
   </script>
 
@@ -255,6 +365,276 @@ const description = "Scan and identify dead or stuck pixels on your display pane
             <li><strong>Pressure Method</strong>: GENTLY apply pressure using a damp microfiber cloth (at your own risk).</li>
             <li><strong>Warranty Claim</strong>: Check if the panel meets the manufacturer's threshold for warranty replacement.</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Screen Dead Pixel Test &amp; Checker
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>screen dead pixel test</strong> is a fast, free, and fully
+        private way to check any display for faulty pixels. It floods your
+        screen with pure, unfiltered solid colors so that even a single flawed
+        dot becomes easy to spot. Whether you need a quick
+        <strong>dead pixel test</strong> before buying a new monitor, a reliable
+        <strong>dead pixel checker</strong> for a second-hand laptop, or a simple
+        way to <strong>check dead pixels</strong> on a phone, this tool runs
+        entirely in your browser with nothing to install. As a
+        <strong>dead pixel test online</strong>, every color frame is rendered
+        locally, so your screen inspection stays completely on your own device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        A dead pixel is a tiny point on your panel that has stopped producing
+        light, leaving a permanent dark dot. A stuck pixel, by contrast, is
+        frozen on a single color. Using this <strong>dead pixel tester</strong>,
+        you cycle through full-screen white, black, red, green, and blue
+        backgrounds so both problems reveal themselves instantly. Dead pixels
+        stand out sharply against pure white, while stuck subpixels are easiest
+        to <strong>find dead pixels</strong> and stuck ones against contrasting
+        primary colors. A built-in magnifier lets you zoom into any suspect area
+        to confirm whether it is a real panel defect or just a speck of dust.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Dead Pixel Test for Windows, Mac &amp; Every Platform
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Because the tool is browser-based, it doubles as a
+        <strong>dead pixel test windows</strong> utility, a
+        <strong>dead pixel test mac</strong> checker, and a mobile tester in one.
+        You can run a <strong>dead pixel test windows 10</strong> or Windows 11
+        session on a desktop or laptop, use it as a
+        <strong>dead pixel test app</strong> alternative straight from Chrome,
+        Edge, Safari, or Firefox, and even perform a
+        <strong>dead pixel test iphone</strong> or
+        <strong>dead pixel android</strong> scan by opening the page on your
+        handset and going full screen. There is no download, no account, and no
+        platform lock-in &mdash; the same reliable
+        <strong>dead pixel check</strong> works everywhere.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        High-Resolution &amp; GPU Display Testing
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Modern high-density panels benefit from careful inspection, which is why
+        this tool is ideal as a <strong>dead pixel test 4k</strong> solution for
+        Ultra HD monitors and TVs. Gamers and creators can also use it as a
+        <strong>dead pixel test nvidia</strong> or
+        <strong>dead pixel test amd</strong> companion after connecting a new GPU
+        or driving an external display, since pure full-screen colors expose any
+        pixel faults regardless of the graphics card in use. Whether you are
+        running a <strong>dead pixel monitor test</strong> on a curved
+        ultrawide, a professional color-grading screen, or a budget office
+        display, the process is identical and takes only a few seconds per
+        color.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use the Dead Pixel Checker
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Running a thorough <strong>dead pixel test</strong> takes just a moment.
+        First, choose Manual Advance to click through colors at your own pace, or
+        Auto-Cycle to let the timer rotate through each background hands-free.
+        Second, optionally add a custom hex color if you want to
+        <strong>check dead pixels</strong> against a specific shade. Third, press
+        Start Fullscreen Test and carefully scan the entire panel edge to edge on
+        each color. Look for any dot that stays dark on white (a likely dead
+        pixel) or glows a fixed color on other backgrounds (a stuck pixel). Use
+        the zoom magnifier to inspect anything suspicious, then press Escape to
+        exit when you are done.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Dead Pixel Test
+      </h3>
+      <p class="text-sm leading-relaxed">
+        There are many pixel testers online, but this one combines speed,
+        accuracy, and privacy in a clean, distraction-free design. It is a
+        complete <strong>dead pixel tester</strong> that works as a
+        <strong>dead pixel monitor test</strong> on desktops and a portable
+        checker on phones and tablets, remembers your custom colors locally, and
+        never sends any data anywhere. Whether you are inspecting a brand-new
+        purchase, verifying a warranty claim, or simply curious about your
+        display's health, this free <strong>dead pixel test online</strong> gives
+        you a clear, trustworthy way to <strong>find dead pixels</strong> and
+        stuck pixels in seconds &mdash; on any device, on any operating system.
+      </p>
+    </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Dead Pixel Test FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Common questions about dead pixels &mdash; what they are, what causes them, and whether they can be fixed.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a dead pixel?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A dead pixel is a single point on your screen that no longer produces light or color. Because its transistor has stopped receiving power, it stays permanently black regardless of what the display is showing. On an LCD or OLED panel, a dead pixel appears as a tiny dark dot that never changes, which makes it easiest to spot against a pure white background during a screen dead pixel test.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why is there a dead pixel on my screen?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A dead pixel usually appears because of a manufacturing defect, a broken transistor, or a loss of electrical connection to that part of the panel. Physical impact, pressure, heat, moisture, or simply age can all cause a pixel to stop working. Sometimes what looks like a dead pixel is actually a stuck pixel, so running a dead pixel test across several colors helps confirm which type you have.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does a dead pixel look like?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A dead pixel looks like a very small black or dark dot on the screen that stays the same no matter what image is displayed. It is most visible on bright, solid backgrounds such as pure white or light colors. Unlike a stuck pixel, which may glow red, green, or blue, a true dead pixel remains unlit during every color in a dead pixel test.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Can you fix a dead pixel?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A true dead pixel is difficult to fix because the pixel receives no power at all, so software methods rarely revive it. Stuck pixels, however, can often be repaired using rapid color-cycling videos or gentle pressure techniques. If a genuine dead pixel remains after testing, the most reliable solution is a warranty replacement if the panel meets the manufacturer's dead pixel policy.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to fix a dead pixel?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To attempt a fix, first run a dead pixel test to confirm whether the pixel is dead or stuck. For stuck pixels, try a flashing pixel-fixer video that rapidly cycles colors on the affected area, or gently massage the spot with a soft, damp microfiber cloth (at your own risk). These methods can re-energize a stuck subpixel, but a fully dead pixel typically requires a professional repair or panel replacement.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What causes a dead pixel?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Dead pixels are caused by a failure in the tiny transistor that controls the pixel's light output. Common causes include manufacturing imperfections, physical shock or pressure on the screen, exposure to extreme heat or cold, moisture damage, and general wear over the display's lifespan. Any of these can permanently cut power to a pixel, leaving it dark.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does dead pixel mean?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>The term dead pixel means a picture element on a display that has completely stopped functioning and no longer emits any light or color. Each pixel is made of red, green, and blue subpixels; when all of them fail and remain off, the pixel is considered dead and shows up as a permanent black dot on the screen.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does a dead pixel happen?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A dead pixel happens when the transistor driving that pixel loses power or fails electrically. This can occur during manufacturing, from physical damage such as a drop or excessive pressure, or gradually as the panel ages and its components degrade. Once the connection is broken, the pixel can no longer switch on and stays permanently dark.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does a dead pixel look like on a monitor?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a monitor, a dead pixel looks like a fixed black speck that does not move, blink, or change color as the screen content updates. It becomes obvious when you display a full-screen white or bright background using a dead pixel monitor test. If the dot instead glows a constant color, it is a stuck pixel rather than a dead one.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1027,6 +1407,32 @@ const description = "Scan and identify dead or stuck pixels on your display pane
     // Listeners for standard fullscreen changes
     document.addEventListener("fullscreenchange", handleFullscreenChange);
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
 
     document.addEventListener("astro:before-swap", () => {
       document.removeEventListener("keydown", handleKeyNavigation);
