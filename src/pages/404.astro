@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ErrorState from '../components/ErrorState.astro';
+---
+
+<Layout
+  title="404 - Page Not Found | TOOLKIFY"
+  description="The page you're looking for doesn't exist or has moved. Explore TOOLKIFY's suite of private, client-side utility tools instead."
+>
+  <ErrorState
+    code="404"
+    title="This page wandered off"
+    description="The page you're looking for doesn't exist, was moved, or never existed. It happens. Let's get you back to something useful."
+    accent="coral"
+  />
+</Layout>

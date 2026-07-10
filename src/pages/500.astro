@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ErrorState from '../components/ErrorState.astro';
+---
+
+<Layout
+  title="500 - Something Went Wrong | TOOLKIFY"
+  description="An unexpected error occurred on our end. Try again in a moment or head back to explore TOOLKIFY's private, client-side utility tools."
+>
+  <ErrorState
+    code="500"
+    title="Something broke on our end"
+    description="An unexpected error occurred while loading this page. This one's on us, not you. Try refreshing in a moment, or head back home."
+    accent="rose"
+  />
+</Layout>
