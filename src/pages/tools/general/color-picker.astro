@@ -5,14 +5,20 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Color Picker & Eyedropper";
 const category = "general";
 const tier = "General Everyday Utilities";
-const description = "Select colors manually, extract them from images via an eyedropper canvas, check WCAG contrast accessibility, and generate harmony palettes.";
-const canonicalUrl = "https://boardtools.app/tools/color-picker";
+
+// On-page SEO metadata
+const pageTitle =
+  "Color Picker & Eyedropper - Free Online Color Picker from Image";
+const description =
+  "Free online color picker & eyedropper tool. Pick a color picker from image, use the RGB, RGBA, and random color picker, and copy HEX codes instantly with this private online color picker tool.";
+const canonicalUrl = "https://boardtools.app/tools/general/color-picker";
 const ogImage = "/og/color-picker.png";
-const keywords = "color picker, online eyedropper, image color extractor, contrast checker, wcag accessibility, color harmony, color palette generator, client side color tool";
+const keywords =
+  "color picker & eyedropper, color picker, color picker from image, rgb color picker, random color picker, rgba color picker, online color picker, color picker tool, color picker online, eyedropper tool, hex color picker, html color picker, css color picker";
 ---
 
 <Layout
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
@@ -29,7 +35,7 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
       "@type": "WebApplication",
       "name": "Color Picker & Eyedropper",
       "alternateName": "Client-Side Color Selector & Image Palette Extractor",
-      "url": "https://boardtools.app/tools/color-picker",
+      "url": "https://boardtools.app/tools/general/color-picker",
       "description": "Free online client-side color picker with manual HSL/RGB adjustment, canvas image pixel sampling, WCAG contrast accessibility analysis, and CSS/JSON palette exports.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -49,6 +55,32 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a color picker tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A color picker tool is an online utility that lets you select, sample, and copy colors in formats like HEX, RGB, RGBA, and HSL. This color picker & eyedropper works as a manual color picker with a saturation-lightness square and hue slider, a color picker from image that samples any pixel from an uploaded photo, and a screen eyedropper that grabs colors from anywhere on your display. It runs entirely in your browser, so it is a fast, private online color picker you can use for web design, graphics, and CSS.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to use a color picker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To use this color picker, first choose a mode. In the Manual Picker, drag inside the color square to set saturation and lightness, move the hue slider to change the tone, and adjust opacity for RGBA values. To use it as a color picker from image, switch to the Image Eyedropper tab, upload or drag in a photo, and click any pixel to capture its exact color. On supported browsers you can also click 'Sample from Screen' to pick a color from anywhere on your screen. The tool instantly shows the HEX, RGB, RGBA, HSL, and HSLA codes, which you can copy with one click.</p>"
+          }
+        }
+      ]
     }
   </script>
 
@@ -555,6 +587,180 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
         100% Client-Side Processing, 0KB Sent to Servers
       </span>
       <span>v2.0.0</span>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Color Picker &amp; Eyedropper Tool
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>Color Picker &amp; Eyedropper</strong> is a fast, free, and
+        completely private way to choose, sample, and copy colors for any
+        design, coding, or creative project. Whether you need a simple
+        <strong>color picker</strong> to fine-tune a shade by hand, a
+        <strong>color picker from image</strong> to lift the exact tone out of a
+        photo, or a full-featured <strong>online color picker</strong> that
+        exports every common code, this single tool does it all in your browser.
+        Every calculation happens client-side, so the images you upload and the
+        colors you pick never leave your device &mdash; it is a genuinely private
+        <strong>color picker tool</strong> that works on desktop, tablet, and
+        phone.
+      </p>
+      <p class="text-sm leading-relaxed">
+        A color picker turns the abstract idea of a colour into precise,
+        copy-ready values. Instead of guessing hex codes, you can visually drag,
+        click, or sample to land on the exact colour you want, then read it back
+        instantly as HEX, RGB, RGBA, HSL, and HSLA. That makes this
+        <strong>color picker online</strong> equally useful for web developers
+        writing CSS, designers building brand palettes, and anyone who simply
+        wants to identify a colour they have seen on screen or in an image.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Color Picker From Image with a Pixel-Perfect Eyedropper
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The built-in eyedropper turns this into a powerful
+        <strong>color picker from image</strong>. Drag and drop or upload any
+        PNG, JPG, SVG, or WebP file, and the picture is drawn onto an interactive
+        canvas. As you hover, a magnified loupe shows the pixels beneath your
+        cursor so you can target the precise spot you want; a single click
+        captures that pixel&rsquo;s exact colour. On browsers that support the
+        native EyeDropper API, such as Chrome and Edge, you can also click
+        &ldquo;Sample from Screen&rdquo; to grab a colour from anywhere on your
+        display &mdash; another window, a video, or a design app &mdash; without
+        leaving the page.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        RGB, RGBA, and HSL Color Picker in One Place
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Every colour you select is displayed simultaneously as a full
+        <strong>rgb color picker</strong> value, an
+        <strong>rgba color picker</strong> value with an adjustable alpha
+        channel, HEX, HSL, and HSLA. The dedicated opacity slider makes it a true
+        RGBA and HSLA tool, so you can dial in semi-transparent colours for
+        overlays, shadows, and gradients. Each format sits next to a one-click
+        copy button, letting you paste production-ready code straight into CSS,
+        Tailwind, design files, or documentation. Because the readouts update
+        live as you drag, this <strong>online color picker</strong> doubles as an
+        instant colour-format converter.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Random Color Picker, Harmonies, and Palettes
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Looking for inspiration? Use the tool as a
+        <strong>random color picker</strong> by exploring the hue slider and
+        harmony generator to discover fresh combinations you might not have
+        chosen manually. From any base colour, the harmony engine builds
+        complementary, analogous, triadic, and monochromatic shade sets in a
+        single click, and you can save favourites to your own palette. Palettes
+        can be exported as CSS custom properties or JSON, so a quick colour
+        experiment can flow directly into your codebase or design system.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Built-In Contrast &amp; Accessibility Checking
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Great colour choices also need to be readable. This
+        <strong>color picker tool</strong> automatically calculates the WCAG
+        contrast ratio of your selected colour against both white and black,
+        showing clear AA and AAA pass or fail badges for normal and large text.
+        That means you are not just picking a pretty colour &mdash; you are
+        confirming it meets accessibility guidelines before it ever reaches your
+        interface. It is the kind of check that separates a casual colour tool
+        from a professional-grade <strong>online color picker</strong>.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Color Picker
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of colour tools exist, but this one combines a manual picker, an
+        image eyedropper, a screen sampler, live format readouts, harmony
+        generation, palette exports, and accessibility checks in one clean,
+        distraction-free workspace. There is no sign-up, no watermarking of your
+        images, and nothing to install, and your recent and saved colours are
+        remembered locally so they are ready next time you visit. From a quick
+        <strong>color picker from image</strong> job to detailed
+        <strong>rgba color picker</strong> work, this free
+        <strong>color picker &amp; eyedropper</strong> gives you accurate,
+        trustworthy colour values in seconds &mdash; privately and entirely in
+        your browser.
+      </p>
+    </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-6">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Color Picker FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Answers to the most common questions about using this color picker &amp; eyedropper tool.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a color picker tool?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A color picker tool is an online utility that lets you select, sample, and copy colors in formats like HEX, RGB, RGBA, and HSL. This color picker &amp; eyedropper works as a manual color picker with a saturation-lightness square and hue slider, a color picker from image that samples any pixel from an uploaded photo, and a screen eyedropper that grabs colors from anywhere on your display. It runs entirely in your browser, so it is a fast, private online color picker you can use for web design, graphics, and CSS.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to use a color picker?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To use this color picker, first choose a mode. In the Manual Picker, drag inside the color square to set saturation and lightness, move the hue slider to change the tone, and adjust opacity for RGBA values. To use it as a color picker from image, switch to the Image Eyedropper tab, upload or drag in a photo, and click any pixel to capture its exact color. On supported browsers you can also click "Sample from Screen" to pick a color from anywhere on your screen. The tool instantly shows the HEX, RGB, RGBA, HSL, and HSLA codes, which you can copy with one click.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1568,6 +1774,32 @@ const keywords = "color picker, online eyedropper, image color extractor, contra
         } catch(e) {}
       }
     }
+
+    // --- FAQ ACCORDION TOGGLE INTERACTION ---
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
 
     // Run initialization
     init();
