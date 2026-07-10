@@ -171,14 +171,15 @@ const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
     const wm    = one(".tk-wordmark");
 
     let chars: SVGTextElement[] = [];
+    // Create the letter <text> nodes ONCE. Keeping stable element identity is
+    // essential: GSAP resolves tween targets at creation time, so the intro
+    // timeline must be built against these exact nodes (see BOOT order below).
     function buildWordmark() {
       wm.innerHTML = "";
       chars = [];
-      let cursor = 190;
       for (const ch of WORD) {
         const t = document.createElementNS(SVGNS, "text");
         t.setAttribute("class", "tk-char");
-        t.setAttribute("x", String(cursor));
         t.setAttribute("y", "110");
         t.setAttribute("font-size", "48");
         t.setAttribute("font-weight", "800");
@@ -187,8 +188,18 @@ const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
         t.setAttribute("font-family", "'Nunito','Segoe UI',system-ui,Arial,sans-serif");
         t.textContent = ch;
         wm.appendChild(t);
-        cursor += t.getComputedTextLength() - 0.5;
         chars.push(t);
+      }
+      layoutWordmark();
+    }
+    // Re-measure & reposition the existing letters (used after web fonts load
+    // so metrics are accurate) WITHOUT recreating nodes — preserves the
+    // element identity the GSAP timeline holds.
+    function layoutWordmark() {
+      let cursor = 190;
+      for (const t of chars) {
+        t.setAttribute("x", String(cursor));
+        cursor += t.getComputedTextLength() - 0.5;
       }
     }
 
@@ -260,7 +271,10 @@ const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
       return tl;
     }
 
-    const intro = buildIntro();
+    // Built during BOOT, AFTER buildWordmark(), so the wordmark reveal tween
+    // resolves against real letter nodes (not an empty array → no
+    // "GSAP target not found" warning).
+    let intro: gsap.core.Timeline;
 
     function playFromStart() {
       if (idleTl) { idleTl.kill(); idleTl = null; }
@@ -286,7 +300,8 @@ const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
 
     // BOOT
     gsap.ticker.lagSmoothing(0);
-    buildWordmark();
+    buildWordmark();          // create letters FIRST so the timeline binds to them
+    intro = buildIntro();     // now safe to build the intro against real targets
     if (reduced) {
       showStatic();
       gsap.to(lockup, { scale: 1.02, duration: 2.4, ease: "sine.inOut", repeat: -1, yoyo: true, svgOrigin: CENTER });
@@ -295,7 +310,9 @@ const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
       intro.play(0);
     }
     if ((document as any).fonts?.ready) {
-      (document as any).fonts.ready.then(() => buildWordmark());
+      // Only re-measure/reposition — do NOT recreate nodes (would orphan the
+      // elements the intro timeline animates).
+      (document as any).fonts.ready.then(() => layoutWordmark());
     }
   }
 

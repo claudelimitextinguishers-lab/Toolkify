@@ -2651,33 +2651,56 @@ const keywords =
 
   // Sketch Drawing Listeners
   function resizeHeroCanvas() {
-    if (heroSketchCanvas && heroSketchCanvas.parentElement) {
-      const temp = document.createElement("canvas");
+    if (!heroSketchCanvas || !heroSketchCanvas.parentElement || !heroCtx)
+      return;
+
+    const parent = heroSketchCanvas.parentElement;
+    const newW = parent.clientWidth;
+    const newH = parent.clientHeight;
+
+    // The hero board may not be laid out yet (hidden, off-screen, or pre-paint)
+    // — in that case clientWidth/Height are 0. Resizing the canvas to 0 and
+    // then drawing it back is exactly what throws:
+    //   InvalidStateError: ... canvas element with a width or height of 0.
+    // Skip; the ResizeObserver below re-runs us once real dimensions exist.
+    if (newW === 0 || newH === 0) return;
+
+    // Preserve the current drawing only if the canvas actually has pixels.
+    let temp: HTMLCanvasElement | null = null;
+    if (heroSketchCanvas.width > 0 && heroSketchCanvas.height > 0) {
+      temp = document.createElement("canvas");
       temp.width = heroSketchCanvas.width;
       temp.height = heroSketchCanvas.height;
       const tCtx = temp.getContext("2d");
       if (tCtx) tCtx.drawImage(heroSketchCanvas, 0, 0);
-
-      heroSketchCanvas.width = heroSketchCanvas.parentElement.clientWidth;
-      heroSketchCanvas.height = heroSketchCanvas.parentElement.clientHeight;
-
-      if (heroCtx) {
-        heroCtx.lineCap = "round";
-        heroCtx.lineJoin = "round";
-        heroCtx.strokeStyle = document.documentElement.classList.contains(
-          "dark",
-        )
-          ? "#ffffff"
-          : "#1c1c1e";
-        heroCtx.lineWidth = 4;
-        heroCtx.drawImage(temp, 0, 0);
-      }
     }
+
+    heroSketchCanvas.width = newW;
+    heroSketchCanvas.height = newH;
+
+    heroCtx.lineCap = "round";
+    heroCtx.lineJoin = "round";
+    heroCtx.strokeStyle = document.documentElement.classList.contains("dark")
+      ? "#ffffff"
+      : "#1c1c1e";
+    heroCtx.lineWidth = 4;
+    if (temp) heroCtx.drawImage(temp, 0, 0);
   }
 
   if (heroSketchCanvas && heroCtx) {
     resizeHeroCanvas();
     window.addEventListener("resize", resizeHeroCanvas);
+
+    // Ensures the canvas is sized as soon as the board actually has layout
+    // dimensions (covers the case where it was hidden/zero-sized at first
+    // paint, which is what produced the drawImage(0-dimension) error).
+    if (
+      typeof ResizeObserver !== "undefined" &&
+      heroSketchCanvas.parentElement
+    ) {
+      const ro = new ResizeObserver(() => resizeHeroCanvas());
+      ro.observe(heroSketchCanvas.parentElement);
+    }
 
     heroSketchCanvas.addEventListener("mousedown", (e) => {
       if (activeHeroTool !== "pen") return;
