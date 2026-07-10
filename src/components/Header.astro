@@ -5,11 +5,11 @@ const currentPath = Astro.url.pathname;
 <header class="sticky top-0 z-50 w-full h-[64px] border-b border-hairline bg-canvas/90 backdrop-blur-md">
   <div class="max-w-[1280px] h-full mx-auto px-4 md:px-8 flex items-center justify-between">
     <!-- Brand Logo -->
-    <a href="/" class="flex items-center gap-3 group">
-      <div class="w-8 h-8 bg-brand-yellow rounded-sm flex items-center justify-center font-display font-semibold text-lg text-primary shadow-subtle group-hover:bg-brand-yellow-deep transition-colors">
-        B
-      </div>
-      <span class="font-display font-medium text-lg tracking-tight text-primary">TOOLKIFY</span>
+    <a href="/" class="flex items-center group" aria-label="Toolkify home">
+      <!-- Light mode: navy wordmark -->
+      <img src="/logo-light.svg" alt="Toolkify" width="140" height="32" class="h-8 w-auto block dark:hidden transition-transform group-hover:scale-105" />
+      <!-- Dark mode: white wordmark -->
+      <img src="/logo-dark.svg" alt="Toolkify" width="140" height="32" class="h-8 w-auto hidden dark:block transition-transform group-hover:scale-105" />
     </a>
 
     <!-- Desktop Navigation -->
