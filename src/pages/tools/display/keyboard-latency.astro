@@ -7,13 +7,14 @@ const category = "display";
 const tier = "Display & Input Diagnostics";
 
 // On-page SEO metadata
-const pageTitle = "Keyboard Latency Test - Measure Browser Input & Render Lag";
+const pageTitle =
+  "Keyboard Latency Test - Measure Keyboard Latency Online Free";
 const description =
-  "Test keyboard input lag. Measure the latency between physical keydown registration and frame paint updates inside your browser with live statistical distribution analysis.";
+  "Free online keyboard latency test to measure keyboard latency in your browser. Test wired vs wireless keyboard latency, check Bluetooth keyboard lag, and see if your keyboard latency is good for gaming.";
 const canonicalUrl = "https://boardtools.app/tools/display/keyboard-latency";
 const ogImage = "/og/keyboard-latency.png";
 const keywords =
-  "keyboard latency test, input lag test, keyboard lag checker, browser render latency, keyboard paint delay, polling rate, input lag browser, keypress test, spacebar latency";
+  "keyboard latency test, keyboard latency, keyboard latency tester, test keyboard latency, how to test keyboard latency, wireless keyboard latency, wired vs wireless keyboard latency, how to check keyboard latency, keyboard latency test online, keyboard latency for gaming, what is a good keyboard latency, bluetooth keyboard latency, measure keyboard latency, wired vs wireless keyboard latency gaming, how to measure keyboard latency, wireless keyboard latency gaming";
 ---
 
 <Layout
@@ -33,9 +34,9 @@ const keywords =
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Keyboard Latency Test",
-      "alternateName": "Browser Keyboard Input lag Analyzer",
+      "alternateName": "Online Keyboard Latency Tester & Input Lag Measure Tool",
       "url": "https://boardtools.app/tools/display/keyboard-latency",
-      "description": "Determine the latency from browser event delivery to render updates (input-to-paint). Collect multi-press distributions, export session CSV, and A/B compare setups.",
+      "description": "Free online keyboard latency test to measure keyboard latency in your browser. Compare wired vs wireless keyboard latency, check Bluetooth keyboard lag, collect multi-press distributions, export session CSV, and A/B compare setups for gaming.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires HTML5 requestAnimationFrame.",
@@ -86,6 +87,96 @@ const keywords =
           "position": 4,
           "name": "Keyboard Latency Test",
           "item": "https://boardtools.app/tools/display/keyboard-latency"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Keyboard latency is the delay between the moment you physically press a key and the moment that keystroke is registered and shown by your computer. It is usually measured in milliseconds (ms) and is made up of several stages: the switch actuation and debounce, the keyboard's internal scanning, the polling interval over USB or wireless, and the operating system and application processing time. Lower keyboard latency means your inputs feel more instant and responsive.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test keyboard latency with this online tool, click the test target to focus it, then press the Spacebar or any key repeatedly at a natural pace. The tool captures a batch of presses and measures the time from each keydown event to the next rendered frame, then reports the median, average, minimum, and maximum latency. Running 20 to 30 presses filters out timing noise and gives you a reliable keyboard latency reading you can compare across setups.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A good keyboard latency is generally under 15 ms, with high-end gaming keyboards achieving 1 to 5 ms of hardware latency. In everyday typing anything under 30 ms feels responsive, while readings above 40 ms can start to feel sluggish. Because this browser-based test also includes display and rendering delay, expect slightly higher numbers here than a pure hardware probe would show, but the relative comparison between keyboards remains meaningful.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What keyboard has the lowest latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Wired mechanical and optical gaming keyboards with a 1000 Hz (or higher 4000/8000 Hz) polling rate typically have the lowest latency, often in the 1 to 5 ms range. Optical-switch keyboards from gaming-focused brands and analog boards tend to lead because they skip mechanical debounce delay. In general, a wired connection with a high polling rate will beat wireless and Bluetooth keyboards on raw latency.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What to look for in wireless gaming keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>For a wireless gaming keyboard, look for a dedicated 2.4 GHz USB dongle rather than Bluetooth, a 1000 Hz polling rate, and low, consistent latency (ideally under 5 to 8 ms). Consistency matters as much as the average: stable, low jitter latency feels better than a low average with occasional spikes. Also check battery-saving modes, since some keyboards increase latency to preserve power when idle.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is input latency on a keyboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Input latency on a keyboard is the total time it takes for a key press to travel from the physical switch to a visible result on screen. It combines switch actuation, keyboard firmware scanning and debounce, the polling rate of the connection, and operating-system input handling. This end-to-end input latency is what actually determines how responsive a keyboard feels during typing and gaming.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is good keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Good keyboard latency is low and consistent. As a rule of thumb, under 5 ms is excellent (competitive gaming grade), 5 to 15 ms is very good, 16 to 30 ms is normal and perfectly fine for everyday use, and anything consistently above 40 ms is worth investigating. Alongside the raw number, a low jitter (small gap between minimum and maximum) is a strong sign of good keyboard latency.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good keyboard latency for gaming?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>For gaming, a good keyboard latency is under 10 ms, and competitive players often aim for 1 to 5 ms using a wired keyboard with a 1000 Hz or higher polling rate. At these levels the keyboard is no longer the bottleneck, and your reaction time and display refresh rate become the limiting factors. If your keyboard latency test shows consistently low, stable results, your keyboard is well suited to fast-paced gaming.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my keyboard latency so high?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>High keyboard latency is often caused by a low polling rate, a weak or interfered wireless connection, a nearly empty battery on a wireless keyboard, or Bluetooth instead of a 2.4 GHz dongle. Software factors also matter: heavy CPU load, too many background apps or browser tabs, power-saving USB settings, and outdated drivers can all raise latency. In a browser test, a low display refresh rate and demanding pages can add extra delay too.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to decrease keyboard latency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To decrease keyboard latency, use a wired connection or a 2.4 GHz dongle instead of Bluetooth, set the polling rate to 1000 Hz, and keep firmware and drivers up to date. Disable USB power-saving in your OS, close unnecessary background apps and browser tabs, and use a higher refresh-rate monitor. Charging wireless keyboards fully and reducing 2.4 GHz interference (from Wi-Fi routers or USB 3.0 devices) also helps keep latency low and stable.</p>"
+          }
         }
       ]
     }
@@ -633,7 +724,7 @@ const keywords =
     </div>
   </section>
 
-  <!-- Educational Article -->
+  <!-- Educational / SEO Article -->
   <section
     class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
     aria-labelledby="about-tool-heading"
@@ -643,45 +734,298 @@ const keywords =
         id="about-tool-heading"
         class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
       >
-        Understanding Keyboard Input and Browser Paint Latency
+        Free Online Keyboard Latency Test
       </h2>
       <p class="text-sm leading-relaxed">
-        Input latency is one of the most critical aspects of computing
-        responsiveness. In game development, desktop productivity, and
-        competitive typing, milliseconds of delay can represent the difference
-        between smooth interaction and frustrating sluggishness. Our <strong
-          >Keyboard Latency Test</strong
-        > allows you to diagnose inputs and evaluate how efficiently your browser
-        processes keyboard events and commits those changes visually to the frame.
+        This <strong>keyboard latency test</strong> is a fast, free, and private
+        way to <strong>measure keyboard latency</strong> directly in your
+        browser. If you have ever wondered whether your keyboard feels slow, this
+        online <strong>keyboard latency tester</strong> lets you
+        <strong>test keyboard latency</strong> in seconds &mdash; no download, no
+        sign-up, and nothing to install. Simply click the test target, press the
+        Spacebar or any key at a natural pace, and watch your latency appear live
+        with a full statistical breakdown of median, average, minimum, and
+        maximum values.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Understanding <strong>keyboard latency</strong> matters whether you are a
+        competitive gamer, a fast typist, or just someone who wants a snappy,
+        responsive desktop. Keyboard latency is the delay between physically
+        pressing a key and seeing the result on screen, and even small amounts of
+        lag can make an otherwise great keyboard feel sluggish. This
+        <strong>keyboard latency test online</strong> gives you a repeatable,
+        shareable measurement so you can benchmark different keyboards,
+        connections, and settings against each other.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        What is Browser Input-to-Paint Latency?
+        How to Test Keyboard Latency
       </h3>
       <p class="text-sm leading-relaxed">
-        This tool measures the duration from when the browser registers a <code
-          >keydown</code
-        > event callback (using high-resolution monotonic timestamps) to when the
-        browser commits the subsequent visual paint update to the screen. Because
-        JavaScript cannot access true physical hardware state (such as the keyboard's
-        internal debounce cycles or USB controller queues), measuring the event timestamp
-        to the next <code>requestAnimationFrame</code> paint represents the absolute
-        proxy for visual latency under the browser's control.
+        Learning <strong>how to test keyboard latency</strong> with this tool
+        takes almost no time. First, click the live test target so it is focused.
+        Second, press the Spacebar or any key repeatedly &mdash; hold-down
+        auto-repeats are automatically filtered out. Third, read your results:
+        the large number shows the latency of your most recent press, while the
+        statistics panel aggregates your whole batch. Running 20 to 30 presses is
+        the best way to <strong>measure keyboard latency</strong> reliably,
+        because a single press is easily skewed by background system activity.
+        This is also the simplest answer to <strong>how to check keyboard
+        latency</strong> and <strong>how to measure keyboard latency</strong>
+        without buying specialised hardware probes.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Why Batch Multiple Keypresses?
+        Wired vs Wireless Keyboard Latency
       </h3>
       <p class="text-sm leading-relaxed">
-        A single input latency measurement is highly vulnerable to timing noise,
-        system interrupts, and browser thread scheduling. Standard operating
-        system activities, garbage collection cycles, or minor screen repaints
-        can easily skew individual timestamps. By capturing 20 to 30 presses
-        inside a natural sample batch, we can filter out anomalies and compute
-        reliable statistical aggregations such as the <strong>median</strong> and
-        <strong>average</strong>.
+        One of the most common questions is about
+        <strong>wired vs wireless keyboard latency</strong>. Historically, wired
+        keyboards held a clear advantage, and for <strong>wired vs wireless
+        keyboard latency gaming</strong> comparisons a wired 1000 Hz connection is
+        still the safe choice for the lowest, most consistent numbers. However,
+        modern <strong>wireless keyboard latency</strong> has improved
+        dramatically: a good 2.4 GHz dongle can rival wired performance, which is
+        why <strong>wireless keyboard latency gaming</strong> setups are now
+        genuinely competitive. <strong>Bluetooth keyboard latency</strong> is
+        typically the highest of the three, so gamers should prefer a dedicated
+        dongle over Bluetooth. Use this tool to run your own
+        <strong>wireless keyboard latency</strong> checks and compare each mode
+        side by side with the built-in A/B comparison feature.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Keyboard Latency for Gaming
+      </h3>
+      <p class="text-sm leading-relaxed">
+        When it comes to <strong>keyboard latency for gaming</strong>, every
+        millisecond counts. In fast-paced titles, lower latency means your
+        actions register sooner, giving you a real competitive edge. So
+        <strong>what is a good keyboard latency</strong>? As a guide, under 5 ms
+        is excellent and competition-grade, 5 to 15 ms is very good, 16 to 30 ms
+        is normal for everyday use, and anything consistently above 40 ms is
+        worth investigating. Because this browser-based
+        <strong>keyboard latency tester</strong> also captures display and
+        rendering delay, your readings here may be a little higher than a pure
+        hardware measurement &mdash; but the relative comparison between keyboards
+        and connection types remains accurate and useful.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What This Keyboard Latency Test Measures
+      </h3>
+      <p class="text-sm leading-relaxed">
+        This tool measures browser input-to-paint latency: the time from when the
+        browser registers a keydown event to when it commits the next visual
+        frame, using high-resolution timers and <code>requestAnimationFrame</code>.
+        JavaScript cannot access the keyboard's internal debounce cycles or USB
+        controller queues, so true end-to-end hardware latency requires physical
+        photosensors. Even so, this <strong>keyboard latency test</strong> is an
+        excellent proxy for responsiveness and, crucially, a consistent baseline
+        for A/B testing &mdash; comparing wired vs wireless, different polling
+        rates, or the effect of closing background tabs. Every calculation runs
+        client-side, so your keystroke data never leaves your device.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Keyboard Latency Tester
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of guides explain <strong>how to test keyboard latency</strong>,
+        but this <strong>keyboard latency test online</strong> combines speed,
+        clarity, and privacy in one place. It captures batches of presses,
+        renders a live distribution histogram, tracks pacing stability, saves your
+        recent sessions locally, and lets you export raw logs as CSV or JSON. The
+        A/B comparison mode is perfect for settling
+        <strong>wired vs wireless keyboard latency</strong> debates with your own
+        hardware. Whether you want to <strong>measure keyboard latency</strong>
+        for gaming, troubleshoot a laggy board, or simply satisfy your curiosity,
+        this free tool gives you trustworthy numbers and the context to
+        understand them.
       </p>
     </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Keyboard Latency Test FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Answers to the most common questions about keyboard latency, testing, and how to improve it.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Keyboard latency is the delay between the moment you physically press a key and the moment that keystroke is registered and shown by your computer. It is usually measured in milliseconds (ms) and is made up of several stages: the switch actuation and debounce, the keyboard's internal scanning, the polling interval over USB or wireless, and the operating system and application processing time. Lower keyboard latency means your inputs feel more instant and responsive.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test keyboard latency with this online tool, click the test target to focus it, then press the Spacebar or any key repeatedly at a natural pace. The tool captures a batch of presses and measures the time from each keydown event to the next rendered frame, then reports the median, average, minimum, and maximum latency. Running 20 to 30 presses filters out timing noise and gives you a reliable keyboard latency reading you can compare across setups.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a good keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A good keyboard latency is generally under 15 ms, with high-end gaming keyboards achieving 1 to 5 ms of hardware latency. In everyday typing anything under 30 ms feels responsive, while readings above 40 ms can start to feel sluggish. Because this browser-based test also includes display and rendering delay, expect slightly higher numbers here than a pure hardware probe would show, but the relative comparison between keyboards remains meaningful.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What keyboard has the lowest latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Wired mechanical and optical gaming keyboards with a 1000 Hz (or higher 4000/8000 Hz) polling rate typically have the lowest latency, often in the 1 to 5 ms range. Optical-switch keyboards from gaming-focused brands and analog boards tend to lead because they skip mechanical debounce delay. In general, a wired connection with a high polling rate will beat wireless and Bluetooth keyboards on raw latency.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What to look for in wireless gaming keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>For a wireless gaming keyboard, look for a dedicated 2.4 GHz USB dongle rather than Bluetooth, a 1000 Hz polling rate, and low, consistent latency (ideally under 5 to 8 ms). Consistency matters as much as the average: stable, low jitter latency feels better than a low average with occasional spikes. Also check battery-saving modes, since some keyboards increase latency to preserve power when idle.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is input latency on a keyboard?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Input latency on a keyboard is the total time it takes for a key press to travel from the physical switch to a visible result on screen. It combines switch actuation, keyboard firmware scanning and debounce, the polling rate of the connection, and operating-system input handling. This end-to-end input latency is what actually determines how responsive a keyboard feels during typing and gaming.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is good keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Good keyboard latency is low and consistent. As a rule of thumb, under 5 ms is excellent (competitive gaming grade), 5 to 15 ms is very good, 16 to 30 ms is normal and perfectly fine for everyday use, and anything consistently above 40 ms is worth investigating. Alongside the raw number, a low jitter (small gap between minimum and maximum) is a strong sign of good keyboard latency.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is a good keyboard latency for gaming?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>For gaming, a good keyboard latency is under 10 ms, and competitive players often aim for 1 to 5 ms using a wired keyboard with a 1000 Hz or higher polling rate. At these levels the keyboard is no longer the bottleneck, and your reaction time and display refresh rate become the limiting factors. If your keyboard latency test shows consistently low, stable results, your keyboard is well suited to fast-paced gaming.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why is my keyboard latency so high?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>High keyboard latency is often caused by a low polling rate, a weak or interfered wireless connection, a nearly empty battery on a wireless keyboard, or Bluetooth instead of a 2.4 GHz dongle. Software factors also matter: heavy CPU load, too many background apps or browser tabs, power-saving USB settings, and outdated drivers can all raise latency. In a browser test, a low display refresh rate and demanding pages can add extra delay too.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to decrease keyboard latency?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To decrease keyboard latency, use a wired connection or a 2.4 GHz dongle instead of Bluetooth, set the polling rate to 1000 Hz, and keep firmware and drivers up to date. Disable USB power-saving in your OS, close unnecessary background apps and browser tabs, and use a higher refresh-rate monitor. Charging wireless keyboards fully and reducing 2.4 GHz interference (from Wi-Fi routers or USB 3.0 devices) also helps keep latency low and stable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal -->
@@ -1555,6 +1899,32 @@ const keywords =
       updateProgress();
       updateHistoryList();
     }
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
 
     init();
     }
