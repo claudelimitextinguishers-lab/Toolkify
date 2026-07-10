@@ -5,11 +5,11 @@ import Layout from "../../../layouts/Layout.astro";
 const name = "Orientation Lock Check";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
-const pageTitle = "Orientation Lock Check - Test Screen Rotation & Lock Status";
-const description = "Verify browser screen rotation responses, lock alignments, event timelines, and display geometry geometry-safe areas.";
+const pageTitle = "Orientation Lock - Test Screen Rotation & Lock Status";
+const description = "Test your screen orientation lock online. Check portrait orientation lock, screen angles, safe area insets, and verify if portrait orientation lock is not working.";
 const canonicalUrl = "https://boardtools.app/tools/mobile/orientation-lock";
 const ogImage = "/og/orientation-lock.png";
-const keywords = "orientation lock, screen rotation test, screen orientation api, mobile orientation, screen angle, landscape test, portrait test, orientation change log, safe area inset, window dimensions";
+const keywords = "orientation lock, portrait orientation lock, portrait orientation lock button, what is portrait orientation lock, what does portrait orientation lock do, screen orientation lockscreen orientation lock, what does portrait orientation lock mean, portrait orientation lock not working, portrait orientation lock meaning, portrait orientation lock in settings";
 ---
 
 <Layout
@@ -76,6 +76,56 @@ const keywords = "orientation lock, screen rotation test, screen orientation api
           "position": 3,
           "name": "Orientation Lock Check",
           "item": "https://boardtools.app/tools/mobile/orientation-lock"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is portrait orientation lock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Portrait orientation lock is a mobile device feature that keeps the screen display locked in a vertical (portrait) position. When enabled, it prevents the screen from automatically rotating to landscape mode when the phone or tablet is tilted sideways.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does portrait orientation lock do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Portrait orientation lock disables the automatic screen rotation triggered by the device's physical sensors (like the accelerometer and gyroscope). It forces the user interface to stay in a vertical layout, which is highly useful when reading in bed, texting, or walking.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does portrait orientation lock mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Portrait orientation lock means that your device is locked to a vertical screen layout. Even if you turn your device horizontally or upside down, the display will not rotate, ensuring a stable and consistent viewing experience for vertical content.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the portrait orientation lock button?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On Apple iOS devices, the portrait orientation lock button is in the Control Center (swipe down from the top-right corner), represented by a padlock inside a circular arrow. On Android, the equivalent setting is typically in the Quick Settings dropdown (swipe down from the top of the screen) named 'Auto-rotate' or 'Portrait'. You can also find it under Display settings.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is orientation lock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Orientation lock is a general software feature on mobile operating systems and web applications that restricts the display configuration to a specific mode, such as portrait or landscape. It prevents automatic screen re-rendering when physical device orientation changes.</p>"
+          }
         }
       ]
     }
@@ -405,7 +455,7 @@ const keywords = "orientation lock, screen rotation test, screen orientation api
 
   <!-- Educational Article -->
   <section
-    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
+    class="max-w-[850px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate print:hidden"
     aria-labelledby="about-tool-heading"
   >
     <article class="flex flex-col gap-4">
@@ -413,37 +463,137 @@ const keywords = "orientation lock, screen rotation test, screen orientation api
         id="about-tool-heading"
         class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
       >
-        Understanding Orientation Lock & Web Standards
+        Understanding Orientation Lock: A Complete Diagnostic Guide
       </h2>
       <p class="text-sm leading-relaxed">
-        Modern smartphones and tablet operating systems feature native <strong>Orientation Lock</strong> functions 
-        (often called rotation lock). These systems stop UI redraws when you shift your device physically. 
-        For web developers and testers, confirming whether a site responds correctly to different angles or 
-        detecting whether a user has rotation lock active is a key diagnostic step.
+        If you have ever had your phone screen rotate to landscape when you were lying down, you know how crucial the <strong>orientation lock</strong> is. But <strong>what is portrait orientation lock</strong>, and <strong>what does portrait orientation lock do</strong>? Simply put, a <strong>portrait orientation lock</strong> is a built-in operating system feature designed to restrict your mobile display to a vertical layout, preventing automatic screen rotation as you tilt your device. Understanding the <strong>portrait orientation lock meaning</strong> is straightforward: it ensures that your screen remains in portrait mode regardless of physical rotation, which is ideal for reading, texting, and navigating on the move. When you enable this feature, the <strong>screen orientation lockscreen orientation lock</strong> states remain fixed, blocking sensor-driven adjustments so that web apps and interfaces stay in a predictable, upright view.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        How is Rotation Lock Inferred?
+        Finding the Portrait Orientation Lock Button
       </h3>
       <p class="text-sm leading-relaxed">
-        Web browsers do not expose a direct API to check if the OS-level rotation lock toggle is active due to fingerprinting and security designs. 
-        Our tool solves this restriction using a <strong>motion-sensor heuristic inference</strong>. 
-        By requesting permission to inspect accelerometer/gyroscope coordinates (`deviceorientation`), we watch the physical angle. 
-        If the physical orientation of the device changes substantially (more than 25° of movement across the X/Y axes) but the browser's 
-        <code>screen.orientation</code> angle or type remains unchanged, the system flags: <em>"Rotation appears locked"</em>. 
-        Conversely, if the screen updates successfully, it registers as <em>"Rotation appears unlocked"</em>.
+        Depending on your device, locating the toggle varies. Many users ask: where is the <strong>portrait orientation lock button</strong>? On Apple devices (iOS), the button is located in the Control Center—accessed by swiping down from the top-right corner of the screen. Look for the icon resembling a padlock surrounded by a circular arrow. On Android devices, the equivalent toggle is often named "Auto-rotate" or "Portrait" in the Quick Settings shade. If you cannot find it there, you can configure the <strong>portrait orientation lock in settings</strong> under the "Display" or "Screen" menu. Understanding <strong>what does portrait orientation lock mean</strong> in your system configuration allows you to toggle it on or off dynamically to match your current activity.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        The Screen Orientation Lock API
+        Troubleshooting Portrait Orientation Lock Not Working Issues
       </h3>
       <p class="text-sm leading-relaxed">
-        The <code>screen.orientation.lock()</code> Web API allows progressive web apps (PWAs) or full-screen environments to force 
-        specific alignments (such as landscape-only gaming or portrait-only reading). In regular browser tabs, this API call is blocked 
-        by security policies (requiring full-screen state) or unsupported entirely by iOS Safari. Using our <strong>Test Lock API</strong>, 
-        you can check whether your current mobile context permits web-driven orientation locking.
+        Is your screen rotating when it shouldn't, or is your <strong>portrait orientation lock not working</strong>? There are several reasons why this might happen. First, verify that the lock hasn't been disabled accidentally in your control panel. If the padlock icon is highlighted, the lock is active. On some versions of iOS and Android, certain apps override system-level rotation locks (such as video players or mobile games). If you notice the rotation lock behaves inconsistently, check if the issue is app-specific or system-wide. A faulty device accelerometer or gyroscope can also lead to issues where the display fails to respond to movement altogether. In these cases, restarting your device or checking sensor permissions in settings can help restore proper functionality.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Testing Screen Orientation and Web API Compatibility
+      </h3>
+      <p class="text-sm leading-relaxed">
+        For developers and designers, testing how web applications handle rotation states is critical. While native apps have deep hardware access, web browsers rely on the Screen Orientation API. Unfortunately, modern web browsers do not expose a direct way to detect if a user's system-level <strong>portrait orientation lock</strong> is active. This diagnostic tool bridges that gap using a motion-sensor heuristic. By comparing physical accelerometer changes with browser screen updates, it can infer whether rotation lock is active. Testing these states helps ensure responsive designs render cleanly without clipping or breaking layout boundaries.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        The Practical Applications of Screen Rotation Tests
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Testing your screen rotation behavior is essential for verifying responsive web design and mobile user experience. When building mobile-first websites, designers must account for different aspect ratios and safe area insets. So, <strong>what is orientation lock</strong>? It is the umbrella term for locking screen layouts to prevent layout shift. Safe area insets (such as camera notches and home indicator bars) shift dynamically when the device is rotated. Using an online orientation check tool helps you confirm that your stylesheet responds correctly to every screen angle. It also verifies whether the browser supports programmatic orientation locking via the <code>screen.orientation.lock()</code> API, which is highly useful for progressive web applications (PWAs) that require a specific layout direction.
       </p>
     </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-6">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Orientation Lock & Screen Rotation FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Answers to frequently asked questions about orientation lock, portrait orientation lock, and how to manage rotation settings.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is portrait orientation lock?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Portrait orientation lock is a mobile device feature that keeps the screen display locked in a vertical (portrait) position. When enabled, it prevents the screen from automatically rotating to landscape mode when the phone or tablet is tilted sideways.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does portrait orientation lock do?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Portrait orientation lock disables the automatic screen rotation triggered by the device's physical sensors (like the accelerometer and gyroscope). It forces the user interface to stay in a vertical layout, which is highly useful when reading in bed, texting, or walking.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does portrait orientation lock mean?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Portrait orientation lock means that your device is locked to a vertical screen layout. Even if you turn your device horizontally or upside down, the display will not rotate, ensuring a stable and consistent viewing experience for vertical content.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Where is the portrait orientation lock button?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On Apple iOS devices, the portrait orientation lock button is in the Control Center (swipe down from the top-right corner), represented by a padlock inside a circular arrow. On Android, the equivalent setting is typically in the Quick Settings dropdown (swipe down from the top of the screen) named 'Auto-rotate' or 'Portrait'. You can also find it under Display settings.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is orientation lock?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Orientation lock is a general software feature on mobile operating systems and web applications that restricts the display configuration to a specific mode, such as portrait or landscape. It prevents automatic screen re-rendering when physical device orientation changes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal -->
@@ -1198,6 +1348,32 @@ const keywords = "orientation lock, screen rotation test, screen orientation api
       if (e.target === howItWorksModal) {
         howItWorksModal.classList.add("hidden");
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Initialize logic execution
