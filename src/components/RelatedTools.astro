@@ -51,14 +51,27 @@ const excluded = new Set<string>([currentSlug]);
 if (nextTarget) excluded.add(nextTarget.slug);
 
 const currentTags = new Set(current.tags);
+
+// Rank candidates so tools in the SAME category always win over tools that
+// merely share a generic tag (e.g. "calculator", which is common to finance,
+// display and health tools). Without this, a display tool like the Aspect
+// Ratio Calculator leaked into finance recommendations purely on the shared
+// "calculator" tag. Same-category first, then by number of overlapping tags;
+// ties keep registry order (Array.sort is stable).
 const related = tools
   .filter((t) => !excluded.has(t.slug))
-  .filter(
-    (t) =>
-      t.category === current.category ||
-      t.tags.some((tag) => currentTags.has(tag))
-  )
-  .slice(0, 4);
+  .map((t) => ({
+    tool: t,
+    sameCategory: t.category === current.category,
+    sharedTags: t.tags.reduce((n, tag) => (currentTags.has(tag) ? n + 1 : n), 0),
+  }))
+  .filter((c) => c.sameCategory || c.sharedTags > 0)
+  .sort((a, b) => {
+    if (a.sameCategory !== b.sameCategory) return a.sameCategory ? -1 : 1;
+    return b.sharedTags - a.sharedTags;
+  })
+  .slice(0, 4)
+  .map((c) => c.tool);
 
 // Don't render a sparse accordion.
 const showRelated = related.length >= 2;
@@ -66,17 +79,27 @@ const showRelated = related.length >= 2;
 
 {nextStep && nextTarget && (
   <aside class="next-step" aria-label="Suggested next step">
-    <p class="next-step__eyebrow">Next step</p>
-    <p class="next-step__line">{nextLine}</p>
+    <div class="next-step__text">
+      <p class="next-step__eyebrow">Next step</p>
+      <p class="next-step__line">{nextLine}</p>
+    </div>
     <a class="next-step__cta" href={hrefFor(nextTarget)}>
-      Try {nextTarget.title}
+      <span class="next-step__cta-label">Try {nextTarget.title}</span>
+      <svg class="next-step__arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M4 10h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
     </a>
   </aside>
 )}
 
 {showRelated && (
   <details class="related">
-    <summary class="related__summary">Related tools</summary>
+    <summary class="related__summary">
+      <span class="related__summary-label">Related tools</span>
+      <svg class="related__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </summary>
     <ul class="related__list">
       {related.map((t) => (
         <li>
@@ -88,27 +111,40 @@ const showRelated = related.length >= 2;
 )}
 
 <style>
+  /* ── Next step suggestion ─────────────────────────────────
+     A flat, on-brand card: hairline border on canvas, the suggestion copy on
+     the left and a black pill CTA on the right. flex-wrap lets the CTA drop
+     below the copy on narrow widths without a media query. */
   .next-step {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 20px;
     margin-top: 24px;
-    padding: 20px 24px;
-    background-color: var(--color-surface, #f7f8fa);
-    border: 1px solid var(--color-hairline-soft, #eef0f3);
+    padding: 18px 22px;
+    background-color: var(--color-canvas, #ffffff);
+    border: 1px solid var(--color-hairline, #e0e2e8);
     border-radius: var(--radius-xl, 16px);
     box-shadow: var(--shadow-subtle, rgba(5, 0, 56, 0.04) 0px 1px 2px 0px);
+  }
+
+  .next-step__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1 1 240px;
+    min-width: 0;
   }
 
   .next-step__eyebrow {
     margin: 0;
     font-family: var(--font-display, sans-serif);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-steel, #6b6f7e);
+    color: var(--color-brand-blue, #4262ff);
   }
 
   .next-step__line {
@@ -119,25 +155,28 @@ const showRelated = related.length >= 2;
     color: var(--color-ink, #1c1c1e);
   }
 
+  /* Black-pill primary CTA — the site's signature button. Uses --color-primary
+     / --color-on-primary so it inverts correctly in dark mode. */
   .next-step__cta {
-    margin-top: 4px;
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
+    gap: 8px;
+    padding: 11px 20px;
     font-family: var(--font-display, sans-serif);
     font-size: 14px;
     font-weight: 500;
+    line-height: 1.3;
     text-decoration: none;
-    color: var(--color-canvas, #ffffff);
-    background-color: var(--color-brand-blue, #4262ff);
+    color: var(--color-on-primary, #ffffff);
+    background-color: var(--color-primary, #1c1c1e);
     border: 1px solid transparent;
     border-radius: 9999px;
     transition: background-color 0.2s ease;
   }
 
   .next-step__cta:hover {
-    background-color: var(--color-blue-pressed, #2a41b6);
+    background-color: var(--color-charcoal, #2c2c34);
   }
 
   .next-step__cta:focus-visible {
@@ -145,22 +184,44 @@ const showRelated = related.length >= 2;
     outline-offset: 2px;
   }
 
+  .next-step__arrow {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .next-step__cta:hover .next-step__arrow {
+    transform: translateX(3px);
+  }
+
+  /* ── Related tools accordion ──────────────────────────────
+     Custom disclosure row with a rotating chevron instead of the native
+     triangle marker. */
   .related {
-    margin-top: 16px;
-    padding: 4px 16px;
+    margin-top: 14px;
+    padding: 2px 16px;
     background-color: var(--color-surface-soft, #fafbfc);
     border: 1px solid var(--color-hairline-soft, #eef0f3);
     border-radius: var(--radius-lg, 12px);
   }
 
   .related__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     cursor: pointer;
-    padding: 12px 4px;
+    padding: 13px 2px;
     font-family: var(--font-display, sans-serif);
     font-size: 14px;
     font-weight: 500;
     color: var(--color-ink, #1c1c1e);
-    list-style-position: inside;
+    list-style: none;
+  }
+
+  .related__summary::-webkit-details-marker {
+    display: none;
   }
 
   .related__summary:focus-visible {
@@ -169,10 +230,16 @@ const showRelated = related.length >= 2;
     border-radius: var(--radius-sm, 6px);
   }
 
-  /* Native marker rotates via built-in details behavior; add a gentle
-     rotation transition on the disclosure triangle where supported. */
-  .related__summary::marker {
+  .related__chevron {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
     color: var(--color-stone, #8e91a0);
+    transition: transform 0.2s ease;
+  }
+
+  .related[open] .related__chevron {
+    transform: rotate(180deg);
   }
 
   .related__list {
@@ -180,14 +247,15 @@ const showRelated = related.length >= 2;
     flex-wrap: wrap;
     gap: 8px;
     margin: 0;
-    padding: 4px 4px 16px;
+    padding: 2px 2px 16px;
     list-style: none;
   }
 
+  /* Pill chips in the site's pill-tab style. */
   .related__chip {
     display: inline-flex;
     align-items: center;
-    padding: 6px 14px;
+    padding: 7px 14px;
     font-family: var(--font-display, sans-serif);
     font-size: 13px;
     font-weight: 500;
@@ -200,8 +268,8 @@ const showRelated = related.length >= 2;
   }
 
   .related__chip:hover {
-    color: var(--color-brand-blue, #4262ff);
-    border-color: var(--color-brand-blue, #4262ff);
+    color: var(--color-primary, #1c1c1e);
+    border-color: var(--color-hairline-strong, #c7cad5);
     background-color: var(--color-surface, #f7f8fa);
   }
 
@@ -210,7 +278,7 @@ const showRelated = related.length >= 2;
     outline-offset: 2px;
   }
 
-  /* (8) A subtle open animation, disabled for reduced-motion users. */
+  /* Subtle open animation, disabled for reduced-motion users. */
   @media (prefers-reduced-motion: no-preference) {
     .related[open] .related__list {
       animation: related-reveal 0.2s ease both;
@@ -225,6 +293,63 @@ const showRelated = related.length >= 2;
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* ── Mobile (320px–480px) ─────────────────────────────────
+     Finance tool names are long ("Compound Interest Calculator",
+     "401(k) Retirement Calculator"). Shrink the type, stack the CTA full
+     width, and keep the two buttons a matched pair so nothing overflows. */
+  @media (max-width: 480px) {
+    .next-step {
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .next-step__line {
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    /* The "Try …" CTA button and the "Related tools" accordion trigger share
+       one sizing scale — same font-size, padding, and border-radius — so they
+       read as a consistent matched pair. */
+    .next-step__cta,
+    .related__summary {
+      font-size: 0.8rem;
+      padding: 9px 16px;
+      border-radius: 9999px;
+    }
+
+    .next-step__cta {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+      white-space: normal;
+      text-align: center;
+      overflow-wrap: break-word;
+    }
+
+    .related {
+      padding: 2px 12px;
+    }
+
+    .related__summary {
+      box-sizing: border-box;
+    }
+
+    .related__list {
+      gap: 6px;
+    }
+
+    /* Chips wrap onto multiple lines and never exceed the container width,
+       even for the longest finance tool titles. */
+    .related__chip {
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
     }
   }
 </style>
