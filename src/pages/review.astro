@@ -99,31 +99,23 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
-  // Pre-seed default reviews to make page look rich out-of-the-box
+  // Reviews shown on the site (kept in sync with the homepage testimonials)
   const defaultReviews = [
     {
-      name: "Darnell Vance",
-      title: "Senior Product Designer",
+      name: "Arjav Jain",
+      title: "Creator & Developer",
       rating: 5,
-      review: "Absolutely loving the interactive whiteboard widget on the homepage! I was able to sketch out a wireframe flow while simultaneously using the UUID and Base64 cards. Perfect toolset.",
+      review: "Toolkify is hands-down the cleanest toolkit I've come across. Everything just works — fast, private, and beautifully designed. It's my go-to for quick tasks now.",
       color: "bg-surface-yellow border border-yellow-light text-yellow-dark",
-      timestamp: Date.now() - 3600000 * 24 * 3 // 3 days ago
+      timestamp: Date.now() - 3600000 * 24 * 2 // 2 days ago
     },
     {
-      name: "Aisha Rahman",
-      title: "Full Stack Developer",
+      name: "Sai Goyal",
+      title: "Designer & Developer",
       rating: 5,
-      review: "The fact that this tool runs 100% locally is a lifesaver. Our company has extremely strict policies about pasting credentials or data into third-party sites, but TOOLKIFY' V8 sandboxing completely solves that.",
+      review: "Love how everything runs right in the browser with zero setup. The tools are simple, useful, and the design feels really polished. Highly recommend it!",
       color: "bg-teal-light border border-hairline text-moss-dark",
       timestamp: Date.now() - 3600000 * 24 // 1 day ago
-    },
-    {
-      name: "Marcus Cheng",
-      title: "UI Engineer",
-      rating: 4,
-      review: "Clean aesthetic, very Miro-esque. The Contrast Checker works flawlessly for auditing AA/AAA scores. I'd love to see a JWT decoder added in a future update!",
-      color: "bg-coral-light border border-hairline text-coral-dark",
-      timestamp: Date.now() - 3600000 * 6 // 6 hours ago
     }
   ];
 
