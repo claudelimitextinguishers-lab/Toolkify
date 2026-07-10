@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
 
 // Tool metadata
 const name = "Base64 & URL Encoder/Decoder";
@@ -457,6 +458,8 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
         <div class="text-xs text-stone py-2 text-center" id="history-empty-msg">No recent conversions. History updates automatically as you convert.</div>
       </div>
     </div>
+
+    <RelatedTools currentSlug="base64-url" />
 
     <!-- Interactive Zoom Overlay/Modal -->
     <div id="preview-modal" class="hidden fixed inset-0 z-50 bg-primary/60 backdrop-blur-sm flex items-center justify-center p-4">
