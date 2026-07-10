@@ -1,0 +1,230 @@
+---
+import { tools, bySlug, type Tool } from '../data/tools-registry';
+import { nextStepMap } from '../data/next-step';
+
+interface Props {
+  /** Slug of the tool this component is rendered on. Must exist in tools-registry. */
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+// (2) Resolve the current tool. bySlug() throws at build time if not found.
+const current = bySlug(currentSlug);
+
+// Build the crawlable URL for a tool. Standalone tools live directly under
+// /tools/{slug}; every other category lives under /tools/{category}/{slug}.
+// This matches the actual file layout in src/pages/tools/.
+const hrefFor = (tool: Tool): string =>
+  tool.category === 'standalone'
+    ? `/tools/${tool.slug}`
+    : `/tools/${tool.category}/${tool.slug}`;
+
+// (3) Next-step lookup + validation.
+const nextStep = nextStepMap[currentSlug];
+let nextTarget: Tool | null = null;
+let nextLine = '';
+
+if (nextStep) {
+  nextTarget = tools.find((t) => t.slug === nextStep.targetSlug) ?? null;
+  if (!nextTarget) {
+    // Fail the build loudly on a typo instead of shipping a dead link.
+    throw new Error(
+      `RelatedTools.astro: nextStepMap['${currentSlug}'].targetSlug ` +
+        `"${nextStep.targetSlug}" does not exist in tools-registry.ts`
+    );
+  }
+  const lines = nextStep.lines ?? [];
+  if (lines.length === 0) {
+    throw new Error(
+      `RelatedTools.astro: nextStepMap['${currentSlug}'] has an empty lines array`
+    );
+  }
+  // Build-time random selection. Fine for a static build — it just varies the
+  // copy between deploys, no client JS and no per-visitor requirement.
+  nextLine = lines[Math.floor(Math.random() * lines.length)];
+}
+
+// (4) Related list: exclude the current tool and the next-step target, then
+// keep tools sharing the category OR at least one tag. Cap at 4.
+const excluded = new Set<string>([currentSlug]);
+if (nextTarget) excluded.add(nextTarget.slug);
+
+const currentTags = new Set(current.tags);
+const related = tools
+  .filter((t) => !excluded.has(t.slug))
+  .filter(
+    (t) =>
+      t.category === current.category ||
+      t.tags.some((tag) => currentTags.has(tag))
+  )
+  .slice(0, 4);
+
+// Don't render a sparse accordion.
+const showRelated = related.length >= 2;
+---
+
+{nextStep && nextTarget && (
+  <aside class="next-step" aria-label="Suggested next step">
+    <p class="next-step__eyebrow">Next step</p>
+    <p class="next-step__line">{nextLine}</p>
+    <a class="next-step__cta" href={hrefFor(nextTarget)}>
+      Try {nextTarget.title}
+    </a>
+  </aside>
+)}
+
+{showRelated && (
+  <details class="related">
+    <summary class="related__summary">Related tools</summary>
+    <ul class="related__list">
+      {related.map((t) => (
+        <li>
+          <a class="related__chip" href={hrefFor(t)}>{t.title}</a>
+        </li>
+      ))}
+    </ul>
+  </details>
+)}
+
+<style>
+  .next-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 20px 24px;
+    background-color: var(--color-surface, #f7f8fa);
+    border: 1px solid var(--color-hairline-soft, #eef0f3);
+    border-radius: var(--radius-xl, 16px);
+    box-shadow: var(--shadow-subtle, rgba(5, 0, 56, 0.04) 0px 1px 2px 0px);
+  }
+
+  .next-step__eyebrow {
+    margin: 0;
+    font-family: var(--font-display, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-steel, #6b6f7e);
+  }
+
+  .next-step__line {
+    margin: 0;
+    font-family: var(--font-body, sans-serif);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--color-ink, #1c1c1e);
+  }
+
+  .next-step__cta {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-family: var(--font-display, sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-canvas, #ffffff);
+    background-color: var(--color-brand-blue, #4262ff);
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+  }
+
+  .next-step__cta:hover {
+    background-color: var(--color-blue-pressed, #2a41b6);
+  }
+
+  .next-step__cta:focus-visible {
+    outline: 2px solid var(--color-brand-blue, #4262ff);
+    outline-offset: 2px;
+  }
+
+  .related {
+    margin-top: 16px;
+    padding: 4px 16px;
+    background-color: var(--color-surface-soft, #fafbfc);
+    border: 1px solid var(--color-hairline-soft, #eef0f3);
+    border-radius: var(--radius-lg, 12px);
+  }
+
+  .related__summary {
+    cursor: pointer;
+    padding: 12px 4px;
+    font-family: var(--font-display, sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink, #1c1c1e);
+    list-style-position: inside;
+  }
+
+  .related__summary:focus-visible {
+    outline: 2px solid var(--color-brand-blue, #4262ff);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm, 6px);
+  }
+
+  /* Native marker rotates via built-in details behavior; add a gentle
+     rotation transition on the disclosure triangle where supported. */
+  .related__summary::marker {
+    color: var(--color-stone, #8e91a0);
+  }
+
+  .related__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 4px 4px 16px;
+    list-style: none;
+  }
+
+  .related__chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-family: var(--font-display, sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-slate, #555a6a);
+    background-color: var(--color-canvas, #ffffff);
+    border: 1px solid var(--color-hairline, #e0e2e8);
+    border-radius: 9999px;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .related__chip:hover {
+    color: var(--color-brand-blue, #4262ff);
+    border-color: var(--color-brand-blue, #4262ff);
+    background-color: var(--color-surface, #f7f8fa);
+  }
+
+  .related__chip:focus-visible {
+    outline: 2px solid var(--color-brand-blue, #4262ff);
+    outline-offset: 2px;
+  }
+
+  /* (8) A subtle open animation, disabled for reduced-motion users. */
+  @media (prefers-reduced-motion: no-preference) {
+    .related[open] .related__list {
+      animation: related-reveal 0.2s ease both;
+    }
+  }
+
+  @keyframes related-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
