@@ -5,15 +5,15 @@ import Layout from '../../../layouts/Layout.astro';
 const name = "Accelerometer Viewer";
 const category = "mobile";
 const tier = "Mobile Sensor Tools";
-const description = "Track real-time acceleration shifts, gravitational forces, and movements.";
-const pageTitle = "Accelerometer Viewer - Real-time Motion & Gravity Grapher";
-const keywords = "accelerometer viewer, motion sensor, gravity sensor, device motion api, acceleration graph, accelerometer csv export, browser accelerometer, shake detector";
+const description = "Use our free online accelerometer viewer to measure real-time 3-axis motion and gravity. Record, graph, and export sensor data logs from your mobile device.";
+const pageTitle = "Accelerometer Viewer - Free Online 3-Axis Sensor & Logger";
+const keywords = "accelerometer, accelerometer sensor, what is an accelerometer, accelerometer definition, how does an accelerometer work, accelerometer what does it do, 3 axis accelerometer, accelerometer logger, what does an accelerometer measure";
 const canonicalUrl = "https://boardtools.app/tools/mobile/accelerometer-viewer";
 const ogImage = "/og/accelerometer-viewer.png";
 ---
 
 <Layout 
-  title={`${name} - BoardTools`}
+  title={pageTitle}
   description={description}
   toolName={name}
   toolCategory={category}
@@ -49,6 +49,72 @@ const ogImage = "/og/accelerometer-viewer.png";
         "price": "0.00",
         "priceCurrency": "USD"
       }
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an accelerometer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>An accelerometer is a specialized sensor that measures proper acceleration—the rate of change of velocity of a physical body relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does an accelerometer work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>An accelerometer works by utilizing micro-electromechanical systems (MEMS) in modern devices. Microscopic seismic masses suspended by silicon springs shift when the device moves, altering the electrical capacitance. The sensor measures this capacitance shift to calculate the exact direction and magnitude of acceleration.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Accelerometer: what does it do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>An accelerometer detects dynamic motion forces, including vibration, shake, tilt, and impact, as well as static forces like gravity. This allows applications to automate screen rotation, track physical steps, trigger airbag deployment, or run structural vibration analyses.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does an accelerometer measure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/s² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does an accelerometer cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Standard MEMS accelerometer chips used in modern consumer electronics cost between $1.00 and $5.00. Industrial-grade, high-precision 3-axis accelerometer loggers used for vibration monitoring or aerospace testing are much more rugged and can range from $100 to over $1,000.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to measure vibration using accelerometer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To measure vibration, mount the accelerometer securely to the target object, configure a high sampling rate (typically 50Hz to 100Hz+), and record the 3-axis acceleration. Analyzing the resulting log's peak amplitude and frequency shifts provides a detailed vibration profile.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does accelerometer sensor work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>An accelerometer sensor works by converting physical force into electrical signals. It achieves this either through capacitive sensing (where motion shifts a microscopic mass to change electrical capacity) or piezoelectric sensing (where physical pressure on a crystal structure generates a proportional electrical charge).</p>"
+          }
+        }
+      ]
     }
   </script>
 
@@ -419,6 +485,234 @@ const ogImage = "/og/accelerometer-viewer.png";
 
       </div>
 
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-12 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Accelerometer Viewer & Logger
+      </h2>
+      <p class="text-sm leading-relaxed">
+        An <strong>accelerometer</strong> is an essential sensor that measures proper acceleration—the rate of velocity change of an object relative to its own rest frame. If you have ever wondered <strong>what is an accelerometer</strong>, it is the technology that detects motion, tilt, shock, and vibration. According to the scientific <strong>accelerometer definition</strong>, these devices measure the force of acceleration, which can be static (such as the continuous gravitational pull of the Earth) or dynamic (such as sudden motion, drops, or impacts). This web application serves as a browser-based <strong>accelerometer logger</strong>, allowing you to test and analyze your device's built-in <strong>accelerometer sensor</strong> in real time.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Our tool utilizes standard browser APIs to access your hardware motion sensors safely and securely inside your browser's local sandbox. Whether you are troubleshooting a mobile sensor, testing a web app, or conducting a basic physics experiment, this online viewer plots incoming movement signals immediately. You can switch between gravity-compensated linear motion or raw gravity-inclusive modes, track maximum peaks on all coordinate planes, and export logged samples as CSV or JSON files.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How Does an Accelerometer Work?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        If you want to know <strong>how does an accelerometer work</strong>, the answer lies in miniaturized electrical engineering. Modern mobile devices use micro-electromechanical systems (MEMS) sensors. Inside a MEMS <strong>accelerometer sensor</strong>, a tiny silicon seismic mass is suspended by micro-springs. When your device moves, inertia shifts this mass. The shifting movement alters the distance between the microscopic mass and fixed plates, changing the electrical capacitance.
+      </p>
+      <p class="text-sm leading-relaxed">
+        The sensor's internal circuitry measures this capacitive change and translates it into a digital signal. This process explains <strong>how does accelerometer sensor work</strong> to produce high-frequency X, Y, and Z readings. In industrial environments, piezoelectric crystals are often used instead; physical force squeezes the crystal, generating a small electric charge proportional to the acceleration.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Accelerometer: What Does It Do?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        When asking "<strong>accelerometer: what does it do</strong>?", the answer spans countless industries. In smartphones, it automatically rotates your screen, detects shake gestures, and tracks steps for health monitoring. In vehicle safety, it detects severe deceleration to trigger airbag inflation. In structural engineering, it monitors the swaying of skyscrapers and bridges.
+      </p>
+      <p class="text-sm leading-relaxed">
+        So, <strong>what does an accelerometer measure</strong>? It measures acceleration forces across three spatial axes. By using a <strong>3 axis accelerometer</strong>, software can isolate motion on the X (lateral), Y (longitudinal), and Z (vertical) axes. This multi-axis layout is critical for mapping spatial motion, calculating total vector magnitude, and recording impact intensity.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Measure Vibration Using an Accelerometer
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Vibration monitoring is a primary industrial use for these sensors. To measure vibration, the sensor is mounted securely to a machine or surface. By monitoring acceleration over time at a high refresh rate, engineers can isolate peak frequency responses and detect mechanical faults, misalignment, or wear. Using our free online logger, you can record these vibration cycles and export the raw raw data directly to standard spreadsheet software for further numerical analysis.
+      </p>
+    </article>
+
+    <!-- Visible FAQ Section -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-8">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Accelerometer FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Get answers to the most common questions about accelerometer sensors, vibration monitoring, and costs.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is an accelerometer?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>An accelerometer is a specialized sensor that measures proper acceleration—the rate of velocity change of an object relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does an accelerometer work?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>An accelerometer works by utilizing micro-electromechanical systems (MEMS) in modern devices. Microscopic seismic masses suspended by silicon springs shift when the device moves, altering the electrical capacitance. The sensor measures this capacitance shift to calculate the exact direction and magnitude of acceleration.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Accelerometer: what does it do?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>An accelerometer detects dynamic motion forces, including vibration, shake, tilt, and impact, as well as static forces like gravity. This allows applications to automate screen rotation, track physical steps, trigger airbag deployment, or run structural vibration analyses.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does an accelerometer measure?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/s² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How much does an accelerometer cost?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Standard MEMS accelerometer chips used in modern consumer electronics cost between $1.00 and $5.00. Industrial-grade, high-precision 3-axis accelerometer loggers used for vibration monitoring or aerospace testing are much more rugged and can range from $100 to over $1,000.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to measure vibration using accelerometer?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To measure vibration, mount the accelerometer securely to the target object, configure a high sampling rate (typically 50Hz to 100Hz+), and record the 3-axis acceleration. Analyzing the resulting log's peak amplitude and frequency shifts provides a detailed vibration profile.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How does accelerometer sensor work?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>An accelerometer sensor works by converting physical force into electrical signals. It achieves this either through capacitive sensing (where motion shifts a microscopic mass to change electrical capacity) or piezoelectric sensing (where physical pressure on a crystal structure generates a proportional electrical charge).</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1209,6 +1503,32 @@ const ogImage = "/og/accelerometer-viewer.png";
     // Click canvas to pause/resume rendering (avoids CPU when user switches tabs or is idle)
     canvas?.addEventListener("click", () => {
       isCanvasPaused = !isCanvasPaused;
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Setup lifecycle
