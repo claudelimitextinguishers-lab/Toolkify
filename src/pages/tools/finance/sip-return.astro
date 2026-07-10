@@ -11,7 +11,7 @@ const description = "Calculate prospective returns and final maturity value on S
 const pageTitle = "SIP Return Calculator - Monthly & Lumpsum SIP Calculator";
 const seoDescription =
   "Free SIP return calculator to estimate the maturity value of monthly and lumpsum SIP investments. Calculate SIP returns for 5, 10, 15, 20, 25, 30 & 40 years with step-up SIP support.";
-const canonicalUrl = "https://boardtools.app/tools/finance/sip-return";
+const canonicalUrl = "https://toolkify.app/tools/finance/sip-return";
 const ogImage = "/og/sip-return-calculator.png";
 const keywords =
   "sip return calculator, how to calculate sip, best sip calculator, sip calculator monthly investment, sip calculator lumpsum, sip calculator 5 year, sip calculator 10 year, sip calculator 15 year, sip calculator 20 year, sip calculator 25 year, sip calculator 30 year, sip calculator lumpsum with monthly investment, top sip calculator, sip calculator, step up sip calculator, sip calculator with step up, sip calculator 40 years, daily sip calculator, sip calculator online";
@@ -35,7 +35,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "SIP Return Calculator",
       "alternateName": "Monthly & Lumpsum SIP Calculator with Step-up",
-      "url": "https://boardtools.app/tools/finance/sip-return",
+      "url": "https://toolkify.app/tools/finance/sip-return",
       "description": "Free interactive SIP return calculator to estimate the maturity value of monthly and lumpsum mutual fund investments with annual step-up percentages, lump-sum top-ups, CSV/Excel exports, and dynamic what-if sensitivity comparisons for 5, 10, 15, 20, 25, 30 and 40 year horizons.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -152,7 +152,7 @@ const keywords =
           "name": "Which sip is best for highest return?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>For the highest potential returns, equity mutual funds—specifically small-cap and mid-cap funds—are generally considered the best options for long-term horizons. However, since high returns come with high risk, investors should balance their portfolio with diversified large-cap or flexi-cap funds.</p>"
+            "text": "<p>For the highest potential returns, equity mutual fundsâ€”specifically small-cap and mid-cap fundsâ€”are generally considered the best options for long-term horizons. However, since high returns come with high risk, investors should balance their portfolio with diversified large-cap or flexi-cap funds.</p>"
           }
         },
         {
@@ -251,12 +251,12 @@ const keywords =
               class="text-xs font-semibold py-0.5 px-2 rounded-full border border-hairline bg-surface hover:bg-canvas cursor-pointer transition-all outline-none"
               aria-label="Currency Select"
             >
-              <option value="INR" selected>₹ INR</option>
+              <option value="INR" selected>â‚¹ INR</option>
               <option value="USD">$ USD</option>
               <option value="CAD">$ CAD</option>
-              <option value="GBP">£ GBP</option>
+              <option value="GBP">Â£ GBP</option>
               <option value="AUD">$ AUD</option>
-              <option value="EUR">€ EUR</option>
+              <option value="EUR">â‚¬ EUR</option>
               <option value="Custom">Custom / Other</option>
             </select>
           </div>
@@ -265,7 +265,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="₹" class="text-input" placeholder="e.g. $, £, €, ₹" />
+              <input type="text" id="custom-currency-symbol" value="â‚¹" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -277,7 +277,7 @@ const keywords =
           <div class="flex flex-col gap-1.5">
             <label class="text-xs font-semibold text-charcoal flex justify-between">
               <span>Monthly Investment</span>
-              <span class="currency-label text-stone font-semibold">INR (₹)</span>
+              <span class="currency-label text-stone font-semibold">INR (â‚¹)</span>
             </label>
             <div class="flex items-center gap-3">
               <input
@@ -291,7 +291,7 @@ const keywords =
                 aria-label="Monthly Investment Slider"
               />
               <div class="relative w-28 shrink-0">
-                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">₹</span>
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">â‚¹</span>
                 <input
                   type="number"
                   id="monthly-amt-input"
@@ -380,7 +380,7 @@ const keywords =
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                ⚙ Advanced Parameters (Step-up, Lump sum, Frequency)
+                âš™ Advanced Parameters (Step-up, Lump sum, Frequency)
               </span>
               <svg
                 id="advanced-chevron"
@@ -448,10 +448,10 @@ const keywords =
               <div class="flex flex-col gap-1.5">
                 <label for="lump-sum-input" class="text-[11px] font-semibold text-slate flex justify-between">
                   <span>One-time Lump Sum Top-up (Initial Investment)</span>
-                  <span class="currency-label text-stone">INR (₹)</span>
+                  <span class="currency-label text-stone">INR (â‚¹)</span>
                 </label>
                 <div class="relative">
-                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">₹</span>
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-xs font-medium currency-symbol">â‚¹</span>
                   <input
                     type="number"
                     id="lump-sum-input"
@@ -521,18 +521,18 @@ const keywords =
             <div>
               <span class="text-xs font-bold text-slate uppercase tracking-wider block">Estimated Maturity Value</span>
               <div id="maturity-display" class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-primary transition-all duration-300 select-all font-mono">
-                ₹0
+                â‚¹0
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 border-t border-hairline pt-4 mt-2">
               <div class="flex flex-col">
                 <span class="text-[10px] uppercase font-bold text-slate">Total Invested Amount</span>
-                <span id="invested-display" class="font-display font-semibold text-base text-primary font-mono select-all">₹0</span>
+                <span id="invested-display" class="font-display font-semibold text-base text-primary font-mono select-all">â‚¹0</span>
               </div>
               <div class="flex flex-col">
                 <span class="text-[10px] uppercase font-bold text-slate">Estimated Wealth Gained</span>
-                <span id="returns-display" class="font-display font-semibold text-base text-success-accent font-mono select-all">₹0</span>
+                <span id="returns-display" class="font-display font-semibold text-base text-success-accent font-mono select-all">â‚¹0</span>
               </div>
             </div>
 
@@ -569,14 +569,14 @@ const keywords =
                   <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
                   <span class="text-charcoal font-medium">Total Invested</span>
                 </span>
-                <span id="legend-invested-val" class="font-mono font-semibold">₹0 (0%)</span>
+                <span id="legend-invested-val" class="font-mono font-semibold">â‚¹0 (0%)</span>
               </li>
               <li class="flex items-center justify-between text-xs">
                 <span class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-success-accent"></span>
                   <span class="text-charcoal font-medium">Estimated Wealth Gained</span>
                 </span>
-                <span id="legend-returns-val" class="font-mono font-semibold">₹0 (0%)</span>
+                <span id="legend-returns-val" class="font-mono font-semibold">â‚¹0 (0%)</span>
               </li>
             </ul>
           </div>
@@ -649,7 +649,7 @@ const keywords =
           <div class="flex flex-col gap-1.5">
             <div class="flex justify-between text-xs font-semibold">
               <span>What-If Monthly Investment</span>
-              <span id="whatif-monthly-display" class="font-mono text-brand-blue">₹0</span>
+              <span id="whatif-monthly-display" class="font-mono text-brand-blue">â‚¹0</span>
             </div>
             <input
               type="range"
@@ -684,15 +684,15 @@ const keywords =
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-hairline-soft pt-4 mt-2 font-mono text-xs">
           <div class="flex flex-col">
             <span class="text-[10px] text-stone uppercase font-bold">New Maturity Value</span>
-            <span id="whatif-maturity-val" class="font-semibold text-sm text-primary">₹0</span>
+            <span id="whatif-maturity-val" class="font-semibold text-sm text-primary">â‚¹0</span>
           </div>
           <div class="flex flex-col">
             <span class="text-[10px] text-stone uppercase font-bold">New Total Invested</span>
-            <span id="whatif-invested-val" class="font-semibold text-sm text-slate">₹0</span>
+            <span id="whatif-invested-val" class="font-semibold text-sm text-slate">â‚¹0</span>
           </div>
           <div class="flex flex-col">
             <span class="text-[10px] text-stone uppercase font-bold">Maturity Difference</span>
-            <span id="whatif-diff-val" class="font-semibold text-sm text-success-accent">₹0</span>
+            <span id="whatif-diff-val" class="font-semibold text-sm text-success-accent">â‚¹0</span>
           </div>
         </div>
       </div>
@@ -1090,7 +1090,7 @@ const keywords =
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>For the highest potential returns, equity mutual funds—specifically small-cap and mid-cap funds—are generally considered the best options for long-term horizons. However, since high returns come with high risk, investors should balance their portfolio with diversified large-cap or flexi-cap funds.</p>
+            <p>For the highest potential returns, equity mutual fundsâ€”specifically small-cap and mid-cap fundsâ€”are generally considered the best options for long-term horizons. However, since high returns come with high risk, investors should balance their portfolio with diversified large-cap or flexi-cap funds.</p>
           </div>
         </div>
 
@@ -1152,7 +1152,7 @@ const keywords =
   >
     <div class="flex flex-col">
       <span class="text-[10px] uppercase font-bold text-stone">Maturity Value</span>
-      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">₹0</span>
+      <span id="mobile-summary-value" class="font-display font-bold text-lg text-primary font-mono">â‚¹0</span>
     </div>
     <button
       type="button"
@@ -1176,7 +1176,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer font-bold"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1290,7 +1290,7 @@ const keywords =
 
     // State Variables
     let currentCurrency = "INR";
-    let currentCurrencySymbol = "₹";
+    let currentCurrencySymbol = "â‚¹";
     let currentCurrencyCode = "INR";
 
     let calculatedInvested = 0;
@@ -1307,7 +1307,7 @@ const keywords =
       currentCurrency = val;
 
       if (val === "INR") {
-        currentCurrencySymbol = "₹";
+        currentCurrencySymbol = "â‚¹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "USD") {
@@ -1319,7 +1319,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "£";
+        currentCurrencySymbol = "Â£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1327,12 +1327,12 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "€";
+        currentCurrencySymbol = "â‚¬";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {
         customCurrencyContainer?.classList.remove("hidden");
-        currentCurrencySymbol = customCurrencySymbolInput?.value || "₹";
+        currentCurrencySymbol = customCurrencySymbolInput?.value || "â‚¹";
         currentCurrencyCode = customCurrencyCodeInput?.value || "INR";
       }
 
@@ -1697,7 +1697,7 @@ Initial Lump Sum: ${formatCurrency(parseFloat(lumpSumInput.value) || 0)}
 Maturity Value: ${formatCurrency(calculatedMaturity)}
 Total Invested: ${formatCurrency(calculatedInvested)}
 Wealth Gained: ${formatCurrency(Math.max(0, calculatedMaturity - calculatedInvested))}
-Generated by BoardTools SIP Return Calculator`;
+Generated by TOOLKIFY SIP Return Calculator`;
 
       navigator.clipboard.writeText(summaryText)
         .then(() => {
@@ -1707,7 +1707,7 @@ Generated by BoardTools SIP Return Calculator`;
             } else {
               copyOriginalText = copyResultsBtn.innerHTML;
             }
-            copyResultsBtn.innerHTML = "✓ Copied!";
+            copyResultsBtn.innerHTML = "âœ“ Copied!";
             copyTimeout = setTimeout(() => {
               copyResultsBtn.innerHTML = copyOriginalText;
               copyTimeout = null;
@@ -1886,7 +1886,7 @@ Generated by BoardTools SIP Return Calculator`;
 
       customCurrencySymbolInput?.addEventListener("input", () => {
         if (currentCurrency === "Custom") {
-          currentCurrencySymbol = customCurrencySymbolInput.value || "₹";
+          currentCurrencySymbol = customCurrencySymbolInput.value || "â‚¹";
           updateCurrencyFormatting();
           calculate();
         }
@@ -1956,7 +1956,7 @@ Generated by BoardTools SIP Return Calculator`;
         compoundingSelect.value = "monthly";
         
         if (currencySelect) currencySelect.value = "INR";
-        if (customCurrencySymbolInput) customCurrencySymbolInput.value = "₹";
+        if (customCurrencySymbolInput) customCurrencySymbolInput.value = "â‚¹";
         if (customCurrencyCodeInput) customCurrencyCodeInput.value = "INR";
 
         updateCurrencyFormatting();

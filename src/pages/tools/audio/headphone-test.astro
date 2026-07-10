@@ -8,7 +8,7 @@ const tier = "Audio Utilities";
 const description = "Free online headphone test. Diagnostic utility to check left right headphone channels, frequency sweep limits, low-end bass, and driver dynamic response.";
 
 const pageTitle = "Online Headphone Test - Left Right Audio & Sound Quality Check";
-const canonicalUrl = "https://boardtools.app/tools/audio/headphone-test";
+const canonicalUrl = "https://toolkify.app/tools/audio/headphone-test";
 const ogImage = "/og/headphone-test.png";
 const keywords = "headphone test, headphone test music, left right headphone test, headphone test left and right, left and right headphone test, online headphone test, right and left headphone test, headphone test left right, headphone test sound, audio headphone test, stereo headphone test";
 ---
@@ -1148,7 +1148,7 @@ const keywords = "headphone test, headphone test music, left right headphone tes
   let stepTimer: any = null;
   
   // Storage Keys
-  const STORAGE_PREFIX = 'boardtools:headphone-test:';
+  const STORAGE_PREFIX = 'toolkify:headphone-test:';
   const HISTORY_KEY = `${STORAGE_PREFIX}history`;
   const DEVICE_KEY = `${STORAGE_PREFIX}device-name`;
   const VOLUME_KEY = `${STORAGE_PREFIX}volume`;
@@ -1984,7 +1984,7 @@ const keywords = "headphone test, headphone test music, left right headphone tes
     const highfreq = (document.getElementById('check-highfreq') as HTMLInputElement).checked ? 'PASS' : 'FAIL';
 
     const text = `====================================
-BOARDTOOLS AUDIO DIAGNOSTIC REPORT
+TOOLKIFY AUDIO DIAGNOSTIC REPORT
 Device: ${device}
 Date: ${new Date().toLocaleString()}
 ====================================
@@ -1996,13 +1996,13 @@ Voice Coil Rattle check:    [ ${rattle} ]
 Stereo Crosstalk Isolation: [ ${crosstalk} ]
 High-Frequency Treble Limit:[ ${highfreq} ]
 ====================================
-Generated via BoardTools Headphone Test Suite.`;
+Generated via TOOLKIFY Headphone Test Suite.`;
 
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `boardtools-audio-report-${device.toLowerCase().replace(/\s+/g, '-')}.txt`;
+    a.download = `toolkify-audio-report-${device.toLowerCase().replace(/\s+/g, '-')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

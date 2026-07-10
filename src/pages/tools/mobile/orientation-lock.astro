@@ -7,7 +7,7 @@ const category = "mobile";
 const tier = "Mobile Sensor Tools";
 const pageTitle = "Orientation Lock - Test Screen Rotation & Lock Status";
 const description = "Test your screen orientation lock online. Check portrait orientation lock, screen angles, safe area insets, and verify if portrait orientation lock is not working.";
-const canonicalUrl = "https://boardtools.app/tools/mobile/orientation-lock";
+const canonicalUrl = "https://toolkify.app/tools/mobile/orientation-lock";
 const ogImage = "/og/orientation-lock.png";
 const keywords = "orientation lock, portrait orientation lock, portrait orientation lock button, what is portrait orientation lock, what does portrait orientation lock do, screen orientation lockscreen orientation lock, what does portrait orientation lock mean, portrait orientation lock not working, portrait orientation lock meaning, portrait orientation lock in settings";
 ---
@@ -30,7 +30,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       "@type": "WebApplication",
       "name": "Orientation Lock Check",
       "alternateName": "Screen Rotation Tester & Orientation API Checker",
-      "url": "https://boardtools.app/tools/mobile/orientation-lock",
+      "url": "https://toolkify.app/tools/mobile/orientation-lock",
       "description": "A client-side screen orientation tester and rotation diagnostic tool. Analyzes screen angle, layout safe area insets, logs orientationchange events, and infers rotation-lock status using motion sensors.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -63,19 +63,19 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Mobile",
-          "item": "https://boardtools.app/tools/mobile"
+          "item": "https://toolkify.app/tools/mobile"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Orientation Lock Check",
-          "item": "https://boardtools.app/tools/mobile/orientation-lock"
+          "item": "https://toolkify.app/tools/mobile/orientation-lock"
         }
       ]
     }
@@ -280,7 +280,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
               <!-- Screen category footer label -->
               <div class="text-[8px] font-mono text-brand-blue font-bold uppercase tracking-wider select-none">
-                BoardTools
+                TOOLKIFY
               </div>
             </div>
 
@@ -673,8 +673,8 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       details: string;
     }
 
-    // Local Storage Keys (boardtools:{tool-slug}:{key})
-    const LS_CHECKLIST = "boardtools:orientation-lock:test-sequence";
+    // Local Storage Keys (toolkify:{tool-slug}:{key})
+    const LS_CHECKLIST = "toolkify:orientation-lock:test-sequence";
 
     let stateChecklist: SequenceState = {
       "portrait-primary": false,
@@ -1289,7 +1289,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       const sh = window.screen.height;
       const dpr = window.devicePixelRatio || 1;
 
-      let logText = `BoardTools - Orientation Lock Check Diagnostics Summary\n`;
+      let logText = `TOOLKIFY - Orientation Lock Check Diagnostics Summary\n`;
       logText += `Generated: ${new Date().toISOString()}\n`;
       logText += `--------------------------------------------------\n`;
       logText += `Current Orientation: ${type} (${angle}°)\n`;

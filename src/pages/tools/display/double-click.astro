@@ -9,7 +9,7 @@ const tier = "Display & Input Diagnostics";
 // On-page SEO metadata
 const pageTitle = "Double Click Test - Free Online Mouse Double Click Tester";
 const description = "Free double click test online. Run a mouse double click test to detect switch chatter, check double clicking on a single click, and use as a double click tester with real-time diagnostics.";
-const canonicalUrl = "https://boardtools.app/tools/display/double-click";
+const canonicalUrl = "https://toolkify.app/tools/display/double-click";
 const ogImage = "/og/double-click.png";
 const keywords = "double click test, mouse double click test, keyboard double click test, double click test mouse, double click test online, mouse double click test website, double click, how to double click on mac, double click tester, how to double click, mouse chatter test, mouse button tester";
 ---
@@ -32,7 +32,7 @@ const keywords = "double click test, mouse double click test, keyboard double cl
       "@type": "WebApplication",
       "name": "Double Click Test",
       "alternateName": "Mouse Double Click Tester & Switch Chatter Detector",
-      "url": "https://boardtools.app/tools/display/double-click",
+      "url": "https://toolkify.app/tools/display/double-click",
       "description": "Free online double click test to check your mouse for switch chatter and double clicking on a single click. Measure click intervals in milliseconds and verify hardware reliability.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -64,25 +64,25 @@ const keywords = "double click test, mouse double click test, keyboard double cl
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://boardtools.app/tools"
+          "item": "https://toolkify.app/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Display",
-          "item": "https://boardtools.app/tools/display"
+          "item": "https://toolkify.app/tools/display"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Double Click Test",
-          "item": "https://boardtools.app/tools/display/double-click"
+          "item": "https://toolkify.app/tools/display/double-click"
         }
       ]
     }
@@ -891,7 +891,7 @@ const keywords = "double click test, mouse double click test, keyboard double cl
         chatterThresholdRange.value = String(chatterThreshold);
         chatterThresholdVal.textContent = `${chatterThreshold}ms`;
       } else {
-        const savedThreshold = localStorage.getItem("boardtools:double-click:threshold");
+        const savedThreshold = localStorage.getItem("toolkify:double-click:threshold");
         if (savedThreshold) {
           chatterThreshold = parseInt(savedThreshold, 10);
           chatterThresholdRange.value = String(chatterThreshold);
@@ -900,7 +900,7 @@ const keywords = "double click test, mouse double click test, keyboard double cl
       }
 
       // Load click history from localStorage if exists
-      const savedHistory = localStorage.getItem("boardtools:double-click:history");
+      const savedHistory = localStorage.getItem("toolkify:double-click:history");
       if (savedHistory) {
         try {
           const parsed = JSON.parse(savedHistory);
@@ -981,8 +981,8 @@ const keywords = "double click test, mouse double click test, keyboard double cl
     });
 
     function saveState() {
-      localStorage.setItem("boardtools:double-click:threshold", String(chatterThreshold));
-      localStorage.setItem("boardtools:double-click:history", JSON.stringify(clickHistory));
+      localStorage.setItem("toolkify:double-click:threshold", String(chatterThreshold));
+      localStorage.setItem("toolkify:double-click:history", JSON.stringify(clickHistory));
     }
 
     function recalculateStatsFromHistory() {
@@ -1021,8 +1021,8 @@ const keywords = "double click test, mouse double click test, keyboard double cl
 
       // Clear local storage
       try {
-        localStorage.removeItem("boardtools:double-click:threshold");
-        localStorage.removeItem("boardtools:double-click:history");
+        localStorage.removeItem("toolkify:double-click:threshold");
+        localStorage.removeItem("toolkify:double-click:history");
       } catch (e) {}
 
       // Reset UI elements

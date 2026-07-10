@@ -8,7 +8,7 @@ const tier = "Mobile Sensor Tools";
 const description = "Use our free online accelerometer viewer to measure real-time 3-axis motion and gravity. Record, graph, and export sensor data logs from your mobile device.";
 const pageTitle = "Accelerometer Viewer - Free Online 3-Axis Sensor & Logger";
 const keywords = "accelerometer, accelerometer sensor, what is an accelerometer, accelerometer definition, how does an accelerometer work, accelerometer what does it do, 3 axis accelerometer, accelerometer logger, what does an accelerometer measure";
-const canonicalUrl = "https://boardtools.app/tools/mobile/accelerometer-viewer";
+const canonicalUrl = "https://toolkify.app/tools/mobile/accelerometer-viewer";
 const ogImage = "/og/accelerometer-viewer.png";
 ---
 
@@ -30,7 +30,7 @@ const ogImage = "/og/accelerometer-viewer.png";
       "@type": "WebApplication",
       "name": "Accelerometer Viewer",
       "alternateName": "Browser Accelerometer & Motion Plotter",
-      "url": "https://boardtools.app/tools/mobile/accelerometer-viewer",
+      "url": "https://toolkify.app/tools/mobile/accelerometer-viewer",
       "description": "Visualize and record real-time accelerometer data including gravity-compensated acceleration and gravity-inclusive values.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -904,13 +904,13 @@ const ogImage = "/og/accelerometer-viewer.png";
         try { return localStorage.getItem(lsKey); } catch (e) { return null; }
       };
 
-      const storedMode = get("boardtools:accelerometer-viewer:mode", "mode");
+      const storedMode = get("toolkify:accelerometer-viewer:mode", "mode");
       if (storedMode) {
         useCompensated = storedMode === "gravity-compensated";
         updateModeUI();
       }
 
-      const storedThreshold = get("boardtools:accelerometer-viewer:shake-threshold", "threshold");
+      const storedThreshold = get("toolkify:accelerometer-viewer:shake-threshold", "threshold");
       if (storedThreshold && shakeThresholdInput) {
         threshold = parseFloat(storedThreshold);
         shakeThresholdInput.value = threshold.toFixed(1);
@@ -919,11 +919,11 @@ const ogImage = "/og/accelerometer-viewer.png";
 
     // Save Settings
     function saveModeSetting(mode: string) {
-      localStorage.setItem("boardtools:accelerometer-viewer:mode", mode);
+      localStorage.setItem("toolkify:accelerometer-viewer:mode", mode);
     }
 
     function saveThresholdSetting(val: number) {
-      localStorage.setItem("boardtools:accelerometer-viewer:shake-threshold", val.toString());
+      localStorage.setItem("toolkify:accelerometer-viewer:shake-threshold", val.toString());
     }
 
     // Update Mode UI CSS
@@ -1392,8 +1392,8 @@ const ogImage = "/og/accelerometer-viewer.png";
       resetPeaks();
       discardRecording();
       resetControlsToDefaults();
-      localStorage.removeItem("boardtools:accelerometer-viewer:mode");
-      localStorage.removeItem("boardtools:accelerometer-viewer:shake-threshold");
+      localStorage.removeItem("toolkify:accelerometer-viewer:mode");
+      localStorage.removeItem("toolkify:accelerometer-viewer:shake-threshold");
     });
 
     // Share Event Listener

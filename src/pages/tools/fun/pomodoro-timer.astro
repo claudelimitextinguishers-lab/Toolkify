@@ -15,8 +15,8 @@ const description =
 const keywords =
   "pomodoro timer, pomodoro timer app, pomodoro timer aesthetic, aesthetic pomodoro timer, pomodoro timer online, best pomodoro timer, online pomodoro timer, pomodoro, pomodoro method, pomodoro technique, pomodoro study method, focus, focus timer, pomodoro focus timer, focus timer app, focus timer online, deep focus timer, study focus timer, focus timer pomodoro";
 const canonical =
-  "https://boardtools.app/tools/fun/pomodoro-timer";
-const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
+  "https://toolkify.app/tools/fun/pomodoro-timer";
+const ogImage = "https://toolkify.app/og-pomodoro-timer.png";
 ---
 
 <Layout
@@ -36,8 +36,8 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Pomodoro Timer - Aesthetic Online Focus Timer",
-      "alternateName": "BoardTools Pomodoro / Focus Timer",
-      "url": "https://boardtools.app/tools/fun/pomodoro-timer",
+      "alternateName": "TOOLKIFY Pomodoro / Focus Timer",
+      "url": "https://toolkify.app/tools/fun/pomodoro-timer",
       "description": "A free, aesthetic online Pomodoro timer and focus timer app. Customize focus and break intervals, track focus streaks, get background alerts, and unlock focus classification achievements using the Pomodoro technique.",
       "applicationCategory": "ProductivityApplication",
       "operatingSystem": "All",
@@ -71,19 +71,19 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Fun Tools",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Pomodoro Timer",
-          "item": "https://boardtools.app/tools/fun/pomodoro-timer"
+          "item": "https://toolkify.app/tools/fun/pomodoro-timer"
         }
       ]
     }
@@ -1488,7 +1488,7 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
       if (timerTimeLeft) {
         timerTimeLeft.textContent = formattedTime;
       }
-      document.title = `${formattedTime} - ${currentStage === "focus" ? "Focus" : "Break"} | BoardTools`;
+      document.title = `${formattedTime} - ${currentStage === "focus" ? "Focus" : "Break"} | TOOLKIFY`;
 
       // Circular Ring logic
       let maxSeconds = focusMinutes * 60;
@@ -1574,7 +1574,7 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
         requestFrameId = null;
       }
       updateStateUI();
-      document.title = "Pomodoro / Focus Timer | BoardTools";
+      document.title = "Pomodoro / Focus Timer | TOOLKIFY";
     }
 
     startPauseBtn?.addEventListener("click", () => {
@@ -1637,7 +1637,7 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
         switchStage("focus");
         sendNotification("Break Over!", "Let's start your next focus session!");
       }
-      document.title = "Pomodoro / Focus Timer | BoardTools";
+      document.title = "Pomodoro / Focus Timer | TOOLKIFY";
       saveStats();
     }
 
@@ -1785,7 +1785,7 @@ const ogImage = "https://boardtools.app/og-pomodoro-timer.png";
       const targetNoteText = focusTargetNote?.value
         ? ` on "${focusTargetNote.value}"`
         : "";
-      const textToCopy = `I unlocked the "${classificationBadge?.textContent || "Casual Cruiser"}" Focus Persona by completing ${completedSessions} session(s) (${totalFocusMins} focus minutes)${targetNoteText} on BoardTools Pomodoro Timer! Try it out!`;
+      const textToCopy = `I unlocked the "${classificationBadge?.textContent || "Casual Cruiser"}" Focus Persona by completing ${completedSessions} session(s) (${totalFocusMins} focus minutes)${targetNoteText} on TOOLKIFY Pomodoro Timer! Try it out!`;
       navigator.clipboard
         .writeText(textToCopy)
         .then(() => {

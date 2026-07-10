@@ -11,7 +11,7 @@ const pageTitle =
   "Color Picker & Eyedropper - Free Online Color Picker from Image";
 const description =
   "Free online color picker & eyedropper tool. Pick a color picker from image, use the RGB, RGBA, and random color picker, and copy HEX codes instantly with this private online color picker tool.";
-const canonicalUrl = "https://boardtools.app/tools/general/color-picker";
+const canonicalUrl = "https://toolkify.app/tools/general/color-picker";
 const ogImage = "/og/color-picker.png";
 const keywords =
   "color picker & eyedropper, color picker, color picker from image, rgb color picker, random color picker, rgba color picker, online color picker, color picker tool, color picker online, eyedropper tool, hex color picker, html color picker, css color picker";
@@ -35,7 +35,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Color Picker & Eyedropper",
       "alternateName": "Client-Side Color Selector & Image Palette Extractor",
-      "url": "https://boardtools.app/tools/general/color-picker",
+      "url": "https://toolkify.app/tools/general/color-picker",
       "description": "Free online client-side color picker with manual HSL/RGB adjustment, canvas image pixel sampling, WCAG contrast accessibility analysis, and CSS/JSON palette exports.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -1126,7 +1126,7 @@ const keywords =
       updateHarmonies(h, s, l);
 
       // Save state to localstorage
-      localStorage.setItem("boardtools:color-picker:current-color", JSON.stringify({ h, s, l, a }));
+      localStorage.setItem("toolkify:color-picker:current-color", JSON.stringify({ h, s, l, a }));
     }
 
     // --- MANUAL SL DRAGGERS ---
@@ -1541,9 +1541,9 @@ const keywords =
       }
       // Clear localStorage keys
       try {
-        localStorage.removeItem("boardtools:color-picker:current-color");
-        localStorage.removeItem("boardtools:color-picker:saved-palette");
-        localStorage.removeItem("boardtools:color-picker:recent-colors");
+        localStorage.removeItem("toolkify:color-picker:current-color");
+        localStorage.removeItem("toolkify:color-picker:saved-palette");
+        localStorage.removeItem("toolkify:color-picker:recent-colors");
       } catch (e) {}
       savedPalette = [];
       recentColors = [];
@@ -1616,7 +1616,7 @@ const keywords =
     function addRecentColor(hex: string) {
       if (recentColors[0] === hex) return;
       recentColors = [hex, ...recentColors.filter((c) => c !== hex)].slice(0, 10);
-      localStorage.setItem("boardtools:color-picker:recent-colors", JSON.stringify(recentColors));
+      localStorage.setItem("toolkify:color-picker:recent-colors", JSON.stringify(recentColors));
       renderRecentColors();
     }
 
@@ -1687,7 +1687,7 @@ const keywords =
     }
 
     function savePaletteData() {
-      localStorage.setItem("boardtools:color-picker:saved-palette", JSON.stringify(savedPalette));
+      localStorage.setItem("toolkify:color-picker:saved-palette", JSON.stringify(savedPalette));
     }
 
     // Save to palette
@@ -1742,7 +1742,7 @@ const keywords =
         }
       } else {
         // 2. Load from localstorage state
-        const savedColor = localStorage.getItem("boardtools:color-picker:current-color");
+        const savedColor = localStorage.getItem("toolkify:color-picker:current-color");
         if (savedColor) {
           try {
             const parsed = JSON.parse(savedColor);
@@ -1757,7 +1757,7 @@ const keywords =
       }
 
       // Load Saved Palette
-      const localPalette = localStorage.getItem("boardtools:color-picker:saved-palette");
+      const localPalette = localStorage.getItem("toolkify:color-picker:saved-palette");
       if (localPalette) {
         try {
           savedPalette = JSON.parse(localPalette);
@@ -1766,7 +1766,7 @@ const keywords =
       }
 
       // Load Recent Colors
-      const localRecents = localStorage.getItem("boardtools:color-picker:recent-colors");
+      const localRecents = localStorage.getItem("toolkify:color-picker:recent-colors");
       if (localRecents) {
         try {
           recentColors = JSON.parse(localRecents);

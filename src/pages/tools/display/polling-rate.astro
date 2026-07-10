@@ -9,7 +9,7 @@ const tier = "Display & Input Diagnostics";
 // On-page SEO metadata
 const pageTitle = "Polling Rate Test - Free Online Mouse & Keyboard Polling Rate Checker";
 const description = "Free online polling rate test for mouse, keyboard, and controller. Check your mouse polling rate in Hz instantly — no download required. Test 125Hz, 500Hz, 1000Hz, 4000Hz, and 8000Hz polling rate mice online.";
-const canonicalUrl = "https://boardtools.app/tools/display/polling-rate";
+const canonicalUrl = "https://toolkify.app/tools/display/polling-rate";
 const ogImage = "/og/polling-rate.png";
 const keywords = "polling rate test, mouse polling rate test, polling rate test online, mouse polling rate test online, polling rate test speed, polling rate test controller, keyboard polling rate test online, online mouse polling rate test, what is polling rate on a mouse, polling rate, how to change mouse polling rate, 8k polling rate mouse, what does polling rate do on a mouse, how to change polling rate on mouse, polling rate checker, polling rate meaning";
 ---
@@ -32,7 +32,7 @@ const keywords = "polling rate test, mouse polling rate test, polling rate test 
       "@type": "WebApplication",
       "name": "Polling Rate Test",
       "alternateName": ["Mouse Polling Rate Test", "Polling Rate Checker", "Online Mouse Polling Rate Test", "Keyboard Polling Rate Test Online"],
-      "url": "https://boardtools.app/tools/display/polling-rate",
+      "url": "https://toolkify.app/tools/display/polling-rate",
       "description": "Free online polling rate test for mouse, keyboard, and controller. Instantly check your mouse polling rate in Hz, verify report rate consistency, and measure input latency. Supports 125Hz, 500Hz, 1000Hz, 4000Hz, and 8000Hz polling rate mice.",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All",
@@ -194,25 +194,25 @@ const keywords = "polling rate test, mouse polling rate test, polling rate test 
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://boardtools.app/tools"
+          "item": "https://toolkify.app/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Display",
-          "item": "https://boardtools.app/tools/display"
+          "item": "https://toolkify.app/tools/display"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Polling Rate Test",
-          "item": "https://boardtools.app/tools/display/polling-rate"
+          "item": "https://toolkify.app/tools/display/polling-rate"
         }
       ]
     }
@@ -970,7 +970,7 @@ const keywords = "polling rate test, mouse polling rate test, polling rate test 
     startStopText.textContent = "Start 10s Capture";
 
     // LocalStorage Keys
-    const LS_KEY_HISTORY = "boardtools:polling-rate:history";
+    const LS_KEY_HISTORY = "toolkify:polling-rate:history";
 
     // Setup Canvas context
     const ctx = trailCanvas.getContext("2d");
@@ -1451,7 +1451,7 @@ const keywords = "polling rate test, mouse polling rate test, polling rate test 
         return;
       }
       
-      let text = "BoardTools Polling Rate Test Results Summary:\n";
+      let text = "TOOLKIFY Polling Rate Test Results Summary:\n";
       text += "=========================================\n";
       history.forEach((run, i) => {
         text += `Run #${i + 1}: ${run.rate}Hz | Median: ${run.medianDelay}ms | Consistency: ${run.consistency}% | Mode: ${run.mode} | Status: ${run.status}\n`;

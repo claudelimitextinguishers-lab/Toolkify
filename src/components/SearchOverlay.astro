@@ -162,7 +162,7 @@ const toolsJSON = JSON.stringify(tools);
 </div>
 
 <script define:vars={{ toolsJSON }}>
-  window.__BOARDTOOLS_SEARCH_INDEX__ = JSON.parse(toolsJSON);
+  window.__TOOLKIFY_SEARCH_INDEX__ = JSON.parse(toolsJSON);
 </script>
 
 <script>
@@ -180,7 +180,7 @@ const toolsJSON = JSON.stringify(tools);
   const suggestionPills = document.querySelectorAll('.search-suggestion-pill');
   
   const tools: Array<{id: string, name: string, desc: string, category: string, path: string, icon: string, keywords: string}> = 
-    (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
+    (window as any).__TOOLKIFY_SEARCH_INDEX__ || [];
 
   let overlayActiveIndex = -1;
   let overlayVisibleResults: HTMLElement[] = [];

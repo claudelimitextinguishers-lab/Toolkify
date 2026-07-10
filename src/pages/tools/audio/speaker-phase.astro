@@ -7,7 +7,7 @@ const category = "audio";
 const tier = "Audio Utilities";
 const description = "Test speaker polarity and diagnose phase issues with our free Speaker Phase Tool. Check speaker phase cancellation, wiring, and phase switch alignment.";
 const pageTitle = "Speaker Phase Tool - Online Speaker Polarity & Phase Tester";
-const canonicalUrl = "https://boardtools.app/tools/audio/speaker-phase";
+const canonicalUrl = "https://toolkify.app/tools/audio/speaker-phase";
 const ogImage = "/og/speaker-phase.png";
 const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker phase tester, how to check speaker phase, speaker phase cancellation, speaker phase test app, speaker phase issues, speaker phase switch";
 ---
@@ -88,7 +88,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
       "@type": "WebApplication",
       "name": "Speaker Phase Tool",
       "alternateName": "Speaker Polarity & Phase Tester",
-      "url": "https://boardtools.app/tools/audio/speaker-phase",
+      "url": "https://toolkify.app/tools/audio/speaker-phase",
       "description": "Free online audio diagnostic tool to check stereo speaker and subwoofer wiring polarity using low frequency tones and pink noise.",
       "applicationCategory": "AudioApplication",
       "operatingSystem": "All",
@@ -799,7 +799,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
     // Initialize Page Settings
     function init() {
       // 1. Restore from localStorage if present
-      const savedFreq = localStorage.getItem("boardtools:speaker-phase:frequency");
+      const savedFreq = localStorage.getItem("toolkify:speaker-phase:frequency");
       if (savedFreq) {
         currentFrequency = parseInt(savedFreq, 10);
         freqSlider.value = savedFreq;
@@ -807,21 +807,21 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         updateSelectedChip(currentFrequency);
       }
 
-      const savedVol = localStorage.getItem("boardtools:speaker-phase:volume");
+      const savedVol = localStorage.getItem("toolkify:speaker-phase:volume");
       if (savedVol) {
         currentVolume = parseInt(savedVol, 10);
         volumeSlider.value = savedVol;
         volumeDisplay.textContent = `${savedVol}%`;
       }
 
-      const savedSignal = localStorage.getItem("boardtools:speaker-phase:signal-type");
+      const savedSignal = localStorage.getItem("toolkify:speaker-phase:signal-type");
       if (savedSignal) {
         currentSignal = savedSignal;
         signalSelect.value = savedSignal;
         toggleSignalLayout(savedSignal);
       }
 
-      const savedPhase = localStorage.getItem("boardtools:speaker-phase:phase");
+      const savedPhase = localStorage.getItem("toolkify:speaker-phase:phase");
       if (savedPhase === "out-of-phase") {
         setPhaseMode(true);
       } else {
@@ -1054,7 +1054,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
     // Polarity Phase Toggle Handler
     function setPhaseMode(outPhase: boolean) {
       isOutofPhase = outPhase;
-      localStorage.setItem("boardtools:speaker-phase:phase", outPhase ? "out-of-phase" : "in-phase");
+      localStorage.setItem("toolkify:speaker-phase:phase", outPhase ? "out-of-phase" : "in-phase");
       setPhaseAngle(outPhase ? 180 : 0);
     }
 
@@ -1216,7 +1216,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
 
     // Save Favorite Frequency
     saveFreqBtn.addEventListener("click", () => {
-      localStorage.setItem("boardtools:speaker-phase:frequency", String(currentFrequency));
+      localStorage.setItem("toolkify:speaker-phase:frequency", String(currentFrequency));
       showToastNotification("✓ Saved frequency to local storage");
     });
 
@@ -1233,10 +1233,10 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
       }
 
       // 2. Clear localStorage keys
-      localStorage.removeItem("boardtools:speaker-phase:frequency");
-      localStorage.removeItem("boardtools:speaker-phase:phase");
-      localStorage.removeItem("boardtools:speaker-phase:volume");
-      localStorage.removeItem("boardtools:speaker-phase:signal-type");
+      localStorage.removeItem("toolkify:speaker-phase:frequency");
+      localStorage.removeItem("toolkify:speaker-phase:phase");
+      localStorage.removeItem("toolkify:speaker-phase:volume");
+      localStorage.removeItem("toolkify:speaker-phase:signal-type");
 
       // 3. Reset defaults
       setPhaseMode(false);
@@ -1333,14 +1333,14 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
     volumeSlider.addEventListener("input", (e) => {
       const val = parseInt((e.target as HTMLInputElement).value, 10);
       setVolume(val);
-      localStorage.setItem("boardtools:speaker-phase:volume", String(val));
+      localStorage.setItem("toolkify:speaker-phase:volume", String(val));
     });
 
     // Signal Select listener
     signalSelect.addEventListener("change", (e) => {
       const val = (e.target as HTMLSelectElement).value;
       currentSignal = val;
-      localStorage.setItem("boardtools:speaker-phase:signal-type", val);
+      localStorage.setItem("toolkify:speaker-phase:signal-type", val);
       toggleSignalLayout(val);
 
       // Re-initialize engine if running

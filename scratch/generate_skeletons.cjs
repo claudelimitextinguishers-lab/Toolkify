@@ -153,7 +153,7 @@ const description = "${description}";
 ---
 
 <Layout 
-  title={\`\${name} - BoardTools\`}
+  title={\`\${name} - TOOLKIFY\`}
   description={description}
   toolName={name}
   toolCategory={category}

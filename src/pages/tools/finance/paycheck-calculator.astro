@@ -12,7 +12,7 @@ const description =
 const pageTitle =
   "Paycheck Calculator - Free Take-Home Salary & Hourly Pay Calculator";
 const canonicalUrl =
-  "https://boardtools.app/tools/finance/paycheck-calculator";
+  "https://toolkify.app/tools/finance/paycheck-calculator";
 const ogImage = "/og/paycheck-calculator.png";
 const keywords =
   "paycheck calculator, take home salary calculator, take home pay calculator, salary paycheck calculator, hourly paycheck calculator, monthly take home salary calculator, how much do i make after taxes, paycheck calculator usa, texas paycheck calculator, paycheck calculator texas, california paycheck calculator, paycheck calculator california, florida paycheck calculator, paycheck calculator florida, ohio paycheck calculator, paycheck calculator ohio, paycheck calculator new york, ny paycheck calculator, paycheck calculator new york city, paycheck calculator illinois, paycheck calculator indiana, colorado paycheck calculator, paycheck calculator wa, paycheck calculator utah, pa paycheck calculator, paycheck calculator pa, paycheck calculator michigan, paycheck calculator maryland, paycheck calculator massachusetts, paycheck calculator ct, take home salary calculator virginia, take home salary calculator georgia, take home salary calculator australia, take home pay calculator nz";
@@ -35,7 +35,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Paycheck & Take-Home Salary Calculator",
       "alternateName": "Free Take-Home Pay & Hourly Paycheck Calculator",
-      "url": "https://boardtools.app/tools/finance/paycheck-calculator",
+      "url": "https://toolkify.app/tools/finance/paycheck-calculator",
       "description": "Free paycheck calculator that estimates your take-home salary after federal, state and local income taxes, Social Security and Medicare, plus pre-tax and post-tax deductions. Works for hourly and salaried pay across US states and other countries.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -70,19 +70,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Finance & Tax Tools",
-          "item": "https://boardtools.app/#finance"
+          "item": "https://toolkify.app/#finance"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Paycheck & Take-Home Salary Calculator",
-          "item": "https://boardtools.app/tools/finance/paycheck-calculator"
+          "item": "https://toolkify.app/tools/finance/paycheck-calculator"
         }
       ]
     }
@@ -3356,12 +3356,12 @@ const keywords =
     ];
 
     function getPinnedScenarios(): PinboardScenario[] {
-      const data = localStorage.getItem("boardtools_paycheck_scenarios");
+      const data = localStorage.getItem("toolkify_paycheck_scenarios");
       return data ? JSON.parse(data) : [];
     }
 
     function savePinnedScenarios(list: PinboardScenario[]) {
-      localStorage.setItem("boardtools_paycheck_scenarios", JSON.stringify(list));
+      localStorage.setItem("toolkify_paycheck_scenarios", JSON.stringify(list));
       renderScenariosGrid();
     }
 

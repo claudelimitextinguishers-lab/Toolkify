@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout 
-  title="Review Our Website - BoardTools"
-  description="Help us make BoardTools better. Write a review, rate your workspace experience, and read reviews left by other developers."
+  title="Review Our Website - TOOLKIFY"
+  description="Help us make TOOLKIFY better. Write a review, rate your workspace experience, and read reviews left by other developers."
 >
   <section class="max-w-[1280px] w-full mx-auto px-4 md:px-8 py-12 flex flex-col gap-10 animate-fade-in-up">
     <!-- Breadcrumb & Header -->
@@ -20,7 +20,7 @@ import Layout from '../layouts/Layout.astro';
       <p class="text-sm text-slate max-w-xl">
         Share your experience, suggest layout refinements, or rate our client-side utilities. 
         You can submit a review by filling out the form below or emailing us directly at 
-        <a href="#" id="direct-email-link" class="text-brand-blue hover:underline font-bold">reviews@boardtools.dev</a>. 
+        <a href="#" id="direct-email-link" class="text-brand-blue hover:underline font-bold">claudelimitextinguishers@gmail.com</a>. 
         Approved reviews will be added to the live site within 1 week.
       </p>
     </div>
@@ -32,14 +32,14 @@ import Layout from '../layouts/Layout.astro';
         <div class="absolute -top-12 -right-12 w-36 h-36 bg-brand-yellow/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
         
         <div class="flex items-center gap-3">
-          <span class="text-3xl animate-pulse">✉️</span>
+          <span class="text-3xl animate-pulse">âœ‰ï¸</span>
           <h2 class="font-display font-semibold text-xl text-primary tracking-tight">
             Share Your Experience
           </h2>
         </div>
         
         <p class="text-sm text-slate leading-relaxed">
-          We want to make BoardTools the absolute best visual workspace. Share your reviews, feedback, or rating with us directly.
+          We want to make TOOLKIFY the absolute best visual workspace. Share your reviews, feedback, or rating with us directly.
         </p>
         
         <!-- Highlight Box -->
@@ -75,11 +75,11 @@ import Layout from '../layouts/Layout.astro';
     <div id="permission-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden animate-fade-in">
       <div class="card-base max-w-md w-full flex flex-col gap-5 p-6 border border-hairline-strong bg-canvas shadow-2xl animate-scale-up">
         <div class="flex items-center gap-3 text-brand-blue">
-          <span class="text-2xl">✉</span>
+          <span class="text-2xl">âœ‰</span>
           <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
         </div>
         <p class="text-xs text-slate leading-relaxed">
-          We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">reviews@boardtools.dev</span>. 
+          We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">claudelimitextinguishers@gmail.com</span>. 
           Your email will contain your name, job title, rating, and review text.
         </p>
         <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
@@ -113,7 +113,7 @@ import Layout from '../layouts/Layout.astro';
       name: "Aisha Rahman",
       title: "Full Stack Developer",
       rating: 5,
-      review: "The fact that this tool runs 100% locally is a lifesaver. Our company has extremely strict policies about pasting credentials or data into third-party sites, but BoardTools' V8 sandboxing completely solves that.",
+      review: "The fact that this tool runs 100% locally is a lifesaver. Our company has extremely strict policies about pasting credentials or data into third-party sites, but TOOLKIFY' V8 sandboxing completely solves that.",
       color: "bg-teal-light border border-hairline text-moss-dark",
       timestamp: Date.now() - 3600000 * 24 // 1 day ago
     },
@@ -143,11 +143,11 @@ import Layout from '../layouts/Layout.astro';
   let selectedRating = 0;
 
   const labels: Record<number, string> = {
-    1: 'Needs Improvement 😠',
-    2: 'Below Average 😐',
-    3: 'Average 🙂',
-    4: 'Great! 😀',
-    5: 'Excellent! 🤩'
+    1: 'Needs Improvement ðŸ˜ ',
+    2: 'Below Average ðŸ˜',
+    3: 'Average ðŸ™‚',
+    4: 'Great! ðŸ˜€',
+    5: 'Excellent! ðŸ¤©'
   };
 
   stars.forEach((star, idx) => {
@@ -208,7 +208,7 @@ import Layout from '../layouts/Layout.astro';
       }
 
       // Format stars
-      const starsHTML = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+      const starsHTML = 'â˜…'.repeat(item.rating) + 'â˜†'.repeat(5 - item.rating);
       
       card.className = `flex flex-col gap-3 p-5 rounded-2xl ${colorClass} shadow-subtle animate-fade-in-up`;
       card.innerHTML = `
@@ -309,16 +309,16 @@ import Layout from '../layouts/Layout.astro';
         timestamp: Date.now()
       };
 
-      const subject = encodeURIComponent(`BoardTools Site Review - ${rating} Stars`);
+      const subject = encodeURIComponent(`TOOLKIFY Site Review - ${rating} Stars`);
       const body = encodeURIComponent(
         `Name: ${name}\n` +
         `Title: ${title}\n` +
         `Rating: ${rating}/5 Stars\n\n` +
         `Review:\n${reviewText}\n\n` +
         `---\n` +
-        `Sent via BoardTools Review composer. Review will be approved and added to the website within 1 week.`
+        `Sent via TOOLKIFY Review composer. Review will be approved and added to the website within 1 week.`
       );
-      const mailtoUrl = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
+      const mailtoUrl = `mailto:claudelimitextinguishers@gmail.com?subject=${subject}&body=${body}`;
 
       showModal(mailtoUrl, reviewData);
     });
@@ -331,7 +331,7 @@ import Layout from '../layouts/Layout.astro';
     if (link) {
       link.addEventListener('click', (e) => {
         e.preventDefault();
-        const subject = encodeURIComponent(`BoardTools Site Review`);
+        const subject = encodeURIComponent(`TOOLKIFY Site Review`);
         const body = encodeURIComponent(
           `Please rate us (1-5 stars):\n` +
           `Stars: \n\n` +
@@ -339,7 +339,7 @@ import Layout from '../layouts/Layout.astro';
           `\n\n` +
           `Your Name & Title:\n`
         );
-        const mailtoUrl = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
+        const mailtoUrl = `mailto:claudelimitextinguishers@gmail.com?subject=${subject}&body=${body}`;
         showModal(mailtoUrl);
       });
     }

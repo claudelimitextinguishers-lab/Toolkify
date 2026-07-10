@@ -8,7 +8,7 @@ const tier = "Mobile Sensor Tools";
 
 const pageTitle = "GPS Speedometer & Trip Tracker - Real-Time In-Browser Speedometer";
 const description = "Free online GPS Speedometer & Trip Tracker. Track your speed, map distance, check speedometer calibration, and fix speedometer issues client-side. Works as a digital speedometer app on mobile & desktop.";
-const canonicalUrl = "https://boardtools.app/tools/mobile/speedometer";
+const canonicalUrl = "https://toolkify.app/tools/mobile/speedometer";
 const ogImage = "/og/speedometer.png";
 const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tracker, speedometer, speedometer app, digital speedometer, speedometer online, speedometer not working, speedometer calibration, online speedometer";
 ---
@@ -31,7 +31,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
       "@type": "WebApplication",
       "name": "GPS Speedometer & Trip Tracker",
       "alternateName": "Digital Speedometer & Trip Log",
-      "url": "https://boardtools.app/tools/mobile/speedometer",
+      "url": "https://toolkify.app/tools/mobile/speedometer",
       "description": "High-precision digital and analog-style GPS speedometer operating entirely client-side. Features real-time speed monitoring, trip statistics, and downloadable travel logs.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -63,19 +63,19 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Mobile",
-          "item": "https://boardtools.app/tools/mobile"
+          "item": "https://toolkify.app/tools/mobile"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "GPS Speedometer",
-          "item": "https://boardtools.app/tools/mobile/speedometer"
+          "item": "https://toolkify.app/tools/mobile/speedometer"
         }
       ]
     }
@@ -937,9 +937,9 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
     }
 
     // Local Storage Namespace Keys
-    const LS_KEY_UNIT = "boardtools:speedometer:unit";
-    const LS_KEY_LIMIT = "boardtools:speedometer:speed-limit";
-    const LS_KEY_SAFETY = "boardtools:speedometer:safety-accepted";
+    const LS_KEY_UNIT = "toolkify:speedometer:unit";
+    const LS_KEY_LIMIT = "toolkify:speedometer:speed-limit";
+    const LS_KEY_SAFETY = "toolkify:speedometer:safety-accepted";
 
     // Speed conversion constants (from m/s)
     const CONVERSIONS: Record<string, number> = {
@@ -1395,7 +1395,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
       let errorMsg = "GPS Error";
       if (error.code === error.PERMISSION_DENIED) {
         errorMsg = "Perm. Denied";
-        alert("BoardTools Speedometer requires location permissions to operate. Please enable GPS permissions in browser.");
+        alert("TOOLKIFY Speedometer requires location permissions to operate. Please enable GPS permissions in browser.");
       } else if (error.code === error.POSITION_UNAVAILABLE) {
         errorMsg = "No GPS Signal";
       } else if (error.code === error.TIMEOUT) {

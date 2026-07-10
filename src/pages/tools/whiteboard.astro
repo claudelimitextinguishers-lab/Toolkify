@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout 
-  title="Visual Board Sketchpad & Draggable Sticky Notes - BoardTools"
+  title="Visual Board Sketchpad & Draggable Sticky Notes - TOOLKIFY"
   description="Draw diagrams, place color-rich sticky notes, sketch flows, and collaborate visually. Completely local, private, and offline-ready whiteboard."
 >
   <div class="flex-grow flex flex-col h-[calc(100vh-104px)] overflow-hidden relative select-none">
@@ -68,7 +68,7 @@ import Layout from '../../layouts/Layout.astro';
       <button 
         id="btn-import-project" 
         class="button-secondary py-1.5 px-3 text-xs !rounded-lg border-hairline-strong hover:bg-surface cursor-pointer"
-        title="Load a saved boardtools project file (.json)"
+        title="Load a saved toolkify project file (.json)"
       >
         Import JSON
       </button>
@@ -761,7 +761,7 @@ import Layout from '../../layouts/Layout.astro';
 
         // Trigger download
         const link = document.createElement('a');
-        link.download = 'boardtools_workspace.png';
+        link.download = 'toolkify_workspace.png';
         link.href = exportCanvas.toDataURL();
         link.click();
       }
@@ -781,7 +781,7 @@ import Layout from '../../layouts/Layout.astro';
         };
         const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
         const link = document.createElement('a');
-        link.download = `boardtools_project_${Date.now()}.json`;
+        link.download = `toolkify_project_${Date.now()}.json`;
         link.href = URL.createObjectURL(blob);
         link.click();
         URL.revokeObjectURL(link.href);

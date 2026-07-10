@@ -8,7 +8,7 @@ const tier = "Audio Utilities";
 const description = "Free online brown noise generator & customizable sound machine. Block distractions, enhance sleep, soothe babies, and support ADHD with deep, high-fidelity, client-side noise.";
 
 const pageTitle = "Best Online Brown Noise Generator - Free Sound Machine for Sleep & Focus";
-const canonicalUrl = "https://boardtools.app/tools/audio/brown-noise";
+const canonicalUrl = "https://toolkify.app/tools/audio/brown-noise";
 const ogImage = "/og/brown-noise.png";
 const keywords = "brown noise, best online brown noise, brown noise for sleep, what is brown noise, brown noise vs white noise, brown noise machine, brown noise for sleeping, white noise vs brown noise, brown noise adhd, is brown noise harmful, what is brown noise good for, deep brown noise, green noise vs brown noise, brown noise vs pink noise, difference between white noise and brown noise";
 ---
@@ -138,7 +138,7 @@ const keywords = "brown noise, best online brown noise, brown noise for sleep, w
       "@type": "WebApplication",
       "name": "Brown Noise Generator",
       "alternateName": "Red Noise Generator",
-      "url": "https://boardtools.app/tools/audio/brown-noise",
+      "url": "https://toolkify.app/tools/audio/brown-noise",
       "description": "Professional client-side brown noise generator. Features adjustable depth, headphone stereo widening, custom presets, sleep timer, and live waveform visualizer.",
       "applicationCategory": "AudioApplication",
       "operatingSystem": "All",
@@ -857,11 +857,11 @@ const keywords = "brown noise, best online brown noise, brown noise for sleep, w
     let isFadingOut = false;
 
     // Local Storage keys
-    const KEY_VOLUME = 'boardtools:brown-noise:volume';
-    const KEY_DEPTH = 'boardtools:brown-noise:depth';
-    const KEY_STEREO = 'boardtools:brown-noise:stereo';
-    const KEY_TIMER = 'boardtools:brown-noise:timer';
-    const KEY_PRESETS = 'boardtools:brown-noise:custom-presets';
+    const KEY_VOLUME = 'toolkify:brown-noise:volume';
+    const KEY_DEPTH = 'toolkify:brown-noise:depth';
+    const KEY_STEREO = 'toolkify:brown-noise:stereo';
+    const KEY_TIMER = 'toolkify:brown-noise:timer';
+    const KEY_PRESETS = 'toolkify:brown-noise:custom-presets';
 
     // DOM Element hooks
     const btnPlayPause = document.getElementById('btn-play-pause') as HTMLButtonElement;
@@ -1140,7 +1140,7 @@ const keywords = "brown noise, best online brown noise, brown noise for sleep, w
 
         canvasCtx.clearRect(0, 0, width, height);
 
-        // Warm color gradient matching BoardTools style guidelines
+        // Warm color gradient matching TOOLKIFY style guidelines
         const gradient = canvasCtx.createLinearGradient(0, height, 0, 0);
         gradient.addColorStop(0, '#fde0f0'); 
         gradient.addColorStop(0.5, '#ff9999'); 

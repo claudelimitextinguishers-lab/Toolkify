@@ -12,7 +12,7 @@ const pageTitle =
 const description =
   "Free compound interest calculator with extra contributions, daily, monthly & annual compounding, withdrawals and inflation. See how your savings, 401k or investments grow.";
 const canonicalUrl =
-  "https://boardtools.app/tools/finance/compound-interest";
+  "https://toolkify.app/tools/finance/compound-interest";
 const ogImage = "/og/compound-interest-calculator.png";
 const keywords =
   "compound interest calculator, daily compound interest calculator, best compound interest calculator, online compound interest calculator, compound interest calculator with extra contributions, compound interest calculator with additional contributions, compound interest calculator excel, real compound interest calculator, compound interest calculator calculator, loan compound interest calculator, monthly compound interest calculator, bankrate compound interest calculator, compound interest calculator with withdrawals, 401k compound interest calculator, continuous compound interest calculator, compound interest calculator monthly, compound interest calculator 401k, compound interest calculator daily, annual compound interest calculator";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Compound Interest Calculator",
       "alternateName": "Daily, Monthly & Annual Compound Interest Calculator",
-      "url": "https://boardtools.app/tools/finance/compound-interest",
+      "url": "https://toolkify.app/tools/finance/compound-interest",
       "description": "Free compound interest calculator with extra contributions, withdrawals, daily, monthly, annual and continuous compounding, inflation adjustment, dynamic charts, and a year-by-year growth breakdown.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -72,19 +72,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Finance & Tax Tools",
-          "item": "https://boardtools.app/#finance"
+          "item": "https://toolkify.app/#finance"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Compound Interest Calculator",
-          "item": "https://boardtools.app/tools/finance/compound-interest"
+          "item": "https://toolkify.app/tools/finance/compound-interest"
         }
       ]
     }
@@ -293,10 +293,10 @@ const keywords =
               >
                 <option value="USD" selected>$ USD</option>
                 <option value="CAD">$ CAD</option>
-                <option value="GBP">£ GBP</option>
+                <option value="GBP">Â£ GBP</option>
                 <option value="AUD">$ AUD</option>
-                <option value="EUR">€ EUR</option>
-                <option value="INR">₹ INR</option>
+                <option value="EUR">â‚¬ EUR</option>
+                <option value="INR">â‚¹ INR</option>
                 <option value="Custom">Custom / Other</option>
               </select>
             </div>
@@ -320,7 +320,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -476,7 +476,7 @@ const keywords =
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                ⚙ Advanced Options (Inflation, Taxes, Timings)
+                âš™ Advanced Options (Inflation, Taxes, Timings)
               </span>
               <svg
                 id="advanced-chevron"
@@ -1206,7 +1206,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1473,7 +1473,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "£";
+        currentCurrencySymbol = "Â£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1481,11 +1481,11 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "€";
+        currentCurrencySymbol = "â‚¬";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "INR") {
-        currentCurrencySymbol = "₹";
+        currentCurrencySymbol = "â‚¹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {
@@ -1950,7 +1950,7 @@ Total Contributed: ${heroContributed?.textContent}
 Total Interest Earned: ${heroInterest?.textContent}
 Inflation Adjusted Value: ${badgeRealVal?.textContent || "N/A"}
 Post-Tax Value: ${badgeTaxVal?.textContent || "N/A"}
-Calculated 100% privately via BoardTools.
+Calculated 100% privately via TOOLKIFY.
       `.trim();
 
       navigator.clipboard.writeText(text).then(() => {

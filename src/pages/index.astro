@@ -814,9 +814,127 @@ const tools = [
       "color picker canvas cursor hex rgb hsl colors palettes checks extract",
   },
 ];
+
+// ============================================
+// ON-PAGE SEO METADATA
+// ============================================
+const pageTitle =
+  "TOOLKIFY - Free Online Tools Suite | 56+ Calculators & Utilities";
+const description =
+  "TOOLKIFY is a free, private, all-in-one online tools suite with 56+ calculators, converters, developer utilities, audio & display testers, and a visual whiteboard. 100% client-side, no sign-up, no tracking.";
+const canonicalUrl = "https://toolkify.app/";
+const ogImage = "/og-default.png";
+const keywords =
+  "TOOLKIFY, Toolkify, toolkify, toolkify tools, toolkify online tools, toolkify app, free online tools, online tools suite, all in one tools, all-in-one toolkit, free web tools, browser tools, web utilities, free calculators online, developer tools online, text tools, online whiteboard, unit converters, productivity tools, privacy-first tools, client-side tools";
 ---
 
-<Layout>
+<Layout
+  title={pageTitle}
+  description={description}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+>
+  <!-- SEO JSON-LD: WebApplication Schema -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TOOLKIFY",
+    "alternateName": "Toolkify Online Tools Suite",
+    "url": "https://toolkify.app/",
+    "description": "TOOLKIFY is a free, privacy-first suite of 56+ online tools including calculators, converters, developer utilities, audio and display testers, and an interactive visual whiteboard. Every tool runs 100% in your browser.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Requires HTML5.",
+    "featureList": [
+      "56+ free online tools in one place",
+      "Finance and tax calculators",
+      "Health and fitness calculators",
+      "Developer and text utilities",
+      "Audio, display, and mobile sensor testers",
+      "Interactive visual whiteboard with sticky notes",
+      "100% private, client-side processing"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    }
+  })} />
+
+  <!-- SEO JSON-LD: FAQPage Schema -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is TOOLKIFY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>TOOLKIFY is a free, all-in-one online tools suite that brings together 56+ web utilities in a single, distraction-free workspace. It includes finance and tax calculators, health and fitness tools, developer and text utilities, audio and display testers, mobile sensor tools, and an interactive visual whiteboard. Every tool runs entirely in your browser, so it is fast, private, and always free.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is TOOLKIFY free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. TOOLKIFY is completely free to use with no sign-up, no account, and no hidden fees. You can open any of the tools instantly and use them as many times as you like. There is nothing to install and no subscription required.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe on TOOLKIFY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Your data is 100% safe. TOOLKIFY is built as a fully static, client-side website. All calculations, conversions, and processing happen locally inside your own browser. No files, text, or inputs are ever uploaded or transmitted to any external server, so your information never leaves your device.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to create an account to use TOOLKIFY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>No account is required. TOOLKIFY works instantly without registration or login. Simply visit the site, pick a tool, and start using it. Optional data such as your recent tools or whiteboard drafts is saved only in your local browser storage.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What kinds of tools does TOOLKIFY offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>TOOLKIFY offers a broad catalog across nine categories: Finance &amp; Tax (mortgage, auto loan, compound interest, tax brackets), Health &amp; Fitness (BMI, calorie, macro, water intake), Developer &amp; Text (JSON formatter, Base64, UUID, password generator), Audio utilities, Mobile sensors, Display &amp; Input testers, Fun tools, Everyday utilities, and a collaborative visual Whiteboard.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does TOOLKIFY work offline and on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Because TOOLKIFY runs client-side, most tools continue to work even with a poor connection once the page has loaded, and the interface is fully responsive on phones, tablets, and desktops. Sensor-based tools such as the compass, spirit level, and light meter take advantage of your mobile device hardware directly in the browser.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I find the right tool on TOOLKIFY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>You can use the instant search bar at the top of the TOOLKIFY homepage to filter tools by name or keyword, or press Ctrl+K to open quick search from anywhere. You can also browse by category using the pill tabs. If a tool you need is missing, you can request it and the team aims to build and add it.</p>"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I request a new tool on TOOLKIFY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "<p>Yes. If you cannot find the tool you need, use the &quot;Request a Tool&quot; button on the homepage to send your suggestion. Requested tools are reviewed and the team aims to build and publish popular requests, typically within about a week.</p>"
+        }
+      }
+    ]
+  })} />
+
   <!-- Hero Section -->
   <section
     class="bg-canvas border-b border-hairline py-16 lg:py-24 px-4 overflow-hidden relative"
@@ -1305,11 +1423,11 @@ const tools = [
         <h2
           class="font-display font-medium text-3xl text-primary tracking-tight"
         >
-          What Creators Say About BoardTools
+          What Creators Say About TOOLKIFY
         </h2>
         <p class="text-sm text-slate max-w-md mx-auto">
           Read testimonials from developers and designers. You can email us at 
-          <a href="#" id="home-direct-email" class="text-brand-blue hover:underline font-bold">reviews@boardtools.dev</a> to review the site and give stars. Approved reviews will be added within 1 week.
+          <a href="#" id="home-direct-email" class="text-brand-blue hover:underline font-bold">claudelimitextinguishers@gmail.com</a> to review the site and give stars. Approved reviews will be added within 1 week.
         </p>
       </div>
 
@@ -1397,79 +1515,270 @@ const tools = [
     </div>
   </section>
 
-  <!-- FAQ Accordion Section -->
-  <section class="bg-surface py-16 px-4">
-    <div class="max-w-[800px] mx-auto">
-      <div class="text-center mb-12">
+  <!-- SEO Content Article -->
+  <section
+    class="bg-surface py-16 px-4"
+    aria-labelledby="about-toolkify-heading"
+  >
+    <article
+      class="max-w-[860px] w-full mx-auto flex flex-col gap-4 text-slate"
+    >
+      <span
+        class="text-xs font-semibold text-brand-blue uppercase tracking-wider"
+        >About the Suite</span
+      >
+      <h2
+        id="about-toolkify-heading"
+        class="font-display font-semibold text-2xl sm:text-3xl text-primary tracking-tight"
+      >
+        TOOLKIFY &mdash; Your Free All-in-One Online Tools Suite
+      </h2>
+      <p class="text-sm leading-relaxed">
+        <strong>TOOLKIFY</strong> is a free, privacy-first collection of 56+
+        online tools built to replace the dozens of single-purpose websites you
+        normally keep bookmarked. Instead of hopping between ad-heavy pages for
+        every small task, Toolkify brings calculators, converters, developer
+        utilities, and diagnostic testers together in one fast, clean, and
+        distraction-free workspace. Whether you need to crunch numbers, format
+        code, test your hardware, or sketch an idea, TOOLKIFY gives you an
+        instant, reliable answer without sign-ups, downloads, or clutter.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Everything on TOOLKIFY runs entirely inside your browser. That
+        client-side design means your inputs, files, and calculations never
+        leave your device &mdash; there is no server storing what you type and
+        nothing to worry about when you paste sensitive text or numbers. It also
+        makes every tool blazing fast: results update the moment you type, drag
+        a slider, or move your mouse. Because there is no back-end to wait on,
+        toolkify stays responsive even on slower connections once the page has
+        loaded.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        A Complete Toolkit Across Nine Categories
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The TOOLKIFY catalog is organised into nine focused categories so you
+        can find exactly what you need in seconds. The
+        <strong>Finance &amp; Tax</strong> section covers mortgage payments,
+        auto loans, compound interest, retirement 401(k) projections, capital
+        gains, federal tax brackets, take-home pay, and more. The
+        <strong>Health &amp; Fitness</strong> tools include a BMI calculator,
+        calorie deficit and macro calculators, water intake, sleep cycle, and
+        pregnancy due-date estimators. Developers and writers get a rich
+        <strong>Developer &amp; Text</strong> set: a JSON formatter, Base64 and
+        URL converter, UUID and hash generator, password generator, diff
+        checker, case converter, word counter, readability scorer, and code
+        formatter.
+      </p>
+      <p class="text-sm leading-relaxed">
+        Beyond the everyday essentials, TOOLKIFY includes hardware-aware
+        utilities you will not find in a typical calculator site. The
+        <strong>Audio</strong> category offers white and brown noise generators,
+        a tuning fork, headphone and speaker phase tests, and a microphone
+        frequency visualiser. The <strong>Mobile Sensors</strong> group turns
+        your phone into a spirit level, compass, accelerometer viewer, light
+        meter, and GPS speedometer. The <strong>Display &amp; Input</strong>
+        tools let you check refresh rate, aspect ratio, polling rate, double
+        clicks, key repeat, caps lock, and keyboard latency &mdash; ideal for
+        gamers and anyone testing new gear. Rounding things out are
+        <strong>Fun</strong> tools (typing test, reaction time, CPS counter,
+        Pomodoro timer) and <strong>Everyday</strong> utilities like a time zone
+        converter, dead-pixel checker, and color picker.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Built for Speed, Privacy, and Simplicity
+      </h3>
+      <p class="text-sm leading-relaxed">
+        TOOLKIFY is designed around three promises: it is fast, it is private,
+        and it is free. There are no accounts to create, no paywalls, and no
+        intrusive tracking. Optional conveniences &mdash; such as your list of
+        recently used tools or a saved whiteboard draft &mdash; live only in
+        your local browser storage, entirely under your control. The interface
+        is fully responsive, so Toolkify works just as smoothly on a phone or
+        tablet as it does on a desktop, and the built-in search (press
+        <strong>Ctrl+K</strong>) lets you jump to any tool instantly.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        The Interactive Whiteboard &amp; Requesting New Tools
+      </h3>
+      <p class="text-sm leading-relaxed">
+        At the heart of TOOLKIFY is a flagship visual whiteboard where you can
+        drag sticky notes, sketch flow diagrams, and even drop in live UUID or
+        Base64 note cards &mdash; a handy way to plan projects while using the
+        utilities side by side. Everything you draw is saved locally and can be
+        exported as an image. And if there is a tool you wish existed, TOOLKIFY
+        makes it easy to ask: use the &quot;Request a Tool&quot; option and the
+        team reviews suggestions regularly, aiming to build and publish popular
+        requests quickly. In short, toolkify is a growing, community-driven
+        toolkit that keeps getting more useful over time &mdash; all in one
+        place, always free, and always private. Bookmark TOOLKIFY once and you
+        will have a dependable home for the calculations, conversions, and quick
+        checks that come up throughout your day, whether you are working,
+        studying, building, or just curious.
+      </p>
+    </article>
+  </section>
+
+  <!-- SEO FAQ Accordion Section (matches FAQPage JSON-LD) -->
+  <section class="bg-canvas py-16 px-4 border-t border-hairline">
+    <div class="max-w-[860px] mx-auto">
+      <div class="text-center mb-10">
         <span
           class="text-xs font-semibold text-brand-blue uppercase tracking-wider"
           >Frequently Asked Questions</span
         >
         <h2
-          class="font-display font-medium text-3xl text-primary mt-1 tracking-tight"
+          class="font-display font-semibold text-2xl sm:text-3xl text-primary mt-1 tracking-tight"
         >
-          Security & Operation
+          TOOLKIFY FAQs
         </h2>
+        <p class="text-sm text-slate max-w-md mx-auto mt-2">
+          Answers to the most common questions about what TOOLKIFY is, how it
+          works, and how to get the most out of the suite.
+        </p>
       </div>
 
       <div
-        class="flex flex-col border border-hairline rounded-lg overflow-hidden bg-canvas"
+        class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline"
       >
-        <!-- Q1 -->
-        <details class="group/faq border-b border-hairline cursor-pointer" open>
-          <summary
-            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
           >
-            Is my data safe? Do you store any inputs?
-            <span
-              class="text-slate group-open/faq:rotate-180 transition-transform"
-              >&darr;</span
-            >
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            Yes, your data is 100% safe. BoardTools is built as a fully static
-            website. All operations, conversions, computations, and image
-            rendering happen entirely inside your local browser. No data, files,
-            or strings are ever transmitted to any external servers.
+            <span>What is TOOLKIFY?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>TOOLKIFY is a free, all-in-one online tools suite that brings together 56+ web utilities in a single, distraction-free workspace. It includes finance and tax calculators, health and fitness tools, developer and text utilities, audio and display testers, mobile sensor tools, and an interactive visual whiteboard. Every tool runs entirely in your browser, so it is fast, private, and always free.</p>
           </div>
-        </details>
+        </div>
 
-        <!-- Q2 -->
-        <details class="group/faq border-b border-hairline cursor-pointer">
-          <summary
-            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
           >
-            How does the canvas whiteboard save its state?
-            <span
-              class="text-slate group-open/faq:rotate-180 transition-transform"
-              >&darr;</span
-            >
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            The whiteboard saves its sketches and sticky notes content directly
-            to your local browser storage (`localStorage`). If you refresh or
-            close the tab, your draft will be preserved. You can also click the
-            "Export PNG" button to download a static snapshot to your computer.
+            <span>Is TOOLKIFY free to use?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>Yes. TOOLKIFY is completely free to use with no sign-up, no account, and no hidden fees. You can open any of the tools instantly and use them as many times as you like. There is nothing to install and no subscription required.</p>
           </div>
-        </details>
+        </div>
 
-        <!-- Q3 -->
-        <details class="group/faq cursor-pointer">
-          <summary
-            class="flex justify-between items-center p-6 text-base font-semibold text-primary font-display list-none"
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
           >
-            Are these tools completely free to use?
-            <span
-              class="text-slate group-open/faq:rotate-180 transition-transform"
-              >&darr;</span
-            >
-          </summary>
-          <div class="px-6 pb-6 text-sm text-slate leading-relaxed">
-            Yes, BoardTools is completely free, open-source, and does not
-            require registration or account login. Our goal is to provide a
-            smooth, aesthetic, and helpful toolkit for creators.
+            <span>Is my data safe on TOOLKIFY?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>Your data is 100% safe. TOOLKIFY is built as a fully static, client-side website. All calculations, conversions, and processing happen locally inside your own browser. No files, text, or inputs are ever uploaded or transmitted to any external server, so your information never leaves your device.</p>
           </div>
-        </details>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Do I need to create an account to use TOOLKIFY?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>No account is required. TOOLKIFY works instantly without registration or login. Simply visit the site, pick a tool, and start using it. Optional data such as your recent tools or whiteboard drafts is saved only in your local browser storage.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What kinds of tools does TOOLKIFY offer?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>TOOLKIFY offers a broad catalog across nine categories: Finance &amp; Tax (mortgage, auto loan, compound interest, tax brackets), Health &amp; Fitness (BMI, calorie, macro, water intake), Developer &amp; Text (JSON formatter, Base64, UUID, password generator), Audio utilities, Mobile sensors, Display &amp; Input testers, Fun tools, Everyday utilities, and a collaborative visual Whiteboard.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Does TOOLKIFY work offline and on mobile?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>Because TOOLKIFY runs client-side, most tools continue to work even with a poor connection once the page has loaded, and the interface is fully responsive on phones, tablets, and desktops. Sensor-based tools such as the compass, spirit level, and light meter take advantage of your mobile device hardware directly in the browser.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How do I find the right tool on TOOLKIFY?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>You can use the instant search bar at the top of the TOOLKIFY homepage to filter tools by name or keyword, or press Ctrl+K to open quick search from anywhere. You can also browse by category using the pill tabs. If a tool you need is missing, you can request it and the team aims to build and add it.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Can I request a new tool on TOOLKIFY?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed">
+            <p>Yes. If you cannot find the tool you need, use the "Request a Tool" button on the homepage to send your suggestion. Requested tools are reviewed and the team aims to build and publish popular requests, typically within about a week.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1559,7 +1868,7 @@ const tools = [
       <h2
         class="font-display font-medium text-3xl md:text-4xl text-canvas max-w-xl tracking-tight leading-tight"
       >
-        Build better web interfaces visually. Launch BoardTools.
+        Build better web interfaces visually. Launch TOOLKIFY.
       </h2>
       <p class="text-xs md:text-sm text-on-dark-muted max-w-md">
         Instant loading, zero tracker cookies, offline capability, completely
@@ -1582,7 +1891,7 @@ const tools = [
         <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
       </div>
       <p class="text-xs text-slate leading-relaxed">
-        We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">reviews@boardtools.dev</span>.
+        We will open your default email service to send this review to <span class="font-bold text-brand-blue select-all">claudelimitextinguishers@gmail.com</span>.
       </p>
       <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
         Note: Your review will be moderated and added to the website's community feedback section within 1 week.
@@ -1606,7 +1915,7 @@ const tools = [
         <h3 class="font-display font-semibold text-lg text-primary">Open Mail Application?</h3>
       </div>
       <p class="text-xs text-slate leading-relaxed">
-        We will open your default email service to send this tool request to <span class="font-bold text-brand-blue select-all">requests@boardtools.dev</span>.
+        We will open your default email service to send this tool request to <span class="font-bold text-brand-blue select-all">claudelimitextinguishers@gmail.com</span>.
       </p>
       <p class="text-[11px] text-slate/80 bg-surface-soft p-3 rounded-lg border border-hairline italic">
         Note: Your request will be reviewed and we will aim to build and add it to the website within 1 week.
@@ -1690,7 +1999,7 @@ const tools = [
   if (homeDirectEmail) {
     homeDirectEmail.addEventListener("click", (e) => {
       e.preventDefault();
-      const subject = encodeURIComponent("BoardTools Site Review");
+      const subject = encodeURIComponent("TOOLKIFY Site Review");
       const body = encodeURIComponent(
         `Please rate us (1-5 stars):\n` +
         `Stars: \n\n` +
@@ -1698,7 +2007,7 @@ const tools = [
         `\n\n` +
         `Your Name & Title:\n`
       );
-      pendingReviewMailto = `mailto:reviews@boardtools.dev?subject=${subject}&body=${body}`;
+      pendingReviewMailto = `mailto:claudelimitextinguishers@gmail.com?subject=${subject}&body=${body}`;
       if (homeReviewModal) homeReviewModal.classList.remove("hidden");
     });
   }
@@ -1708,14 +2017,14 @@ const tools = [
   if (gridDirectEmail) {
     gridDirectEmail.addEventListener("click", (e) => {
       e.preventDefault();
-      const subject = encodeURIComponent("BoardTools Custom Tool Request");
+      const subject = encodeURIComponent("TOOLKIFY Custom Tool Request");
       const body = encodeURIComponent(
-        "Hi BoardTools Team,\n\n" +
+        "Hi TOOLKIFY Team,\n\n" +
         "I would like to suggest a custom tool:\n" +
         "- Tool Description: \n\n" +
         "Thank you!"
       );
-      pendingRequestMailto = `mailto:requests@boardtools.dev?subject=${subject}&body=${body}`;
+      pendingRequestMailto = `mailto:claudelimitextinguishers@gmail.com?subject=${subject}&body=${body}`;
       if (homeRequestModal) homeRequestModal.classList.remove("hidden");
     });
   }
@@ -1808,7 +2117,7 @@ const tools = [
     path: string;
     icon: string;
     keywords: string;
-  }> = (window as any).__BOARDTOOLS_SEARCH_INDEX__ || [];
+  }> = (window as any).__TOOLKIFY_SEARCH_INDEX__ || [];
 
   let activeCategory = "all";
   let searchQuery = "";
@@ -2720,4 +3029,31 @@ const tools = [
       console.error(e);
     }
   }
+
+  // ============================================
+  // SEO FAQ ACCORDION TOGGLE
+  // ============================================
+  const faqToggleButtons =
+    document.querySelectorAll<HTMLButtonElement>(".faq-toggle-btn");
+  faqToggleButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+
+      // Close other open accordions
+      faqToggleButtons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute("aria-expanded", "false");
+          const otherContent = otherBtn.nextElementSibling;
+          if (otherContent) otherContent.classList.add("hidden");
+          otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+        }
+      });
+
+      // Toggle current accordion
+      btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+      const content = btn.nextElementSibling;
+      if (content) content.classList.toggle("hidden");
+      btn.querySelector("svg")?.classList.toggle("rotate-180");
+    });
+  });
 </script>

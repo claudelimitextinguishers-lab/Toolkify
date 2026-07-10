@@ -11,7 +11,7 @@ const pageTitle =
   "Mortgage Calculator - Free Home Loan Payment, Affordability & Refinance Calculator";
 const description =
   "Free mortgage calculator with taxes, PMI, HOA and extra payments. Estimate your monthly home mortgage payment, check affordability, compare refinance savings, and analyze rent vs buy.";
-const canonicalUrl = "https://boardtools.app/tools/finance/mortgage-payment";
+const canonicalUrl = "https://toolkify.app/tools/finance/mortgage-payment";
 const ogImage = "/og/mortgage-calculator.png";
 const keywords =
   "mortgage calculator, simple mortgage calculator, home mortgage calculator, free mortgage calculator, monthly mortgage calculator, mortgage calculator with taxes, mortgage calculator with extra payments, 30 year mortgage calculator, house mortgage calculator, commercial mortgage calculator, mortgage affordability calculator, home affordability calculator, house affordability calculator, affordability calculator, home loan affordability calculator, housing affordability calculator, mortgage refinance calculator, refinance savings calculator, mortgage refinance savings calculator, refinance mortgage calculator, refinance calculator, rent vs buy calculator, rent vs buy house, rent vs buy home, rent vs buy calc";
@@ -34,7 +34,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Mortgage Calculator",
       "alternateName": "Home Mortgage Payment, Affordability & Refinance Calculator",
-      "url": "https://boardtools.app/tools/finance/mortgage-payment",
+      "url": "https://toolkify.app/tools/finance/mortgage-payment",
       "description": "Free mortgage calculator to estimate monthly home loan payments with property taxes, insurance, HOA fees, PMI and extra payments. Includes a mortgage affordability calculator, refinance savings calculator, and rent vs buy calculator.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -69,19 +69,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Finance & Tax Tools",
-          "item": "https://boardtools.app/#finance"
+          "item": "https://toolkify.app/#finance"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Mortgage Calculator",
-          "item": "https://boardtools.app/tools/finance/mortgage-payment"
+          "item": "https://toolkify.app/tools/finance/mortgage-payment"
         }
       ]
     }
@@ -5568,13 +5568,13 @@ const keywords =
   }
 
   function getScenarios(): Scenario[] {
-    const data = localStorage.getItem("boardtools_suite_scenarios");
+    const data = localStorage.getItem("toolkify_suite_scenarios");
     return data ? JSON.parse(data) : [];
   }
 
   function saveScenarios(scenarios: Scenario[]) {
     localStorage.setItem(
-      "boardtools_suite_scenarios",
+      "toolkify_suite_scenarios",
       JSON.stringify(scenarios),
     );
     renderScenariosBoard();
@@ -5868,7 +5868,7 @@ const keywords =
     link.setAttribute("href", encodeURI(csvContent));
     link.setAttribute(
       "download",
-      `boardtools_mortgage_${currentMode}_${Date.now()}.csv`,
+      `toolkify_mortgage_${currentMode}_${Date.now()}.csv`,
     );
     document.body.appendChild(link);
     link.click();

@@ -17,21 +17,21 @@ interface Props {
 }
 
 const { 
-	title = "BoardTools - The Visual Workspace Tools Suite", 
+	title = "TOOLKIFY - The Visual Workspace Tools Suite", 
 	description = "A gorgeous Miro-inspired suite of client-side web utility tools including whiteboard, JSON formatter, contrast checker, base64 tool, and more. 100% private.",
 	toolName,
 	toolCategory,
 	hideBanner = false,
 	keywords,
 	canonical,
-	ogImage = "https://boardtools.app/og-default.png",
+	ogImage = "https://toolkify.app/og-default.png",
 	ogType = "website"
 } = Astro.props;
 
-const siteName = "BoardTools";
+const siteName = "TOOLKIFY";
 // Resolve a canonical URL: explicit prop wins, otherwise derive from the current request URL.
-const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://boardtools.app").href;
-const ogImageUrl = new URL(ogImage, Astro.site ?? "https://boardtools.app").href;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://toolkify.app").href;
+const ogImageUrl = new URL(ogImage, Astro.site ?? "https://toolkify.app").href;
 ---
 <!doctype html>
 <html lang="en" class="h-full">

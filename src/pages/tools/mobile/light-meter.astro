@@ -8,7 +8,7 @@ const tier = "Mobile Sensor Tools";
 const description = "Measure ambient light levels in real-time. Uses the native Ambient Light Sensor API if supported, or falls back to camera-frame brightness estimation with privacy-safe processing.";
 
 const pageTitle = "Light Meter - Free Online Lux & Light Level Meter App";
-const canonicalUrl = "https://boardtools.app/tools/mobile/light-meter";
+const canonicalUrl = "https://toolkify.app/tools/mobile/light-meter";
 const ogImage = "/og/light-meter.png";
 const keywords = "light meter, what is a light meter, light meter app, light meter photography, best light meter app, how to use a light meter, how do you read a light meter, lux meter, measure light, lux sensor, ambient light sensor, camera light meter";
 ---
@@ -31,7 +31,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
       "@type": "WebApplication",
       "name": "Light Meter",
       "alternateName": "Ambient Lux Meter & Camera Brightness Estimator",
-      "url": "https://boardtools.app/tools/mobile/light-meter",
+      "url": "https://toolkify.app/tools/mobile/light-meter",
       "description": "Free, privacy-first web-based light meter. Leverages the native Ambient Light Sensor API for true Lux readings, or falls back to camera-frame brightness estimation with smooth readings and real-time statistics.",
       "applicationCategory": "SensorApplication",
       "operatingSystem": "All",
@@ -62,25 +62,25 @@ const keywords = "light meter, what is a light meter, light meter app, light met
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://boardtools.app/tools"
+          "item": "https://toolkify.app/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Mobile",
-          "item": "https://boardtools.app/tools/mobile"
+          "item": "https://toolkify.app/tools/mobile"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Light Meter",
-          "item": "https://boardtools.app/tools/mobile/light-meter"
+          "item": "https://toolkify.app/tools/mobile/light-meter"
         }
       ]
     }
@@ -854,7 +854,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         try { return localStorage.getItem(lsKey); } catch (e) { return null; }
       };
 
-      const savedMode = get("boardtools:light-meter:mode", "mode");
+      const savedMode = get("toolkify:light-meter:mode", "mode");
       if (savedMode === "camera" || !hasSensorSupport) {
         setMode("camera");
       } else {
@@ -871,7 +871,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         }
 
         currentMode = mode;
-        localStorage.setItem("boardtools:light-meter:mode", mode);
+        localStorage.setItem("toolkify:light-meter:mode", mode);
         resetPeaks();
 
         if (mode === "sensor") {
@@ -1285,7 +1285,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         `;
         btnExportCsv.disabled = true;
 
-        localStorage.removeItem("boardtools:light-meter:mode");
+        localStorage.removeItem("toolkify:light-meter:mode");
       });
 
       // Share Event Listener

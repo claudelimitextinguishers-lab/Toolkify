@@ -9,7 +9,7 @@ const tier = "General Everyday Utilities";
 // On-page SEO metadata
 const pageTitle = "Time Zone Converter - World & Meeting Time Zone Converter";
 const description = "Free time zone converter to compare world time zones instantly. Convert Pacific time, plan meetings across multiple time zones, and find the best overlap with a DST-aware, privacy-first world time zone converter.";
-const canonicalUrl = "https://boardtools.app/tools/general/time-zone-converter";
+const canonicalUrl = "https://toolkify.app/tools/general/time-zone-converter";
 const ogImage = "/og/time-zone-converter.png";
 const keywords = "time zone converter, pacific time zone converter, time zone converter for meetings, world time zone converter, multiple time zone converter, gmt converter, what time zone am i in, dst aware timezone, world clock, meeting planner";
 ---
@@ -32,7 +32,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       "@type": "WebApplication",
       "name": "Time Zone Converter",
       "alternateName": "Client-Side World Clock & Meeting Planner",
-      "url": "https://boardtools.app/tools/general/time-zone-converter",
+      "url": "https://toolkify.app/tools/general/time-zone-converter",
       "description": "Free offline client-side world clock converter. Plan meetings across multiple timezones with a visual 24-hour day/night slider and auto overlap finder.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -64,19 +64,19 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "General Tools",
-          "item": "https://boardtools.app/tools/general"
+          "item": "https://toolkify.app/tools/general"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Time Zone Converter",
-          "item": "https://boardtools.app/tools/general/time-zone-converter"
+          "item": "https://toolkify.app/tools/general/time-zone-converter"
         }
       ]
     }
@@ -616,7 +616,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
           4. Zero Server Footprint
         </h4>
         <p>
-          Just like all BoardTools utilities, your configurations, times, and location setups stay locally stored in your browser. Absolutely zero data is logged or sent online.
+          Just like all TOOLKIFY utilities, your configurations, times, and location setups stay locally stored in your browser. Absolutely zero data is logged or sent online.
         </p>
       </div>
       <button
@@ -743,13 +743,13 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         state.targetZones = decodeURIComponent(zonesParam).split(",");
       } else {
         // Fallback to local storage
-        const savedZones = localStorage.getItem("boardtools:time-zone-converter:targetZones");
+        const savedZones = localStorage.getItem("toolkify:time-zone-converter:targetZones");
         if (savedZones) {
           state.targetZones = JSON.parse(savedZones);
         }
       }
 
-      const savedFormat = localStorage.getItem("boardtools:time-zone-converter:format24h");
+      const savedFormat = localStorage.getItem("toolkify:time-zone-converter:format24h");
       if (savedFormat !== null) {
         state.format24h = savedFormat === "true";
       }
@@ -987,7 +987,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
           const target = e.currentTarget as HTMLButtonElement;
           const idx = parseInt(target.getAttribute("data-index") || "0", 10);
           state.targetZones.splice(idx, 1);
-          localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+          localStorage.setItem("toolkify:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
           renderComparisonList();
           calculateOverlap();
         });
@@ -1126,7 +1126,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
     setupTimezoneSearch(addZoneSearch, addZoneAutocomplete, (tz) => {
       if (!state.targetZones.includes(tz)) {
         state.targetZones.push(tz);
-        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+        localStorage.setItem("toolkify:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
         renderComparisonList();
         calculateOverlap();
       }
@@ -1150,7 +1150,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
             state.targetZones.push(z);
           }
         });
-        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+        localStorage.setItem("toolkify:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
         renderComparisonList();
         calculateOverlap();
       });
@@ -1169,14 +1169,14 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
 
     format12hBtn.addEventListener("click", () => {
       state.format24h = false;
-      localStorage.setItem("boardtools:time-zone-converter:format24h", "false");
+      localStorage.setItem("toolkify:time-zone-converter:format24h", "false");
       updateFormatButtons();
       renderComparisonList();
     });
 
     format24hBtn.addEventListener("click", () => {
       state.format24h = true;
-      localStorage.setItem("boardtools:time-zone-converter:format24h", "true");
+      localStorage.setItem("toolkify:time-zone-converter:format24h", "true");
       updateFormatButtons();
       renderComparisonList();
     });
@@ -1207,7 +1207,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
     // Local presets management
     function loadPresetsList() {
       presetSelect.innerHTML = `<option value="">-- Choose Set --</option>`;
-      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const rawPresets = localStorage.getItem("toolkify:time-zone-converter:presets");
       const presets = rawPresets ? JSON.parse(rawPresets) : {};
       
       // Add default Sales Team preset if empty
@@ -1227,7 +1227,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       const presetName = presetSelect.value;
       if (!presetName) return;
 
-      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const rawPresets = localStorage.getItem("toolkify:time-zone-converter:presets");
       const presets = rawPresets ? JSON.parse(rawPresets) : {};
       
       // Default fallback
@@ -1237,7 +1237,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         state.targetZones = presets[presetName];
       }
 
-      localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
+      localStorage.setItem("toolkify:time-zone-converter:targetZones", JSON.stringify(state.targetZones));
       renderComparisonList();
       calculateOverlap();
     });
@@ -1249,11 +1249,11 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         return;
       }
 
-      const rawPresets = localStorage.getItem("boardtools:time-zone-converter:presets");
+      const rawPresets = localStorage.getItem("toolkify:time-zone-converter:presets");
       const presets = rawPresets ? JSON.parse(rawPresets) : {};
       presets[nameVal] = [...state.targetZones];
 
-      localStorage.setItem("boardtools:time-zone-converter:presets", JSON.stringify(presets));
+      localStorage.setItem("toolkify:time-zone-converter:presets", JSON.stringify(presets));
       newPresetNameInput.value = "";
       loadPresetsList();
       presetSelect.value = nameVal;
@@ -1324,9 +1324,9 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
     // Verbatim Reset button structure and action handler
     btnReset.addEventListener("click", () => {
       // Clear localStorage
-      localStorage.removeItem("boardtools:time-zone-converter:targetZones");
-      localStorage.removeItem("boardtools:time-zone-converter:format24h");
-      localStorage.removeItem("boardtools:time-zone-converter:presets");
+      localStorage.removeItem("toolkify:time-zone-converter:targetZones");
+      localStorage.removeItem("toolkify:time-zone-converter:format24h");
+      localStorage.removeItem("toolkify:time-zone-converter:presets");
 
       // Clear URL query parameters
       if (window.history.pushState) {
@@ -1428,7 +1428,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         }
         zones.splice(insertIndex, 0, moved);
         state.targetZones = zones;
-        localStorage.setItem("boardtools:time-zone-converter:targetZones", JSON.stringify(zones));
+        localStorage.setItem("toolkify:time-zone-converter:targetZones", JSON.stringify(zones));
         renderComparisonList();
         calculateOverlap();
       }

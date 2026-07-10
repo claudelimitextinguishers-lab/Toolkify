@@ -9,7 +9,7 @@ const tier = "Display & Input Diagnostics";
 // On-page SEO metadata
 const pageTitle = "Refresh Rate Test - Check Monitor Hz Online";
 const description = "Use our free online refresh rate test to check your monitor refresh rate. Measure screen refresh rate on TV, PC, and mobile (Android & iPhone) in real-time.";
-const canonicalUrl = "https://boardtools.app/tools/display/refresh-rate";
+const canonicalUrl = "https://toolkify.app/tools/display/refresh-rate";
 const ogImage = "/og/refresh-rate.png";
 const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh rate test, refresh rate test mobile, display refresh rate test, refresh rate test online, 120hz refresh rate test, refresh rate test monitor, online refresh rate test, phone refresh rate test, refresh rate test android, refresh rate test iphone, monitor hz test, hz tester, screen refresh rate, measure hz, fps test, check refresh rate, display hz check, frame pacing test, dropped frames";
 ---
@@ -32,7 +32,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
       "@type": "WebApplication",
       "name": "Refresh Rate Test",
       "alternateName": "Monitor Hz Analyzer",
-      "url": "https://boardtools.app/tools/display/refresh-rate",
+      "url": "https://toolkify.app/tools/display/refresh-rate",
       "description": "Measure and analyze your monitor display refresh rate and frame pacing consistency in real-time using high-precision requestAnimationFrame loops.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -64,25 +64,25 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://boardtools.app/tools"
+          "item": "https://toolkify.app/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Display",
-          "item": "https://boardtools.app/tools/display"
+          "item": "https://toolkify.app/tools/display"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Refresh Rate Test",
-          "item": "https://boardtools.app/tools/display/refresh-rate"
+          "item": "https://toolkify.app/tools/display/refresh-rate"
         }
       ]
     }
@@ -284,7 +284,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
               <!-- Jitter / Confidence -->
               <div class="p-2 bg-surface border border-hairline rounded-xl flex flex-col gap-0.5 items-center text-center">
                 <span class="text-[9px] font-semibold text-slate uppercase tracking-wider">Stability (SD)</span>
-                <span id="sd-val" class="text-xs font-bold text-primary">±0.00 ms</span>
+                <span id="sd-val" class="text-xs font-bold text-primary">Â±0.00 ms</span>
                 <span class="text-[8px] text-stone">Frame variance</span>
               </div>
 
@@ -332,7 +332,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
                 id="start-stop-btn"
                 class="w-full button-primary text-xs py-2 px-4 !rounded-full shadow-subtle hover:scale-[1.02] active:scale-95 transition-all cursor-pointer font-bold text-center flex items-center justify-center gap-1.5"
               >
-                <span id="start-stop-icon">▶</span>
+                <span id="start-stop-icon">â–¶</span>
                 <span id="start-stop-text">Start Test</span>
               </button>
               
@@ -341,7 +341,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
                 id="fullscreen-btn"
                 class="w-full inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
               >
-                <span>🎎</span>
+                <span>ðŸŽŽ</span>
                 <span>Fullscreen Overlay</span>
               </button>
             </div>
@@ -378,7 +378,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
           </div>
 
           <div id="test-zone-instructions" class="pointer-events-none flex flex-col items-center text-center gap-2 z-10 transition-opacity duration-300">
-            <div class="text-3xl animate-bounce">⚡</div>
+            <div class="text-3xl animate-bounce">âš¡</div>
             <div class="flex flex-col gap-1">
               <h3 class="font-display font-medium text-sm sm:text-base text-primary">Refresh Rate Diagnostics Box</h3>
               <p class="text-xs text-slate max-w-sm leading-relaxed">
@@ -391,7 +391,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
         <!-- Troubleshooting Panel (Shown under test zone if issues detected) -->
         <div id="troubleshoot-panel" class="hidden card-base p-3 bg-surface-yellow border border-brand-yellow-deep/40 flex flex-col gap-2 animate-fade-in">
           <h3 class="font-display font-semibold text-xs text-yellow-dark flex items-center gap-1.5">
-            <span>⚠️</span> Low Refresh Rate or High Jitter Detected
+            <span>âš ï¸</span> Low Refresh Rate or High Jitter Detected
           </h3>
           <div class="text-[10px] text-yellow-dark leading-relaxed flex flex-col gap-1">
             <p>Your browser reports high variance or capped frame rates. Common solutions:</p>
@@ -454,7 +454,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
           <!-- Security & Privacy Guard Tag -->
           <div class="flex items-center justify-between text-[9px] text-slate border-t border-hairline-soft pt-2">
             <span class="flex items-center gap-0.5">
-              <span class="text-success-accent font-semibold">✓</span> Client-Side
+              <span class="text-success-accent font-semibold">âœ“</span> Client-Side
             </span>
             <span>v2.0.0</span>
           </div>
@@ -512,7 +512,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
         How the Display Refresh Rate Test Works
       </h3>
       <p class="text-sm leading-relaxed">
-        To deliver high-precision results, our tool utilizes the HTML5 <code>requestAnimationFrame</code> API to sync with the browser’s repaint cycle. The tool records the millisecond timestamp of each draw callback and computes the frame-to-frame delay. By collecting these samples, our <strong>display refresh rate test</strong> calculates both the median delay and the stability (standard deviation) of the loop. To screen out occasional OS background hiccups or CPU spike stutters, the analyzer ignores statistical outliers and displays a clean, stabilized estimation of your screen's actual Hertz rating. This gives you a more realistic representation of real-world frame consistency compared to basic counters that simply divide total frames by seconds.
+        To deliver high-precision results, our tool utilizes the HTML5 <code>requestAnimationFrame</code> API to sync with the browserâ€™s repaint cycle. The tool records the millisecond timestamp of each draw callback and computes the frame-to-frame delay. By collecting these samples, our <strong>display refresh rate test</strong> calculates both the median delay and the stability (standard deviation) of the loop. To screen out occasional OS background hiccups or CPU spike stutters, the analyzer ignores statistical outliers and displays a clean, stabilized estimation of your screen's actual Hertz rating. This gives you a more realistic representation of real-world frame consistency compared to basic counters that simply divide total frames by seconds.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
@@ -706,7 +706,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -771,7 +771,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
     let blockDy = 2.5;
     
     // LocalStorage Keys
-    const LS_KEY_HISTORY = "boardtools:refresh-rate:history";
+    const LS_KEY_HISTORY = "toolkify:refresh-rate:history";
 
     // DOM Elements
     const resetBtn = document.getElementById("reset-btn") as HTMLButtonElement;
@@ -982,7 +982,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
       troubleshootPanel.classList.add("hidden");
 
       if (!isFullscreenMode) {
-        startStopIcon.textContent = "⏹";
+        startStopIcon.textContent = "â¹";
         startStopText.textContent = "Stop Test";
         startStopBtn.classList.remove("button-primary");
         startStopBtn.classList.add("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
@@ -1019,7 +1019,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
       cancelAnimationFrame(rafId);
       
       if (!isFullscreenMode) {
-        startStopIcon.textContent = "▶";
+        startStopIcon.textContent = "â–¶";
         startStopText.textContent = "Start Test";
         startStopBtn.classList.add("button-primary");
         startStopBtn.classList.remove("bg-brand-coral", "text-coral-dark", "hover:bg-coral-light");
@@ -1257,7 +1257,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
       liveHz.innerHTML = `${stats.estHz.toFixed(1)} <span class="text-xs text-slate">Hz</span>`;
       liveHzSubtext.textContent = `Likely ${closestHz}Hz Display`;
       medianInterval.textContent = `${stats.median.toFixed(2)} ms`;
-      sdVal.textContent = `±${stats.sd.toFixed(2)} ms`;
+      sdVal.textContent = `Â±${stats.sd.toFixed(2)} ms`;
       droppedCounter.textContent = stats.dropped.toString();
       sampleCounter.textContent = frameIntervals.length.toString();
 
@@ -1295,7 +1295,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
       liveHz.innerHTML = `0.0 <span class="text-xs text-slate">Hz</span>`;
       liveHzSubtext.textContent = "Likely -- Hz Display";
       medianInterval.textContent = "0.00 ms";
-      sdVal.textContent = "±0.00 ms";
+      sdVal.textContent = "Â±0.00 ms";
       droppedCounter.textContent = "0";
       sampleCounter.textContent = "0";
       
@@ -1362,7 +1362,7 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
         <tr class="border-b border-hairline-soft hover:bg-surface/40">
           <td class="py-1.5 px-1 font-bold text-primary">${item.rate} Hz</td>
           <td class="py-1.5 px-1 text-right font-mono">${item.medianDelay} ms</td>
-          <td class="py-1.5 px-1 text-right font-mono">±${item.jitter} ms</td>
+          <td class="py-1.5 px-1 text-right font-mono">Â±${item.jitter} ms</td>
           <td class="py-1.5 px-1 text-right font-mono text-coral-dark">${item.dropped}</td>
         </tr>
       `).join("");
@@ -1376,10 +1376,10 @@ const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh r
         return;
       }
       
-      let text = "BoardTools Refresh Rate Test Results Summary:\n";
+      let text = "TOOLKIFY Refresh Rate Test Results Summary:\n";
       text += "=========================================\n";
       history.forEach((run, i) => {
-        text += `Run #${i + 1}: ${run.rate}Hz | Median: ${run.medianDelay}ms | Jitter: ±${run.jitter}ms | Dropped Frames: ${run.dropped}\n`;
+        text += `Run #${i + 1}: ${run.rate}Hz | Median: ${run.medianDelay}ms | Jitter: Â±${run.jitter}ms | Dropped Frames: ${run.dropped}\n`;
       });
       
       navigator.clipboard.writeText(text).then(() => {

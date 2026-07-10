@@ -9,7 +9,7 @@ const tier = "Developer & Text Utilities";
 // SEO
 const pageTitle = "Randomizer Wheel - Free Name, Number & Custom List Spinner";
 const description = "Spin the ultimate free randomizer wheel spinner online. Create a custom list randomizer wheel, name randomizer wheel, number, food, color, or letter spinner with interactive physics.";
-const canonicalUrl = "https://boardtools.app/tools/developer/randomizer-wheel";
+const canonicalUrl = "https://toolkify.app/tools/developer/randomizer-wheel";
 const keywords = "randomizer wheel, name randomizer wheel, number randomizer wheel, color randomizer wheel, list randomizer wheel, randomizer wheel custom, country randomizer wheel, letter randomizer wheel, food randomizer wheel, animal randomizer wheel, randomizer wheel spinner, free randomizer wheel";
 const ogImage = "/og/randomizer-wheel.png";
 ---
@@ -30,7 +30,7 @@ const ogImage = "/og/randomizer-wheel.png";
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Randomizer Wheel",
-      "url": "https://boardtools.app/tools/developer/randomizer-wheel",
+      "url": "https://toolkify.app/tools/developer/randomizer-wheel",
       "description": "An interactive, client-side decision wheel featuring realistic physics, drag-to-spin, per-item weights, custom color palettes, and session logs.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -52,19 +52,19 @@ const ogImage = "/og/randomizer-wheel.png";
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://boardtools.app/"
+          "item": "https://toolkify.app/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer & Text Utilities",
-          "item": "https://boardtools.app/#developer"
+          "item": "https://toolkify.app/#developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Randomizer Wheel",
-          "item": "https://boardtools.app/tools/developer/randomizer-wheel"
+          "item": "https://toolkify.app/tools/developer/randomizer-wheel"
         }
       ]
     }
@@ -1259,11 +1259,11 @@ const ogImage = "/og/randomizer-wheel.png";
       angularVelocity = 0;
       
       // Clear localStorage keys in namespace
-      localStorage.removeItem('boardtools:randomizer-wheel:choices');
-      localStorage.removeItem('boardtools:randomizer-wheel:presets');
-      localStorage.removeItem('boardtools:randomizer-wheel:sound-enabled');
-      localStorage.removeItem('boardtools:randomizer-wheel:palette-id');
-      localStorage.removeItem('boardtools:randomizer-wheel:weighted-mode');
+      localStorage.removeItem('toolkify:randomizer-wheel:choices');
+      localStorage.removeItem('toolkify:randomizer-wheel:presets');
+      localStorage.removeItem('toolkify:randomizer-wheel:sound-enabled');
+      localStorage.removeItem('toolkify:randomizer-wheel:palette-id');
+      localStorage.removeItem('toolkify:randomizer-wheel:weighted-mode');
 
       // Clear input views
       choicesInput.value = 'Choice 1\nChoice 2\nChoice 3';
@@ -1525,17 +1525,17 @@ const ogImage = "/og/randomizer-wheel.png";
 
     // Local Storage Helpers
     function saveState() {
-      localStorage.setItem('boardtools:randomizer-wheel:choices', JSON.stringify(choices));
-      localStorage.setItem('boardtools:randomizer-wheel:weighted-mode', JSON.stringify(isWeightedMode));
-      localStorage.setItem('boardtools:randomizer-wheel:palette-id', selectedPalette);
-      localStorage.setItem('boardtools:randomizer-wheel:sound-enabled', JSON.stringify(isSoundEnabled));
-      localStorage.setItem('boardtools:randomizer-wheel:presets', JSON.stringify(savedPresets));
+      localStorage.setItem('toolkify:randomizer-wheel:choices', JSON.stringify(choices));
+      localStorage.setItem('toolkify:randomizer-wheel:weighted-mode', JSON.stringify(isWeightedMode));
+      localStorage.setItem('toolkify:randomizer-wheel:palette-id', selectedPalette);
+      localStorage.setItem('toolkify:randomizer-wheel:sound-enabled', JSON.stringify(isSoundEnabled));
+      localStorage.setItem('toolkify:randomizer-wheel:presets', JSON.stringify(savedPresets));
     }
 
     function loadState() {
       if (loadFromUrl()) return;
 
-      const savedChoices = localStorage.getItem('boardtools:randomizer-wheel:choices');
+      const savedChoices = localStorage.getItem('toolkify:randomizer-wheel:choices');
       if (savedChoices) {
         try {
           choices = JSON.parse(savedChoices);
@@ -1549,7 +1549,7 @@ const ogImage = "/og/randomizer-wheel.png";
         ];
       }
 
-      const savedWeighted = localStorage.getItem('boardtools:randomizer-wheel:weighted-mode');
+      const savedWeighted = localStorage.getItem('toolkify:randomizer-wheel:weighted-mode');
       if (savedWeighted) {
         isWeightedMode = JSON.parse(savedWeighted);
         weightedToggle.checked = isWeightedMode;
@@ -1559,17 +1559,17 @@ const ogImage = "/og/randomizer-wheel.png";
         }
       }
 
-      const savedPalette = localStorage.getItem('boardtools:randomizer-wheel:palette-id');
+      const savedPalette = localStorage.getItem('toolkify:randomizer-wheel:palette-id');
       if (savedPalette) {
         selectedPalette = savedPalette as keyof typeof PALETTES;
       }
 
-      const savedSound = localStorage.getItem('boardtools:randomizer-wheel:sound-enabled');
+      const savedSound = localStorage.getItem('toolkify:randomizer-wheel:sound-enabled');
       if (savedSound) {
         isSoundEnabled = JSON.parse(savedSound);
       }
 
-      const savedPresetsStr = localStorage.getItem('boardtools:randomizer-wheel:presets');
+      const savedPresetsStr = localStorage.getItem('toolkify:randomizer-wheel:presets');
       if (savedPresetsStr) {
         try {
           savedPresets = JSON.parse(savedPresetsStr);

@@ -8,7 +8,7 @@ const tier = "Audio Utilities";
 const description = "Free online white noise generator & customizable sound machine. Block distractions, enhance sleep, soothe babies, and mask tinnitus with high-fidelity, client-side noise.";
 
 const pageTitle = "Best Online White Noise Generator - Free Sound Machine for Sleep & Focus";
-const canonicalUrl = "https://boardtools.app/tools/audio/white-noise";
+const canonicalUrl = "https://toolkify.app/tools/audio/white-noise";
 const ogImage = "/og/white-noise.png";
 const keywords = "white noise, best online white noise, white noise machine, white noise for sleep, what is white noise, brown noise vs white noise, best white noise machine, white noise app, best white noise for baby, white noise sleep, white noise book, free white noise for sleep";
 ---
@@ -145,7 +145,7 @@ const keywords = "white noise, best online white noise, white noise machine, whi
       "@type": "WebApplication",
       "name": "White Noise Generator",
       "alternateName": "Browser-Based White Noise Sound Machine",
-      "url": "https://boardtools.app/tools/audio/white-noise",
+      "url": "https://toolkify.app/tools/audio/white-noise",
       "description": "Generate high-fidelity, loop-safe white noise and environmental soundscapes entirely in your browser. Customizable sleep timer, visualizer, presets, and synthesized audio layers.",
       "applicationCategory": "AudioApplication",
       "operatingSystem": "All",
@@ -1114,7 +1114,7 @@ const keywords = "white noise, best online white noise, white noise machine, whi
   <!-- Client-side Logic Script -->
   <script>
     // LocalStorage Prefix
-    const LS_PREFIX = "boardtools:white-noise:";
+    const LS_PREFIX = "toolkify:white-noise:";
 
     // Audio State
     let audioCtx: AudioContext | null = null;
@@ -1832,7 +1832,7 @@ const keywords = "white noise, best online white noise, white noise machine, whi
       timerProgressFill.style.width = `${pct}%`;
     }
 
-    // LocalStorage System (using boardtools:white-noise:{key})
+    // LocalStorage System (using toolkify:white-noise:{key})
     function saveSettingsToLS() {
       const config = {
         volume: parseInt(volumeSlider.value),
