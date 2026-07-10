@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../layouts/Layout.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 
@@ -12,7 +12,7 @@ const pageTitle =
   "JSON Formatter & JSON Viewer - Online JSON Beautifier & Validator";
 const description =
   "Free client-side online JSON formatter tool and JSON validator. Prettify, inspect, and format JSON strings instantly. Use the interactive tree-based online JSON viewer to validate JSON files with syntax highlighting and zero server tracking.";
-const canonicalUrl = "https://toolkify.app/tools/json-formatter";
+const canonicalUrl = "https://toolkify.com/tools/json-formatter";
 const ogImage = "/og/json-formatter.png";
 const keywords =
   "json formatter, json formatter tool, online json formatter, what is a json file, json, json viewer, json syntax square brackets, json validator, json beautifier, json file, json format, what is json, format json, json formatter online, online json viewer, online json formatter";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "JSON Formatter & Validator",
       "alternateName": "Client-Side JSON Prettifier & Error Finder",
-      "url": "https://toolkify.app/tools/json-formatter",
+      "url": "https://toolkify.com/tools/json-formatter",
       "description": "Free client-side tool to format, beautify, minify, and validate JSON. Features collapsible tree node exploration, hover path breadcrumbs, and exact line/column syntax error tracking.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -68,19 +68,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer",
-          "item": "https://toolkify.app/tools/developer"
+          "item": "https://toolkify.com/tools/developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "JSON Formatter",
-          "item": "https://toolkify.app/tools/json-formatter"
+          "item": "https://toolkify.com/tools/json-formatter"
         }
       ]
     }
@@ -239,7 +239,7 @@ const keywords =
             class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="View keyboard shortcuts"
           >
-            <span>⌨ Keyboard Shortcuts</span>
+            <span>âŒ¨ Keyboard Shortcuts</span>
           </button>
 
           <button
@@ -389,7 +389,7 @@ const keywords =
           class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake"
         >
           <div class="font-bold flex items-center gap-1.5">
-            <span>⚠️ Precise Parse Error:</span>
+            <span>âš ï¸ Precise Parse Error:</span>
             <span id="error-brief" class="font-semibold text-primary"></span>
           </div>
           <pre
@@ -435,7 +435,7 @@ const keywords =
               id="drop-overlay"
               class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200"
             >
-              <span class="text-2xl">📥</span>
+              <span class="text-2xl">ðŸ“¥</span>
               <span class="text-xs font-bold text-brand-blue"
                 >Drop .json file here</span
               >
@@ -634,7 +634,7 @@ const keywords =
           <button
             id="close-shortcuts-btn"
             class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
-            >×</button
+            >Ã—</button
           >
         </div>
         <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
@@ -1096,7 +1096,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1461,10 +1461,10 @@ const keywords =
       }
       try {
         JSON.parse(text);
-        updateStatus("success", "✓ Structure Valid");
+        updateStatus("success", "âœ“ Structure Valid");
         errorTracePanel.classList.add("hidden");
       } catch (err: any) {
-        updateStatus("error", "✗ Invalid JSON");
+        updateStatus("error", "âœ— Invalid JSON");
       }
     }
 
@@ -1510,7 +1510,7 @@ const keywords =
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus("success", `✓ Valid JSON string formatted.`);
+        updateStatus("success", `âœ“ Valid JSON string formatted.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
 
         // Save to history
@@ -1550,7 +1550,7 @@ const keywords =
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus("success", `✓ Minified successfully.`);
+        updateStatus("success", `âœ“ Minified successfully.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
 
         errorTracePanel.classList.add("hidden");
@@ -1572,7 +1572,7 @@ const keywords =
 
     // Precise syntax error highlighting and parsing
     function handleParseError(rawText: string, err: Error) {
-      updateStatus("error", "✗ Invalid JSON structure");
+      updateStatus("error", "âœ— Invalid JSON structure");
       outputPretty.textContent = "";
       treeRootWrapper.innerHTML = "";
 
@@ -1746,7 +1746,7 @@ const keywords =
       if (!textStr) return;
 
       navigator.clipboard.writeText(textStr).then(() => {
-        showToast("✓ Copied formatted JSON");
+        showToast("âœ“ Copied formatted JSON");
       });
     });
 
@@ -1765,7 +1765,7 @@ const keywords =
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast("✓ Downloading JSON File");
+      showToast("âœ“ Downloading JSON File");
     });
 
     // Share link as URL query param
@@ -1831,7 +1831,7 @@ const keywords =
           }
         }
       } catch (err) {
-        showToast("⚠️ Could not generate link");
+        showToast("âš ï¸ Could not generate link");
       }
     });
 
@@ -1844,10 +1844,10 @@ const keywords =
         const shareUrl = `${window.location.origin}${window.location.pathname}?json=${compressed}`;
 
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast("✓ Shareable URL copied!");
+          showToast("âœ“ Shareable URL copied!");
         });
       } catch (err) {
-        showToast("⚠️ Could not generate link");
+        showToast("âš ï¸ Could not generate link");
       }
     });
 

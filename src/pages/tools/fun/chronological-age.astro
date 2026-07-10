@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -9,11 +9,11 @@ const tier = "Fun Tools";
 
 // On-page SEO metadata
 const pageTitle =
-  "Chronological Age Calculator – Find Out Your Exact Age";
+  "Chronological Age Calculator â€“ Find Out Your Exact Age";
 const description =
   "Free chronological age calculator to find out your exact age in years, months, weeks, days, hours, minutes, and seconds. Online age calculator for testing, Pearson & Super Duper scoring.";
 const canonicalUrl =
-  "https://toolkify.app/tools/fun/chronological-age";
+  "https://toolkify.com/tools/fun/chronological-age";
 const ogImage = "/og/chronological-age-calculator.png";
 const keywords =
   "chronological age calculator, chronological age calculator pearson, super duper chronological age calculator, chronological age calculator find out your age, chronological age calculator for testing, free chronological age calculator, chronological age calculator super duper, biological age vs chronological age calculator, chronological age calculator in months, chronological age calculator year and month, online chronological age calculator, chronological age calculator in years, chronological age calculator in weeks, chronological age calculator in days, chronological age calculator in hours, chronological age calculator in minutes, chronological age calculator in seconds";
@@ -37,7 +37,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Chronological Age Calculator",
       "alternateName": "Chronological Age Calculator (Find Out Your Age)",
-      "url": "https://toolkify.app/tools/fun/chronological-age",
+      "url": "https://toolkify.com/tools/fun/chronological-age",
       "description": "Free online chronological age calculator that finds your exact age in years, months, weeks, days, hours, minutes, and seconds. Includes clinical 15-day rounding for testing (Pearson and Super Duper style scoring) and corrected age for prematurity.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "All",
@@ -432,7 +432,7 @@ const keywords =
               id="calculate-btn"
               class="flex-1 inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2.5 bg-plum-accent text-canvas rounded-full transition-all cursor-pointer shadow-subtle hover:bg-plum-accent/90"
             >
-              📊 Calculate Age
+              ðŸ“Š Calculate Age
             </button>
           </div>
         </div>
@@ -459,7 +459,7 @@ const keywords =
 
             <!-- Error Banner -->
             <div id="error-banner" class="hidden bg-brand-red/10 border border-brand-red-dark/30 rounded-lg p-2.5 text-[11px] text-brand-red-dark leading-relaxed animate-fade-in-up">
-              ⚠️ Birthdate cannot be in the future relative to the "as of" date.
+              âš ï¸ Birthdate cannot be in the future relative to the "as of" date.
             </div>
 
             <!-- Results Reveal Container -->
@@ -469,7 +469,7 @@ const keywords =
             >
               <!-- Initial Idle State -->
               <div id="idle-readout" class="flex flex-col items-center gap-1.5 px-4 text-center">
-                <span class="text-3xl animate-bounce">📅</span>
+                <span class="text-3xl animate-bounce">ðŸ“…</span>
                 <span class="text-xs font-semibold text-plum-text-bright">Enter a birth date to calculate</span>
                 <span class="text-[10px] text-plum-text-muted max-w-[200px]">Calculates precise years, months, weeks, days, and hours instantly.</span>
               </div>
@@ -554,7 +554,7 @@ const keywords =
               </div>
               <!-- Gestational Notification Tag -->
               <div id="gestational-badge" class="hidden bg-plum-accent/20 border border-plum-accent/30 text-plum-text-bright rounded p-1 text-[9px] text-center mt-1">
-                👼 Adjusted for gestational prematurity of <span id="prematurity-weeks-display">0</span> week(s).
+                ðŸ‘¼ Adjusted for gestational prematurity of <span id="prematurity-weeks-display">0</span> week(s).
               </div>
             </div>
 
@@ -666,7 +666,7 @@ const keywords =
         id="about-tool-heading"
         class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
       >
-        Free Chronological Age Calculator – Find Out Your Exact Age
+        Free Chronological Age Calculator â€“ Find Out Your Exact Age
       </h2>
       <p class="text-sm leading-relaxed">
         This <strong>chronological age calculator</strong> is a fast, free, and
@@ -1341,7 +1341,7 @@ const keywords =
       // Parse DOB
       const dobDate = parseDateTime(inputDob.value, inputTob?.value);
       if (!dobDate) {
-        showError(true, "⚠️ Please enter a valid Date of Birth (DD/MM/YYYY).");
+        showError(true, "âš ï¸ Please enter a valid Date of Birth (DD/MM/YYYY).");
         return;
       }
 
@@ -1351,7 +1351,7 @@ const keywords =
         new Date().getFullYear();
       const asOfDate = parseDateTime(inputAsof.value || currentDefaultStr, inputAsofTime?.value);
       if (!asOfDate) {
-        showError(true, "⚠️ Please enter a valid As Of Date (DD/MM/YYYY).");
+        showError(true, "âš ï¸ Please enter a valid As Of Date (DD/MM/YYYY).");
         return;
       }
 
@@ -1372,7 +1372,7 @@ const keywords =
 
       // Validation
       if (adjustedDob.getTime() > asOfDate.getTime()) {
-        showError(true, '⚠️ Birthdate cannot be in the future relative to the "as of" date.');
+        showError(true, 'âš ï¸ Birthdate cannot be in the future relative to the "as of" date.');
         return;
       }
       showError(false);
@@ -1565,7 +1565,7 @@ const keywords =
       requestAnimationFrame(update);
     }
 
-    function showError(visible: boolean, message: string = '⚠️ Birthdate cannot be in the future relative to the "as of" date.') {
+    function showError(visible: boolean, message: string = 'âš ï¸ Birthdate cannot be in the future relative to the "as of" date.') {
       if (errorBanner) {
         errorBanner.textContent = message;
       }
@@ -1876,7 +1876,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 

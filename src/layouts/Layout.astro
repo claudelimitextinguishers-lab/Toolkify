@@ -1,4 +1,4 @@
----
+﻿---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import RequestToolPopup from '../components/RequestToolPopup.astro';
@@ -24,14 +24,14 @@ const {
 	hideBanner = false,
 	keywords,
 	canonical,
-	ogImage = "https://toolkify.app/og-default.png",
+	ogImage = "https://toolkify.com/og-default.png",
 	ogType = "website"
 } = Astro.props;
 
 const siteName = "TOOLKIFY";
 // Resolve a canonical URL: explicit prop wins, otherwise derive from the current request URL.
-const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://toolkify.app").href;
-const ogImageUrl = new URL(ogImage, Astro.site ?? "https://toolkify.app").href;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://toolkify.com").href;
+const ogImageUrl = new URL(ogImage, Astro.site ?? "https://toolkify.com").href;
 ---
 <!doctype html>
 <html lang="en" class="h-full">

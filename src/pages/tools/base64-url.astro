@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../layouts/Layout.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 
@@ -10,7 +10,7 @@ const tier = "Developer Tools";
 // SEO metadata
 const pageTitle = "Base64 & URL Converter - Free Base64 Decode & Encode Online";
 const description = "Free online Base64 & URL Converter. Easily base64 decode, base64 encode, or convert URL strings. Supports standard & URL-safe formats and data:image/png;base64 online.";
-const canonicalUrl = "https://toolkify.app/tools/base64-url";
+const canonicalUrl = "https://toolkify.com/tools/base64-url";
 const ogImage = "/og/base64-url.png";
 const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, decode base64, base64 decoder, data:image/png;base64, base64 decode online, base64 encoding, base64 converter, URL Converter";
 ---
@@ -33,7 +33,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
       "@type": "WebApplication",
       "name": "Base64 & URL Encoder/Decoder",
       "alternateName": "Live Bidirectional Base64 & URL Converter",
-      "url": "https://toolkify.app/tools/base64-url",
+      "url": "https://toolkify.com/tools/base64-url",
       "description": "Free client-side tool to encode and decode Base64, URL strings, or chained variants. Features drag-and-drop file encoding, inline image previews, smart auto-detection, and local history.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -68,19 +68,19 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer",
-          "item": "https://toolkify.app/tools/developer"
+          "item": "https://toolkify.com/tools/developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Base64 & URL Converter",
-          "item": "https://toolkify.app/tools/base64-url"
+          "item": "https://toolkify.com/tools/base64-url"
         }
       ]
     }
@@ -286,7 +286,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
           </label>
           <div class="flex items-center gap-2 text-xs text-stone">
             <button id="btn-load-sample" class="text-brand-blue font-semibold hover:underline cursor-pointer">Load Sample</button>
-            <span>•</span>
+            <span>â€¢</span>
             <button id="btn-clear-a" class="hover:text-brand-coral cursor-pointer">Clear</button>
           </div>
         </div>
@@ -311,7 +311,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
             </svg>
             <span id="file-info-text" class="truncate font-semibold text-charcoal">image.png (45 KB)</span>
           </div>
-          <button id="btn-remove-file" class="text-brand-coral hover:text-coral-dark font-bold text-xs p-1 cursor-pointer">✕</button>
+          <button id="btn-remove-file" class="text-brand-coral hover:text-coral-dark font-bold text-xs p-1 cursor-pointer">âœ•</button>
         </div>
 
         <!-- Textarea A -->
@@ -371,7 +371,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
               </svg>
               <span>Copy</span>
             </button>
-            <span>•</span>
+            <span>â€¢</span>
             <button id="btn-clear-b" class="hover:text-brand-coral cursor-pointer">Clear</button>
           </div>
         </div>
@@ -466,7 +466,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
       <div class="bg-canvas border border-hairline max-w-[800px] w-full rounded-2xl overflow-hidden flex flex-col shadow-modal max-h-[85vh] animate-scale-up">
         <div class="flex justify-between items-center p-4 border-b border-hairline bg-surface">
           <span class="font-display font-semibold text-sm text-primary">Fullscreen Image Decoded View</span>
-          <button id="btn-close-modal" class="text-slate hover:text-primary font-bold text-base px-2 py-1 cursor-pointer">✕</button>
+          <button id="btn-close-modal" class="text-slate hover:text-primary font-bold text-base px-2 py-1 cursor-pointer">âœ•</button>
         </div>
         <div class="flex-grow p-6 flex items-center justify-center bg-surface-soft overflow-auto">
           <img id="img-modal" src="" alt="Decoded preview zoom" class="max-w-full max-h-[50vh] object-contain rounded shadow-card" />
@@ -699,7 +699,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1495,7 +1495,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
   btnCopyA?.addEventListener('click', () => {
     navigator.clipboard.writeText(editorA.value).then(() => {
       const orig = btnCopyA.innerHTML;
-      btnCopyA.innerHTML = '✓ Copied!';
+      btnCopyA.innerHTML = 'âœ“ Copied!';
       setTimeout(() => btnCopyA.innerHTML = orig, 1200);
     });
   });
@@ -1509,7 +1509,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
   btnCopyB?.addEventListener('click', () => {
     navigator.clipboard.writeText(editorB.value).then(() => {
       const orig = btnCopyB.innerHTML;
-      btnCopyB.innerHTML = '✓ Copied!';
+      btnCopyB.innerHTML = 'âœ“ Copied!';
       setTimeout(() => btnCopyB.innerHTML = orig, 1200);
     });
   });
@@ -1533,15 +1533,15 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
   btnLoadSample?.addEventListener('click', () => {
     if (mode === 'b64') {
       editorA.value = direction === 'encode' 
-        ? "TOOLKIFY: The ultimate workspace utility! 🚀 ✨ Let's explore Base64."
+        ? "TOOLKIFY: The ultimate workspace utility! ðŸš€ âœ¨ Let's explore Base64."
         : "Qm9hcmRUb29sczogVGhlIHVsdGltYXRlIHdvcmtzcGFjZSB1dGlsaXR5ISAgICA=";
     } else if (mode === 'url') {
       editorA.value = direction === 'encode'
-        ? "https://toolkify.app/search?query=miro templates & tools"
-        : "https%3A%2F%2Ftoolkify.app%2Fsearch%3Fquery%3Dmiro%20templates%20%26%20tools";
+        ? "https://toolkify.com/search?query=miro templates & tools"
+        : "https%3A%2F%2Ftoolkify.com%2Fsearch%3Fquery%3Dmiro%20templates%20%26%20tools";
     } else {
       editorA.value = direction === 'encode'
-        ? "Nested chained format: emoji 🌟 string"
+        ? "Nested chained format: emoji ðŸŒŸ string"
         : "TmVzdGVkJTIwY2hhaW5lZCUyMGZvcm1hdCUzQSUyMGVtb2ppJTIwJUZGJTlGJTlCJTk1JTIwc3RyaW5n";
     }
     runConversion('b');
@@ -1753,7 +1753,7 @@ const keywords = "Base64 & URL Converter, base64, base64 decode, base64 encode, 
 
       navigator.clipboard.writeText(finalUrl).then(() => {
         const orig = btnGenerateShare.innerHTML;
-        btnGenerateShare.innerHTML = '✓ Copied Share URL!';
+        btnGenerateShare.innerHTML = 'âœ“ Copied Share URL!';
         setTimeout(() => btnGenerateShare.innerHTML = orig, 1500);
       });
     } catch (e) {

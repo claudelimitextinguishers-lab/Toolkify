@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -8,7 +8,7 @@ const category = "audio";
 const tier = "Audio Utilities";
 const description = "Test speaker polarity and diagnose phase issues with our free Speaker Phase Tool. Check speaker phase cancellation, wiring, and phase switch alignment.";
 const pageTitle = "Speaker Phase Tool - Online Speaker Polarity & Phase Tester";
-const canonicalUrl = "https://toolkify.app/tools/audio/speaker-phase";
+const canonicalUrl = "https://toolkify.com/tools/audio/speaker-phase";
 const ogImage = "/og/speaker-phase.png";
 const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker phase tester, how to check speaker phase, speaker phase cancellation, speaker phase test app, speaker phase issues, speaker phase switch";
 ---
@@ -89,7 +89,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
       "@type": "WebApplication",
       "name": "Speaker Phase Tool",
       "alternateName": "Speaker Polarity & Phase Tester",
-      "url": "https://toolkify.app/tools/audio/speaker-phase",
+      "url": "https://toolkify.com/tools/audio/speaker-phase",
       "description": "Free online audio diagnostic tool to check stereo speaker and subwoofer wiring polarity using low frequency tones and pink noise.",
       "applicationCategory": "AudioApplication",
       "operatingSystem": "All",
@@ -163,7 +163,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
 
     <!-- Mobile Stereo Warning -->
     <div class="sm:hidden p-3 rounded-lg border border-brand-yellow-deep/30 bg-surface-yellow text-[11px] text-yellow-dark leading-normal flex items-start gap-2">
-      <span class="text-base select-none">🔊</span>
+      <span class="text-base select-none">ðŸ”Š</span>
       <div>
         <span class="font-bold">Important Mobile Notice:</span> This phase cancellation test requires external stereo speakers or a subwoofer. Internal mono phone speakers will not produce valid results.
       </div>
@@ -199,7 +199,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
               class="relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-blue bg-surface-pricing-featured text-brand-blue"
             >
               <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-blue"></div>
-              <div class="text-2xl" id="in-phase-icon">🟢</div>
+              <div class="text-2xl" id="in-phase-icon">ðŸŸ¢</div>
               <span class="font-display font-bold text-sm sm:text-base">In-Phase (Normal)</span>
               <span class="text-[10px] text-slate text-center opacity-85">Waveforms align, creating reinforced, full bass.</span>
             </button>
@@ -211,7 +211,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
               class="relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate"
             >
               <div class="absolute top-2 right-2 w-2 h-2 rounded-full bg-transparent"></div>
-              <div class="text-2xl" id="out-phase-icon">🔴</div>
+              <div class="text-2xl" id="out-phase-icon">ðŸ”´</div>
               <span class="font-display font-bold text-sm sm:text-base text-primary">Out-of-Phase</span>
               <span class="text-[10px] text-slate text-center opacity-85">Right channel inverted. Waves cancel out (thin sound).</span>
             </button>
@@ -222,9 +222,9 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         <!-- Live Waveform Monitor Graphic -->
         <div class="bg-surface rounded-xl border border-hairline p-4 flex flex-col gap-2">
           <div class="flex justify-between items-center text-[10px] font-mono text-stone">
-            <span>LEFT CHANNEL (0°)</span>
-            <span id="phase-diff-indicator" class="font-bold text-brand-blue">ALIGNED (0° DELTA)</span>
-            <span>RIGHT CHANNEL (<span id="right-phase-val">0°</span>)</span>
+            <span>LEFT CHANNEL (0Â°)</span>
+            <span id="phase-diff-indicator" class="font-bold text-brand-blue">ALIGNED (0Â° DELTA)</span>
+            <span>RIGHT CHANNEL (<span id="right-phase-val">0Â°</span>)</span>
           </div>
           
           <div class="h-28 relative overflow-hidden bg-canvas rounded-lg border border-hairline-soft">
@@ -295,7 +295,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
             <div class="flex flex-col gap-1.5">
               <div class="flex justify-between items-center text-[11px] font-bold text-slate uppercase tracking-wider">
                 <span>Phase Angle Adjustment</span>
-                <span id="phase-angle-display" class="font-mono text-xs text-primary font-bold">0° (In-Phase)</span>
+                <span id="phase-angle-display" class="font-mono text-xs text-primary font-bold">0Â° (In-Phase)</span>
               </div>
               <input
                 type="range"
@@ -351,7 +351,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
             id="btn-play-toggle"
             class="w-full sm:w-auto button-primary text-sm py-3 px-8 !rounded-full flex items-center justify-center gap-2 cursor-pointer font-bold shadow-subtle hover:scale-[1.02] active:scale-[0.98] transition-all bg-primary text-canvas"
           >
-            <span id="play-btn-icon">▶</span>
+            <span id="play-btn-icon">â–¶</span>
             <span id="play-btn-text">Start Test Signal</span>
           </button>
         </div>
@@ -364,7 +364,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         <!-- Guided Phase Test Card -->
         <div class="card-base flex flex-col gap-4">
           <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
-            <span class="text-base select-none">🗺️</span> Step-by-Step Diagnostic
+            <span class="text-base select-none">ðŸ—ºï¸</span> Step-by-Step Diagnostic
           </h3>
           
           <div class="flex flex-col gap-4" id="diagnostic-guide">
@@ -468,7 +468,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         Acoustic Optimization & Troubleshooting Phase Switches
       </h3>
       <p class="text-sm sm:text-base leading-relaxed">
-        Subwoofers are particularly prone to phase issues because low-frequency waves are long and interact heavily with room boundaries. Many powered subwoofers feature a dedicated <strong>speaker phase switch</strong> (toggling between 0° and 180°) or a variable phase dial. This control compensates for physical distance differences between the subwoofer and the main stereo speakers. By adjusting this switch while playing a low-frequency test tone, you can align the waves at your listening position, ensuring the subwoofer's output constructively sums with the main speakers instead of cancelling them out.
+        Subwoofers are particularly prone to phase issues because low-frequency waves are long and interact heavily with room boundaries. Many powered subwoofers feature a dedicated <strong>speaker phase switch</strong> (toggling between 0Â° and 180Â°) or a variable phase dial. This control compensates for physical distance differences between the subwoofer and the main stereo speakers. By adjusting this switch while playing a low-frequency test tone, you can align the waves at your listening position, ensuring the subwoofer's output constructively sums with the main speakers instead of cancelling them out.
       </p>
 
       <h3 class="font-display font-semibold text-xl text-primary mt-2">
@@ -583,7 +583,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>Optimize speaker phase alignment by placing your stereo speakers equidistant from your listening position. For subwoofers, place them along the same plane as the main monitors and adjust the physical phase switch or phase control dial (from 0° to 180°) on the subwoofer panel until the crossover range sounds punchy and cohesive.</p>
+            <p>Optimize speaker phase alignment by placing your stereo speakers equidistant from your listening position. For subwoofers, place them along the same plane as the main monitors and adjust the physical phase switch or phase control dial (from 0Â° to 180Â°) on the subwoofer panel until the crossover range sounds punchy and cohesive.</p>
           </div>
         </div>
 
@@ -657,7 +657,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1039,13 +1039,13 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
     function togglePlayback() {
       if (isPlaying) {
         stopAudioEngine();
-        playBtnIcon.textContent = "▶";
+        playBtnIcon.textContent = "â–¶";
         playBtnText.textContent = "Start Test Signal";
         playToggleBtn.classList.remove("bg-brand-coral", "text-primary");
         playToggleBtn.classList.add("bg-primary", "text-canvas");
       } else {
         startAudioEngine();
-        playBtnIcon.textContent = "■";
+        playBtnIcon.textContent = "â– ";
         playBtnText.textContent = "Stop Test Signal";
         playToggleBtn.classList.remove("bg-primary", "text-canvas");
         // Style feedback depending on phase mode
@@ -1066,13 +1066,13 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
       currentPhaseAngle = angle;
       phaseAngleSlider.value = String(angle);
       
-      let label = `${angle}°`;
+      let label = `${angle}Â°`;
       if (angle === 0) {
         label += " (In-Phase)";
         isOutofPhase = false;
         toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-blue bg-surface-pricing-featured text-brand-blue";
         toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
-        phaseDiffIndicator.textContent = "ALIGNED (0° DELTA)";
+        phaseDiffIndicator.textContent = "ALIGNED (0Â° DELTA)";
         phaseDiffIndicator.className = "font-bold text-brand-blue";
         
         // Return step 2 styles
@@ -1084,7 +1084,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         isOutofPhase = true;
         toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-brand-coral bg-brand-red text-coral-dark";
         toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
-        phaseDiffIndicator.textContent = "MUTUALLY INVERTED (180° DELTA)";
+        phaseDiffIndicator.textContent = "MUTUALLY INVERTED (180Â° DELTA)";
         phaseDiffIndicator.className = "font-bold text-brand-coral";
 
         // Highlight Step 2 in diagnostic
@@ -1095,7 +1095,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         isOutofPhase = false;
         toggleInPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
         toggleOutPhase.className = "relative p-4 rounded-xl border-2 flex flex-col items-center gap-2 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-hairline bg-canvas text-slate";
-        phaseDiffIndicator.textContent = `PHASE SHIFTED (${angle}° DELTA)`;
+        phaseDiffIndicator.textContent = `PHASE SHIFTED (${angle}Â° DELTA)`;
         phaseDiffIndicator.className = "font-bold text-primary";
         
         step2El?.classList.remove("border-brand-blue");
@@ -1103,7 +1103,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
         step2El?.querySelector("span")?.classList.add("bg-surface", "text-slate");
       }
       phaseAngleDisplay.textContent = label;
-      rightPhaseVal.textContent = `${angle}°`;
+      rightPhaseVal.textContent = `${angle}Â°`;
 
       // Update DSP live if running
       if (audioCtx && rightGain && delayNode) {
@@ -1220,7 +1220,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
     // Save Favorite Frequency
     saveFreqBtn.addEventListener("click", () => {
       localStorage.setItem("toolkify:speaker-phase:frequency", String(currentFrequency));
-      showToastNotification("✓ Saved frequency to local storage");
+      showToastNotification("âœ“ Saved frequency to local storage");
     });
 
     // Reset settings to defaults (Verbatim Contract)
@@ -1250,7 +1250,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
       signalSelect.value = "sine";
       toggleSignalLayout("sine");
 
-      showToastNotification("✓ Phase settings reset");
+      showToastNotification("âœ“ Phase settings reset");
     });
 
     // Share link generator
@@ -1311,7 +1311,7 @@ const keywords = "Speaker Phase Tool, speaker phase, speaker phase plug, speaker
             }, 2000);
           }
         }
-        showToastNotification("✓ Shareable configuration URL copied!");
+        showToastNotification("âœ“ Shareable configuration URL copied!");
       }
     });
 

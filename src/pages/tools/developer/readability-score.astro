@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -11,7 +11,7 @@ const tier = "Developer & Text Utilities";
 const pageTitle = "Readability Score Checker - Free Readability Checker Online";
 const description = "Free online readability score checker. Analyze your text readability grade level instantly using Flesch-Kincaid, Gunning Fog, and other standard readability formulas.";
 const keywords = "readability score checker, readability score, how to increase readability score, free readability score, what does readability score mean, what is readability score";
-const canonicalUrl = "https://toolkify.app/tools/developer/readability-score";
+const canonicalUrl = "https://toolkify.com/tools/developer/readability-score";
 const ogImage = "/og/readability-score.png";
 ---
 
@@ -114,7 +114,7 @@ const ogImage = "/og/readability-score.png";
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Readability Score Checker",
-      "url": "https://toolkify.app/tools/developer/readability-score",
+      "url": "https://toolkify.com/tools/developer/readability-score",
       "description": "Analyze text reading levels using standard Flesch-Kincaid, Gunning Fog, and Flesch Reading Ease formulas with inline sentence-level highlighting.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -146,19 +146,19 @@ const ogImage = "/og/readability-score.png";
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer Tools",
-          "item": "https://toolkify.app/#developer"
+          "item": "https://toolkify.com/#developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Readability Score Checker",
-          "item": "https://toolkify.app/tools/developer/readability-score"
+          "item": "https://toolkify.com/tools/developer/readability-score"
         }
       ]
     }
@@ -247,15 +247,15 @@ const ogImage = "/og/readability-score.png";
             id="btn-single-mode"
             class="pill-tab-active bg-primary text-canvas px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer border border-primary flex items-center gap-1"
           >
-            <span class="sm:inline">📝 Analyzer Workspace</span>
-            <span class="inline sm:hidden">📝 Workspace</span>
+            <span class="sm:inline">ðŸ“ Analyzer Workspace</span>
+            <span class="inline sm:hidden">ðŸ“ Workspace</span>
           </button>
           <button
             id="btn-compare-mode"
             class="pill-tab bg-canvas text-slate hover:text-primary hover:border-slate px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer border border-hairline flex items-center gap-1"
           >
-            <span class="sm:inline">⚖ Compare Versions</span>
-            <span class="inline sm:hidden">⚖ Compare</span>
+            <span class="sm:inline">âš– Compare Versions</span>
+            <span class="inline sm:hidden">âš– Compare</span>
           </button>
         </div>
       </div>
@@ -276,7 +276,7 @@ const ogImage = "/og/readability-score.png";
                 <option value="">-- Select Saved Draft --</option>
               </select>
               <button id="btn-delete-draft" class="text-stone hover:text-brand-coral p-1.5 rounded-full hover:bg-surface transition-all text-sm hidden" title="Delete selected draft">
-                🗑
+                ðŸ—‘
               </button>
             </div>
           </div>
@@ -486,7 +486,7 @@ const ogImage = "/og/readability-score.png";
           <!-- Mobile Collapse Toggle -->
           <div class="flex items-center justify-between lg:pointer-events-none">
             <h3 class="font-display font-semibold text-base text-primary flex items-center gap-2">
-              📊 Readability Gauge
+              ðŸ“Š Readability Gauge
             </h3>
             <button id="btn-toggle-stats-mobile" class="lg:hidden text-xs bg-surface border border-hairline px-2.5 py-1 rounded-full text-slate font-bold cursor-pointer">
               Hide Dashboard
@@ -644,7 +644,7 @@ const ogImage = "/og/readability-score.png";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1076,13 +1076,13 @@ const ogImage = "/og/readability-score.png";
   }
 
   function getFKInterpretation(grade: number): string {
-    if (grade <= 4) return "Very Easy — Easily read by 4th graders";
-    if (grade <= 6) return "Easy — 5th or 6th grade level";
-    if (grade <= 8) return "Standard — 7th or 8th grade level";
-    if (grade <= 10) return "Average — 9th or 10th grade level";
-    if (grade <= 12) return "Fairly Difficult — High School level";
-    if (grade <= 15) return "Difficult — College level";
-    return "Very Difficult — Post-graduate level";
+    if (grade <= 4) return "Very Easy â€” Easily read by 4th graders";
+    if (grade <= 6) return "Easy â€” 5th or 6th grade level";
+    if (grade <= 8) return "Standard â€” 7th or 8th grade level";
+    if (grade <= 10) return "Average â€” 9th or 10th grade level";
+    if (grade <= 12) return "Fairly Difficult â€” High School level";
+    if (grade <= 15) return "Difficult â€” College level";
+    return "Very Difficult â€” Post-graduate level";
   }
 
   function getGFIInterpretation(index: number): string {

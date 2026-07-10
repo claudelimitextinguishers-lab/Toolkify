@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -11,7 +11,7 @@ const tier = "Developer & Text Utilities";
 const pageTitle = "Text Case Converter - Convert Case Online (Free Case Converter Tool)";
 const description = "Free client-side Text Case Converter. Convert upper case to lower case, sentence case, title case, camel case, proper case, and more online instantly.";
 const keywords = "Text Case Converter, case converter, title case converter, upper case converter, lower case converter, sentence case converter, capital case converter, case converter online, upper case to lower case converter, upper to lower case converter, lower case to upper case converter, online case converter, text case converter, case converter tool, letter case converter, camel case converter, cap case converter, proper case converter, universal case converter, word case converter";
-const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
+const canonicalUrl = "https://toolkify.com/tools/developer/case-converter";
 ---
 
 <Layout 
@@ -31,7 +31,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Text Case Converter",
-      "url": "https://toolkify.app/tools/developer/case-converter",
+      "url": "https://toolkify.com/tools/developer/case-converter",
       "description": "Convert text block casing instantly. Supports common cases (UPPERCASE, lowercase, Title Case, Sentence case) and developer-oriented formats (camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case) in single or bulk batch modes.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -62,19 +62,19 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer Tools",
-          "item": "https://toolkify.app/#developer"
+          "item": "https://toolkify.com/#developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Text Case Converter",
-          "item": "https://toolkify.app/tools/developer/case-converter"
+          "item": "https://toolkify.com/tools/developer/case-converter"
         }
       ]
     }
@@ -470,7 +470,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
           type="button"
           id="close-how-it-works-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
-        >✕</button>
+        >âœ•</button>
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
@@ -481,7 +481,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
 
         <h4 class="font-semibold text-primary">2. Favorites Pinning</h4>
         <p>
-          Click the star icon (★) in the top-right of any case card to pin it to the top. Your favorite formats will stay at the top of the grid and are saved to your browser's local storage.
+          Click the star icon (â˜…) in the top-right of any case card to pin it to the top. Your favorite formats will stay at the top of the grid and are saved to your browser's local storage.
         </p>
 
         <h4 class="font-semibold text-primary">3. Batch Mode (Line-by-Line)</h4>
@@ -725,7 +725,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
             data-id="${c.id}"
             title="${isPinned ? 'Unpin case' : 'Pin case to top'}"
           >
-            ★
+            â˜…
           </button>
         </div>
         <textarea 
@@ -750,7 +750,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/case-converter";
       copyBtn.addEventListener('click', () => {
         if (!textarea.value) return;
         navigator.clipboard.writeText(textarea.value).then(() => {
-          copyBtn.textContent = '✓ Copied!';
+          copyBtn.textContent = 'âœ“ Copied!';
           copyBtn.className = "copy-card-btn inline-flex items-center gap-1 text-[10px] font-bold text-success-accent";
           setTimeout(() => {
             copyBtn.textContent = 'Copy';

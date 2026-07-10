@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -10,7 +10,7 @@ const description = "Compare two texts or files side-by-side or inline. Highligh
 
 // SEO Metadata
 const pageTitle = "Text Diff Checker - Online File & Code Comparison Tool";
-const canonicalUrl = "https://toolkify.app/tools/developer/diff-checker";
+const canonicalUrl = "https://toolkify.com/tools/developer/diff-checker";
 const ogImage = "/og/text-diff-checker.png";
 const keywords = "Text Diff Checker, diff checker, online diff checker, diff checker online, code diff checker, file diff checker, json diff checker, text diff checker, xml diff checker, string diff checker, word diff checker, character diff checker, list diff checker, html diff checker, sql diff checker";
 ---
@@ -32,7 +32,7 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
       "@type": "WebApplication",
       "name": "Text Diff Checker",
       "alternateName": "Client-Side Diff & File Comparator",
-      "url": "https://toolkify.app/tools/developer/diff-checker",
+      "url": "https://toolkify.com/tools/developer/diff-checker",
       "description": "Free online client-side text diff checker. Compare two text files or strings side-by-side or inline with character, word, and line level highlights.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -64,19 +64,19 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer & Text Utilities",
-          "item": "https://toolkify.app/#developer"
+          "item": "https://toolkify.com/#developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Text Diff Checker",
-          "item": "https://toolkify.app/tools/developer/diff-checker"
+          "item": "https://toolkify.com/tools/developer/diff-checker"
         }
       ]
     }
@@ -271,13 +271,13 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
               id="btn-export-dropdown"
               class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-sm whitespace-nowrap"
             >
-              <span>Export & Share ▼</span>
+              <span>Export & Share â–¼</span>
             </button>
             <div id="export-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-canvas border border-hairline ring-1 ring-black/5 z-10">
               <div class="py-1" role="menu">
-                <button id="btn-export-share" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">🔗 Copy Shareable Link</button>
-                <button id="btn-export-patch" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">💾 Download .diff Patch</button>
-                <button id="btn-export-md" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">📝 Copy as Markdown</button>
+                <button id="btn-export-share" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ”— Copy Shareable Link</button>
+                <button id="btn-export-patch" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ’¾ Download .diff Patch</button>
+                <button id="btn-export-md" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ“ Copy as Markdown</button>
               </div>
             </div>
           </div>
@@ -376,7 +376,7 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
           <div class="overflow-x-auto w-full flex-grow font-mono text-xs leading-relaxed select-text" id="diff-output-container">
             <!-- Populated via script -->
             <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
-              <span class="text-2xl">⚡</span>
+              <span class="text-2xl">âš¡</span>
               <p class="font-medium text-charcoal">Waiting for changes...</p>
               <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
             </div>
@@ -606,13 +606,13 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
           type="button"
           id="close-how-it-works-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
-        >✕</button>
+        >âœ•</button>
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
         <h4 class="font-semibold text-primary">1. How does it work?</h4>
         <p>
-          This tool runs <strong>entirely inside your browser</strong> using a Web Worker sandbox. Your text is never sent to any server — all diffing is computed locally, making it safe for private code, configs, and sensitive documents.
+          This tool runs <strong>entirely inside your browser</strong> using a Web Worker sandbox. Your text is never sent to any server â€” all diffing is computed locally, making it safe for private code, configs, and sensitive documents.
         </p>
 
         <h4 class="font-semibold text-primary">2. Diff Granularity</h4>
@@ -1378,7 +1378,7 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
   function renderPlaceholder() {
     diffOutput.innerHTML = `
       <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
-        <span class="text-2xl">⚡</span>
+        <span class="text-2xl">âš¡</span>
         <p class="font-medium text-charcoal">Waiting for changes...</p>
         <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
       </div>

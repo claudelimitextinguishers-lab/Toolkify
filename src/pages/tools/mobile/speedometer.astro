@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -9,7 +9,7 @@ const tier = "Mobile Sensor Tools";
 
 const pageTitle = "GPS Speedometer & Trip Tracker - Real-Time In-Browser Speedometer";
 const description = "Free online GPS Speedometer & Trip Tracker. Track your speed, map distance, check speedometer calibration, and fix speedometer issues client-side. Works as a digital speedometer app on mobile & desktop.";
-const canonicalUrl = "https://toolkify.app/tools/mobile/speedometer";
+const canonicalUrl = "https://toolkify.com/tools/mobile/speedometer";
 const ogImage = "/og/speedometer.png";
 const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tracker, speedometer, speedometer app, digital speedometer, speedometer online, speedometer not working, speedometer calibration, online speedometer";
 ---
@@ -32,7 +32,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
       "@type": "WebApplication",
       "name": "GPS Speedometer & Trip Tracker",
       "alternateName": "Digital Speedometer & Trip Log",
-      "url": "https://toolkify.app/tools/mobile/speedometer",
+      "url": "https://toolkify.com/tools/mobile/speedometer",
       "description": "High-precision digital and analog-style GPS speedometer operating entirely client-side. Features real-time speed monitoring, trip statistics, and downloadable travel logs.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -64,19 +64,19 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Mobile",
-          "item": "https://toolkify.app/tools/mobile"
+          "item": "https://toolkify.com/tools/mobile"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "GPS Speedometer",
-          "item": "https://toolkify.app/tools/mobile/speedometer"
+          "item": "https://toolkify.com/tools/mobile/speedometer"
         }
       ]
     }
@@ -499,7 +499,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
       >
         <div class="flex items-center justify-between border-b border-brand-blue/10 pb-1.5">
           <span class="text-xs font-bold text-brand-blue flex items-center gap-1.5">
-            🏁 Trip Summary Session Completed
+            ðŸ Trip Summary Session Completed
           </span>
           <span id="trip-duration" class="text-[10px] font-mono font-semibold text-slate">Duration: 00:00:00</span>
         </div>
@@ -838,7 +838,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
   >
     <div class="bg-canvas rounded-2xl max-w-md w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 text-center">
       <div class="flex justify-center text-4xl mt-2 text-brand-coral">
-        ⚠️
+        âš ï¸
       </div>
       <h3 class="font-display font-semibold text-lg text-primary">
         Driver Safety Warning & Disclaimer
@@ -891,7 +891,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1308,7 +1308,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
             
             const rawCalcSpeed = distMeters / deltaSec;
 
-            // Outlier-rejection: Filter impossible acceleration jumps (e.g. >12m/s² speed changes)
+            // Outlier-rejection: Filter impossible acceleration jumps (e.g. >12m/sÂ² speed changes)
             const speedDiff = Math.abs(rawCalcSpeed - currentSpeedMs);
             const acceleration = speedDiff / deltaSec;
 

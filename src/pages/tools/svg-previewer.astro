@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../layouts/Layout.astro";
 import RelatedTools from "../../components/RelatedTools.astro";
 
@@ -10,7 +10,7 @@ const tier = "Design & Assets";
 // On-page SEO metadata
 const pageTitle = "SVG Optimizer - Free Online SVG Vector Compressor & Minifier";
 const description = "Optimize, minify, and compress vector SVG assets in real-time. Features side-by-side interactive previews, batch processing, and visual diff detection with zero server tracking.";
-const canonicalUrl = "https://toolkify.app/tools/svg-previewer";
+const canonicalUrl = "https://toolkify.com/tools/svg-previewer";
 const ogImage = "/og/svg-optimizer.png";
 const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify svg, online svg optimizer, optimize svg, scale vector graphics, compress svg";
 ---
@@ -33,7 +33,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
       "@type": "WebApplication",
       "name": "SVG Optimizer",
       "alternateName": "Vector SVG Compression & Minification Tool",
-      "url": "https://toolkify.app/tools/svg-previewer",
+      "url": "https://toolkify.com/tools/svg-previewer",
       "description": "Free client-side SVG optimizer to compress, minify, and clean vector images. Features side-by-side comparison, interactive code diff view, and batch SVG processing.",
       "applicationCategory": "DesignApplication",
       "operatingSystem": "All",
@@ -64,19 +64,19 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://toolkify.app/tools"
+          "item": "https://toolkify.com/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "SVG Optimizer",
-          "item": "https://toolkify.app/tools/svg-previewer"
+          "item": "https://toolkify.com/tools/svg-previewer"
         }
       ]
     }
@@ -532,7 +532,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
             id="diff-warning"
             class="hidden flex items-start gap-3 bg-brand-red/35 border border-brand-red-dark p-3.5 rounded-lg text-xs"
           >
-            <span class="text-base">⚠️</span>
+            <span class="text-base">âš ï¸</span>
             <div class="flex-grow">
               <h4 class="font-bold text-coral-dark">Visual Shift Detected</h4>
               <p class="text-primary mt-0.5">
@@ -632,7 +632,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
                 <div
                   class="w-6 h-6 rounded-full bg-brand-blue shadow-card border border-canvas text-canvas flex items-center justify-center text-xs font-bold pointer-events-none select-none"
                 >
-                  ↔
+                  â†”
                 </div>
               </div>
             </div>
@@ -655,13 +655,13 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
                 id="btn-copy"
                 class="button-secondary flex-1 sm:flex-initial py-2 sm:py-1.5 px-3.5 text-xs hover:bg-surface cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-all"
               >
-                <span class="icon-copy">📋</span> Copy Code
+                <span class="icon-copy">ðŸ“‹</span> Copy Code
               </button>
               <button
                 id="btn-download"
                 class="button-primary flex-1 sm:flex-initial py-2 sm:py-1.5 px-3.5 text-xs cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 transition-all"
               >
-                <span class="icon-download">📥</span> Download
+                <span class="icon-download">ðŸ“¥</span> Download
               </button>
             </div>
           </div>
@@ -738,7 +738,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
         <div
           class="w-12 h-12 rounded-full bg-surface-yellow border border-yellow-light text-yellow-dark flex items-center justify-center text-xl font-bold"
         >
-          📁
+          ðŸ“
         </div>
         <p class="text-sm text-ink font-semibold">
           Upload multiple SVG vector icons
@@ -798,7 +798,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
       id="btn-mobile-download"
       class="button-primary w-full py-3 px-6 text-sm font-bold flex items-center justify-center gap-2 shadow-modal active:scale-95 transition-all"
     >
-      <span class="icon-download">📥</span> Download Optimized SVG
+      <span class="icon-download">ðŸ“¥</span> Download Optimized SVG
     </button>
   </div>
 
@@ -821,7 +821,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1489,7 +1489,7 @@ const keywords = "SVG Optimizer, svg, svg file, free svg, svg compressor, minify
     if (!optimizedCode) return;
     navigator.clipboard.writeText(optimizedCode).then(() => {
       const origText = btnCopy.innerHTML;
-      btnCopy.innerHTML = "✓ Copied!";
+      btnCopy.innerHTML = "âœ“ Copied!";
       btnCopy.classList.add("animate-ping", "bg-success-accent", "text-white");
       setTimeout(() => {
         btnCopy.innerHTML = origText;

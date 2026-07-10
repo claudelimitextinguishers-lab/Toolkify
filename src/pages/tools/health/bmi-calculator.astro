@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -12,7 +12,7 @@ const pageTitle =
   "BMI Calculator - Free Online BMI Calculator for Men & Women";
 const description =
   "Free online BMI calculator for men and women. Calculate your Body Mass Index in metric (cm/kg) or imperial (inches/pounds) units instantly with WHO weight categories.";
-const canonicalUrl = "https://toolkify.app/tools/health/bmi-calculator";
+const canonicalUrl = "https://toolkify.com/tools/health/bmi-calculator";
 const ogImage = "/og/bmi-calculator.png";
 const keywords =
   "bmi calculator, bmi calculator women, bmi calculator men, bmi calculator female, bmi calculator male, bmi calculator online, bmi calculator imperial, bmi calculator metric, bmi calculator imperial units, bmi calculator metric units, bmi calculator inches pounds, bmi calculator cm kg, bmi calculator pounds inches, bmi calculator kg cm, bmi calculator cm and kg, bmi calculator pounds and inches, bmi calculator inches and pounds, bmi calculator kg and cm, bmi calculator cm and pounds, bmi calculator pounds and cm, bmi calculator cm and inches, bmi calculator inches and kg";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "BMI Calculator",
       "alternateName": "Body Mass Index Calculator for Men & Women",
-      "url": "https://toolkify.app/tools/health/bmi-calculator",
+      "url": "https://toolkify.com/tools/health/bmi-calculator",
       "description": "Free online BMI calculator for men and women supporting metric (cm/kg) and imperial (inches/pounds) units, real-time feedback, a WHO category scale visual indicator, and contextual health advice.",
       "applicationCategory": "HealthApplication",
       "operatingSystem": "All",
@@ -607,10 +607,10 @@ const keywords =
       </h3>
       <p class="text-sm leading-relaxed">
         BMI is calculated by dividing your weight by the square of your height.
-        In metric units the formula is <strong>weight (kg) ÷ height (m)²</strong>,
+        In metric units the formula is <strong>weight (kg) Ã· height (m)Â²</strong>,
         which is why a BMI calculator cm kg only needs your centimetres and
         kilograms. In imperial units the formula is
-        <strong>weight (lb) ÷ height (in)² × 703</strong>, so a BMI calculator
+        <strong>weight (lb) Ã· height (in)Â² Ã— 703</strong>, so a BMI calculator
         inches pounds simply converts your feet and inches into total inches
         first. Both methods give the same result for the same person, which is
         why you can freely move between a BMI calculator pounds and cm setup and
@@ -867,7 +867,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -877,8 +877,8 @@ const keywords =
           BMI is calculated by dividing your weight by your height squared:
         </p>
         <ul class="list-disc pl-4 flex flex-col gap-1">
-          <li><strong>Metric:</strong> weight (kg) / height (m)²</li>
-          <li><strong>Imperial:</strong> weight (lb) / height (in)² × 703</li>
+          <li><strong>Metric:</strong> weight (kg) / height (m)Â²</li>
+          <li><strong>Imperial:</strong> weight (lb) / height (in)Â² Ã— 703</li>
         </ul>
 
         <h4 class="font-semibold text-primary">2. WHO Weight Classifications</h4>
@@ -1374,28 +1374,28 @@ const keywords =
 
       // Contextual modifiers
       if (age > 0 && age < 20) {
-        mainMsg = `Note: Standard BMI categories are for adults 20+. For children and teens (ages 2–19), BMI classifications must be calculated as percentiles relative to peers of the same age and sex. <br/><br/>${mainMsg}`;
-        badges.push("⚠️ Youth (Age < 20)");
+        mainMsg = `Note: Standard BMI categories are for adults 20+. For children and teens (ages 2â€“19), BMI classifications must be calculated as percentiles relative to peers of the same age and sex. <br/><br/>${mainMsg}`;
+        badges.push("âš ï¸ Youth (Age < 20)");
       }
 
       if (age >= 65) {
-        badges.push("👴 Older Adult (65+)");
+        badges.push("ðŸ‘´ Older Adult (65+)");
         if (classification === "Normal" && currentBmi < 23) {
-          mainMsg += " For older adults (65+), a slightly higher BMI (23–27) may offer nutritional reserve against illness.";
+          mainMsg += " For older adults (65+), a slightly higher BMI (23â€“27) may offer nutritional reserve against illness.";
         }
       }
 
       if (sex === "male") {
-        badges.push("♂ Male Context");
+        badges.push("â™‚ Male Context");
       } else if (sex === "female") {
-        badges.push("♀ Female Context");
+        badges.push("â™€ Female Context");
       } else if (sex === "other") {
-        badges.push("⚧ Other Context");
+        badges.push("âš§ Other Context");
       }
 
       // Limitations note for athletes or body types
       if (classification === "Overweight" || classification === "Obese") {
-        badges.push("💪 Muscle Mass Check");
+        badges.push("ðŸ’ª Muscle Mass Check");
       }
 
       mainContextText.innerHTML = mainMsg;

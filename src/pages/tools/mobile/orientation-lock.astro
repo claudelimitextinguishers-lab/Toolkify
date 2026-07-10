@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -8,7 +8,7 @@ const category = "mobile";
 const tier = "Mobile Sensor Tools";
 const pageTitle = "Orientation Lock - Test Screen Rotation & Lock Status";
 const description = "Test your screen orientation lock online. Check portrait orientation lock, screen angles, safe area insets, and verify if portrait orientation lock is not working.";
-const canonicalUrl = "https://toolkify.app/tools/mobile/orientation-lock";
+const canonicalUrl = "https://toolkify.com/tools/mobile/orientation-lock";
 const ogImage = "/og/orientation-lock.png";
 const keywords = "orientation lock, portrait orientation lock, portrait orientation lock button, what is portrait orientation lock, what does portrait orientation lock do, screen orientation lockscreen orientation lock, what does portrait orientation lock mean, portrait orientation lock not working, portrait orientation lock meaning, portrait orientation lock in settings";
 ---
@@ -31,14 +31,14 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       "@type": "WebApplication",
       "name": "Orientation Lock Check",
       "alternateName": "Screen Rotation Tester & Orientation API Checker",
-      "url": "https://toolkify.app/tools/mobile/orientation-lock",
+      "url": "https://toolkify.com/tools/mobile/orientation-lock",
       "description": "A client-side screen orientation tester and rotation diagnostic tool. Analyzes screen angle, layout safe area insets, logs orientationchange events, and infers rotation-lock status using motion sensors.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires Screen Orientation API.",
       "featureList": [
         "Read live orientation type (portrait-primary, landscape-primary, etc.)",
-        "Live screen angle indicator (0°, 90°, 180°, 270°)",
+        "Live screen angle indicator (0Â°, 90Â°, 180Â°, 270Â°)",
         "Phone silhouette visual rotation matching device physical state",
         "Best-effort rotation-lock status inference via accelerometer motion vs screen state",
         "Lock testing via screen.orientation.lock() API with clean exception reports",
@@ -64,19 +64,19 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Mobile",
-          "item": "https://toolkify.app/tools/mobile"
+          "item": "https://toolkify.com/tools/mobile"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Orientation Lock Check",
-          "item": "https://toolkify.app/tools/mobile/orientation-lock"
+          "item": "https://toolkify.com/tools/mobile/orientation-lock"
         }
       ]
     }
@@ -275,8 +275,8 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
               <!-- Main orientation visual representation -->
               <div class="flex flex-col items-center gap-1.5 select-none">
-                <span id="screen-icon" class="text-3xl transition-transform duration-300">📱</span>
-                <span id="screen-angle-text" class="text-xs font-mono font-semibold text-slate uppercase tracking-wider">0° Angle</span>
+                <span id="screen-icon" class="text-3xl transition-transform duration-300">ðŸ“±</span>
+                <span id="screen-angle-text" class="text-xs font-mono font-semibold text-slate uppercase tracking-wider">0Â° Angle</span>
               </div>
 
               <!-- Screen category footer label -->
@@ -299,7 +299,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
           <div class="flex flex-col gap-0.5 bg-surface/50 border border-hairline p-2 rounded-xl text-center">
             <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Rotation Angle</span>
-            <span id="angle-readout" class="font-display font-medium text-xs text-primary">0°</span>
+            <span id="angle-readout" class="font-display font-medium text-xs text-primary">0Â°</span>
           </div>
 
           <div class="col-span-2 sm:col-span-1 flex flex-col gap-0.5 bg-surface/50 border border-hairline p-1.5 rounded-xl justify-center">
@@ -331,7 +331,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         <div class="card-base flex flex-col gap-3 p-4">
           <div class="flex justify-between items-center border-b border-hairline-soft pb-2">
             <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
-              <span>📋</span> Guided Test Checklist
+              <span>ðŸ“‹</span> Guided Test Checklist
             </h3>
             <button 
               type="button" 
@@ -344,20 +344,20 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
           <div class="flex flex-col gap-2">
             <div id="check-portrait-primary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
-              <span class="text-xs">Portrait-Primary (0°)</span>
-              <span class="status-icon text-xs">⬜ Pending</span>
+              <span class="text-xs">Portrait-Primary (0Â°)</span>
+              <span class="status-icon text-xs">â¬œ Pending</span>
             </div>
             <div id="check-landscape-primary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
-              <span class="text-xs">Landscape-Primary (90°)</span>
-              <span class="status-icon text-xs">⬜ Pending</span>
+              <span class="text-xs">Landscape-Primary (90Â°)</span>
+              <span class="status-icon text-xs">â¬œ Pending</span>
             </div>
             <div id="check-portrait-secondary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
-              <span class="text-xs">Portrait-Secondary (180°)</span>
-              <span class="status-icon text-xs">⬜ Pending</span>
+              <span class="text-xs">Portrait-Secondary (180Â°)</span>
+              <span class="status-icon text-xs">â¬œ Pending</span>
             </div>
             <div id="check-landscape-secondary" class="flex justify-between items-center py-1 border-b border-hairline-soft text-slate">
-              <span class="text-xs">Landscape-Secondary (270°)</span>
-              <span class="status-icon text-xs">⬜ Pending</span>
+              <span class="text-xs">Landscape-Secondary (270Â°)</span>
+              <span class="status-icon text-xs">â¬œ Pending</span>
             </div>
           </div>
 
@@ -365,14 +365,14 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
             id="checklist-summary-banner" 
             class="hidden p-2 rounded-lg border text-[10px] text-center font-semibold bg-success-accent/10 border-success-accent/20 text-moss-dark"
           >
-            🎉 All 4 orientations detected successfully!
+            ðŸŽ‰ All 4 orientations detected successfully!
           </div>
         </div>
 
         <!-- Technical geometry details panel -->
         <div class="card-base flex flex-col gap-2 p-4">
           <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5 border-b border-hairline-soft pb-2">
-            <span>📐</span> Screen & Safe Area Insets
+            <span>ðŸ“</span> Screen & Safe Area Insets
           </h3>
           <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] text-slate font-mono">
             <div class="flex justify-between border-b border-hairline-soft py-0.5">
@@ -406,7 +406,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         <div class="card-base flex flex-col gap-2 p-4 flex-grow max-h-[220px]">
           <div class="flex justify-between items-center border-b border-hairline-soft pb-2">
             <h3 class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center gap-1.5">
-              <span>🕒</span> Event History Log
+              <span>ðŸ•’</span> Event History Log
             </h3>
             <div class="flex gap-2">
               <button 
@@ -476,7 +476,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         Finding the Portrait Orientation Lock Button
       </h3>
       <p class="text-sm leading-relaxed">
-        Depending on your device, locating the toggle varies. Many users ask: where is the <strong>portrait orientation lock button</strong>? On Apple devices (iOS), the button is located in the Control Center—accessed by swiping down from the top-right corner of the screen. Look for the icon resembling a padlock surrounded by a circular arrow. On Android devices, the equivalent toggle is often named "Auto-rotate" or "Portrait" in the Quick Settings shade. If you cannot find it there, you can configure the <strong>portrait orientation lock in settings</strong> under the "Display" or "Screen" menu. Understanding <strong>what does portrait orientation lock mean</strong> in your system configuration allows you to toggle it on or off dynamically to match your current activity.
+        Depending on your device, locating the toggle varies. Many users ask: where is the <strong>portrait orientation lock button</strong>? On Apple devices (iOS), the button is located in the Control Centerâ€”accessed by swiping down from the top-right corner of the screen. Look for the icon resembling a padlock surrounded by a circular arrow. On Android devices, the equivalent toggle is often named "Auto-rotate" or "Portrait" in the Quick Settings shade. If you cannot find it there, you can configure the <strong>portrait orientation lock in settings</strong> under the "Display" or "Screen" menu. Understanding <strong>what does portrait orientation lock mean</strong> in your system configuration allows you to toggle it on or off dynamically to match your current activity.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
@@ -618,7 +618,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -628,7 +628,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         </h4>
         <p>
           We read <code>window.screen.orientation</code> directly to output the current layout state (Portrait vs Landscape, primary vs secondary) 
-          and rotation angles (0°, 90°, 180°, 270°). The central phone silhouette updates dynamically to match.
+          and rotation angles (0Â°, 90Â°, 180Â°, 270Â°). The central phone silhouette updates dynamically to match.
         </p>
 
         <h4 class="font-semibold text-primary">2. Best-Effort Lock Heuristic</h4>
@@ -779,7 +779,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       checkSensorAvailability();
 
       // Add visual logging of starting status
-      logEvent("init", `Initialized: type=${getOrientationType()}, angle=${getOrientationAngle()}°`);
+      logEvent("init", `Initialized: type=${getOrientationType()}, angle=${getOrientationAngle()}Â°`);
     }
 
     // Update screen clock
@@ -824,7 +824,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
       // Readouts
       if (typeReadout) typeReadout.textContent = type;
-      if (angleReadout) angleReadout.textContent = `${angle}°`;
+      if (angleReadout) angleReadout.textContent = `${angle}Â°`;
 
       // Silhouette Rotation - match reported orientation angle
       if (phoneVisualizerContainer) {
@@ -834,14 +834,14 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
 
       // Inside layout display updates
       if (screenAngleText) {
-        screenAngleText.textContent = `${angle}° Angle`;
+        screenAngleText.textContent = `${angle}Â° Angle`;
       }
       if (screenIcon) {
         // Change icon layout based on orientation aspect ratio
         if (type.startsWith("landscape")) {
-          screenIcon.textContent = "💻"; // horizontal device feel
+          screenIcon.textContent = "ðŸ’»"; // horizontal device feel
         } else {
-          screenIcon.textContent = "📱"; // vertical phone feel
+          screenIcon.textContent = "ðŸ“±"; // vertical phone feel
         }
       }
 
@@ -860,7 +860,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
     function handleOrientationChange(e: Event) {
       const type = getOrientationType();
       const angle = getOrientationAngle();
-      logEvent("screen.orientation.onchange", `Type: ${type} | Angle: ${angle}°`);
+      logEvent("screen.orientation.onchange", `Type: ${type} | Angle: ${angle}Â°`);
       
       // Since orientation updated successfully, we confirm rotation is unlocked
       updateLockStatus("unlocked");
@@ -872,7 +872,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
     function handleLegacyOrientationChange() {
       const type = getOrientationType();
       const angle = getOrientationAngle();
-      logEvent("orientationchange", `Type: ${type} | Angle: ${angle}°`);
+      logEvent("orientationchange", `Type: ${type} | Angle: ${angle}Â°`);
       
       updateLockStatus("unlocked");
       updateScreenReadouts(true);
@@ -924,11 +924,11 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         if (element) {
           const statusSpan = element.querySelector(".status-icon") as HTMLSpanElement;
           if (itemVal) {
-            statusSpan.textContent = "✅ Completed";
+            statusSpan.textContent = "âœ… Completed";
             statusSpan.className = "status-icon text-xs font-bold text-success-accent";
             element.className = "flex justify-between items-center py-1 border-b border-hairline-soft text-primary font-medium";
           } else {
-            statusSpan.textContent = "⬜ Pending";
+            statusSpan.textContent = "â¬œ Pending";
             statusSpan.className = "status-icon text-xs text-slate";
             element.className = "flex justify-between items-center py-1 border-b border-hairline-soft text-slate";
             allDone = false;
@@ -1047,10 +1047,10 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       
       if (status === "locked") {
         lockInferenceBanner.classList.add("bg-brand-red", "border-brand-red-dark/30", "text-coral-dark");
-        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-red-dark animate-pulse"></span> <strong>Rotation appears locked</strong> — Device rotated physically but screen remained stationary.`;
+        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-brand-red-dark animate-pulse"></span> <strong>Rotation appears locked</strong> â€” Device rotated physically but screen remained stationary.`;
       } else if (status === "unlocked") {
         lockInferenceBanner.classList.add("bg-success-accent/15", "border-success-accent/40", "text-moss-dark");
-        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span> <strong>Rotation appears unlocked</strong> — Screen is responding dynamically to physical movement.`;
+        lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-success-accent"></span> <strong>Rotation appears unlocked</strong> â€” Screen is responding dynamically to physical movement.`;
       } else {
         lockInferenceBanner.classList.add("bg-surface-yellow", "border-yellow-light/80", "text-yellow-dark");
         lockInferenceMsg.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-yellow-dark animate-pulse"></span> Awaiting device movement to verify rotation lock...`;
@@ -1123,7 +1123,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
           await orientation.lock(currentType);
           
           apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-success-accent/15 border-success-accent/30 text-moss-dark";
-          if (apiResultTitle) apiResultTitle.innerHTML = "✅ Lock API Success";
+          if (apiResultTitle) apiResultTitle.innerHTML = "âœ… Lock API Success";
           if (apiResultDesc) apiResultDesc.textContent = `Screen locked to orientation type: ${currentType}. Exit fullscreen or click Reset to unlock.`;
           logEvent("screen.orientation.lock", `Successfully locked to ${currentType}`);
         } catch (err: any) {
@@ -1132,7 +1132,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
             try { await document.exitFullscreen(); } catch (_) {}
           }
           apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-brand-red border-brand-red-dark/30 text-coral-dark";
-          if (apiResultTitle) apiResultTitle.innerHTML = "❌ Lock API Rejected";
+          if (apiResultTitle) apiResultTitle.innerHTML = "âŒ Lock API Rejected";
           if (apiResultDesc) {
             if (err.name === "NotSupportedError") {
               apiResultDesc.textContent = "Rejection: NotSupportedError. Locking screen is not supported on this device/browser.";
@@ -1146,7 +1146,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
         }
       } else {
         apiResultBanner.className = "p-2 rounded-lg border text-[10px] leading-relaxed transition-all duration-300 flex flex-col gap-0.5 bg-brand-red border-brand-red-dark/30 text-coral-dark";
-        if (apiResultTitle) apiResultTitle.innerHTML = "❌ API Unsupported";
+        if (apiResultTitle) apiResultTitle.innerHTML = "âŒ API Unsupported";
         if (apiResultDesc) apiResultDesc.textContent = "Your browser does not implement screen.orientation.lock(). (Unsupported on iOS)";
         logEvent("screen.orientation.lock", "API unsupported on this browser.");
       }
@@ -1295,7 +1295,7 @@ const keywords = "orientation lock, portrait orientation lock, portrait orientat
       let logText = `TOOLKIFY - Orientation Lock Check Diagnostics Summary\n`;
       logText += `Generated: ${new Date().toISOString()}\n`;
       logText += `--------------------------------------------------\n`;
-      logText += `Current Orientation: ${type} (${angle}°)\n`;
+      logText += `Current Orientation: ${type} (${angle}Â°)\n`;
       logText += `Inferred Lock State: ${isRotationLocked.toUpperCase()}\n`;
       logText += `Viewport Dimensions: ${vw}x${vh} (Screen: ${sw}x${sh})\n`;
       logText += `Device Pixel Ratio: ${dpr.toFixed(1)}x\n`;

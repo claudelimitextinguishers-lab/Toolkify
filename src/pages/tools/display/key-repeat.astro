@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -10,7 +10,7 @@ const tier = "Display & Input Diagnostics";
 // On-page SEO metadata
 const pageTitle = "Key Repeat Test - Check Keyboard Repeat Rate & Delay Online";
 const description = "Free online key repeat test to measure your keyboard's key repeat rate and key repeat delay. Check key repeat on Windows 11 & Mac, detect bouncy or ghost keys, and understand what key repeat rate means.";
-const canonicalUrl = "https://toolkify.app/tools/display/key-repeat";
+const canonicalUrl = "https://toolkify.com/tools/display/key-repeat";
 const ogImage = "/og/key-repeat.png";
 const keywords = "key repeat test, what is key repeat rate, key repeat rate, key repeat, key repeat rate mac, key repeat delay, windows 11 key repeat rate, what does key repeat rate mean, key repeat vs delay until repeat, key repeat meaning, key repeat time, key repeat windows, key repeat test windows, what does key repeat mean";
 ---
@@ -33,7 +33,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
       "@type": "WebApplication",
       "name": "Keyboard Key Repeat Test",
       "alternateName": "Key Repeat Delay & Rate Analyzer",
-      "url": "https://toolkify.app/tools/display/key-repeat",
+      "url": "https://toolkify.com/tools/display/key-repeat",
       "description": "Measure physical keyboard repeat delay, auto-fire repeat rate, bounce double-presses, and stuck/ghost keys locally in your browser.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -66,25 +66,25 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Tools",
-          "item": "https://toolkify.app/tools"
+          "item": "https://toolkify.com/tools"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Display",
-          "item": "https://toolkify.app/tools/display"
+          "item": "https://toolkify.com/tools/display"
         },
         {
           "@type": "ListItem",
           "position": 4,
           "name": "Key Repeat Test",
-          "item": "https://toolkify.app/tools/display/key-repeat"
+          "item": "https://toolkify.com/tools/display/key-repeat"
         }
       ]
     }
@@ -261,7 +261,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
         id="touch-warning"
         class="hidden bg-surface-yellow border border-yellow-dark/20 text-yellow-dark rounded-xl p-3.5 text-xs flex items-start gap-2.5"
       >
-        <span class="text-base select-none">⚠️</span>
+        <span class="text-base select-none">âš ï¸</span>
         <div class="flex-1 flex flex-col gap-0.5">
           <span class="font-semibold">Physical Keyboard Recommended</span>
           <p class="leading-relaxed">
@@ -319,7 +319,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
             <div id="test-zone-ripple-layer" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
             
             <div id="test-zone-placeholder" class="text-center p-4 flex flex-col items-center gap-1.5 pointer-events-none">
-              <span class="text-2xl">⌨️</span>
+              <span class="text-2xl">âŒ¨ï¸</span>
               <span class="font-display font-medium text-xs text-primary">Click here to focus and test key repeat</span>
               <span class="text-[10px] text-slate">Hold down any key (e.g. Space, F5, A, Enter)</span>
             </div>
@@ -420,14 +420,14 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
               id="export-csv-btn"
               class="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
             >
-              📊 Export CSV
+              ðŸ“Š Export CSV
             </button>
             <button
               type="button"
               id="export-json-btn"
               class="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
             >
-              📁 Export JSON
+              ðŸ“ Export JSON
             </button>
           </div>
         </div>
@@ -476,7 +476,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
             id="close-modal-btn"
             class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
           >
-            ✕
+            âœ•
           </button>
         </div>
 
@@ -789,7 +789,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>In many Windows applications the F4 key repeats the last command — for example, in Microsoft Excel and Word, pressing F4 repeats your most recent action. In the classic Windows Command Prompt, F3 repeats the previous command line. These "repeat last command" shortcuts are separate from keyboard key repeat, which is the automatic character repetition you can measure with this key repeat test when holding any key down.</p>
+            <p>In many Windows applications the F4 key repeats the last command â€” for example, in Microsoft Excel and Word, pressing F4 repeats your most recent action. In the classic Windows Command Prompt, F3 repeats the previous command line. These "repeat last command" shortcuts are separate from keyboard key repeat, which is the automatic character repetition you can measure with this key repeat test when holding any key down.</p>
           </div>
         </div>
 
@@ -1161,7 +1161,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
             session.bounceCount++;
             totalBounces++;
             animateNumericValue(statBounce, totalBounces);
-            addLogEntry(`⚠️ BOUNCE detected on [${keyName}] interval: ${releaseToPress.toFixed(1)}ms`, "text-brand-coral font-bold");
+            addLogEntry(`âš ï¸ BOUNCE detected on [${keyName}] interval: ${releaseToPress.toFixed(1)}ms`, "text-brand-coral font-bold");
             keystrokeHistory.push({ key: keyName, code, type: "bounce", timestamp: Date.now(), interval: releaseToPress });
             triggerBounceAnimation();
           }
@@ -1204,7 +1204,7 @@ const keywords = "key repeat test, what is key repeat rate, key repeat rate, key
           session.ghostCount++;
           totalGhosts++;
           animateNumericValue(statGhost, totalGhosts);
-          addLogEntry(`⚠️ GHOST/STUCK detection: [${keyName}] held > ${ghostThreshold}s`, "text-brand-coral font-bold");
+          addLogEntry(`âš ï¸ GHOST/STUCK detection: [${keyName}] held > ${ghostThreshold}s`, "text-brand-coral font-bold");
           keystrokeHistory.push({ key: keyName, code, type: "ghost", timestamp: Date.now(), interval: elapsedSinceFirst });
         }
 

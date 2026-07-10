@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -9,7 +9,7 @@ const tier = "Mobile Sensor Tools";
 const description = "Use our free online accelerometer viewer to measure real-time 3-axis motion and gravity. Record, graph, and export sensor data logs from your mobile device.";
 const pageTitle = "Accelerometer Viewer - Free Online 3-Axis Sensor & Logger";
 const keywords = "accelerometer, accelerometer sensor, what is an accelerometer, accelerometer definition, how does an accelerometer work, accelerometer what does it do, 3 axis accelerometer, accelerometer logger, what does an accelerometer measure";
-const canonicalUrl = "https://toolkify.app/tools/mobile/accelerometer-viewer";
+const canonicalUrl = "https://toolkify.com/tools/mobile/accelerometer-viewer";
 const ogImage = "/og/accelerometer-viewer.png";
 ---
 
@@ -31,7 +31,7 @@ const ogImage = "/og/accelerometer-viewer.png";
       "@type": "WebApplication",
       "name": "Accelerometer Viewer",
       "alternateName": "Browser Accelerometer & Motion Plotter",
-      "url": "https://toolkify.app/tools/mobile/accelerometer-viewer",
+      "url": "https://toolkify.com/tools/mobile/accelerometer-viewer",
       "description": "Visualize and record real-time accelerometer data including gravity-compensated acceleration and gravity-inclusive values.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -64,7 +64,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           "name": "What is an accelerometer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>An accelerometer is a specialized sensor that measures proper acceleration—the rate of change of velocity of a physical body relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>"
+            "text": "<p>An accelerometer is a specialized sensor that measures proper accelerationâ€”the rate of change of velocity of a physical body relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>"
           }
         },
         {
@@ -88,7 +88,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           "name": "What does an accelerometer measure?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/s² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>"
+            "text": "<p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/sÂ² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>"
           }
         },
         {
@@ -210,7 +210,7 @@ const ogImage = "/og/accelerometer-viewer.png";
       
       <!-- iOS Permission Request & Simulation Warning Banners -->
       <div id="sensor-permission-panel" class="hidden flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-brand-blue/30 rounded-xl bg-surface-pricing-featured/30 text-center gap-2 sm:gap-3">
-        <div class="text-3xl">📳</div>
+        <div class="text-3xl">ðŸ“³</div>
         <h3 class="font-display font-medium text-sm text-primary">Sensor Permission Required</h3>
         <p class="text-[11px] text-slate max-w-sm leading-relaxed">
           iOS 13+ devices require manual user interaction to enable motion sensors. Click below to authorize accelerometer usage.
@@ -221,7 +221,7 @@ const ogImage = "/og/accelerometer-viewer.png";
       </div>
 
       <div id="sensor-denied-panel" class="hidden flex flex-col items-center justify-center p-4 sm:p-6 border border-dashed border-brand-coral/30 rounded-xl bg-brand-red/10 text-center gap-2 sm:gap-3">
-        <div class="text-3xl">⚠️</div>
+        <div class="text-3xl">âš ï¸</div>
         <h3 class="font-display font-medium text-sm text-primary text-coral-dark">Permission Denied</h3>
         <p class="text-[11px] text-slate max-w-sm leading-relaxed">
           Sensor access was blocked or denied. If you want to use real sensors, reset page permissions in your browser. Alternatively, enable simulated mode.
@@ -233,7 +233,7 @@ const ogImage = "/og/accelerometer-viewer.png";
 
       <div id="sensor-simulation-banner" class="hidden flex items-center justify-between px-3 py-2 border border-brand-yellow-deep/30 rounded-lg bg-surface-yellow text-[11px] text-slate">
         <div class="flex items-center gap-2">
-          <span>⚠️ <strong>Demo Simulation Mode:</strong> Accelerometer hardware not detected (common on desktop). Using mock motion waves.</span>
+          <span>âš ï¸ <strong>Demo Simulation Mode:</strong> Accelerometer hardware not detected (common on desktop). Using mock motion waves.</span>
         </div>
         <button id="toggle-sim-off-btn" class="text-brand-blue hover:underline font-semibold cursor-pointer">
           Use Real API
@@ -273,7 +273,7 @@ const ogImage = "/og/accelerometer-viewer.png";
             <!-- Custom Thresholds & Record controls -->
             <div class="flex items-center gap-3">
               <div class="flex flex-col gap-1">
-                <label for="shake-threshold-input" class="text-[10px] font-semibold text-slate">Shake Threshold (m/s²)</label>
+                <label for="shake-threshold-input" class="text-[10px] font-semibold text-slate">Shake Threshold (m/sÂ²)</label>
                 <input
                   type="number"
                   id="shake-threshold-input"
@@ -367,7 +367,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           <!-- Real-time Canvas Graph Visualizer -->
           <div class="bg-canvas rounded-xl border border-hairline-soft p-3 relative flex flex-col gap-2 shadow-subtle">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Live Waveform (m/s²)</span>
+              <span class="text-[10px] font-semibold text-slate uppercase tracking-wider">Live Waveform (m/sÂ²)</span>
               
               <!-- Checkboxes to show/hide lines -->
               <div class="flex items-center gap-3 text-[9px] font-semibold">
@@ -415,7 +415,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           <!-- Secondary Metrics: Rotation Rate (Gyroscope) -->
           <div class="card-base bg-surface-soft p-4 border border-hairline-soft rounded-xl flex flex-col gap-2.5">
             <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider flex items-center gap-1.5">
-              <span>🧭</span> Gyroscope Rotation Rate
+              <span>ðŸ§­</span> Gyroscope Rotation Rate
             </h3>
             <div class="text-[10px] text-slate mb-1">
               Angular velocity (requires gyroscope hardware).
@@ -426,15 +426,15 @@ const ogImage = "/og/accelerometer-viewer.png";
             <div id="gyro-grid" class="hidden grid grid-cols-3 gap-2">
               <div class="bg-canvas border border-hairline rounded p-2 text-center">
                 <div class="text-[8px] font-semibold text-slate">ALPHA</div>
-                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-alpha">0.0°/s</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-alpha">0.0Â°/s</div>
               </div>
               <div class="bg-canvas border border-hairline rounded p-2 text-center">
                 <div class="text-[8px] font-semibold text-slate">BETA</div>
-                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-beta">0.0°/s</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-beta">0.0Â°/s</div>
               </div>
               <div class="bg-canvas border border-hairline rounded p-2 text-center">
                 <div class="text-[8px] font-semibold text-slate">GAMMA</div>
-                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-gamma">0.0°/s</div>
+                <div class="text-xs font-bold font-mono text-primary truncate" id="gyro-gamma">0.0Â°/s</div>
               </div>
             </div>
           </div>
@@ -442,7 +442,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           <!-- Session Recording Log Section -->
           <div class="card-base bg-surface-soft p-4 border border-hairline-soft rounded-xl flex flex-col gap-3">
             <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider">
-              ⏺ Recorded Session Data
+              âº Recorded Session Data
             </h3>
             
             <div class="flex flex-col gap-1.5 text-[10px] text-slate leading-relaxed">
@@ -504,7 +504,7 @@ const ogImage = "/og/accelerometer-viewer.png";
         Free Online Accelerometer Viewer & Logger
       </h2>
       <p class="text-sm leading-relaxed">
-        An <strong>accelerometer</strong> is an essential sensor that measures proper acceleration—the rate of velocity change of an object relative to its own rest frame. If you have ever wondered <strong>what is an accelerometer</strong>, it is the technology that detects motion, tilt, shock, and vibration. According to the scientific <strong>accelerometer definition</strong>, these devices measure the force of acceleration, which can be static (such as the continuous gravitational pull of the Earth) or dynamic (such as sudden motion, drops, or impacts). This web application serves as a browser-based <strong>accelerometer logger</strong>, allowing you to test and analyze your device's built-in <strong>accelerometer sensor</strong> in real time.
+        An <strong>accelerometer</strong> is an essential sensor that measures proper accelerationâ€”the rate of velocity change of an object relative to its own rest frame. If you have ever wondered <strong>what is an accelerometer</strong>, it is the technology that detects motion, tilt, shock, and vibration. According to the scientific <strong>accelerometer definition</strong>, these devices measure the force of acceleration, which can be static (such as the continuous gravitational pull of the Earth) or dynamic (such as sudden motion, drops, or impacts). This web application serves as a browser-based <strong>accelerometer logger</strong>, allowing you to test and analyze your device's built-in <strong>accelerometer sensor</strong> in real time.
       </p>
       <p class="text-sm leading-relaxed">
         Our tool utilizes standard browser APIs to access your hardware motion sensors safely and securely inside your browser's local sandbox. Whether you are troubleshooting a mobile sensor, testing a web app, or conducting a basic physics experiment, this online viewer plots incoming movement signals immediately. You can switch between gravity-compensated linear motion or raw gravity-inclusive modes, track maximum peaks on all coordinate planes, and export logged samples as CSV or JSON files.
@@ -568,7 +568,7 @@ const ogImage = "/og/accelerometer-viewer.png";
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>An accelerometer is a specialized sensor that measures proper acceleration—the rate of velocity change of an object relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>
+            <p>An accelerometer is a specialized sensor that measures proper accelerationâ€”the rate of velocity change of an object relative to its own rest frame. It translates physical motion, tilts, and gravitational forces into readable digital data.</p>
           </div>
         </div>
 
@@ -640,7 +640,7 @@ const ogImage = "/og/accelerometer-viewer.png";
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/s² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>
+            <p>An accelerometer measures acceleration along three axes: X (lateral, side-to-side), Y (longitudinal, forward-backward), and Z (vertical, up-down). It can measure raw values (which include Earth's 9.81 m/sÂ² gravity force) or gravity-compensated values representing purely user-initiated movement.</p>
           </div>
         </div>
 
@@ -738,7 +738,7 @@ const ogImage = "/og/accelerometer-viewer.png";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -749,17 +749,17 @@ const ogImage = "/og/accelerometer-viewer.png";
         </p>
         <ul class="list-disc pl-4 flex flex-col gap-1 mt-0.5">
           <li>
-            <strong>Gravity-Compensated (acceleration)</strong>: Isolates transient user movement by subtracting Earth's gravitational pull. A stationary device will display values close to 0 m/s².
+            <strong>Gravity-Compensated (acceleration)</strong>: Isolates transient user movement by subtracting Earth's gravitational pull. A stationary device will display values close to 0 m/sÂ².
           </li>
           <li>
-            <strong>Gravity-Included (accelerationIncludingGravity)</strong>: Registers both physical movement and Earth's gravity. When static on a flat table, the Z axis reads around 9.81 m/s² (pointing up), reflecting gravity.
+            <strong>Gravity-Included (accelerationIncludingGravity)</strong>: Registers both physical movement and Earth's gravity. When static on a flat table, the Z axis reads around 9.81 m/sÂ² (pointing up), reflecting gravity.
           </li>
         </ul>
 
         <h4 class="font-semibold text-primary">2. Vector Magnitude Calculation</h4>
         <p>
           The total magnitude measures absolute structural motion force. It is computed as the vector length:
-          <code class="bg-surface px-1.5 py-0.5 rounded text-primary font-mono text-[10px]">Magnitude = √(x² + y² + z²)</code>.
+          <code class="bg-surface px-1.5 py-0.5 rounded text-primary font-mono text-[10px]">Magnitude = âˆš(xÂ² + yÂ² + zÂ²)</code>.
           This value indicates general shake intensity, regardless of direction.
         </p>
 
@@ -1061,9 +1061,9 @@ const ogImage = "/og/accelerometer-viewer.png";
         if (rot.alpha !== null || rot.beta !== null || rot.gamma !== null) {
           if (gyroUnavailable) gyroUnavailable.classList.add("hidden");
           if (gyroGrid) gyroGrid.classList.remove("hidden");
-          if (gyroAlpha) gyroAlpha.textContent = `${(rot.alpha ?? 0).toFixed(1)}°/s`;
-          if (gyroBeta) gyroBeta.textContent = `${(rot.beta ?? 0).toFixed(1)}°/s`;
-          if (gyroGamma) gyroGamma.textContent = `${(rot.gamma ?? 0).toFixed(1)}°/s`;
+          if (gyroAlpha) gyroAlpha.textContent = `${(rot.alpha ?? 0).toFixed(1)}Â°/s`;
+          if (gyroBeta) gyroBeta.textContent = `${(rot.beta ?? 0).toFixed(1)}Â°/s`;
+          if (gyroGamma) gyroGamma.textContent = `${(rot.gamma ?? 0).toFixed(1)}Â°/s`;
         }
       }
     }
@@ -1161,9 +1161,9 @@ const ogImage = "/og/accelerometer-viewer.png";
       // Simulation fake gyro
       if (gyroUnavailable) gyroUnavailable.classList.add("hidden");
       if (gyroGrid) gyroGrid.classList.remove("hidden");
-      if (gyroAlpha) gyroAlpha.textContent = `${(Math.sin(simAngle) * 45).toFixed(1)}°/s`;
-      if (gyroBeta) gyroBeta.textContent = `${(Math.cos(simAngle * 0.8) * 30).toFixed(1)}°/s`;
-      if (gyroGamma) gyroGamma.textContent = `${(Math.sin(simAngle * 1.5) * 20).toFixed(1)}°/s`;
+      if (gyroAlpha) gyroAlpha.textContent = `${(Math.sin(simAngle) * 45).toFixed(1)}Â°/s`;
+      if (gyroBeta) gyroBeta.textContent = `${(Math.cos(simAngle * 0.8) * 30).toFixed(1)}Â°/s`;
+      if (gyroGamma) gyroGamma.textContent = `${(Math.sin(simAngle * 1.5) * 20).toFixed(1)}Â°/s`;
 
       simFrameId = requestAnimationFrame(runSimulationStep);
     }
@@ -1233,8 +1233,8 @@ const ogImage = "/og/accelerometer-viewer.png";
       // Legend labeling values on coordinates
       ctx.fillStyle = "#8e91a0";
       ctx.font = `${9 * dpr}px Roobert PRO, system-ui`;
-      ctx.fillText(`+${maxVal.toFixed(0)} m/s²`, 8 * dpr, 15 * dpr);
-      ctx.fillText(`-${maxVal.toFixed(0)} m/s²`, 8 * dpr, height - 8 * dpr);
+      ctx.fillText(`+${maxVal.toFixed(0)} m/sÂ²`, 8 * dpr, 15 * dpr);
+      ctx.fillText(`-${maxVal.toFixed(0)} m/sÂ²`, 8 * dpr, height - 8 * dpr);
 
       // Helper function to plot lines
       function plotAxis(data: number[], color: string) {

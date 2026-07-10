@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from "../../../components/RelatedTools.astro";
 
@@ -10,7 +10,7 @@ const tier = "Developer & Text Utilities";
 // SEO
 const pageTitle = "Randomizer Wheel - Free Name, Number & Custom List Spinner";
 const description = "Spin the ultimate free randomizer wheel spinner online. Create a custom list randomizer wheel, name randomizer wheel, number, food, color, or letter spinner with interactive physics.";
-const canonicalUrl = "https://toolkify.app/tools/developer/randomizer-wheel";
+const canonicalUrl = "https://toolkify.com/tools/developer/randomizer-wheel";
 const keywords = "randomizer wheel, name randomizer wheel, number randomizer wheel, color randomizer wheel, list randomizer wheel, randomizer wheel custom, country randomizer wheel, letter randomizer wheel, food randomizer wheel, animal randomizer wheel, randomizer wheel spinner, free randomizer wheel";
 const ogImage = "/og/randomizer-wheel.png";
 ---
@@ -31,7 +31,7 @@ const ogImage = "/og/randomizer-wheel.png";
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Randomizer Wheel",
-      "url": "https://toolkify.app/tools/developer/randomizer-wheel",
+      "url": "https://toolkify.com/tools/developer/randomizer-wheel",
       "description": "An interactive, client-side decision wheel featuring realistic physics, drag-to-spin, per-item weights, custom color palettes, and session logs.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -53,19 +53,19 @@ const ogImage = "/og/randomizer-wheel.png";
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Developer & Text Utilities",
-          "item": "https://toolkify.app/#developer"
+          "item": "https://toolkify.com/#developer"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Randomizer Wheel",
-          "item": "https://toolkify.app/tools/developer/randomizer-wheel"
+          "item": "https://toolkify.com/tools/developer/randomizer-wheel"
         }
       ]
     }
@@ -90,7 +90,7 @@ const ogImage = "/og/randomizer-wheel.png";
           "name": "How to add randomizer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>To add options to the randomizer, locate the \"Edit Choices\" tab next to the wheel. Enter your custom entries—such as names to create a name randomizer wheel, numbers for a number randomizer wheel, or geographical names for a country randomizer wheel. You can also toggle \"Weighting Mode\" to adjust the relative probability of each choice, allowing some slices to be larger than others.</p>"
+            "text": "<p>To add options to the randomizer, locate the \"Edit Choices\" tab next to the wheel. Enter your custom entriesâ€”such as names to create a name randomizer wheel, numbers for a number randomizer wheel, or geographical names for a country randomizer wheel. You can also toggle \"Weighting Mode\" to adjust the relative probability of each choice, allowing some slices to be larger than others.</p>"
           }
         },
         {
@@ -245,7 +245,7 @@ const ogImage = "/og/randomizer-wheel.png";
           class="hidden absolute inset-0 z-30 bg-primary/10 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center"
         >
           <div class="bg-canvas rounded-2xl max-w-md w-full p-6 border-2 border-primary shadow-modal flex flex-col gap-4 transform transition-all duration-300 scale-90 translate-y-4" id="winner-box">
-            <span class="text-3xl">🎉 WINNER! 🎉</span>
+            <span class="text-3xl">ðŸŽ‰ WINNER! ðŸŽ‰</span>
             <div class="h-[1px] bg-hairline"></div>
             <h2 id="winner-name" class="font-display font-medium text-2xl sm:text-3xl text-primary break-words px-2 py-4 bg-surface rounded-xl border border-hairline-soft font-bold">
               Name
@@ -396,7 +396,7 @@ const ogImage = "/og/randomizer-wheel.png";
               id="sound-toggle-btn"
               class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
             >
-              <span id="sound-icon">🔊</span>
+              <span id="sound-icon">ðŸ”Š</span>
               <span id="sound-status-text">On</span>
             </button>
           </div>
@@ -480,7 +480,7 @@ const ogImage = "/og/randomizer-wheel.png";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -597,7 +597,7 @@ const ogImage = "/og/randomizer-wheel.png";
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>To add options to the randomizer, locate the "Edit Choices" tab next to the wheel. Enter your custom entries—such as names to create a name randomizer wheel, numbers for a number randomizer wheel, or geographical names for a country randomizer wheel. You can also toggle "Weighting Mode" to adjust the relative probability of each choice, allowing some slices to be larger than others.</p>
+            <p>To add options to the randomizer, locate the "Edit Choices" tab next to the wheel. Enter your custom entriesâ€”such as names to create a name randomizer wheel, numbers for a number randomizer wheel, or geographical names for a country randomizer wheel. You can also toggle "Weighting Mode" to adjust the relative probability of each choice, allowing some slices to be larger than others.</p>
           </div>
         </div>
 
@@ -1282,7 +1282,7 @@ const ogImage = "/og/randomizer-wheel.png";
       // Pulse ring reset
       pulseRing.classList.add('animate-ping');
       
-      showToast('✓ Configuration and history reset successfully.');
+      showToast('âœ“ Configuration and history reset successfully.');
     }
 
     // State Sync helpers
@@ -1314,14 +1314,14 @@ const ogImage = "/og/randomizer-wheel.png";
 
       // Warning rules
       if (choices.length > 50) {
-        duplicateWarning.textContent = '⚠️ Long list makes labels hard to read';
+        duplicateWarning.textContent = 'âš ï¸ Long list makes labels hard to read';
         duplicateWarning.className = 'text-[9px] font-semibold text-yellow-dark';
       } else {
         // Duplicate detection
         const texts = choices.map(c => c.text.toLowerCase().trim());
         const hasDuplicates = texts.some((val, i) => texts.indexOf(val) !== i);
         if (hasDuplicates) {
-          duplicateWarning.textContent = '⚠️ Duplicate item detected';
+          duplicateWarning.textContent = 'âš ï¸ Duplicate item detected';
           duplicateWarning.className = 'text-[9px] font-semibold text-brand-coral';
         } else {
           duplicateWarning.textContent = '';
@@ -1377,7 +1377,7 @@ const ogImage = "/og/randomizer-wheel.png";
     function savePreset() {
       const name = presetNameInput.value.trim();
       if (!name) {
-        showToast('⚠️ Please enter a preset name');
+        showToast('âš ï¸ Please enter a preset name');
         return;
       }
       if (choices.length === 0) return;
@@ -1393,7 +1393,7 @@ const ogImage = "/og/randomizer-wheel.png";
       presetNameInput.value = '';
       updatePresetsUI();
       saveState();
-      showToast(`✓ Preset "${name}" saved!`);
+      showToast(`âœ“ Preset "${name}" saved!`);
     }
 
     function updatePresetsUI() {
@@ -1409,7 +1409,7 @@ const ogImage = "/og/randomizer-wheel.png";
         row.innerHTML = `
           <div class="flex flex-col gap-0.5 truncate max-w-[200px]">
             <span class="font-bold text-primary truncate">${p.name}</span>
-            <span class="text-[10px] text-slate">${p.choices.length} choices · ${p.weighted ? 'Weighted' : 'Equal'}</span>
+            <span class="text-[10px] text-slate">${p.choices.length} choices Â· ${p.weighted ? 'Weighted' : 'Equal'}</span>
           </div>
           <div class="flex gap-1">
             <button type="button" class="preset-load-btn bg-canvas hover:bg-hairline text-slate hover:text-primary px-2.5 py-1 border border-hairline rounded-full cursor-pointer transition-colors text-[10px] font-bold" data-index="${idx}">Load</button>
@@ -1452,7 +1452,7 @@ const ogImage = "/og/randomizer-wheel.png";
         choicesInput.value = choices.map(c => c.text).join('\n');
         
         syncStateFromChoices();
-        showToast(`✓ Loaded preset: ${preset.name}`);
+        showToast(`âœ“ Loaded preset: ${preset.name}`);
         
         // Go back to edit tab
         tabEditBtn.click();
@@ -1480,10 +1480,10 @@ const ogImage = "/og/randomizer-wheel.png";
         const url = `${window.location.origin}${window.location.pathname}?wheel=${encoded}`;
         
         navigator.clipboard.writeText(url).then(() => {
-          showToast('✓ Shareable URL copied to clipboard!');
+          showToast('âœ“ Shareable URL copied to clipboard!');
         });
       } catch (err) {
-        showToast('⚠️ Could not generate URL.');
+        showToast('âš ï¸ Could not generate URL.');
       }
     }
 
@@ -1621,7 +1621,7 @@ const ogImage = "/og/randomizer-wheel.png";
             choices = JSON.parse(JSON.stringify(lastClearedChoices));
             choicesInput.value = choices.map(c => c.text).join('\n');
             syncStateFromChoices();
-            showToast('✓ Cleared choices restored.');
+            showToast('âœ“ Cleared choices restored.');
           }
           clearTimeout(dismissTimeout);
           toast.remove();
@@ -1633,10 +1633,10 @@ const ogImage = "/og/randomizer-wheel.png";
     function updateSoundButtonUI() {
       if (isSoundEnabled) {
         soundStatusText.textContent = 'On';
-        soundIcon.textContent = '🔊';
+        soundIcon.textContent = 'ðŸ”Š';
       } else {
         soundStatusText.textContent = 'Off';
-        soundIcon.textContent = '🔇';
+        soundIcon.textContent = 'ðŸ”‡';
       }
     }
 
@@ -1644,7 +1644,7 @@ const ogImage = "/og/randomizer-wheel.png";
       isSoundEnabled = !isSoundEnabled;
       updateSoundButtonUI();
       saveState();
-      showToast(isSoundEnabled ? '🔊 Sound effects enabled' : '🔇 Sound effects muted');
+      showToast(isSoundEnabled ? 'ðŸ”Š Sound effects enabled' : 'ðŸ”‡ Sound effects muted');
     });
 
     // History list UI
@@ -1670,7 +1670,7 @@ const ogImage = "/og/randomizer-wheel.png";
     clearHistoryBtn.addEventListener('click', () => {
       spinHistory = [];
       updateHistoryUI();
-      showToast('✓ Spin history log cleared.');
+      showToast('âœ“ Spin history log cleared.');
     });
 
     // Quick templates setup
@@ -1689,7 +1689,7 @@ const ogImage = "/og/randomizer-wheel.png";
           choices = JSON.parse(JSON.stringify(TEMPLATES[type]));
           choicesInput.value = choices.map(c => c.text).join('\n');
           syncStateFromChoices();
-          showToast(`✓ Template loaded.`);
+          showToast(`âœ“ Template loaded.`);
         }
       });
     });
@@ -1708,7 +1708,7 @@ const ogImage = "/og/randomizer-wheel.png";
         
         drawWheel();
         saveState();
-        showToast(`✓ Palette changed to ${palette}`);
+        showToast(`âœ“ Palette changed to ${palette}`);
       });
     });
 
@@ -1804,7 +1804,7 @@ const ogImage = "/og/randomizer-wheel.png";
           copyToClipboard(url.toString());
         }
       } catch (err) {
-        showToast('⚠️ Could not generate share URL.');
+        showToast('âš ï¸ Could not generate share URL.');
       }
 
       function copyToClipboard(text: string) {

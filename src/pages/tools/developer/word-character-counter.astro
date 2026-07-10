@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../../layouts/Layout.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -11,7 +11,7 @@ const tier = "Developer & Text Utilities";
 const pageTitle = "Word / Character Counter - Free Online Word & Character Counter";
 const description = "Free online word / character counter tool. Count words, characters (with & without spaces), sentences, and paragraphs in real-time. Perfect for essays and platform character limits.";
 const keywords = "Word / Character Counter, word counter, word counter online, word counter free, word counter tool, free word counter, online word counter, essay word counter, text word counter, word counter website, word counter., word counter for essays, free online word counter, website word counter, character counter, character counter online, online character counter, twitter character counter, macos character counter, chinese character counter, character counter tool, character counter with spaces, text character counter, free character counter, online character counter tool, chinese character counter free";
-const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counter";
+const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counter";
 ---
 
 <Layout 
@@ -89,7 +89,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Word & Character Counter",
-      "url": "https://toolkify.app/tools/developer/word-character-counter",
+      "url": "https://toolkify.com/tools/developer/word-character-counter",
       "description": "Analyze text in real-time. Get detailed statistics, speaking/reading times, keyword density, and platform limit indicators completely in your local browser sandbox.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
@@ -256,7 +256,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
               
               <!-- Drag overlay message -->
               <div id="drag-overlay" class="absolute inset-0 bg-brand-yellow/90 flex flex-col items-center justify-center gap-2 rounded-xl opacity-0 pointer-events-none transition-all duration-200 z-30">
-                <span class="text-3xl">📥</span>
+                <span class="text-3xl">ðŸ“¥</span>
                 <span class="font-display font-bold text-sm text-primary">Drop to load text file</span>
               </div>
               
@@ -680,7 +680,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -873,7 +873,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
   function calculateSentenceCount(str: string): number {
     if (!str.trim()) return 0;
     // Standard English/CJK sentence regex fallback
-    const standardMatches = str.match(/[^.!?。！？\s][^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
+    const standardMatches = str.match(/[^.!?ã€‚ï¼ï¼Ÿ\s][^.!?ã€‚ï¼ï¼Ÿ]*(?:[.!?ã€‚ï¼ï¼Ÿ]|\s*$)/g);
     return standardMatches ? standardMatches.length : 0;
   }
 
@@ -981,7 +981,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
               data-id="${l.id}"
               title="${l.pinned ? 'Unpin' : 'Pin'}"
             >
-              ★
+              â˜…
             </button>
             ${l.custom ? `
               <button 
@@ -990,7 +990,7 @@ const canonicalUrl = "https://toolkify.app/tools/developer/word-character-counte
                 data-id="${l.id}"
                 title="Delete"
               >
-                ✕
+                âœ•
               </button>
             ` : ''}
           </div>

@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -12,7 +12,7 @@ const pageTitle =
   "Color Picker & Eyedropper - Free Online Color Picker from Image";
 const description =
   "Free online color picker & eyedropper tool. Pick a color picker from image, use the RGB, RGBA, and random color picker, and copy HEX codes instantly with this private online color picker tool.";
-const canonicalUrl = "https://toolkify.app/tools/general/color-picker";
+const canonicalUrl = "https://toolkify.com/tools/general/color-picker";
 const ogImage = "/og/color-picker.png";
 const keywords =
   "color picker & eyedropper, color picker, color picker from image, rgb color picker, random color picker, rgba color picker, online color picker, color picker tool, color picker online, eyedropper tool, hex color picker, html color picker, css color picker";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Color Picker & Eyedropper",
       "alternateName": "Client-Side Color Selector & Image Palette Extractor",
-      "url": "https://toolkify.app/tools/general/color-picker",
+      "url": "https://toolkify.com/tools/general/color-picker",
       "description": "Free online client-side color picker with manual HSL/RGB adjustment, canvas image pixel sampling, WCAG contrast accessibility analysis, and CSS/JSON palette exports.",
       "applicationCategory": "UtilityApplication",
       "operatingSystem": "All",
@@ -217,7 +217,7 @@ const keywords =
               <div class="flex flex-col gap-1">
                 <div class="flex justify-between items-center text-[10px] font-semibold text-slate">
                   <label for="slider-hue">Hue</label>
-                  <span id="label-hue">0°</span>
+                  <span id="label-hue">0Â°</span>
                 </div>
                 <div class="relative h-6 flex items-center">
                   <input
@@ -265,7 +265,7 @@ const keywords =
                 <span>Sample from Screen (EyeDropper)</span>
               </button>
               <p id="eyedropper-unsupported-note" class="hidden text-[10px] text-stone text-center w-full py-1">
-                ⚠️ Screen eyedropper is not supported on this browser (use Chrome/Edge).
+                âš ï¸ Screen eyedropper is not supported on this browser (use Chrome/Edge).
               </p>
             </div>
           </div>
@@ -279,7 +279,7 @@ const keywords =
               <input type="file" id="image-uploader" class="hidden" accept="image/*" />
               
               <div id="drop-zone-prompt" class="flex flex-col items-center gap-1.5">
-                <span class="text-2xl">🖼️</span>
+                <span class="text-2xl">ðŸ–¼ï¸</span>
                 <span class="text-xs font-bold text-brand-blue">Upload or drag-drop an image</span>
                 <span class="text-[10px] text-stone">PNG, JPG, SVG, WebP up to 10MB</span>
               </div>
@@ -431,7 +431,7 @@ const keywords =
             id="btn-add-palette"
             class="button-primary text-xs py-2 px-5 w-full flex items-center justify-center gap-1.5 !rounded-full shadow-subtle hover:scale-105 active:scale-95 transition-all cursor-pointer font-bold mt-1"
           >
-            <span>➕ Save Color to Palette</span>
+            <span>âž• Save Color to Palette</span>
           </button>
         </div>
       </div>
@@ -443,9 +443,9 @@ const keywords =
       <details class="card-base p-4 bg-canvas border border-hairline-soft group" open>
         <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
           <span class="flex items-center gap-2">
-            🎨 Color Harmony Generator
+            ðŸŽ¨ Color Harmony Generator
           </span>
-          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+          <span class="text-stone transition-transform group-open:rotate-180">â–¼</span>
         </summary>
 
         <div class="mt-4 flex flex-col gap-4">
@@ -478,9 +478,9 @@ const keywords =
       <details class="card-base p-4 bg-canvas border border-hairline-soft group">
         <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
           <span class="flex items-center gap-2">
-            ♿ WCAG Accessibility & Contrast Checker
+            â™¿ WCAG Accessibility & Contrast Checker
           </span>
-          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+          <span class="text-stone transition-transform group-open:rotate-180">â–¼</span>
         </summary>
 
         <div class="mt-4 flex flex-col gap-4">
@@ -534,9 +534,9 @@ const keywords =
       <details class="card-base p-4 bg-canvas border border-hairline-soft group">
         <summary class="font-display font-semibold text-xs sm:text-sm text-primary flex items-center justify-between cursor-pointer list-none select-none">
           <span class="flex items-center gap-2">
-            💾 Saved Palette & Recents
+            ðŸ’¾ Saved Palette & Recents
           </span>
-          <span class="text-stone transition-transform group-open:rotate-180">▼</span>
+          <span class="text-stone transition-transform group-open:rotate-180">â–¼</span>
         </summary>
 
         <div class="mt-4 flex flex-col gap-4">
@@ -786,7 +786,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -1112,7 +1112,7 @@ const keywords =
       }
       if (source !== "hue") {
         sliderHue.value = String(h);
-        labelHue.textContent = `${h}°`;
+        labelHue.textContent = `${h}Â°`;
       }
       if (source !== "alpha") {
         sliderAlpha.value = String(Math.round(a * 100));
@@ -1193,7 +1193,7 @@ const keywords =
     // Range Sliders Input Action
     sliderHue.addEventListener("input", () => {
       const h = Number(sliderHue.value);
-      labelHue.textContent = `${h}°`;
+      labelHue.textContent = `${h}Â°`;
       updateColor(h, currentS, currentL, currentA, "hue");
     });
     sliderHue.addEventListener("change", () => {
@@ -1582,7 +1582,7 @@ const keywords =
 
         navigator.clipboard.writeText(targetEl.value).then(() => {
           const originalText = btn.textContent;
-          btn.textContent = "Copied! ✓";
+          btn.textContent = "Copied! âœ“";
           btn.classList.add("scale-105", "text-success-accent");
           
           setTimeout(() => {
@@ -1713,7 +1713,7 @@ const keywords =
       if (savedPalette.length === 0) return;
       const dataStr = JSON.stringify(savedPalette, null, 2);
       navigator.clipboard.writeText(dataStr).then(() => {
-        alert("✓ Exported JSON copied to clipboard!");
+        alert("âœ“ Exported JSON copied to clipboard!");
       });
     });
 
@@ -1726,7 +1726,7 @@ const keywords =
       });
       cssStr += "}";
       navigator.clipboard.writeText(cssStr).then(() => {
-        alert("✓ Exported CSS Variables copied to clipboard!");
+        alert("âœ“ Exported CSS Variables copied to clipboard!");
       });
     });
 

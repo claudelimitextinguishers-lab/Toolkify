@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -12,7 +12,7 @@ const pageTitle =
   "Tip & Split Calculator - Free Tip Calculator & Bill Split Calculator";
 const description =
   "Free Tip & Split Calculator to find the perfect tip and split any bill between friends. Restaurant, nail salon & group bill split calculator with per-person totals.";
-const canonicalUrl = "https://toolkify.app/tools/finance/tip-calculator";
+const canonicalUrl = "https://toolkify.com/tools/finance/tip-calculator";
 const ogImage = "/og/tip-split-calculator.png";
 const keywords =
   "tip & split calculator, tip calculator, tip calculator google, tip calculator how much to tip, google tip calculator, tip calculator iphone, restaurant tip calculator, tattoo tip calculator, nail salon tip calculator, tax and tip calculator, free tip calculator, ez tip calculator, simple tip calculator, split calculator, rent split calculator, mini split calculator, stock split calculator, bill split calculator, split bill calculator, group bill split calculator, 50/50 split calculator, group expense calculator, 4 way bill split calculator, dinner bill split calculator, 3 way bill split calculator, 4 way split calculator, group expense splitting, split bill app";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Tip & Split Calculator",
       "alternateName": "Tip Calculator & Bill Split Calculator",
-      "url": "https://toolkify.app/tools/finance/tip-calculator",
+      "url": "https://toolkify.com/tools/finance/tip-calculator",
       "description": "Free Tip & Split Calculator and bill splitter with quick tip presets, custom tip controls, tax support, multi-currency formatting and instant per-person breakdowns for groups.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -72,19 +72,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Finance & Tax Tools",
-          "item": "https://toolkify.app/#finance"
+          "item": "https://toolkify.com/#finance"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Tip & Split Calculator",
-          "item": "https://toolkify.app/tools/finance/tip-calculator"
+          "item": "https://toolkify.com/tools/finance/tip-calculator"
         }
       ]
     }
@@ -337,10 +337,10 @@ const keywords =
               >
                 <option value="USD" selected>$ USD</option>
                 <option value="CAD">$ CAD</option>
-                <option value="GBP">£ GBP</option>
+                <option value="GBP">Â£ GBP</option>
                 <option value="AUD">$ AUD</option>
-                <option value="EUR">€ EUR</option>
-                <option value="INR">₹ INR</option>
+                <option value="EUR">â‚¬ EUR</option>
+                <option value="INR">â‚¹ INR</option>
                 <option value="Custom">Custom / Other</option>
               </select>
             </div>
@@ -365,7 +365,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -433,7 +433,7 @@ const keywords =
                 id="split-minus"
                 class="w-9 h-9 flex items-center justify-center border border-hairline hover:border-hairline-strong text-slate hover:text-primary rounded-full transition-all cursor-pointer font-bold text-sm bg-canvas active:scale-90"
               >
-                −
+                âˆ’
               </button>
               <input
                 type="number"
@@ -1184,7 +1184,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "£";
+        currentCurrencySymbol = "Â£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1192,11 +1192,11 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "€";
+        currentCurrencySymbol = "â‚¬";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "INR") {
-        currentCurrencySymbol = "₹";
+        currentCurrencySymbol = "â‚¹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {

@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from "../../../layouts/Layout.astro";
 import RelatedTools from '../../../components/RelatedTools.astro';
 
@@ -13,7 +13,7 @@ const description =
 const pageTitle =
   "Paycheck Calculator - Free Take-Home Salary & Hourly Pay Calculator";
 const canonicalUrl =
-  "https://toolkify.app/tools/finance/paycheck-calculator";
+  "https://toolkify.com/tools/finance/paycheck-calculator";
 const ogImage = "/og/paycheck-calculator.png";
 const keywords =
   "paycheck calculator, take home salary calculator, take home pay calculator, salary paycheck calculator, hourly paycheck calculator, monthly take home salary calculator, how much do i make after taxes, paycheck calculator usa, texas paycheck calculator, paycheck calculator texas, california paycheck calculator, paycheck calculator california, florida paycheck calculator, paycheck calculator florida, ohio paycheck calculator, paycheck calculator ohio, paycheck calculator new york, ny paycheck calculator, paycheck calculator new york city, paycheck calculator illinois, paycheck calculator indiana, colorado paycheck calculator, paycheck calculator wa, paycheck calculator utah, pa paycheck calculator, paycheck calculator pa, paycheck calculator michigan, paycheck calculator maryland, paycheck calculator massachusetts, paycheck calculator ct, take home salary calculator virginia, take home salary calculator georgia, take home salary calculator australia, take home pay calculator nz";
@@ -36,7 +36,7 @@ const keywords =
       "@type": "WebApplication",
       "name": "Paycheck & Take-Home Salary Calculator",
       "alternateName": "Free Take-Home Pay & Hourly Paycheck Calculator",
-      "url": "https://toolkify.app/tools/finance/paycheck-calculator",
+      "url": "https://toolkify.com/tools/finance/paycheck-calculator",
       "description": "Free paycheck calculator that estimates your take-home salary after federal, state and local income taxes, Social Security and Medicare, plus pre-tax and post-tax deductions. Works for hourly and salaried pay across US states and other countries.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -71,19 +71,19 @@ const keywords =
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://toolkify.app/"
+          "item": "https://toolkify.com/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Finance & Tax Tools",
-          "item": "https://toolkify.app/#finance"
+          "item": "https://toolkify.com/#finance"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "Paycheck & Take-Home Salary Calculator",
-          "item": "https://toolkify.app/tools/finance/paycheck-calculator"
+          "item": "https://toolkify.com/tools/finance/paycheck-calculator"
         }
       ]
     }
@@ -767,14 +767,14 @@ const keywords =
               <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
               Custom Tax Settings
             </span>
-            <button type="button" id="close-custom-tax-btn" class="text-stone hover:text-primary transition-all text-xs font-bold cursor-pointer">✕</button>
+            <button type="button" id="close-custom-tax-btn" class="text-stone hover:text-primary transition-all text-xs font-bold cursor-pointer">âœ•</button>
           </h3>
 
           <!-- Currency & Code -->
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -1025,7 +1025,7 @@ const keywords =
           id="scenarios-empty-state"
           class="col-span-full py-8 px-4 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-3 min-h-[140px]"
         >
-          <span class="text-2xl">📌</span>
+          <span class="text-2xl">ðŸ“Œ</span>
           <p class="text-xs text-slate">No saved paycheck variants pinned to the board yet.</p>
         </div>
       </div>
@@ -1658,7 +1658,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          ✕
+          âœ•
         </button>
       </div>
 
@@ -2044,7 +2044,7 @@ const keywords =
         }
       },
       GB: {
-        currencySymbol: "£",
+        currencySymbol: "Â£",
         currencyCode: "GBP",
         regionLabel: "Region",
         regions: {
@@ -2085,7 +2085,7 @@ const keywords =
         }
       },
       DE: {
-        currencySymbol: "€",
+        currencySymbol: "â‚¬",
         currencyCode: "EUR",
         regionLabel: "Tax Class",
         regions: {
@@ -2112,7 +2112,7 @@ const keywords =
         }
       },
       IN: {
-        currencySymbol: "₹",
+        currencySymbol: "â‚¹",
         currencyCode: "INR",
         regionLabel: "Tax Regime",
         regions: {
@@ -2431,7 +2431,7 @@ const keywords =
               </div>
             </td>
             <td class="py-1 px-2 text-center">
-              <button type="button" class="btn-delete-bracket text-brand-red-dark hover:scale-110 transition-all font-semibold p-1 cursor-pointer text-xs" data-idx="${idx}">✕</button>
+              <button type="button" class="btn-delete-bracket text-brand-red-dark hover:scale-110 transition-all font-semibold p-1 cursor-pointer text-xs" data-idx="${idx}">âœ•</button>
             </td>
           </tr>
         `;
@@ -3557,7 +3557,7 @@ const keywords =
               data-id="${sc.id}"
               title="Remove scenario"
             >
-              ✕
+              âœ•
             </button>
             <div class="flex flex-col gap-1 pr-6">
               <span class="text-[9px] uppercase font-bold tracking-wider opacity-60">Scenario Detail</span>
