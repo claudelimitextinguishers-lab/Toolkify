@@ -557,6 +557,20 @@ export const nextStepMap: Record<string, NextStep> = {
   },
 
   // ── fun ───────────────────────────────────────────────
+  'chronological-age': {
+    targetSlug: 'retirement-401k',
+    lines: [
+      "Know your exact age? See what your savings could grow into by retirement.",
+      "You have your age down to the day, now project your retirement nest egg.",
+      "From counting the years lived to planning the years ahead.",
+      "Got your precise age? Map out where a 401(k) takes you by retirement.",
+      "Next after your age: see how your retirement savings stack up over time.",
+      "Turn that age figure into a look at your retirement horizon.",
+      "You know how far you've come, now project how far your savings can go.",
+      "Your age is the starting line, plan the finish with a 401(k) projection.",
+      "From years lived to years to plan, run your retirement numbers next.",
+    ],
+  },
   'clicks-per-second': {
     targetSlug: 'reaction-time',
     lines: [
