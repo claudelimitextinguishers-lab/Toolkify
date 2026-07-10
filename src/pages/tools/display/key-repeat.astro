@@ -7,11 +7,11 @@ const category = "display";
 const tier = "Display & Input Diagnostics";
 
 // On-page SEO metadata
-const pageTitle = "Keyboard Key Repeat Test - Measure Repeat Delay, Rate & Bounce";
-const description = "Free client-side tool to test keyboard key repeat delay, rate, and detect ghost or bouncy keys. View real-time keystroke metrics, logs, and export reports.";
+const pageTitle = "Key Repeat Test - Check Keyboard Repeat Rate & Delay Online";
+const description = "Free online key repeat test to measure your keyboard's key repeat rate and key repeat delay. Check key repeat on Windows 11 & Mac, detect bouncy or ghost keys, and understand what key repeat rate means.";
 const canonicalUrl = "https://boardtools.app/tools/display/key-repeat";
 const ogImage = "/og/key-repeat.png";
-const keywords = "key repeat test, keyboard repeat rate, repeat delay test, bounce keys, ghost keys, mechanical keyboard test, chatter check, keystroke log";
+const keywords = "key repeat test, what is key repeat rate, key repeat rate, key repeat, key repeat rate mac, key repeat delay, windows 11 key repeat rate, what does key repeat rate mean, key repeat vs delay until repeat, key repeat meaning, key repeat time, key repeat windows, key repeat test windows, what does key repeat mean";
 ---
 
 <Layout
@@ -84,6 +84,72 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
           "position": 4,
           "name": "Key Repeat Test",
           "item": "https://boardtools.app/tools/display/key-repeat"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is key repeat rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Key repeat rate is the speed at which a single character is typed over and over when you press and hold a key on your keyboard. It is usually measured in characters per second (or hertz, Hz). A higher key repeat rate fires the held character more quickly, while a lower rate produces it more slowly. This key repeat test shows your live key repeat rate in Hz so you can see exactly how fast your keyboard auto-fires.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does key repeat rate mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Key repeat rate means how frequently your operating system re-sends the same keystroke while a key stays pressed down. Once the initial key repeat delay has passed, the system begins repeating the character at a steady interval, and that interval is the key repeat rate. In practical terms, a fast repeat rate lets you scroll, delete, or move a cursor rapidly by holding one key, whereas a slow rate makes those held-key actions feel sluggish.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is key repeat vs delay until repeat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Delay until repeat (also called key repeat delay) is the pause between the moment you first press a key and the moment it starts repeating. Key repeat rate is how fast the character repeats after that pause ends. In short, the delay controls how long you must hold a key before it begins auto-firing, and the repeat rate controls how quickly it fires once it starts. Both settings work together, and this tool measures each of them separately in milliseconds and hertz.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the key repeat rate on Mac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a Mac, the key repeat rate is adjusted under System Settings (or System Preferences) &rarr; Keyboard, using the &ldquo;Key Repeat&rdquo; and &ldquo;Delay Until Repeat&rdquo; sliders. macOS lets you set the repeat rate from slow up to fast, and power users can push it beyond the slider limits with a Terminal command. After changing the setting, run this key repeat test to confirm the new rate and delay are actually being applied by your Mac.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Samsung: what is key repeat time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On Samsung devices, key repeat time refers to how long a held key waits before it starts repeating and how quickly it repeats afterward. On a Samsung phone or tablet this applies to a connected physical keyboard, and on Samsung monitors or displays with built-in controls it can refer to how fast the menu buttons repeat when held. Because behavior varies by device, the most reliable check is to connect the keyboard and use this key repeat test to see the actual repeat time.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which function key repeat last command?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>In many Windows applications the F4 key repeats the last command &mdash; for example, in Microsoft Excel and Word, pressing F4 repeats your most recent action. In the classic Windows Command Prompt, F3 repeats the previous command line. These &ldquo;repeat last command&rdquo; shortcuts are separate from keyboard key repeat, which is the automatic character repetition you can measure with this key repeat test when holding any key down.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is key repeat time monitor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A key repeat time monitor is a tool that watches your keystrokes in real time and reports the key repeat delay and key repeat rate as you hold keys down. This page is exactly that: it logs each keydown, keyup, and auto-repeat event, then displays your repeat delay in milliseconds, your repeat rate in hertz, and flags any bouncy or stuck keys. It runs entirely in your browser, so it monitors key repeat timing privately without sending any data to a server.</p>"
+          }
         }
       ]
     }
@@ -451,6 +517,301 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
           >
             Got it
           </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Key Repeat Test
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>key repeat test</strong> is a fast, free, and completely
+        private way to check exactly how your keyboard behaves when you press
+        and hold a key. Every keyboard has two hidden timing values &mdash; the
+        <strong>key repeat delay</strong> and the
+        <strong>key repeat rate</strong> &mdash; and this tool measures both in
+        real time, right in your browser. Just click the capture area, hold down
+        any key such as Space, A, or an arrow key, and watch the live metrics
+        update. Nothing you type is ever uploaded, because the entire key repeat
+        test runs client-side on your own device.
+      </p>
+      <p class="text-sm leading-relaxed">
+        If you have ever wondered <strong>what is key repeat rate</strong> or
+        <strong>what does key repeat rate mean</strong>, the simplest answer is
+        this: it is the speed at which a single character is fired over and over
+        while a key stays pressed. So <strong>what does key repeat mean</strong>
+        in everyday use? When you hold Backspace to erase a sentence or hold an
+        arrow key to move the cursor, that automatic repetition is key repeat in
+        action. This page turns those invisible values into clear numbers so you
+        can understand and compare them across devices.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Key Repeat Rate vs Key Repeat Delay
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Understanding <strong>key repeat vs delay until repeat</strong> is the
+        key to reading your results correctly. The
+        <strong>key repeat delay</strong> is the pause between your first
+        keypress and the moment the character starts repeating &mdash; it stops
+        a quick tap from accidentally producing several letters. The
+        <strong>key repeat rate</strong> is how quickly the character repeats
+        once that delay is over. In other words, the delay decides
+        <em>when</em> repetition begins and the rate decides <em>how fast</em>
+        it goes. That is the full <strong>key repeat meaning</strong>: two
+        timing values working together. This test reports the delay in
+        milliseconds and the rate in hertz (Hz), and it also tracks each key's
+        <strong>key repeat time</strong> individually so you can spot
+        inconsistent switches.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Key Repeat on Windows
+      </h3>
+      <p class="text-sm leading-relaxed">
+        On Windows you can change your <strong>key repeat</strong> settings by
+        opening Control Panel &rarr; Keyboard, where two sliders control the
+        repeat delay and the repeat speed. If you are tuning the
+        <strong>windows 11 key repeat rate</strong>, the same dialog is
+        available by searching &ldquo;Keyboard&rdquo; in the Start menu. After
+        adjusting <strong>key repeat windows</strong> settings, use this
+        <strong>key repeat test windows</strong> users rely on to confirm the
+        change actually took effect &mdash; hold a key and check whether the
+        measured rate and delay match what you expect. It is the quickest way to
+        verify Windows applied your new configuration.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Key Repeat Rate on Mac
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Mac users can adjust the <strong>key repeat rate mac</strong> setting
+        under System Settings &rarr; Keyboard, using the &ldquo;Key
+        Repeat&rdquo; and &ldquo;Delay Until Repeat&rdquo; sliders. macOS even
+        allows advanced users to push the repeat rate faster than the slider
+        limits with a Terminal command. Whichever method you use, this tool
+        works identically on macOS, Windows, Linux, and ChromeOS, so you can run
+        the same key repeat test after tweaking your Mac and immediately see the
+        new timing values reflected on screen.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        More Than Just Repeat Timing
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Beyond measuring <strong>key repeat rate</strong> and
+        <strong>key repeat delay</strong>, this diagnostic also flags two common
+        hardware faults. It detects <strong>bouncy keys</strong> (chatter),
+        where a worn switch registers two presses from a single tap within a few
+        milliseconds, and it flags <strong>ghost or stuck keys</strong> that
+        report as held far longer than physically plausible. A per-key summary
+        table records the average repeat delay, average repeat rate, and a
+        consistency rating for every key you test, and you can export the full
+        keystroke log as CSV or JSON for deeper analysis or a warranty claim.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Key Repeat Test
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Whether you are a gamer fine-tuning responsiveness, a writer bothered by
+        a sluggish Backspace, or someone troubleshooting a suspected faulty
+        switch, this key repeat test gives you honest, hardware-level numbers in
+        seconds. It requires no sign-up, no installation, and no data sharing
+        &mdash; it uses the browser's native <code>event.repeat</code> property
+        to distinguish genuine key presses from operating-system auto-fires.
+        From checking the <strong>windows 11 key repeat rate</strong> to
+        confirming your <strong>key repeat rate mac</strong> setting, this is a
+        clear, trustworthy way to understand your keyboard's true behavior.
+      </p>
+    </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Key Repeat Test FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Common questions about key repeat rate, key repeat delay, and how key repeat works across devices.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is key repeat rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Key repeat rate is the speed at which a single character is typed over and over when you press and hold a key on your keyboard. It is usually measured in characters per second (or hertz, Hz). A higher key repeat rate fires the held character more quickly, while a lower rate produces it more slowly. This key repeat test shows your live key repeat rate in Hz so you can see exactly how fast your keyboard auto-fires.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What does key repeat rate mean?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Key repeat rate means how frequently your operating system re-sends the same keystroke while a key stays pressed down. Once the initial key repeat delay has passed, the system begins repeating the character at a steady interval, and that interval is the key repeat rate. In practical terms, a fast repeat rate lets you scroll, delete, or move a cursor rapidly by holding one key, whereas a slow rate makes those held-key actions feel sluggish.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is key repeat vs delay until repeat?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Delay until repeat (also called key repeat delay) is the pause between the moment you first press a key and the moment it starts repeating. Key repeat rate is how fast the character repeats after that pause ends. In short, the delay controls how long you must hold a key before it begins auto-firing, and the repeat rate controls how quickly it fires once it starts. Both settings work together, and this tool measures each of them separately in milliseconds and hertz.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is the key repeat rate on Mac?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a Mac, the key repeat rate is adjusted under System Settings (or System Preferences) &rarr; Keyboard, using the "Key Repeat" and "Delay Until Repeat" sliders. macOS lets you set the repeat rate from slow up to fast, and power users can push it beyond the slider limits with a Terminal command. After changing the setting, run this key repeat test to confirm the new rate and delay are actually being applied by your Mac.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Samsung: what is key repeat time?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On Samsung devices, key repeat time refers to how long a held key waits before it starts repeating and how quickly it repeats afterward. On a Samsung phone or tablet this applies to a connected physical keyboard, and on Samsung monitors or displays with built-in controls it can refer to how fast the menu buttons repeat when held. Because behavior varies by device, the most reliable check is to connect the keyboard and use this key repeat test to see the actual repeat time.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Which function key repeat last command?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>In many Windows applications the F4 key repeats the last command — for example, in Microsoft Excel and Word, pressing F4 repeats your most recent action. In the classic Windows Command Prompt, F3 repeats the previous command line. These "repeat last command" shortcuts are separate from keyboard key repeat, which is the automatic character repetition you can measure with this key repeat test when holding any key down.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is key repeat time monitor?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A key repeat time monitor is a tool that watches your keystrokes in real time and reports the key repeat delay and key repeat rate as you hold keys down. This page is exactly that: it logs each keydown, keyup, and auto-repeat event, then displays your repeat delay in milliseconds, your repeat rate in hertz, and flags any bouncy or stuck keys. It runs entirely in your browser, so it monitors key repeat timing privately without sending any data to a server.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1105,6 +1466,32 @@ const keywords = "key repeat test, keyboard repeat rate, repeat delay test, boun
       window.removeEventListener("blur", clearHeldKeys);
       window.removeEventListener("resize", handleResize);
     });
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
+    });
+
     checkTouchCapability();
     loadSavedSettings();
     }
