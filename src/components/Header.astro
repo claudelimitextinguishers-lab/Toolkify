@@ -1,15 +1,13 @@
 ---
 import SearchOverlay from './SearchOverlay.astro';
+import AnimatedLogo from './AnimatedLogo.astro';
 const currentPath = Astro.url.pathname;
 ---
 <header class="sticky top-0 z-50 w-full h-[64px] border-b border-hairline bg-canvas/90 backdrop-blur-md">
   <div class="max-w-[1280px] h-full mx-auto px-4 md:px-8 flex items-center justify-between">
     <!-- Brand Logo -->
-    <a href="/" class="flex items-center group" aria-label="Toolkify home">
-      <!-- Light mode: navy wordmark -->
-      <img src="/logo-light.svg" alt="Toolkify" width="140" height="32" class="h-8 w-auto block dark:hidden transition-transform group-hover:scale-105" />
-      <!-- Dark mode: white wordmark -->
-      <img src="/logo-dark.svg" alt="Toolkify" width="140" height="32" class="h-8 w-auto hidden dark:block transition-transform group-hover:scale-105" />
+    <a href="/" class="flex items-center" aria-label="Toolkify home">
+      <AnimatedLogo theme="auto" height={40} />
     </a>
 
     <!-- Desktop Navigation -->

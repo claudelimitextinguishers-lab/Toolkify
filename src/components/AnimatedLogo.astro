@@ -1,0 +1,311 @@
+---
+/**
+ * AnimatedLogo.astro — the animated Toolkify lockup.
+ *
+ * Behaviour: the icon + "Toolkify" wordmark fly in ONCE, then stay put
+ * permanently in a subtle idle loop (breathing + a periodic spin flourish
+ * + sonar ping). The wordmark is always visible after the intro.
+ *
+ * Props:
+ *   theme  : 'auto' | 'dark' | 'light'   (default 'auto' → follows html.dark)
+ *   height : number (px)                  (rendered height of the lockup)
+ *
+ * Colours are driven by CSS variables on the root so the JS-generated
+ * wordmark letters inherit them correctly. GSAP is bundled (no CDN).
+ */
+interface Props {
+  theme?: 'auto' | 'dark' | 'light';
+  height?: number;
+  class?: string;
+}
+const { theme = 'auto', height = 40, class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={["tk-logo", className]}
+  data-theme={theme}
+  style={`--tk-h:${height}px`}
+  aria-label="Toolkify"
+  role="img"
+>
+  <!-- viewBox tightened to the artwork so the mark fills the height -->
+  <svg viewBox="90 70 345 86" aria-hidden="true">
+    <defs>
+      <radialGradient class="tk-flashGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"  class="tk-flash-stop" stop-opacity="0.85"></stop>
+        <stop offset="45%" class="tk-flash-stop" stop-opacity="0.28"></stop>
+        <stop offset="100%" class="tk-flash-stop" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+
+    <g class="tk-lockup">
+      <!-- ambient flash + sonar ring (behind the fan) -->
+      <circle class="tk-flash" cx="110" cy="110" r="44" opacity="0"></circle>
+      <circle class="tk-ping"  cx="110" cy="110" r="12" fill="none" stroke-width="2" opacity="0"></circle>
+
+      <!-- ICON: three fanned tool bars -->
+      <g class="tk-icon">
+        <g class="tk-bars">
+          <!-- PINK wrench -->
+          <g class="tk-fly" data-bar="0">
+            <g class="tk-rot" data-base="-30">
+              <rect x="110" y="104" width="44" height="12" rx="6" fill="#F5A9C0"></rect>
+              <circle cx="154" cy="110" r="8" fill="none" stroke="#F5A9C0" stroke-width="4"></circle>
+            </g>
+          </g>
+          <!-- TEAL ruler -->
+          <g class="tk-fly" data-bar="1">
+            <g class="tk-rot" data-base="0">
+              <rect x="110" y="104" width="56" height="12" rx="2" fill="#2DD4BF"></rect>
+              <rect class="tk-tick" x="126" y="104" width="2" height="12"></rect>
+              <rect class="tk-tick" x="140" y="104" width="2" height="12"></rect>
+              <rect class="tk-tick" x="154" y="104" width="2" height="12"></rect>
+            </g>
+          </g>
+          <!-- YELLOW screwdriver -->
+          <g class="tk-fly" data-bar="2">
+            <g class="tk-rot" data-base="30">
+              <rect class="tk-yellow" x="110" y="104" width="44" height="12" rx="2"></rect>
+              <path class="tk-yellow" d="M154 104 l8 6 l-8 6 z"></path>
+            </g>
+          </g>
+        </g>
+        <circle class="tk-pivot" cx="110" cy="110" r="7"></circle>
+      </g>
+
+      <!-- WORDMARK (letters injected by JS for metric-accurate layout) -->
+      <g class="tk-wordmark"></g>
+    </g>
+  </svg>
+</span>
+
+<!-- Global (namespaced) styles so JS-created letters inherit colours. -->
+<style is:global>
+  .tk-logo {
+    /* light palette (default) */
+    --tk-fg: #0B0F14;
+    --tk-yellow: #D9A400;
+    --tk-tick: #FFFFFF;
+    --tk-flash: #0B0F14;
+
+    display: inline-flex;
+    line-height: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html.dark .tk-logo[data-theme="auto"] {
+    --tk-fg: #FFFFFF;
+    --tk-yellow: #F2C230;
+    --tk-tick: #0B0F14;
+    --tk-flash: #FFFFFF;
+  }
+  .tk-logo[data-theme="dark"] {
+    --tk-fg: #FFFFFF;
+    --tk-yellow: #F2C230;
+    --tk-tick: #0B0F14;
+    --tk-flash: #FFFFFF;
+  }
+  .tk-logo[data-theme="light"] {
+    --tk-fg: #0B0F14;
+    --tk-yellow: #D9A400;
+    --tk-tick: #FFFFFF;
+    --tk-flash: #0B0F14;
+  }
+
+  /* Clip during the fly-in intro so bars don't spill; allow overflow once
+     settled so the 360° spin flourish is never cut off. */
+  .tk-logo svg { height: var(--tk-h, 40px); width: auto; display: block; overflow: hidden; }
+  .tk-logo[data-spin="1"] svg { overflow: visible; }
+
+  .tk-logo .tk-pivot { fill: var(--tk-fg); }
+  .tk-logo .tk-yellow { fill: var(--tk-yellow); }
+  .tk-logo .tk-tick { fill: var(--tk-tick); }
+  .tk-logo .tk-ping { stroke: var(--tk-fg); }
+  .tk-logo .tk-char { fill: var(--tk-fg); }
+  .tk-flashGrad .tk-flash-stop { stop-color: var(--tk-flash); }
+
+  .tk-logo .tk-bars { filter: brightness(var(--tk-br,1)) saturate(var(--tk-sa,1)); }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  const PIVOT = "110 110";
+  const CENTER = "255 112";
+  const BASE = [-30, 0, 30];
+  const WORD = "Toolkify";
+  const SVGNS = "http://www.w3.org/2000/svg";
+
+  // Entrance vectors — each bar arrives from a different off-canvas point,
+  // distance & spin. Clipped by the (tight) viewBox so nothing spills out.
+  const ENTER = [
+    { x: -150, y: -95, rot: -95 },
+    { x: -190, y:  60, rot:  70 },
+    { x: -140, y: 120, rot: -40 },
+  ];
+  const FLY_EASE = ["back.out(2.4)", "elastic.out(1, 0.62)", "back.out(1.7)"];
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function initLogo(root: HTMLElement) {
+    if (root.dataset.tkInit === "1") return;
+    root.dataset.tkInit = "1";
+
+    const svg = root.querySelector("svg")!;
+    const q  = (s: string) => Array.from(svg.querySelectorAll(s)) as SVGElement[];
+    const one = (s: string) => svg.querySelector(s) as SVGElement;
+
+    // Unique gradient id per instance (avoid collisions across header/footer).
+    const uid = "tk" + Math.random().toString(36).slice(2, 8) + "-grad";
+    const grad = one(".tk-flashGrad") as unknown as SVGGradientElement;
+    grad.id = uid;
+    (one(".tk-flash") as SVGCircleElement).setAttribute("fill", `url(#${uid})`);
+
+    const flys = q(".tk-fly");
+    const rots = q(".tk-rot");
+    const bars = one(".tk-bars");
+    const icon = one(".tk-icon");
+    const lockup = one(".tk-lockup");
+    const flash = one(".tk-flash");
+    const ping  = one(".tk-ping");
+    const wm    = one(".tk-wordmark");
+
+    let chars: SVGTextElement[] = [];
+    function buildWordmark() {
+      wm.innerHTML = "";
+      chars = [];
+      let cursor = 190;
+      for (const ch of WORD) {
+        const t = document.createElementNS(SVGNS, "text");
+        t.setAttribute("class", "tk-char");
+        t.setAttribute("x", String(cursor));
+        t.setAttribute("y", "110");
+        t.setAttribute("font-size", "48");
+        t.setAttribute("font-weight", "800");
+        t.setAttribute("letter-spacing", "-0.5");
+        t.setAttribute("dominant-baseline", "central");
+        t.setAttribute("font-family", "'Nunito','Segoe UI',system-ui,Arial,sans-serif");
+        t.textContent = ch;
+        wm.appendChild(t);
+        cursor += t.getComputedTextLength() - 0.5;
+        chars.push(t);
+      }
+    }
+
+    // Hidden, pre-intro state (bars off-canvas, wordmark tucked up).
+    function resetState() {
+      gsap.set(bars,   { rotation: 0, svgOrigin: PIVOT, "--tk-br": 1, "--tk-sa": 1 });
+      gsap.set(lockup, { scale: 1, x: 0, svgOrigin: CENTER });
+      gsap.set(icon,   { scale: 1, svgOrigin: PIVOT });
+      flys.forEach((f, i) => gsap.set(f, { x: ENTER[i].x, y: ENTER[i].y, opacity: 0 }));
+      rots.forEach((r, i) => gsap.set(r, { rotation: BASE[i] + ENTER[i].rot, svgOrigin: PIVOT }));
+      gsap.set(chars,  { yPercent: -38, opacity: 0 });
+      gsap.set([flash, ping], { opacity: 0 });
+    }
+
+    // Final resting state — everything visible & in place.
+    function showStatic() {
+      gsap.set(bars, { rotation: 0, svgOrigin: PIVOT });
+      flys.forEach(f => gsap.set(f, { x: 0, y: 0, opacity: 1 }));
+      rots.forEach((r, i) => gsap.set(r, { rotation: BASE[i], svgOrigin: PIVOT }));
+      gsap.set(chars, { yPercent: 0, opacity: 1 });
+      gsap.set([flash, ping], { opacity: 0 });
+    }
+
+    let idleTl: gsap.core.Timeline | null = null;
+
+    // ---------- INTRO (plays once) ----------
+    function buildIntro() {
+      const tl = gsap.timeline({ paused: true, onComplete: () => {
+        root.dataset.spin = "1";           // let the spin overflow the box
+        idleTl = startIdle();
+      } });
+
+      // ENTRANCE — bars fly in, cascade, overshoot & snap
+      flys.forEach((f, i) => {
+        tl.to(f, { x: 0, y: 0, opacity: 1, duration: 1.0, ease: FLY_EASE[i] }, i * 0.12);
+        tl.to(rots[i], { rotation: BASE[i], duration: 1.1, ease: "elastic.out(1,0.55)", svgOrigin: PIVOT }, i * 0.12);
+      });
+      // WORDMARK REVEAL — letters drop into place (and STAY)
+      tl.to(chars, { yPercent: 0, opacity: 1, duration: 0.5, ease: "back.out(1.8)", stagger: 0.045 }, 0.55);
+
+      // IMPACT
+      tl.add("impact", 1.2);
+      tl.to(icon, { scale: 1.08, duration: 0.12, ease: "power2.out", svgOrigin: PIVOT }, "impact")
+        .to(icon, { scale: 1.0, duration: 0.5, ease: "elastic.out(1,0.4)", svgOrigin: PIVOT }, "impact+=0.12");
+      tl.fromTo(flash, { opacity: 0, scale: 0.4, svgOrigin: PIVOT },
+                       { opacity: 1, scale: 1.15, duration: 0.14, ease: "power2.out", svgOrigin: PIVOT }, "impact")
+        .to(flash, { opacity: 0, scale: 1.6, duration: 0.5, ease: "power2.out", svgOrigin: PIVOT }, "impact+=0.14");
+      tl.to(lockup, { x: "+=3", duration: 0.05, ease: "power1.inOut" }, "impact")
+        .to(lockup, { x: "-=3", duration: 0.28, ease: "elastic.out(1,0.3)" }, "impact+=0.05");
+
+      return tl;
+    }
+
+    // ---------- IDLE (loops forever; nothing disappears) ----------
+    function startIdle() {
+      const tl = gsap.timeline({ repeat: -1 });
+      // gentle breathing
+      tl.to(lockup, { scale: 1.02, duration: 2.3, ease: "sine.inOut", svgOrigin: CENTER }, 0)
+        .to(lockup, { scale: 1.0,  duration: 2.3, ease: "sine.inOut", svgOrigin: CENTER }, 2.3);
+      // sonar pings
+      [0.3, 3.0].forEach(t => {
+        tl.fromTo(ping, { opacity: 0.5, scale: 0.4, svgOrigin: PIVOT },
+                        { opacity: 0, scale: 2.2, duration: 1.6, ease: "power2.out", svgOrigin: PIVOT }, t);
+      });
+      // periodic spin flourish (once per cycle) + on-brand colour breathe
+      tl.to(bars, { rotation: "+=360", duration: 1.5, ease: "power3.inOut", svgOrigin: PIVOT }, 2.0);
+      tl.to(bars, { "--tk-br": 1.2, "--tk-sa": 1.15, duration: 0.75, ease: "sine.inOut" }, 2.0)
+        .to(bars, { "--tk-br": 1, "--tk-sa": 1, duration: 0.75, ease: "sine.inOut" }, 2.75);
+      return tl;
+    }
+
+    const intro = buildIntro();
+
+    function playFromStart() {
+      if (idleTl) { idleTl.kill(); idleTl = null; }
+      root.dataset.spin = "0";             // re-clip for the fly-in
+      resetState();
+      intro.restart(true);
+    }
+
+    // HOVER wiggle (independent, layered)
+    root.addEventListener("mouseenter", () => {
+      if (reduced) return;
+      rots.forEach((r, i) => {
+        const d = (i % 2 ? -1 : 1) * gsap.utils.random(3, 5);
+        gsap.to(r, {
+          rotation: "+=" + d, duration: 0.14, ease: "power2.out", svgOrigin: PIVOT, overwrite: "auto",
+          onComplete() { gsap.to(r, { rotation: "-=" + d, duration: 0.9, ease: "elastic.out(1,0.35)", svgOrigin: PIVOT }); }
+        });
+      });
+    });
+
+    // CLICK replay
+    root.addEventListener("click", () => { if (!reduced) playFromStart(); });
+
+    // BOOT
+    gsap.ticker.lagSmoothing(0);
+    buildWordmark();
+    if (reduced) {
+      showStatic();
+      gsap.to(lockup, { scale: 1.02, duration: 2.4, ease: "sine.inOut", repeat: -1, yoyo: true, svgOrigin: CENTER });
+    } else {
+      resetState();
+      intro.play(0);
+    }
+    if ((document as any).fonts?.ready) {
+      (document as any).fonts.ready.then(() => buildWordmark());
+    }
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>(".tk-logo").forEach(initLogo);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAll);
+  } else {
+    initAll();
+  }
+</script>

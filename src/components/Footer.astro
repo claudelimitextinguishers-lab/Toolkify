@@ -1,4 +1,5 @@
 ---
+import AnimatedLogo from './AnimatedLogo.astro';
 ---
 <footer class="bg-footer-bg text-on-dark border-t border-charcoal/80 py-16 px-4 md:px-8 mt-auto relative overflow-hidden">
   <!-- Subtle decorative grid background for the footer -->
@@ -7,8 +8,8 @@
   <div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 relative z-10">
     <!-- Brand Block (lg:col-span-3) -->
     <div class="lg:col-span-3 flex flex-col gap-5">
-      <a href="/" class="flex items-center group cursor-pointer w-fit" aria-label="Toolkify home">
-        <img src="/logo-dark.svg" alt="Toolkify" width="158" height="36" class="h-9 w-auto transition-transform duration-300 group-hover:scale-105" />
+      <a href="/" class="flex items-center cursor-pointer w-fit" aria-label="Toolkify home">
+        <AnimatedLogo theme="dark" height={44} />
       </a>
       
       <p class="text-sm text-on-dark-muted leading-relaxed max-w-sm">
