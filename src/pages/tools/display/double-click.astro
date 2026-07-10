@@ -7,11 +7,11 @@ const category = "display";
 const tier = "Display & Input Diagnostics";
 
 // On-page SEO metadata
-const pageTitle = "Mouse Double Click Test - Detect Switch Chatter & Double Clicking";
-const description = "Free online browser mouse double click test. Detect switch bounce/chatter, measure click intervals, and test mouse buttons with real-time diagnostics.";
+const pageTitle = "Double Click Test - Free Online Mouse Double Click Tester";
+const description = "Free double click test online. Run a mouse double click test to detect switch chatter, check double clicking on a single click, and use as a double click tester with real-time diagnostics.";
 const canonicalUrl = "https://boardtools.app/tools/display/double-click";
 const ogImage = "/og/double-click.png";
-const keywords = "double click test, mouse chatter test, mouse double click test, check mouse double click, mouse switch chatter test, double click rate, mouse test, mouse button tester";
+const keywords = "double click test, mouse double click test, keyboard double click test, double click test mouse, double click test online, mouse double click test website, double click, how to double click on mac, double click tester, how to double click, mouse chatter test, mouse button tester";
 ---
 
 <Layout
@@ -30,10 +30,10 @@ const keywords = "double click test, mouse chatter test, mouse double click test
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Mouse Double Click Test",
-      "alternateName": "Mouse Switch Chatter Detector",
+      "name": "Double Click Test",
+      "alternateName": "Mouse Double Click Tester & Switch Chatter Detector",
       "url": "https://boardtools.app/tools/display/double-click",
-      "description": "Measure and detect mechanical mouse switch chatter and double click issues. Analyze click intervals and verify hardware reliability.",
+      "description": "Free online double click test to check your mouse for switch chatter and double clicking on a single click. Measure click intervals in milliseconds and verify hardware reliability.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "browserRequirements": "Requires JavaScript. Requires Mouse input.",
@@ -83,6 +83,80 @@ const keywords = "double click test, mouse chatter test, mouse double click test
           "position": 4,
           "name": "Double Click Test",
           "item": "https://boardtools.app/tools/display/double-click"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to test mouse double click?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test your mouse double click, open this double click test tool and click inside the test area with the button you want to check. The tool measures the millisecond interval between each click and flags any that arrive faster than the chatter threshold. If a single physical press registers two clicks in under 50&ndash;80ms, the tool marks it as chatter, which indicates a failing switch. Run 30&ndash;50 clicks per button to get a reliable reading in the session summary.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to double click on Mac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a Mac, double click by pressing the trackpad or mouse button twice in quick succession without moving the pointer. On a MacBook trackpad you can also enable \"Tap to Click\" in System Settings &gt; Trackpad, then tap twice. You can adjust how fast the two clicks must be by changing the double-click speed under System Settings &gt; Accessibility &gt; Pointer Control (or Mouse/Trackpad). A slower speed gives you more time between the two clicks.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my double click not working?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A double click may fail for several reasons: the double-click speed in your operating system is set too fast, the mouse switch is worn out, the surface is dirty, or a driver is malfunctioning. Try slowing the double-click speed in your mouse settings, cleaning the mouse, testing on another USB port, or trying a different mouse. Running this double click test helps confirm whether the button is registering clicks at all.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to double click?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To double click, quickly press and release the left mouse button twice in a row while keeping the pointer still. Both clicks must land within your system's double-click time window (usually around 500ms) for it to count as a double click rather than two separate single clicks. If you find double clicking difficult, increase the double-click time in your operating system's mouse settings.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my mouse double clicking on a single click?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A mouse that double clicks on a single press is almost always suffering from switch chatter. As a mechanical switch ages, its metal contact loses tension or collects debris and bounces when pressed, sending two signals instead of one. This tool detects that by measuring the interval between clicks: intervals under 50ms during a single press strongly suggest hardware chatter. The fix is usually replacing or cleaning the switch, or replacing the mouse.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is double click?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>A double click is the action of pressing a mouse button twice in rapid succession, within a short time window, to trigger a command such as opening a file, folder, or application. The operating system treats two quick clicks as a single double-click event, distinct from two separate single clicks. The maximum gap allowed between the two presses is controlled by your double-click speed setting.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to double click on Chromebook?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>On a Chromebook touchpad, double click by tapping the touchpad twice quickly with one finger, or by pressing down on the pad twice. If tapping is disabled, enable \"Tap-to-click\" in Settings &gt; Device &gt; Touchpad. With an external mouse, simply press the left button twice in quick succession. You can also adjust touchpad speed in the same settings menu if double clicks are not registering reliably.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why isn't my double click working?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>If your double click isn't working, the most common causes are a double-click speed set too fast for you, moving the pointer between the two clicks, a worn or dirty switch, or a software/driver conflict. Slow down the double-click speed in your mouse settings, keep the cursor still while clicking, and test the button here. If the tool shows missed or inconsistent clicks, the switch or cable may be faulty and the mouse may need repair or replacement.</p>"
+          }
         }
       ]
     }
@@ -395,6 +469,276 @@ const keywords = "double click test, mouse chatter test, mouse double click test
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Double Click Test
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>double click test</strong> is a fast, free, and private way
+        to check whether your mouse is registering clicks correctly. If your
+        mouse has started opening files by itself, dragging when you meant to
+        click once, or firing two clicks from a single press, this
+        <strong>mouse double click test</strong> will tell you exactly what is
+        happening. Every click is measured in real time, so you get precise
+        millisecond intervals between presses and an instant verdict on whether
+        your switches are healthy or chattering. As a fully client-side
+        <strong>double click test online</strong>, all measurements happen in
+        your browser &mdash; nothing is uploaded, making it a genuinely private
+        <strong>mouse double click test website</strong> you can use on any
+        computer.
+      </p>
+      <p class="text-sm leading-relaxed">
+        The most common reason people reach for a
+        <strong>double click test mouse</strong> tool is switch chatter. Inside
+        every mechanical mouse button is a tiny metal switch. Over time the
+        metal contact loses tension or collects microscopic debris, and instead
+        of making one clean connection it bounces &mdash; sending two or more
+        signals from a single physical press. Your computer then interprets that
+        as an accidental double click. This
+        <strong>double click tester</strong> catches those bounce events by
+        timing the gap between clicks: intentional human double clicks rarely
+        fall under 80ms, while hardware chatter typically registers in the 5ms
+        to 50ms range.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Use This Double Click Test
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Using the tool takes seconds. Click inside the large test area with the
+        button you want to check &mdash; left, right, or the middle scroll-wheel
+        button are all supported, and the browser context menu is disabled so
+        right clicks register cleanly. Each press appears in the interval log
+        with a precise timestamp and the gap since your previous click. If a
+        click arrives faster than the chatter threshold, it is highlighted in
+        red and counted as a chatter event. Watch the live counters for total
+        clicks, chatter events, and chatter rate, then review the session
+        summary for a per-button breakdown and an overall health verdict. You
+        can export the full log as a CSV file for record keeping or warranty
+        claims.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Adjustable Chatter Threshold
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Not every mouse behaves the same, so the tool lets you set the chatter
+        threshold anywhere from 5ms to 150ms. A threshold of 50&ndash;80ms works
+        well for most people: if a single physical click produces intervals
+        below that window, your switch almost certainly has a hardware fault.
+        Lowering the threshold makes the test stricter, which is useful for
+        confirming borderline cases, while raising it helps you understand your
+        natural clicking rhythm. This flexibility makes the tool useful both as
+        a diagnostic <strong>double click</strong> checker and as a way to
+        practise controlled, deliberate clicking.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Mouse and Keyboard Double Click Testing
+      </h3>
+      <p class="text-sm leading-relaxed">
+        While this page is primarily a <strong>mouse double click test</strong>,
+        the same principle applies to any input device. A
+        <strong>keyboard double click test</strong> looks for the equivalent
+        problem on keys &mdash; a single keypress that registers twice because
+        of contact bounce. The underlying diagnosis is identical: measure the
+        interval between repeated signals and flag anything suspiciously fast.
+        If you suspect a specific mouse button is failing, use the filter tabs to
+        isolate the left, middle, or right button and run a focused test on just
+        that switch.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Double Click Correctly
+      </h3>
+      <p class="text-sm leading-relaxed">
+        If you are learning <strong>how to double click</strong>, the technique
+        is simple: press and release the left mouse button twice in quick
+        succession while keeping the pointer perfectly still. Both clicks must
+        land inside your operating system's double-click time window for the
+        action to count. Users often ask
+        <strong>how to double click on Mac</strong> specifically &mdash; the
+        method is the same, and you can slow the required speed under System
+        Settings so the two presses do not have to be as fast. On Windows and
+        Chromebooks the double-click speed lives in the mouse or touchpad
+        settings. If double clicking feels awkward, increasing that time window
+        usually solves it instantly.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use This Double Click Tester
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Plenty of checkers exist, but this one combines accuracy, privacy, and a
+        clean, distraction-free design. It is a complete
+        <strong>double click test online</strong> that works on any browser,
+        remembers your settings and history locally, and requires no sign-up,
+        downloads, or installation. Whether you are diagnosing a mouse that
+        double clicks on a single click, deciding if a switch is worth
+        replacing, filing a warranty claim, or simply verifying a new mouse
+        before a game, this free <strong>double click tester</strong> gives you
+        clear, trustworthy numbers in seconds &mdash; along with the context to
+        understand exactly what they mean.
+      </p>
+    </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-12">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Double Click Test FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Answers to the most common questions about testing double clicks, switch chatter, and fixing double-click problems.
+      </p>
+
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test mouse double click?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test your mouse double click, open this double click test tool and click inside the test area with the button you want to check. The tool measures the millisecond interval between each click and flags any that arrive faster than the chatter threshold. If a single physical press registers two clicks in under 50&ndash;80ms, the tool marks it as chatter, which indicates a failing switch. Run 30&ndash;50 clicks per button to get a reliable reading in the session summary.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to double click on Mac?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a Mac, double click by pressing the trackpad or mouse button twice in quick succession without moving the pointer. On a MacBook trackpad you can also enable "Tap to Click" in System Settings &gt; Trackpad, then tap twice. You can adjust how fast the two clicks must be by changing the double-click speed under System Settings &gt; Accessibility &gt; Pointer Control (or Mouse/Trackpad). A slower speed gives you more time between the two clicks.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why is my double click not working?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A double click may fail for several reasons: the double-click speed in your operating system is set too fast, the mouse switch is worn out, the surface is dirty, or a driver is malfunctioning. Try slowing the double-click speed in your mouse settings, cleaning the mouse, testing on another USB port, or trying a different mouse. Running this double click test helps confirm whether the button is registering clicks at all.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to double click?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To double click, quickly press and release the left mouse button twice in a row while keeping the pointer still. Both clicks must land within your system's double-click time window (usually around 500ms) for it to count as a double click rather than two separate single clicks. If you find double clicking difficult, increase the double-click time in your operating system's mouse settings.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why is my mouse double clicking on a single click?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A mouse that double clicks on a single press is almost always suffering from switch chatter. As a mechanical switch ages, its metal contact loses tension or collects debris and bounces when pressed, sending two signals instead of one. This tool detects that by measuring the interval between clicks: intervals under 50ms during a single press strongly suggest hardware chatter. The fix is usually replacing or cleaning the switch, or replacing the mouse.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>What is double click?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>A double click is the action of pressing a mouse button twice in rapid succession, within a short time window, to trigger a command such as opening a file, folder, or application. The operating system treats two quick clicks as a single double-click event, distinct from two separate single clicks. The maximum gap allowed between the two presses is controlled by your double-click speed setting.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to double click on Chromebook?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>On a Chromebook touchpad, double click by tapping the touchpad twice quickly with one finger, or by pressing down on the pad twice. If tapping is disabled, enable "Tap-to-click" in Settings &gt; Device &gt; Touchpad. With an external mouse, simply press the left button twice in quick succession. You can also adjust touchpad speed in the same settings menu if double clicks are not registering reliably.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>Why isn't my double click working?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>If your double click isn't working, the most common causes are a double-click speed set too fast for you, moving the pointer between the two clicks, a worn or dirty switch, or a software/driver conflict. Slow down the double-click speed in your mouse settings, keep the cursor still while clicking, and test the button here. If the tool shows missed or inconsistent clicks, the switch or cable may be faulty and the mouse may need repair or replacement.</p>
           </div>
         </div>
       </div>
@@ -1060,6 +1404,32 @@ const keywords = "double click test, mouse chatter test, mouse double click test
     // Cleanup listeners on navigate
     document.addEventListener("astro:before-swap", () => {
       stopMetronome();
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Run init
