@@ -46,32 +46,16 @@ if (nextStep) {
 }
 
 // (4) Related list: exclude the current tool and the next-step target, then
-// keep tools sharing the category OR at least one tag. Cap at 4.
+// keep ONLY tools that share the exact same category. Cap at 4.
 const excluded = new Set<string>([currentSlug]);
 if (nextTarget) excluded.add(nextTarget.slug);
 
-const currentTags = new Set(current.tags);
-
-// Rank candidates so tools in the SAME category always win over tools that
-// merely share a generic tag (e.g. "calculator", which is common to finance,
-// display and health tools). Without this, a display tool like the Aspect
-// Ratio Calculator leaked into finance recommendations purely on the shared
-// "calculator" tag. Same-category first, then by number of overlapping tags;
-// ties keep registry order (Array.sort is stable).
+// Strict same-category matching only. A tool appears here solely when its
+// `category` exactly equals the current tool's category — no tag-based
+// cross-category matching. Registry order is preserved (filter is stable).
 const related = tools
-  .filter((t) => !excluded.has(t.slug))
-  .map((t) => ({
-    tool: t,
-    sameCategory: t.category === current.category,
-    sharedTags: t.tags.reduce((n, tag) => (currentTags.has(tag) ? n + 1 : n), 0),
-  }))
-  .filter((c) => c.sameCategory || c.sharedTags > 0)
-  .sort((a, b) => {
-    if (a.sameCategory !== b.sameCategory) return a.sameCategory ? -1 : 1;
-    return b.sharedTags - a.sharedTags;
-  })
-  .slice(0, 4)
-  .map((c) => c.tool);
+  .filter((t) => !excluded.has(t.slug) && t.category === current.category)
+  .slice(0, 4);
 
 // Don't render a sparse accordion.
 const showRelated = related.length >= 2;

@@ -1,5 +1,6 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
+import RelatedTools from "../../../components/RelatedTools.astro";
 
 // Tool metadata
 const name = "Randomizer Wheel";
@@ -458,6 +459,8 @@ const ogImage = "/og/randomizer-wheel.png";
       </div>
     </div>
   </section>
+
+  <RelatedTools currentSlug="randomizer-wheel" />
 
   <!-- Toast Notification Wrapper (For Copy Actions & Undo Actions) -->
   <div id="toast-wrapper" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
