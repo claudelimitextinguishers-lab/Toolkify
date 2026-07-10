@@ -7,11 +7,11 @@ const category = "display";
 const tier = "Display & Input Diagnostics";
 
 // On-page SEO metadata
-const pageTitle = "Refresh Rate Test - Measure Monitor Hz & Frame Pacing";
-const description = "Free online browser refresh rate test. Measure your monitor's actual refresh rate in Hz, detect dropped frames, and analyze frame-to-frame consistency in real-time.";
+const pageTitle = "Refresh Rate Test - Check Monitor Hz Online";
+const description = "Use our free online refresh rate test to check your monitor refresh rate. Measure screen refresh rate on TV, PC, and mobile (Android & iPhone) in real-time.";
 const canonicalUrl = "https://boardtools.app/tools/display/refresh-rate";
 const ogImage = "/og/refresh-rate.png";
-const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh rate, measure hz, fps test, check refresh rate, display hz check, frame pacing test, dropped frames";
+const keywords = "Refresh Rate Test, monitor refresh rate test, screen refresh rate test, refresh rate test mobile, display refresh rate test, refresh rate test online, 120hz refresh rate test, refresh rate test monitor, online refresh rate test, phone refresh rate test, refresh rate test android, refresh rate test iphone, monitor hz test, hz tester, screen refresh rate, measure hz, fps test, check refresh rate, display hz check, frame pacing test, dropped frames";
 ---
 
 <Layout
@@ -83,6 +83,64 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
           "position": 4,
           "name": "Refresh Rate Test",
           "item": "https://boardtools.app/tools/display/refresh-rate"
+        }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to test refresh rate",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test your refresh rate, use an online refresh rate test like this tool. Simply open the page on any browser, click 'Start Test', and the tool will use high-precision requestAnimationFrame loops to measure the exact frequency (in Hz) at which your display renders frames.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test monitor refresh rate",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test monitor refresh rate, open this free tool in your desktop browser. Close any background applications to avoid CPU/GPU stutter, and click 'Start Test'. For the most accurate hardware diagnostic, enter Fullscreen mode to bypass window compositor limitations.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test tv refresh rate",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test a TV refresh rate, connect your computer, phone, or streaming device to the TV. Open this online test on the TV's browser, select the display context, and start the test. Ensure your system's display settings are configured to output the TV's native Hz rate.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test my refresh rate",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>You can test your display's refresh rate instantly using our free web-based tool. It automatically analyzes frame pacing, stability, and dropped frames to tell you exactly whether your screen is running at its intended speed.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test refresh rate on iphone",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>To test the refresh rate on an iPhone, open Safari or Chrome, navigate to this online refresh rate test mobile version, and click 'Start Test'. For ProMotion models (iPhone 13 Pro and newer), the test can verify dynamic rates up to 120Hz depending on active scrolling.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test screen refresh rate",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Testing your screen refresh rate is simple: run our online test on any display, monitor, or phone. The tool counts the time intervals between frame rendering ticks to calculate the screen's actual performance in Hz.</p>"
+          }
         }
       ]
     }
@@ -437,26 +495,196 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
         id="about-tool-heading"
         class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
       >
-        Understanding Display Refresh Rates & Pacing
+        Complete Guide to the Refresh Rate Test & Monitor Hz Diagnostics
       </h2>
       <p class="text-sm leading-relaxed">
-        The refresh rate of a monitor defines how many times per second the display updates its visual buffer. Measured in Hertz (Hz), higher values like 120Hz, 144Hz, 240Hz, or 360Hz provide fluid animations and reduced motion blur. This is critical for gaming and fast UI interactions.
+        Every screen you interact with relies on rapid visual updates to create smooth motion. Whether you are aiming for high-fps competitive gaming or simply scrolling through social feeds, understanding your display's actual performance is essential. Our free <strong>refresh rate test</strong> provides a real-time diagnostic to evaluate display frame pacing, detect jitter, and check for dropped frames directly inside your web browser. By measuring the precise interval between successive frames, this utility functions as an <strong>online refresh rate test</strong> that calculates exactly how many times per second your monitor refreshes its image buffer. Understanding these hardware variables helps you optimize your system for gaming, creative work, or daily tasks, ensuring that what you see matches what your system is actually rendering.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        How browsers schedule rendering loops
+        Why Run a Monitor Refresh Rate Test?
       </h3>
       <p class="text-sm leading-relaxed">
-        Web browsers attempt to synchronize rendering with the display compositor using the <code>requestAnimationFrame</code> API. By tracking the high-precision timestamp supplied to this callback, the browser can calculate the precise interval between adjacent frame draws.
+        Running a dedicated <strong>monitor refresh rate test</strong> ensures that your hardware is configured correctly. It is surprisingly common for users to purchase high-end gaming monitors (such as 144Hz, 240Hz, or 360Hz models) but leave them capped at a default 60Hz setting in their operating system's advanced display properties. With this web-based <strong>refresh rate test monitor</strong> analyzer, you can quickly verify if your setup matches your hardware's maximum potential. Furthermore, running a <strong>screen refresh rate test</strong> helps identify stutter, GPU rendering limitations, or browser-specific compositor issues that prevent fluid visual pacing. By performing a quick diagnostic, you can rule out cable bottlenecks (like outdated HDMI standards) or software misconfigurations that limit your screen's performance.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
-        Filtering Compositor Noise and OS Hiccups
+        How the Display Refresh Rate Test Works
       </h3>
       <p class="text-sm leading-relaxed">
-        Even on clean monitors, system processes can delay the browser compositor, causing an occasional delayed frame (often called "stutter"). To determine your hardware's actual refresh rate without these outliers skewing the average, this test ignores extreme values (the highest and lowest 10% samples) and reports the **Median Interval** and **Trimmed Mean Hz**.
+        To deliver high-precision results, our tool utilizes the HTML5 <code>requestAnimationFrame</code> API to sync with the browser’s repaint cycle. The tool records the millisecond timestamp of each draw callback and computes the frame-to-frame delay. By collecting these samples, our <strong>display refresh rate test</strong> calculates both the median delay and the stability (standard deviation) of the loop. To screen out occasional OS background hiccups or CPU spike stutters, the analyzer ignores statistical outliers and displays a clean, stabilized estimation of your screen's actual Hertz rating. This gives you a more realistic representation of real-world frame consistency compared to basic counters that simply divide total frames by seconds.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Testing on Phones, Tablets, and Android Devices
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Modern smartphones have shifted to variable or high-frequency displays to make interactions feel incredibly responsive. With our <strong>refresh rate test mobile</strong> features, you can verify your device's refresh rate instantly. If you own a smartphone, running a <strong>phone refresh rate test</strong> will show whether your device is operating at standard 60Hz or higher frequencies. Our test works seamlessly as a <strong>refresh rate test android</strong> tool, as well as a dedicated <strong>refresh rate test iphone</strong> checker. On ProMotion iOS devices, running a <strong>120hz refresh rate test</strong> will dynamically trace frame updates, although keep in mind that iOS often dials down the refresh rate to save power when the screen is static, ramping up to 120Hz during active scroll interactions. This variable refresh rate (VRR) design is standard across modern mobile platforms to conserve battery life.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Why Use an Online Refresh Rate Test?
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Unlike native benchmarking applications, a <strong>refresh rate test online</strong> requires no downloads, installations, or administrative permissions. It runs directly inside any standard modern web browser, making it the most accessible way to diagnose displays on the fly. Whether you are checking a laptop panel, a desktop gaming rig, or a smart TV, this tool gives you instant, privacy-focused visual feedback. It is the easiest way to double-check that your settings, graphics drivers, and cables (such as DisplayPort or HDMI) are all working harmoniously to output the correct frequency. By utilizing our online interface, you gain access to an instantaneous performance verification tool that helps you diagnose display limits across multiple platforms in just a few clicks.
       </p>
     </article>
+
+    <!-- Visible FAQ matching FAQ JSON-LD -->
+    <div class="flex flex-col gap-6 max-w-4xl mx-auto w-full mt-4">
+      <h2 class="font-display font-semibold text-xl sm:text-2xl tracking-tight text-primary text-center mb-1">
+        Refresh Rate Test FAQs
+      </h2>
+      <p class="text-xs text-slate text-center mb-4">
+        Find answers to the most common questions about display refresh rates, monitor Hz, and diagnostic testing.
+      </p>
+      
+      <div class="flex flex-col border border-hairline rounded-xl bg-canvas overflow-hidden shadow-subtle divide-y divide-hairline">
+        <!-- FAQ 1 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test refresh rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test your refresh rate, use an online refresh rate test like this tool. Simply open the page on any browser, click "Start Test", and the tool will use high-precision requestAnimationFrame loops to measure the exact frequency (in Hz) at which your display renders frames.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test monitor refresh rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test monitor refresh rate, open this free tool in your desktop browser. Close any background applications to avoid CPU/GPU stutter, and click "Start Test". For the most accurate hardware diagnostic, enter Fullscreen mode to bypass window compositor limitations.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test TV refresh rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test a TV refresh rate, connect your computer, phone, or streaming device to the TV. Open this online test on the TV's browser, select the display context, and start the test. Ensure your system's display settings are configured to output the TV's native Hz rate.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test my refresh rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>You can test your display's refresh rate instantly using our free web-based tool. It automatically analyzes frame pacing, stability, and dropped frames to tell you exactly whether your screen is running at its intended speed.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test refresh rate on iPhone?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>To test the refresh rate on an iPhone, open Safari or Chrome, navigate to this online refresh rate test mobile version, and click "Start Test". For ProMotion models (iPhone 13 Pro and newer), the test can verify dynamic rates up to 120Hz depending on active scrolling.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-accordion-item group">
+          <button
+            type="button"
+            class="faq-toggle-btn w-full text-left font-display font-medium text-[15px] sm:text-base text-primary flex items-center justify-between cursor-pointer px-6 py-4.5 hover:bg-surface-soft transition-colors duration-200"
+            aria-expanded="false"
+          >
+            <span>How to test screen refresh rate?</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 text-stone group-hover:text-primary transition-transform duration-200 shrink-0 ml-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
+            <p>Testing your screen refresh rate is simple: run our online test on any display, monitor, or phone. The tool counts the time intervals between frame rendering ticks to calculate the screen's actual performance in Hz.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- How it works Modal -->
@@ -1225,6 +1453,32 @@ const keywords = "refresh rate test, monitor hz test, hz tester, screen refresh 
           }
         }
       }
+    });
+
+    // FAQ Accordion Toggle Interaction
+    const faqToggleButtons = document.querySelectorAll(".faq-toggle-btn");
+    faqToggleButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        
+        // Close other open accordions
+        faqToggleButtons.forEach((otherBtn) => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute("aria-expanded", "false");
+            const otherContent = otherBtn.nextElementSibling;
+            if (otherContent) otherContent.classList.add("hidden");
+            otherBtn.querySelector("svg")?.classList.remove("rotate-180");
+          }
+        });
+
+        // Toggle current accordion
+        btn.setAttribute("aria-expanded", !expanded ? "true" : "false");
+        const content = btn.nextElementSibling;
+        if (content) {
+          content.classList.toggle("hidden");
+        }
+        btn.querySelector("svg")?.classList.toggle("rotate-180");
+      });
     });
 
     // Suspend loop if browser tab is backgrounded
