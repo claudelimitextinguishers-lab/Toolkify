@@ -298,7 +298,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
               type="text"
               id="add-zone-search"
               class="text-input w-full py-1 px-3 text-xs h-8.5 border border-hairline-strong bg-canvas rounded-md focus:border-brand-blue outline-none"
-              placeholder="ðŸ” Add zone (e.g. London, UTC+1, PST)..."
+              placeholder="🔍 Add zone (e.g. London, UTC+1, PST)..."
               autocomplete="off"
             />
             <div
@@ -323,7 +323,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
               class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md transition-all cursor-pointer"
               title="Copy text summary of current times"
             >
-              ðŸ“‹ Copy Summary
+              📋 Copy Summary
             </button>
             <button
               type="button"
@@ -331,7 +331,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
               class="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-md transition-all cursor-pointer"
               title="Copy shareable link"
             >
-              ðŸ”— Share Link
+              🔗 Share Link
             </button>
           </div>
         </div>
@@ -346,7 +346,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
           <!-- Meeting Time Overlap Finder -->
           <div class="card-base bg-surface-soft border border-hairline p-3 flex flex-col gap-2 rounded-lg flex-1">
             <h3 class="font-display font-semibold text-xs text-primary flex items-center gap-1">
-              <span>ðŸ¤ Meeting Time Finder</span>
+              <span>🤝 Meeting Time Finder</span>
               <span id="overlap-sweep" class="hidden text-[9px] bg-brand-blue/15 text-brand-blue py-0.5 px-1.5 rounded animate-pulse">Analyzing...</span>
             </h3>
             <p class="text-[10px] text-slate leading-relaxed">
@@ -591,7 +591,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -796,7 +796,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         if (!tzPart || tzPart === 'GMT' || tzPart === 'UTC') return 0;
 
         // Normalize minus signs
-        tzPart = tzPart.replace(/[\u2212âˆ’]/g, '-');
+        tzPart = tzPart.replace(/[\u2212−]/g, '-');
 
         // Match GMT+05:30 or GMT-05:30
         const matchColon = tzPart.match(/GMT([+-])(\d+):(\d+)/);
@@ -927,10 +927,10 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         card.innerHTML = `
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-1.5 min-w-0">
-              <span class="text-stone text-[10px] cursor-move select-none">â˜°</span>
+              <span class="text-stone text-[10px] cursor-move select-none">☰</span>
               <div class="flex flex-col">
                 <span class="font-display font-semibold text-xs text-primary truncate">${city}</span>
-                <span class="text-[9px] text-slate font-medium truncate">${tz} â€¢ ${abbr}</span>
+                <span class="text-[9px] text-slate font-medium truncate">${tz} • ${abbr}</span>
               </div>
             </div>
 
@@ -945,7 +945,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
                 data-index="${index}"
                 title="Remove location"
               >
-                Ã—
+                ×
               </button>
             </div>
           </div>
@@ -1042,7 +1042,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       }
 
       if (matches.length === 0) {
-        overlapResults.innerHTML = `<span class="text-[10px] text-brand-coral font-medium">âš ï¸ No comfortable overlap slots found for these timezones.</span>`;
+        overlapResults.innerHTML = `<span class="text-[10px] text-brand-coral font-medium">⚠️ No comfortable overlap slots found for these timezones.</span>`;
         return;
       }
 
@@ -1051,7 +1051,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         item.type = "button";
         item.className = "w-full text-left p-1.5 border border-hairline rounded bg-canvas hover:bg-surface-yellow hover:border-brand-yellow-deep transition-all text-[11px] font-medium flex items-center justify-between cursor-pointer";
         item.innerHTML = `
-          <span>ðŸ•’ ${slot.label}</span>
+          <span>🕒 ${slot.label}</span>
           <span class="text-[9px] bg-success-accent/10 text-success-accent py-0.5 px-2 rounded-full font-bold">Good Match</span>
         `;
         item.addEventListener("click", () => {
@@ -1260,7 +1260,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       newPresetNameInput.value = "";
       loadPresetsList();
       presetSelect.value = nameVal;
-      showToast("âœ“ Preset saved locally!");
+      showToast("✓ Preset saved locally!");
     });
 
     // Share action
@@ -1353,7 +1353,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       startLiveTicking();
       renderComparisonList();
       calculateOverlap();
-      showToast("ðŸ”„ State reset successfully");
+      showToast("🔄 State reset successfully");
     });
 
     // Copy Summary Text
@@ -1367,11 +1367,11 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
         const targetDateTime = new Date(sourceDateTime.getTime() + (relativeOffset * 60 * 1000));
         const timeStr = formatTime(targetDateTime, tz, state.format24h);
         const city = tz.split('/').pop()?.replace(/_/g, ' ') || tz;
-        summary += `â€¢ ${city} (${tz}): ${timeStr} (Offset: ${relativeOffset >= 0 ? "+" : ""}${(relativeOffset / 60).toFixed(relativeOffset % 60 === 0 ? 0 : 1)}h)\n`;
+        summary += `• ${city} (${tz}): ${timeStr} (Offset: ${relativeOffset >= 0 ? "+" : ""}${(relativeOffset / 60).toFixed(relativeOffset % 60 === 0 ? 0 : 1)}h)\n`;
       });
 
       navigator.clipboard.writeText(summary).then(() => {
-        showToast("ðŸ“‹ Summary copied to clipboard");
+        showToast("📋 Summary copied to clipboard");
       });
     });
 
@@ -1382,7 +1382,7 @@ const keywords = "time zone converter, pacific time zone converter, time zone co
       const shareUrl = `${window.location.origin}${window.location.pathname}?date=${state.sourceDate}&time=${state.sourceTime}&stz=${stzEncoded}&zones=${zonesEncoded}`;
 
       navigator.clipboard.writeText(shareUrl).then(() => {
-        showToast("ðŸ”— Shareable link copied!");
+        showToast("🔗 Shareable link copied!");
       });
     });
 

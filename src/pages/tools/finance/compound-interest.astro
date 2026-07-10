@@ -294,10 +294,10 @@ const keywords =
               >
                 <option value="USD" selected>$ USD</option>
                 <option value="CAD">$ CAD</option>
-                <option value="GBP">Ã‚Â£ GBP</option>
+                <option value="GBP">£ GBP</option>
                 <option value="AUD">$ AUD</option>
-                <option value="EUR">Ã¢â€šÂ¬ EUR</option>
-                <option value="INR">Ã¢â€šÂ¹ INR</option>
+                <option value="EUR">€ EUR</option>
+                <option value="INR">₹ INR</option>
                 <option value="Custom">Custom / Other</option>
               </select>
             </div>
@@ -321,7 +321,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Ã‚Â£, Ã¢â€šÂ¬, Ã¢â€šÂ¹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -477,7 +477,7 @@ const keywords =
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                Ã¢Å¡â„¢ Advanced Options (Inflation, Taxes, Timings)
+                ⚙ Advanced Options (Inflation, Taxes, Timings)
               </span>
               <svg
                 id="advanced-chevron"
@@ -1209,7 +1209,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          Ã¢Å“â€¢
+          ✕
         </button>
       </div>
 
@@ -1476,7 +1476,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "Ã‚Â£";
+        currentCurrencySymbol = "£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1484,11 +1484,11 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "Ã¢â€šÂ¬";
+        currentCurrencySymbol = "€";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "INR") {
-        currentCurrencySymbol = "Ã¢â€šÂ¹";
+        currentCurrencySymbol = "₹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {

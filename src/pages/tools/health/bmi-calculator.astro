@@ -607,10 +607,10 @@ const keywords =
       </h3>
       <p class="text-sm leading-relaxed">
         BMI is calculated by dividing your weight by the square of your height.
-        In metric units the formula is <strong>weight (kg) Ã· height (m)Â²</strong>,
+        In metric units the formula is <strong>weight (kg) ÷ height (m)²</strong>,
         which is why a BMI calculator cm kg only needs your centimetres and
         kilograms. In imperial units the formula is
-        <strong>weight (lb) Ã· height (in)Â² Ã— 703</strong>, so a BMI calculator
+        <strong>weight (lb) ÷ height (in)² × 703</strong>, so a BMI calculator
         inches pounds simply converts your feet and inches into total inches
         first. Both methods give the same result for the same person, which is
         why you can freely move between a BMI calculator pounds and cm setup and
@@ -867,7 +867,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -877,8 +877,8 @@ const keywords =
           BMI is calculated by dividing your weight by your height squared:
         </p>
         <ul class="list-disc pl-4 flex flex-col gap-1">
-          <li><strong>Metric:</strong> weight (kg) / height (m)Â²</li>
-          <li><strong>Imperial:</strong> weight (lb) / height (in)Â² Ã— 703</li>
+          <li><strong>Metric:</strong> weight (kg) / height (m)²</li>
+          <li><strong>Imperial:</strong> weight (lb) / height (in)² × 703</li>
         </ul>
 
         <h4 class="font-semibold text-primary">2. WHO Weight Classifications</h4>
@@ -1374,28 +1374,28 @@ const keywords =
 
       // Contextual modifiers
       if (age > 0 && age < 20) {
-        mainMsg = `Note: Standard BMI categories are for adults 20+. For children and teens (ages 2â€“19), BMI classifications must be calculated as percentiles relative to peers of the same age and sex. <br/><br/>${mainMsg}`;
-        badges.push("âš ï¸ Youth (Age < 20)");
+        mainMsg = `Note: Standard BMI categories are for adults 20+. For children and teens (ages 2–19), BMI classifications must be calculated as percentiles relative to peers of the same age and sex. <br/><br/>${mainMsg}`;
+        badges.push("⚠️ Youth (Age < 20)");
       }
 
       if (age >= 65) {
-        badges.push("ðŸ‘´ Older Adult (65+)");
+        badges.push("👴 Older Adult (65+)");
         if (classification === "Normal" && currentBmi < 23) {
-          mainMsg += " For older adults (65+), a slightly higher BMI (23â€“27) may offer nutritional reserve against illness.";
+          mainMsg += " For older adults (65+), a slightly higher BMI (23–27) may offer nutritional reserve against illness.";
         }
       }
 
       if (sex === "male") {
-        badges.push("â™‚ Male Context");
+        badges.push("♂ Male Context");
       } else if (sex === "female") {
-        badges.push("â™€ Female Context");
+        badges.push("♀ Female Context");
       } else if (sex === "other") {
-        badges.push("âš§ Other Context");
+        badges.push("⚧ Other Context");
       }
 
       // Limitations note for athletes or body types
       if (classification === "Overweight" || classification === "Obese") {
-        badges.push("ðŸ’ª Muscle Mass Check");
+        badges.push("💪 Muscle Mass Check");
       }
 
       mainContextText.innerHTML = mainMsg;

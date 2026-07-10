@@ -123,7 +123,7 @@ const ogImage = "/og/code-formatter.png";
             class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary hover:border-primary/30 rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-subtle"
             aria-label="View keyboard shortcuts"
           >
-            <span>âŒ¨ Keyboard Shortcuts</span>
+            <span>⌨ Keyboard Shortcuts</span>
           </button>
 
           <button
@@ -216,7 +216,7 @@ const ogImage = "/og/code-formatter.png";
           <label for="language-select" class="text-[10px] font-bold text-slate uppercase tracking-wider">Format Syntax</label>
           <div class="flex gap-2">
             <select id="language-select" class="text-input py-0.5 px-3 text-xs h-9 flex-grow cursor-pointer border border-hairline-strong bg-canvas rounded-md focus:outline-none focus:border-brand-blue">
-              <option value="auto">âš¡ Auto-detect Syntax</option>
+              <option value="auto">⚡ Auto-detect Syntax</option>
               <option value="javascript">JavaScript (JS)</option>
               <option value="json">JSON</option>
               <option value="html">HTML Markup</option>
@@ -295,7 +295,7 @@ const ogImage = "/og/code-formatter.png";
           >
             <!-- Drop message overlay -->
             <div id="drop-overlay" class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200 z-10">
-              <span class="text-2xl">ðŸ“¥</span>
+              <span class="text-2xl">📥</span>
               <span class="text-xs font-bold text-brand-blue">Drop code file here</span>
             </div>
 
@@ -408,7 +408,7 @@ const ogImage = "/og/code-formatter.png";
         <!-- Precise syntax failure trace overlay -->
         <div id="error-trace-panel" class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake">
           <div class="font-bold flex items-center gap-1.5">
-            <span>âš ï¸ Format Parse Exception:</span>
+            <span>⚠️ Format Parse Exception:</span>
             <span id="error-brief" class="font-semibold text-primary"></span>
           </div>
           <pre id="error-context" class="font-mono text-[11px] p-2 bg-canvas/60 rounded border border-brand-red-dark/30 whitespace-pre overflow-x-auto text-primary"></pre>
@@ -597,7 +597,7 @@ const ogImage = "/og/code-formatter.png";
         <button
           id="close-shortcuts-btn"
           class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
-          >Ã—</button
+          >×</button
         >
       </div>
       <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
@@ -638,7 +638,7 @@ const ogImage = "/og/code-formatter.png";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -823,7 +823,7 @@ const ogImage = "/og/code-formatter.png";
         worker.onerror = function(e) {
           console.error("Formatting engine worker error:", e);
           loadingOverlay.classList.add('hidden');
-          updateBannerStatus('error', 'Formatting engine failed to load â€” check your connection');
+          updateBannerStatus('error', 'Formatting engine failed to load — check your connection');
         };
       } catch (err) {
         console.error("Could not spawn background formatter worker:", err);
@@ -992,7 +992,7 @@ const ogImage = "/og/code-formatter.png";
         (window as any).Prism.highlightElement(outputCode);
       }
 
-      updateBannerStatus('success', 'âœ“ Format Successful');
+      updateBannerStatus('success', '✓ Format Successful');
       errorTracePanel.classList.add('hidden');
       
       // Save valid snippet to local history
@@ -1007,7 +1007,7 @@ const ogImage = "/og/code-formatter.png";
     }
 
     function handleFormatError(error: string) {
-      updateBannerStatus('error', 'âœ— Syntax/Validation Error');
+      updateBannerStatus('error', '✗ Syntax/Validation Error');
       errorBrief.textContent = error;
       errorTracePanel.classList.remove('hidden');
       
@@ -1177,7 +1177,7 @@ const ogImage = "/og/code-formatter.png";
       if (!text.trim()) return;
 
       navigator.clipboard.writeText(text).then(() => {
-        showToast('âœ“ Copied Code');
+        showToast('✓ Copied Code');
         // Pulse animation effect
         btnCopy.classList.add('bg-success-accent/15', 'text-moss-dark', 'scale-105');
         setTimeout(() => {
@@ -1206,7 +1206,7 @@ const ogImage = "/og/code-formatter.png";
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('âœ“ Downloading Code File');
+      showToast('✓ Downloading Code File');
     });
 
     // Share state link URL helper
@@ -1220,10 +1220,10 @@ const ogImage = "/og/code-formatter.png";
         const shareUrl = `${window.location.origin}${window.location.pathname}?code=${base}&lang=${lang}`;
         
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast('âœ“ Share URL copied to Clipboard');
+          showToast('✓ Share URL copied to Clipboard');
         });
       } catch (err) {
-        showToast('âš ï¸ Could not generate share URL');
+        showToast('⚠️ Could not generate share URL');
       }
     });
 
@@ -1255,7 +1255,7 @@ const ogImage = "/og/code-formatter.png";
           copyToClipboard(url.toString());
         }
       } catch (err) {
-        showToast('âš ï¸ Could not generate share URL');
+        showToast('⚠️ Could not generate share URL');
       }
 
       function copyToClipboard(text: string) {

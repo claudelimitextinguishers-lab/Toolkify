@@ -256,7 +256,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counte
               
               <!-- Drag overlay message -->
               <div id="drag-overlay" class="absolute inset-0 bg-brand-yellow/90 flex flex-col items-center justify-center gap-2 rounded-xl opacity-0 pointer-events-none transition-all duration-200 z-30">
-                <span class="text-3xl">ðŸ“¥</span>
+                <span class="text-3xl">📥</span>
                 <span class="font-display font-bold text-sm text-primary">Drop to load text file</span>
               </div>
               
@@ -680,7 +680,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counte
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -873,7 +873,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counte
   function calculateSentenceCount(str: string): number {
     if (!str.trim()) return 0;
     // Standard English/CJK sentence regex fallback
-    const standardMatches = str.match(/[^.!?ã€‚ï¼ï¼Ÿ\s][^.!?ã€‚ï¼ï¼Ÿ]*(?:[.!?ã€‚ï¼ï¼Ÿ]|\s*$)/g);
+    const standardMatches = str.match(/[^.!?。！？\s][^.!?。！？]*(?:[.!?。！？]|\s*$)/g);
     return standardMatches ? standardMatches.length : 0;
   }
 
@@ -981,7 +981,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counte
               data-id="${l.id}"
               title="${l.pinned ? 'Unpin' : 'Pin'}"
             >
-              â˜…
+              ★
             </button>
             ${l.custom ? `
               <button 
@@ -990,7 +990,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/word-character-counte
                 data-id="${l.id}"
                 title="Delete"
               >
-                âœ•
+                ✕
               </button>
             ` : ''}
           </div>

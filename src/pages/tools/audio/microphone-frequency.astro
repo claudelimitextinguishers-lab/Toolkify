@@ -159,7 +159,7 @@ const keywords = "microphone frequency response, microphone frequency response m
         <!-- Permission & Welcome Screen -->
         <div id="welcome-panel" class="absolute inset-0 bg-canvas rounded-xl flex flex-col items-center justify-center p-8 text-center z-20 gap-6 transition-all duration-300">
           <div class="w-16 h-16 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue text-2xl" id="mic-icon-welcome">
-            ðŸŽ™ï¸
+            🎙️
           </div>
           <div class="max-w-md flex flex-col gap-2">
             <h3 class="font-display font-semibold text-lg text-primary">Microphone Access Required</h3>
@@ -179,7 +179,7 @@ const keywords = "microphone frequency response, microphone frequency response m
         <!-- Error Panel -->
         <div id="error-panel" class="absolute inset-0 bg-canvas rounded-xl flex flex-col items-center justify-center p-8 text-center z-20 gap-4 transition-all duration-300 hidden">
           <div class="w-16 h-16 rounded-full bg-brand-coral/10 flex items-center justify-center text-brand-coral text-2xl">
-            âš ï¸
+            ⚠️
           </div>
           <div class="max-w-md flex flex-col gap-2">
             <h3 class="font-display font-semibold text-lg text-primary">Access Blocked or Unavailable</h3>
@@ -253,10 +253,10 @@ const keywords = "microphone frequency response, microphone frequency response m
             <!-- Capture State Action Row -->
             <div class="md:col-span-4 flex justify-end gap-2">
               <button id="btn-pause-resume" class="flex-1 md:flex-initial inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 bg-surface hover:bg-hairline border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer">
-                <span>â¸ï¸ Pause</span>
+                <span>⏸️ Pause</span>
               </button>
               <button id="btn-stop-capture" class="flex-1 md:flex-initial inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer">
-                <span>ðŸ›‘ Stop</span>
+                <span>🛑 Stop</span>
               </button>
             </div>
           </div>
@@ -265,15 +265,15 @@ const keywords = "microphone frequency response, microphone frequency response m
           <div class="flex flex-wrap gap-2 items-center justify-between border-t border-hairline pt-4">
             <div class="flex items-center gap-2">
               <button id="btn-freeze" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-surface hover:bg-hairline border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer">
-                <span id="freeze-icon">â„ï¸</span> <span id="freeze-text">Freeze Snapshot</span>
+                <span id="freeze-icon">❄️</span> <span id="freeze-text">Freeze Snapshot</span>
               </button>
               <button id="btn-export" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-surface hover:bg-hairline border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer">
-                ðŸ“¥ Export Image
+                📥 Export Image
               </button>
             </div>
             
             <button id="btn-open-settings" class="lg:hidden inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-surface hover:bg-hairline border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer">
-              âš™ï¸ Controls & Overlay
+              ⚙️ Controls & Overlay
             </button>
           </div>
         </div>
@@ -285,7 +285,7 @@ const keywords = "microphone frequency response, microphone frequency response m
         <div id="settings-card" class="card-base flex flex-col gap-4 max-lg:hidden max-lg:fixed max-lg:bottom-0 max-lg:left-0 max-lg:right-0 max-lg:z-40 max-lg:bg-canvas max-lg:border-t max-lg:border-hairline max-lg:shadow-modal max-lg:rounded-t-2xl max-lg:p-6 transition-all duration-300">
           <div class="flex justify-between items-center lg:hidden">
             <h3 class="font-display font-semibold text-base text-primary">Analyzer Settings</h3>
-            <button id="btn-close-settings" class="text-stone hover:text-primary text-lg cursor-pointer">âœ•</button>
+            <button id="btn-close-settings" class="text-stone hover:text-primary text-lg cursor-pointer">✕</button>
           </div>
           <h3 class="font-display font-semibold text-base text-primary max-lg:hidden">Settings & Overlay</h3>
           
@@ -389,7 +389,7 @@ const keywords = "microphone frequency response, microphone frequency response m
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -449,7 +449,7 @@ const keywords = "microphone frequency response, microphone frequency response m
         To visualize how a microphone shapes sound, audio manufacturers supply <strong>microphone frequency response charts</strong>. A <strong>microphone frequency response chart</strong> maps the output level of the microphone (in decibels, or dB) against a series of audio pitches (in Hertz, or Hz) ranging from 20 Hz sub-bass to 20,000 Hz high treble.
       </p>
       <p class="text-sm sm:text-base leading-relaxed">
-        When you study these <strong>microphone frequency response charts</strong>, you will notice a line plotted across the grid. A completely straight, horizontal line indicates a flat response, representing a microphone that captures all frequencies with equal sensitivity. These neutral capsules are ideal for critical <strong>microphone frequency response measurement</strong> applications and room acoustic analysis because they do not color or alter the source sound. In contrast, many popular vocal microphones feature a tailored response curve. For example, they might include a presence boostâ€”a peak between 2 kHz and 6 kHzâ€”which accentuates vocal clarity and helps the singer cut through a dense instrument mix. They may also incorporate a high-pass filter or low-frequency roll-off to mitigate proximity effect rumble and wind noise.
+        When you study these <strong>microphone frequency response charts</strong>, you will notice a line plotted across the grid. A completely straight, horizontal line indicates a flat response, representing a microphone that captures all frequencies with equal sensitivity. These neutral capsules are ideal for critical <strong>microphone frequency response measurement</strong> applications and room acoustic analysis because they do not color or alter the source sound. In contrast, many popular vocal microphones feature a tailored response curve. For example, they might include a presence boost—a peak between 2 kHz and 6 kHz—which accentuates vocal clarity and helps the singer cut through a dense instrument mix. They may also incorporate a high-pass filter or low-frequency roll-off to mitigate proximity effect rumble and wind noise.
       </p>
 
       <h3 class="font-display font-semibold text-xl text-primary mt-2">
@@ -868,7 +868,7 @@ const keywords = "microphone frequency response, microphone frequency response m
       isCapturing = true;
       isPaused = false;
       isFrozen = false;
-      btnPauseResume.querySelector("span")!.textContent = "â¸ï¸ Pause";
+      btnPauseResume.querySelector("span")!.textContent = "⏸️ Pause";
       listeningIndicator.className = "w-2.5 h-2.5 rounded-full bg-brand-teal animate-pulse";
       
       // Start loop
@@ -878,7 +878,7 @@ const keywords = "microphone frequency response, microphone frequency response m
       console.error(err);
       welcomePanel.classList.add("hidden");
       errorPanel.classList.remove("hidden");
-      errorMessage.innerHTML = `${err.message || "Microphone access denied or audio device not found."}<br><br><span class="block text-[11px] text-brand-coral font-semibold bg-brand-coral/5 p-2 rounded-lg border border-brand-coral/10">To fix this: Click the lock icon ðŸ”’ next to the website URL in your browser's address bar, and change "Microphone" to "Allow", then click Retry.</span>`;
+      errorMessage.innerHTML = `${err.message || "Microphone access denied or audio device not found."}<br><br><span class="block text-[11px] text-brand-coral font-semibold bg-brand-coral/5 p-2 rounded-lg border border-brand-coral/10">To fix this: Click the lock icon 🔒 next to the website URL in your browser's address bar, and change "Microphone" to "Allow", then click Retry.</span>`;
     }
   }
 
@@ -933,10 +933,10 @@ const keywords = "microphone frequency response, microphone frequency response m
     if (!isCapturing) return;
     isPaused = !isPaused;
     if (isPaused) {
-      btnPauseResume.querySelector("span")!.textContent = "â–¶ï¸ Resume";
+      btnPauseResume.querySelector("span")!.textContent = "▶️ Resume";
       listeningIndicator.className = "w-2.5 h-2.5 rounded-full bg-yellow-dark";
     } else {
-      btnPauseResume.querySelector("span")!.textContent = "â¸ï¸ Pause";
+      btnPauseResume.querySelector("span")!.textContent = "⏸️ Pause";
       listeningIndicator.className = "w-2.5 h-2.5 rounded-full bg-brand-teal animate-pulse";
       if (audioCtx && audioCtx.state === 'suspended') {
         audioCtx.resume();
@@ -1305,11 +1305,11 @@ const keywords = "microphone frequency response, microphone frequency response m
     if (isFrozen) {
       freezeIndicator.style.opacity = "1";
       btnFreeze.querySelector("#freeze-text")!.textContent = "Resume Live";
-      btnFreeze.querySelector("#freeze-icon")!.textContent = "â–¶ï¸";
+      btnFreeze.querySelector("#freeze-icon")!.textContent = "▶️";
     } else {
       freezeIndicator.style.opacity = "0";
       btnFreeze.querySelector("#freeze-text")!.textContent = "Freeze Snapshot";
-      btnFreeze.querySelector("#freeze-icon")!.textContent = "â„ï¸";
+      btnFreeze.querySelector("#freeze-icon")!.textContent = "❄️";
     }
   }
 

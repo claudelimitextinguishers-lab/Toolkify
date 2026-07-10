@@ -308,7 +308,7 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
             id="btn-generate-uuids" 
             class="button-primary w-full py-2 sm:py-2.5 text-xs font-bold hover:scale-[1.01] active:scale-[0.99] transition-all shadow-subtle flex items-center justify-center gap-1.5"
           >
-            <span>âš¡ Generate Unique IDs</span>
+            <span>⚡ Generate Unique IDs</span>
           </button>
 
           <!-- Favorites / Pinned List -->
@@ -322,7 +322,7 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
               id="btn-pin-preset"
               class="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-brand-blue hover:underline cursor-pointer w-fit"
             >
-              â­ Pin Current Config
+              ⭐ Pin Current Config
             </button>
           </div>
         </div>
@@ -419,7 +419,7 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
               class="relative min-h-[110px] sm:min-h-[140px] border-2 border-dashed border-hairline-strong rounded-xl bg-surface-soft/60 hover:bg-surface flex flex-col items-center justify-center gap-2 p-5 text-center cursor-pointer transition-all focus-within:border-brand-blue"
             >
               <input type="file" id="hash-file-input" class="hidden" />
-              <span class="text-xl">ðŸ“</span>
+              <span class="text-xl">📁</span>
               <div class="flex flex-col gap-0.5">
                 <span class="text-xs font-bold text-primary">Drag & drop file here or click to browse</span>
                 <span class="text-[10px] text-slate">Calculation is 100% offline and client-side (no uploads).</span>
@@ -829,7 +829,7 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1514,9 +1514,9 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
       return `
         <div class="flex items-center justify-between bg-surface p-1.5 px-2.5 rounded border border-hairline text-[11px] font-mono group">
           <button type="button" class="text-left hover:text-brand-blue font-bold flex-grow btn-apply-preset" data-id="${p.id}">
-            â­ ${parts.join(' | ')}
+            ⭐ ${parts.join(' | ')}
           </button>
-          <button type="button" class="text-stone hover:text-brand-coral ml-2 btn-remove-preset" data-id="${p.id}">Ã—</button>
+          <button type="button" class="text-stone hover:text-brand-coral ml-2 btn-remove-preset" data-id="${p.id}">×</button>
         </div>
       `;
     }).join('');
@@ -1757,7 +1757,7 @@ const canonicalUrl = "https://toolkify.com/tools/uuid-hash";
       if (input && input.value) {
         navigator.clipboard.writeText(input.value).then(() => {
           const origText = btn.innerHTML;
-          btn.innerHTML = "âœ“ Copied";
+          btn.innerHTML = "✓ Copied";
           setTimeout(() => {
             btn.innerHTML = origText;
           }, 1500);

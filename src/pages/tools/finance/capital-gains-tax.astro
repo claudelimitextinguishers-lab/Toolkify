@@ -9,7 +9,7 @@ const tier = "Finance & Tax";
 
 // On-page SEO metadata
 const pageTitle =
-  "Capital Gains Tax Estimator â€“ Free 2025 Calculator";
+  "Capital Gains Tax Estimator – Free 2025 Calculator";
 const description =
   "Free capital gains tax estimator & 2025 capital gains tax calculator. Estimate short- and long-term capital gains tax on stocks, crypto & property by income.";
 const canonicalUrl =
@@ -318,7 +318,7 @@ const keywords =
           id="custom-currency-symbol"
           value="$"
           class="text-input"
-          placeholder="e.g. $, Â£, â‚¬, â‚¹"
+          placeholder="e.g. $, £, €, ₹"
         />
       </div>
       <div class="flex flex-col gap-1.5">
@@ -360,31 +360,31 @@ const keywords =
                 type="button"
                 data-asset="stocks"
                 class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
-                >ðŸ“ˆ Stocks</button
+                >📈 Stocks</button
               >
               <button
                 type="button"
                 data-asset="crypto"
                 class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
-                >ðŸª™ Crypto</button
+                >🪙 Crypto</button
               >
               <button
                 type="button"
                 data-asset="real-estate"
                 class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
-                >ðŸ  Real Estate</button
+                >🏠 Real Estate</button
               >
               <button
                 type="button"
                 data-asset="funds"
                 class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
-                >ðŸ’¼ Funds</button
+                >💼 Funds</button
               >
               <button
                 type="button"
                 data-asset="other"
                 class="asset-btn text-xs py-2 rounded-xl font-semibold border border-hairline bg-surface text-primary hover:bg-canvas transition-all active:scale-95"
-                >ðŸ“¦ Other</button
+                >📦 Other</button
               >
             </div>
           </div>
@@ -405,10 +405,10 @@ const keywords =
                 >
                   <option value="USD" selected>$ USD</option>
                   <option value="CAD">$ CAD</option>
-                  <option value="GBP">Â£ GBP</option>
+                  <option value="GBP">£ GBP</option>
                   <option value="AUD">$ AUD</option>
-                  <option value="EUR">â‚¬ EUR</option>
-                  <option value="INR">â‚¹ INR</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
                   <option value="Custom">Custom</option>
                 </select>
               </div>
@@ -518,7 +518,7 @@ const keywords =
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                âš™ Advanced Options +
+                ⚙ Advanced Options +
               </span>
               <svg
                 id="advanced-chevron"
@@ -1603,7 +1603,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -2201,10 +2201,10 @@ const keywords =
       const country = currencySelect.value;
       if (country === "USD") return { symbol: "$", code: "USD" };
       if (country === "CAD") return { symbol: "$", code: "CAD" };
-      if (country === "GBP") return { symbol: "Â£", code: "GBP" };
+      if (country === "GBP") return { symbol: "£", code: "GBP" };
       if (country === "AUD") return { symbol: "$", code: "AUD" };
-      if (country === "EUR") return { symbol: "â‚¬", code: "EUR" };
-      if (country === "INR") return { symbol: "â‚¹", code: "INR" };
+      if (country === "EUR") return { symbol: "€", code: "EUR" };
+      if (country === "INR") return { symbol: "₹", code: "INR" };
       if (country === "Custom") {
         return {
           symbol: customCurrencySymbolInput.value || "$",
@@ -2549,7 +2549,7 @@ const keywords =
 
         // 3. UNITED KINGDOM
       } else if (country === "GBP") {
-        // CGT allowance is Â£3,000
+        // CGT allowance is £3,000
         const allowanceUsed = ukAllowanceCheckbox.checked;
         const allowance = allowanceUsed ? 0 : 3000;
         const taxableGain = Math.max(0, grossGain - allowance);
@@ -2562,7 +2562,7 @@ const keywords =
           appliedBracket = "Private Residence Relief";
         } else {
           // Stacking on income to see basic/higher rate taxpayer threshold
-          // Basic rate limit is Â£37,700 taxable (which corresponds to total income of Â£50,270 with Â£12,570 Personal Allowance)
+          // Basic rate limit is £37,700 taxable (which corresponds to total income of £50,270 with £12,570 Personal Allowance)
           const taxableIncome = Math.max(0, annualIncome - 12570);
           const basicRateLimit = 37700;
 
@@ -2607,7 +2607,7 @@ const keywords =
           });
         }
 
-        notes = `UK allowance for 2024/25 is Â£3,000. Residential property CGT rates are 18% / 24% (reduced from 28% in 2024). Business Asset Disposal Relief (BADR) allows a flat 10% rate for qualifying shares.`;
+        notes = `UK allowance for 2024/25 is £3,000. Residential property CGT rates are 18% / 24% (reduced from 28% in 2024). Business Asset Disposal Relief (BADR) allows a flat 10% rate for qualifying shares.`;
 
         // 4. AUSTRALIA
       } else if (country === "AUD") {
@@ -2689,13 +2689,13 @@ const keywords =
               value: finalTax,
             });
           } else {
-            // Long Term Equity 12.5% over â‚¹1.25L exemption
+            // Long Term Equity 12.5% over ₹1.25L exemption
             const exemption = 125000;
             const taxableGain = Math.max(0, grossGain - exemption);
             finalTax = taxableGain * 0.125;
             appliedBracket = "Equity LTCG (12.5%)";
             breakdownRows.push({
-              label: "LTCG Exemption (â‚¹1.25L)",
+              label: "LTCG Exemption (₹1.25L)",
               value: Math.min(grossGain, exemption),
             });
             breakdownRows.push({
@@ -2768,12 +2768,12 @@ const keywords =
             limit:
               b.limit === Infinity
                 ? "Over"
-                : `â‚¹${b.limit.toLocaleString("en-IN")}`,
+                : `₹${b.limit.toLocaleString("en-IN")}`,
             rate: `${(b.rate * 100).toFixed(0)}%`,
           });
         });
 
-        notes = `India budget 2024: Equity STCG is 20%, LTCG is 12.5% (with exemption up to â‚¹1.25L). Real estate LTCG is 12.5% without indexation (taxpayers can choose 20% with indexation for pre-Jul 2024 assets). Flat 4% cess applies.`;
+        notes = `India budget 2024: Equity STCG is 20%, LTCG is 12.5% (with exemption up to ₹1.25L). Real estate LTCG is 12.5% without indexation (taxpayers can choose 20% with indexation for pre-Jul 2024 assets). Flat 4% cess applies.`;
 
         // 7. CUSTOM
       } else {
@@ -3229,7 +3229,7 @@ const keywords =
           // NOTE: copyOriginalText only captures the icon's HTML once and won't reflect later changes to the SVG icon string
           copyOriginalText = copyResultsBtn.innerHTML;
         }
-        copyResultsBtn.innerHTML = `<span>âœ“ Copied!</span>`;
+        copyResultsBtn.innerHTML = `<span>✓ Copied!</span>`;
         copyTimeout = setTimeout(() => {
           copyResultsBtn.innerHTML = copyOriginalText;
           copyTimeout = null;

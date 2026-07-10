@@ -337,10 +337,10 @@ const keywords =
               >
                 <option value="USD" selected>$ USD</option>
                 <option value="CAD">$ CAD</option>
-                <option value="GBP">Â£ GBP</option>
+                <option value="GBP">£ GBP</option>
                 <option value="AUD">$ AUD</option>
-                <option value="EUR">â‚¬ EUR</option>
-                <option value="INR">â‚¹ INR</option>
+                <option value="EUR">€ EUR</option>
+                <option value="INR">₹ INR</option>
                 <option value="Custom">Custom / Other</option>
               </select>
             </div>
@@ -365,7 +365,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -433,7 +433,7 @@ const keywords =
                 id="split-minus"
                 class="w-9 h-9 flex items-center justify-center border border-hairline hover:border-hairline-strong text-slate hover:text-primary rounded-full transition-all cursor-pointer font-bold text-sm bg-canvas active:scale-90"
               >
-                âˆ’
+                −
               </button>
               <input
                 type="number"
@@ -1184,7 +1184,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "Â£";
+        currentCurrencySymbol = "£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1192,11 +1192,11 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "â‚¬";
+        currentCurrencySymbol = "€";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "INR") {
-        currentCurrencySymbol = "â‚¹";
+        currentCurrencySymbol = "₹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {

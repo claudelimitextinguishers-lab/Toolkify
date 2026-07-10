@@ -470,7 +470,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/case-converter";
           type="button"
           id="close-how-it-works-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
-        >âœ•</button>
+        >✕</button>
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
@@ -481,7 +481,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/case-converter";
 
         <h4 class="font-semibold text-primary">2. Favorites Pinning</h4>
         <p>
-          Click the star icon (â˜…) in the top-right of any case card to pin it to the top. Your favorite formats will stay at the top of the grid and are saved to your browser's local storage.
+          Click the star icon (★) in the top-right of any case card to pin it to the top. Your favorite formats will stay at the top of the grid and are saved to your browser's local storage.
         </p>
 
         <h4 class="font-semibold text-primary">3. Batch Mode (Line-by-Line)</h4>
@@ -725,7 +725,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/case-converter";
             data-id="${c.id}"
             title="${isPinned ? 'Unpin case' : 'Pin case to top'}"
           >
-            â˜…
+            ★
           </button>
         </div>
         <textarea 
@@ -750,7 +750,7 @@ const canonicalUrl = "https://toolkify.com/tools/developer/case-converter";
       copyBtn.addEventListener('click', () => {
         if (!textarea.value) return;
         navigator.clipboard.writeText(textarea.value).then(() => {
-          copyBtn.textContent = 'âœ“ Copied!';
+          copyBtn.textContent = '✓ Copied!';
           copyBtn.className = "copy-card-btn inline-flex items-center gap-1 text-[10px] font-bold text-success-accent";
           setTimeout(() => {
             copyBtn.textContent = 'Copy';

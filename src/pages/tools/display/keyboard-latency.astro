@@ -285,7 +285,7 @@ const keywords =
       class="p-2 bg-surface-yellow border border-yellow-light/80 rounded-lg text-[11px] text-yellow-dark leading-normal flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-subtle print:hidden"
     >
       <div class="flex items-start gap-1.5">
-        <span class="text-xs select-none shrink-0">ðŸ’¡</span>
+        <span class="text-xs select-none shrink-0">💡</span>
         <div>
           <span class="font-bold">Honesty Disclaimer:</span> Measures <span
             class="font-bold underline text-primary"
@@ -300,7 +300,7 @@ const keywords =
       id="touch-device-warning"
       class="hidden p-3.5 bg-brand-red border border-brand-red-dark/50 text-coral-dark rounded-xl text-xs flex items-center gap-2.5 shadow-subtle"
     >
-      <span class="text-base">âš ï¸</span>
+      <span class="text-base">⚠️</span>
       <div>
         <span class="font-bold">Physical Keyboard Recommended:</span> We detected
         a touch-only or virtual keyboard environment. For meaningful diagnostics,
@@ -644,7 +644,7 @@ const keywords =
           <h3
             class="font-display font-semibold text-[11px] text-primary flex items-center gap-1"
           >
-            ðŸ•’ Keystrokes Log
+            🕒 Keystrokes Log
           </h3>
           <div class="flex items-center gap-1.5">
             <button
@@ -693,7 +693,7 @@ const keywords =
         <h3
           class="font-display font-semibold text-[11px] text-primary flex items-center gap-1 border-b border-hairline-soft pb-1.5"
         >
-          ðŸ“‚ Session History (Local)
+          📂 Session History (Local)
         </h3>
         <div id="saved-sessions-container" class="flex flex-col gap-1 max-h-28 overflow-y-auto pr-1">
           <div class="text-[10px] text-stone italic">
@@ -709,11 +709,11 @@ const keywords =
         </h4>
         <div class="flex flex-col gap-1 text-[10px] text-slate leading-relaxed">
           <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
-            <span class="font-bold text-success-accent whitespace-nowrap">5msâ€“15ms:</span>
+            <span class="font-bold text-success-accent whitespace-nowrap">5ms–15ms:</span>
             <span class="text-[9px] text-stone text-right">Excellent. Low load, high refresh.</span>
           </div>
           <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
-            <span class="font-bold text-brand-blue whitespace-nowrap">16msâ€“30ms:</span>
+            <span class="font-bold text-brand-blue whitespace-nowrap">16ms–30ms:</span>
             <span class="text-[9px] text-stone text-right">Normal. 60Hz displays.</span>
           </div>
           <div class="flex justify-between items-start gap-1 p-1 bg-canvas border border-hairline rounded">
@@ -1050,7 +1050,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1410,7 +1410,7 @@ const keywords =
       } else if (stdDev > 4) {
         stability = "Moderate";
       }
-      envStability.textContent = `${stability} (Â±${stdDev.toFixed(1)}ms)`;
+      envStability.textContent = `${stability} (±${stdDev.toFixed(1)}ms)`;
 
       // Render Distribution Histogram
       renderHistogram();
@@ -1819,7 +1819,7 @@ const keywords =
       if (diff < 1.0) {
         abResultBanner.textContent = `Results show negligible difference (${diff.toFixed(1)}ms gap between setups).`;
       } else {
-        abResultBanner.textContent = `ðŸŽ‰ ${better} is faster by ${diff.toFixed(1)}ms (${Math.min(aMed, bMed).toFixed(1)}ms vs ${Math.max(aMed, bMed).toFixed(1)}ms).`;
+        abResultBanner.textContent = `🎉 ${better} is faster by ${diff.toFixed(1)}ms (${Math.min(aMed, bMed).toFixed(1)}ms vs ${Math.max(aMed, bMed).toFixed(1)}ms).`;
       }
     }
 

@@ -249,7 +249,7 @@ const keywords = "Color Contrast Checker, color contrast checker, color contrast
                 <div class="flex flex-col gap-1">
                   <div class="flex justify-between text-[11px] font-semibold text-slate">
                     <span>Hue (H)</span>
-                    <span id="fg-val-h">0Â°</span>
+                    <span id="fg-val-h">0°</span>
                   </div>
                   <input type="range" id="slider-fg-h" min="0" max="360" value="0" class="w-full h-1 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-red-500 rounded-lg appearance-none cursor-pointer" />
                 </div>
@@ -292,7 +292,7 @@ const keywords = "Color Contrast Checker, color contrast checker, color contrast
                 <div class="flex flex-col gap-1">
                   <div class="flex justify-between text-[11px] font-semibold text-slate">
                     <span>Hue (H)</span>
-                    <span id="bg-val-h">0Â°</span>
+                    <span id="bg-val-h">0°</span>
                   </div>
                   <input type="range" id="slider-bg-h" min="0" max="360" value="0" class="w-full h-1 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-red-500 rounded-lg appearance-none cursor-pointer" />
                 </div>
@@ -517,7 +517,7 @@ const keywords = "Color Contrast Checker, color contrast checker, color contrast
           Color Contrast Checker for Web Design &amp; Accessibility compliance
         </h2>
         <p class="text-sm text-slate leading-relaxed">
-          In today's digital landscape, ensuring that your digital content is readable by everyone is more than a best practiceâ€”it is a core pillar of modern design. This is where an advanced <strong>Color Contrast Checker</strong> becomes indispensable. Designers, developers, and content creators use a <strong>color contrast checker accessibility</strong> tool to audit background and text colors to confirm compliance with international guidelines. Our <strong>web color contrast checker</strong> is a fully integrated, client-side resource built to evaluate relative luminance and compliance with the Web Content Accessibility Guidelines (WCAG) 2.1 in real-time. Whether you are building a new application or editing an existing site, this <strong>free color contrast checker</strong> is designed to streamline your accessibility workflow.
+          In today's digital landscape, ensuring that your digital content is readable by everyone is more than a best practice—it is a core pillar of modern design. This is where an advanced <strong>Color Contrast Checker</strong> becomes indispensable. Designers, developers, and content creators use a <strong>color contrast checker accessibility</strong> tool to audit background and text colors to confirm compliance with international guidelines. Our <strong>web color contrast checker</strong> is a fully integrated, client-side resource built to evaluate relative luminance and compliance with the Web Content Accessibility Guidelines (WCAG) 2.1 in real-time. Whether you are building a new application or editing an existing site, this <strong>free color contrast checker</strong> is designed to streamline your accessibility workflow.
         </p>
       </div>
 
@@ -638,7 +638,7 @@ const keywords = "Color Contrast Checker, color contrast checker, color contrast
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -873,11 +873,11 @@ const keywords = "Color Contrast Checker, color contrast checker, color contrast
       if (bgL) bgL.value = hslBg.l.toString();
     }
 
-    if (fgValH) fgValH.textContent = `${hslFg.h}Â°`;
+    if (fgValH) fgValH.textContent = `${hslFg.h}°`;
     if (fgValS) fgValS.textContent = `${hslFg.s}%`;
     if (fgValL) fgValL.textContent = `${hslFg.l}%`;
 
-    if (bgValH) bgValH.textContent = `${hslBg.h}Â°`;
+    if (bgValH) bgValH.textContent = `${hslBg.h}°`;
     if (bgValS) bgValS.textContent = `${hslBg.s}%`;
     if (bgValL) bgValL.textContent = `${hslBg.l}%`;
 

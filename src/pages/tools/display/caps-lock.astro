@@ -245,7 +245,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
     <!-- Mobile Virtual Keyboard Warning Banner -->
     <div id="mobile-warning-banner" class="hidden card-feature-teal flex flex-col gap-2 p-3.5 rounded-xl border border-brand-teal/20 text-xs">
       <div class="flex items-center gap-2 font-bold text-moss-dark">
-        <span>ðŸ“± Virtual Keyboard Detected</span>
+        <span>📱 Virtual Keyboard Detected</span>
       </div>
       <p class="text-[11px] text-slate leading-relaxed">
         Caps Lock event modifiers behave differently on touchscreen/mobile virtual keyboards. Connect a Bluetooth/external physical keyboard for accurate hardware toggle diagnostics, or use the simulator button below.
@@ -299,7 +299,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
                 class="w-full px-4 py-2 text-xs rounded-lg border border-hairline bg-canvas focus:outline-none focus:border-brand-blue"
               />
               <div id="caps-warning-pill" class="absolute right-2 top-1.5 hidden items-center gap-1 bg-brand-coral/20 border border-brand-coral/40 text-coral-dark text-[9px] font-bold px-2 py-0.5 rounded-full animate-pulse transition-all">
-                âš ï¸ CAPS LOCK IS ON
+                ⚠️ CAPS LOCK IS ON
               </div>
             </div>
           </div>
@@ -337,7 +337,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
             </div>
           </div>
           <div id="anomaly-alert-box" class="hidden p-2 bg-brand-coral/10 border border-brand-coral/30 rounded-lg text-[10px] text-coral-dark leading-relaxed">
-            <strong>âš ï¸ Potential hardware issue:</strong> Rapid double-firing toggle observed (&lt;150ms). Key may be bouncing or sticking.
+            <strong>⚠️ Potential hardware issue:</strong> Rapid double-firing toggle observed (&lt;150ms). Key may be bouncing or sticking.
           </div>
         </div>
 
@@ -346,7 +346,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
           <div class="flex items-center justify-between pb-2 border-b border-hairline-soft">
             <h3 class="font-display font-semibold text-xs text-primary uppercase tracking-wider">Event Timeline</h3>
             <button id="export-csv-btn" class="text-[10px] font-semibold text-brand-blue hover:text-blue-pressed transition-colors cursor-pointer flex items-center gap-1">
-              ðŸ“¥ Export CSV
+              📥 Export CSV
             </button>
           </div>
 
@@ -667,7 +667,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -994,7 +994,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
         statAnomalies.textContent = String(anomalyCount);
         statAnomalies.className = "text-xl font-display font-bold text-brand-coral";
         anomalyAlertBox.classList.remove("hidden");
-        anomalyStr = " [âš ï¸ Switch Bounce Anomaly]";
+        anomalyStr = " [⚠️ Switch Bounce Anomaly]";
       }
 
       const timestampStr = new Date().toLocaleTimeString();
@@ -1002,7 +1002,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
         time: timestampStr,
         timestamp: now,
         type: 'toggle',
-        details: `CapsLock toggled: ${from ? "ON" : "OFF"} âž” ${to ? "ON" : "OFF"}${anomalyStr}`,
+        details: `CapsLock toggled: ${from ? "ON" : "OFF"} ➔ ${to ? "ON" : "OFF"}${anomalyStr}`,
         stateBefore: from,
         stateAfter: to
       };
@@ -1055,7 +1055,7 @@ const keywords = "caps lock test, what is a caps lock test, what is a caps lock 
       }
 
       logList.innerHTML = filtered.map(log => {
-        const itemClass = log.details.includes("âš ï¸") 
+        const itemClass = log.details.includes("⚠️") 
           ? "p-1.5 rounded bg-brand-coral/10 border border-brand-coral/20 text-coral-dark" 
           : "p-1 rounded bg-surface hover:bg-hairline-soft transition-all text-slate border border-transparent";
         return `

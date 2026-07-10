@@ -302,14 +302,14 @@ const keywords =
           id="cond-new-btn"
           class="text-xs px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer bg-primary text-canvas"
         >
-          ðŸš— New Car
+          🚗 New Car
         </button>
         <button
           type="button"
           id="cond-used-btn"
           class="text-xs px-4 py-1.5 rounded-full font-semibold transition-all cursor-pointer text-slate"
         >
-          ðŸš™ Used Car
+          🚙 Used Car
         </button>
       </div>
     </div>
@@ -339,10 +339,10 @@ const keywords =
                 >
                   <option value="USD" selected>$ USD</option>
                   <option value="CAD">$ CAD</option>
-                  <option value="GBP">Â£ GBP</option>
+                  <option value="GBP">£ GBP</option>
                   <option value="AUD">$ AUD</option>
-                  <option value="EUR">â‚¬ EUR</option>
-                  <option value="INR">â‚¹ INR</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
                   <option value="Custom">Custom / Other</option>
                 </select>
               </div>
@@ -388,7 +388,7 @@ const keywords =
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -557,7 +557,7 @@ const keywords =
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                âš™ Advanced Options (Taxes, Fees, Balloon Payment)
+                ⚙ Advanced Options (Taxes, Fees, Balloon Payment)
               </span>
               <svg
                 id="advanced-chevron"
@@ -1433,7 +1433,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1655,7 +1655,7 @@ const keywords =
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "GBP") {
-        currentCurrencySymbol = "Â£";
+        currentCurrencySymbol = "£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "AUD") {
@@ -1663,11 +1663,11 @@ const keywords =
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "EUR") {
-        currentCurrencySymbol = "â‚¬";
+        currentCurrencySymbol = "€";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "INR") {
-        currentCurrencySymbol = "â‚¹";
+        currentCurrencySymbol = "₹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (val === "Custom") {

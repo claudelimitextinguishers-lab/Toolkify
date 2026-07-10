@@ -211,10 +211,10 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
                 >
                   <option value="USD" selected>$ USD</option>
                   <option value="CAD">$ CAD</option>
-                  <option value="GBP">Ã‚Â£ GBP</option>
+                  <option value="GBP">£ GBP</option>
                   <option value="AUD">$ AUD</option>
-                  <option value="EUR">Ã¢â€šÂ¬ EUR</option>
-                  <option value="INR">Ã¢â€šÂ¹ INR</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
                   <option value="Custom">Custom / Other</option>
                 </select>
               </div>
@@ -275,7 +275,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
           <div id="custom-currency-container" class="grid grid-cols-2 gap-3 pt-2 border-t border-hairline-soft hidden animate-fade-in-up">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Ã‚Â£, Ã¢â€šÂ¬, Ã¢â€šÂ¹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -382,7 +382,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                Ã¢Å¡â„¢ Advanced Options +
+                ⚙ Advanced Options +
               </span>
               <svg
                 id="advanced-chevron"
@@ -670,7 +670,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
             </div>
 
             <div class="text-[10px] text-slate leading-relaxed border-t border-hairline pt-3 flex items-center gap-2">
-              <span class="text-success-accent">Ã¢Å“â€</span>
+              <span class="text-success-accent">✔</span>
               <span><strong>Client-Side:</strong> Calculations are processed fully locally in your browser session for maximum security.</span>
             </div>
           </div>
@@ -1081,7 +1081,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          Ã¢Å“â€¢
+          ✕
         </button>
       </div>
 
@@ -1103,9 +1103,9 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
         <ul class="list-disc pl-4 flex flex-col gap-1.5">
           <li><strong>US ($):</strong> Focuses on federal standards, offering tax savings and income-driven notes.</li>
           <li><strong>Canada ($):</strong> Aligns with NSLSC interest suspension on federal student loans.</li>
-          <li><strong>United Kingdom (Ã‚Â£):</strong> Accommodates Plan thresholds with threshold-based write-offs.</li>
+          <li><strong>United Kingdom (£):</strong> Accommodates Plan thresholds with threshold-based write-offs.</li>
           <li><strong>Australia ($):</strong> Applies indexation-only updates reflecting CPI trends.</li>
-          <li><strong>India (Ã¢â€šÂ¹):</strong> Aligns with IBA course moratorium rules and Section 80E tax deductions.</li>
+          <li><strong>India (₹):</strong> Aligns with IBA course moratorium rules and Section 80E tax deductions.</li>
         </ul>
       </div>
       <button
@@ -1175,7 +1175,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
         paymentLabel: "Monthly Repayment",
         loanTypes: ["Plan 1 Student Loan", "Plan 2 Student Loan", "Plan 5 Student Loan", "Postgraduate Loan"],
         ruleTitle: "United Kingdom Rules",
-        ruleText: "UK Student Loans are repaid via Plan levels, operating as a 9% graduate tax above specific annual income thresholds (Plan 1: Ã‚Â£24,990, Plan 2: Ã‚Â£27,295, Plan 5: Ã‚Â£25,000). Remaining debt is written off after 30 years (Plan 1/2) or 40 years (Plan 5)."
+        ruleText: "UK Student Loans are repaid via Plan levels, operating as a 9% graduate tax above specific annual income thresholds (Plan 1: £24,990, Plan 2: £27,295, Plan 5: £25,000). Remaining debt is written off after 30 years (Plan 1/2) or 40 years (Plan 5)."
       },
       AUD: {
         defaultRate: 4.5,
@@ -1427,7 +1427,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
         currentCurrencyCode = "CAD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (currencyKey === "GBP") {
-        currentCurrencySymbol = "Ã‚Â£";
+        currentCurrencySymbol = "£";
         currentCurrencyCode = "GBP";
         customCurrencyContainer?.classList.add("hidden");
       } else if (currencyKey === "AUD") {
@@ -1435,11 +1435,11 @@ const canonicalUrl = "https://toolkify.com/tools/finance/student-loan-payoff";
         currentCurrencyCode = "AUD";
         customCurrencyContainer?.classList.add("hidden");
       } else if (currencyKey === "EUR") {
-        currentCurrencySymbol = "Ã¢â€šÂ¬";
+        currentCurrencySymbol = "€";
         currentCurrencyCode = "EUR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (currencyKey === "INR") {
-        currentCurrencySymbol = "Ã¢â€šÂ¹";
+        currentCurrencySymbol = "₹";
         currentCurrencyCode = "INR";
         customCurrencyContainer?.classList.add("hidden");
       } else if (currencyKey === "Custom") {
@@ -2139,7 +2139,7 @@ Calculated at toolkify.com`;
 
       navigator.clipboard.writeText(summaryText).then(() => {
         const prevText = copyResultsBtn.innerHTML;
-        copyResultsBtn.innerHTML = `<span>Ã¢Å“â€ Copied!</span>`;
+        copyResultsBtn.innerHTML = `<span>✔ Copied!</span>`;
         setTimeout(() => {
           copyResultsBtn.innerHTML = prevText;
         }, 2000);

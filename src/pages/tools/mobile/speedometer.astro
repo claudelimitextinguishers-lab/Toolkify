@@ -499,7 +499,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
       >
         <div class="flex items-center justify-between border-b border-brand-blue/10 pb-1.5">
           <span class="text-xs font-bold text-brand-blue flex items-center gap-1.5">
-            ðŸ Trip Summary Session Completed
+            🏁 Trip Summary Session Completed
           </span>
           <span id="trip-duration" class="text-[10px] font-mono font-semibold text-slate">Duration: 00:00:00</span>
         </div>
@@ -838,7 +838,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
   >
     <div class="bg-canvas rounded-2xl max-w-md w-full p-6 border border-hairline shadow-modal flex flex-col gap-4 text-center">
       <div class="flex justify-center text-4xl mt-2 text-brand-coral">
-        âš ï¸
+        ⚠️
       </div>
       <h3 class="font-display font-semibold text-lg text-primary">
         Driver Safety Warning & Disclaimer
@@ -891,7 +891,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1308,7 +1308,7 @@ const keywords = "GPS Speedometer & Trip Tracker, GPS Speedometer, GPS, Trip Tra
             
             const rawCalcSpeed = distMeters / deltaSec;
 
-            // Outlier-rejection: Filter impossible acceleration jumps (e.g. >12m/sÂ² speed changes)
+            // Outlier-rejection: Filter impossible acceleration jumps (e.g. >12m/s² speed changes)
             const speedDiff = Math.abs(rawCalcSpeed - currentSpeedMs);
             const acceleration = speedDiff / deltaSec;
 

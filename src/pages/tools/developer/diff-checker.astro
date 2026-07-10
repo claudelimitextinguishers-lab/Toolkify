@@ -271,13 +271,13 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
               id="btn-export-dropdown"
               class="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-sm whitespace-nowrap"
             >
-              <span>Export & Share â–¼</span>
+              <span>Export & Share ▼</span>
             </button>
             <div id="export-dropdown" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-canvas border border-hairline ring-1 ring-black/5 z-10">
               <div class="py-1" role="menu">
-                <button id="btn-export-share" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ”— Copy Shareable Link</button>
-                <button id="btn-export-patch" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ’¾ Download .diff Patch</button>
-                <button id="btn-export-md" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">ðŸ“ Copy as Markdown</button>
+                <button id="btn-export-share" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">🔗 Copy Shareable Link</button>
+                <button id="btn-export-patch" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">💾 Download .diff Patch</button>
+                <button id="btn-export-md" class="w-full text-left px-4 py-2 text-xs text-slate hover:bg-surface hover:text-primary font-medium" role="menuitem">📝 Copy as Markdown</button>
               </div>
             </div>
           </div>
@@ -376,7 +376,7 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
           <div class="overflow-x-auto w-full flex-grow font-mono text-xs leading-relaxed select-text" id="diff-output-container">
             <!-- Populated via script -->
             <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
-              <span class="text-2xl">âš¡</span>
+              <span class="text-2xl">⚡</span>
               <p class="font-medium text-charcoal">Waiting for changes...</p>
               <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
             </div>
@@ -606,13 +606,13 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
           type="button"
           id="close-how-it-works-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
-        >âœ•</button>
+        >✕</button>
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
         <h4 class="font-semibold text-primary">1. How does it work?</h4>
         <p>
-          This tool runs <strong>entirely inside your browser</strong> using a Web Worker sandbox. Your text is never sent to any server â€” all diffing is computed locally, making it safe for private code, configs, and sensitive documents.
+          This tool runs <strong>entirely inside your browser</strong> using a Web Worker sandbox. Your text is never sent to any server — all diffing is computed locally, making it safe for private code, configs, and sensitive documents.
         </p>
 
         <h4 class="font-semibold text-primary">2. Diff Granularity</h4>
@@ -1378,7 +1378,7 @@ const keywords = "Text Diff Checker, diff checker, online diff checker, diff che
   function renderPlaceholder() {
     diffOutput.innerHTML = `
       <div class="p-6 text-center text-slate h-full flex flex-col items-center justify-center gap-1.5">
-        <span class="text-2xl">âš¡</span>
+        <span class="text-2xl">⚡</span>
         <p class="font-medium text-charcoal">Waiting for changes...</p>
         <p class="text-[10px] text-slate max-w-xs leading-relaxed">Enter content in the panels above to see real-time, high-contrast structural differences.</p>
       </div>

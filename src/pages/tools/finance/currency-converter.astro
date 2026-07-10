@@ -256,7 +256,7 @@ const keywords = "currency converter, currency converter calculator, currency co
                   aria-label="Source Currency"
                 >
                   <span class="flex items-center gap-1.5">
-                    <span id="from-flag" class="text-base select-none">ðŸ‡ºðŸ‡¸</span>
+                    <span id="from-flag" class="text-base select-none">🇺🇸</span>
                     <span id="from-code" class="font-mono">USD</span>
                   </span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -320,7 +320,7 @@ const keywords = "currency converter, currency converter calculator, currency co
                   aria-label="Target Currency"
                 >
                   <span class="flex items-center gap-1.5">
-                    <span id="to-flag" class="text-base select-none">ðŸ‡ªðŸ‡º</span>
+                    <span id="to-flag" class="text-base select-none">🇪🇺</span>
                     <span id="to-code" class="font-mono">EUR</span>
                   </span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-stone" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -330,7 +330,7 @@ const keywords = "currency converter, currency converter calculator, currency co
 
                 <!-- Decimal Input -->
                 <div class="relative flex-grow">
-                  <span id="to-symbol" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold select-none">â‚¬</span>
+                  <span id="to-symbol" class="absolute left-3 top-1/2 -translate-y-1/2 text-stone text-sm font-semibold select-none">€</span>
                   <input
                     type="number"
                     id="to-amount"
@@ -355,7 +355,7 @@ const keywords = "currency converter, currency converter calculator, currency co
           >
             <div class="flex items-center gap-2 pb-1 border-b border-hairline">
               <span class="text-xs font-bold text-primary flex-grow">Select Currency</span>
-              <button type="button" id="close-picker-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 cursor-pointer">âœ•</button>
+              <button type="button" id="close-picker-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 cursor-pointer">✕</button>
             </div>
             <input
               type="text"
@@ -393,7 +393,7 @@ const keywords = "currency converter, currency converter calculator, currency co
                 class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer"
                 title="Save current pair as default"
               >
-                <span id="favorite-icon">â˜†</span>
+                <span id="favorite-icon">☆</span>
                 <span id="favorite-text">Set Default</span>
               </button>
               <button
@@ -510,12 +510,12 @@ const keywords = "currency converter, currency converter calculator, currency co
           Comprehensive Guide to Currency Converters & Foreign Exchange Calculations
         </h2>
         <p>
-          In todayâ€™s highly interconnected global economy, keeping track of fluctuating currency values is essential. Whether you are an international traveler budgeting for an upcoming trip, an e-commerce entrepreneur pricing goods for global markets, or a financial enthusiast tracking market trends, a reliable <strong>currency converter</strong> is an indispensable utility. Understanding the mechanics of foreign exchange and having access to a high-quality <strong>currency converter calculator</strong> can save you significant time and money.
+          In today’s highly interconnected global economy, keeping track of fluctuating currency values is essential. Whether you are an international traveler budgeting for an upcoming trip, an e-commerce entrepreneur pricing goods for global markets, or a financial enthusiast tracking market trends, a reliable <strong>currency converter</strong> is an indispensable utility. Understanding the mechanics of foreign exchange and having access to a high-quality <strong>currency converter calculator</strong> can save you significant time and money.
         </p>
 
         <h3 class="font-display font-medium text-sm text-primary mt-2">What is a Currency Converter?</h3>
         <p>
-          A <strong>currency converter</strong> is a digital application or tool designed to calculate the relative value of one countryâ€™s currency against anotherâ€™s. At its core, the tool performs simple multiplication and division based on a specific <strong>currency exchange rate</strong>. For example, when you want to convert money, a dedicated <strong>currency converter euro to usd</strong> takes the base amount in Euros (EUR) and multiplies it by the current conversion rate to output the equivalent value in United States Dollars (USD).
+          A <strong>currency converter</strong> is a digital application or tool designed to calculate the relative value of one country’s currency against another’s. At its core, the tool performs simple multiplication and division based on a specific <strong>currency exchange rate</strong>. For example, when you want to convert money, a dedicated <strong>currency converter euro to usd</strong> takes the base amount in Euros (EUR) and multiplies it by the current conversion rate to output the equivalent value in United States Dollars (USD).
         </p>
         <p>
           Using a web-based <strong>currency converter app</strong> allows you to perform these calculations instantly on any device. Rather than performing manual arithmetic or searching for conversion formulas, you simply input the amount, select your desired currency pair, and view the results in real time. If you primarily deal with American markets, setting your default parameters to act as a <strong>currency converter to usd</strong> ensures that you can see standard values instantly.
@@ -721,14 +721,14 @@ const keywords = "currency converter, currency converter calculator, currency co
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
       <div class="text-xs text-slate leading-relaxed flex flex-col gap-3">
         <!-- Prominent Disclaimer Repeated In Modal -->
         <div class="bg-brand-red/40 border border-brand-red-dark text-coral-dark rounded-md p-3 select-none flex flex-col gap-1">
-          <span class="font-semibold text-sm">âš ï¸ CRITICAL FINANCIAL DISCLAIMER</span>
+          <span class="font-semibold text-sm">⚠️ CRITICAL FINANCIAL DISCLAIMER</span>
           <p>
             This tool contains stale, hardcoded reference rates from July 5, 2026. These are approximate estimation numbers and do <strong>NOT</strong> represent real-time bank or market exchange rates. Please check with your bank or a live-rate provider for actual financial operations.
           </p>
@@ -818,35 +818,35 @@ const keywords = "currency converter, currency converter calculator, currency co
     }
 
     const CURRENCY_DETAILS: Record<string, CurrencyInfo> = {
-      USD: { name: "US Dollar", flag: "ðŸ‡ºðŸ‡¸", symbol: "$", precision: 2, country: "United States USA" },
-      EUR: { name: "Euro", flag: "ðŸ‡ªðŸ‡º", symbol: "â‚¬", precision: 2, country: "Europe Eurozone Germany France Italy Spain" },
-      GBP: { name: "British Pound", flag: "ðŸ‡¬ðŸ‡§", symbol: "Â£", precision: 2, country: "United Kingdom Great Britain England UK" },
-      JPY: { name: "Japanese Yen", flag: "ðŸ‡¯ðŸ‡µ", symbol: "Â¥", precision: 0, country: "Japan JPY" },
-      CNY: { name: "Chinese Yuan", flag: "ðŸ‡¨ðŸ‡³", symbol: "Â¥", precision: 2, country: "China PRC RMB" },
-      INR: { name: "Indian Rupee", flag: "ðŸ‡®ðŸ‡³", symbol: "â‚¹", precision: 2, country: "India Bharat" },
-      AUD: { name: "Australian Dollar", flag: "ðŸ‡¦ðŸ‡º", symbol: "$", precision: 2, country: "Australia" },
-      CAD: { name: "Canadian Dollar", flag: "ðŸ‡¨ðŸ‡¦", symbol: "$", precision: 2, country: "Canada" },
-      CHF: { name: "Swiss Franc", flag: "ðŸ‡¨ðŸ‡­", symbol: "Fr.", precision: 2, country: "Switzerland" },
-      NZD: { name: "New Zealand Dollar", flag: "ðŸ‡³ðŸ‡¿", symbol: "$", precision: 2, country: "New Zealand Kiwi" },
-      SEK: { name: "Swedish Krona", flag: "ðŸ‡¸ðŸ‡ª", symbol: "kr", precision: 2, country: "Sweden Stockholm" },
-      NOK: { name: "Norwegian Krone", flag: "ðŸ‡³ðŸ‡´", symbol: "kr", precision: 2, country: "Norway Oslo" },
-      DKK: { name: "Danish Krone", flag: "ðŸ‡©ðŸ‡°", symbol: "kr", precision: 2, country: "Denmark Copenhagen" },
-      MXN: { name: "Mexican Peso", flag: "ðŸ‡²ðŸ‡½", symbol: "$", precision: 2, country: "Mexico Peso" },
-      SGD: { name: "Singapore Dollar", flag: "ðŸ‡¸ðŸ‡¬", symbol: "$", precision: 2, country: "Singapore" },
-      HKD: { name: "Hong Kong Dollar", flag: "ðŸ‡­ðŸ‡°", symbol: "$", precision: 2, country: "Hong Kong" },
-      KRW: { name: "South Korean Won", flag: "ðŸ‡°ðŸ‡·", symbol: "â‚©", precision: 0, country: "South Korea Seoul" },
-      TRY: { name: "Turkish Lira", flag: "ðŸ‡¹ðŸ‡·", symbol: "â‚º", precision: 2, country: "Turkey Istanbul" },
-      RUB: { name: "Russian Ruble", flag: "ðŸ‡·ðŸ‡º", symbol: "â‚½", precision: 2, country: "Russia Moscow" },
-      BRL: { name: "Brazilian Real", flag: "ðŸ‡§ðŸ‡·", symbol: "R$", precision: 2, country: "Brazil Rio" },
-      ZAR: { name: "South African Rand", flag: "ðŸ‡¿ðŸ‡¦", symbol: "R", precision: 2, country: "South Africa Pretoria" },
-      PHP: { name: "Philippine Peso", flag: "ðŸ‡µðŸ‡­", symbol: "â‚±", precision: 2, country: "Philippines Manila" },
-      IDR: { name: "Indonesian Rupiah", flag: "ðŸ‡®ðŸ‡©", symbol: "Rp", precision: 0, country: "Indonesia Jakarta Bali" },
-      MYR: { name: "Malaysian Ringgit", flag: "ðŸ‡²ðŸ‡¾", symbol: "RM", precision: 2, country: "Malaysia Kuala Lumpur" },
-      THB: { name: "Thai Baht", flag: "ðŸ‡¹ðŸ‡­", symbol: "à¸¿", precision: 2, country: "Thailand Bangkok" },
-      AED: { name: "UAE Dirham", flag: "ðŸ‡¦ðŸ‡ª", symbol: "Ø¯.Ø¥", precision: 2, country: "United Arab Emirates Dubai Abu Dhabi" },
-      SAR: { name: "Saudi Riyal", flag: "ðŸ‡¸ðŸ‡¦", symbol: "Ø±.Ø³", precision: 2, country: "Saudi Arabia Riyadh" },
-      ILS: { name: "Israeli New Shekel", flag: "ðŸ‡®ðŸ‡±", symbol: "â‚ª", precision: 2, country: "Israel Tel Aviv Jerusalem" },
-      PLN: { name: "Polish Zloty", flag: "ðŸ‡µðŸ‡±", symbol: "zÅ‚", precision: 2, country: "Poland Warsaw" }
+      USD: { name: "US Dollar", flag: "🇺🇸", symbol: "$", precision: 2, country: "United States USA" },
+      EUR: { name: "Euro", flag: "🇪🇺", symbol: "€", precision: 2, country: "Europe Eurozone Germany France Italy Spain" },
+      GBP: { name: "British Pound", flag: "🇬🇧", symbol: "£", precision: 2, country: "United Kingdom Great Britain England UK" },
+      JPY: { name: "Japanese Yen", flag: "🇯🇵", symbol: "¥", precision: 0, country: "Japan JPY" },
+      CNY: { name: "Chinese Yuan", flag: "🇨🇳", symbol: "¥", precision: 2, country: "China PRC RMB" },
+      INR: { name: "Indian Rupee", flag: "🇮🇳", symbol: "₹", precision: 2, country: "India Bharat" },
+      AUD: { name: "Australian Dollar", flag: "🇦🇺", symbol: "$", precision: 2, country: "Australia" },
+      CAD: { name: "Canadian Dollar", flag: "🇨🇦", symbol: "$", precision: 2, country: "Canada" },
+      CHF: { name: "Swiss Franc", flag: "🇨🇭", symbol: "Fr.", precision: 2, country: "Switzerland" },
+      NZD: { name: "New Zealand Dollar", flag: "🇳🇿", symbol: "$", precision: 2, country: "New Zealand Kiwi" },
+      SEK: { name: "Swedish Krona", flag: "🇸🇪", symbol: "kr", precision: 2, country: "Sweden Stockholm" },
+      NOK: { name: "Norwegian Krone", flag: "🇳🇴", symbol: "kr", precision: 2, country: "Norway Oslo" },
+      DKK: { name: "Danish Krone", flag: "🇩🇰", symbol: "kr", precision: 2, country: "Denmark Copenhagen" },
+      MXN: { name: "Mexican Peso", flag: "🇲🇽", symbol: "$", precision: 2, country: "Mexico Peso" },
+      SGD: { name: "Singapore Dollar", flag: "🇸🇬", symbol: "$", precision: 2, country: "Singapore" },
+      HKD: { name: "Hong Kong Dollar", flag: "🇭🇰", symbol: "$", precision: 2, country: "Hong Kong" },
+      KRW: { name: "South Korean Won", flag: "🇰🇷", symbol: "₩", precision: 0, country: "South Korea Seoul" },
+      TRY: { name: "Turkish Lira", flag: "🇹🇷", symbol: "₺", precision: 2, country: "Turkey Istanbul" },
+      RUB: { name: "Russian Ruble", flag: "🇷🇺", symbol: "₽", precision: 2, country: "Russia Moscow" },
+      BRL: { name: "Brazilian Real", flag: "🇧🇷", symbol: "R$", precision: 2, country: "Brazil Rio" },
+      ZAR: { name: "South African Rand", flag: "🇿🇦", symbol: "R", precision: 2, country: "South Africa Pretoria" },
+      PHP: { name: "Philippine Peso", flag: "🇵🇭", symbol: "₱", precision: 2, country: "Philippines Manila" },
+      IDR: { name: "Indonesian Rupiah", flag: "🇮🇩", symbol: "Rp", precision: 0, country: "Indonesia Jakarta Bali" },
+      MYR: { name: "Malaysian Ringgit", flag: "🇲🇾", symbol: "RM", precision: 2, country: "Malaysia Kuala Lumpur" },
+      THB: { name: "Thai Baht", flag: "🇹🇭", symbol: "฿", precision: 2, country: "Thailand Bangkok" },
+      AED: { name: "UAE Dirham", flag: "🇦🇪", symbol: "د.إ", precision: 2, country: "United Arab Emirates Dubai Abu Dhabi" },
+      SAR: { name: "Saudi Riyal", flag: "🇸🇦", symbol: "ر.س", precision: 2, country: "Saudi Arabia Riyadh" },
+      ILS: { name: "Israeli New Shekel", flag: "🇮🇱", symbol: "₪", precision: 2, country: "Israel Tel Aviv Jerusalem" },
+      PLN: { name: "Polish Zloty", flag: "🇵🇱", symbol: "zł", precision: 2, country: "Poland Warsaw" }
     };
 
     // Primary DOM Elements
@@ -1143,11 +1143,11 @@ const keywords = "currency converter, currency converter calculator, currency co
       const isFav = localStorage.getItem(KEY_FAVORITE) === pairString;
       
       if (isFav) {
-        favoriteIcon.textContent = "â˜…";
+        favoriteIcon.textContent = "★";
         favoriteIcon.className = "text-brand-yellow font-bold text-xs animate-scale-in";
         favoriteText.textContent = "Default Saved";
       } else {
-        favoriteIcon.textContent = "â˜†";
+        favoriteIcon.textContent = "☆";
         favoriteIcon.className = "text-slate";
         favoriteText.textContent = "Set Default";
       }

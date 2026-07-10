@@ -149,7 +149,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           "name": "Who invented the spirit level?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>The spirit level was invented by MelchisÃ©dech ThÃ©venot, a French scientist, librarian, and amateur physicist, around 1661. He filled a glass tube with alcohol and mounted it on a stone ruler to measure horizontal alignment.</p>"
+            "text": "<p>The spirit level was invented by Melchisédech Thévenot, a French scientist, librarian, and amateur physicist, around 1661. He filled a glass tube with alcohol and mounted it on a stone ruler to measure horizontal alignment.</p>"
           }
         },
         {
@@ -165,7 +165,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           "name": "Who invented the bubble level?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>The bubble level (also known as the spirit level) was invented by the French polymath MelchisÃ©dech ThÃ©venot in 1661. Later, in the 18th century, English instrument maker Edward Troughton improved the design by curving the tube slightly for more sensitivity.</p>"
+            "text": "<p>The bubble level (also known as the spirit level) was invented by the French polymath Melchisédech Thévenot in 1661. Later, in the 18th century, English instrument maker Edward Troughton improved the design by curving the tube slightly for more sensitivity.</p>"
           }
         },
         {
@@ -189,7 +189,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           "name": "When was the bubble level invented?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>The bubble level was invented in the year 1661 by MelchisÃ©dech ThÃ©venot. His invention was later patented and gained widespread use in the late 17th century once glass manufacturing and precision marking techniques improved.</p>"
+            "text": "<p>The bubble level was invented in the year 1661 by Melchisédech Thévenot. His invention was later patented and gained widespread use in the late 17th century once glass manufacturing and precision marking techniques improved.</p>"
           }
         },
         {
@@ -337,7 +337,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
         <!-- Permission Dialog Screen (shown on iOS or initially) -->
         <div id="permission-screen" class="hidden flex-1 flex flex-col items-center justify-center text-center p-6 gap-5">
           <div class="w-16 h-16 rounded-full bg-blue-450/10 flex items-center justify-center text-3xl animate-bounce">
-            ðŸ“±
+            📱
           </div>
           <div class="max-w-md flex flex-col gap-2">
             <h3 class="font-display font-semibold text-lg text-primary">Sensor Access Required</h3>
@@ -373,7 +373,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
             
             <!-- Large Glanceable Readout -->
             <div class="flex items-baseline gap-2">
-              <span id="primary-readout" class="font-display font-semibold text-4xl sm:text-5xl text-primary tabular-nums">0.0Â°</span>
+              <span id="primary-readout" class="font-display font-semibold text-4xl sm:text-5xl text-primary tabular-nums">0.0°</span>
               <span id="secondary-readout" class="text-xs font-medium text-slate tabular-nums hidden sm:inline"></span>
             </div>
           </div>
@@ -428,7 +428,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
               class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
               title="Set current position as 0"
             >
-              ðŸŽ¯ Calibrate Zero
+              🎯 Calibrate Zero
             </button>
             
             <button
@@ -436,7 +436,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
               id="mode-toggle-btn"
               class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
             >
-              ðŸ”„ Circular / Linear
+              🔄 Circular / Linear
             </button>
 
             <button
@@ -444,7 +444,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
               id="unit-toggle-btn"
               class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
             >
-              ðŸ“ Unit: Degrees
+              📐 Unit: Degrees
             </button>
 
             <button
@@ -452,7 +452,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
               id="haptics-toggle-btn"
               class="inline-flex items-center justify-center gap-1 text-[11px] font-semibold py-2 px-3 bg-surface hover:bg-hairline text-slate hover:text-primary border border-hairline rounded-lg transition-all cursor-pointer shadow-subtle"
             >
-              ðŸ“³ Haptics: On
+              📳 Haptics: On
             </button>
           </div>
 
@@ -460,7 +460,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           <div class="flex flex-wrap items-center justify-between gap-4 py-2 px-3 bg-surface/50 border border-hairline rounded-xl mt-1">
             <div class="flex items-center gap-2">
               <span class="text-[10px] font-semibold text-slate uppercase">Tolerance Sensitivity</span>
-              <span id="tolerance-val" class="text-xs font-bold text-brand-blue">0.5Â°</span>
+              <span id="tolerance-val" class="text-xs font-bold text-brand-blue">0.5°</span>
             </div>
             <div class="flex-1 max-w-[180px]">
               <input 
@@ -489,11 +489,11 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           <div class="flex flex-col gap-2">
             <div class="flex justify-between items-center py-1 border-b border-hairline-soft">
               <span class="text-xs text-slate">Roll (Gamma)</span>
-              <span id="raw-gamma-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0Â°</span>
+              <span id="raw-gamma-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0°</span>
             </div>
             <div class="flex justify-between items-center py-1 border-b border-hairline-soft">
               <span class="text-xs text-slate">Pitch (Beta)</span>
-              <span id="raw-beta-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0Â°</span>
+              <span id="raw-beta-display" class="text-xs font-mono font-semibold text-primary tabular-nums">0.0°</span>
             </div>
             <div id="offset-details" class="hidden flex-col gap-1 mt-1 bg-surface-yellow/50 p-2 rounded-lg border border-yellow-light/60">
               <span class="text-[10px] uppercase font-bold text-yellow-dark">Saved Offsets</span>
@@ -542,7 +542,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
         What is a Spirit Level and How Does It Work?
       </h3>
       <p class="text-sm leading-relaxed">
-        To understand how a digital level works, it helps to ask: <strong>what is a spirit level</strong>? The traditional carpenter's level consists of a slightly curved, sealed glass tube (vial) filled with a liquidâ€”typically ethanol, which is a type of spiritâ€”leaving a small gas bubble inside. Because the liquid is denser than the gas, the <strong>spirit level bubble</strong> always rises to the highest point of the curved tube. When the instrument is placed on a completely flat, horizontal surface, the bubble rests precisely between two centering marks. If the surface tilts, the bubble drifts toward the elevated side.
+        To understand how a digital level works, it helps to ask: <strong>what is a spirit level</strong>? The traditional carpenter's level consists of a slightly curved, sealed glass tube (vial) filled with a liquid—typically ethanol, which is a type of spirit—leaving a small gas bubble inside. Because the liquid is denser than the gas, the <strong>spirit level bubble</strong> always rises to the highest point of the curved tube. When the instrument is placed on a completely flat, horizontal surface, the bubble rests precisely between two centering marks. If the surface tilts, the bubble drifts toward the elevated side.
       </p>
       <p class="text-sm leading-relaxed">
         A digital version, or <strong>tools spirit level</strong> app, replaces the glass vial and liquid bubble with digital sensors called Micro-Electro-Mechanical Systems (MEMS) accelerometers. These sensors measure the acceleration forces acting on the device relative to gravity. By analyzing these gravitational vectors, the web application calculates the precise angles of tilt in real-time and displays them on a visual interface that mimics the look and feel of a classic mechanical level.
@@ -557,7 +557,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
       <ul class="list-disc pl-5 flex flex-col gap-1 text-sm leading-relaxed">
         <li><strong>Dual-Axis Measuring</strong>: Switch between a circular (2-axis) level for leveling flat surfaces, and a linear (1-axis) level for checking edges, walls, and vertical borders.</li>
         <li><strong>Offset Calibration</strong>: Many smartphones have camera bumps or cases that prevent them from laying completely flat. Our tool features a "Calibrate Zero" function that lets you set a custom baseline reference to bypass these physical obstructions.</li>
-        <li><strong>Unit Versatility</strong>: Toggle seamlessly between standard angular degrees (Â°) and percent grade (%) to measure slope gradients easily.</li>
+        <li><strong>Unit Versatility</strong>: Toggle seamlessly between standard angular degrees (°) and percent grade (%) to measure slope gradients easily.</li>
         <li><strong>Haptic Feedback</strong>: Enable vibration indicators that alert you with tactile confirmation when your device is perfectly balanced, allowing you to focus on the work itself.</li>
       </ul>
 
@@ -711,7 +711,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>The spirit level was invented by MelchisÃ©dech ThÃ©venot, a French scientist, librarian, and amateur physicist, around 1661. He filled a glass tube with alcohol and mounted it on a stone ruler to measure horizontal alignment.</p>
+            <p>The spirit level was invented by Melchisédech Thévenot, a French scientist, librarian, and amateur physicist, around 1661. He filled a glass tube with alcohol and mounted it on a stone ruler to measure horizontal alignment.</p>
           </div>
         </div>
 
@@ -745,7 +745,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>The bubble level (also known as the spirit level) was invented by the French polymath MelchisÃ©dech ThÃ©venot in 1661. Later, in the 18th century, English instrument maker Edward Troughton improved the design by curving the tube slightly for more sensitivity.</p>
+            <p>The bubble level (also known as the spirit level) was invented by the French polymath Melchisédech Thévenot in 1661. Later, in the 18th century, English instrument maker Edward Troughton improved the design by curving the tube slightly for more sensitivity.</p>
           </div>
         </div>
 
@@ -796,7 +796,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
             </svg>
           </button>
           <div class="faq-content hidden px-6 pb-5 pt-1 text-sm text-slate leading-relaxed border-t border-hairline-soft/30 bg-surface-soft/10">
-            <p>The bubble level was invented in the year 1661 by MelchisÃ©dech ThÃ©venot. His invention was later patented and gained widespread use in the late 17th century once glass manufacturing and precision marking techniques improved.</p>
+            <p>The bubble level was invented in the year 1661 by Melchisédech Thévenot. His invention was later patented and gained widespread use in the late 17th century once glass manufacturing and precision marking techniques improved.</p>
           </div>
         </div>
 
@@ -890,7 +890,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -915,7 +915,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
 
         <h4 class="font-semibold text-primary">4. Units Explained</h4>
         <p>
-          - <strong>Degrees (Â°)</strong>: Angular measurement, where 0Â° is true horizontal level.<br/>
+          - <strong>Degrees (°)</strong>: Angular measurement, where 0° is true horizontal level.<br/>
           - <strong>Percent Grade (%)</strong>: Rise divided by run. A grade of 100% indicates a 45-degree angle (1 unit of vertical rise for every 1 unit of horizontal distance).
         </p>
       </div>
@@ -1007,7 +1007,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
       state.haptics = (hapticsVal !== "false");
 
       toleranceSlider.value = state.tolerance.toString();
-      toleranceVal.textContent = state.tolerance.toFixed(1) + "Â°";
+      toleranceVal.textContent = state.tolerance.toFixed(1) + "°";
       updateUIStrings();
     }
 
@@ -1055,7 +1055,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
 
       // Update inputs & indicators
       toleranceSlider.value = "0.5";
-      toleranceVal.textContent = "0.5Â°";
+      toleranceVal.textContent = "0.5°";
       
       updateUIStrings();
       updateSensorFlow();
@@ -1149,7 +1149,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
     toleranceSlider.addEventListener("input", (e) => {
       const val = parseFloat((e.target as HTMLInputElement).value);
       state.tolerance = val;
-      toleranceVal.textContent = val.toFixed(1) + "Â°";
+      toleranceVal.textContent = val.toFixed(1) + "°";
       saveSetting(LS_TOLERANCE, val);
     });
 
@@ -1187,10 +1187,10 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
       }
 
       // Units
-      unitToggleBtn.textContent = state.unit === "deg" ? "ðŸ“ Unit: Degrees" : "ðŸ“ Unit: % Grade";
+      unitToggleBtn.textContent = state.unit === "deg" ? "📐 Unit: Degrees" : "📐 Unit: % Grade";
       
       // Haptics
-      hapticsToggleBtn.textContent = state.haptics ? "ðŸ“³ Haptics: On" : "ðŸ“´ Haptics: Off";
+      hapticsToggleBtn.textContent = state.haptics ? "📳 Haptics: On" : "📴 Haptics: Off";
     }
 
     // Screen display transitions
@@ -1254,8 +1254,8 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
     let hapticThrottle = false;
     function processTiltValues(betaVal: number, gammaVal: number) {
       // Raw info displays
-      rawBetaDisplay.textContent = state.rawBeta.toFixed(1) + "Â°";
-      rawGammaDisplay.textContent = state.rawGamma.toFixed(1) + "Â°";
+      rawBetaDisplay.textContent = state.rawBeta.toFixed(1) + "°";
+      rawGammaDisplay.textContent = state.rawGamma.toFixed(1) + "°";
 
       // Compute total error tilt angle
       let tiltAngle = 0;
@@ -1273,7 +1273,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
       // Formatted value display
       let formattedText = "";
       if (state.unit === "deg") {
-        formattedText = tiltAngle.toFixed(1) + "Â°";
+        formattedText = tiltAngle.toFixed(1) + "°";
       } else {
         // Percentage Grade rise/run tan calculation
         const pct = Math.abs(Math.tan(tiltAngle * Math.PI / 180) * 100);
@@ -1283,7 +1283,7 @@ const keywords = "Spirit Level / Bubble Level, Spirit Level, Bubble Level, spiri
 
       if (state.mode === "circular") {
         secondaryReadout.classList.remove("hidden");
-        secondaryReadout.textContent = `X: ${gammaVal.toFixed(1)}Â° Y: ${betaVal.toFixed(1)}Â°`;
+        secondaryReadout.textContent = `X: ${gammaVal.toFixed(1)}° Y: ${betaVal.toFixed(1)}°`;
       } else {
         secondaryReadout.classList.add("hidden");
       }

@@ -239,7 +239,7 @@ const keywords =
             class="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
             aria-label="View keyboard shortcuts"
           >
-            <span>âŒ¨ Keyboard Shortcuts</span>
+            <span>⌨ Keyboard Shortcuts</span>
           </button>
 
           <button
@@ -389,7 +389,7 @@ const keywords =
           class="hidden p-3 rounded-lg border border-brand-red-dark bg-brand-red text-xs text-coral-dark leading-relaxed flex flex-col gap-1.5 animate-shake"
         >
           <div class="font-bold flex items-center gap-1.5">
-            <span>âš ï¸ Precise Parse Error:</span>
+            <span>⚠️ Precise Parse Error:</span>
             <span id="error-brief" class="font-semibold text-primary"></span>
           </div>
           <pre
@@ -435,7 +435,7 @@ const keywords =
               id="drop-overlay"
               class="absolute inset-0 bg-brand-blue/5 border-2 border-dashed border-brand-blue rounded-xl flex flex-col items-center justify-center gap-2 opacity-0 pointer-events-none transition-all duration-200"
             >
-              <span class="text-2xl">ðŸ“¥</span>
+              <span class="text-2xl">📥</span>
               <span class="text-xs font-bold text-brand-blue"
                 >Drop .json file here</span
               >
@@ -634,7 +634,7 @@ const keywords =
           <button
             id="close-shortcuts-btn"
             class="text-stone hover:text-primary font-bold text-lg cursor-pointer"
-            >Ã—</button
+            >×</button
           >
         </div>
         <div class="flex flex-col gap-3 text-xs leading-relaxed text-slate">
@@ -1096,7 +1096,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1461,10 +1461,10 @@ const keywords =
       }
       try {
         JSON.parse(text);
-        updateStatus("success", "âœ“ Structure Valid");
+        updateStatus("success", "✓ Structure Valid");
         errorTracePanel.classList.add("hidden");
       } catch (err: any) {
-        updateStatus("error", "âœ— Invalid JSON");
+        updateStatus("error", "✗ Invalid JSON");
       }
     }
 
@@ -1510,7 +1510,7 @@ const keywords =
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus("success", `âœ“ Valid JSON string formatted.`);
+        updateStatus("success", `✓ Valid JSON string formatted.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
 
         // Save to history
@@ -1550,7 +1550,7 @@ const keywords =
         const end = performance.now();
         fileProcessTime = end - start;
 
-        updateStatus("success", `âœ“ Minified successfully.`);
+        updateStatus("success", `✓ Minified successfully.`);
         validationPerf.textContent = `${fileProcessTime.toFixed(1)}ms | ${formatBytes(text.length)}`;
 
         errorTracePanel.classList.add("hidden");
@@ -1572,7 +1572,7 @@ const keywords =
 
     // Precise syntax error highlighting and parsing
     function handleParseError(rawText: string, err: Error) {
-      updateStatus("error", "âœ— Invalid JSON structure");
+      updateStatus("error", "✗ Invalid JSON structure");
       outputPretty.textContent = "";
       treeRootWrapper.innerHTML = "";
 
@@ -1746,7 +1746,7 @@ const keywords =
       if (!textStr) return;
 
       navigator.clipboard.writeText(textStr).then(() => {
-        showToast("âœ“ Copied formatted JSON");
+        showToast("✓ Copied formatted JSON");
       });
     });
 
@@ -1765,7 +1765,7 @@ const keywords =
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast("âœ“ Downloading JSON File");
+      showToast("✓ Downloading JSON File");
     });
 
     // Share link as URL query param
@@ -1831,7 +1831,7 @@ const keywords =
           }
         }
       } catch (err) {
-        showToast("âš ï¸ Could not generate link");
+        showToast("⚠️ Could not generate link");
       }
     });
 
@@ -1844,10 +1844,10 @@ const keywords =
         const shareUrl = `${window.location.origin}${window.location.pathname}?json=${compressed}`;
 
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast("âœ“ Shareable URL copied!");
+          showToast("✓ Shareable URL copied!");
         });
       } catch (err) {
-        showToast("âš ï¸ Could not generate link");
+        showToast("⚠️ Could not generate link");
       }
     });
 

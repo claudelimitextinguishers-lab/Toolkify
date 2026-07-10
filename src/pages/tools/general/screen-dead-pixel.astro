@@ -336,11 +336,11 @@ const keywords =
           </h3>
           <div class="flex flex-col gap-2.5 text-xs text-slate leading-relaxed">
             <div class="p-2.5 bg-surface rounded-lg border border-hairline-soft">
-              <p class="font-semibold text-primary mb-0.5">âš« Dead Pixels</p>
+              <p class="font-semibold text-primary mb-0.5">⚫ Dead Pixels</p>
               <p>Permanently switched off. Appears as a dark or black dot. Most visible on a <strong class="text-primary">Pure White</strong> background.</p>
             </div>
             <div class="p-2.5 bg-surface rounded-lg border border-hairline-soft">
-              <p class="font-semibold text-primary mb-0.5">ðŸ”´ Stuck Pixels</p>
+              <p class="font-semibold text-primary mb-0.5">🔴 Stuck Pixels</p>
               <p>Frozen on a single subpixel (Red, Green, or Blue). Cycle through pure primary screens to pinpoint the stuck element.</p>
             </div>
           </div>
@@ -359,7 +359,7 @@ const keywords =
         <div id="post-test-guidance" class="card-base border border-brand-rose bg-surface-soft hidden flex-col gap-2">
           <div class="flex items-center justify-between">
             <h3 class="text-xs font-bold text-slate uppercase tracking-wider">What if you found an issue?</h3>
-            <button id="close-guidance-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 py-0.5">âœ• Dismiss</button>
+            <button id="close-guidance-btn" class="text-stone hover:text-primary transition-colors text-xs font-bold px-1.5 py-0.5">✕ Dismiss</button>
           </div>
           <ul class="list-disc pl-4 text-xs text-slate flex flex-col gap-1">
             <li><strong>Pixel Fixing Tools</strong>: Try rapid-cycle blinking videos to un-stick the pixel.</li>
@@ -662,7 +662,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -720,7 +720,7 @@ const keywords =
         id="hud-zoom-toggle"
         class="hover:text-brand-yellow font-bold transition-colors cursor-pointer"
       >
-        ðŸ” Toggle Zoom Mode (Z)
+        🔍 Toggle Zoom Mode (Z)
       </button>
       <div class="h-3 w-[1px] bg-white/20"></div>
       <button
@@ -739,7 +739,7 @@ const keywords =
       class="fixed top-4 right-4 z-55 w-8 h-8 rounded-full bg-primary/70 backdrop-blur-sm text-white hover:bg-primary border border-white/20 flex items-center justify-center text-sm transition-opacity duration-300 font-bold shadow cursor-pointer"
       aria-label="Exit fullscreen test"
     >
-      âœ•
+      ✕
     </button>
 
     <!-- Simulated High-Fidelity Subpixel Magnifier Lens -->
@@ -941,7 +941,7 @@ const keywords =
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.className = "absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand-coral hover:bg-rose-600 text-white rounded-full flex items-center justify-center text-[8px] font-bold shadow transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer";
-        delBtn.textContent = 'âœ•';
+        delBtn.textContent = '✕';
         delBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           const customIndex = index - DEFAULT_COLORS.length;

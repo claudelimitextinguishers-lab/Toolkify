@@ -267,7 +267,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         <!-- Sensor Unsupported Banner (Hidden by default) -->
         <div id="unsupported-banner" class="hidden bg-brand-orange-light/40 border border-brand-orange-light text-primary rounded-xl p-3.5 text-xs flex flex-col gap-1">
           <div class="font-bold flex items-center gap-1">
-            <span>âš ï¸ API Unsupported in this Browser</span>
+            <span>⚠️ API Unsupported in this Browser</span>
           </div>
           <p class="text-slate leading-relaxed">
             The Ambient Light Sensor API is restricted or not implemented by your browser vendor (common on iOS/macOS Safari and desktop browsers). We recommend switching to the <strong class="text-primary font-semibold">Camera Estimate</strong> tab to measure relative light levels.
@@ -361,15 +361,15 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
             <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Minimum</span>
-            <span id="stat-min" class="font-display font-medium text-lg text-primary">â€”</span>
+            <span id="stat-min" class="font-display font-medium text-lg text-primary">—</span>
           </div>
           <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
             <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Maximum</span>
-            <span id="stat-max" class="font-display font-medium text-lg text-primary">â€”</span>
+            <span id="stat-max" class="font-display font-medium text-lg text-primary">—</span>
           </div>
           <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5">
             <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Average</span>
-            <span id="stat-avg" class="font-display font-medium text-lg text-primary">â€”</span>
+            <span id="stat-avg" class="font-display font-medium text-lg text-primary">—</span>
           </div>
           <div class="bg-surface border border-hairline-soft rounded-lg p-3 flex flex-col gap-0.5 justify-between">
             <span class="text-[9px] font-bold text-slate uppercase tracking-wider">Session Peaks</span>
@@ -391,7 +391,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         <!-- Photographer Settings Helper -->
         <div class="card-base flex flex-col gap-3">
           <h3 class="font-display font-semibold text-sm text-primary flex items-center gap-1.5">
-            <span class="text-base">ðŸ“·</span> Photographer Exposure Helper
+            <span class="text-base">📷</span> Photographer Exposure Helper
           </h3>
           <p class="text-[11px] text-slate leading-relaxed">
             Suggested exposure settings guideline based on current light level categories (assuming a standard 18% gray card target):
@@ -403,7 +403,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
             </div>
             <div class="flex items-center justify-between border-b border-hairline-soft pb-1.5">
               <span class="text-[10px] font-bold text-primary uppercase">Estimated EV 100</span>
-              <span id="photo-ev" class="text-[11px] font-bold text-primary">â€”</span>
+              <span id="photo-ev" class="text-[11px] font-bold text-primary">—</span>
             </div>
             <div class="flex items-center justify-between">
               <span class="text-[10px] font-bold text-primary uppercase">Suggested Aperture</span>
@@ -510,14 +510,14 @@ const keywords = "light meter, what is a light meter, light meter app, light met
         Why Use a Light Meter App?
       </h3>
       <p class="text-sm leading-relaxed">
-        While traditional standalone meters are still popular, modern technology allows us to use a mobile device as a highly capable tool. A <strong>light meter app</strong> leverages the built-in hardware sensors of your smartphoneâ€”specifically the ambient light sensor or the camera sensorâ€”to estimate lux levels in real time. Using the <strong>best light meter app</strong> on your phone gives you the convenience of carrying a reliable exposure helper directly in your pocket, making it easier than ever to gauge light levels on the go without carrying extra gear.
+        While traditional standalone meters are still popular, modern technology allows us to use a mobile device as a highly capable tool. A <strong>light meter app</strong> leverages the built-in hardware sensors of your smartphone—specifically the ambient light sensor or the camera sensor—to estimate lux levels in real time. Using the <strong>best light meter app</strong> on your phone gives you the convenience of carrying a reliable exposure helper directly in your pocket, making it easier than ever to gauge light levels on the go without carrying extra gear.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
         Light Meter Photography: Capturing the Perfect Shot
       </h3>
       <p class="text-sm leading-relaxed">
-        In the world of <strong>light meter photography</strong>, understanding how light interacts with your subject is key to creative control. Camera meters are designed to measure reflected light, which can sometimes be fooled by very bright backgrounds (like snow) or dark subjects. A dedicated light meter allows you to measure incident lightâ€”the light actually falling on your subject. This ensures consistent exposure values regardless of the subject's color or reflectivity. Whether you are shooting film, setting up studio lighting, or shooting outdoors, a light meter gives you predictable, repeatable exposures.
+        In the world of <strong>light meter photography</strong>, understanding how light interacts with your subject is key to creative control. Camera meters are designed to measure reflected light, which can sometimes be fooled by very bright backgrounds (like snow) or dark subjects. A dedicated light meter allows you to measure incident light—the light actually falling on your subject. This ensures consistent exposure values regardless of the subject's color or reflectivity. Whether you are shooting film, setting up studio lighting, or shooting outdoors, a light meter gives you predictable, repeatable exposures.
       </p>
 
       <h3 class="font-display font-semibold text-lg text-primary mt-2">
@@ -718,7 +718,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -730,7 +730,7 @@ const keywords = "light meter, what is a light meter, light meter app, light met
           The Ambient Light Sensor API provides standard, calibrated illuminance values in Lux. However, this API is disabled by default in most desktop browsers and is completely unsupported on iOS Safari due to user-fingerprinting protection.
         </p>
         <p>
-          If the Ambient Light Sensor is unavailable, the application automatically switches to <strong>Camera Estimate</strong>. This fallback reads live camera video frames using canvas image data to compute average pixel luminance. Because cameras auto-adjust ISO, aperture, and shutter speed on the fly, <em>a camera estimate cannot represent calibrated Lux</em>. We clearly present it on a relative 0â€“100 scale to prevent misleading readouts.
+          If the Ambient Light Sensor is unavailable, the application automatically switches to <strong>Camera Estimate</strong>. This fallback reads live camera video frames using canvas image data to compute average pixel luminance. Because cameras auto-adjust ISO, aperture, and shutter speed on the fly, <em>a camera estimate cannot represent calibrated Lux</em>. We clearly present it on a relative 0–100 scale to prevent misleading readouts.
         </p>
 
         <h4 class="font-semibold text-primary">
@@ -1144,18 +1144,18 @@ const keywords = "light meter, what is a light meter, light meter app, light met
       }
 
       function updateStats() {
-        statMin!.textContent = sessionMin === Infinity ? "â€”" : sessionMin + (currentMode === "sensor" ? " lx" : "%");
-        statMax!.textContent = sessionMax === -Infinity ? "â€”" : sessionMax + (currentMode === "sensor" ? " lx" : "%");
+        statMin!.textContent = sessionMin === Infinity ? "—" : sessionMin + (currentMode === "sensor" ? " lx" : "%");
+        statMax!.textContent = sessionMax === -Infinity ? "—" : sessionMax + (currentMode === "sensor" ? " lx" : "%");
         
         const avg = sessionCount > 0 ? Math.round(sessionSum / sessionCount) : 0;
-        statAvg!.textContent = sessionCount === 0 ? "â€”" : avg + (currentMode === "sensor" ? " lx" : "%");
+        statAvg!.textContent = sessionCount === 0 ? "—" : avg + (currentMode === "sensor" ? " lx" : "%");
       }
 
       // Exposure Helper calculations (standard photographic logic)
       function updateExposureHelper(val: number) {
         if (val === 0) {
-          photoEv!.textContent = "â€”";
-          photoShutter!.textContent = "â€”";
+          photoEv!.textContent = "—";
+          photoShutter!.textContent = "—";
           return;
         }
 

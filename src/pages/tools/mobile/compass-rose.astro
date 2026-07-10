@@ -251,7 +251,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         <!-- Permission Request / iOS Prompt Cover -->
         <div id="permission-card" class="absolute inset-0 bg-canvas/95 z-20 flex flex-col items-center justify-center text-center p-4 sm:p-6 transition-all duration-300">
           <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-yellow-light text-brand-yellow-deep flex items-center justify-center text-2xl font-bold mb-3 sm:mb-4 shadow-subtle">
-            ðŸ§­
+            🧭
           </div>
           <h3 class="font-display font-semibold text-base sm:text-lg text-primary mb-1 sm:mb-2">Sensor Permission Required</h3>
           <p class="text-[11px] sm:text-xs text-slate max-w-sm mb-4 sm:mb-6 leading-relaxed">
@@ -273,7 +273,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         <!-- Hardware Fallback Cover (No Magnetometer Detected) -->
         <div id="fallback-card" class="hidden absolute inset-0 bg-canvas/95 z-10 flex flex-col items-center justify-center text-center p-4 sm:p-6">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-red/20 text-brand-coral flex items-center justify-center text-lg font-bold mb-2 sm:mb-3">
-            âš ï¸
+            ⚠️
           </div>
           <h3 class="font-display font-semibold text-sm sm:text-base text-primary mb-1">Compass Sensor Unavailable</h3>
           <p class="text-[11px] sm:text-xs text-slate max-w-xs mb-3 sm:mb-4 leading-relaxed">
@@ -283,7 +283,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
             Activate Keyboard Simulator
           </button>
           <div class="text-[9px] sm:text-[10px] text-slate mt-2">
-            Use <kbd class="px-1 py-0.5 bg-surface border border-hairline rounded font-mono text-[9px] shadow-xs">â†</kbd> and <kbd class="px-1 py-0.5 bg-surface border border-hairline rounded font-mono text-[9px] shadow-xs">â†’</kbd> keys to rotate on Desktop.
+            Use <kbd class="px-1 py-0.5 bg-surface border border-hairline rounded font-mono text-[9px] shadow-xs">←</kbd> and <kbd class="px-1 py-0.5 bg-surface border border-hairline rounded font-mono text-[9px] shadow-xs">→</kbd> keys to rotate on Desktop.
           </div>
         </div>
 
@@ -301,7 +301,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         <!-- Huge Heading & Cardinal Readout -->
         <div class="text-center mt-4 sm:mt-6 mb-1 sm:mb-2 z-5">
           <div class="font-mono font-medium text-3xl sm:text-5xl tracking-tight text-primary flex items-baseline justify-center gap-1 select-none">
-            <span id="heading-deg">000</span><span class="text-lg sm:text-2xl text-slate">Â°</span>
+            <span id="heading-deg">000</span><span class="text-lg sm:text-2xl text-slate">°</span>
             <span id="heading-cardinal" class="ml-2 font-display font-bold text-xl sm:text-3xl text-brand-blue uppercase">N</span>
           </div>
           <div id="reference-deviation" class="text-[9px] sm:text-[10px] font-bold text-stone tracking-wide hidden mt-0.5">
@@ -394,13 +394,13 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         <!-- High-contrast calibration indicator warning -->
         <div id="calibration-warning-box" class="hidden w-full max-w-xs mt-4 flex items-center justify-between gap-2 p-2 bg-surface-yellow border border-brand-yellow-deep/50 rounded-lg animate-bounce select-none">
           <div class="flex items-center gap-2">
-            <span class="text-sm">ðŸ”„</span>
+            <span class="text-sm">🔄</span>
             <div class="text-[10px] text-yellow-dark leading-tight">
               <strong class="font-bold block">Interference / Low Accuracy</strong>
               Calibrate by moving device in a figure-8 path.
             </div>
           </div>
-          <button id="dismiss-calibration-btn" class="text-stone hover:text-primary font-bold text-xs p-1 cursor-pointer">âœ•</button>
+          <button id="dismiss-calibration-btn" class="text-stone hover:text-primary font-bold text-xs p-1 cursor-pointer">✕</button>
         </div>
       </div>
 
@@ -453,7 +453,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
                   class="w-full bg-canvas border border-hairline hover:border-hairline-strong focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-xs font-mono font-medium rounded-lg px-3 py-2 outline-none transition-all"
                   placeholder="e.g. 12.5 or -3.2"
                 />
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate font-mono">Â°</span>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate font-mono">°</span>
               </div>
               <div class="flex rounded-lg border border-hairline p-0.5 bg-surface">
                 <button type="button" id="decl-east-btn" class="px-2.5 py-1 text-[10px] font-bold rounded-md bg-canvas border border-hairline-soft shadow-xs text-primary cursor-pointer">E</button>
@@ -469,7 +469,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
           <div class="flex flex-col gap-2 pt-2 border-t border-hairline-soft">
             <div class="flex justify-between items-center">
               <span class="text-[10px] font-bold text-slate uppercase tracking-wider">Reference Bearing Lock</span>
-              <span id="locked-bearing-text" class="text-[10px] font-mono font-semibold text-brand-coral bg-coral-light/30 px-2 py-0.5 rounded-full hidden">Locked: --Â°</span>
+              <span id="locked-bearing-text" class="text-[10px] font-mono font-semibold text-brand-coral bg-coral-light/30 px-2 py-0.5 rounded-full hidden">Locked: --°</span>
             </div>
             
             <div class="flex gap-2">
@@ -478,7 +478,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
                 id="lock-heading-btn"
                 class="flex-1 bg-surface hover:bg-hairline text-primary text-xs font-semibold py-2 px-4 border border-hairline-strong rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-subtle"
               >
-                <span>ðŸ”’</span> Lock Heading
+                <span>🔒</span> Lock Heading
               </button>
               <button
                 type="button"
@@ -507,7 +507,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
             id="enable-gps-btn"
             class="w-full bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-teal hover:border-brand-teal text-xs font-semibold py-2 px-4 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-subtle"
           >
-            <span>ðŸ“</span> Get Live GPS Position
+            <span>📍</span> Get Live GPS Position
           </button>
 
           <!-- Current Lat/Lng Status Display -->
@@ -557,7 +557,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
           <div id="waypoint-stats" class="hidden bg-teal-light/20 border border-brand-teal/40 p-2.5 rounded-xl text-xs text-slate flex flex-col gap-1.5 select-none">
             <div class="flex justify-between items-center border-b border-brand-teal/20 pb-1">
               <span class="font-semibold text-moss-dark">Destination Bearing:</span>
-              <span id="wp-target-bearing" class="font-mono font-bold text-primary">--Â°</span>
+              <span id="wp-target-bearing" class="font-mono font-bold text-primary">--°</span>
             </div>
             <div class="flex justify-between items-center">
               <span>Distance to Target:</span>
@@ -607,7 +607,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         Free Online Compass Rose: Real-Time Direction & Navigation Tool
       </h2>
       <p class="text-sm leading-relaxed">
-        To understand the foundations of navigation, one must ask: <strong>what is a compass rose</strong>? At its core, <strong>a compass rose</strong> is a classic figure found on maps, charts, and compasses that displays the orientation of the cardinal directionsâ€”North, South, East, and Westâ€”along with their intermediate points. Historically, it is the design element that helps cartographers and navigators establish alignment. The <strong>compass rose definition</strong> highlights its role as a guide, translating raw orientation into clear, geographic headings. Whether you are using it as a reference for a physical journey or as a digital instrument, this interface provides an interactive, modern take on a timeless tool.
+        To understand the foundations of navigation, one must ask: <strong>what is a compass rose</strong>? At its core, <strong>a compass rose</strong> is a classic figure found on maps, charts, and compasses that displays the orientation of the cardinal directions—North, South, East, and West—along with their intermediate points. Historically, it is the design element that helps cartographers and navigators establish alignment. The <strong>compass rose definition</strong> highlights its role as a guide, translating raw orientation into clear, geographic headings. Whether you are using it as a reference for a physical journey or as a digital instrument, this interface provides an interactive, modern take on a timeless tool.
       </p>
       <p class="text-sm leading-relaxed">
         If you look closely at the center of the dial, you will see a detailed star pattern. <strong>What does a compass rose look like</strong>? Traditionally, it features a central point with points or "petals" radiating outward. The largest, most prominent point points North, while smaller points represent East, West, South, and the intercardinal directions (North-East, South-West, etc.). This geometric beauty is why <strong>compass rose images</strong> have remained highly popular in design, art, and cartography. Historically, the names and styles evolved from the wind rose, which charted winds across the Mediterranean. <strong>Why is it called a compass rose</strong>? It earned the name because the radiating points resemble the petals of a rose flower, combining artistic aesthetics with navigation utility.
@@ -859,7 +859,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -875,7 +875,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
 
         <h4 class="font-semibold text-primary">2. Circular averaging & smoothing</h4>
         <p>
-          Magnetometer inputs commonly suffer from sensor noise. Rather than applying standard linear smoothing (which breaks when transitioning between 359Â° and 0Â°), this tool uses a trigonometric circular filter: averaging the sines and cosines of heading angles to deliver smooth, glitch-free needle rotations.
+          Magnetometer inputs commonly suffer from sensor noise. Rather than applying standard linear smoothing (which breaks when transitioning between 359° and 0°), this tool uses a trigonometric circular filter: averaging the sines and cosines of heading angles to deliver smooth, glitch-free needle rotations.
         </p>
 
         <h4 class="font-semibold text-primary">3. True North & Declination offsets</h4>
@@ -1108,7 +1108,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
 
     function updateLockUI() {
       if (state.lockedBearing !== null) {
-        lockedBearingText.textContent = `Locked: ${Math.round(state.lockedBearing).toString().padStart(3, '0')}Â°`;
+        lockedBearingText.textContent = `Locked: ${Math.round(state.lockedBearing).toString().padStart(3, '0')}°`;
         lockedBearingText.classList.remove('hidden');
         clearLockBtn.classList.remove('hidden');
         bearingLockMarker.classList.remove('hidden');
@@ -1175,13 +1175,13 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
 
         const roundDev = Math.round(deviation);
         if (roundDev === 0) {
-          referenceDeviation.textContent = "ON COURSE (0Â°)";
+          referenceDeviation.textContent = "ON COURSE (0°)";
           referenceDeviation.className = "text-[10px] font-bold text-success-accent tracking-wide mt-0.5";
         } else if (roundDev > 0) {
-          referenceDeviation.textContent = `TURN LEFT ${roundDev}Â°`;
+          referenceDeviation.textContent = `TURN LEFT ${roundDev}°`;
           referenceDeviation.className = "text-[10px] font-bold text-brand-coral tracking-wide mt-0.5";
         } else {
-          referenceDeviation.textContent = `TURN RIGHT ${Math.abs(roundDev)}Â°`;
+          referenceDeviation.textContent = `TURN RIGHT ${Math.abs(roundDev)}°`;
           referenceDeviation.className = "text-[10px] font-bold text-brand-blue tracking-wide mt-0.5";
         }
       }
@@ -1253,10 +1253,10 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         state.accuracy = event.webkitCompassAccuracy;
         
         if (state.accuracy > 0 && state.accuracy <= 15) {
-          accuracyDisplay.textContent = `Acc: Â±${Math.round(state.accuracy)}Â°`;
+          accuracyDisplay.textContent = `Acc: ±${Math.round(state.accuracy)}°`;
           calibrationWarningBox.classList.add('hidden');
         } else if (state.accuracy > 15) {
-          accuracyDisplay.textContent = `Acc: Poor (Â±${Math.round(state.accuracy)}Â°)`;
+          accuracyDisplay.textContent = `Acc: Poor (±${Math.round(state.accuracy)}°)`;
           calibrationWarningBox.classList.remove('hidden');
         } else {
           accuracyDisplay.textContent = `Acc: --`;
@@ -1428,7 +1428,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         state.targetCoords.lon
       );
 
-      wpTargetBearingEl.textContent = `${Math.round(bearing).toString().padStart(3, '0')}Â°`;
+      wpTargetBearingEl.textContent = `${Math.round(bearing).toString().padStart(3, '0')}°`;
       wpDistanceEl.textContent = distance;
 
       // Angle relative to our current heading (e.g. where should the waypoint arrow point inside the dial)
@@ -1447,10 +1447,10 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         wpRelativeDirEl.textContent = "AHEAD";
         wpRelativeDirEl.className = "font-mono font-bold text-success-accent";
       } else if (roundedRel > 0) {
-        wpRelativeDirEl.textContent = `${roundedRel}Â° RIGHT`;
+        wpRelativeDirEl.textContent = `${roundedRel}° RIGHT`;
         wpRelativeDirEl.className = "font-mono font-bold text-brand-teal";
       } else {
-        wpRelativeDirEl.textContent = `${Math.abs(roundedRel)}Â° LEFT`;
+        wpRelativeDirEl.textContent = `${Math.abs(roundedRel)}° LEFT`;
         wpRelativeDirEl.className = "font-mono font-bold text-brand-coral";
       }
 
@@ -1474,7 +1474,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
             gpsLngEl.textContent = state.myCoords.lon.toFixed(6);
             gpsStatusRow.classList.remove('hidden');
             
-            enableGpsBtn.textContent = "ðŸ“ GPS Active / Connected";
+            enableGpsBtn.textContent = "📍 GPS Active / Connected";
             enableGpsBtn.className = "w-full bg-brand-teal/20 border border-brand-teal text-brand-teal text-xs font-semibold py-2 px-4 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-subtle";
 
             updateWaypointCalculations();
@@ -1593,7 +1593,7 @@ const canonicalUrl = "https://toolkify.com/tools/mobile/compass-rose";
         navigator.geolocation.clearWatch(gpsWatchId);
         gpsWatchId = null;
       }
-      enableGpsBtn.textContent = "ðŸ“ Get Live GPS Position";
+      enableGpsBtn.textContent = "📍 Get Live GPS Position";
       enableGpsBtn.className = "w-full bg-canvas hover:bg-surface border border-hairline text-slate hover:text-brand-teal hover:border-brand-teal text-xs font-semibold py-2 px-4 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-subtle";
 
       // Stop simulator

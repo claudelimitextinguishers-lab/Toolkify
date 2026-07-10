@@ -767,14 +767,14 @@ const keywords =
               <span class="w-2.5 h-2.5 rounded-full bg-brand-teal"></span>
               Custom Tax Settings
             </span>
-            <button type="button" id="close-custom-tax-btn" class="text-stone hover:text-primary transition-all text-xs font-bold cursor-pointer">âœ•</button>
+            <button type="button" id="close-custom-tax-btn" class="text-stone hover:text-primary transition-all text-xs font-bold cursor-pointer">✕</button>
           </h3>
 
           <!-- Currency & Code -->
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-symbol" class="text-[10px] font-semibold text-slate">Currency Symbol</label>
-              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, Â£, â‚¬, â‚¹" />
+              <input type="text" id="custom-currency-symbol" value="$" class="text-input" placeholder="e.g. $, £, €, ₹" />
             </div>
             <div class="flex flex-col gap-1.5">
               <label for="custom-currency-code" class="text-[10px] font-semibold text-slate">Currency Code</label>
@@ -1025,7 +1025,7 @@ const keywords =
           id="scenarios-empty-state"
           class="col-span-full py-8 px-4 border border-dashed border-hairline-strong rounded-xl bg-surface/50 text-center flex flex-col items-center justify-center gap-3 min-h-[140px]"
         >
-          <span class="text-2xl">ðŸ“Œ</span>
+          <span class="text-2xl">📌</span>
           <p class="text-xs text-slate">No saved paycheck variants pinned to the board yet.</p>
         </div>
       </div>
@@ -1658,7 +1658,7 @@ const keywords =
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -2044,7 +2044,7 @@ const keywords =
         }
       },
       GB: {
-        currencySymbol: "Â£",
+        currencySymbol: "£",
         currencyCode: "GBP",
         regionLabel: "Region",
         regions: {
@@ -2085,7 +2085,7 @@ const keywords =
         }
       },
       DE: {
-        currencySymbol: "â‚¬",
+        currencySymbol: "€",
         currencyCode: "EUR",
         regionLabel: "Tax Class",
         regions: {
@@ -2112,7 +2112,7 @@ const keywords =
         }
       },
       IN: {
-        currencySymbol: "â‚¹",
+        currencySymbol: "₹",
         currencyCode: "INR",
         regionLabel: "Tax Regime",
         regions: {
@@ -2431,7 +2431,7 @@ const keywords =
               </div>
             </td>
             <td class="py-1 px-2 text-center">
-              <button type="button" class="btn-delete-bracket text-brand-red-dark hover:scale-110 transition-all font-semibold p-1 cursor-pointer text-xs" data-idx="${idx}">âœ•</button>
+              <button type="button" class="btn-delete-bracket text-brand-red-dark hover:scale-110 transition-all font-semibold p-1 cursor-pointer text-xs" data-idx="${idx}">✕</button>
             </td>
           </tr>
         `;
@@ -3557,7 +3557,7 @@ const keywords =
               data-id="${sc.id}"
               title="Remove scenario"
             >
-              âœ•
+              ✕
             </button>
             <div class="flex flex-col gap-1 pr-6">
               <span class="text-[9px] uppercase font-bold tracking-wider opacity-60">Scenario Detail</span>

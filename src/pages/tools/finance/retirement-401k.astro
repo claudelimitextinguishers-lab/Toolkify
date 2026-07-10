@@ -272,7 +272,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
             class="card-feature-rose !p-3 !rounded-lg text-[11px] flex flex-col gap-1 hidden"
           >
             <span class="font-bold text-coral-dark"
-              >âš ï¸ Contribution Limit Warning:</span
+              >⚠️ Contribution Limit Warning:</span
             >
             <span id="warning-text" class="text-slate leading-relaxed">
               Your contribution exceeds the localized annual limit.
@@ -382,10 +382,10 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
                 >
                   <option value="USD" selected>$ USD</option>
                   <option value="CAD">$ CAD</option>
-                  <option value="GBP">Â£ GBP</option>
+                  <option value="GBP">£ GBP</option>
                   <option value="AUD">$ AUD</option>
-                  <option value="EUR">â‚¬ EUR</option>
-                  <option value="INR">â‚¹ INR</option>
+                  <option value="EUR">€ EUR</option>
+                  <option value="INR">₹ INR</option>
                   <option value="Custom">Custom</option>
                 </select>
               </div>
@@ -568,7 +568,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
               class="w-full flex items-center justify-between text-xs font-bold text-slate hover:text-primary transition-all cursor-pointer py-1"
             >
               <span class="flex items-center gap-1.5">
-                âš™ Advanced Options (Inflation, Growth, Taxes & Limits)
+                ⚙ Advanced Options (Inflation, Growth, Taxes & Limits)
               </span>
               <svg
                 id="advanced-chevron"
@@ -1136,7 +1136,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
           drawing down your balance affects long-term growth. The
           <strong>early withdrawal 401k calculator</strong> perspective is
           especially useful for understanding the true cost of taking money out
-          before age 59Â½, where a 10% penalty plus income tax and lost compound
+          before age 59½, where a 10% penalty plus income tax and lost compound
           growth can shrink your nest egg dramatically.
         </p>
       </div>
@@ -1550,7 +1550,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
           id="close-modal-btn"
           class="text-stone hover:text-primary transition-all text-lg cursor-pointer font-bold"
         >
-          âœ•
+          ✕
         </button>
       </div>
 
@@ -1567,7 +1567,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
         <p>
           Many employer retirement accounts match your contributions up to a
           specific percentage of your annual salary. Always aim to contribute at
-          least enough to capture the full match limitâ€”this is essentially "free
+          least enough to capture the full match limit—this is essentially "free
           money" adding to your future wealth.
         </p>
 
@@ -1666,7 +1666,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
       GBP: {
         countryName: "United Kingdom",
         toolTitle: "Pension Calculator",
-        currencySymbol: "Â£",
+        currencySymbol: "£",
         currencyCode: "GBP",
         limitNormal: 60000,
         limitCatchup: 60000,
@@ -1708,7 +1708,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
       EUR: {
         countryName: "Europe",
         toolTitle: "Pension Calculator",
-        currencySymbol: "â‚¬",
+        currencySymbol: "€",
         currencyCode: "EUR",
         limitNormal: 50000,
         limitCatchup: 50000,
@@ -1729,7 +1729,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
       INR: {
         countryName: "India",
         toolTitle: "EPF/NPS Calculator",
-        currencySymbol: "â‚¹",
+        currencySymbol: "₹",
         currencyCode: "INR",
         limitNormal: 150000,
         limitCatchup: 150000,
@@ -1737,7 +1737,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
         defaultMatchRate: 100,
         defaultMatchLimit: 12,
         taxNote:
-          "EPF and PPF enjoy EEE (Exempt-Exempt-Exempt) tax status. NPS offers up to â‚¹1.5L deduction under 80C + â‚¹50,000 additional under 80CCD(1B).",
+          "EPF and PPF enjoy EEE (Exempt-Exempt-Exempt) tax status. NPS offers up to ₹1.5L deduction under 80C + ₹50,000 additional under 80CCD(1B).",
         accountTypes: [
           { id: "epf", name: "Employees' Provident Fund (EPF)" },
           { id: "nps", name: "National Pension System (NPS)" },
@@ -2327,7 +2327,7 @@ const canonicalUrl = "https://toolkify.com/tools/finance/retirement-401k";
         .then(() => {
           if (copyResultsBtn) {
             const prevText = copyResultsBtn.innerHTML;
-            copyResultsBtn.innerHTML = `<span>âœ” Copied!</span>`;
+            copyResultsBtn.innerHTML = `<span>✔ Copied!</span>`;
             setTimeout(() => {
               copyResultsBtn.innerHTML = prevText;
             }, 2000);
