@@ -1,0 +1,5 @@
+# Redirect the legacy sitemap URL to the real Astro-generated sitemap index.
+# Google Search Console still has the old /sitemap.xml submission that cannot be
+# removed; without this it 404s and returns the HTML 404 page ("Sitemap is HTML"
+# / "Couldn't fetch"). A 301 here makes that submission resolve to valid XML.
+/sitemap.xml   /sitemap-index.xml   301
