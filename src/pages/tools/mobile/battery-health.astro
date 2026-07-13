@@ -1,0 +1,1131 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+// Tool metadata
+const name = "Battery Health Test";
+const category = "mobile";
+const tier = "Mobile Sensor Tools";
+const description = "Read your phone or laptop's live battery status right in the browser — real charge level, charging state, and a measured drain rate. Plus a transparent battery-health estimator based on age and charging habits.";
+
+const pageTitle = "Battery Health Test - Live Battery Status & Honest Health Estimate";
+const canonicalUrl = "https://toolkify.com/tools/mobile/battery-health";
+const ogImage = "/og/battery-health.png";
+const keywords = "battery health, battery test, battery status api, phone battery test, battery drain rate, battery percentage, time remaining, battery health estimate, laptop battery, charge cycles";
+---
+
+<Layout
+  title={pageTitle}
+  description={description}
+  toolName={name}
+  toolCategory={category}
+  keywords={keywords}
+  canonical={canonicalUrl}
+  ogImage={ogImage}
+  ogType="website"
+  hideBanner={true}
+>
+  <!-- SEO JSON-LD WebApplication Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Battery Health Test",
+      "alternateName": "Live Battery Status Monitor & Health Estimator",
+      "url": "https://toolkify.com/tools/mobile/battery-health",
+      "description": "A privacy-first, in-browser battery tool. It reads your device's real battery level and charging state through the standard Battery Status API, measures your live drain and charge rate over time, and provides a transparent, model-based battery-health estimate from your device age and charging habits.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Live status requires a Chromium-based browser (Chrome, Edge, Opera, Samsung Internet) that supports the Battery Status API. Firefox and Safari/iOS do not expose battery data; the tool falls back to the manual estimator.",
+      "featureList": [
+        "Live battery level and charging state via the Battery Status API",
+        "Measured drain and charge rate (percent per hour) computed from real samples",
+        "System and measured time-to-full / time-to-empty estimates",
+        "Screen Wake Lock so the reading stays visible while you watch it",
+        "Transparent, science-based battery-health estimator (age + charging habits)",
+        "Honest about limits: no fabricated temperature, voltage, or cycle-count readings",
+        "100% client-side — no battery or device data leaves your browser"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://toolkify.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://toolkify.com/tools" },
+        { "@type": "ListItem", "position": 3, "name": "Mobile", "item": "https://toolkify.com/tools/mobile" },
+        { "@type": "ListItem", "position": 4, "name": "Battery Health Test", "item": "https://toolkify.com/tools/mobile/battery-health" }
+      ]
+    }
+  </script>
+
+  <!-- FAQ JSON-LD Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can a browser read my battery health or capacity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>No. Browsers cannot read physical battery health, remaining capacity in mAh, cycle count, temperature, or voltage. The web Battery Status API only exposes four things: the current charge level (as a percentage), whether the device is charging, and rough time-to-full and time-to-empty values. This tool shows those real values and additionally measures your live drain rate. Any 'health percentage' here is a clearly-labelled estimate from the age and habits you enter, not a hardware reading.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why doesn't the live reading work on my iPhone or in Firefox?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Safari and all iOS browsers never implemented the Battery Status API, and Firefox removed it in 2017 to prevent fingerprinting. On those browsers there is no way for any website to read your battery level, so this tool automatically switches to its manual health estimator. Live battery status works on Chromium-based browsers: Chrome, Edge, Opera, and Samsung Internet.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the drain rate measured?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>The tool timestamps every change in your battery percentage while the page is open, then divides the total percentage change by the elapsed time to give a real percent-per-hour figure. Because the operating system only reports whole-percent steps, the first accurate number appears after your level changes by at least one percent, so leaving the page open for a few minutes gives a more precise reading.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What actually degrades a lithium-ion battery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Two things dominate: cycle aging (each full charge-discharge cycle wears the cell, with most phones rated to keep about 80% capacity after 500 cycles) and calendar aging (chemical decay over time regardless of use). Heat above about 35°C, sitting at 100% while plugged in, deep discharges to 0%, and frequent fast charging all accelerate both. The estimator on this page uses these factors, weighted from published lithium-ion research, to approximate wear.</p>"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I make my battery last longer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<p>Keep the charge roughly between 20% and 80%, avoid leaving it plugged in at 100% overnight, keep it cool (don't game or run heavy loads while charging), and prefer slower charging when you're not in a hurry. These habits reduce both cycle and calendar aging.</p>"
+          }
+        }
+      ]
+    }
+  </script>
+
+  <section class="max-w-[1280px] w-full mx-auto px-3 sm:px-4 md:px-8 py-3 sm:py-10 flex flex-col gap-3 sm:gap-8 animate-fade-in-up pb-14 sm:pb-16 print:p-0">
+
+    <!-- Breadcrumb & Header -->
+    <div class="flex flex-col gap-1.5 print:hidden">
+      <nav class="flex items-center gap-1.5 text-[10px] font-semibold text-slate uppercase" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary transition-colors">Home</a>
+        <span>/</span>
+        <a href="/" class="hover:text-primary transition-colors">Tools</a>
+        <span>/</span>
+        <span class="text-brand-blue capitalize">{category}</span>
+      </nav>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-0.5 gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+          <h1 class="font-display font-medium text-xl sm:text-2xl tracking-tight text-primary">
+            {name}
+          </h1>
+          <span class="bg-surface-pricing-featured text-brand-blue text-[10px] py-0.5 px-2 rounded-full font-semibold uppercase whitespace-nowrap shrink-0">
+            {tier}
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            id="share-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface active:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Share tool link"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742l5.028-2.513m0 7.544l-5.028-2.513M18 8a3 3 0 11-6 0 3 3 0 016 0zm-6 8a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Share</span>
+          </button>
+
+          <button
+            type="button"
+            id="how-it-works-btn"
+            class="inline-flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface active:bg-surface border border-hairline text-slate hover:text-primary rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="How this tool works"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>How it works</span>
+          </button>
+
+          <button
+            type="button"
+            id="reset-btn"
+            class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-canvas hover:bg-surface active:bg-surface border border-hairline text-slate hover:text-brand-coral hover:border-brand-coral rounded-full transition-all cursor-pointer shadow-subtle"
+            aria-label="Reset estimator inputs"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 items-start">
+
+      <!-- Left: Live Battery Monitor -->
+      <div class="lg:col-span-7 card-base flex flex-col gap-3.5 sm:gap-5 p-3.5 sm:p-6">
+
+        <!-- Live Status Bar -->
+        <div class="flex flex-row flex-wrap items-center justify-between gap-2 pb-2.5 sm:pb-3 border-b border-hairline-soft">
+          <div class="flex items-center gap-2">
+            <div id="api-status-dot" class="w-2.5 h-2.5 rounded-full bg-slate animate-pulse"></div>
+            <span id="api-status-label" class="text-xs font-semibold text-slate uppercase tracking-wider">Detecting battery interface…</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-stone">Source:</span>
+            <span id="mode-badge" class="bg-surface-pricing-featured text-brand-blue text-[10px] font-bold py-0.5 px-2 rounded-full uppercase">Checking</span>
+          </div>
+        </div>
+
+        <!-- Big Gauge -->
+        <div class="flex flex-col items-center justify-center gap-4">
+          <div class="relative w-40 h-40 sm:w-56 sm:h-56 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 176 176">
+              <circle cx="88" cy="88" r="76" stroke="#e0e2e8" stroke-width="12" fill="none"></circle>
+              <circle id="gauge-level-ring" cx="88" cy="88" r="76" stroke="#4262ff" stroke-dasharray="477.5" stroke-dashoffset="477.5" stroke-linecap="round" stroke-width="12" fill="none" class="transition-all duration-700 ease-out"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center text-center px-4">
+              <span id="gauge-level-text" class="text-4xl sm:text-6xl font-display font-medium text-primary tabular-nums leading-none">--<span class="text-xl sm:text-2xl align-top">%</span></span>
+              <span id="charging-status-text" class="mt-1.5 sm:mt-2 inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-slate uppercase tracking-wider">
+                Reading battery…
+              </span>
+            </div>
+          </div>
+
+          <!-- Scan button: centered directly below the battery circle -->
+          <button
+            type="button"
+            id="scan-btn"
+            class="inline-flex items-center justify-center gap-2 bg-primary text-canvas font-semibold text-sm py-3 px-7 min-h-[46px] rounded-full hover:bg-charcoal active:scale-[0.98] transition-all cursor-pointer shadow-subtle"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+            </svg>
+            <span>Run Health Scan</span>
+          </button>
+        </div>
+
+        <!-- Live Telemetry (REAL values only) -->
+        <div class="grid grid-cols-2 gap-2 sm:gap-3">
+          <div class="p-2.5 sm:p-3 bg-surface rounded-lg border border-hairline-soft">
+            <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">State</p>
+            <p id="stat-state" class="text-sm font-semibold text-primary mt-0.5">--</p>
+          </div>
+          <div class="p-2.5 sm:p-3 bg-surface rounded-lg border border-hairline-soft">
+            <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Measured rate</p>
+            <p id="stat-rate" class="text-sm font-semibold text-primary mt-0.5 tabular-nums">--</p>
+          </div>
+          <div class="p-2.5 sm:p-3 bg-surface rounded-lg border border-hairline-soft">
+            <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Time remaining</p>
+            <p id="stat-time" class="text-sm font-semibold text-primary mt-0.5 tabular-nums">--</p>
+          </div>
+          <div class="p-2.5 sm:p-3 bg-surface rounded-lg border border-hairline-soft">
+            <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Change this session</p>
+            <p id="stat-session" class="text-sm font-semibold text-primary mt-0.5 tabular-nums">--</p>
+          </div>
+        </div>
+
+        <!-- Wake lock + measuring hint -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+          <label for="wake-lock-toggle" class="flex items-center gap-2.5 cursor-pointer select-none">
+            <span class="relative inline-flex">
+              <input type="checkbox" id="wake-lock-toggle" class="peer sr-only" />
+              <span class="w-10 h-6 bg-hairline peer-checked:bg-brand-blue rounded-full transition-colors"></span>
+              <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-canvas rounded-full shadow-subtle transition-transform peer-checked:translate-x-4"></span>
+            </span>
+            <span class="text-xs font-semibold text-slate">Keep screen awake while monitoring</span>
+          </label>
+          <p id="measure-hint" class="text-[11px] text-stone leading-snug">Leave this open a few minutes for an accurate drain rate.</p>
+        </div>
+
+        <!-- Unsupported / fallback notice -->
+        <div id="fallback-notice" class="hidden flex-col gap-1.5 p-3.5 rounded-xl border border-hairline bg-surface-soft">
+          <p class="text-xs font-semibold text-primary flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4 text-brand-yellow-deep">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            Live battery data isn't available in this browser
+          </p>
+          <p class="text-[11px] text-slate leading-relaxed">Safari, iOS browsers, and Firefox don't expose the Battery Status API. Your real level and drain rate can't be read here — but the health estimator on the right still works everywhere.</p>
+        </div>
+      </div>
+
+      <!-- Right: Health Estimator + Compatibility -->
+      <div class="lg:col-span-5 flex flex-col gap-3 sm:gap-6">
+
+        <!-- Health Estimator -->
+        <div id="estimator-top" class="card-base p-3.5 sm:p-6 flex flex-col gap-3.5 sm:gap-4 scroll-mt-24 transition-shadow">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-brand-blue rounded-full"></span>
+            <h2 class="text-sm font-semibold text-primary">Battery Health Estimator</h2>
+          </div>
+          <p class="text-[11px] text-slate leading-relaxed -mt-1">
+            An <strong class="text-primary">estimate</strong>, not a hardware reading. It models lithium-ion wear from the details you provide below.
+          </p>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center">
+                <label for="device-age" class="text-xs font-semibold text-slate">Device age (months)</label>
+                <span id="age-val" class="text-xs font-bold text-primary tabular-nums">12</span>
+              </div>
+              <input type="range" id="device-age" min="1" max="72" value="12" class="w-full h-2 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue" />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <div class="flex justify-between items-center">
+                <label for="cycles-day" class="text-xs font-semibold text-slate">Full charge cycles per day</label>
+                <span id="cycles-val" class="text-xs font-bold text-primary tabular-nums">1.0</span>
+              </div>
+              <input type="range" id="cycles-day" min="2" max="30" value="10" class="w-full h-2 bg-hairline rounded-lg appearance-none cursor-pointer accent-brand-blue" />
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <span class="text-xs font-semibold text-slate">Typical temperature</span>
+              <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Typical temperature exposure">
+                <button type="button" data-temp="cool" class="temp-btn min-h-[40px] text-[11px] font-semibold rounded-lg border border-hairline bg-surface text-slate transition-all">Cool</button>
+                <button type="button" data-temp="warm" class="temp-btn min-h-[40px] text-[11px] font-semibold rounded-lg border border-hairline bg-surface text-slate transition-all">Warm</button>
+                <button type="button" data-temp="hot" class="temp-btn min-h-[40px] text-[11px] font-semibold rounded-lg border border-hairline bg-surface text-slate transition-all">Hot</button>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="flex items-center justify-between gap-2 cursor-pointer select-none">
+                <span class="text-xs font-semibold text-slate">Often fast-charges</span>
+                <span class="relative inline-flex">
+                  <input type="checkbox" id="habit-fast" class="peer sr-only" />
+                  <span class="w-10 h-6 bg-hairline peer-checked:bg-brand-blue rounded-full transition-colors"></span>
+                  <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-canvas rounded-full shadow-subtle transition-transform peer-checked:translate-x-4"></span>
+                </span>
+              </label>
+              <label class="flex items-center justify-between gap-2 cursor-pointer select-none">
+                <span class="text-xs font-semibold text-slate">Often left plugged in at 100%</span>
+                <span class="relative inline-flex">
+                  <input type="checkbox" id="habit-plugged" class="peer sr-only" />
+                  <span class="w-10 h-6 bg-hairline peer-checked:bg-brand-blue rounded-full transition-colors"></span>
+                  <span class="absolute left-0.5 top-0.5 w-5 h-5 bg-canvas rounded-full shadow-subtle transition-transform peer-checked:translate-x-4"></span>
+                </span>
+              </label>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label for="design-capacity" class="text-xs font-semibold text-slate">Original capacity in mAh <span class="text-stone font-normal">(optional)</span></label>
+              <input type="number" id="design-capacity" inputmode="numeric" min="500" max="20000" placeholder="e.g. 4500" class="w-full min-h-[44px] px-3 text-sm rounded-lg border border-hairline-strong bg-canvas text-primary focus:border-brand-blue focus:outline-none transition-colors" />
+            </div>
+          </div>
+
+          <!-- Estimator Result -->
+          <div id="est-result" class="mt-1 flex flex-col gap-3 p-4 rounded-xl border border-hairline bg-surface-soft scroll-mt-20">
+            <div class="flex items-end justify-between">
+              <div>
+                <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Estimated health</p>
+                <p id="est-health" class="text-3xl font-display font-medium text-primary tabular-nums leading-none mt-1">--<span class="text-lg align-top">%</span></p>
+              </div>
+              <span id="est-condition" class="text-[11px] font-bold py-1 px-2.5 rounded-full bg-surface-pricing-featured text-brand-blue">—</span>
+            </div>
+            <div class="w-full bg-hairline rounded-full h-2 overflow-hidden">
+              <div id="est-bar" class="h-full w-0 rounded-full bg-brand-blue transition-all duration-500"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Est. cycles</p>
+                <p id="est-cycles" class="text-sm font-semibold text-primary mt-0.5 tabular-nums">--</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold text-stone uppercase tracking-wide">Est. capacity now</p>
+                <p id="est-capacity" class="text-sm font-semibold text-primary mt-0.5 tabular-nums">--</p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <p class="text-[10px] text-stone leading-snug max-w-[70%]">Model-based approximation from published Li-ion aging data.</p>
+              <button
+                type="button"
+                id="print-report-btn"
+                class="text-[11px] font-semibold text-brand-blue hover:underline cursor-pointer flex items-center gap-1 shrink-0"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.617 0-1.11-.497-1.12-1.115L6.34 18m11.32 0h-11.32" />
+                </svg>
+                <span>Print</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Browser Compatibility (ACCURATE) -->
+        <div class="card-base p-4 sm:p-6 bg-surface-soft flex flex-col gap-3">
+          <h3 class="text-xs font-bold text-slate uppercase tracking-wider">Live-data Browser Support</h3>
+          <ul class="flex flex-col gap-2 text-xs">
+            <li class="flex items-center justify-between">
+              <span class="text-stone">Chrome / Edge / Opera</span>
+              <span class="text-success-accent font-semibold">Supported</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="text-stone">Samsung Internet</span>
+              <span class="text-success-accent font-semibold">Supported</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="text-stone">Firefox</span>
+              <span class="text-brand-coral font-semibold">Removed in 2017</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span class="text-stone">Safari / iOS (all browsers)</span>
+              <span class="text-brand-coral font-semibold">Not supported</span>
+            </li>
+          </ul>
+          <p class="text-[10px] text-stone leading-snug pt-1 border-t border-hairline-soft mt-1">Where live data is unavailable, the health estimator above still works on every browser.</p>
+        </div>
+
+        <!-- Longevity Tips -->
+        <div class="card-base p-4 sm:p-6 bg-canvas flex flex-col gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-brand-yellow rounded-full"></span>
+            <h3 class="text-sm font-semibold text-primary">Longevity Advice</h3>
+          </div>
+          <div class="flex flex-col gap-3.5">
+            <div class="flex gap-2.5 items-start">
+              <span class="bg-teal-light text-brand-teal p-1.5 rounded-lg shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0-17.25a9 9 0 11-9 9m9-9a9 9 0 019 9" />
+                </svg>
+              </span>
+              <div>
+                <h4 class="text-xs font-semibold text-primary">Stay in the 20–80% band</h4>
+                <p class="text-[11px] text-slate mt-0.5">Keeping charge between 20% and 80% reduces voltage stress and can noticeably slow capacity loss.</p>
+              </div>
+            </div>
+            <div class="flex gap-2.5 items-start">
+              <span class="bg-coral-light text-brand-coral p-1.5 rounded-lg shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </span>
+              <div>
+                <h4 class="text-xs font-semibold text-primary">Avoid heat</h4>
+                <p class="text-[11px] text-slate mt-0.5">Sustained temperatures above ~35°C permanently degrade cells. Don't game or run heavy loads while charging.</p>
+              </div>
+            </div>
+            <div class="flex gap-2.5 items-start">
+              <span class="bg-rose-light text-brand-rose p-1.5 rounded-lg shrink-0 mt-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                </svg>
+              </span>
+              <div>
+                <h4 class="text-xs font-semibold text-primary">Slow-charge when you can</h4>
+                <p class="text-[11px] text-slate mt-0.5">Use standard-speed charging overnight to cut heat and internal resistance wear from fast charging.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools -->
+    <div class="mt-6 sm:mt-8 print:hidden">
+      <RelatedTools currentSlug="battery-health" />
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="mt-10 sm:mt-12 max-w-[800px] mx-auto w-full flex flex-col gap-4 print:hidden">
+      <h3 class="font-display font-medium text-lg sm:text-xl text-primary text-center">Frequently Asked Questions</h3>
+
+      <div class="flex flex-col border border-hairline rounded-lg overflow-hidden bg-canvas divide-y divide-hairline-soft">
+
+        <div class="faq-accordion-item p-4 sm:p-5">
+          <button type="button" class="faq-toggle-btn w-full flex items-center justify-between gap-3 font-semibold text-left text-sm text-primary" aria-expanded="false">
+            <span>Can a browser read my battery health or capacity?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-slate transform transition-transform duration-300 shrink-0">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="mt-2 text-xs sm:text-sm text-slate hidden leading-relaxed">
+            <p>No. Browsers cannot read physical battery health, remaining capacity in mAh, cycle count, temperature, or voltage. The web Battery Status API only exposes four things: the current charge level, whether the device is charging, and rough time-to-full and time-to-empty values. This tool shows those real values and measures your live drain rate. Any "health percentage" here is a clearly-labelled estimate from the details you enter, not a hardware reading.</p>
+          </div>
+        </div>
+
+        <div class="faq-accordion-item p-4 sm:p-5">
+          <button type="button" class="faq-toggle-btn w-full flex items-center justify-between gap-3 font-semibold text-left text-sm text-primary" aria-expanded="false">
+            <span>Why doesn't the live reading work on my iPhone or in Firefox?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-slate transform transition-transform duration-300 shrink-0">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="mt-2 text-xs sm:text-sm text-slate hidden leading-relaxed">
+            <p>Safari and all iOS browsers never implemented the Battery Status API, and Firefox removed it in 2017 to prevent fingerprinting. On those browsers no website can read your battery level, so this tool automatically switches to its manual estimator. Live status works on Chromium-based browsers: Chrome, Edge, Opera, and Samsung Internet.</p>
+          </div>
+        </div>
+
+        <div class="faq-accordion-item p-4 sm:p-5">
+          <button type="button" class="faq-toggle-btn w-full flex items-center justify-between gap-3 font-semibold text-left text-sm text-primary" aria-expanded="false">
+            <span>How is the drain rate measured?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-slate transform transition-transform duration-300 shrink-0">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="mt-2 text-xs sm:text-sm text-slate hidden leading-relaxed">
+            <p>The tool timestamps every change in your battery percentage while the page is open, then divides total percentage change by elapsed time for a real percent-per-hour figure. Because the OS only reports whole-percent steps, the first accurate number appears after your level changes by at least 1%, so leaving the page open a few minutes gives a more precise reading.</p>
+          </div>
+        </div>
+
+        <div class="faq-accordion-item p-4 sm:p-5">
+          <button type="button" class="faq-toggle-btn w-full flex items-center justify-between gap-3 font-semibold text-left text-sm text-primary" aria-expanded="false">
+            <span>What actually degrades a lithium-ion battery?</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-slate transform transition-transform duration-300 shrink-0">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="mt-2 text-xs sm:text-sm text-slate hidden leading-relaxed">
+            <p>Two things dominate: cycle aging (each full charge-discharge cycle wears the cell, with most phones rated to keep about 80% capacity after 500 cycles) and calendar aging (chemical decay over time). Heat above ~35°C, sitting at 100% plugged in, deep discharges to 0%, and frequent fast charging all accelerate both. The estimator uses these factors, weighted from published lithium-ion research.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SEO Content Article -->
+  <section
+    class="max-w-[760px] w-full mx-auto px-4 pb-20 flex flex-col gap-8 text-slate"
+    aria-labelledby="about-tool-heading"
+  >
+    <article class="flex flex-col gap-4">
+      <h2
+        id="about-tool-heading"
+        class="font-display font-semibold text-xl sm:text-2xl text-primary tracking-tight"
+      >
+        Free Online Battery Health Test &amp; Live Status Monitor
+      </h2>
+      <p class="text-sm leading-relaxed">
+        This <strong>battery health test</strong> is a fast, private, in-browser
+        way to see what your phone or laptop battery is actually doing right now.
+        On supported browsers it reads your <strong>live battery percentage</strong>
+        and charging state, and it measures your real
+        <strong>battery drain rate</strong> over time. It runs 100% client-side,
+        so nothing about your device ever leaves your browser. Where a browser
+        can't read battery data, the built-in estimator still gives you a
+        transparent, science-based approximation of wear.
+      </p>
+      <p class="text-sm leading-relaxed">
+        The most important thing to understand about any
+        <strong>online battery test</strong> is what a web page can and cannot
+        measure. This tool is deliberately honest about that line, so you always
+        know which numbers are real readings and which are estimates.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What a Browser Battery Test Can Actually Measure
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Modern Chromium browsers (Chrome, Edge, Opera, and Samsung Internet)
+        expose the standard <strong>Battery Status API</strong>. Through it, this
+        tool reads your current charge level as a percentage, whether the device
+        is charging or discharging, and the operating system's rough estimates
+        for time-to-full and time-to-empty. On top of that, it timestamps every
+        one-percent change in your level to calculate a genuinely
+        <strong>measured percent-per-hour drain rate</strong> — a real number
+        based on your actual usage, not a guess.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        What No Website Can Read (And Why)
+      </h3>
+      <p class="text-sm leading-relaxed">
+        For privacy and security reasons, browsers do not expose your battery's
+        physical <strong>health percentage</strong>, its remaining
+        <strong>capacity in mAh</strong>, the <strong>charge cycle count</strong>,
+        temperature, or voltage. That means no web page — including this one —
+        can tell you your exact battery health from the browser alone. Any tool
+        that claims a precise "battery health: 87%" figure purely from a website
+        is estimating or fabricating it. To keep this tool trustworthy, its
+        health figure is clearly labelled as a model-based estimate you control.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How the Battery Health Estimator Works
+      </h3>
+      <p class="text-sm leading-relaxed">
+        The estimator asks for your device age, typical charge cycles per day,
+        temperature exposure, and charging habits, then models lithium-ion
+        degradation from published research. Two effects dominate:
+        <strong>cycle aging</strong> (most phone batteries retain around 80% of
+        capacity after roughly 500 full cycles) and <strong>calendar aging</strong>
+        (chemical decay over time regardless of use). Heat, fast charging, and
+        sitting at 100% accelerate both. Enter your original capacity in mAh and
+        it will estimate your current capacity too — useful context, but always
+        an approximation.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        How to Check Real Battery Health on Your Phone
+      </h3>
+      <p class="text-sm leading-relaxed">
+        For a verified reading, use your device's own settings, which have
+        privileged access the browser doesn't. On <strong>iPhone</strong>, open
+        Settings → Battery → Battery Health &amp; Charging to see Maximum
+        Capacity. On <strong>Samsung</strong> phones, use the Samsung Members app
+        under Diagnostics, or dial <span class="font-mono">*#0228#</span>. On
+        <strong>Pixel and stock Android</strong> (Android 14 and later), check
+        Settings → Battery → Battery health. Combine that verified figure with
+        this tool's live drain rate for a complete picture of how your battery is
+        performing day to day.
+      </p>
+
+      <h3 class="font-display font-semibold text-lg text-primary mt-2">
+        Tips to Extend Your Battery Lifespan
+      </h3>
+      <p class="text-sm leading-relaxed">
+        Battery longevity comes down to reducing stress on the cell. Keep your
+        charge roughly between 20% and 80%, avoid leaving the phone plugged in at
+        100% overnight, keep it cool by not gaming or running heavy loads while
+        charging, and prefer slower charging when you're not in a hurry. These
+        habits slow both cycle and calendar aging, and they're reflected in how
+        this tool's estimator scores your inputs — so you can see the impact of
+        better charging behaviour on projected battery health.
+      </p>
+    </article>
+  </section>
+
+  <!-- How It Works Modal -->
+  <div id="how-it-works-modal" class="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+    <div class="bg-canvas border border-hairline rounded-t-2xl sm:rounded-xl max-w-[500px] w-full p-6 shadow-modal flex flex-col gap-4 animate-scale-up max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-hairline-soft pb-3">
+        <h3 class="font-display font-medium text-base text-primary">How this tool works</h3>
+        <button id="close-modal-btn" class="text-slate hover:text-primary cursor-pointer p-1 -m-1" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="text-xs sm:text-sm text-slate flex flex-col gap-3 leading-relaxed">
+        <p>This tool has two clearly separated parts, and it never invents data:</p>
+
+        <div class="flex flex-col gap-1 bg-surface-soft p-3 rounded-lg border border-hairline">
+          <h4 class="font-semibold text-primary text-xs">1. Live status (real, when supported)</h4>
+          <p class="text-[11px]">On Chromium browsers it reads the standard Battery Status API: charge level, charging state, and the OS's own time-to-full / time-to-empty. It then timestamps every percent change to compute a genuinely <em>measured</em> drain or charge rate.</p>
+        </div>
+
+        <div class="flex flex-col gap-1 bg-surface-soft p-3 rounded-lg border border-hairline">
+          <h4 class="font-semibold text-primary text-xs">2. Health estimator (a model, not a reading)</h4>
+          <p class="text-[11px]">Browsers can't read physical wear, so the health percentage is calculated from the age and habits you enter, using published lithium-ion cycle and calendar aging behaviour. It's an approximation to guide expectations — not your phone's exact figure.</p>
+        </div>
+
+        <div class="flex flex-col gap-1.5 bg-coral-light/30 p-3 rounded-lg border border-brand-coral/30">
+          <h4 class="font-semibold text-primary text-xs flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-3.5 h-3.5 text-brand-coral">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            What a web page honestly can and cannot do
+          </h4>
+          <p class="text-[11px]"><strong class="text-primary">Can:</strong> read your live charge percentage and charging state, and measure drain rate over time (Chromium browsers only).</p>
+          <p class="text-[11px]"><strong class="text-primary">Cannot:</strong> read true battery health, exact capacity (mAh), cycle count, temperature, or voltage. No website can — the browser simply doesn't expose them, for privacy and security. Anyone claiming an exact "battery health %" from a web page is guessing.</p>
+        </div>
+
+        <div class="flex flex-col gap-1.5 bg-surface-soft p-3 rounded-lg border border-hairline">
+          <h4 class="font-semibold text-primary text-xs">Where to find your real battery health</h4>
+          <p class="text-[11px]">Only your device's own settings can show verified health. Check these:</p>
+          <ul class="text-[11px] flex flex-col gap-1 list-disc pl-4">
+            <li><strong class="text-primary">iPhone:</strong> Settings → Battery → Battery Health &amp; Charging (shows Maximum Capacity %).</li>
+            <li><strong class="text-primary">Samsung:</strong> Samsung Members app → Support/Diagnostics → Battery status, or dial <span class="font-mono">*#0228#</span>.</li>
+            <li><strong class="text-primary">Pixel / stock Android:</strong> Settings → Battery → Battery health (Android 14+), or Settings → About phone.</li>
+            <li><strong class="text-primary">Any Android:</strong> Settings → Battery → Battery usage for real drain data; some phones show design vs. current capacity under Device care.</li>
+          </ul>
+        </div>
+
+        <p class="text-[11px] text-stone mt-1">Everything here runs locally in your browser. No battery, device, or usage data is sent anywhere.</p>
+      </div>
+
+      <button id="modal-ok-btn" class="bg-primary text-canvas font-semibold text-sm py-3 px-6 rounded-full self-stretch sm:self-end hover:bg-charcoal transition-all cursor-pointer min-h-[44px]">
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      'use strict';
+
+      const STATE_KEY = 'toolkify_battery_health_state_v2';
+
+      const state = {
+        // estimator inputs
+        age: 12,
+        cyclesPerDay: 1.0,
+        temp: 'warm',
+        fastCharge: false,
+        keepPlugged: false,
+        designCapacity: null
+      };
+
+      // Live-monitor runtime (not persisted)
+      let batterySamples = [];   // { t: ms, level: 0..1 }
+      let sessionStart = null;   // { t, level }
+      let wakeLock = null;
+      let batteryRef = null;     // live BatteryManager reference
+      let pollTimer = null;      // periodic re-read timer
+
+      // ---- DOM refs ----
+      const $ = (id) => document.getElementById(id);
+      const apiStatusDot = $('api-status-dot');
+      const apiStatusLabel = $('api-status-label');
+      const modeBadge = $('mode-badge');
+      const gaugeRing = $('gauge-level-ring');
+      const gaugeText = $('gauge-level-text');
+      const chargingStatusText = $('charging-status-text');
+
+      const statState = $('stat-state');
+      const statRate = $('stat-rate');
+      const statTime = $('stat-time');
+      const statSession = $('stat-session');
+      const measureHint = $('measure-hint');
+      const fallbackNotice = $('fallback-notice');
+      const wakeToggle = $('wake-lock-toggle');
+
+      const ageInput = $('device-age');
+      const ageVal = $('age-val');
+      const cyclesInput = $('cycles-day');
+      const cyclesVal = $('cycles-val');
+      const tempBtns = Array.prototype.slice.call(document.querySelectorAll('.temp-btn'));
+      const fastInput = $('habit-fast');
+      const pluggedInput = $('habit-plugged');
+      const capacityInput = $('design-capacity');
+
+      const estHealth = $('est-health');
+      const estCondition = $('est-condition');
+      const estBar = $('est-bar');
+      const estCycles = $('est-cycles');
+      const estCapacity = $('est-capacity');
+
+      const shareBtn = $('share-btn');
+      const resetBtn = $('reset-btn');
+      const printReportBtn = $('print-report-btn');
+      const howItWorksBtn = $('how-it-works-btn');
+      const howItWorksModal = $('how-it-works-modal');
+      const closeModalBtn = $('close-modal-btn');
+      const modalOkBtn = $('modal-ok-btn');
+
+      const CIRCUMFERENCE = 2 * Math.PI * 76; // 477.5
+
+      // ---- helpers ----
+      function haptic(ms) {
+        try { if (navigator.vibrate) navigator.vibrate(ms || 8); } catch (e) {}
+      }
+
+      function ringColor(levelPct, charging) {
+        if (charging) return '#00b473';        // success green while charging
+        if (levelPct <= 15) return '#ff9999';  // coral low
+        if (levelPct <= 40) return '#fcb900';  // amber
+        return '#4262ff';                        // brand blue
+      }
+
+      function fmtDuration(seconds) {
+        if (!isFinite(seconds) || seconds <= 0) return null;
+        const h = Math.floor(seconds / 3600);
+        const m = Math.round((seconds % 3600) / 60);
+        if (h > 0) return h + 'h ' + m + 'm';
+        return m + 'm';
+      }
+
+      // ---- gauge ----
+      function drawGauge(levelPct, charging) {
+        const clamped = Math.max(0, Math.min(100, levelPct));
+        const offset = CIRCUMFERENCE - (clamped / 100) * CIRCUMFERENCE;
+        gaugeRing.style.strokeDashoffset = String(offset);
+        gaugeRing.setAttribute('stroke', ringColor(clamped, charging));
+        gaugeText.innerHTML = Math.round(clamped) + '<span class="text-2xl align-top">%</span>';
+      }
+
+      // ================= LIVE MONITOR =================
+      function computeMeasuredRate() {
+        // Returns { perHour: signed %/h, remaining: seconds|null } or null
+        if (batterySamples.length < 2) return null;
+        const first = batterySamples[0];
+        const last = batterySamples[batterySamples.length - 1];
+        const hours = (last.t - first.t) / 3600000;
+        const deltaPct = (last.level - first.level) * 100;
+        if (hours <= 0 || Math.abs(deltaPct) < 1) return null; // need a real 1% step
+        const perHour = deltaPct / hours; // negative => draining
+        let remaining = null;
+        if (perHour < 0) {
+          remaining = (last.level * 100 / -perHour) * 3600;        // to empty
+        } else if (perHour > 0) {
+          remaining = ((1 - last.level) * 100 / perHour) * 3600;   // to full
+        }
+        return { perHour: perHour, remaining: remaining };
+      }
+
+      function renderLive(battery) {
+        const levelPct = battery.level * 100;
+        const charging = battery.charging;
+        drawGauge(levelPct, charging);
+
+        // State + charging line
+        if (charging) {
+          statState.textContent = levelPct >= 99.5 ? 'Charged / plugged in' : 'Charging';
+          chargingStatusText.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-brand-yellow-deep"><path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.972 9.75h7.278a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd"/></svg> Charging';
+        } else {
+          statState.textContent = 'Discharging';
+          chargingStatusText.textContent = 'On battery';
+        }
+
+        // Measured rate + time remaining (prefer our measurement, fall back to OS estimate)
+        const measured = computeMeasuredRate();
+        if (measured) {
+          const abs = Math.abs(measured.perHour);
+          statRate.textContent = (measured.perHour < 0 ? '−' : '+') + abs.toFixed(1) + '%/h';
+          const rem = fmtDuration(measured.remaining);
+          statTime.textContent = rem ? rem + (measured.perHour < 0 ? ' to empty' : ' to full') : '—';
+          measureHint.textContent = 'Measured live from ' + batterySamples.length + ' samples.';
+        } else {
+          statRate.textContent = 'Measuring…';
+          // OS-provided estimate as an interim value
+          const osSeconds = charging ? battery.chargingTime : battery.dischargingTime;
+          const osRem = fmtDuration(osSeconds);
+          statTime.textContent = osRem ? osRem + (charging ? ' to full' : ' to empty') + ' (system)' : 'Unknown';
+          measureHint.textContent = 'Waiting for a 1% change to measure your real drain rate…';
+        }
+
+        // Session change
+        if (sessionStart) {
+          const delta = Math.round((battery.level - sessionStart.level) * 100);
+          const mins = Math.max(1, Math.round((Date.now() - sessionStart.t) / 60000));
+          const sign = delta > 0 ? '+' : '';
+          statSession.textContent = sign + delta + '% over ' + mins + 'm';
+        }
+      }
+
+      function recordSample(battery) {
+        const now = Date.now();
+        if (!sessionStart) sessionStart = { t: now, level: battery.level };
+        const last = batterySamples[batterySamples.length - 1];
+        if (!last || last.level !== battery.level) {
+          batterySamples.push({ t: now, level: battery.level });
+          // keep memory bounded
+          if (batterySamples.length > 200) batterySamples.shift();
+        }
+      }
+
+      function initBattery() {
+        if (!('getBattery' in navigator) || typeof navigator.getBattery !== 'function') {
+          markUnsupported();
+          return;
+        }
+        navigator.getBattery().then(function (battery) {
+          apiStatusDot.className = 'w-2.5 h-2.5 rounded-full bg-success-accent';
+          apiStatusLabel.textContent = 'Live battery data connected';
+          modeBadge.textContent = 'Live API';
+          fallbackNotice.classList.add('hidden');
+
+          batteryRef = battery;
+          recordSample(battery);
+          renderLive(battery);
+
+          function onChange() { recordSample(battery); renderLive(battery); }
+          battery.addEventListener('levelchange', onChange);
+          battery.addEventListener('chargingchange', function () { haptic(12); onChange(); });
+          battery.addEventListener('chargingtimechange', onChange);
+          battery.addEventListener('dischargingtimechange', onChange);
+
+          // Some devices report a stale level at first (often 100%) and only
+          // correct it a moment later WITHOUT firing an event. Re-read the live
+          // properties a few times after load, then keep polling gently, so the
+          // displayed percentage always reflects the true current charge.
+          [400, 1200, 2500, 5000].forEach(function (delay) {
+            setTimeout(function () { if (batteryRef) renderLive(batteryRef); }, delay);
+          });
+          if (pollTimer) clearInterval(pollTimer);
+          pollTimer = setInterval(function () {
+            if (batteryRef) { recordSample(batteryRef); renderLive(batteryRef); }
+          }, 15000);
+
+          // Re-sync whenever the user returns to the tab.
+          document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible' && batteryRef) renderLive(batteryRef);
+          });
+          window.addEventListener('focus', function () { if (batteryRef) renderLive(batteryRef); });
+        }).catch(function () {
+          markUnsupported();
+        });
+      }
+
+      function markUnsupported() {
+        apiStatusDot.className = 'w-2.5 h-2.5 rounded-full bg-brand-coral';
+        apiStatusLabel.textContent = 'Live battery data unavailable';
+        modeBadge.textContent = 'Estimate only';
+        fallbackNotice.classList.remove('hidden');
+        // Draw an empty (grey) ring WITHOUT touching the centre text.
+        gaugeRing.style.strokeDashoffset = String(CIRCUMFERENCE);
+        gaugeRing.setAttribute('stroke', '#e0e2e8');
+        gaugeText.innerHTML = 'N/A';
+        chargingStatusText.textContent = 'Use the estimator below';
+        statState.textContent = 'Unavailable';
+        statRate.textContent = '—';
+        statTime.textContent = '—';
+        statSession.textContent = '—';
+        measureHint.textContent = 'This browser blocks battery access.';
+      }
+
+      // ---- Wake Lock ----
+      async function requestWakeLock() {
+        try {
+          if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            wakeLock.addEventListener('release', function () { wakeLock = null; });
+          }
+        } catch (e) { wakeToggle.checked = false; }
+      }
+      function releaseWakeLock() {
+        try { if (wakeLock) { wakeLock.release(); wakeLock = null; } } catch (e) {}
+      }
+      wakeToggle.addEventListener('change', function () {
+        haptic();
+        if (wakeToggle.checked) requestWakeLock(); else releaseWakeLock();
+      });
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible' && wakeToggle.checked && !wakeLock) requestWakeLock();
+      });
+
+      // ================= HEALTH ESTIMATOR =================
+      function computeHealth() {
+        const tempMult = state.temp === 'cool' ? 0.8 : (state.temp === 'hot' ? 1.4 : 1.0);
+        const cycles = Math.round(state.age * 30.44 * state.cyclesPerDay);
+
+        // Cycle aging: ~0.04%/cycle baseline (≈20% loss at 500 cycles), scaled by heat.
+        const cycleLoss = cycles * 0.04 * tempMult;
+        // Calendar aging: ~3%/year baseline, scaled by heat.
+        const calendarLoss = (state.age / 12) * 3 * tempMult;
+        // Habit penalties.
+        const habitLoss = (state.fastCharge ? 3 : 0) + (state.keepPlugged ? 4 : 0);
+
+        let health = 100 - cycleLoss - calendarLoss - habitLoss;
+        health = Math.max(40, Math.min(100, Math.round(health)));
+
+        return { health: health, cycles: cycles };
+      }
+
+      function conditionFor(h) {
+        if (h >= 90) return { label: 'Excellent', cls: 'text-success-accent', bg: 'bg-teal-light', color: '#00b473' };
+        if (h >= 80) return { label: 'Good', cls: 'text-brand-blue', bg: 'bg-surface-pricing-featured', color: '#4262ff' };
+        if (h >= 70) return { label: 'Fair', cls: 'text-brand-yellow-deep', bg: 'bg-yellow-light', color: '#fcb900' };
+        return { label: 'Consider service', cls: 'text-brand-coral', bg: 'bg-coral-light', color: '#ff9999' };
+      }
+
+      function renderEstimator() {
+        const r = computeHealth();
+        const cond = conditionFor(r.health);
+
+        estHealth.innerHTML = r.health + '<span class="text-lg align-top">%</span>';
+        estCondition.textContent = cond.label;
+        estCondition.className = 'text-[11px] font-bold py-1 px-2.5 rounded-full ' + cond.bg + ' ' + cond.cls;
+        estBar.style.width = r.health + '%';
+        estBar.style.backgroundColor = cond.color;
+        estCycles.textContent = '~' + r.cycles.toLocaleString();
+
+        if (state.designCapacity && state.designCapacity >= 500) {
+          const nowCap = Math.round(state.designCapacity * r.health / 100);
+          estCapacity.textContent = '~' + nowCap.toLocaleString() + ' mAh';
+        } else {
+          estCapacity.textContent = '~' + r.health + '% of new';
+        }
+      }
+
+      function syncTempButtons() {
+        tempBtns.forEach(function (b) {
+          const active = b.getAttribute('data-temp') === state.temp;
+          b.className = 'temp-btn min-h-[40px] text-[11px] font-semibold rounded-lg border transition-all ' +
+            (active ? 'border-brand-blue bg-surface-pricing-featured text-brand-blue' : 'border-hairline bg-surface text-slate');
+        });
+      }
+
+      function syncInputsFromState() {
+        ageInput.value = state.age;
+        ageVal.textContent = state.age;
+        cyclesInput.value = Math.round(state.cyclesPerDay * 10);
+        cyclesVal.textContent = state.cyclesPerDay.toFixed(1);
+        fastInput.checked = state.fastCharge;
+        pluggedInput.checked = state.keepPlugged;
+        capacityInput.value = state.designCapacity || '';
+        syncTempButtons();
+        renderEstimator();
+      }
+
+      // ---- persistence ----
+      function saveState() {
+        try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
+      }
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STATE_KEY);
+          if (raw) {
+            const p = JSON.parse(raw);
+            if (typeof p.age === 'number') state.age = p.age;
+            if (typeof p.cyclesPerDay === 'number') state.cyclesPerDay = p.cyclesPerDay;
+            if (typeof p.temp === 'string') state.temp = p.temp;
+            state.fastCharge = !!p.fastCharge;
+            state.keepPlugged = !!p.keepPlugged;
+            state.designCapacity = (typeof p.designCapacity === 'number') ? p.designCapacity : null;
+          }
+        } catch (e) {}
+      }
+
+      // ---- estimator input events ----
+      ageInput.addEventListener('input', function (e) {
+        state.age = parseInt(e.target.value, 10);
+        ageVal.textContent = state.age;
+        renderEstimator(); saveState();
+      });
+      cyclesInput.addEventListener('input', function (e) {
+        state.cyclesPerDay = parseInt(e.target.value, 10) / 10;
+        cyclesVal.textContent = state.cyclesPerDay.toFixed(1);
+        renderEstimator(); saveState();
+      });
+      tempBtns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          haptic();
+          state.temp = b.getAttribute('data-temp');
+          syncTempButtons(); renderEstimator(); saveState();
+        });
+      });
+      fastInput.addEventListener('change', function () {
+        state.fastCharge = fastInput.checked; renderEstimator(); saveState();
+      });
+      pluggedInput.addEventListener('change', function () {
+        state.keepPlugged = pluggedInput.checked; renderEstimator(); saveState();
+      });
+      capacityInput.addEventListener('input', function () {
+        const v = parseInt(capacityInput.value, 10);
+        state.designCapacity = (v >= 500 && v <= 20000) ? v : null;
+        renderEstimator(); saveState();
+      });
+
+      // ---- reset ----
+      resetBtn.addEventListener('click', function () {
+        haptic();
+        state.age = 12; state.cyclesPerDay = 1.0; state.temp = 'warm';
+        state.fastCharge = false; state.keepPlugged = false; state.designCapacity = null;
+        try { localStorage.removeItem(STATE_KEY); } catch (e) {}
+        syncInputsFromState();
+      });
+
+      // ---- print ----
+      printReportBtn.addEventListener('click', function () { window.print(); });
+
+      // ---- share ----
+      shareBtn.addEventListener('click', function () {
+        haptic();
+        const url = new URL(window.location.origin + window.location.pathname);
+        const shareData = { title: 'Battery Health Test', url: url.toString() };
+        if (navigator.share) {
+          navigator.share(shareData).catch(function (err) {
+            if (err && err.name !== 'AbortError') copyToClipboard(url.toString());
+          });
+        } else {
+          copyToClipboard(url.toString());
+        }
+      });
+      function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopySuccess).catch(function () { fallbackCopy(text); });
+        } else { fallbackCopy(text); }
+      }
+      function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); showCopySuccess(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      function showCopySuccess() {
+        const span = shareBtn.querySelector('span');
+        if (!span) return;
+        const original = span.textContent;
+        span.textContent = 'Copied!';
+        shareBtn.classList.add('text-success-accent', 'border-success-accent');
+        setTimeout(function () {
+          span.textContent = original;
+          shareBtn.classList.remove('text-success-accent', 'border-success-accent');
+        }, 2000);
+      }
+
+      // ---- modal ----
+      function openModal() { howItWorksModal.classList.remove('hidden'); }
+      function closeModal() { howItWorksModal.classList.add('hidden'); }
+      howItWorksBtn.addEventListener('click', openModal);
+      closeModalBtn.addEventListener('click', closeModal);
+      modalOkBtn.addEventListener('click', closeModal);
+      howItWorksModal.addEventListener('click', function (e) { if (e.target === howItWorksModal) closeModal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      // ---- FAQ accordion ----
+      const faqButtons = Array.prototype.slice.call(document.querySelectorAll('.faq-toggle-btn'));
+      faqButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          faqButtons.forEach(function (other) {
+            if (other !== btn) {
+              other.setAttribute('aria-expanded', 'false');
+              const oc = other.nextElementSibling;
+              if (oc) oc.classList.add('hidden');
+              const os = other.querySelector('svg'); if (os) os.classList.remove('rotate-180');
+            }
+          });
+          btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          const content = btn.nextElementSibling;
+          if (content) content.classList.toggle('hidden');
+          const svg = btn.querySelector('svg'); if (svg) svg.classList.toggle('rotate-180');
+        });
+      });
+
+      // ---- scan button: recompute estimate, then scroll to the estimator so the user can set it up ----
+      const scanBtn = $('scan-btn');
+      const estimatorTop = $('estimator-top');
+      scanBtn.addEventListener('click', function () {
+        haptic(15);
+        const label = scanBtn.querySelector('span');
+        const original = label ? label.textContent : '';
+        if (label) label.textContent = 'Scanning…';
+        scanBtn.disabled = true;
+        scanBtn.classList.add('opacity-70');
+        renderEstimator();
+        setTimeout(function () {
+          if (label) label.textContent = original;
+          scanBtn.disabled = false;
+          scanBtn.classList.remove('opacity-70');
+          if (estimatorTop && estimatorTop.scrollIntoView) {
+            estimatorTop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          estimatorTop.classList.add('ring-2', 'ring-brand-blue');
+          setTimeout(function () { estimatorTop.classList.remove('ring-2', 'ring-brand-blue'); }, 1200);
+        }, 550);
+      });
+
+      // ---- init ----
+      loadState();
+      syncInputsFromState();
+      initBattery();
+    })();
+  </script>
+</Layout>

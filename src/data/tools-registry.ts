@@ -80,6 +80,7 @@ export const tools: Tool[] = [
   { slug: 'light-meter',          title: 'Light Meter',             category: 'mobile', tags: ['sensor', 'mobile', 'light'] },
   { slug: 'compass-rose',         title: 'Compass Rose',            category: 'mobile', tags: ['sensor', 'mobile', 'compass', 'direction'] },
   { slug: 'accelerometer-viewer', title: 'Accelerometer Viewer',    category: 'mobile', tags: ['sensor', 'mobile', 'motion'] },
+  { slug: 'battery-health',       title: 'Battery Health Test',     category: 'mobile', tags: ['sensor', 'mobile', 'battery', 'health', 'diagnostics'] },
 
   // ── standalone ────────────────────────────────────────
   { slug: 'json-formatter',   title: 'JSON Formatter',      category: 'standalone', tags: ['code', 'json', 'format', 'developer'] },
