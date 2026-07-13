@@ -1,0 +1,160 @@
+---
+// Thin floating "100% secure" bar.
+// - Floats on top of content (fixed, does not push the page down).
+// - Shown on every page load by default.
+// - When dismissed, stays hidden for the rest of that browser session
+//   (uses sessionStorage, which auto-clears when the session ends).
+// - On a fresh visit (new session) it appears again.
+//
+// It starts hidden (opacity/pointer disabled via the `is-hidden` class) and an
+// inline, render-blocking script reveals it only when it wasn't dismissed this
+// session — this avoids a flash for returning-in-session visitors.
+---
+
+<div
+  id="security-bar"
+  class="security-bar is-hidden"
+  role="status"
+  aria-live="polite"
+>
+  <div class="security-bar__inner">
+    <span class="security-bar__text">
+      <svg class="security-bar__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M10 1.667 3.333 4.5v4.25c0 3.68 2.844 7.12 6.667 8.083 3.823-.963 6.667-4.403 6.667-8.083V4.5L10 1.667Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="m7.5 10 1.75 1.75L13 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>100% secure &amp; private — all tools run entirely in your browser. Your data never leaves your device.</span>
+    </span>
+    <button
+      id="security-bar-close"
+      class="security-bar__close"
+      type="button"
+      aria-label="Dismiss security notice"
+      title="Dismiss"
+    >
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .security-bar {
+    position: fixed;
+    top: 64px; /* sits just below the sticky 64px navbar — never covers it */
+    left: 0;
+    right: 0;
+    z-index: 30; /* above page content, below the header (z-50) and its menus (z-40) */
+    background-color: var(--color-success-accent, #00b473);
+    color: #ffffff;
+    font-family: var(--font-body, sans-serif);
+    box-shadow: 0 1px 4px rgba(0, 90, 60, 0.18);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform, opacity;
+  }
+
+  /* Hidden state: fully removed from view + interaction, without reflowing the page. */
+  .security-bar.is-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .security-bar__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 3px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 24px;
+  }
+
+  .security-bar__text {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    line-height: 1.3;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .security-bar__icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .security-bar__close {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 9999px;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+  }
+
+  .security-bar__close:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+    opacity: 1;
+  }
+
+  .security-bar__close svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* On small screens keep it thin: trim the message so the bar stays one line. */
+  @media (max-width: 640px) {
+    .security-bar__inner {
+      padding-right: 34px; /* leave room for the close button */
+      padding-left: 34px;
+    }
+    .security-bar__text {
+      font-size: 11px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const KEY = 'security_bar_dismissed';
+    const bar = document.getElementById('security-bar');
+    if (!bar) return;
+
+    let dismissed = false;
+    try {
+      dismissed = sessionStorage.getItem(KEY) === '1';
+    } catch (e) {
+      // sessionStorage unavailable (e.g. privacy mode) — just show the bar.
+    }
+
+    if (!dismissed) {
+      // Reveal without a transition so it doesn't slide in on first paint.
+      bar.classList.remove('is-hidden');
+    }
+
+    const closeBtn = document.getElementById('security-bar-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        bar.classList.add('is-hidden');
+        try {
+          sessionStorage.setItem(KEY, '1');
+        } catch (e) {}
+      });
+    }
+  })();
+</script>
